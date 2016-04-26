@@ -194,6 +194,7 @@ ModelManifest.xml
 #temp files
 Temp/
 /Bin/Launcher_Debug.exe
+/Bin/Launcher_Release.exe
 *.idb
 /Bin/Logs/
 *.user
