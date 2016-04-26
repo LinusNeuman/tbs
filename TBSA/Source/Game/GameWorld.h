@@ -13,7 +13,7 @@ public:
 
 	void Init();
 	virtual eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
-	virtual void Draw() override;
+	virtual void Draw() const override;
 private:
 
 	Renderer * myRenderer;

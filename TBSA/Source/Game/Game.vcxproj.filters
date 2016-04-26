@@ -19,8 +19,6 @@
     </ClInclude>
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="WrappedSprite.h" />
-    <ClInclude Include="TextState.h" />
-    <ClInclude Include="InteMartinKakaState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -30,7 +28,5 @@
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="WrappedSprite.cpp" />
-    <ClCompile Include="TextState.cpp" />
-    <ClCompile Include="InteMartinKakaState.cpp" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,6 @@
 #include "Renderer.h"
 #include "WrappedSprite.h"
 #include <CU/InputWrapper/SingletonInputWrapper.h>
-#include "TextState.h"
 #include <ProxyStateStack.h>
 
 const float Speed = 150.f;
@@ -86,20 +85,20 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	if (GetInput::GetKeyPressed(DIK_A) == true)
 	{
-		TextState * tempState = new TextState();
+		CGameWorld * tempState = new CGameWorld();
 		tempState->Init();
-		aStateStack.AddSubState(tempState);
+		aStateStack.AddMainState(tempState);
 	}
 
-	if (GetInput::GetKeyPressed(DIK_END) == true)
+	if (GetInput::GetKeyReleased(DIK_END) == true)
 	{
 		return eStackReturnValue::ePopSubState;
 	}
-	if (GetInput::GetKeyPressed(DIK_HOME) == true)
+	if (GetInput::GetKeyReleased(DIK_HOME) == true)
 	{
 		return eStackReturnValue::ePopCurrentSubStates;
 	}
-	if (GetInput::GetKeyPressed(DIK_DELETE) == true)
+	if (GetInput::GetKeyReleased(DIK_DELETE) == true)
 	{
 		return eStackReturnValue::ePopMain;
 	}
@@ -107,7 +106,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	return eStackReturnValue::eStay;
 }
 
-void CGameWorld::Draw()
+void CGameWorld::Draw() const
 {
 	myRenderer->UpdateSprite(*myTestSprite);
 	myRenderer->Draw();

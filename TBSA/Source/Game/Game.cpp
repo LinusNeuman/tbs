@@ -9,8 +9,6 @@
 #include <vector>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <CU/Timer/TimeManager.h>
-#include "TextState.h"
-#include "InteMartinKakaState.h"
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
 
@@ -86,23 +84,15 @@ void CGame::Init(const std::wstring& aVersion)
 void CGame::InitCallBack()
 {
 	myGameWorld = new CGameWorld();
-	myTextState = new TextState();
-	myKakaState = new InteMartinKakaState();
-	mySubStateGameWorld = new CGameWorld();
-	mySubStateTextState = new TextState();
-	mySubStateKakaState = new InteMartinKakaState();
 
 	GetInput::Create();
 	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
 
 	CU::TimeManager::Create();
 
-	myTextState->Init();
+	
     myGameWorld->Init();
-	myKakaState->Init();
-	mySubStateGameWorld->Init();
-	mySubStateTextState->Init();
-	mySubStateKakaState->Init();
+	
 
 	myGameStateStack.AddMainState(myGameWorld);
 }

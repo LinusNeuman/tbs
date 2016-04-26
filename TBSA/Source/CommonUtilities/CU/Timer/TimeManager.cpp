@@ -42,10 +42,10 @@ namespace CommonUtilities
 
 	 Time TimeManager::GetDeltaTime()
 	{
-		if (GetInstance().myDeltaTime / 1000000.0 >= 1)
+		/*if (GetInstance().myDeltaTime / 1000000.0 >= 1)
 		{
 			return Time(0);
-		}
+		}*/
 		return Time(GetInstance().myDeltaTime);
 	}
 

@@ -47,7 +47,7 @@ bool StateStack::Update(const CU::Time & aDeltaTime)
 	return false;
 }
 
-void StateStack::Render()
+void StateStack::Render() const
 {
 	RenderState(myStates.GetLast(), myStates.GetLast().Size() -1);
 }
@@ -61,7 +61,7 @@ void StateStack::PopMainState()
 
 void StateStack::PopSubState()
 {
-	DL_ASSERT(myStates.GetLast().Size() > 0, "GameStateStack - Trying to pop a substate when there are none!");
+	DL_ASSERT(myStates.GetLast().Size() > 1, "GameStateStack - Trying to pop a substate when there are none!");
 	myStates.GetLast().RemoveAtIndex(myStates.GetLast().Size() - 1);
 }
 
@@ -73,7 +73,7 @@ void StateStack::PopCurrentSubstates()
 	}
 }
 
-void StateStack::RenderState(CU::GrowingArray<GameState *> & aMainState, unsigned short anIndexToCheck)
+void StateStack::RenderState(const CU::GrowingArray<GameState *> & aMainState, unsigned short anIndexToCheck) const
 {
 	if (aMainState[anIndexToCheck]->GetShouldLetThroughRendering() == true && anIndexToCheck > 0)
 	{
