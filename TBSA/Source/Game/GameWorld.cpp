@@ -9,11 +9,18 @@
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
 
+// For test sound
+#include "../Audio/Source/Sound.h"
+
 const float Speed = 150.f;
 
 
 CGameWorld::CGameWorld()
 {
+	// Test sound
+	Sound mySound;
+	mySound.Init("Sounds/Horse-neigh.mp3");
+	mySound.Play(0.5f);
 }
 
 
