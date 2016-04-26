@@ -21,7 +21,8 @@ Renderer::~Renderer()
 void Renderer::Init(const std::string & aSpriteFilePath)
 {
 	myNodesToDraw = new DX2D::CSpriteBatch(true);
-	myNodesToDraw->Init(aSpriteFilePath.c_str());
+	//myNodesToDraw->Init(aSpriteFilePath.c_str());
+	myNodesToDraw->Init("Sprites/palm.dds");
 	myTextsToPrint = new DX2D::CText("Text/calibril.ttf_sdf");
 
 	myLinesToDraw.Init(300);

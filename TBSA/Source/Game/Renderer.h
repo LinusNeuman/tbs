@@ -6,8 +6,7 @@ struct LineData
 {
 	LineData() :
 		myStartPosition(CU::Vector2f::Zero), myEndPosition(CU::Vector2f::Zero), myColor(CU::Vector4f::One)
-	{
-	}
+	{}
 
 	LineData(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition) :
 		myStartPosition(aStartPosition), myEndPosition(aEndPosition), myColor(CU::Vector4f::One)
