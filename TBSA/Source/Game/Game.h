@@ -16,11 +16,6 @@ private:
 	void LogCallback(std::string aText);
 
 	GameState * myGameWorld;
-	GameState * myTextState;
-	GameState * myKakaState;
-	GameState * mySubStateGameWorld;
-	GameState * mySubStateTextState;
-	GameState * mySubStateKakaState;
 
 	StateStack myGameStateStack;
 	bool myImRunning;

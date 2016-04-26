@@ -22,7 +22,7 @@ public:
 	virtual void Init();
 	
 	virtual eStackReturnValue Update(const CU::Time & aDeltaTime, ProxyStateStack & aStateStack) = 0;
-	virtual void Draw() = 0;
+	virtual void Draw() const = 0;
 
 	bool GetShouldLetThroughRendering();
 

@@ -17,14 +17,14 @@ public:
 
 	bool Update(const CU::Time & aDeltaTime);
 
-	void Render();
+	void Render() const;
 
 private:
 	void PopMainState();
 	void PopSubState();
 	void PopCurrentSubstates();
 
-	void RenderState(CU::GrowingArray<GameState *> & aMainState , unsigned short anIndexToCheck);
+	void RenderState(const CU::GrowingArray<GameState *> & aMainState , unsigned short anIndexToCheck) const;
 
 	CU::GrowingArray<CU::GrowingArray<GameState*>> myStates;
 	ProxyStateStack myProxy;
