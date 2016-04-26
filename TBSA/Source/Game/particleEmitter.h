@@ -1,8 +1,8 @@
-#include "../../CommonUtilities/Vectors/vector2.h"
-#include "../../CommonUtilities/Vectors/vector4.h"
-#include "../../CommonUtilities/Timer/Time.h"
-#include "../../DX2DEngine/tga2d/sprite/sprite.h"
-#include "../Renderer/Renderer.h"
+#include "../CommonUtilities/CU/Vectors/vector2.h"
+#include "../CommonUtilities/CU/Vectors/vector4.h"
+#include "../CommonUtilities/CU/Timer/Time.h"
+#include "WrappedSprite.h"
+#include "Renderer.h"
 
 struct ParticleEmitterData
 {
@@ -39,10 +39,10 @@ struct ParticleEmitterData
 	float MinParRotationSpeed = 10.f;
 	float MaxParRotationSpeed = 25.f;
 	GameObject* myMagnetTarget = nullptr;
-	Vector2f Position;
-	Vector2f Dimensions;
-	Vector2f MinParEmissionVel = {-150.f, -150.f};
-	Vector2f MaxParEmissionVel = {150.f, 150.f};
+	CommonUtilities::Vector2f Position;
+	CommonUtilities::Vector2f Dimensions;
+	CommonUtilities::Vector2f MinParEmissionVel = { -150.f, -150.f };
+	CommonUtilities::Vector2f MaxParEmissionVel = { 150.f, 150.f };
 };
 
 template<unsigned int COUNT>
@@ -58,7 +58,7 @@ struct ParticleData
 	Vector2f Position[COUNT];
 	Vector2f Velocity[COUNT];
 	DX2D::CColor Color[COUNT];
-	DX2D::CSprite* Sprite[COUNT];
+	WrappedSprite Sprite[COUNT];
 };
 
 template<unsigned int COUNT>
