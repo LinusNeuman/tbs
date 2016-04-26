@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="TestShit|Win32">
+      <Configuration>TestShit</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="TestShit|x64">
+      <Configuration>TestShit</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A41E3ED6-A914-40B1-B1E9-9551E0CC7EAB}</ProjectGuid>
+    <RootNamespace>CommonUtilities</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseIntelMKL>No</UseIntelMKL>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseIntelMKL>No</UseIntelMKL>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseIntelMKL>No</UseIntelMKL>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>../CommonUtilities/;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|x64'">
+    <IncludePath>../CommonUtilities/;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>../CommonUtilities/;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="CU\BinaryTree\BinaryTree.h" />
+    <ClInclude Include="CU\Camera\Camera2D.h" />
+    <ClInclude Include="CU\GridArray\GridArray.h" />
+    <ClInclude Include="CU\InputWrapper\SingletonInputWrapper.h" />
+    <ClInclude Include="CU\Intersection\Shapes2D\AABB2D.h" />
+    <ClInclude Include="CU\Intersection\Shapes2D\BaseShape2D.h" />
+    <ClInclude Include="CU\DLDebug\DL_Debug.h" />
+    <ClInclude Include="CU\DLDebug\DL_StackWalker.h" />
+    <ClInclude Include="CU\DLDebug\StackWalker\StackWalker.h" />
+    <ClInclude Include="CU\GrowingArray\GrowingArray.h" />
+    <ClInclude Include="CU\InputWrapper\InputWrapper.h" />
+    <ClInclude Include="CU\Intersection\Shapes2D.h" />
+    <ClInclude Include="CU\Intersection\Shapes2D\Circle2D.h" />
+    <ClInclude Include="CU\Intersection\Shapes\AABB.h" />
+    <ClInclude Include="CU\Intersection\Shapes\BaseShape.h" />
+    <ClInclude Include="CU\Intersection\Shapes\Fov90Frustum.h" />
+    <ClInclude Include="CU\Intersection\Intersections3D.h" />
+    <ClInclude Include="CU\Intersection\Intersection2D.h" />
+    <ClInclude Include="CU\Intersection\Shapes2D\LineSegment2D.h" />
+    <ClInclude Include="CU\Intersection\Shapes\LineSegment3D.h" />
+    <ClInclude Include="CU\Intersection\Shapes.h" />
+    <ClInclude Include="CU\Intersection\Shapes\Sphere.h" />
+    <ClInclude Include="CU\Lines And Planes\line.h" />
+    <ClInclude Include="CU\Lines And Planes\line_volume.h" />
+    <ClInclude Include="CU\Lines And Planes\plane.h" />
+    <ClInclude Include="CU\Lines And Planes\plane_volume.h" />
+    <ClInclude Include="CU\Macros\Macros.h" />
+    <ClInclude Include="CU\Matriser\matrix.h" />
+    <ClInclude Include="CU\Matriser\matrix33.h" />
+    <ClInclude Include="CU\Matriser\matrix44.h" />
+    <ClInclude Include="CU\NameSpaceAliases.h" />
+    <ClInclude Include="CU\Observer\ObserverPatternListener.h" />
+    <ClInclude Include="CU\Observer\ObserverPatternSubject.h" />
+    <ClInclude Include="CU\Queue\ObjectQueue.h" />
+    <ClInclude Include="CU\StaticArray\StaticArray.h" />
+    <ClInclude Include="CU\StringToData.h" />
+    <ClInclude Include="CU\Syncronizer\Syncronizer.h" />
+    <ClInclude Include="CU\Timer\Alarm.h" />
+    <ClInclude Include="CU\Timer\Time.h" />
+    <ClInclude Include="CU\Timer\TimeManager.h" />
+    <ClInclude Include="CU\Timer\Timer.h" />
+    <ClInclude Include="CU\Utility\FileHandling.h" />
+    <ClInclude Include="CU\Utility\MathHelper.h" />
+    <ClInclude Include="CU\Utility\Randomizer\Randomizer.h" />
+    <ClInclude Include="CU\Utility\WindowsFunctions.h" />
+    <ClInclude Include="CU\VectonOnStack\VectorOnStack.h" />
+    <ClInclude Include="CU\Vectors\Vector.h" />
+    <ClInclude Include="CU\Vectors\vector2.h" />
+    <ClInclude Include="CU\Vectors\vector3.h" />
+    <ClInclude Include="CU\Vectors\vector4.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CU\Camera\Camera2D.cpp" />
+    <ClCompile Include="CU\InputWrapper\SingletonInputWrapper.cpp" />
+    <ClCompile Include="CU\Intersection\Intersection2D.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes2D\AABB2D.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes2D\BaseShape2D.cpp" />
+    <ClCompile Include="CU\DLDebug\DL_Debug.cpp" />
+    <ClCompile Include="CU\DLDebug\DL_StackWalker.cpp" />
+    <ClCompile Include="CU\DLDebug\StackWalker\StackWalker.cpp" />
+    <ClCompile Include="CU\InputWrapper\InputWrapper.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes2D\Circle2D.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes\AABB.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes\BaseShape.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes\Fov90Frustum.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes2D\LineSegment2D.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes\LineSegment3D.cpp" />
+    <ClCompile Include="CU\Intersection\Shapes\Sphere.cpp" />
+    <ClCompile Include="CU\Observer\ObserverPatternListener.cpp" />
+    <ClCompile Include="CU\Observer\ObserverPatternSubject.cpp" />
+    <ClCompile Include="CU\Timer\Alarm.cpp" />
+    <ClCompile Include="CU\Timer\Time.cpp" />
+    <ClCompile Include="CU\Timer\TimeManager.cpp" />
+    <ClCompile Include="CU\Timer\Timer.cpp" />
+    <ClCompile Include="CU\Utility\FileHandling.cpp" />
+    <ClCompile Include="CU\Utility\Randomizer\Randomizer.cpp" />
+    <ClCompile Include="CU\Utility\WindowsFunctions.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">false</MultiProcessorCompilation>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">Create</PrecompiledHeader>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CU\Matriser\matrix33.inl" />
+    <None Include="CU\Matriser\matrix44.inl" />
+    <None Include="CU\Syncronizer\Syncronizer.inl" />
+    <None Include="CU\Vectors\vector2.inl" />
+    <None Include="CU\Vectors\vector3.inl" />
+    <None Include="CU\Vectors\vector4.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
