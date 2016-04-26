@@ -239,6 +239,7 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
