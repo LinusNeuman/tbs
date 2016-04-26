@@ -195,6 +195,7 @@ ModelManifest.xml
 Temp/
 /Bin/Launcher_Debug.exe
 /Bin/Launcher_Release.exe
+/Source/Launcher/Debug_Logs/*
 *.vs
 *.idb
 /Bin/Logs/
