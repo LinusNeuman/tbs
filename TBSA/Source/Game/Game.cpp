@@ -42,8 +42,8 @@ CGame::~CGame()
 
 void CGame::Init(const std::wstring& aVersion)
 {
-	unsigned short windowWidth = 1920;
-	unsigned short windowHeight = 1080;
+	unsigned short windowWidth = GetSystemMetrics(SM_CXSCREEN);
+	unsigned short windowHeight = GetSystemMetrics(SM_CYSCREEN);
 
 
     DX2D::SEngineCreateParameters createParameters;
@@ -59,12 +59,17 @@ void CGame::Init(const std::wstring& aVersion)
 	createParameters.myTargetWidth = 1920;
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
+	createParameters.myStartInFullScreen = true;
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
 
 	
-	std::wstring appname = L"TGA 2D RELEASE [" + aVersion + L"]";
+	std::wstring appname = L"TBS RELEASE [" + aVersion + L"]";
 #ifdef _DEBUG
-	appname = L"TGA 2D DEBUG  [" + aVersion + L"]";
+	appname = L"TBS DEBUG  [" + aVersion + L"]";
+
+	createParameters.myWindowWidth = 1280;
+	createParameters.myWindowHeight = 720;
+	createParameters.myStartInFullScreen = false;
 #endif
 
     createParameters.myApplicationName = appname;
