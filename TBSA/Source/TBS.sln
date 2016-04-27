@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSONParser", "JSONParser\JS
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Audio\Audio.vcxproj", "{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadPool", "ThreadPool\ThreadPool.vcxproj", "{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -125,6 +127,15 @@ Global
 		{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}.TestShit|Win32.ActiveCfg = Release|Win32
 		{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}.TestShit|Win32.Build.0 = Release|Win32
 		{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}.TestShit|x64.ActiveCfg = Release|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Debug|Win32.Build.0 = Debug|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Debug|x64.ActiveCfg = Debug|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Release|Win32.ActiveCfg = Release|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Release|Win32.Build.0 = Release|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Release|x64.ActiveCfg = Release|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.TestShit|Win32.ActiveCfg = Release|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.TestShit|Win32.Build.0 = Release|Win32
+		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.TestShit|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
