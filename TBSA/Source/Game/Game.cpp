@@ -42,8 +42,8 @@ CGame::~CGame()
 
 void CGame::Init(const std::wstring& aVersion)
 {
-	unsigned short windowWidth = 1280;
-	unsigned short windowHeight = 720;
+	unsigned short windowWidth = 1920;
+	unsigned short windowHeight = 1080;
 
 
     DX2D::SEngineCreateParameters createParameters;
@@ -56,10 +56,11 @@ void CGame::Init(const std::wstring& aVersion)
     createParameters.myWindowWidth = windowWidth;
 	createParameters.myRenderHeight = windowHeight;
 	createParameters.myRenderWidth = windowWidth;
-	createParameters.myTargetWidth = 1280;
-	createParameters.myTargetHeight = 720;
-	createParameters.myAutoUpdateViewportWithWindow = false;
-    createParameters.myClearColor.Set( 0.0f, 0.0f, 0.0f, 1.0f );
+	createParameters.myTargetWidth = 1920;
+	createParameters.myTargetHeight = 1080;
+	createParameters.myAutoUpdateViewportWithWindow = true;
+    createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
+
 	
 	std::wstring appname = L"TGA 2D RELEASE [" + aVersion + L"]";
 #ifdef _DEBUG
