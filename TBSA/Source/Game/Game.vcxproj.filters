@@ -21,6 +21,7 @@
     <ClInclude Include="WrappedSprite.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="Animation\Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -30,5 +31,6 @@
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="WrappedSprite.cpp" />
+    <ClCompile Include="Animation\Animation.cpp" />
   </ItemGroup>
 </Project>
