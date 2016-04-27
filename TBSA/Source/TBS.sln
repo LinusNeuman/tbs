@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DX2DEngine", "DX2DEngine\DX2DEngine.vcxproj", "{11F98BF6-7BDB-4CFB-96CF-577DB4AE312F}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSONParser", "JSONParser\JSONParser.vcxproj", "{E94E2940-E22D-495F-9DA6-D2895858FA0E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Audio\Audio.vcxproj", "{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderer", "Renderer\Renderer.vcxproj", "{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,18 @@ Global
 		{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}.TestShit|Win32.ActiveCfg = Release|Win32
 		{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}.TestShit|Win32.Build.0 = Release|Win32
 		{58B80636-B81A-4FC6-A5D1-1F6A8CC28617}.TestShit|x64.ActiveCfg = Release|Win32
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Debug|Win32.Build.0 = Debug|Win32
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Debug|x64.ActiveCfg = Debug|x64
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Debug|x64.Build.0 = Debug|x64
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Release|Win32.ActiveCfg = Release|Win32
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Release|Win32.Build.0 = Release|Win32
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Release|x64.ActiveCfg = Release|x64
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.Release|x64.Build.0 = Release|x64
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.TestShit|Win32.ActiveCfg = Release|Win32
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.TestShit|Win32.Build.0 = Release|Win32
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.TestShit|x64.ActiveCfg = Release|x64
+		{307DC057-1CBA-4A4B-A7CF-FB5CE0F1571E}.TestShit|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

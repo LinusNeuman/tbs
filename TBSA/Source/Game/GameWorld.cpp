@@ -4,8 +4,8 @@
 #include <tga2d/Engine.h>
 #include <tga2d/sprite/sprite.h>
 #include <CU/Vectors/Vector2.h>
-#include "Renderer.h"
-#include "WrappedSprite.h"
+#include <Rend/Renderer.h>
+#include <Rend/WrappedSprite.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
 

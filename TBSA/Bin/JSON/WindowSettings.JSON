@@ -1,8 +1,12 @@
 {
-  "windowsSize": 
-  {
+  "windowsSize": {
     "width": 700,
     "height": 800
+  },
+  "derp": 
+  {
+    "e": 10,
+    "z": 30
   },
   "testPosition": 
   {
