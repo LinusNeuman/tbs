@@ -83,11 +83,15 @@
     <ClInclude Include="External\fmod_errors.h" />
     <ClInclude Include="External\fmod_output.h" />
     <ClInclude Include="Source\AudioManager.h" />
-    <ClInclude Include="Source\Sound.h" />
+    <ClInclude Include="Source\Sound Classes\Song.h" />
+    <ClInclude Include="Source\Sound Classes\SoundBase.h" />
+    <ClInclude Include="Source\Sound Classes\SoundEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AudioManager.cpp" />
-    <ClCompile Include="Source\Sound.cpp" />
+    <ClCompile Include="Source\Sound Classes\Song.cpp" />
+    <ClCompile Include="Source\Sound Classes\SoundBase.cpp" />
+    <ClCompile Include="Source\Sound Classes\SoundEffect.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,8 @@
-#include "Sound.h"
-#include "AudioManager.h"
+#include "SoundBase.h"
+#include "../AudioManager.h"
 
 #pragma region Creation
-Sound::Sound()
+SoundBase::SoundBase()
 {
 	mySFX = nullptr;
 	myChannel = nullptr;
@@ -12,32 +12,34 @@ Sound::Sound()
 
 	myIsLooping = false;
 	myHasPlayed = false;
+
+	myChannelGroup = "undefined";
 }
 
 // Creates a sound, provide a path.
-void Sound::Init(const char* aPath, bool aIsLooped)
+void SoundBase::Init(const char* aPath, bool aIsLooped)
 {
 	Stream(aPath);
 	myIsLooping = aIsLooped;
 }
 
 // Loads a new sound into heap. Use Stream instead.
-void Sound::Create(const char* aFile)
+void SoundBase::Create(const char* aFile)
 {
-	mySFX = SoundManager::GetInstance()->CreateSound(aFile);
+	mySFX = AudioManager::GetInstance()->CreateSound(aFile);
 }
 
 // Streams a sound directly from disk.
-void Sound::Stream(const char* aFile)
+void SoundBase::Stream(const char* aFile)
 {
-	mySFX = SoundManager::GetInstance()->CreateStream(aFile);
+	mySFX = AudioManager::GetInstance()->CreateStream(aFile);
 }
 
 #pragma endregion
 
 #pragma region Controls
 // Plays a sound with given volume
-void Sound::Play(float aVolume, eSoundType aSoundType)
+void SoundBase::Play(float aVolume)
 {
 	bool aBool = false;
 	if (myChannel != nullptr)
@@ -46,49 +48,32 @@ void Sound::Play(float aVolume, eSoundType aSoundType)
 	}
 	if (aBool == false)
 	{
-		myChannel = SoundManager::GetInstance()->PlaySound(mySFX, myIsLooping);
+		myChannel = AudioManager::GetInstance()->PlaySound(mySFX, myIsLooping);
 	}
 
-	switch (aSoundType)
-	{
-	case eSoundType::eMusic:
-		myChannel->setChannelGroup(SoundManager::GetInstance()->GetChannelGroup("Music"));
-		break;
-	case eSoundType::eSFX:
-		myChannel->setChannelGroup(SoundManager::GetInstance()->GetChannelGroup("SFX"));
-		break;
-	case eSoundType::ePauseSFX:
-		myChannel->setChannelGroup(SoundManager::GetInstance()->GetChannelGroup("PauseSFX"));
-		break;
-	case eSoundType::ePauseMusic:
-		myChannel->setChannelGroup(SoundManager::GetInstance()->GetChannelGroup("PauseMusic"));
-		break;
-	default:
-		myChannel->setChannelGroup(SoundManager::GetInstance()->GetChannelGroup("SFX"));
-		break;
-	}
+	myChannel->setChannelGroup(AudioManager::GetInstance()->GetChannelGroup(myChannelGroup));
 
 	myHasPlayed = true;
 	
 	SetVolume(aVolume);
 }
 
-void Sound::Pause()
+void SoundBase::Pause()
 {
 	myChannel->setPaused(true);
 }
 
-void Sound::Resume()
+void SoundBase::Resume()
 {
 	myChannel->setPaused(false);
 }
 
-void Sound::Stop()
+void SoundBase::Stop()
 {
 	myChannel->stop();
 }
 
-void Sound::Fade(eFade aFadeUpOrDown)
+void SoundBase::Fade(eFade aFadeUpOrDown)
 {
 	if (eFadeInt(aFadeUpOrDown) == 0)
 	{
@@ -106,43 +91,43 @@ void Sound::Fade(eFade aFadeUpOrDown)
 
 #pragma region Altering
 
-void Sound::SetLooping(bool aSet)
+void SoundBase::SetLooping(bool aSet)
 {
 	myIsLooping = aSet;
 }
 
-void Sound::SetPitch(float aPitch)
+void SoundBase::SetPitch(float aPitch)
 {
 	myChannel->setPitch(aPitch);
 }
 
-float Sound::GetPitch()
+float SoundBase::GetPitch()
 {
 	float tempFloat = 0;
 	myChannel->getPitch(&tempFloat);
 	return tempFloat;
 }
 
-void Sound::SetVolume(float aVolume)
+void SoundBase::SetVolume(float aVolume)
 {
 	myChannel->setVolume(aVolume);
 }
 
-float Sound::GetVolume()
+float SoundBase::GetVolume()
 {
 	float tempFloat = 0;
 	myChannel->getVolume(&tempFloat);
 	return tempFloat;
 }
 
-bool Sound::GetIsPlaying()
+bool SoundBase::GetIsPlaying()
 {
 	bool tempBool = false;
 	myChannel->isPlaying(&tempBool);
 	return tempBool;
 }
 
-bool Sound::GetHasPlayed()
+bool SoundBase::GetHasPlayed()
 {
 	return myHasPlayed;
 }
@@ -150,7 +135,7 @@ bool Sound::GetHasPlayed()
 
 #pragma region Update
 
-void Sound::FadeDown(float aDeltaTime)
+void SoundBase::FadeDown(float aDeltaTime)
 {
 	float volume;
 	myChannel->getVolume(&volume);
@@ -167,7 +152,7 @@ void Sound::FadeDown(float aDeltaTime)
 		}
 	}
 }
-void Sound::FadeUp(float aDeltaTime)
+void SoundBase::FadeUp(float aDeltaTime)
 {
 	float volume;
 	myChannel->getVolume(&volume);
@@ -185,7 +170,7 @@ void Sound::FadeUp(float aDeltaTime)
 	}
 }
 
-void Sound::Update(float aDeltaTime)
+void SoundBase::Update(float aDeltaTime)
 {
 	if (myIsFadingDown == true)
 	{
@@ -203,12 +188,12 @@ void Sound::Update(float aDeltaTime)
 
 #pragma region Destruction
 
-Sound::~Sound()
+SoundBase::~SoundBase()
 {
 
 }
 
-void Sound::Destroy()
+void SoundBase::Destroy()
 {
 	mySFX->release();
 }
