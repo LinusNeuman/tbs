@@ -3,7 +3,7 @@
 #include "../CommonUtilities/CU/Timer/TimeManager.h"
 #include <map>
 
-void SetTextureRect(DX2D::CSprite* newSprite, const CU::Vector2f &aSpriteOffsetStart, const CU::Vector2f &aSpriteSize, bool aResizeSprite);
+void SetTextureRectangle(DX2D::CSprite* newSprite, const CU::Vector2f &aSpriteOffsetStart, const CU::Vector2f &aSpriteSize, bool aResizeSprite);
 void UpdateSpriteSize(const CU::Vector2f &aSpriteSize, DX2D::CSprite* newSprite);
 void ChangeAnimation(const std::string& anAnimation);
 
