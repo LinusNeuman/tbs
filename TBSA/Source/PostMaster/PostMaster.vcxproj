@@ -55,19 +55,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../Game;../CommonUtilities;../Renderer;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)../Lib/</OutDir>
     <IntDir>$(SolutionDir)../Temp/$(ProjectName)/$(Configuration)/</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">
-    <IncludePath>../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../Game;../CommonUtilities;../Renderer;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)../Lib/</OutDir>
     <IntDir>$(SolutionDir)../Temp/$(ProjectName)/$(Configuration)/</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../Game;../CommonUtilities;../Renderer;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)../Lib/</OutDir>
     <IntDir>$(SolutionDir)../Temp/$(ProjectName)/$(Configuration)/</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
@@ -119,6 +119,12 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.vcxproj">
+      <Project>{9426bf5b-a0a8-48eb-9e45-da9bbb4276f2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Renderer\Renderer.vcxproj">
+      <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
