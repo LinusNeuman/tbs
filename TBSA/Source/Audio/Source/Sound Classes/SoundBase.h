@@ -1,18 +1,11 @@
 #pragma once
-#include "../External/fmod.hpp"
+#include "../../External/fmod.hpp"
+#include <string>
 
 enum class eFade
 {
 	eUp,
 	eDown
-};
-
-enum class eSoundType
-{
-	eMusic,
-	eSFX,
-	ePauseSFX,
-	ePauseMusic
 };
 
 // To avoid static_cast-ing all the time.
@@ -23,15 +16,15 @@ int eFadeInt(T aElementType)
 }
 
 // Wraps FMOD Sound class with more functionality
-class Sound
+class SoundBase
 {
 public:
 	//				Creation
-					Sound();
-	void			Init(const char* aPath, bool aIsLooped = false);
+					SoundBase();
+	virtual void	Init(const char* aPath, bool aIsLooped = false) = 0;
 
 	//				Controls
-	void			Play(float aVolume, eSoundType aSoundType = eSoundType::eSFX);
+	void			Play(float aVolume);
 	void			Pause();
 	void			Resume();
 	void			Stop();
@@ -50,15 +43,17 @@ public:
 	void			Update(float aDeltaTime);
 
 	//				Destruction
-					~Sound();
+	virtual			~SoundBase();
 	void			Destroy();
-private:
+protected:
 	// SFX is the actual sound effect that we are wrapping
 	// Channel is the way we access/modify this sound after playing it
 	// FMOD cant modify sounds, only channels. Every sound has its own channel.
 
 	FMOD::Sound*	mySFX;
 	FMOD::Channel*	myChannel;
+
+	std::string		myChannelGroup;
 
 	bool			myIsLooping;
 	bool			myHasPlayed;

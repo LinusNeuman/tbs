@@ -2,11 +2,11 @@
 #include <iostream>
 #include "../../CommonUtilities/CU/DLDebug/DL_Debug.h"
 
-SoundManager* SoundManager::mySoundManager = nullptr;
+AudioManager* AudioManager::myAudioManager = nullptr;
 
 #pragma region Creation
 
-SoundManager::SoundManager()
+AudioManager::AudioManager()
 {
 	if (FMOD::System_Create(&mySystem) != FMOD_OK)
 	{
@@ -26,18 +26,11 @@ SoundManager::SoundManager()
 	mySystem->init(36, FMOD_INIT_NORMAL, nullptr);
 	DL_PRINT("Created a sound device");
 
-	mySystem->createChannelGroup("Music_Channel", &myChannelGroupMusic);
-	mySystem->createChannelGroup("SFX_Channel", &myChannelGroupSFX);
-	mySystem->createChannelGroup("PauseSFX_Channel", &myChannelGroupPauseSFX);
-	mySystem->createChannelGroup("PauseMusic_Channel", &myChannelGroupPauseMusic);
-
-	myChannelGroupPauseMusic->setPaused(true);
-
-	myChannelGroupMusic->setVolume(0.8f);
-	myChannelGroupPauseMusic->setVolume(0.8f);
+	GetChannelGroup("SFX")->setVolume(1.0f);
+	GetChannelGroup("Song")->setVolume(0.8f);
 }
 
-SoundClass SoundManager::CreateSound(const char* aFile)
+SoundClass AudioManager::CreateSound(const char* aFile)
 {
 	// for stream use FMOD_CREATESTREAM
 	// FMOD_CREATESAMPLE compresses and streams. FMOD_DEFAULT is higher qual-ish
@@ -53,7 +46,7 @@ SoundClass SoundManager::CreateSound(const char* aFile)
 	return tempSoundClass;
 }
 
-SoundClass SoundManager::CreateStream(const char* aFile)
+SoundClass AudioManager::CreateStream(const char* aFile)
 {
 	SoundClass tempSoundClass = nullptr;
 	FMOD_RESULT aRes;
@@ -76,33 +69,23 @@ SoundClass SoundManager::CreateStream(const char* aFile)
 #pragma endregion
 
 // Gets a channel group containing other channels.
-FMOD::ChannelGroup* SoundManager::GetChannelGroup(const std::string &aName)
+FMOD::ChannelGroup* AudioManager::GetChannelGroup(const std::string &aName)
 {
-	if (aName == "Music")
+	if (myChannelGroups.find(aName) == myChannelGroups.end())
 	{
-		return myChannelGroupMusic;
+		FMOD::ChannelGroup* aChannelGroupToAdd = nullptr;
+		mySystem->createChannelGroup(aName.c_str(), &aChannelGroupToAdd);
+		
+		DL_PRINT(std::string("Created new channel group: " + aName).c_str());
+		std::cout << "Created new channel group: " << aName << std::endl;
+		return myChannelGroups[aName] = aChannelGroupToAdd;
 	}
-	else if (aName == "SFX")
-	{
-		return myChannelGroupSFX;
-	}
-	else if (aName == "PauseSFX")
-	{
-		return myChannelGroupPauseSFX;
-	}
-	else if (aName == "PauseMusic")
-	{
-		return myChannelGroupPauseMusic;
-	}
-	else
-	{
-		std::cout << "Channel group not found! Tried to get channel group: " << aName << std::endl;
-	}
-	return nullptr;
+
+	return myChannelGroups[aName];
 }
 
 // Plays a sound that has been created.
-FMOD::Channel* SoundManager::PlaySound(SoundClass aSound, bool isLooping)
+FMOD::Channel* AudioManager::PlaySound(SoundClass aSound, bool isLooping)
 {
 	if (!isLooping)
 	{
@@ -131,19 +114,19 @@ FMOD::Channel* SoundManager::PlaySound(SoundClass aSound, bool isLooping)
 }
 
 // Updates the FMOD sound system.
-void SoundManager::Update()
+void AudioManager::Update()
 {
 	mySystem->update();
 }
 
 #pragma region Destruction
 
-SoundManager::~SoundManager()
+AudioManager::~AudioManager()
 {
 
 }
 
-void SoundManager::Destroy()
+void AudioManager::Destroy()
 {
 	mySystem->close();
 	mySystem->release();

@@ -10,7 +10,7 @@
 #include <ProxyStateStack.h>
 
 // For test sound
-#include "../Audio/Source/Sound.h"
+#include "../Audio/Source/Sound Classes/SoundEffect.h"
 
 const float Speed = 150.f;
 
@@ -18,7 +18,7 @@ const float Speed = 150.f;
 CGameWorld::CGameWorld()
 {
 	// Test sound
-	Sound mySound;
+	SoundEffect mySound;
 	mySound.Init("Sounds/Horse-neigh.mp3");
 	mySound.Play(0.5f);
 }
