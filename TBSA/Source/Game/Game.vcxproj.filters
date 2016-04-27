@@ -19,6 +19,7 @@
     </ClInclude>
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="WrappedSprite.h" />
+    <ClInclude Include="Animation\Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -28,5 +29,6 @@
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="WrappedSprite.cpp" />
+    <ClCompile Include="Animation\Animation.cpp" />
   </ItemGroup>
 </Project>
