@@ -3,6 +3,7 @@
 #include "GameWorld.h"
 #include <StateStack.h>
 
+#include "../ThreadPool/Source/ThreadPool.h"
 
 class CGame
 {
@@ -19,4 +20,6 @@ private:
 
 	StateStack myGameStateStack;
 	bool myImRunning;
+
+	ThreadPool myThreadPool;
 };

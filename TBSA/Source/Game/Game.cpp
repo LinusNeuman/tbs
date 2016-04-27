@@ -120,6 +120,7 @@ void CGame::UpdateCallBack()
 		{
 			myGameStateStack.Render();
 		}
+		myThreadPool.Update();
 	}
 }
 

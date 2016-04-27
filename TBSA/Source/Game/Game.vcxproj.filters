@@ -22,6 +22,7 @@
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="Animation\Animation.h" />
+    <ClInclude Include="particleEmitter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
