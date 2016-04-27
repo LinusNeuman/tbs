@@ -240,6 +240,7 @@
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -262,6 +263,9 @@
     <ClCompile Include="WrappedSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Audio\Audio.vcxproj">
+      <Project>{58b80636-b81a-4fc6-a5d1-1f6a8cc28617}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>

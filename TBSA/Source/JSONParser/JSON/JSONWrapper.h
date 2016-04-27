@@ -24,7 +24,7 @@ public:
 
 	void SetActiveFile(const std::string aFileKey);
 	CU::Vector2ui GetWidthHeightUIFromActiveFile(const std::string & aElementName);
-	CU::Vector2ui GetPositionUIFromFromActiveFile(const std::string & aElementName, const std::string & aXName = "x", const std::string & aYName = "y");
+	CU::Vector2ui GetPositionUIFromActiveFile(const std::string & aElementName, const std::string & aXName = "x", const std::string & aYName = "y");
 	
 	CU::Vector2f GetPositionFloatFromActiveFile(const std::string & aElementName, const std::string & aXName = "x", const std::string & aYName = "y");
 

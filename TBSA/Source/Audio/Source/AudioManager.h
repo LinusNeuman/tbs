@@ -1,38 +1,39 @@
 #pragma once
 #include "../External/fmod.hpp"
 #include <string>
+#include <unordered_map>
 
 typedef FMOD::Sound* SoundClass;
 
-class SoundManager
+class AudioManager
 {
 public:
-	~SoundManager();
+	~AudioManager();
 
 	static void CreateInstance()
 	{
-		if (mySoundManager == nullptr)
+		if (myAudioManager == nullptr)
 		{
-			mySoundManager = new SoundManager();
+			myAudioManager = new AudioManager();
 		}
 	}
 
-	static SoundManager* const GetInstance()
+	static AudioManager* const GetInstance()
 	{
-		if (mySoundManager == nullptr)
+		if (myAudioManager == nullptr)
 		{
-			mySoundManager = new SoundManager();
+			myAudioManager = new AudioManager();
 		}
-		return mySoundManager;
+		return myAudioManager;
 	}
 
 	static void DestroyInstance()
 	{
-		if (mySoundManager != nullptr)
+		if (myAudioManager != nullptr)
 		{
-			mySoundManager->Destroy();
-			delete mySoundManager;
-			mySoundManager = nullptr;
+			myAudioManager->Destroy();
+			delete myAudioManager;
+			myAudioManager = nullptr;
 		}
 	}
 
@@ -41,7 +42,8 @@ public:
 	//					Creates a sound to be streamed from disk.
 	SoundClass			CreateStream(const char* aFile);
 
-	//					Get access to a channel containing other channels.
+	//					Gets access to a channel containing other channels.
+	//					If not found, channelgroup will be created.
 	FMOD::ChannelGroup* GetChannelGroup(const std::string &aName);
 
 	//					Plays a sound that has been created.
@@ -50,19 +52,15 @@ public:
 	//					Updates the sound system.
 	void				Update();
 private:
-	SoundManager();
-	static SoundManager* mySoundManager;
+	AudioManager();
+	static AudioManager* myAudioManager;
 
-	void Destroy();
+	void				Destroy();
 
 	//					The actual FMOD sound system.
 	FMOD::System		*mySystem;
 
 	//					The channel groups which holds other channels
-	FMOD::ChannelGroup* myChannelGroupMusic;
-	FMOD::ChannelGroup* myChannelGroupSFX;
-
-	FMOD::ChannelGroup* myChannelGroupPauseSFX;
-	FMOD::ChannelGroup* myChannelGroupPauseMusic;
+	std::unordered_map<std::string, FMOD::ChannelGroup*> myChannelGroups;
 };
 

@@ -45,7 +45,7 @@ CU::Vector2ui JSONWrapper::GetWidthHeightUIFromActiveFile(const std::string & aE
 	return GetVectorFromFromActiveFile<unsigned int>(aElementName, "width", "height");
 }
 
-CU::Vector2ui JSONWrapper::GetPositionUIFromFromActiveFile(const std::string & aElementName, const std::string & aXName/* = "x"*/, const std::string & aYName/* = "y"*/)
+CU::Vector2ui JSONWrapper::GetPositionUIFromActiveFile(const std::string & aElementName, const std::string & aXName/* = "x"*/, const std::string & aYName/* = "y"*/)
 {
 	return GetVectorFromFromActiveFile<unsigned int>(aElementName, aXName, aYName);
 }

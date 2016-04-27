@@ -22,7 +22,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -52,7 +52,7 @@
       <AdditionalDependencies>fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>C:\Users\stline1\Source\Repos\tbs\TBSA\ExternalLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\ExternalLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,6 +68,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\ExternalLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="External\fmod.h" />
@@ -79,11 +83,15 @@
     <ClInclude Include="External\fmod_errors.h" />
     <ClInclude Include="External\fmod_output.h" />
     <ClInclude Include="Source\AudioManager.h" />
-    <ClInclude Include="Source\Sound.h" />
+    <ClInclude Include="Source\Sound Classes\Song.h" />
+    <ClInclude Include="Source\Sound Classes\SoundBase.h" />
+    <ClInclude Include="Source\Sound Classes\SoundEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AudioManager.cpp" />
-    <ClCompile Include="Source\Sound.cpp" />
+    <ClCompile Include="Source\Sound Classes\Song.cpp" />
+    <ClCompile Include="Source\Sound Classes\SoundBase.cpp" />
+    <ClCompile Include="Source\Sound Classes\SoundEffect.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
