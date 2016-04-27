@@ -8,13 +8,14 @@
 #include "WrappedSprite.h"
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
+#include "MemoryPool.h"
 
 // For test sound
 #include "../Audio/Source/Sound Classes/SoundEffect.h"
 
 const float Speed = 150.f;
 
-
+template MemoryPool<int, 5>;
 CGameWorld::CGameWorld()
 {
 	// Test sound

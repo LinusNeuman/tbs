@@ -19,6 +19,8 @@
     </ClInclude>
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="WrappedSprite.h" />
+    <ClInclude Include="particleEmitter.h" />
+    <ClInclude Include="MemoryPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
