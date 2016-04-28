@@ -10,3 +10,8 @@ RenderConverter::RenderConverter()
 RenderConverter::~RenderConverter()
 {
 }
+
+void RenderConverter::CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender)
+{
+
+}
