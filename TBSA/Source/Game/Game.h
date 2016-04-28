@@ -3,7 +3,9 @@
 #include "GameWorld.h"
 #include <StateStack.h>
 
-
+#include "../ThreadPool/Source/ThreadPool.h"
+#pragma warning  (push)
+#pragma warning(disable : 4512)
 class CGame
 {
 public:
@@ -19,4 +21,7 @@ private:
 
 	StateStack myGameStateStack;
 	bool myImRunning;
+
+	ThreadPool myThreadPool;
 };
+#pragma warning (pop)

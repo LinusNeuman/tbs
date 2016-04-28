@@ -123,7 +123,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -237,6 +237,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="particleEmitter.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="WrappedSprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -272,6 +274,9 @@
     </ProjectReference>
     <ProjectReference Include="..\JSONParser\JSONParser.vcxproj">
       <Project>{e94e2940-e22d-495f-9da6-d2895858fa0e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ThreadPool\ThreadPool.vcxproj">
+      <Project>{c8af6e8b-88ca-4a10-912d-36197ac37dca}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
