@@ -240,7 +240,6 @@
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWorld.h" />
-    <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />

@@ -20,7 +20,6 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="WrappedSprite.h" />
     <ClInclude Include="particleEmitter.h" />
-    <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="particleEmitter.h" />
   </ItemGroup>

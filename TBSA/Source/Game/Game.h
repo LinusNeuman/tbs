@@ -4,7 +4,8 @@
 #include <StateStack.h>
 
 #include "../ThreadPool/Source/ThreadPool.h"
-
+#pragma warning  (push)
+#pragma warning(disable : 4512)
 class CGame
 {
 public:
@@ -23,3 +24,4 @@ private:
 
 	ThreadPool myThreadPool;
 };
+#pragma warning (pop)
