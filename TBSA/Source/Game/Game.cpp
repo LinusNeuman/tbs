@@ -29,7 +29,7 @@ CGame::CGame()
 	myImRunning = true;
 	DL_Debug::Debug::Create();
 	JSONWrapper::Create();
-	JSONWrapper::ReadAllDocuments("JSON/Root.json");
+	JSONWrapper::ReadAllDocuments("Data/Root.json");
 	JSONWrapper::TestShit();
 }
 
