@@ -270,6 +270,9 @@
     <ProjectReference Include="..\Renderer\Renderer.vcxproj">
       <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\ThreadPool\ThreadPool.vcxproj">
+      <Project>{c8af6e8b-88ca-4a10-912d-36197ac37dca}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,13 +8,15 @@
 #include <Rend/WrappedSprite.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
+#include <CU/Memory Pool/MemoryPool.h>
 
 // For test sound
 #include "../Audio/Source/Sound Classes/SoundEffect.h"
 
+
 const float Speed = 150.f;
 
-
+template CU::MemoryPool<int, 5>;
 CGameWorld::CGameWorld()
 {
 	// Test sound
@@ -36,7 +38,7 @@ CGameWorld::~CGameWorld()
 void CGameWorld::Init()
 {
 	myRenderer = new Renderer();
-	myRenderer->Init("Sprites/hestfan.png");
+	myRenderer->Init("Sprites/Magnus.png");
 	myRenderer->SetWindowSize(CU::Vector2ui(1280, 720));
 
 	myTestSprite = new WrappedSprite();

@@ -213,6 +213,7 @@
     <ClInclude Include="CU\Matriser\matrix.h" />
     <ClInclude Include="CU\Matriser\matrix33.h" />
     <ClInclude Include="CU\Matriser\matrix44.h" />
+    <ClInclude Include="CU\Memory Pool\MemoryPool.h" />
     <ClInclude Include="CU\NameSpaceAliases.h" />
     <ClInclude Include="CU\Observer\ObserverPatternListener.h" />
     <ClInclude Include="CU\Observer\ObserverPatternSubject.h" />

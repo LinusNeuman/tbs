@@ -2,7 +2,8 @@
 #include "GameState.h"
 #include <CU/GrowingArray/GrowingArray.h>
 #include "ProxyStateStack.h"
-
+#pragma warning  (push)
+#pragma warning(disable : 4512)
 
 class StateStack
 {
@@ -29,4 +30,5 @@ private:
 	CU::GrowingArray<CU::GrowingArray<GameState*>> myStates;
 	ProxyStateStack myProxy;
 };
+#pragma warning (pop)
 
