@@ -168,6 +168,9 @@
     <ClInclude Include="CU\Utility\FileHandling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CU\Memory Pool\MemoryPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CU\DLDebug\StackWalker\StackWalker.cpp">
