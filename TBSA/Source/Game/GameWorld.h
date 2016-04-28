@@ -1,8 +1,9 @@
 #pragma once
 #include <GameState.h>
 
-class Renderer;
+//class Renderer;
 class WrappedSprite;
+class RenderConverter;
 
 
 class CGameWorld : public GameState
@@ -16,7 +17,8 @@ public:
 	virtual void Draw() const override;
 private:
 
-	Renderer * myRenderer;
+	RenderConverter * myRenderer;
+	
 
 	WrappedSprite * myTestSprite;
 };

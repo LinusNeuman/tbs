@@ -9,6 +9,7 @@
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
 #include <CU/Memory Pool/MemoryPool.h>
+#include <Rend/RenderConverter.h>
 
 // For test sound
 #include "../Audio/Source/Sound Classes/SoundEffect.h"
@@ -37,16 +38,15 @@ CGameWorld::~CGameWorld()
 
 void CGameWorld::Init()
 {
-	myRenderer = new Renderer();
-	myRenderer->Init("Sprites/Magnus.png");
-	myRenderer->SetWindowSize(CU::Vector2ui(1280, 720));
+	myRenderer = new RenderConverter();
+	myRenderer->Init("Sprites/Magnus.png", CU::Vector2ui(1280, 720));
 
 	myTestSprite = new WrappedSprite();
 	
 
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
-	myRenderer->AddNodeToDraw(*myTestSprite);
+	myRenderer->AddSpriteToBeDraw(*myTestSprite);
 }
 
 

@@ -45,7 +45,7 @@ public:
 
 	void PrintText(const std::string & aText, const CU::Vector2f & aPosition);
 	
-	void Draw();
+	void Draw() const;
 
 	void SetWindowSize(const CU::Vector2ui & aWindowSize);
 

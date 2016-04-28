@@ -22,7 +22,7 @@ void Renderer::Init(const std::string & aSpriteFilePath)
 {
 	myNodesToDraw = new DX2D::CSpriteBatch(true);
 	//myNodesToDraw->Init(aSpriteFilePath.c_str());
-	myNodesToDraw->Init("Sprites/inteKaka.png");
+	myNodesToDraw->Init("Sprites/Magnus.png");
 	myTextsToPrint = new DX2D::CText("Text/calibril.ttf_sdf");
 
 	myLinesToDraw.Init(300);
@@ -44,9 +44,9 @@ void Renderer::AddNodeToDraw(WrappedSprite & aSpriteToAdd)
 	myNodesToDraw->AddObject(&tempSprite);
 }
 
-void Renderer::Draw()
+void Renderer::Draw() const
 {
-	RenderLines();
+	//RenderLines();
 
 	myNodesToDraw->Render();
 }
