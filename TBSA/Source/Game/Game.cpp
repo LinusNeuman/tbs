@@ -42,8 +42,8 @@ CGame::~CGame()
 
 void CGame::Init(const std::wstring& aVersion)
 {
-	unsigned short windowWidth = GetSystemMetrics(SM_CXSCREEN);
-	unsigned short windowHeight = GetSystemMetrics(SM_CYSCREEN);
+	unsigned short windowWidth = static_cast<unsigned short>(GetSystemMetrics(SM_CXSCREEN));
+	unsigned short windowHeight = static_cast<unsigned short>(GetSystemMetrics(SM_CYSCREEN));
 
 
     DX2D::SEngineCreateParameters createParameters;

@@ -9,7 +9,7 @@ public:
 	MemoryPool()
 	{
 		myObjectList.Init(Size);
-		for (int i = 0; i < Size; i++)
+		for (unsigned short i = 0; i < Size; i++)
 		{
 			myObjectList.Add(T());
 			myFreeObjects.push(&myObjectList[i]);
