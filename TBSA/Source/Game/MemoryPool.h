@@ -2,14 +2,14 @@
 #include <queue>
 #include <CU/GrowingArray/GrowingArray.h>
 
-template<typename T, int Size>
+template<typename T, int Size = 10>
 class MemoryPool
 {
 public:
 	MemoryPool()
 	{
 		myObjectList.Init(Size);
-		for (size_t i = 0; i < Size; i++)
+		for (int i = 0; i < Size; i++)
 		{
 			myObjectList.Add(T());
 			myFreeObjects.push(&myObjectList[i]);
