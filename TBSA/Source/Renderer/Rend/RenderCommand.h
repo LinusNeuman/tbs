@@ -10,8 +10,10 @@ public:
 
 	void Render() const;
 
+	
+	CU::Vector2f myPosition;
+
 private:
 	DX2D::CSprite * mySprite;
-	CU::Vector2f myPosition;
 };
 

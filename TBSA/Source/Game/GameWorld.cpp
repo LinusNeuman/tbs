@@ -121,5 +121,12 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 void CGameWorld::Draw() const
 {
+	myRenderer->AddRenderCommand(myTestSprite->GetRenderCommand());
+	myRenderer->Draw();
 	//myRenderer->RenderSprite(*myTestSprite);
+}
+
+void CGameWorld::SwapBuffers()
+{
+	myRenderer->SwapBuffer();
 }

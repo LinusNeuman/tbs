@@ -64,21 +64,16 @@ void Renderer::Draw() const
 }
 
 
-void Renderer::ResetRender()
-{
-	myLinesToDraw.RemoveAll();
-	myNodesToDraw->DeleteAll();
-	myNodesToDraw->ClearAll();
-}
-
 void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 {
+	aRenderCommand.myPosition.x /= static_cast<float>(myWindowSize.x);
+	aRenderCommand.myPosition.y /= static_cast<float>(myWindowSize.y);
 	myBuffer->Add(aRenderCommand);
 }
 
 void Renderer::SwapBuffer()
 {
-	myCommandsToRender->clear();
+	myCommandsToRender->RemoveAll();
 	std::swap(myCommandsToRender, myBuffer);
 }
 

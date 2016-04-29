@@ -1,12 +1,18 @@
 #include "stdafx.h"
 #include "WrappedSprite.h"
 #include "tga2d/sprite/sprite.h"
+#include "RenderCommand.h"
 
 
 
 
 
 CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
+
+RenderCommand WrappedSprite::GetRenderCommand()
+{
+	return RenderCommand(*ourSprites[myImageIndex], myPosition);
+}
 
 WrappedSprite::WrappedSprite()
 {
@@ -39,11 +45,6 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 
 	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
 	return (ourSprites.Size() - 1);
-}
-
-unsigned short WrappedSprite::AddNewSprite(const std::string & aFilePath)
-{
-	
 }
 
 

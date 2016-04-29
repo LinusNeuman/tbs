@@ -5,6 +5,8 @@ namespace DX2D
 	class CSprite;
 }
 
+class RenderCommand;
+
 class WrappedSprite
 {
 public:
@@ -23,8 +25,9 @@ public:
 
 	unsigned short AddImage(const std::string & aFilePath);
 
-	static unsigned short AddNewSprite(const std::string & aFilePath);
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
+
+	RenderCommand GetRenderCommand();
 
 	unsigned short GetImageIndex()
 	{

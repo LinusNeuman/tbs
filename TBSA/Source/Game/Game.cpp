@@ -119,6 +119,7 @@ void CGame::UpdateCallBack()
 		else
 		{
 			myGameStateStack.Render();
+			reinterpret_cast<CGameWorld*>(myGameWorld)->SwapBuffers();
 		}
 		myThreadPool.Update();
 	}
