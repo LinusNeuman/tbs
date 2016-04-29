@@ -4,6 +4,7 @@
 #include <StateStack.h>
 
 #include "../ThreadPool/Source/ThreadPool.h"
+#include <CU/Thread/ThreadSynchronizer.h>
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 class CGame
@@ -15,6 +16,8 @@ public:
 private:
 	void InitCallBack();
 	void UpdateCallBack();
+	void UpdateWork();
+	void RenderWork();
 	void LogCallback(std::string aText);
 
 	GameState * myGameWorld;

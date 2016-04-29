@@ -1,5 +1,5 @@
 #include "Work.h"
-#include <future> // https://mz-prod.s3.amazonaws.com/uploads/photo/file/208173/small_23c05ce08bd50b09b8cf9f09b758aefa-5470.jpg
+#include <future> // https://45.media.tumblr.com/0d48529ac6bb9428556a44713d9f7e55/tumblr_mzlbooK7D41rdjj9to1_500.gif
 
 Work::Work()
 {
