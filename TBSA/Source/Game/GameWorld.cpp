@@ -38,15 +38,10 @@ CGameWorld::~CGameWorld()
 
 void CGameWorld::Init()
 {
-//	myRenderer = new RenderConverter();
-	myRenderer = new Renderer();
-	//myRenderer->Init("Sprites/Magnus.png", CU::Vector2ui(1280, 720));
-	myRenderer->Init();
-	myRenderer->SetWindowSize(CU::Vector2ui(1280, 720));
+	myRenderer = new RenderConverter();
+	myRenderer->Init(CU::Vector2ui(1280, 720));
 
 	myTestSprite = new WrappedSprite();
-	
-
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
 }
@@ -94,26 +89,6 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	myTestSprite->SetPosition(CurrentPosition);
 
-	if (GetInput::GetKeyPressed(DIK_A) == true)
-	{
-		CGameWorld * tempState = new CGameWorld();
-		tempState->Init();
-		aStateStack.AddMainState(tempState);
-	}
-
-	if (GetInput::GetKeyReleased(DIK_END) == true)
-	{
-		return eStackReturnValue::ePopSubState;
-	}
-	if (GetInput::GetKeyReleased(DIK_HOME) == true)
-	{
-		return eStackReturnValue::ePopCurrentSubStates;
-	}
-	if (GetInput::GetKeyReleased(DIK_DELETE) == true)
-	{
-		return eStackReturnValue::ePopMain;
-	}
-
 	return eStackReturnValue::eStay;
 }
 
@@ -121,10 +96,9 @@ void CGameWorld::Draw() const
 {
 	myRenderer->AddRenderCommand(myTestSprite->GetRenderCommand());
 	myRenderer->Draw();
-	//myRenderer->RenderSprite(*myTestSprite);
 }
 
 void CGameWorld::SwapBuffers()
 {
-	myRenderer->SwapBuffer();
+	myRenderer->SwapBuffers();
 }

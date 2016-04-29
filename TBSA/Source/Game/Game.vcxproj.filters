@@ -17,8 +17,6 @@
     <ClInclude Include="resource.h">
       <Filter>Precompiled</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="WrappedSprite.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="particleEmitter.h" />
@@ -29,8 +27,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWorld.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="WrappedSprite.cpp" />
     <ClCompile Include="Animation\Animation.cpp" />
   </ItemGroup>
 </Project>

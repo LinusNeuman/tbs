@@ -13,7 +13,11 @@ public:
 
 	void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender) const;
 
+	void AddRenderCommand(RenderCommand & aRenderCommand);
+
 	void Draw() const;
+
+	void SwapBuffers();
 
 private:
 	Renderer myRenderer;

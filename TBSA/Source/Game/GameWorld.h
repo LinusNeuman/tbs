@@ -1,9 +1,9 @@
 #pragma once
 #include <GameState.h>
 
-class Renderer;
+//class Renderer;
 class WrappedSprite;
-//class RenderConverter;
+class RenderConverter;
 
 
 class CGameWorld : public GameState
@@ -19,8 +19,8 @@ public:
 	virtual void SwapBuffers();
 private:
 
-	//RenderConverter * myRenderer;
-	Renderer * myRenderer;
+	RenderConverter * myRenderer;
+	//Renderer * myRenderer;
 
 	WrappedSprite * myTestSprite;
 };
