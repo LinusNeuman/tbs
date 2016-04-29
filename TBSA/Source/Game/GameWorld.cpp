@@ -11,9 +11,6 @@
 #include <CU/Memory Pool/MemoryPool.h>
 #include <Rend/RenderConverter.h>
 
-// For test sound
-#include "../Audio/Source/Sound Classes/SoundEffect.h"
-
 
 const float Speed = 150.f;
 
