@@ -109,9 +109,10 @@ void CGame::InitCallBack()
 
 void CGame::UpdateCallBack()
 {
-	myThreadPool.AddWork(Work(std::bind(&CGame::UpdateWork, this)));
+	/*myThreadPool.AddWork(Work(std::bind(&CGame::UpdateWork, this)));
 	myThreadPool.AddWork(Work(std::bind(&CGame::RenderWork, this)));
-	myThreadPool.Update();
+	myThreadPool.Update();*/
+	UpdateWork();
 }
 
 void CGame::UpdateWork()
@@ -132,7 +133,7 @@ void CGame::UpdateWork()
 			myGameStateStack.Render();
 			reinterpret_cast<CGameWorld*>(myGameWorld)->SwapBuffers();
 		}
-		myThreadPool.Update();
+		//myThreadPool.Update();
 	}
 }
 
