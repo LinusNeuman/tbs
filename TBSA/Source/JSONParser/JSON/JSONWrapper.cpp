@@ -89,6 +89,7 @@ void JSONWrapper::TestShitStuff()
 {
 	SetActiveFile("WindowSettings");
 	CU::Vector2ui test = GetWidthHeightUIFromActiveFile("windowsSize");
+	CU::Vector2ui test2 = GetPositionUIFromActiveFile("derp", "e","z");
 	std::string debugLogsLocation = GetStringFromActiveFile("Logs");
 	CU::Vector2f testfloat = GetPositionFloatFromActiveFile("testPosition");
 

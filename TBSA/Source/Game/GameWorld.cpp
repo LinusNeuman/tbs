@@ -4,11 +4,12 @@
 #include <tga2d/Engine.h>
 #include <tga2d/sprite/sprite.h>
 #include <CU/Vectors/Vector2.h>
-#include "Renderer.h"
-#include "WrappedSprite.h"
+#include <Rend/Renderer.h>
+#include <Rend/WrappedSprite.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
 #include <CU/Memory Pool/MemoryPool.h>
+#include <Rend/RenderConverter.h>
 
 
 const float Speed = 150.f;
@@ -34,8 +35,10 @@ CGameWorld::~CGameWorld()
 
 void CGameWorld::Init()
 {
+//	myRenderer = new RenderConverter();
 	myRenderer = new Renderer();
-	myRenderer->Init("Sprites/Magnus.png");
+	//myRenderer->Init("Sprites/Magnus.png", CU::Vector2ui(1280, 720));
+	myRenderer->Init();
 	myRenderer->SetWindowSize(CU::Vector2ui(1280, 720));
 
 	myTestSprite = new WrappedSprite();
@@ -43,7 +46,6 @@ void CGameWorld::Init()
 
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
-	myRenderer->AddNodeToDraw(*myTestSprite);
 }
 
 
@@ -114,6 +116,12 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 void CGameWorld::Draw() const
 {
-	myRenderer->UpdateSprite(*myTestSprite);
+	myRenderer->AddRenderCommand(myTestSprite->GetRenderCommand());
 	myRenderer->Draw();
+	//myRenderer->RenderSprite(*myTestSprite);
+}
+
+void CGameWorld::SwapBuffers()
+{
+	myRenderer->SwapBuffer();
 }

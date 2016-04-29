@@ -1,16 +1,16 @@
 #pragma once
 #include "RecieverTypes.h"
 
-class Event;
+class MessageEvent;
 
 struct Message
 {
 
-	Message(const RecieverTypes aRecieverType, const Event & aEventPointer) :
+	Message(const RecieverTypes aRecieverType, const MessageEvent & aEventPointer) :
 		myEventPointer(aEventPointer),
 		myMessageType(aRecieverType)
 	{}
 
-	const Event & myEventPointer;
+	const MessageEvent & myEventPointer;
 	RecieverTypes myMessageType;
 };
