@@ -12,7 +12,7 @@
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
 #include <CU/Thread/ThreadHelper.h>
-
+#include <SingletonPostMaster.h>
 
 using namespace std::placeholders;
 
@@ -32,6 +32,7 @@ CGame::CGame()
 	JSONWrapper::Create();
 	JSONWrapper::ReadAllDocuments("Data/Root.json");
 	JSONWrapper::TestShit();
+	SingletonPostMaster::Create();
 }
 
 
@@ -60,7 +61,7 @@ void CGame::Init(const std::wstring& aVersion)
 	createParameters.myTargetWidth = 1920;
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
-	createParameters.myStartInFullScreen = true;
+	createParameters.myStartInFullScreen = false;
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
 
 	

@@ -102,10 +102,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../PostMaster;../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">
-    <IncludePath>../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../PostMaster;../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
@@ -114,7 +114,7 @@
     <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../PostMaster;../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -270,6 +270,9 @@
     </ProjectReference>
     <ProjectReference Include="..\JSONParser\JSONParser.vcxproj">
       <Project>{e94e2940-e22d-495f-9da6-d2895858fa0e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PostMaster\PostMaster.vcxproj">
+      <Project>{667e0cb3-dcad-4ee5-a6e3-871ecbe3ab16}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Renderer\Renderer.vcxproj">
       <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
