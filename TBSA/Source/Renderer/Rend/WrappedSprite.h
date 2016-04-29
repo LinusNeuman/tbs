@@ -20,7 +20,7 @@ public:
 	void SetPosition(const CU::Vector2f & aPosition);
 	CU::Vector2f GetPosition() const;
 
-	void SetColor(const CU::Vector4f& aColor);
+	//void SetColor(const CU::Vector4f& aColor);
 	void Draw();
 
 	DX2D::CSprite * GetSprite() const;

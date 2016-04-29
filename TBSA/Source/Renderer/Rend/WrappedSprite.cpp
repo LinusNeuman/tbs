@@ -55,10 +55,10 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 }
 
 
-void WrappedSprite::SetColor(const CU::Vector4f& aColor)
-{
-//	mySprite->SetColor(DX2D::CColor(aColor.r, aColor.g, aColor.b, aColor.a));
-}
+//void WrappedSprite::SetColor(const CU::Vector4f& aColor)
+//{
+////	mySprite->SetColor(DX2D::CColor(aColor.r, aColor.g, aColor.b, aColor.a));
+//}
 
 void WrappedSprite::Draw()
 {

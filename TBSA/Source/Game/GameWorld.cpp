@@ -54,6 +54,7 @@ void CGameWorld::Init()
 
 eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
+	(aStateStack);
 
 	float kLeft = 0.f;
 	float kRight = 0.f;
