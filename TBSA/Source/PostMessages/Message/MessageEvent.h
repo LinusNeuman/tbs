@@ -5,5 +5,5 @@ public:
 	MessageEvent();
 	virtual ~MessageEvent();
 
-	virtual void DoEvent(RenderConverter & aRenderConverter);
+	//virtual void DoEvent(RenderConverter & aRenderConverter);
 };

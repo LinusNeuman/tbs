@@ -42,10 +42,16 @@ void CGameWorld::Init()
 	myRenderer->SetWindowSize(CU::Vector2ui(1280, 720));
 
 	myTestSprite = new WrappedSprite();
-	
-
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
+
+	myTestSprite1 = new WrappedSprite();
+	myTestSprite1->Init();
+	myTestSprite1->SetPosition(CU::Vector2f(254.f, 650.f));
+
+	myTestSprite2 = new WrappedSprite();
+	myTestSprite2->Init();
+	myTestSprite2->SetPosition(CU::Vector2f(150.f, 150.f));
 }
 
 
@@ -117,6 +123,8 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 void CGameWorld::Draw() const
 {
 	myRenderer->AddRenderCommand(myTestSprite->GetRenderCommand());
+	myRenderer->AddRenderCommand(myTestSprite1->GetRenderCommand());
+	myRenderer->AddRenderCommand(myTestSprite2->GetRenderCommand());
 	myRenderer->Draw();
 	//myRenderer->RenderSprite(*myTestSprite);
 }

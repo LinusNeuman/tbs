@@ -23,4 +23,6 @@ private:
 	Renderer * myRenderer;
 
 	WrappedSprite * myTestSprite;
+	WrappedSprite * myTestSprite1;
+	WrappedSprite * myTestSprite2;
 };

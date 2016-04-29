@@ -10,9 +10,9 @@ public:
 	RenderSpriteEvent();
 	~RenderSpriteEvent();
 
-	virtual void DoEvent(RenderConverter & aRenderConverter) override;
+	//virtual void DoEvent(RenderConverter & aRenderConverter) override;
 
 private:
-	const WrappedSprite & myWrappedSprite;
+	//const WrappedSprite & myWrappedSprite;
 };
 
