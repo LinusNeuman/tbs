@@ -10,9 +10,6 @@
 #include <ProxyStateStack.h>
 #include <CU/Memory Pool/MemoryPool.h>
 
-// For test sound
-#include "../Audio/Source/Sound Classes/SoundEffect.h"
-
 
 const float Speed = 150.f;
 

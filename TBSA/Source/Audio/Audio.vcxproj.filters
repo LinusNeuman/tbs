@@ -42,13 +42,13 @@
     <ClInclude Include="Source\AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sound Classes\SoundBase.h">
+    <ClInclude Include="Source\Generic\SoundBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sound Classes\SoundEffect.h">
+    <ClInclude Include="Source\Instances\SoundEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sound Classes\Song.h">
+    <ClInclude Include="Source\Instances\Song.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,13 +56,13 @@
     <ClCompile Include="Source\AudioManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sound Classes\SoundBase.cpp">
+    <ClCompile Include="Source\Generic\SoundBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sound Classes\SoundEffect.cpp">
+    <ClCompile Include="Source\Instances\SoundEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sound Classes\Song.cpp">
+    <ClCompile Include="Source\Instances\Song.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
