@@ -41,7 +41,7 @@ void CGameWorld::Init()
 //	myRenderer = new RenderConverter();
 	myRenderer = new Renderer();
 	//myRenderer->Init("Sprites/Magnus.png", CU::Vector2ui(1280, 720));
-	myRenderer->Init("Sprites/Magnus.png");
+	myRenderer->Init();
 	myRenderer->SetWindowSize(CU::Vector2ui(1280, 720));
 
 	myTestSprite = new WrappedSprite();
@@ -49,8 +49,6 @@ void CGameWorld::Init()
 
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
-	//myRenderer->AddSpriteToBeDraw(*myTestSprite);
-	myRenderer->AddNodeToDraw(*myTestSprite);
 }
 
 

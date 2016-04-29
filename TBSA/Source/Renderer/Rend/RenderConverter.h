@@ -9,11 +9,7 @@ public:
 	RenderConverter();
 	~RenderConverter();
 
-	void Init(const std::string & aSpriteFilePath, const CU::Vector2ui & aWindowSize);
-
-	void AddSpriteToBeDraw(WrappedSprite & aSprite);
-
-	void UpdateSprite(WrappedSprite & aSpriteToUpdate);
+	void Init(const CU::Vector2ui & aWindowSize);
 
 	void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender) const;
 
