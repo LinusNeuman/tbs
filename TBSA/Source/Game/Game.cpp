@@ -11,6 +11,7 @@
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
+#include <CU/Thread/ThreadHelper.h>
 
 
 using namespace std::placeholders;
@@ -89,6 +90,8 @@ void CGame::Init(const std::wstring& aVersion)
 
 void CGame::InitCallBack()
 {
+	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
+
 	myGameWorld = new CGameWorld();
 
 	GetInput::Create();
@@ -106,6 +109,14 @@ void CGame::InitCallBack()
 
 void CGame::UpdateCallBack()
 {
+	myThreadPool.AddWork(Work(std::bind(&CGame::UpdateWork, this)));
+	myThreadPool.AddWork(Work(std::bind(&CGame::RenderWork, this)));
+	myThreadPool.Update();
+}
+
+void CGame::UpdateWork()
+{
+	//ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "ThreadPool: Update");
 	GetInput::Update();
 	CU::TimeManager::Update();
 
@@ -118,10 +129,14 @@ void CGame::UpdateCallBack()
 		}
 		else
 		{
-			myGameStateStack.Render();
+			//myGameStateStack.Render();
 		}
-		myThreadPool.Update();
 	}
+}
+
+void CGame::RenderWork()
+{
+	//myGameStateStack.Render();
 }
 
 

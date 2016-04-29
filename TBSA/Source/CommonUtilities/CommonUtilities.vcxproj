@@ -221,6 +221,8 @@
     <ClInclude Include="CU\StaticArray\StaticArray.h" />
     <ClInclude Include="CU\StringToData.h" />
     <ClInclude Include="CU\Syncronizer\Syncronizer.h" />
+    <ClInclude Include="CU\Thread\ThreadHelper.h" />
+    <ClInclude Include="CU\Thread\ThreadSynchronizer.h" />
     <ClInclude Include="CU\Timer\Alarm.h" />
     <ClInclude Include="CU\Timer\Time.h" />
     <ClInclude Include="CU\Timer\TimeManager.h" />
@@ -255,6 +257,8 @@
     <ClCompile Include="CU\Intersection\Shapes\Sphere.cpp" />
     <ClCompile Include="CU\Observer\ObserverPatternListener.cpp" />
     <ClCompile Include="CU\Observer\ObserverPatternSubject.cpp" />
+    <ClCompile Include="CU\Thread\ThreadHelper.cpp" />
+    <ClCompile Include="CU\Thread\ThreadSynchronizer.cpp" />
     <ClCompile Include="CU\Timer\Alarm.cpp" />
     <ClCompile Include="CU\Timer\Time.cpp" />
     <ClCompile Include="CU\Timer\TimeManager.cpp" />
