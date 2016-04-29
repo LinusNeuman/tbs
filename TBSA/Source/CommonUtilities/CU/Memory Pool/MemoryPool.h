@@ -20,6 +20,7 @@ namespace CommonUtilities
 #undef GetObject
 		T* GetObject()
 		{
+			DL_ASSERT(myFreeObjects.size() > 0, "MemoryPool ran out of space, increase the size!");
 			T* tempObject = myFreeObjects.front();
 			myFreeObjects.pop();
 			return tempObject;
