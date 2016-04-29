@@ -11,9 +11,6 @@
 #include <CU/Memory Pool/MemoryPool.h>
 #include <Rend/RenderConverter.h>
 
-// For test sound
-#include "../Audio/Source/Sound Classes/SoundEffect.h"
-
 
 const float Speed = 150.f;
 
@@ -44,6 +41,14 @@ void CGameWorld::Init()
 	myTestSprite = new WrappedSprite();
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
+
+	myTestSprite1 = new WrappedSprite();
+	myTestSprite1->Init();
+	myTestSprite1->SetPosition(CU::Vector2f(254.f, 650.f));
+
+	myTestSprite2 = new WrappedSprite();
+	myTestSprite2->Init();
+	myTestSprite2->SetPosition(CU::Vector2f(150.f, 150.f));
 }
 
 
@@ -95,6 +100,8 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 void CGameWorld::Draw() const
 {
 	myRenderer->AddRenderCommand(myTestSprite->GetRenderCommand());
+	myRenderer->AddRenderCommand(myTestSprite1->GetRenderCommand());
+	myRenderer->AddRenderCommand(myTestSprite2->GetRenderCommand());
 	myRenderer->Draw();
 }
 

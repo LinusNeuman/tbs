@@ -103,11 +103,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../PostMaster;../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../Renderer;../JSONParser;../StateStack;../CommonUtilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../PostMaster;../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../Renderer;../JSONParser;../StateStack;../CommonUtilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -117,7 +117,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>../PostMaster;../Renderer;../JSONParser;../GameStates;../CommonUtilities;$(IncludePath)</IncludePath>
+    <IncludePath>../Renderer;../JSONParser;../StateStack;../CommonUtilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -261,17 +261,14 @@
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\GameStates\GameStates.vcxproj">
-      <Project>{3c9dcb24-429f-481a-a242-b37c017113ea}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\JSONParser\JSONParser.vcxproj">
       <Project>{e94e2940-e22d-495f-9da6-d2895858fa0e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\PostMaster\PostMaster.vcxproj">
-      <Project>{667e0cb3-dcad-4ee5-a6e3-871ecbe3ab16}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Renderer\Renderer.vcxproj">
       <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\StateStack\StateStack.vcxproj">
+      <Project>{9b5c9f6d-ca46-4bee-950e-5570c2bc5c22}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ThreadPool\ThreadPool.vcxproj">
       <Project>{c8af6e8b-88ca-4a10-912d-36197ac37dca}</Project>

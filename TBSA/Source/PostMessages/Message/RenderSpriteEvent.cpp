@@ -11,7 +11,7 @@ RenderSpriteEvent::~RenderSpriteEvent()
 {
 }
 
-void RenderSpriteEvent::DoEvent(RenderConverter & aRenderConverter)
-{
-	aRenderConverter
-}
+//void RenderSpriteEvent::DoEvent(RenderConverter & aRenderConverter)
+//{
+//	aRenderConverter
+//}

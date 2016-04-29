@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DX2DEngine", "DX2DEngine\DX2DEngine.vcxproj", "{11F98BF6-7BDB-4CFB-96CF-577DB4AE312F}"
 EndProject
@@ -17,8 +17,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Launch
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonUtilities", "CommonUtilities\CommonUtilities.vcxproj", "{A41E3ED6-A914-40B1-B1E9-9551E0CC7EAB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameStates", "GameStates\GameStates.vcxproj", "{3C9DCB24-429F-481A-A242-B37C017113EA}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PostMaster", "PostMaster\PostMaster.vcxproj", "{667E0CB3-DCAD-4EE5-A6E3-871ECBE3AB16}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSONParser", "JSONParser\JSONParser.vcxproj", "{E94E2940-E22D-495F-9DA6-D2895858FA0E}"
@@ -30,6 +28,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PostMessages", "PostMessages\PostMessages.vcxproj", "{12FFE2CE-8CED-46FE-9B19-76F780675F10}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadPool", "ThreadPool\ThreadPool.vcxproj", "{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StateStack", "StateStack\StateStack.vcxproj", "{9B5C9F6D-CA46-4BEE-950E-5570C2BC5C22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,14 +71,6 @@ Global
 		{A41E3ED6-A914-40B1-B1E9-9551E0CC7EAB}.Release|Win32.Build.0 = Release|Win32
 		{A41E3ED6-A914-40B1-B1E9-9551E0CC7EAB}.Release|x64.ActiveCfg = Release|x64
 		{A41E3ED6-A914-40B1-B1E9-9551E0CC7EAB}.Release|x64.Build.0 = Release|x64
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Debug|Win32.Build.0 = Debug|Win32
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Debug|x64.ActiveCfg = Debug|x64
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Debug|x64.Build.0 = Debug|x64
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Release|Win32.ActiveCfg = Release|Win32
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Release|Win32.Build.0 = Release|Win32
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Release|x64.ActiveCfg = Release|x64
-		{3C9DCB24-429F-481A-A242-B37C017113EA}.Release|x64.Build.0 = Release|x64
 		{667E0CB3-DCAD-4EE5-A6E3-871ECBE3AB16}.Debug|Win32.ActiveCfg = Debug|Win32
 		{667E0CB3-DCAD-4EE5-A6E3-871ECBE3AB16}.Debug|Win32.Build.0 = Debug|Win32
 		{667E0CB3-DCAD-4EE5-A6E3-871ECBE3AB16}.Debug|x64.ActiveCfg = Debug|Win32
@@ -121,6 +113,12 @@ Global
 		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Release|Win32.ActiveCfg = Release|Win32
 		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Release|Win32.Build.0 = Release|Win32
 		{C8AF6E8B-88CA-4A10-912D-36197AC37DCA}.Release|x64.ActiveCfg = Release|Win32
+		{9B5C9F6D-CA46-4BEE-950E-5570C2BC5C22}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9B5C9F6D-CA46-4BEE-950E-5570C2BC5C22}.Debug|Win32.Build.0 = Debug|Win32
+		{9B5C9F6D-CA46-4BEE-950E-5570C2BC5C22}.Debug|x64.ActiveCfg = Debug|Win32
+		{9B5C9F6D-CA46-4BEE-950E-5570C2BC5C22}.Release|Win32.ActiveCfg = Release|Win32
+		{9B5C9F6D-CA46-4BEE-950E-5570C2BC5C22}.Release|Win32.Build.0 = Release|Win32
+		{9B5C9F6D-CA46-4BEE-950E-5570C2BC5C22}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
