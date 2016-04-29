@@ -2,6 +2,7 @@
 #include "WrappedSprite.h"
 #include "tga2d/sprite/sprite.h"
 #include "RenderCommand.h"
+#include "RenderConverter.h"
 
 
 
@@ -16,8 +17,14 @@ RenderCommand WrappedSprite::GetRenderCommand()
 
 WrappedSprite::WrappedSprite()
 {
+	myRenderConverter = nullptr;
 }
 
+
+WrappedSprite::WrappedSprite(RenderConverter & aRenderConverter)
+{
+	myRenderConverter = &aRenderConverter;
+}
 
 WrappedSprite::~WrappedSprite()
 {
@@ -29,8 +36,8 @@ void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*
 
 	myImageIndex = AddImage(aFilePath);
 
-	mySprite = new DX2D::CSprite(nullptr);
-	mySprite->SetPivot(DX2D::Vector2f(0.5f, 0.5f));
+	/*mySprite = new DX2D::CSprite(nullptr);
+	mySprite->SetPivot(DX2D::Vector2f(0.5f, 0.5f));*/
 }
 
 unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
@@ -50,12 +57,11 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 
 void WrappedSprite::SetColor(const CU::Vector4f& aColor)
 {
-	mySprite->SetColor(DX2D::CColor(aColor.r, aColor.g, aColor.b, aColor.a));
+//	mySprite->SetColor(DX2D::CColor(aColor.r, aColor.g, aColor.b, aColor.a));
 }
 
 void WrappedSprite::Draw()
 {
-
-	DX2D::Vector2f tempPosition(myPosition.x, myPosition.y);
-	mySprite->SetPosition(tempPosition);
+	DL_ASSERT(myRenderConverter != nullptr, "WrappedSprites render pointer is nullptr");
+	myRenderConverter->CalculateAndRenderSprite(*this);
 }

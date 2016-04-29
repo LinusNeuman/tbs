@@ -11,7 +11,7 @@ public:
 
 	void Init(const CU::Vector2ui & aWindowSize);
 
-	void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender) const;
+	void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender);
 
 	void AddRenderCommand(RenderCommand & aRenderCommand);
 
