@@ -12,6 +12,11 @@
 
 Renderer::Renderer()
 {
+	myCommandsToRender = new CU::GrowingArray<RenderCommand>();
+	myBuffer = new CU::GrowingArray<RenderCommand>();
+
+	myCommandsToRender->Init(100);
+	myBuffer->Init(100);
 }
 
 Renderer::~Renderer()
@@ -20,6 +25,11 @@ Renderer::~Renderer()
 
 void Renderer::Init(const std::string & aSpriteFilePath)
 {
+	if (WrappedSprite::ourSprites.IsInitialized() == false)
+	{
+		WrappedSprite::ourSprites.Init(100);
+	}
+
 	myNodesToDraw = new DX2D::CSpriteBatch(true);
 	//myNodesToDraw->Init(aSpriteFilePath.c_str());
 	myNodesToDraw->Init("Sprites/Magnus.png");
@@ -48,7 +58,9 @@ void Renderer::Draw() const
 {
 	//RenderLines();
 
-	myNodesToDraw->Render();
+	//myNodesToDraw->Render();
+
+	RenderAllSprites();
 }
 
 
@@ -57,6 +69,17 @@ void Renderer::ResetRender()
 	myLinesToDraw.RemoveAll();
 	myNodesToDraw->DeleteAll();
 	myNodesToDraw->ClearAll();
+}
+
+void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
+{
+	myBuffer->Add(aRenderCommand);
+}
+
+void Renderer::SwapBuffer()
+{
+	myCommandsToRender->clear();
+	std::swap(myCommandsToRender, myBuffer);
 }
 
 void Renderer::AddLineToDraw(const LineData & aLinkToDraw)
@@ -91,6 +114,23 @@ void Renderer::PrintText(const std::string & aText, const CU::Vector2f & aPositi
 	myTextsToPrint->Render();
 }
 
+void Renderer::RenderSprite(WrappedSprite & aSpriteToRender)
+{
+	//DX2D::CSprite & tempSprite(*aSpriteToRender.GetSprite());
+
+	DX2D::CSprite & tempSprite(*WrappedSprite::ourSprites[aSpriteToRender.GetImageIndex()]);
+
+	CU::Vector2f tempPosition = aSpriteToRender.GetPosition();
+
+	tempPosition.x /= static_cast<float>(myWindowSize.x);
+	tempPosition.y /= static_cast<float>(myWindowSize.y);
+
+	DX2D::Vector2f drawPosition(tempPosition.x, tempPosition.y);
+
+	tempSprite.SetPosition(drawPosition);
+	tempSprite.Render();
+}
+
 void Renderer::RenderLines()
 {
 	for (unsigned short iLine = 0; iLine < myLinesToDraw.Size(); ++iLine)
@@ -116,4 +156,14 @@ void Renderer::RenderLine(const LineData & aLineToDraw)
 	DX2D::Vector4f color(aLineToDraw.myColor.r, aLineToDraw.myColor.g, aLineToDraw.myColor.b, aLineToDraw.myColor.a);
 
 	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine(startPosition, endPosition, color);
+}
+
+void Renderer::RenderAllSprites() const
+{
+	myCommandsToRender->CallFunctionOnAllMembers(std::mem_fn(&RenderCommand::Render));
+
+	/*for (unsigned short iRenderCommand = 0; iRenderCommand < myRenderCommands.Size(); ++iRenderCommand)
+	{
+		myRenderCommands[iRenderCommand].Render();
+	}*/
 }

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "RenderCommand.h"
 
 
 struct LineData
@@ -44,6 +44,8 @@ public:
 	void UpdateSprite(WrappedSprite & aSpriteToAdd);
 
 	void PrintText(const std::string & aText, const CU::Vector2f & aPosition);
+
+	void RenderSprite(WrappedSprite & aSpriteToRender);
 	
 	void Draw() const;
 
@@ -51,12 +53,21 @@ public:
 
 	void ResetRender();
 
+	void AddRenderCommand(RenderCommand & aRenderCommand);
+
+	void SwapBuffer();
+
 private:
-	
+	CU::GrowingArray<RenderCommand> * myBuffer;
+	CU::GrowingArray<RenderCommand> * myCommandsToRender;
+
+
 	CU::Vector2ui myWindowSize;
 
 	void RenderLines();
 	void RenderLine(const LineData & aLineToDraw);
+
+	void RenderAllSprites() const;
 
 	DX2D::CSpriteBatch * myNodesToDraw;
 	

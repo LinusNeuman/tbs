@@ -11,7 +11,7 @@ public:
 	WrappedSprite();
 	~WrappedSprite();
 
-	void Init();
+	void Init(const std::string & aFilePath = "Sprites/Magnus.png");
 
 	void SetPosition(const CU::Vector2f & aPosition);
 	CU::Vector2f GetPosition();
@@ -21,9 +21,21 @@ public:
 
 	DX2D::CSprite * GetSprite();
 
+	unsigned short AddImage(const std::string & aFilePath);
+
+	static unsigned short AddNewSprite(const std::string & aFilePath);
+	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
+
+	unsigned short GetImageIndex()
+	{
+		return myImageIndex;
+	}
+
 private:
 	DX2D::CSprite * mySprite;
 	CU::Vector2f myPosition;
+
+	unsigned short myImageIndex;
 };
 
 inline void WrappedSprite::SetPosition(const CU::Vector2f & aPosition)

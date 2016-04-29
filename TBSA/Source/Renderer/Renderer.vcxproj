@@ -129,6 +129,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Rend\RenderCommand.cpp" />
     <ClCompile Include="Rend\RenderConverter.cpp" />
     <ClCompile Include="Rend\Renderer.cpp" />
     <ClCompile Include="Rend\WrappedSprite.cpp" />
@@ -140,6 +141,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Rend\RenderCommand.h" />
     <ClInclude Include="Rend\RenderConverter.h" />
     <ClInclude Include="Rend\Renderer.h" />
     <ClInclude Include="Rend\WrappedSprite.h" />
