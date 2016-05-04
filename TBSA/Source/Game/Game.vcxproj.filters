@@ -20,6 +20,7 @@
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="particleEmitter.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -28,5 +29,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Animation\Animation.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
 </Project>
