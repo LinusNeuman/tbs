@@ -1,5 +1,6 @@
 #pragma once
 #include <GameState.h>
+#include <CU/GrowingArray/GrowingArray.h>
 
 class WrappedSprite;
 class RenderConverter;

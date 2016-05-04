@@ -37,6 +37,7 @@ void CGameWorld::Init()
 {
 	myRenderer = new RenderConverter();
 	myRenderer->Init(CU::Vector2ui(1280, 720));
+	myTiles.Init(100);
 
 	myTestSprite = new WrappedSprite(*myRenderer);
 
