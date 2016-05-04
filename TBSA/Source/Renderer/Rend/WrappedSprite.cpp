@@ -10,10 +10,10 @@
 
 CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
 
-RenderCommand WrappedSprite::GetRenderCommand()
-{
-	return RenderCommand(*ourSprites[myImageIndex], myPosition);
-}
+//RenderCommand WrappedSprite::GetRenderCommand()
+//{
+//	return RenderCommand(*ourSprites[myImageIndex], myPosition);
+//}
 
 WrappedSprite::WrappedSprite()
 {
@@ -46,6 +46,7 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 	}
 
 	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
+	ourSprites.GetLast()->SetPivot(DX2D::Vector2f(0.f, 1.0f));
 	return (ourSprites.Size() - 1);
 }
 

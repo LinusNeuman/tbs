@@ -41,6 +41,15 @@ void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 {
 	aRenderCommand.myPosition.x /= static_cast<float>(myWindowSize.x);
 	aRenderCommand.myPosition.y /= static_cast<float>(myWindowSize.y);
+	
+	for (USHORT iRenderCommand = 0; iRenderCommand < myBuffer->Size(); ++iRenderCommand)
+	{
+		if (aRenderCommand.GetPriority() < (*myBuffer)[iRenderCommand].GetPriority())
+		{
+			myBuffer->Insert(iRenderCommand, aRenderCommand);
+			return;
+		}
+	}
 	myBuffer->Add(aRenderCommand);
 }
 

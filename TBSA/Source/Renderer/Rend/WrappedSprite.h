@@ -29,7 +29,7 @@ public:
 	
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
 
-	RenderCommand GetRenderCommand();
+	//RenderCommand GetRenderCommand();
 
 	unsigned short GetImageIndex()
 	{
