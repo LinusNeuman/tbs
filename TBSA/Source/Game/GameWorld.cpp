@@ -12,11 +12,10 @@
 #include <Rend/RenderConverter.h>
 
 
-const float Speed = 150.f;
+const float Speed = 1.f;
 const USHORT TileCount = 100;
 const USHORT TileRowShift = 10;
-const float TileSize = 64.f;
-const float TileSizeHalf = 32.f;
+
 
 template CU::MemoryPool<int, 5>;
 CGameWorld::CGameWorld()
@@ -54,7 +53,7 @@ void CGameWorld::Init()
 		myTiles.GetLast()->SetPosition(tempderp);
 	}
 
-	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
+	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
 		CU::Vector2f tempPosition = myTiles[iSprite]->GetPosition();
 
@@ -63,10 +62,10 @@ void CGameWorld::Init()
 		CU::Vector2f newPos = CU::Vector2f( (tempPosition.x - tempPosition.y) * TileSizeHalf, ((tempPosition.x + tempPosition.y) * TileSizeHalf) / 2.f);
 
 		myTiles[iSprite]->SetPosition(tempOffset + newPos);
-	}
+	}*/
 
 	myTestSprite->Init();
-	myTestSprite->SetPosition(CU::Vector2f(125.f, 125.f));
+	myTestSprite->SetPosition(CU::Vector2f(0.f, 0.f));
 }
 
 
