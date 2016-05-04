@@ -13,6 +13,10 @@
 
 
 const float Speed = 150.f;
+const USHORT TileCount = 100;
+const USHORT TileRowShift = 10;
+const float TileSize = 64.f;
+const float TileSizeHalf = 32.f;
 
 template CU::MemoryPool<int, 5>;
 CGameWorld::CGameWorld()
@@ -36,20 +40,33 @@ CGameWorld::~CGameWorld()
 void CGameWorld::Init()
 {
 	myRenderer = new RenderConverter();
-	myRenderer->Init(CU::Vector2ui(1280, 720));
+	myRenderer->Init(CU::Vector2ui(1920, 1080));
 	myTiles.Init(100);
 
 	myTestSprite = new WrappedSprite(*myRenderer);
 
-	for (USHORT iSprite = 0; iSprite < myTiles.Size(); ++iSprite)
+	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
-		myTiles[iSprite] = new WrappedSprite(*myRenderer);
-		myTiles[iSprite]->Init();
-		myTiles[iSprite]->SetPosition(CU::Vector2f(250.f, 250.f));
+		myTiles.Add(new WrappedSprite(*myRenderer));
+		myTiles.GetLast()->Init();
+
+		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
+		myTiles.GetLast()->SetPosition(tempderp);
+	}
+
+	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
+	{
+		CU::Vector2f tempPosition = myTiles[iSprite]->GetPosition();
+
+		CU::Vector2f tempOffset(350.f, 0.f);
+
+		CU::Vector2f newPos = CU::Vector2f( (tempPosition.x - tempPosition.y) * TileSizeHalf, ((tempPosition.x + tempPosition.y) * TileSizeHalf) / 2.f);
+
+		myTiles[iSprite]->SetPosition(tempOffset + newPos);
 	}
 
 	myTestSprite->Init();
-	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
+	myTestSprite->SetPosition(CU::Vector2f(125.f, 125.f));
 }
 
 
@@ -101,6 +118,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 void CGameWorld::Draw() const
 {
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&WrappedSprite::Draw));
 	myTestSprite->Draw();
 	myRenderer->Draw();
 }

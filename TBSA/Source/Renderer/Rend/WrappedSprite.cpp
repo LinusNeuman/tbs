@@ -32,12 +32,7 @@ WrappedSprite::~WrappedSprite()
 
 void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/)
 {
-	//mySprite = new DX2D::CSprite(aFilePath.c_str());
-
 	myImageIndex = AddImage(aFilePath);
-
-	/*mySprite = new DX2D::CSprite(nullptr);
-	mySprite->SetPivot(DX2D::Vector2f(0.5f, 0.5f));*/
 }
 
 unsigned short WrappedSprite::AddImage(const std::string & aFilePath)

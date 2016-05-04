@@ -15,7 +15,7 @@ public:
 	WrappedSprite(RenderConverter & aRenderConverter);
 	~WrappedSprite();
 
-	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/testTile.png");
+	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png");
 
 	void SetPosition(const CU::Vector2f & aPosition);
 	CU::Vector2f GetPosition() const;
