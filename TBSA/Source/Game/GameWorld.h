@@ -4,7 +4,8 @@
 
 class WrappedSprite;
 class RenderConverter;
-
+class Player;
+class PlayerController;
 
 class CGameWorld : public GameState
 {
@@ -23,4 +24,6 @@ private:
 	CU::GrowingArray<WrappedSprite*> myTiles;
 
 	WrappedSprite * myTestSprite;
+	Player *myPlayer;
+	PlayerController *myPlayerController;
 };

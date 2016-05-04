@@ -10,6 +10,8 @@
 #include <ProxyStateStack.h>
 #include <CU/Memory Pool/MemoryPool.h>
 #include <Rend/RenderConverter.h>
+#include "Player/Player.h"
+#include "PlayerController.h"
 
 
 const float Speed = 150.f;
@@ -67,6 +69,9 @@ void CGameWorld::Init()
 
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(125.f, 125.f));
+	myPlayer = new Player(myRenderer);
+	myPlayerController = new PlayerController();
+	myPlayerController->AddPlayer(myPlayer);
 }
 
 
@@ -78,6 +83,12 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	float kRight = 0.f;
 	float kUp = 0.f;
 	float kDown = 0.f;
+	
+	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	{
+		myPlayerController->NotifyPlayers(aTimeDelta);
+	}
+	
 
 	if (GetInput::GetKeyDown(DIK_H) == true)
 	{
@@ -112,7 +123,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	CurrentPosition += InputVector * Speed * aTimeDelta.GetSeconds();
 
 	myTestSprite->SetPosition(CurrentPosition);
-
+	myPlayer->Update(aTimeDelta);
 	return eStackReturnValue::eStay;
 }
 
@@ -121,6 +132,7 @@ void CGameWorld::Draw() const
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&WrappedSprite::Draw));
 	myTestSprite->Draw();
 	myRenderer->Draw();
+	myPlayer->Draw();
 }
 
 void CGameWorld::SwapBuffers()
