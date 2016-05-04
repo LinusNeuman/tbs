@@ -19,4 +19,5 @@
 #include <CU/DLDebug/DL_Debug.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/Vectors/Vector.h>
+#include <CU/Vectors/Vector2.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
