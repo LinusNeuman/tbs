@@ -197,7 +197,7 @@ Temp/
 /Source/Launcher/Debug_Logs
 *.vs
 *.idb
-/Bin/Debug_Logs/*
+*.txt
 *.user
 TBSA/Lib/DX2DEngine_Debug.lib
 TBSA/Lib/Game_Debug.lib
