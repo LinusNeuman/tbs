@@ -26,7 +26,7 @@ void PlayerController::NotifyPlayers(const CU::Time aDeltaTime)
 	{
 		if (myPlayers[i] != nullptr)
 		{
-			myPlayers[i]->Move(GetInput::GetMouseWindowPosition(), aDeltaTime);
+			myPlayers[i]->Move(GetInput::GetMouseWindowPosition() /64.f, aDeltaTime);
 		}
 	}
 }
