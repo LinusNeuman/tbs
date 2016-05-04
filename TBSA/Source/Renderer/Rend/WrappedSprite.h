@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CU/Vectors/vector2.h>
+//#include <CU/Vectors/vector2.h>
 
 namespace DX2D
 {
