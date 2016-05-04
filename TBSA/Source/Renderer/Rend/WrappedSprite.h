@@ -1,5 +1,7 @@
 #pragma once
 
+#include <CU/Vectors/vector2.h>
+
 namespace DX2D
 {
 	class CSprite;
@@ -23,6 +25,11 @@ public:
 	//void SetColor(const CU::Vector4f& aColor);
 	void Draw();
 
+	unsigned short GetLayer() const
+	{
+		return myLayer;
+	}
+
 	DX2D::CSprite * GetSprite() const;
 
 	unsigned short AddImage(const std::string & aFilePath);
@@ -36,7 +43,10 @@ public:
 		return myImageIndex;
 	}
 
+	unsigned short myLayer;
 private:
+	
+
 	CU::Vector2f myPosition;
 
 	RenderConverter * myRenderConverter;

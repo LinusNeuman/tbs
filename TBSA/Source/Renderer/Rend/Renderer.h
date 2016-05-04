@@ -1,5 +1,7 @@
 #pragma once
 #include "RenderCommand.h"
+#include <CU/Vectors/vector2.h>
+//#include <CU/GrowingArray/GrowingArray.h>
 
 namespace DX2D
 {
@@ -27,8 +29,8 @@ public:
 	void SwapBuffer();
 
 private:
-	CU::GrowingArray<RenderCommand> * myBuffer;
-	CU::GrowingArray<RenderCommand> * myCommandsToRender;
+	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>> * myBuffer;
+	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>> * myCommandsToRender;
 
 	CU::Vector2ui myWindowSize;
 

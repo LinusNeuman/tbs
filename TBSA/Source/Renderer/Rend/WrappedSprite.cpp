@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "WrappedSprite.h"
 #include "tga2d/sprite/sprite.h"
-#include "RenderCommand.h"
+//#include "RenderCommand.h"
 #include "RenderConverter.h"
 
 
@@ -24,6 +24,7 @@ WrappedSprite::WrappedSprite()
 WrappedSprite::WrappedSprite(RenderConverter & aRenderConverter)
 {
 	myRenderConverter = &aRenderConverter;
+	myLayer = 0;
 }
 
 WrappedSprite::~WrappedSprite()

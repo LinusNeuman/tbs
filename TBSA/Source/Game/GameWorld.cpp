@@ -55,6 +55,7 @@ void CGameWorld::Init()
 
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(0.f, 0.f));
+	myTestSprite->myLayer = 1;
 }
 
 

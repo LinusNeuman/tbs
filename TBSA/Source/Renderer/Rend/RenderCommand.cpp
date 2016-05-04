@@ -8,11 +8,12 @@ RenderCommand::RenderCommand()
 	mySprite = nullptr;
 }
 
-RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, CU::Vector2f & aPosition, const float aRenderPriority) 
+RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer)
 	: mySprite(&aSpriteToRender),
 	myPosition(aPosition)
 {
 	myRenderPriority = aRenderPriority;
+	myLayer = aLayer;
 	//myRenderPriority = (aPosition.x + (aPosition.y * TileWidth));
 }
 

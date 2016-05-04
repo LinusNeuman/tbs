@@ -34,12 +34,12 @@ void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRende
 
 	const float Priority = (tempPosition.x + (tempPosition.y * TileWidth));
 
-	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority));
+	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority, aSpriteToRender.GetLayer()));
 }
 
 void RenderConverter::CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender)
 {
-	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aSpriteToRender.GetPosition(), 10000.f));
+	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aSpriteToRender.GetPosition(), 10000.f, aSpriteToRender.GetLayer()));
 }
 
 void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
