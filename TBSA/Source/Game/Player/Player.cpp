@@ -8,7 +8,8 @@ Player::Player(RenderConverter* aRenderConverter)
 {
 	mySprite = new WrappedSprite(*aRenderConverter);
 	mySprite->Init("Sprites/camera3.png");
-	myPosition = CU::Vector2f(265, 120);
+	mySprite->myLayer = 1;
+	myPosition = CU::Vector2f(2, 2);
 	myVelocity = CU::Vector2f::Zero;
 	myTargetPosition = myPosition;
 }
@@ -20,7 +21,7 @@ Player::~Player()
 
 void Player::Update(const CU::Time  aDeltaTime)
 {
-	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 50.f;
+	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 1.f;
 	mySprite->SetPosition(myPosition);
 	myPosition = myPosition + myVelocity * aDeltaTime.GetSeconds();
 }
@@ -32,7 +33,6 @@ void Player::Draw() const
 
 void Player::Move(CU::Vector2f aTargetPosition, const CU::Time  aDeltaTime)
 {
-	
 	myTargetPosition = aTargetPosition;
 }
 
