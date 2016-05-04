@@ -39,16 +39,16 @@ void CGameWorld::Init()
 	myRenderer->Init(CU::Vector2ui(1280, 720));
 
 	myTestSprite = new WrappedSprite(*myRenderer);
+
+	for (USHORT iSprite = 0; iSprite < myTiles.Size(); ++iSprite)
+	{
+		myTiles[iSprite] = new WrappedSprite(*myRenderer);
+		myTiles[iSprite]->Init();
+		myTiles[iSprite]->SetPosition(CU::Vector2f(250.f, 250.f));
+	}
+
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(250.f, 250.f));
-
-	myTestSprite1 = new WrappedSprite(*myRenderer);
-	myTestSprite1->Init();
-	myTestSprite1->SetPosition(CU::Vector2f(254.f, 650.f));
-
-	myTestSprite2 = new WrappedSprite(*myRenderer);
-	myTestSprite2->Init();
-	myTestSprite2->SetPosition(CU::Vector2f(150.f, 150.f));
 }
 
 
@@ -101,13 +101,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 void CGameWorld::Draw() const
 {
 	myTestSprite->Draw();
-	myTestSprite1->Draw();
-	myTestSprite2->Draw();
 	myRenderer->Draw();
-	/*myRenderer->AddRenderCommand(myTestSprite->GetRenderCommand());
-	myRenderer->AddRenderCommand(myTestSprite1->GetRenderCommand());
-	myRenderer->AddRenderCommand(myTestSprite2->GetRenderCommand());
-	myRenderer->Draw();*/
 }
 
 void CGameWorld::SwapBuffers()

@@ -15,7 +15,7 @@ public:
 	WrappedSprite(RenderConverter & aRenderConverter);
 	~WrappedSprite();
 
-	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/Magnus.png");
+	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/testTile.png");
 
 	void SetPosition(const CU::Vector2f & aPosition);
 	CU::Vector2f GetPosition() const;
@@ -26,7 +26,7 @@ public:
 	DX2D::CSprite * GetSprite() const;
 
 	unsigned short AddImage(const std::string & aFilePath);
-
+	
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
 
 	RenderCommand GetRenderCommand();

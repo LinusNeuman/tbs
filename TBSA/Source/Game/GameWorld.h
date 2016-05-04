@@ -1,7 +1,6 @@
 #pragma once
 #include <GameState.h>
 
-//class Renderer;
 class WrappedSprite;
 class RenderConverter;
 
@@ -20,9 +19,7 @@ public:
 private:
 
 	RenderConverter * myRenderer;
-	//Renderer * myRenderer;
+	CU::GrowingArray<WrappedSprite*> myTiles;
 
 	WrappedSprite * myTestSprite;
-	WrappedSprite * myTestSprite1;
-	WrappedSprite * myTestSprite2;
 };
