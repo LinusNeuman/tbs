@@ -58,5 +58,5 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 void WrappedSprite::Draw()
 {
 	DL_ASSERT(myRenderConverter != nullptr, "WrappedSprites render pointer is nullptr");
-	myRenderConverter->CalculateAndRenderIso(*this);
+	myRenderConverter->CalculateAndRenderSprite(*this);
 }
