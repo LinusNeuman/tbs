@@ -1,7 +1,7 @@
 ﻿// Author:   Hampus Huledal
 // CreationDate: 06/05/2016
 #pragma once
-#include  <GrowingArray/GrowingArray.h>
+#include <CU/GrowingArray/GrowingArray.h>
 #include "../MapTile/MapTile.h"
 
 
