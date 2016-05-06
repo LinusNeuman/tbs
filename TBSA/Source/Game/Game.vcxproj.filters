@@ -24,7 +24,6 @@
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Room\IsometricTile.h" />
     <ClInclude Include="InputAdaption\SingletonIsometricInputWrapper.h" />
-    <ClInclude Include="MainSingleton\MainSingleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -37,6 +36,5 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Room\IsometricTile.cpp" />
     <ClCompile Include="InputAdaption\SingletonIsometricInputWrapper.cpp" />
-    <ClCompile Include="MainSingleton\MainSingleton.cpp" />
   </ItemGroup>
 </Project>

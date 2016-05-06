@@ -26,6 +26,6 @@ private:
 	WrappedSprite * testSprite;
 
 	Player *myPlayer;
-	Player *myPlayer;
+	Player *myPlayer2;
 	PlayerController *myPlayerController;
 };

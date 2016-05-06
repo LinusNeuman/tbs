@@ -21,5 +21,7 @@ public:
 	void SwapBuffers();
 
 private:
+	
+
 	Renderer myRenderer;
 };
