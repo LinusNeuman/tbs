@@ -4,9 +4,9 @@
 #include <Rend/WrappedSprite.h>
 
 
-Player::Player(RenderConverter* aRenderConverter)
+Player::Player()
 {
-	mySprite = new WrappedSprite(*aRenderConverter);
+	mySprite = new WrappedSprite();
 	mySprite->Init("Sprites/camera3.png");
 	mySprite->myLayer = 1;
 	myPosition = CU::Vector2f(2, 2);

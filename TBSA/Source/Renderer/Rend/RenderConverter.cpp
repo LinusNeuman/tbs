@@ -21,6 +21,11 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 {
 	myRenderer.Init();
 	myRenderer.SetWindowSize(aWindowSize);
+
+	if (WrappedSprite::myRenderConverter == nullptr)
+	{
+		WrappedSprite::myRenderConverter = this;
+	}
 }
 
 
