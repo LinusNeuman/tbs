@@ -2,6 +2,7 @@
 // CreationDate: 06/05/2016
 #pragma once
 #include "../../CommonUtilities/CU/Vectors/Vector.h"
+#include "../../CommonUtilities/CU/GrowingArray/GrowingArray.h"
 
 enum class eTileType
 {
@@ -13,11 +14,12 @@ enum class eTileType
 
 struct MapTile
 {
-	MapTile(eTileType aType, unsigned int aRoomId, unsigned int aGraphicsId, CommonUtilities::Vector2ui a2DIndex);
+	MapTile();
+	MapTile(eTileType aType, unsigned int aRoomId, unsigned int aGraphicsId, CommonUtilities::Vector2ui& a2DIndex);
 
 	eTileType myType;
 	unsigned int myRoomId;
-	unsigned int myGrphicsId;
+	CommonUtilities::GrowingArray<unsigned int> myGraphicsLayers;
 	void * myActor = nullptr;
 	CommonUtilities::Vector2ui myIndex;
 };
