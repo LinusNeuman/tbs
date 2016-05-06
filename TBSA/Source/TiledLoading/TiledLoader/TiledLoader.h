@@ -4,7 +4,9 @@
 */
 #include <string>
 
+class TileMap;
+
 namespace TiledLoader
 {
-	inline void Load(std::string aFilePath);
+	inline void Load(std::string aFilePath, TileMap* aTileMap);
 }
