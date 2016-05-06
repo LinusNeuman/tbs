@@ -21,7 +21,7 @@ Player::~Player()
 
 void Player::Update(const CU::Time  aDeltaTime)
 {
-	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 1.f;
+	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 3.f;
 	myPosition += myVelocity * aDeltaTime.GetSeconds();
 }
 
