@@ -4,14 +4,20 @@
 #include <Rend/WrappedSprite.h>
 
 
-Player::Player()
+Player::Player(const CU::Vector2f &aStartPosition, const unsigned aId)
 {
 	mySprite = new WrappedSprite();
 	mySprite->Init("Sprites/camera3.png");
 	mySprite->myLayer = 1;
-	myPosition = CU::Vector2f(2, 2);
+	myPosition = aStartPosition;
 	myVelocity = CU::Vector2f::Zero;
 	myTargetPosition = myPosition;
+	myId = aId;
+	if (myId == 1)
+		myIsSelected = true;
+	else
+		myIsSelected = false;
+
 }
 
 Player::~Player()
@@ -43,4 +49,9 @@ unsigned Player::GetSizeX() const
 unsigned Player::GetSizeY() const
 {
 	return mySprite->GetSprite()->GetImageSize().y;
+}
+
+void Player::SetSelected(const bool aValue)
+{
+	myIsSelected = aValue;
 }
