@@ -11,7 +11,8 @@
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
-
+#include <CU/Thread/ThreadHelper.h>
+#include <SingletonPostMaster.h>
 
 using namespace std::placeholders;
 
@@ -31,6 +32,7 @@ CGame::CGame()
 	JSONWrapper::Create();
 	JSONWrapper::ReadAllDocuments("Data/Root.json");
 	JSONWrapper::TestShit();
+	SingletonPostMaster::Create();
 }
 
 
@@ -59,7 +61,7 @@ void CGame::Init(const std::wstring& aVersion)
 	createParameters.myTargetWidth = 1920;
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
-	createParameters.myStartInFullScreen = true;
+	createParameters.myStartInFullScreen = false;
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
 
 	
@@ -89,6 +91,8 @@ void CGame::Init(const std::wstring& aVersion)
 
 void CGame::InitCallBack()
 {
+	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
+
 	myGameWorld = new CGameWorld();
 
 	GetInput::Create();
@@ -106,6 +110,15 @@ void CGame::InitCallBack()
 
 void CGame::UpdateCallBack()
 {
+	/*myThreadPool.AddWork(Work(std::bind(&CGame::UpdateWork, this)));
+	myThreadPool.AddWork(Work(std::bind(&CGame::RenderWork, this)));
+	myThreadPool.Update();*/
+	UpdateWork();
+}
+
+void CGame::UpdateWork()
+{
+	//ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "ThreadPool: Update");
 	GetInput::Update();
 	CU::TimeManager::Update();
 
@@ -119,9 +132,15 @@ void CGame::UpdateCallBack()
 		else
 		{
 			myGameStateStack.Render();
+			reinterpret_cast<CGameWorld*>(myGameWorld)->SwapBuffers();
 		}
-		myThreadPool.Update();
+		//myThreadPool.Update();
 	}
+}
+
+void CGame::RenderWork()
+{
+	//myGameStateStack.Render();
 }
 
 

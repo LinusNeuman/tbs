@@ -13,7 +13,6 @@
 x64/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
 
 # Roslyn cache directories
@@ -198,5 +197,9 @@ Temp/
 /Source/Launcher/Debug_Logs
 *.vs
 *.idb
-/Bin/Logs/
+*.txt
 *.user
+TBSA/Lib/DX2DEngine_Debug.lib
+TBSA/Lib/Game_Debug.lib
+TBSA/Lib/PostMaster_Debug.lib
+TBSA/Source/TBS.VC.opendb

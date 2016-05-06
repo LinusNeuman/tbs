@@ -52,6 +52,8 @@ namespace CommonUtilities
 
 		inline void CallFunctionOnAllMembers(std::function<void(T&)> aFunction);
 
+		inline void CallFunctionOnAllMembers(std::function<void(const T&)> aFunction) const;
+
 	private:
 		inline void MirrorWithMoveSemantics(GrowingArray & aGrowingArray);
 		void DumpAll();
@@ -463,6 +465,16 @@ namespace CommonUtilities
 
 	template<typename T, typename CountType /*= unsigned short*/>
 	void CommonUtilities::GrowingArray<T, CountType>::CallFunctionOnAllMembers(std::function<void(T&)> aFunction)
+	{
+		DL_ASSERT(myImInitialized == true, "Growing Array is not initialized");
+		for (CountType iElement = 0; iElement < myElementCount; ++iElement)
+		{
+			aFunction((*this)[iElement]);
+		}
+	}
+
+	template<typename T, typename CountType /*= unsigned short*/>
+	void CommonUtilities::GrowingArray<T, CountType>::CallFunctionOnAllMembers(std::function<void(const T&)> aFunction) const
 	{
 		DL_ASSERT(myImInitialized == true, "Growing Array is not initialized");
 		for (CountType iElement = 0; iElement < myElementCount; ++iElement)

@@ -13,8 +13,14 @@
 
 // TODO: reference additional headers your program requires here
 
+
+#include <CU/Timer/Time.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <CU/NameSpaceAliases.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/Vectors/Vector.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
+
+// Audio
+#include "../Audio/Source/Instances/SoundEffect.h"
+#include "../Audio/Source/Instances/Song.h"
