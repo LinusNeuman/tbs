@@ -40,8 +40,9 @@ void CGameWorld::Init()
 	myRenderer->Init(CU::Vector2ui(1920, 1080));
 	myTiles.Init(100);
 
-	
-	
+	testSprite = new WrappedSprite();	
+	testSprite->Init("Sprites/camera3.png");
+	testSprite->myLayer = 1;
 
 	
 
@@ -120,6 +121,9 @@ void CGameWorld::Draw() const
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myRenderer->Draw();
 	myPlayer->Draw();
+
+	testSprite->Draw(CU::Vector2f(5.f, 5.f));
+
 	myPlayer2->Draw();
 }
 

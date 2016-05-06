@@ -23,6 +23,9 @@ private:
 	RenderConverter * myRenderer;
 	CU::GrowingArray<IsometricTile> myTiles;
 
-	Player *myPlayer, *myPlayer2;
+	WrappedSprite * testSprite;
+
+	Player *myPlayer;
+	Player *myPlayer;
 	PlayerController *myPlayerController;
 };
