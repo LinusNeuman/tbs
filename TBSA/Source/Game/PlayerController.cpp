@@ -6,7 +6,6 @@
 PlayerController::PlayerController()
 {
 	myPlayers.Init(2);
-	
 }
 
 

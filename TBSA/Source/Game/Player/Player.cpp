@@ -23,7 +23,7 @@ void Player::Update(const CU::Time  aDeltaTime)
 {
 	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 1.f;
 	mySprite->SetPosition(myPosition);
-	myPosition = myPosition + myVelocity * aDeltaTime.GetSeconds();
+	myPosition += myVelocity * aDeltaTime.GetSeconds();
 }
 
 void Player::Draw() const
