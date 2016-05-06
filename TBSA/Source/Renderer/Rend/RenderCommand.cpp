@@ -14,7 +14,6 @@ RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, CU::Vector2f & aPo
 {
 	myRenderPriority = aRenderPriority;
 	myLayer = aLayer;
-	//myRenderPriority = (aPosition.x + (aPosition.y * TileWidth));
 }
 
 RenderCommand::~RenderCommand()

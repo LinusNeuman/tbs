@@ -44,11 +44,11 @@ void CGameWorld::Init()
 	myRenderer->Init(CU::Vector2ui(1920, 1080));
 	myTiles.Init(100);
 
-	myTestSprite = new WrappedSprite(*myRenderer);
+	myTestSprite = new WrappedSprite();
 
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
-		myTiles.Add(new WrappedSprite(*myRenderer));
+		myTiles.Add(new WrappedSprite());
 		myTiles.GetLast()->Init();
 
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
@@ -57,7 +57,7 @@ void CGameWorld::Init()
 
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(125.f, 125.f));
-	myPlayer = new Player(myRenderer);
+	myPlayer = new Player();
 	myPlayerController = new PlayerController();
 	myPlayerController->AddPlayer(myPlayer);
 }

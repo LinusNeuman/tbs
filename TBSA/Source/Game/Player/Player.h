@@ -7,7 +7,7 @@ class WrappedSprite;
 class Player
 {
 public:
-	Player(RenderConverter* aRenderConverter);
+	Player();
 	~Player();
 	void Update(const CU::Time aDeltaTime);
 	void Draw() const;

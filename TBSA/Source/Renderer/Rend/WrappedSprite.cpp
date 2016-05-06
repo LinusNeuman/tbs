@@ -6,9 +6,11 @@
 
 
 
-
+RenderConverter * WrappedSprite::myRenderConverter = nullptr;
 
 CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
+
+
 
 //RenderCommand WrappedSprite::GetRenderCommand()
 //{
@@ -17,13 +19,7 @@ CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
 
 WrappedSprite::WrappedSprite()
 {
-	myRenderConverter = nullptr;
-}
-
-
-WrappedSprite::WrappedSprite(RenderConverter & aRenderConverter)
-{
-	myRenderConverter = &aRenderConverter;
+	//myRenderConverter = &aRenderConverter;
 	myLayer = 0;
 }
 
