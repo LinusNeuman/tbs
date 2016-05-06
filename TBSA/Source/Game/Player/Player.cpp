@@ -7,17 +7,23 @@
 Player::Player(const CU::Vector2f &aStartPosition, const unsigned aId)
 {
 	mySprite = new WrappedSprite();
-	mySprite->Init("Sprites/camera3.png");
-	mySprite->myLayer = 1;
+	
 	myPosition = aStartPosition;
 	myVelocity = CU::Vector2f::Zero;
 	myTargetPosition = myPosition;
 	myId = aId;
 	if (myId == 1)
+	{
 		myIsSelected = true;
+		mySprite->Init("Sprites/camera3.png");
+		mySprite->myLayer = 1;
+	}
 	else
+	{
 		myIsSelected = false;
-
+		mySprite->Init("Sprites/camera7.png");
+		mySprite->myLayer = 1;
+	}
 }
 
 Player::~Player()
