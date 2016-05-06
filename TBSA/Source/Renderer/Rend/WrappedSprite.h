@@ -14,7 +14,6 @@ class WrappedSprite
 {
 public:
 	WrappedSprite();
-	WrappedSprite(RenderConverter & aRenderConverter);
 	~WrappedSprite();
 
 	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png");
@@ -44,12 +43,14 @@ public:
 	}
 
 	unsigned short myLayer;
+
+	static RenderConverter * myRenderConverter;
 private:
 	
 
 	CU::Vector2f myPosition;
 
-	RenderConverter * myRenderConverter;
+	
 
 	unsigned short myImageIndex;
 };
