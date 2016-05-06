@@ -20,7 +20,7 @@ void PlayerController::AddPlayer(Player* aPlayer)
 
 void PlayerController::SelectPlayer()
 {
-	for (size_t i = 0; i < myPlayers.Size(); i++)
+	for (unsigned short i = 0; i < myPlayers.Size(); i++)
 	{
 		myPlayers[i]->SetSelected(!myPlayers[i]->GetIsSelected());
 	}
@@ -28,7 +28,7 @@ void PlayerController::SelectPlayer()
 
 void PlayerController::NotifyPlayers(const CU::Time aDeltaTime)
 {
-	for (size_t i = 0; i < myPlayers.Size(); i++)
+	for (unsigned short i = 0; i < myPlayers.Size(); i++)
 	{
 		if (myPlayers[i] != nullptr && myPlayers[i]->GetIsSelected() == true)
 		{

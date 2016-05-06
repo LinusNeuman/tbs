@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "TiledLoader.h"
-#include "../../JSONParser/Pico/picojson.h"
-#include "../CU/Utility/FileHandling.h"
-#include "../CU/DLDebug/DL_Debug.h"
-#include "GrowingArray/GrowingArray.h"
-#include "../../TileMap/MapTile/MapTile.h"
+#include <JSON/JSONWrapper.h>
+#include <CU/Utility/FileHandling.h>
+#include <CU/DLDebug/DL_Debug.h>
+#include <CU/GrowingArray/GrowingArray.h>
+#include <MapTile/MapTile.h>
 
 picojson::object& GetObject(picojson::value aValue);
 double& GetNumber(picojson::value aValue);
