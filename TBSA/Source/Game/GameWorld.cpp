@@ -122,8 +122,6 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 void CGameWorld::Draw() const
 {
-	//myTestTile.Draw();
-
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myTestSprite->Draw();
 	myRenderer->Draw();

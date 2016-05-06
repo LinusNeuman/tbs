@@ -1,7 +1,7 @@
 #pragma once
 #include <GameState.h>
 #include <CU/GrowingArray/GrowingArray.h>
-#include "IsometricTile.h"
+#include "Room/IsometricTile.h"
 
 class WrappedSprite;
 class RenderConverter;

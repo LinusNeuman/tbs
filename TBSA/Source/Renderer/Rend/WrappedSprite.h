@@ -21,7 +21,6 @@ public:
 	void SetPosition(const CU::Vector2f & aPosition);
 	CU::Vector2f GetPosition() const;
 
-	//void SetColor(const CU::Vector4f& aColor);
 	void Draw();
 
 	unsigned short GetLayer() const
@@ -34,8 +33,6 @@ public:
 	unsigned short AddImage(const std::string & aFilePath);
 	
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
-
-	//RenderCommand GetRenderCommand();
 
 	unsigned short GetImageIndex()
 	{

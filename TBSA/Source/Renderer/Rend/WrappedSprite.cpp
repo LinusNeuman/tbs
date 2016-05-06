@@ -12,14 +12,10 @@ CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
 
 
 
-//RenderCommand WrappedSprite::GetRenderCommand()
-//{
-//	return RenderCommand(*ourSprites[myImageIndex], myPosition);
-//}
+
 
 WrappedSprite::WrappedSprite()
 {
-	//myRenderConverter = &aRenderConverter;
 	myLayer = 0;
 }
 
