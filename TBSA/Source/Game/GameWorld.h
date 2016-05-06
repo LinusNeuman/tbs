@@ -24,6 +24,6 @@ private:
 	CU::GrowingArray<IsometricTile> myTiles;
 
 	WrappedSprite * myTestSprite;
-	Player *myPlayer;
+	Player *myPlayer, *myPlayer2;
 	PlayerController *myPlayerController;
 };

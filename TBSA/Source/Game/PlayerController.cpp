@@ -18,12 +18,19 @@ void PlayerController::AddPlayer(Player* aPlayer)
 	myPlayers.Add(aPlayer);
 }
 
+void PlayerController::SelectPlayer()
+{
+	for (size_t i = 0; i < myPlayers.Size(); i++)
+	{
+		myPlayers[i]->SetSelected(!myPlayers[i]->GetIsSelected());
+	}
+}
 
 void PlayerController::NotifyPlayers(const CU::Time aDeltaTime)
 {
 	for (size_t i = 0; i < myPlayers.Size(); i++)
 	{
-		if (myPlayers[i] != nullptr)
+		if (myPlayers[i] != nullptr && myPlayers[i]->GetIsSelected() == true)
 		{
 			myPlayers[i]->Move(GetInput::GetMouseWindowPosition() /64.f, aDeltaTime);
 		}

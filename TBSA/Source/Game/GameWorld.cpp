@@ -62,9 +62,11 @@ void CGameWorld::Init()
 
 	myTestSprite->Init();
 	myTestSprite->SetPosition(CU::Vector2f(125.f, 125.f));
-	myPlayer = new Player();
+	myPlayer = new Player(CU::Vector2f(1,1), 1);
 	myPlayerController = new PlayerController();
 	myPlayerController->AddPlayer(myPlayer);
+	myPlayer2 = new Player(CU::Vector2f(4, 5), 2);
+	myPlayerController->AddPlayer(myPlayer2);
 }
 
 
@@ -82,7 +84,10 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 		myPlayerController->NotifyPlayers(aTimeDelta);
 	}
 	
-
+	if (GetInput::GetKeyPressed(DIK_TAB) == true)
+	{
+		myPlayerController->SelectPlayer();
+	}
 	if (GetInput::GetKeyDown(DIK_H) == true)
 	{
 		kLeft = 1.f;
@@ -117,6 +122,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	myTestSprite->SetPosition(CurrentPosition);
 	myPlayer->Update(aTimeDelta);
+	myPlayer2->Update(aTimeDelta);
 	return eStackReturnValue::eStay;
 }
 
@@ -128,6 +134,7 @@ void CGameWorld::Draw() const
 	myTestSprite->Draw();
 	myRenderer->Draw();
 	myPlayer->Draw();
+	myPlayer2->Draw();
 }
 
 void CGameWorld::SwapBuffers()
