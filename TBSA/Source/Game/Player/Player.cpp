@@ -28,13 +28,12 @@ Player::~Player()
 void Player::Update(const CU::Time  aDeltaTime)
 {
 	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 1.f;
-	mySprite->SetPosition(myPosition);
 	myPosition += myVelocity * aDeltaTime.GetSeconds();
 }
 
 void Player::Draw() const
 {
-	mySprite->Draw();
+	mySprite->Draw(myPosition);
 }
 
 void Player::Move(CU::Vector2f aTargetPosition, const CU::Time  aDeltaTime)

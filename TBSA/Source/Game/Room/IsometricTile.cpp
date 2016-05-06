@@ -21,10 +21,10 @@ void IsometricTile::Init()
 {
 	mySprite = new WrappedSprite();
 	mySprite->Init();
-	mySprite->SetPosition(myPosition);
+	//mySprite->SetPosition(myPosition);
 }
 
 void IsometricTile::Draw() const
 {
-	mySprite->Draw();
+	mySprite->Draw(myPosition);
 }

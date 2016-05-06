@@ -29,9 +29,9 @@ CGame::CGame()
 {
 	myImRunning = true;
 	DL_Debug::Debug::Create();
-	JSONWrapper::Create();
+	/*JSONWrapper::Create();
 	JSONWrapper::ReadAllDocuments("Data/Root.json");
-	JSONWrapper::TestShit();
+	JSONWrapper::TestShit();*/
 	SingletonPostMaster::Create();
 }
 

@@ -240,7 +240,7 @@
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWorld.h" />
-    <ClInclude Include="IsometricTile.h" />
+    <ClInclude Include="Room\IsometricTile.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Player\Player.h" />
@@ -252,7 +252,7 @@
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWorld.cpp" />
-    <ClCompile Include="IsometricTile.cpp" />
+    <ClCompile Include="Room\IsometricTile.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="stdafx.cpp">

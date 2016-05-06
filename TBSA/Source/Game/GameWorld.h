@@ -1,7 +1,7 @@
 #pragma once
 #include <GameState.h>
 #include <CU/GrowingArray/GrowingArray.h>
-#include "IsometricTile.h"
+#include "Room/IsometricTile.h"
 
 class WrappedSprite;
 class RenderConverter;
@@ -23,7 +23,6 @@ private:
 	RenderConverter * myRenderer;
 	CU::GrowingArray<IsometricTile> myTiles;
 
-	WrappedSprite * myTestSprite;
 	Player *myPlayer, *myPlayer2;
 	PlayerController *myPlayerController;
 };
