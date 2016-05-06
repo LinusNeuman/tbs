@@ -49,8 +49,8 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 ////	mySprite->SetColor(DX2D::CColor(aColor.r, aColor.g, aColor.b, aColor.a));
 //}
 
-void WrappedSprite::Draw()
+void WrappedSprite::Draw(const CU::Vector2f & aPosition)
 {
 	DL_ASSERT(myRenderConverter != nullptr, "WrappedSprites render pointer is nullptr");
-	myRenderConverter->CalculateAndRenderIso(*this);
+	myRenderConverter->CalculateAndRenderIso(*this, aPosition);
 }
