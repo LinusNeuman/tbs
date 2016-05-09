@@ -20,11 +20,11 @@ Actor::Actor(const CU::Vector2f &aStartPosition, const eActorType &aActorType)
 		mySprite->myLayer = 1;
 		break;
 	case eActorType::eEnemyOne: 
-		mySprite->Init("Sprites/camera3.png");
+		mySprite->Init("Sprites/camera4.png");
 		mySprite->myLayer = 1;
 		break;
 	case eActorType::eEnemyTwo: 
-		mySprite->Init("Sprites/camera3.png");
+		mySprite->Init("Sprites/camera4.png");
 		mySprite->myLayer = 1;
 		break;
 	default:
