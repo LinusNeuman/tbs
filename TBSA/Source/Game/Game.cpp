@@ -13,6 +13,7 @@
 #include <JSON/JSONWrapper.h>
 #include <CU/Thread/ThreadHelper.h>
 #include <SingletonPostMaster.h>
+//#include "MainSingleton/MainSingleton.h"
 
 using namespace std::placeholders;
 
@@ -29,6 +30,7 @@ CGame::CGame()
 {
 	myImRunning = true;
 	DL_Debug::Debug::Create();
+	//MainSingleton::Create();
 	/*JSONWrapper::Create();
 	JSONWrapper::ReadAllDocuments("Data/Root.json");
 	JSONWrapper::TestShit();*/
@@ -91,6 +93,7 @@ void CGame::Init(const std::wstring& aVersion)
 
 void CGame::InitCallBack()
 {
+	//MainSingleton::Init();
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
 
 	myGameWorld = new CGameWorld();

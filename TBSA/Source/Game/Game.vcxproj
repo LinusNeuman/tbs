@@ -242,7 +242,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="InputAdaption\SingletonIsometricInputWrapper.h" />
-    <ClInclude Include="MainSingleton\MainSingleton.h" />
     <ClInclude Include="Room\IsometricTile.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="PlayerController.h" />
@@ -257,7 +256,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="InputAdaption\SingletonIsometricInputWrapper.cpp" />
-    <ClCompile Include="MainSingleton\MainSingleton.cpp" />
     <ClCompile Include="Room\IsometricTile.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
