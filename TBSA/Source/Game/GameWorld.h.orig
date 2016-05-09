@@ -1,0 +1,34 @@
+#pragma once
+#include <GameState.h>
+#include <CU/GrowingArray/GrowingArray.h>
+#include "Room/IsometricTile.h"
+
+class WrappedSprite;
+class RenderConverter;
+class Player;
+class PlayerController;
+
+class CGameWorld : public GameState
+{
+public:
+	CGameWorld(); 
+	~CGameWorld();
+
+	void Init();
+	virtual eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
+	virtual void Draw() const override;
+
+	virtual void SwapBuffers();
+private:
+	RenderConverter * myRenderer;
+	CU::GrowingArray<IsometricTile> myTiles;
+
+<<<<<<< HEAD
+	WrappedSprite * testSprite;
+
+	Player *myPlayer;
+=======
+	Player *myPlayer, *myPlayer2;
+>>>>>>> a082637ba476a43563f1299db10a604f10a623ad
+	PlayerController *myPlayerController;
+};

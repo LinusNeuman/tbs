@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "PlayerController.h"
-#include "Player/Player.h"
+#include "Actor/Actor.h"
 
 
 PlayerController::PlayerController()
 {
 	myPlayers.Init(2);
-	
+	mySelectedPlayer = nullptr;
 }
 
 
@@ -14,19 +14,23 @@ PlayerController::~PlayerController()
 {
 }
 
-void PlayerController::AddPlayer(Player* aPlayer)
+void PlayerController::AddPlayer(Actor* aPlayer)
 {
 	myPlayers.Add(aPlayer);
 }
 
-
-void PlayerController::NotifyPlayers(const CU::Time aDeltaTime)
+void PlayerController::SelectPlayer(Actor *aPlayer)
 {
-	for (size_t i = 0; i < myPlayers.Size(); i++)
+	if (myPlayers.Find(aPlayer) != myPlayers.FoundNone)
 	{
-		if (myPlayers[i] != nullptr)
-		{
-			myPlayers[i]->Move(GetInput::GetMouseWindowPosition() /64.f, aDeltaTime);
-		}
+		mySelectedPlayer = aPlayer;
+	}
+}
+
+void PlayerController::NotifyPlayers(const CU::Time aDeltaTime) const
+{
+	if (mySelectedPlayer != nullptr)
+	{
+		mySelectedPlayer->Move(GetInput::GetMouseWindowPosition() / 64.f, aDeltaTime);
 	}
 }

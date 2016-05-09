@@ -8,7 +8,7 @@ RenderCommand::RenderCommand()
 	mySprite = nullptr;
 }
 
-RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer)
+RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer)
 	: mySprite(&aSpriteToRender),
 	myPosition(aPosition)
 {

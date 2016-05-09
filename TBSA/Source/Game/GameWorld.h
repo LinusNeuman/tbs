@@ -1,10 +1,11 @@
 #pragma once
 #include <GameState.h>
 #include <CU/GrowingArray/GrowingArray.h>
+#include "Room/IsometricTile.h"
 
 class WrappedSprite;
 class RenderConverter;
-class Player;
+class Actor;
 class PlayerController;
 
 class CGameWorld : public GameState
@@ -19,11 +20,11 @@ public:
 
 	virtual void SwapBuffers();
 private:
-
 	RenderConverter * myRenderer;
-	CU::GrowingArray<WrappedSprite*> myTiles;
+	CU::GrowingArray<IsometricTile> myTiles;
 
-	WrappedSprite * myTestSprite;
-	Player *myPlayer;
+	WrappedSprite * testSprite;
+
+	Actor *myPlayer, *myPlayer2;
 	PlayerController *myPlayerController;
 };

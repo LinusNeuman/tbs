@@ -29,9 +29,9 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 }
 
 
-void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRender)
+void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
-	CU::Vector2f tempPosition = aSpriteToRender.GetPosition();
+	CU::Vector2f tempPosition = aPosition;
 
 	CU::Vector2f tempOffset(550.f, 250.f);
 
@@ -42,9 +42,9 @@ void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRende
 	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority, aSpriteToRender.GetLayer()));
 }
 
-void RenderConverter::CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender)
+void RenderConverter::CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
-	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aSpriteToRender.GetPosition(), 10000.f, aSpriteToRender.GetLayer()));
+	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, aSpriteToRender.GetLayer()));
 }
 
 void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)

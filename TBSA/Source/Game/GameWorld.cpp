@@ -10,7 +10,8 @@
 #include <ProxyStateStack.h>
 #include <CU/Memory Pool/MemoryPool.h>
 #include <Rend/RenderConverter.h>
-#include "Player/Player.h"
+#include "Actor/Actor.h"
+#include "Actor/Player.h"
 #include "PlayerController.h"
 
 
@@ -31,10 +32,6 @@ CGameWorld::CGameWorld()
 
 CGameWorld::~CGameWorld()
 {
-	if (myTestSprite != nullptr)
-	{
-		SAFE_DELETE(myTestSprite);
-	}
 }
 
 
@@ -44,22 +41,28 @@ void CGameWorld::Init()
 	myRenderer->Init(CU::Vector2ui(1920, 1080));
 	myTiles.Init(100);
 
-	myTestSprite = new WrappedSprite();
+	testSprite = new WrappedSprite();	
+	testSprite->Init("Sprites/camera3.png");
+	testSprite->myLayer = 1;
+
+	
 
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
-		myTiles.Add(new WrappedSprite());
-		myTiles.GetLast()->Init();
+		
 
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
-		myTiles.GetLast()->SetPosition(tempderp);
+		myTiles.Add(IsometricTile(tempderp));
 	}
 
-	myTestSprite->Init();
-	myTestSprite->SetPosition(CU::Vector2f(125.f, 125.f));
-	myPlayer = new Player();
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
+
+	
+	myPlayer = new Player(CU::Vector2f(2, 1), eActorType::ePlayerOne);
 	myPlayerController = new PlayerController();
 	myPlayerController->AddPlayer(myPlayer);
+	myPlayer2 = new Player(CU::Vector2f(4, 5), eActorType::ePlayerTwo);
+	myPlayerController->AddPlayer(myPlayer2);
 }
 
 
@@ -77,7 +80,14 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 		myPlayerController->NotifyPlayers(aTimeDelta);
 	}
 	
-
+	if (GetInput::GetKeyPressed(DIK_1) == true)
+	{
+		myPlayerController->SelectPlayer(myPlayer);
+	}
+	if (GetInput::GetKeyPressed(DIK_2) == true)
+	{
+		myPlayerController->SelectPlayer(myPlayer2);
+	}
 	if (GetInput::GetKeyDown(DIK_H) == true)
 	{
 		kLeft = 1.f;
@@ -106,21 +116,20 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	CU::Vector2f InputVector(kRight - kLeft, kDown - kUp);
 
-	CU::Vector2f CurrentPosition = myTestSprite->GetPosition();
-
-	CurrentPosition += InputVector * Speed * aTimeDelta.GetSeconds();
-
-	myTestSprite->SetPosition(CurrentPosition);
 	myPlayer->Update(aTimeDelta);
+	myPlayer2->Update(aTimeDelta);
 	return eStackReturnValue::eStay;
 }
 
 void CGameWorld::Draw() const
 {
-	myTiles.CallFunctionOnAllMembers(std::mem_fn(&WrappedSprite::Draw));
-	myTestSprite->Draw();
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myRenderer->Draw();
 	myPlayer->Draw();
+
+	testSprite->Draw(CU::Vector2f(5.f, 5.f));
+
+	myPlayer2->Draw();
 }
 
 void CGameWorld::SwapBuffers()
