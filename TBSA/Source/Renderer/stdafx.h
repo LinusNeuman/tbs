@@ -14,9 +14,10 @@
 // TODO: reference additional headers your program requires here
 
 
-
-#include <CU/NameSpaceAliases.h>
 #include <CU/DLDebug/DL_Debug.h>
-#include <CU/GrowingArray/GrowingArray.h>
+#include <CU/NameSpaceAliases.h>
+
 #include <CU/Vectors/Vector.h>
+#include <CU/Vectors/Vector2.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
+#include <CU/GrowingArray/GrowingArray.h>

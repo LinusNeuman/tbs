@@ -1,11 +1,14 @@
 #pragma once
 
+#include <CU/Vectors/vector2.h>
+
 namespace DX2D
 {
 	class CSprite;
 }
 
 class RenderCommand;
+class RenderConverter;
 
 class WrappedSprite
 {
@@ -13,45 +16,37 @@ public:
 	WrappedSprite();
 	~WrappedSprite();
 
-	void Init(const std::string & aFilePath = "Sprites/Magnus.png");
+	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png");
 
-	void SetPosition(const CU::Vector2f & aPosition);
-	CU::Vector2f GetPosition();
+	/*void SetPosition(const CU::Vector2f & aPosition);
+	CU::Vector2f GetPosition() const;*/
 
-	void SetColor(const CU::Vector4f& aColor);
-	void Draw();
+	void Draw(const CU::Vector2f & aPosition);
 
-	DX2D::CSprite * GetSprite();
+	unsigned short GetLayer() const
+	{
+		return myLayer;
+	}
+
+	DX2D::CSprite * GetSprite() const;
 
 	unsigned short AddImage(const std::string & aFilePath);
-
+	
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
-
-	RenderCommand GetRenderCommand();
 
 	unsigned short GetImageIndex()
 	{
 		return myImageIndex;
 	}
 
-private:
-	DX2D::CSprite * mySprite;
-	CU::Vector2f myPosition;
+	unsigned short myLayer;
 
+	static RenderConverter * myRenderConverter;
+private:
 	unsigned short myImageIndex;
 };
 
-inline void WrappedSprite::SetPosition(const CU::Vector2f & aPosition)
+inline DX2D::CSprite * WrappedSprite::GetSprite() const
 {
-	myPosition = aPosition;
-}
-
-inline CU::Vector2f WrappedSprite::GetPosition()
-{
-	return myPosition;
-}
-
-inline DX2D::CSprite * WrappedSprite::GetSprite()
-{
-	return mySprite;
+	return ourSprites[myImageIndex];
 }

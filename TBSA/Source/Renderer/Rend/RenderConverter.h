@@ -11,10 +11,17 @@ public:
 
 	void Init(const CU::Vector2ui & aWindowSize);
 
-	void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender) const;
+	void CalculateAndRenderIso(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
+	void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
+
+	void AddRenderCommand(RenderCommand & aRenderCommand);
 
 	void Draw() const;
 
+	void SwapBuffers();
+
 private:
+	
+
 	Renderer myRenderer;
 };

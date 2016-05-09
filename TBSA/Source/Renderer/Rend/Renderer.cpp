@@ -8,15 +8,33 @@
 #include <tga2d/sprite/sprite.h>
 #include <tga2d/text/text.h>
 
+
+//#include <CU/NameSpaceAliases.h>
 #include "WrappedSprite.h"
+#include "RenderLayerEnum.h"
+#include "RenderCommand.h"
+
 
 Renderer::Renderer()
 {
-	myCommandsToRender = new CU::GrowingArray<RenderCommand>();
-	myBuffer = new CU::GrowingArray<RenderCommand>();
+	myCommandsToRender = new CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>>();
+	myBuffer = new CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>>();
 
-	myCommandsToRender->Init(100);
-	myBuffer->Init(100);
+	myCommandsToRender->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
+
+	for (USHORT iLayer = 0; iLayer < static_cast<USHORT>(enumRenderLayer::enumLength); ++iLayer)
+	{
+		myCommandsToRender->Add(CommonUtilities::GrowingArray<RenderCommand>());
+		myCommandsToRender->GetLast().Init(128);
+	}
+
+	myBuffer->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
+
+	for (USHORT iLayer = 0; iLayer < static_cast<USHORT>(enumRenderLayer::enumLength); ++iLayer)
+	{
+		myBuffer->Add(CommonUtilities::GrowingArray<RenderCommand>());
+		myBuffer->GetLast().Init(128);
+	}
 }
 
 Renderer::~Renderer()
@@ -41,16 +59,29 @@ void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 {
 	aRenderCommand.myPosition.x /= static_cast<float>(myWindowSize.x);
 	aRenderCommand.myPosition.y /= static_cast<float>(myWindowSize.y);
-	myBuffer->Add(aRenderCommand);
+	
+	for (USHORT iRenderCommand = 0; iRenderCommand < (*myBuffer)[aRenderCommand.GetLayer()].Size(); ++iRenderCommand)
+	{
+		if (aRenderCommand.GetPriority() < 
+			(*myBuffer)[aRenderCommand.GetLayer()][iRenderCommand].GetPriority())
+		{
+			(*myBuffer)[aRenderCommand.GetLayer()].Insert(iRenderCommand, aRenderCommand);
+			return;
+		}
+	}
+	(*myBuffer)[aRenderCommand.GetLayer()].Add(aRenderCommand);
 }
 
 void Renderer::SwapBuffer()
 {
-	myCommandsToRender->RemoveAll();
+	myCommandsToRender->CallFunctionOnAllMembers(std::mem_fn(&CU::GrowingArray<RenderCommand>::RemoveAll));
 	std::swap(myCommandsToRender, myBuffer);
 }
 
 void Renderer::RenderAllSprites() const
 {
-	myCommandsToRender->CallFunctionOnAllMembers(std::mem_fn(&RenderCommand::Render));
+	for (USHORT iLayer = 0; iLayer < myCommandsToRender->Size(); ++iLayer)
+	{
+		(*myCommandsToRender)[iLayer].CallFunctionOnAllMembers(std::mem_fn(&RenderCommand::Render));
+	}
 }

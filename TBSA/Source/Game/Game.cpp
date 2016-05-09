@@ -12,7 +12,8 @@
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
 #include <CU/Thread/ThreadHelper.h>
-
+#include <SingletonPostMaster.h>
+//#include "MainSingleton/MainSingleton.h"
 
 using namespace std::placeholders;
 
@@ -29,9 +30,11 @@ CGame::CGame()
 {
 	myImRunning = true;
 	DL_Debug::Debug::Create();
-	JSONWrapper::Create();
+	//MainSingleton::Create();
+	/*JSONWrapper::Create();
 	JSONWrapper::ReadAllDocuments("Data/Root.json");
-	JSONWrapper::TestShit();
+	JSONWrapper::TestShit();*/
+	SingletonPostMaster::Create();
 }
 
 
@@ -60,7 +63,7 @@ void CGame::Init(const std::wstring& aVersion)
 	createParameters.myTargetWidth = 1920;
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
-	createParameters.myStartInFullScreen = true;
+	createParameters.myStartInFullScreen = false;
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
 
 	
@@ -90,6 +93,7 @@ void CGame::Init(const std::wstring& aVersion)
 
 void CGame::InitCallBack()
 {
+	//MainSingleton::Init();
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
 
 	myGameWorld = new CGameWorld();
