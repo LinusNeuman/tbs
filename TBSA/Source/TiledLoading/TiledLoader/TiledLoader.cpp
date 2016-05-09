@@ -26,7 +26,13 @@ void TiledLoader::Load(std::string aFilePath, TileMap* aTileMap)
 
 	CommonUtilities::GrowingArray<MapTile> someMapTiles;
 
-	picojson::array layers;
+	picojson::array layers = GetArray(rootObject["layers"]);
+
+	for (size_t i = 0; i < height * width; i++)
+	{
+		
+	}
+
 }
 
 picojson::object& GetObject(picojson::value aValue)
