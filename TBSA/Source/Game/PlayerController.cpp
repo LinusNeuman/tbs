@@ -6,7 +6,6 @@
 PlayerController::PlayerController()
 {
 	myPlayers.Init(2);
-	mySelectedPlayer = nullptr;
 }
 
 
@@ -17,13 +16,18 @@ PlayerController::~PlayerController()
 void PlayerController::AddPlayer(Actor* aPlayer)
 {
 	myPlayers.Add(aPlayer);
+	mySelectedPlayer = myPlayers[0];
 }
 
-void PlayerController::SelectPlayer(Actor *aPlayer)
+void PlayerController::SelectPlayer()
 {
-	if (myPlayers.Find(aPlayer) != myPlayers.FoundNone)
+	if (mySelectedPlayer == myPlayers[0])
 	{
-		mySelectedPlayer = aPlayer;
+		mySelectedPlayer = myPlayers[1];
+	}
+	else
+	{
+		mySelectedPlayer = myPlayers[0];
 	}
 }
 

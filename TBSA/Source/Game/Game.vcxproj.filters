@@ -23,9 +23,9 @@
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Room\IsometricTile.h" />
     <ClInclude Include="InputAdaption\SingletonIsometricInputWrapper.h" />
-    <ClInclude Include="MainSingleton\MainSingleton.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Actor\Actor.h" />
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -37,8 +37,8 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Room\IsometricTile.cpp" />
     <ClCompile Include="InputAdaption\SingletonIsometricInputWrapper.cpp" />
-    <ClCompile Include="MainSingleton\MainSingleton.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\Actor.cpp" />
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
 </Project>

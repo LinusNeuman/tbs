@@ -25,6 +25,6 @@ private:
 
 	WrappedSprite * testSprite;
 
-	Actor *myPlayer, *myPlayer2;
+	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
 };

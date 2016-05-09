@@ -13,6 +13,7 @@
 #include "Actor/Actor.h"
 #include "Actor/Player.h"
 #include "PlayerController.h"
+#include "Enemy.h"
 
 
 const float Speed = 10.f;
@@ -63,6 +64,7 @@ void CGameWorld::Init()
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayer2 = new Player(CU::Vector2f(4, 5), eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer2);
+	myEnemy = new Enemy(CU::Vector2f(6, 6), eActorType::eEnemyOne);
 }
 
 
@@ -79,14 +81,9 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	{
 		myPlayerController->NotifyPlayers(aTimeDelta);
 	}
-	
-	if (GetInput::GetKeyPressed(DIK_1) == true)
+	if (GetInput::GetKeyPressed(DIK_TAB) == true)
 	{
-		myPlayerController->SelectPlayer(myPlayer);
-	}
-	if (GetInput::GetKeyPressed(DIK_2) == true)
-	{
-		myPlayerController->SelectPlayer(myPlayer2);
+		myPlayerController->SelectPlayer();
 	}
 	if (GetInput::GetKeyDown(DIK_H) == true)
 	{
@@ -118,6 +115,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
+	myEnemy->Update(aTimeDelta);
 	return eStackReturnValue::eStay;
 }
 
@@ -130,6 +128,7 @@ void CGameWorld::Draw() const
 	testSprite->Draw(CU::Vector2f(5.f, 5.f));
 
 	myPlayer2->Draw();
+	myEnemy->Draw();
 }
 
 void CGameWorld::SwapBuffers()
