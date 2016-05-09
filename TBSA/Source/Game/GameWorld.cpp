@@ -10,7 +10,8 @@
 #include <ProxyStateStack.h>
 #include <CU/Memory Pool/MemoryPool.h>
 #include <Rend/RenderConverter.h>
-#include "Player/Player.h"
+#include "Actor/Actor.h"
+#include "Actor/Player.h"
 #include "PlayerController.h"
 
 
@@ -57,10 +58,10 @@ void CGameWorld::Init()
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
 
 	
-	myPlayer = new Player(CU::Vector2f(2, 1), 1);
+	myPlayer = new Player(CU::Vector2f(2, 1), eActorType::ePlayerOne);
 	myPlayerController = new PlayerController();
 	myPlayerController->AddPlayer(myPlayer);
-	myPlayer2 = new Player(CU::Vector2f(4, 5), 2);
+	myPlayer2 = new Player(CU::Vector2f(4, 5), eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer2);
 }
 
@@ -79,9 +80,13 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 		myPlayerController->NotifyPlayers(aTimeDelta);
 	}
 	
-	if (GetInput::GetKeyPressed(DIK_TAB) == true)
+	if (GetInput::GetKeyPressed(DIK_1) == true)
 	{
-		myPlayerController->SelectPlayer();
+		myPlayerController->SelectPlayer(myPlayer);
+	}
+	if (GetInput::GetKeyPressed(DIK_2) == true)
+	{
+		myPlayerController->SelectPlayer(myPlayer2);
 	}
 	if (GetInput::GetKeyDown(DIK_H) == true)
 	{

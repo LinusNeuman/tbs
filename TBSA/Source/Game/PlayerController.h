@@ -1,6 +1,6 @@
 #pragma once
 
-class Player;
+class Actor;
 class RenderConverter;
 
 class PlayerController
@@ -8,11 +8,12 @@ class PlayerController
 public:
 	PlayerController();
 	~PlayerController();
-	void AddPlayer(Player *aPlayer);
-	void SelectPlayer();
-	void NotifyPlayers(const CU::Time aDeltaTime);
+	void AddPlayer(Actor *aPlayer);
+	void SelectPlayer(Actor *aPlayer);
+	void NotifyPlayers(const CU::Time aDeltaTime) const;
 private:
-	CU::GrowingArray<Player*> myPlayers;
+	CU::GrowingArray<Actor*> myPlayers;
 	CU::Vector2f myMousePosition;
+	Actor *mySelectedPlayer;
 };
 
