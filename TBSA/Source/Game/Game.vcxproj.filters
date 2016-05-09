@@ -26,6 +26,7 @@
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="TestPostMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -40,5 +41,6 @@
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="TestPostMessage.cpp" />
   </ItemGroup>
 </Project>

@@ -59,18 +59,6 @@ bool SingletonPostMaster::CheckIfExists()
 	return (ourInstance != nullptr);
 }
 
-void SingletonPostMaster::InternalPostMessage(const Message & aMessageToSend)
-{
-	for (unsigned short iReciever = 0; iReciever < myRecievers[static_cast<unsigned short>(aMessageToSend.myMessageType)].Size(); ++iReciever)
-	{
-		DL_ASSERT(myRecievers[static_cast<unsigned short>(aMessageToSend.myMessageType)].Size() > 0, "ERROR: No reciever to recieve message");
-		MessageReciever* explainginReciever = myRecievers[static_cast<unsigned short>(aMessageToSend.myMessageType)][iReciever];
-		explainginReciever->RecieveMessage(aMessageToSend);
-	}
-}
-
-
-
 
 SingletonPostMaster::SingletonPostMaster()
 {

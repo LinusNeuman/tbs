@@ -5,7 +5,7 @@
 #include "RecieverTypes.h"
 
 class MessageReciever;
-struct Message;
+//struct Message;
 
 class SingletonPostMaster
 {
@@ -20,13 +20,14 @@ public:
 	
 	static bool CheckIfExists();
 	
-
-	static inline void PostMessage(const Message & aMessageToSend);
+	template <typename MessageType>
+	static inline void PostMessage(const MessageType & aMessageToSend);
 private:
 	SingletonPostMaster();
 	~SingletonPostMaster();
 
-	void InternalPostMessage(const Message & aMessageToSend);
+	template <typename MessageType>
+	void InternalPostMessage(const MessageType & aMessageToSend);
 
 	static SingletonPostMaster * ourInstance;
 
@@ -35,13 +36,26 @@ private:
 	CU::GrowingArray<CU::GrowingArray<MessageReciever*>> myRecievers;
 };
 
+template <typename MessageType>
+void SingletonPostMaster::PostMessage(const MessageType & aMessageToSend)
+{
+	GetInstance().InternalPostMessage(aMessageToSend);
+}
+
+template <typename MessageType>
+void SingletonPostMaster::InternalPostMessage(const MessageType & aMessageToSend)
+{
+	for (unsigned short iReciever = 0; iReciever < myRecievers[static_cast<unsigned short>(aMessageToSend.myMessageType)].Size(); ++iReciever)
+	{
+		DL_ASSERT(myRecievers[static_cast<unsigned short>(aMessageToSend.myMessageType)].Size() > 0, "ERROR: No reciever to recieve message");
+		MessageReciever* explainginReciever = myRecievers[static_cast<unsigned short>(aMessageToSend.myMessageType)][iReciever];
+		explainginReciever->RecieveMessage(aMessageToSend);
+	}
+}
+
 inline SingletonPostMaster & SingletonPostMaster::GetInstance()
 {
 	DL_ASSERT(ourInstance != nullptr, "PostMaster pointer is being used but it is nullptr");
 	return *ourInstance;
 }
 
-inline void SingletonPostMaster::PostMessage(const Message & aMessageToSend)
-{
-	GetInstance().InternalPostMessage(aMessageToSend);
-}

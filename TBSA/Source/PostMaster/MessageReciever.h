@@ -1,13 +1,14 @@
 #pragma once
 
-struct Message;
+#include <Message/TestPosition.h>
 
 class MessageReciever
 {
 public:
-	virtual ~MessageReciever();
+	virtual ~MessageReciever()
+	{}
 
-	virtual void RecieveMessage(const Message & aMessageToRecieve) = 0;
+	virtual void RecieveMessage(const TestPositionMessage aMessage) = 0;
 
 protected:
 	MessageReciever()

@@ -140,8 +140,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\MessageEvent.h" />
     <ClInclude Include="Message\RenderSpriteEvent.h" />
+    <ClInclude Include="Message\TestPosition.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

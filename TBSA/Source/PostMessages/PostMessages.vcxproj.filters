@@ -35,5 +35,11 @@
     <ClInclude Include="Message\RenderSpriteEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Message\BaseMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\TestPosition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
