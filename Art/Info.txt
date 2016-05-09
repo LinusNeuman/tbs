@@ -1,3 +1,19 @@
 Information, skalor, anteckningar osv
 ----------------------------------------------
 
+Camera:
+TX = 16
+TY = 12.641
+TZ = 16
+RX = -30
+RY = 45
+RZ = 0
+Ortographic
+
+Tile cube 3d
+X = 1
+Y = 13/16 (0.8125)
+Z = 1
+
+Tile 2d
+128 x 128 pixels
