@@ -5,7 +5,7 @@
 
 class WrappedSprite;
 class RenderConverter;
-class Player;
+class Actor;
 class PlayerController;
 
 class CGameWorld : public GameState
@@ -25,6 +25,6 @@ private:
 
 	WrappedSprite * testSprite;
 
-	Player *myPlayer, *myPlayer2;
+	Actor *myPlayer, *myPlayer2;
 	PlayerController *myPlayerController;
 };
