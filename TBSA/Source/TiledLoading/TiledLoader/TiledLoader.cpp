@@ -5,12 +5,13 @@
 #include <CU/DLDebug/DL_Debug.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <MapTile/MapTile.h>
+#include "../../Game/Room/IsometricTile.h"
 
 picojson::object& GetObject(picojson::value aValue);
 double& GetNumber(picojson::value aValue);
 picojson::array GetArray(picojson::value aValue);
 
-void TiledLoader::Load(std::string aFilePath, TileMap* aTileMap)
+void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile> someTiles)
 {
 	picojson::value root;
 
@@ -30,7 +31,10 @@ void TiledLoader::Load(std::string aFilePath, TileMap* aTileMap)
 
 	for (size_t i = 0; i < height * width; i++)
 	{
+		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / height)));
+		newTile.Init();
 		
+		for (layers)
 	}
 
 }

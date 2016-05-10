@@ -15,6 +15,7 @@ public:
 	MapTile const * GetMapTileByIndex(unsigned int aXindex, unsigned int aYindex);
 	MapTile const * GetMapTileByIndex(CommonUtilities::Vector2ui aIndex);
 
+
 private:
 	CommonUtilities::GrowingArray<MapTile> myTiles;
 	unsigned int myMapWidth;

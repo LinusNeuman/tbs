@@ -27,3 +27,13 @@ void IsometricTile::Draw() const
 {
 	mySprite->Draw(myPosition);
 }
+
+void IsometricTile::AddSpriteLayer(unsigned int aSprite)
+{
+	myGraphicsLayers.Add(aSprite);
+}
+
+void IsometricTile::SetDoor(const Door& aDoor)
+{
+	myDoor = aDoor;
+}
