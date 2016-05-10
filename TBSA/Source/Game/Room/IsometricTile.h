@@ -21,14 +21,12 @@ public:
 	void Init();
 
 	void Draw() const;
-
+	void AddSpriteLayer(WrappedSprite* aSprite);
 	inline eTileType GetTileType()const;
 	inline void SetTileType(eTileType);
 
 	inline int GetRoomId() const;
 	inline void SetRoomId(unsigned int aId);
-
-	void AddSpriteLayer(unsigned int aSprite);
 
 	void SetDoor(const Door& aDoor);
 
@@ -38,7 +36,7 @@ private:
 
 	eTileType myType;
 	unsigned int myRoomId;
-	CommonUtilities::GrowingArray<unsigned int> myGraphicsLayers;
+	CommonUtilities::GrowingArray<WrappedSprite *> myGraphicsLayers;
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 };

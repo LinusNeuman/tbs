@@ -28,7 +28,7 @@ void IsometricTile::Draw() const
 	mySprite->Draw(myPosition);
 }
 
-void IsometricTile::AddSpriteLayer(unsigned int aSprite)
+void IsometricTile::AddSpriteLayer(WrappedSprite * aSprite)
 {
 	myGraphicsLayers.Add(aSprite);
 }
