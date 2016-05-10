@@ -72,16 +72,19 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 				}
 
 				eTileType tileType = static_cast<eTileType>(tileId);
+				newTile.SetTileType(tileType);
 				if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
 				{
-					newTile.SetDoor()
+					newTile.SetDoor(Door(roomId));
 				}
 			}
 			else
 			{
-				
+				//todo: add code for graphics when availible
 			}
 		}
+
+		someTiles.Add(newTile);
 	}
 
 }

@@ -4,11 +4,11 @@
 
 IsometricTile::IsometricTile()
 {
-	myPosition = CU::Vector2f::Zero;
+	myPosition = CommonUtilities::Vector2f::Zero;
 }
 
 
-IsometricTile::IsometricTile(const CU::Vector2f & aPosition)
+IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 {
 	myPosition = aPosition;
 }

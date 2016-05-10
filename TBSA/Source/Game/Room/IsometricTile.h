@@ -1,5 +1,6 @@
 #pragma once
 #include <Rend/WrappedSprite.h>
+#include <CU/GrowingArray/GrowingArray.h>
 #include "Door.h"
 
 enum class eTileType
@@ -16,7 +17,7 @@ class IsometricTile
 {
 public:
 	IsometricTile();
-	IsometricTile(const CU::Vector2f & aPosition);
+	IsometricTile(const CommonUtilities::Vector2f & aPosition);
 	~IsometricTile();
 
 	void Init();
@@ -32,7 +33,7 @@ public:
 	void SetDoor(const Door& aDoor);
 
 private:
-	CU::Vector2f myPosition;
+	CommonUtilities::Vector2f myPosition;
 	WrappedSprite * mySprite;
 
 	eTileType myType;
