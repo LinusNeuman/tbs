@@ -1,1 +1,2 @@
-﻿#include "DataSpriteSheet.h"
+﻿#include "stdafx.h"
+#include "DataSpriteSheet.h"

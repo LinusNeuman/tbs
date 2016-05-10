@@ -12,6 +12,7 @@ public:
 
 	void SetSecondId(unsigned int anId);
 
+	Door& operator=(const Door& aDoor);
 
 private:
 	CommonUtilities::Vector2f myPosition;
@@ -19,4 +20,5 @@ private:
 	unsigned int myFirstId;
 	unsigned int mySecondId;
 	bool myCompleted;
+	bool myIsSet;
 };

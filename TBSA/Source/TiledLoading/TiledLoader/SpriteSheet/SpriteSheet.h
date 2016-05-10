@@ -2,6 +2,7 @@
 // CreationDate: 10/05/2016
 #pragma once
 #include <CU/Vectors/vector2.h>
+#include <string>
 
 class WrappedSprite;
 
@@ -18,6 +19,7 @@ public:
 	
 	WrappedSprite* CreateSprite(unsigned int aImageId, bool aUniqueId = true);
 	unsigned int GetFirstIndex();
+	std::string GetName();
 
 private:
 	static std::string ourFolder;
@@ -27,4 +29,5 @@ private:
 
 	unsigned int myFirstId;
 	CommonUtilities::Vector2f mySize;
+	
 };

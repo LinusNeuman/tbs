@@ -29,7 +29,18 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 	picojson::object rootObject = GetObject(root);
 
-	CommonUtilities::GrowingArray<SpriteSheet> aSpriteSheet = LoadSpriteSheets(GetArray(rootObject["tilesets"]), fileEnding);
+	CommonUtilities::GrowingArray<SpriteSheet> SpriteSheets = LoadSpriteSheets(GetArray(rootObject["tilesets"]), fileEnding);
+	SpriteSheet dataSheet;
+
+	for (size_t i = 0; i < SpriteSheets.Size(); i++)
+	{
+		std::string name = SpriteSheets[i].GetName();
+		if (name[0] == '_')
+		{
+			dataSheet = SpriteSheets[i];
+			break;
+		}
+	}
 
 	unsigned int height = static_cast<unsigned int>(GetNumber(rootObject["height"]));
 	unsigned int width = static_cast<unsigned int>(GetNumber(rootObject["width"]));
@@ -43,7 +54,33 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 		
 		for (size_t j = 0; j < layers.size(); ++i)
 		{
-			
+			picojson::object currentLayer = GetObject(layers[i]);
+			std::string name = GetString(currentLayer["name"]);
+			picojson::array data = GetArray(currentLayer["data"]);
+
+			if (name[0] == '_')
+			{
+				unsigned int lastUnderscore = name.find_last_of('_');
+				unsigned int roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
+
+				newTile.SetRoomId(roomId);
+
+				int tileId = GetNumber(data[i]) - dataSheet.GetFirstIndex() + 1;
+				if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
+				{
+					tileId = 0;
+				}
+
+				eTileType tileType = static_cast<eTileType>(tileId);
+				if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
+				{
+					newTile.SetDoor()
+				}
+			}
+			else
+			{
+				
+			}
 		}
 	}
 

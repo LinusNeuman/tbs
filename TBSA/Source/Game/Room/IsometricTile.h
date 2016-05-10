@@ -8,7 +8,8 @@ enum class eTileType
 	OPEN,
 	BLOCKED,
 	DOOR,
-	DOOR_2
+	DOOR_2,
+	Size
 };
 
 class IsometricTile

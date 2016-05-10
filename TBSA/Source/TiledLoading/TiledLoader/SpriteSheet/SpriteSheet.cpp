@@ -34,7 +34,7 @@ std::string SpriteSheet::GetPath() const
 
 WrappedSprite* SpriteSheet::CreateSprite(unsigned /*aImageId*/, bool /*aUniqueId*/)
 {
-	//Todo: Add code to extract Subimages
+	//TODO : Add code to extract Subimages
 
 	return new WrappedSprite();
 }
@@ -42,4 +42,9 @@ WrappedSprite* SpriteSheet::CreateSprite(unsigned /*aImageId*/, bool /*aUniqueId
 unsigned SpriteSheet::GetFirstIndex()
 {
 	return myFirstId;
+}
+
+std::string SpriteSheet::GetName()
+{
+	return  myName;
 }
