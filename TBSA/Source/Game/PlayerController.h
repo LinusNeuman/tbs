@@ -9,7 +9,7 @@ public:
 	PlayerController();
 	~PlayerController();
 	void AddPlayer(Actor *aPlayer);
-	void SelectPlayer(Actor *aPlayer);
+	void SelectPlayer();
 	void NotifyPlayers(const CU::Time aDeltaTime) const;
 private:
 	CU::GrowingArray<Actor*> myPlayers;

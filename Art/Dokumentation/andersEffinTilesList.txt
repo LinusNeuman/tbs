@@ -1,0 +1,6 @@
+LD vill ha dessa tiles också i ngn första iteration på:
+
+* Start 
+* Slut 
+* Objective
+* Cache/stash/safe
