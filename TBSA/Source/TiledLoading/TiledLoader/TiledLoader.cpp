@@ -4,14 +4,21 @@
 #include <CU/Utility/FileHandling.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <CU/GrowingArray/GrowingArray.h>
-#include <MapTile/MapTile.h>
+
 #include "../../Game/Room/IsometricTile.h"
+#include "SpriteSheet/SpriteSheet.h"
+
+
 
 picojson::object& GetObject(picojson::value aValue);
-double& GetNumber(picojson::value aValue);
-picojson::array GetArray(picojson::value aValue);
+double& GetNumber( picojson::value aValue);
+picojson::array GetArray( picojson::value aValue);
+std::string GetString( picojson::value aValue);
+CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const picojson::value& aYValue);
 
-void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile> someTiles)
+CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType);
+
+void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile>& someTiles)
 {
 	picojson::value root;
 
@@ -22,10 +29,10 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 	picojson::object rootObject = GetObject(root);
 
+	CommonUtilities::GrowingArray<SpriteSheet> aSpriteSheet = LoadSpriteSheets(GetArray(rootObject["tilesets"]), fileEnding);
+
 	unsigned int height = static_cast<unsigned int>(GetNumber(rootObject["height"]));
 	unsigned int width = static_cast<unsigned int>(GetNumber(rootObject["width"]));
-
-	CommonUtilities::GrowingArray<MapTile> someMapTiles;
 
 	picojson::array layers = GetArray(rootObject["layers"]);
 
@@ -34,7 +41,10 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / height)));
 		newTile.Init();
 		
-		for (layers)
+		for (size_t j = 0; j < layers.size(); ++i)
+		{
+			
+		}
 	}
 
 }
@@ -51,8 +61,39 @@ double& GetNumber(picojson::value aValue)
 	return aValue.get<double>();
 }
 
-picojson::array GetArray(picojson::value aValue)
+picojson::array GetArray( picojson::value aValue)
 {
 	DL_ASSERT(aValue.is<picojson::array>(), "ERROR: Json value is not an array");
 	return aValue.get<picojson::array>();
+}
+
+std::string GetString( picojson::value aValue)
+{
+	DL_ASSERT(aValue.is<std::string>(), "ERROR: Json value is not a string");
+	return aValue.get<std::string>();
+}
+
+CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const picojson::value& aYValue)
+{
+	const float x = GetNumber(aXValue);
+	const float y = GetNumber(aYValue);
+
+	return CommonUtilities::Vector2f(x, y);
+}
+
+CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType)
+{
+	CommonUtilities::GrowingArray<SpriteSheet> returnArray;
+	for (size_t i = 0; i < aSpriteSheetArray.size(); ++i)
+	{
+		picojson::object currentObject = GetObject(aSpriteSheetArray[i]);
+
+		std::string name = GetString(currentObject["name"]);
+		unsigned int firstId = GetNumber(currentObject["firstgid"]);
+		CommonUtilities::Vector2f size = GetVector2f(currentObject["tilewidth"], currentObject["tileheight"]);
+		
+		returnArray.Add(SpriteSheet(name, size, aFileType, firstId));
+	}
+
+	return returnArray;
 }
