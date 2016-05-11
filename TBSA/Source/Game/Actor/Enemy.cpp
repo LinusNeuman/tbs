@@ -13,5 +13,5 @@ Enemy::~Enemy()
 
 void Enemy::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorType)
 {
-
+	Actor::Init(aStartPosition, aActorType);
 }

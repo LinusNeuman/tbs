@@ -15,5 +15,6 @@ private:
 	CU::GrowingArray<Actor*> myPlayers;
 	CU::Vector2f myMousePosition;
 	Actor *mySelectedPlayer;
+	unsigned short mySelectedPlayerIndex;
 };
 

@@ -3,6 +3,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include "Room/IsometricTile.h"
 #include <PlayerFactory/PlayerFactory.h>
+#include <EnemyFactory/EnemyFactory.h>
 
 
 class WrappedSprite;
@@ -27,5 +28,6 @@ private:
 
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
-	PlayerFactory myFactory;
+	PlayerFactory myPlayerFactory;
+	EnemyFactory myEnemyFactory;
 };

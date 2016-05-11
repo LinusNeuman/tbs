@@ -3,7 +3,13 @@
 #include "../Game/Actor/Player.h"
 #include <CU/Memory Pool/MemoryPool.h>
 
-struct PlayerData
+struct PlayerOneData
+{
+	eActorType myActortype;
+	CU::Vector2f myPosition;
+};
+
+struct PlayerTwoData
 {
 	eActorType myActortype;
 	CU::Vector2f myPosition;
@@ -16,10 +22,11 @@ public:
 	PlayerFactory();
 	~PlayerFactory();
 	void LoadFromJson();
-	Player* CreatePlayer();
+	Player* CreatePlayer(eActorType aActorType);
 	void ReturnPlayer(Player* aPlayer);
 private:
 	CommonUtilities::MemoryPool<Player, 2> myPlayerPool;
-	PlayerData myPlayerData;
+	PlayerOneData myPlayerOneData;
+	PlayerTwoData myPlayerTwoData;
 };
 

@@ -52,7 +52,8 @@ void CGameWorld::Init()
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
-	myFactory.LoadFromJson();
+	myPlayerFactory.LoadFromJson();
+	myEnemyFactory.LoadFromJson();
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
@@ -60,15 +61,14 @@ void CGameWorld::Init()
 	}*/
 
 	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
-	myPlayerController = new PlayerController();
-	//myPlayer = PlayerFactory::CreatePlayer();
-	//myPlayer2 = new Player(CU::Vector2f(4, 5), eActorType::ePlayerTwo);
 
-	myPlayer = myFactory.CreatePlayer();
-	myPlayer2 = myFactory.CreatePlayer();
+	myPlayerController = new PlayerController();
+	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
+	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
-	//myEnemy = new Enemy(CU::Vector2f(6, 6), eActorType::eEnemyOne);
+	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
+	myPlayerController->AddPlayer(myEnemy);
 }
 
 
@@ -84,6 +84,10 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	{
 		myPlayerController->SelectPlayer();
 	}
+	if (GetInput::GetKeyPressed(DIK_1) == true)
+	{
+
+	}
 
 	if (GetInput::GetKeyReleased(DIK_Q) == true)
 	{
@@ -94,7 +98,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
-	//myEnemy->Update(aTimeDelta);
+	myEnemy->Update(aTimeDelta);
 	return eStackReturnValue::eStay;
 }
 
@@ -102,9 +106,9 @@ void CGameWorld::Draw() const
 {
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
-
-	testSprite->Draw(CU::Vector2f(5.f, 5.f));
-
 	myPlayer2->Draw();
-	//myEnemy->Draw();
+	testSprite->Draw(CU::Vector2f(5.f, 5.f));
+	myEnemy->Draw();
+
+	
 }

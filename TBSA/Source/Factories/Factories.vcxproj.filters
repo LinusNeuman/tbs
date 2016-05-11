@@ -27,12 +27,18 @@
     <ClInclude Include="PlayerFactory\PlayerFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyFactory\EnemyFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFactory\PlayerFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory\EnemyFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
