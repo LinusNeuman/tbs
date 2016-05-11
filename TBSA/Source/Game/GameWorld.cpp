@@ -14,6 +14,8 @@
 #include "Actor/Player.h"
 #include "PlayerController.h"
 #include "Enemy.h"
+#include <JsonWrapper/JsonWrapper.h>
+#include <TiledLoader/TiledLoader.h>
 
 #include "../TiledLoading/TiledLoader/TiledLoader.h"
 
@@ -29,6 +31,7 @@ CGameWorld::CGameWorld()
 	SoundEffect mySound;
 	mySound.Init("Sounds/Horse-neigh.mp3");
 	mySound.Play(0.5f);
+
 }
 
 
@@ -48,7 +51,7 @@ void CGameWorld::Init()
 	testSprite->myLayer = 1;
 
 	TiledLoader::Load("Data/Tiled/test2.json", myTiles);
-
+	
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
 		

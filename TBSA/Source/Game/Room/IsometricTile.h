@@ -1,10 +1,9 @@
 #pragma once
-
 #include <CU/GrowingArray/GrowingArray.h>
 #include "Door.h"
 
-class WrappedSprite;
 
+class WrappedSprite;
 enum class eTileType
 {
 	EMPTY,

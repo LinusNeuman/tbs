@@ -1,6 +1,6 @@
 #include "JsonWrapper.h"
 #include <fstream>
-#include "../../CommonUtilities/CU/DLDebug/DL_Debug.h"
+#include <CU/DLDebug/DL_Debug.h>
 
 JsonWrapper::JsonWrapper()
 {
