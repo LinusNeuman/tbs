@@ -41,7 +41,7 @@ public:
 
 	unsigned short myLayer;
 
-	static RenderConverter * myRenderConverter;
+	//static RenderConverter * myRenderConverter;
 private:
 	unsigned short myImageIndex;
 };
