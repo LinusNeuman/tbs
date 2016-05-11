@@ -50,7 +50,7 @@ void CGameWorld::Init()
 	testSprite->myLayer = 1;
 	
 	
-	TiledLoader::Load("Data/Tiled/test2.json", myTiles);
+	//TiledLoader::Load("Data/Tiled/Test2.json", myTiles);
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
 		
