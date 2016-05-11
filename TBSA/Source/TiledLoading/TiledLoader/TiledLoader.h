@@ -5,10 +5,7 @@
 
 #include "../../Game/Room/IsometricTile.h"
 
-namespace
-{
-	const std::string fileEnding = ".png";
-}
+
 
 class TileMap;
 

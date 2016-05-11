@@ -8,8 +8,13 @@
 #include <JsonWrapper/JsonWrapper.h>
 
 
+namespace
+{
+	const std::string fileEnding = ".png";
+}
 
-picojson::object& GetObject(picojson::value aValue);
+
+picojson::object GetObject(picojson::value aValue);
 double& GetNumber( picojson::value aValue);
 picojson::array GetArray( picojson::value aValue);
 std::string GetString( picojson::value aValue);
@@ -52,9 +57,9 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / height)));
 		newTile.Init();
 		
-		for (size_t j = 0; j < layers.size(); ++i)
+		for (size_t j = 0; j < layers.size(); ++j)
 		{
-			picojson::object currentLayer = GetObject(layers[i]);
+			picojson::object currentLayer = GetObject(layers[j]);
 			std::string name = GetString(currentLayer["name"]);
 			picojson::array data = GetArray(currentLayer["data"]);
 
@@ -89,7 +94,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 }
 
-picojson::object& GetObject(picojson::value aValue)
+picojson::object GetObject(picojson::value aValue)
 {
 	DL_ASSERT(aValue.is<picojson::object>(), "ERROR: Json value is not an object");
 	return aValue.get<picojson::object>();
@@ -124,9 +129,11 @@ CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const pico
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType)
 {
 	CommonUtilities::GrowingArray<SpriteSheet> returnArray;
+	returnArray.Init(2);
+
 	for (size_t i = 0; i < aSpriteSheetArray.size(); ++i)
 	{
-		picojson::object currentObject = GetObject(aSpriteSheetArray[i]);
+		picojson::object  currentObject = GetObject(aSpriteSheetArray[i]);
 
 		std::string name = GetString(currentObject["name"]);
 		unsigned int firstId = GetNumber(currentObject["firstgid"]);
