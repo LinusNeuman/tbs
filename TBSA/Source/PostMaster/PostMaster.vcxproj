@@ -116,7 +116,6 @@
     <ClInclude Include="SingletonPostMaster.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MessageReciever.cpp" />
     <ClCompile Include="SingletonPostMaster.cpp" />
   </ItemGroup>
   <ItemGroup>

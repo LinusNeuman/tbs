@@ -14,7 +14,10 @@ public:
 
 	virtual void RecieveMessage(const TestPositionMessage aMessage) override;
 
+	void Draw() const;
+
 private:
 	WrappedSprite * mySprite;
+	CU::Vector2f myPosition;
 };
 

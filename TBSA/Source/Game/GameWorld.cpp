@@ -14,6 +14,8 @@
 #include "Actor/Player.h"
 #include "PlayerController.h"
 #include "Enemy.h"
+#include <SingletonPostMaster.h>
+#include <Message/TestPosition.h>
 
 
 const float Speed = 10.f;
@@ -46,7 +48,7 @@ void CGameWorld::Init()
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->myLayer = 1;
 
-	
+	myTester.Init();
 
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
@@ -111,6 +113,12 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 		DL_ASSERT(isFalse, "IT Works!");
 	}
 
+	if (GetInput::GetKeyReleased(DIK_R) == true)
+	{
+		TestPositionMessage testMessage(CU::Vector2f(6.f, 6.f));
+		SingletonPostMaster::PostMessage(RecieverTypes::ePlayer, testMessage);
+	}
+
 	CU::Vector2f InputVector(kRight - kLeft, kDown - kUp);
 
 	myPlayer->Update(aTimeDelta);
@@ -129,6 +137,8 @@ void CGameWorld::Draw() const
 
 	myPlayer2->Draw();
 	myEnemy->Draw();
+
+	myTester.Draw();
 }
 
 void CGameWorld::SwapBuffers()
