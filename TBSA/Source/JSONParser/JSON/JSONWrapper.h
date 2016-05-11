@@ -1,9 +1,9 @@
 #pragma once
-#include "../../CommonUtilities/CU/DLDebug/DL_Debug.h"
+#include <CU/DLDebug/DL_Debug.h>
 #include "../Pico/picojson.h"
-#include "../../CommonUtilities/CU/GrowingArray/GrowingArray.h"
-#include "../../CommonUtilities/CU/Vectors/vector2.h"
-#include "../../CommonUtilities/CU/NameSpaceAliases.h"
+#include <CU/GrowingArray/GrowingArray.h>
+#include <CU/Vectors/vector2.h>
+#include <CU/NameSpaceAliases.h>
 
 class JSONWrapper
 {

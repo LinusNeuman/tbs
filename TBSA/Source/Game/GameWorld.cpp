@@ -14,6 +14,8 @@
 #include "Actor/Player.h"
 #include "PlayerController.h"
 #include "Enemy.h"
+#include <JsonWrapper/JsonWrapper.h>
+
 
 
 const float Speed = 10.f;
@@ -45,7 +47,7 @@ void CGameWorld::Init()
 	testSprite = new WrappedSprite();	
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->myLayer = 1;
-
+	
 	
 
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
