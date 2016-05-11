@@ -7,6 +7,7 @@
 
 #include "../../Game/Room/IsometricTile.h"
 #include "SpriteSheet/SpriteSheet.h"
+#include <JsonWrapper/JsonWrapper.h>
 
 
 
@@ -26,8 +27,9 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 	std::string err = picojson::parse(root , JsonData);
 	
 	DL_ASSERT(err.empty(), (std::string("ERROR from Json: ") + err).c_str());
+	
 
-	picojson::object rootObject = GetObject(root);
+	picojson::object rootObject = JsonWrapper::GetPicoObject(root);
 
 	CommonUtilities::GrowingArray<SpriteSheet> SpriteSheets = LoadSpriteSheets(GetArray(rootObject["tilesets"]), fileEnding);
 	SpriteSheet dataSheet;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "IsometricTile.h"
+#include <Rend/WrappedSprite.h>
 
 
 IsometricTile::IsometricTile()

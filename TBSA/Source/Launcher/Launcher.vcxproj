@@ -128,7 +128,7 @@
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -147,7 +147,7 @@
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -200,7 +200,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -278,6 +278,9 @@
     </ProjectReference>
     <ProjectReference Include="..\ThreadPool\ThreadPool.vcxproj">
       <Project>{c8af6e8b-88ca-4a10-912d-36197ac37dca}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TiledLoading\TiledLoading.vcxproj">
+      <Project>{b0e30c9f-422d-4ce9-8617-f3b6792c9ca3}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
