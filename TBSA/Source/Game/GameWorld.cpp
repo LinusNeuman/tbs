@@ -51,12 +51,8 @@ void CGameWorld::Init()
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->myLayer = 1;
 
-	myTester.Init();
-
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
-		
-
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
 		myTiles.Add(IsometricTile(tempderp));
 	}
@@ -76,11 +72,6 @@ void CGameWorld::Init()
 eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
 	(aStateStack);
-
-	float kLeft = 0.f;
-	float kRight = 0.f;
-	float kUp = 0.f;
-	float kDown = 0.f;
 	
 	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
@@ -89,26 +80,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	if (GetInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		myPlayerController->SelectPlayer();
-	}
-	if (GetInput::GetKeyDown(DIK_H) == true)
-	{
-		kLeft = 1.f;
-	}
-
-	if (GetInput::GetKeyDown(DIK_K) == true)
-	{
-		kRight = 1.f;
-	}
-
-	if (GetInput::GetKeyDown(DIK_U) == true)
-	{
-		kUp = 1.f;
-	}
-
-	if (GetInput::GetKeyDown(DIK_J) == true)
-	{
-		kDown = 1.f;
-	}
+	}	
 
 	if (GetInput::GetKeyReleased(DIK_Q) == true)
 	{
@@ -116,13 +88,12 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 		DL_ASSERT(isFalse, "IT Works!");
 	}
 
-	if (GetInput::GetKeyReleased(DIK_R) == true)
+	/*if (GetInput::GetKeyReleased(DIK_R) == true)
 	{
 		TestPositionMessage testMessage(RecieverTypes::ePlayer, CU::Vector2f(6.f, 6.f));
 		SingletonPostMaster::PostMessage(testMessage);
-	}
+	}*/
 
-	CU::Vector2f InputVector(kRight - kLeft, kDown - kUp);
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
@@ -141,7 +112,6 @@ void CGameWorld::Draw() const
 	myPlayer2->Draw();
 	myEnemy->Draw();
 
-	myTester.Draw();
 }
 
 void CGameWorld::SwapBuffers()
