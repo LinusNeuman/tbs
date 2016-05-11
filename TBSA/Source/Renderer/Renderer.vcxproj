@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="Rend\RenderCommand.h" />
     <ClInclude Include="Rend\RenderConverter.h" />
+    <ClInclude Include="Rend\RenderData.h" />
     <ClInclude Include="Rend\Renderer.h" />
     <ClInclude Include="Rend\RenderLayerEnum.h" />
     <ClInclude Include="Rend\WrappedSprite.h" />

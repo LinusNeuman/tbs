@@ -47,7 +47,7 @@ void CGameWorld::Init()
 
 	testSprite = new WrappedSprite();	
 	testSprite->Init("Sprites/camera3.png");
-	testSprite->myLayer = 1;
+	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 
 	TiledLoader::Load("Data/Tiled/test2.json", myTiles);
 	

@@ -13,19 +13,19 @@ Actor::Actor(const CU::Vector2f &aStartPosition, const eActorType &aActorType)
 	{
 	case eActorType::ePlayerOne: 
 		mySprite->Init("Sprites/camera3.png");
-		mySprite->myLayer = 1;
+		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		break;
 	case eActorType::ePlayerTwo: 
 		mySprite->Init("Sprites/camera7.png");
-		mySprite->myLayer = 1;
+		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		break;
 	case eActorType::eEnemyOne: 
 		mySprite->Init("Sprites/camera4.png");
-		mySprite->myLayer = 1;
+		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		break;
 	case eActorType::eEnemyTwo: 
 		mySprite->Init("Sprites/camera4.png");
-		mySprite->myLayer = 1;
+		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		break;
 	default:
 		break;
