@@ -4,6 +4,10 @@
 #include "WrappedSprite.h"
 #include <CU/Vectors/vector2.h>
 
+RenderConverter * RenderConverter::ourInstance = nullptr;
+
+
+
 const float TileWidth = 10;
 const float TileSize = 64.f;
 const float TileSizeHalf = 32.f;
@@ -17,15 +21,34 @@ RenderConverter::~RenderConverter()
 {
 }
 
+
+
+void RenderConverter::Create()
+{
+	if (ourInstance == nullptr)
+	{
+		ourInstance = new RenderConverter();
+	}
+}
+
+void RenderConverter::Destroy()
+{
+	if (ourInstance != nullptr)
+	{
+		delete ourInstance;
+		ourInstance = nullptr;
+	}
+}
+
 void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 {
-	myRenderer.Init();
-	myRenderer.SetWindowSize(aWindowSize);
+	GetInstance().myRenderer.Init();
+	GetInstance().myRenderer.SetWindowSize(aWindowSize);
 
-	if (WrappedSprite::myRenderConverter == nullptr)
+	/*if (WrappedSprite::myRenderConverter == nullptr)
 	{
 		WrappedSprite::myRenderConverter = this;
-	}
+	}*/
 }
 
 
@@ -39,25 +62,25 @@ void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRende
 
 	const float Priority = (tempPosition.x + (tempPosition.y * TileWidth));
 
-	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority, aSpriteToRender.GetLayer()));
+	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority, aSpriteToRender.GetLayer()));
 }
 
 void RenderConverter::CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
-	myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, aSpriteToRender.GetLayer()));
+	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, aSpriteToRender.GetLayer()));
 }
 
 void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
 {
-	myRenderer.AddRenderCommand(aRenderCommand);
+	GetInstance().myRenderer.AddRenderCommand(aRenderCommand);
 }
 
-void RenderConverter::Draw() const
+void RenderConverter::Draw()
 {
-	myRenderer.Draw();
+	GetInstance().myRenderer.Draw();
 }
 
 void RenderConverter::SwapBuffers()
 {
-	myRenderer.SwapBuffer();
+	GetInstance().myRenderer.SwapBuffer();
 }

@@ -43,8 +43,6 @@ CGameWorld::~CGameWorld()
 
 void CGameWorld::Init()
 {
-	myRenderer = new RenderConverter();
-	myRenderer->Init(CU::Vector2ui(1920, 1080));
 	myTiles.Init(100);
 
 	testSprite = new WrappedSprite();	
@@ -88,12 +86,6 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 		DL_ASSERT(isFalse, "IT Works!");
 	}
 
-	/*if (GetInput::GetKeyReleased(DIK_R) == true)
-	{
-		TestPositionMessage testMessage(RecieverTypes::ePlayer, CU::Vector2f(6.f, 6.f));
-		SingletonPostMaster::PostMessage(testMessage);
-	}*/
-
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
@@ -104,17 +96,10 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 void CGameWorld::Draw() const
 {
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
-	myRenderer->Draw();
 	myPlayer->Draw();
 
 	testSprite->Draw(CU::Vector2f(5.f, 5.f));
 
 	myPlayer2->Draw();
 	myEnemy->Draw();
-
-}
-
-void CGameWorld::SwapBuffers()
-{
-	myRenderer->SwapBuffers();
 }

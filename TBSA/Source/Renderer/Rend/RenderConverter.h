@@ -6,22 +6,33 @@ class WrappedSprite;
 class RenderConverter
 {
 public:
+	static void Create();
+	static void Destroy();
+
+	static void Init(const CU::Vector2ui & aWindowSize);
+
+	static void CalculateAndRenderIso(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
+	static void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
+
+	static void AddRenderCommand(RenderCommand & aRenderCommand);
+
+	static void Draw();
+
+	static void SwapBuffers();
+
+private:
 	RenderConverter();
 	~RenderConverter();
 
-	void Init(const CU::Vector2ui & aWindowSize);
+	static RenderConverter * ourInstance;
 
-	void CalculateAndRenderIso(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
-	void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
-
-	void AddRenderCommand(RenderCommand & aRenderCommand);
-
-	void Draw() const;
-
-	void SwapBuffers();
-
-private:
-	
+	static RenderConverter & GetInstance();
 
 	Renderer myRenderer;
 };
+
+inline RenderConverter & RenderConverter::GetInstance()
+{
+	DL_ASSERT(ourInstance != nullptr, "RenderConverter Singleton instance is nullptr");
+	return *ourInstance;
+}

@@ -13,6 +13,7 @@
 #include <JSON/JSONWrapper.h>
 #include <CU/Thread/ThreadHelper.h>
 #include <SingletonPostMaster.h>
+#include <Rend/RenderConverter.h>
 //#include "MainSingleton/MainSingleton.h"
 
 using namespace std::placeholders;
@@ -41,6 +42,7 @@ CGame::CGame()
 CGame::~CGame()
 {
 	JSONWrapper::Destroy();
+	RenderConverter::Destroy();
 }
 
 
@@ -93,7 +95,8 @@ void CGame::Init(const std::wstring& aVersion)
 
 void CGame::InitCallBack()
 {
-	//MainSingleton::Init();
+	RenderConverter::Create();
+	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
 
 	myGameWorld = new CGameWorld();
@@ -135,7 +138,7 @@ void CGame::UpdateWork()
 		else
 		{
 			myGameStateStack.Render();
-			reinterpret_cast<CGameWorld*>(myGameWorld)->SwapBuffers();
+			RenderWork();
 		}
 		//myThreadPool.Update();
 	}
@@ -143,7 +146,8 @@ void CGame::UpdateWork()
 
 void CGame::RenderWork()
 {
-	//myGameStateStack.Render();
+	RenderConverter::Draw();
+	RenderConverter::SwapBuffers();
 }
 
 
