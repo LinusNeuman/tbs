@@ -19,7 +19,7 @@ public:
 	void SetSelected(const bool aValue);
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
-	void Move(CU::Vector2f aTargetPosition, const CU::Time aDeltaTime);
+	void Move(CU::Vector2f aTargetPosition);
 	CU::Vector2f GetPosition() const
 	{
 		return myPosition;

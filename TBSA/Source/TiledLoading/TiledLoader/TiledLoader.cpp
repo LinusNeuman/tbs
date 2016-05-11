@@ -54,7 +54,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 	for (size_t i = 0; i < height * width; i++)
 	{
-		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / height)));
+		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / width)));
 		newTile.Init();
 		
 		for (size_t j = 0; j < layers.size(); ++j)

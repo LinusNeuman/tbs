@@ -2,9 +2,9 @@
 #include "GameWorld.h"
 
 #include <tga2d/Engine.h>
-#include <tga2d/sprite/sprite.h>
+//#include <tga2d/sprite/sprite.h>
 #include <CU/Vectors/Vector2.h>
-#include <Rend/Renderer.h>
+//#include <Rend/Renderer.h>
 #include <Rend/WrappedSprite.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
@@ -16,9 +16,9 @@
 #include "Enemy.h"
 #include <TiledLoader/TiledLoader.h>
 #include <SingletonPostMaster.h>
-#include <Message/TestPosition.h>
+//#include <Message/TestPosition.h>
 
-#include "../TiledLoading/TiledLoader/TiledLoader.h"
+//#include "../TiledLoading/TiledLoader/TiledLoader.h"
 
 const float Speed = 10.f;
 const USHORT TileCount = 100;
@@ -49,7 +49,7 @@ void CGameWorld::Init()
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 
-	TiledLoader::Load("Data/Tiled/test2.json", myTiles);
+	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
 	
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
@@ -75,7 +75,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		myPlayerController->NotifyPlayers(aTimeDelta);
+		myPlayerController->NotifyPlayers();
 	}
 	if (GetInput::GetKeyPressed(DIK_TAB) == true)
 	{

@@ -8,9 +8,13 @@ public:
 	virtual ~MessageReciever()
 	{}
 
-	virtual void RecieveMessage(const TestPositionMessage aMessage) = 0;
+	virtual void RecieveMessage(const TestPositionMessage aMessage);
 
 protected:
 	MessageReciever()
 	{}
 };
+
+inline void MessageReciever::RecieveMessage(const TestPositionMessage aMessage)
+{
+}
