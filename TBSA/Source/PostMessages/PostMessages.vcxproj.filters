@@ -8,5 +8,6 @@
     <ClInclude Include="Message\TestPosition.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
+    <ClInclude Include="Message\WindowRectChangedMessage.h" />
   </ItemGroup>
 </Project>

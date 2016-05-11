@@ -141,6 +141,7 @@
     <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\TestPosition.h" />
+    <ClInclude Include="Message\WindowRectChangedMessage.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

@@ -18,4 +18,6 @@
 //#include <CU/GrowingArray/GrowingArray.h>
 //#include <CU/Vectors/Vector.h>
 //#include <Rend/RenderConverter.h>
-#include "Message/TestPosition.h"
+#include <CU/Vectors/vector2.h>
+//#include <CU/Vectors/vector4.h>
+//#include "Message/TestPosition.h"

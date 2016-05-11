@@ -12,6 +12,8 @@
 #include "windows/windows_window.h"
 #include <windows.h>
 
+#include <Message/WindowRectChangedMessage.h> 
+#include <SingletonPostMaster.h>
 
 #pragma comment( lib, "user32.lib" )
 
@@ -285,6 +287,8 @@ void DX2D::CEngine::UpdateWindowSizeChanges()
 		lastWidth = width;
 		lastHeight = height;
 		SetViewPort(vp_x, vp_y, width, height, 0, 1, true);
+		WindowRectChangedMessage tempMessage(RecieverTypes::eWindowProperties, vp_x, vp_y, width, height);
+		SingletonPostMaster::PostMessage(tempMessage);
 	}
 }
 

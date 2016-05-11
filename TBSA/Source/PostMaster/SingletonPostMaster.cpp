@@ -1,5 +1,5 @@
 #include "SingletonPostMaster.h"
-#include "MessageReciever.h"
+#include "MessageReceiver.h"
 //#include "Message.h"
 
 

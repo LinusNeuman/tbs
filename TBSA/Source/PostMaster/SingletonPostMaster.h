@@ -3,7 +3,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/NameSpaceAliases.h>
 #include <Message/RecieverTypes.h>
-#include "MessageReciever.h"
+#include "MessageReceiver.h"
 
 class MessageReciever;
 //struct Message;

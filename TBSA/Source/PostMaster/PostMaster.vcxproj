@@ -111,10 +111,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Message.h" />
-    <ClInclude Include="MessageReciever.h" />
+    <ClInclude Include="MessageReceiver.h" />
     <ClInclude Include="SingletonPostMaster.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MessageReceiver.cpp" />
     <ClCompile Include="SingletonPostMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
