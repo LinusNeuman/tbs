@@ -11,9 +11,12 @@ namespace DX2D
 
 class RenderCommand;
 class RenderConverter;
+class Renderer;
 
 class WrappedSprite
 {
+	friend Renderer;
+
 public:
 	WrappedSprite();
 	~WrappedSprite();
@@ -30,11 +33,10 @@ public:
 	
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
-	
-	
-	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
 
 private:
+	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
+
 	enumRenderLayer myLayer;
 
 	unsigned short myImageIndex;

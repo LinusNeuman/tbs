@@ -15,6 +15,8 @@ public:
 	static void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
 
 	static void AddRenderCommand(RenderCommand & aRenderCommand);
+	static void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition);
+	static void DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition);
 
 	static void Draw();
 
@@ -36,3 +38,7 @@ inline RenderConverter & RenderConverter::GetInstance()
 	DL_ASSERT(ourInstance != nullptr, "RenderConverter Singleton instance is nullptr");
 	return *ourInstance;
 }
+
+
+#define DRAWLINE(aStartPosition, aEndPosition) RenderConverter::DrawLine((aStartPosition),(aEndPosition));
+#define DRAWISOMETRICLINE(aStartPosition, aEndPosition) RenderConverter::DrawIsometricLine((aStartPosition),(aEndPosition));

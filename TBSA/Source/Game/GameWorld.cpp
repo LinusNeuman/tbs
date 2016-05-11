@@ -88,6 +88,8 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 		DL_ASSERT(isFalse, "IT Works!");
 	}
 
+	//RenderConverter::DrawLine();
+	DRAWLINE(CU::Vector2f::Zero, GetInput::GetMouseWindowPosition());
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);

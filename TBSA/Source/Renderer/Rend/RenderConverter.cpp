@@ -78,6 +78,23 @@ void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
 	GetInstance().myRenderer.AddRenderCommand(aRenderCommand);
 }
 
+void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
+{
+	GetInstance().myRenderer.DrawLine(aStartPosition, aEndPosition);
+}
+
+void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
+{
+	CU::Vector2f tempOffset(550.f, 250.f);
+	CU::Vector2f newStartPos = CU::Vector2f((aStartPosition.x - aStartPosition.y) * TileSizeHalf, ((aStartPosition.x + aStartPosition.y) * TileSizeHalf) / 2.f);
+	newStartPos += tempOffset;
+
+	CU::Vector2f newEndPos = CU::Vector2f((aEndPosition.x - aEndPosition.y) * TileSizeHalf, ((aEndPosition.x + aEndPosition.y) * TileSizeHalf) / 2.f);
+	newEndPos += tempOffset;
+
+	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos);
+}
+
 void RenderConverter::Draw()
 {
 	GetInstance().myRenderer.Draw();
