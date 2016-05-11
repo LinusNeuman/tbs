@@ -85,7 +85,14 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 			}
 			else
 			{
-				//todo: add code for graphics when availible
+				int tileId = GetNumber(data[i]);
+				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
+				{
+					if (tileId >= SpriteSheets[j].GetFirstIndex())
+					{
+						newTile.AddSpriteLayer(SpriteSheets[j].CreateSprite(tileId));
+					}
+				}
 			}
 		}
 

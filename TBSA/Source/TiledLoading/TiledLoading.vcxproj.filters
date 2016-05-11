@@ -22,9 +22,6 @@
     <ClInclude Include="TiledLoader\SpriteSheet\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TiledLoader\DataSpriteSheet\DataSpriteSheet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -32,6 +29,5 @@
     </ClCompile>
     <ClCompile Include="TiledLoader\TiledLoader.cpp" />
     <ClCompile Include="TiledLoader\SpriteSheet\SpriteSheet.cpp" />
-    <ClCompile Include="TiledLoader\DataSpriteSheet\DataSpriteSheet.cpp" />
   </ItemGroup>
 </Project>
