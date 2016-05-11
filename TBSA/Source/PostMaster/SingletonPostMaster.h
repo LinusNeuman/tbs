@@ -2,7 +2,7 @@
 #include <CU/DLDebug/DL_Debug.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/NameSpaceAliases.h>
-#include "RecieverTypes.h"
+#include <Message/RecieverTypes.h>
 
 class MessageReciever;
 //struct Message;
@@ -21,13 +21,13 @@ public:
 	static bool CheckIfExists();
 	
 	template <typename MessageType>
-	static inline void PostMessage(const RecieverTypes aRecieverType, const MessageType & aMessageToSend);
+	static inline void PostMessage(const MessageType & aMessageToSend);
 private:
 	SingletonPostMaster();
 	~SingletonPostMaster();
 
 	template <typename MessageType>
-	void InternalPostMessage(const RecieverTypes aRecieverType, const MessageType & aMessageToSend);
+	void InternalPostMessage(const MessageType & aMessageToSend);
 
 	static SingletonPostMaster * ourInstance;
 
@@ -37,18 +37,18 @@ private:
 };
 
 template <typename MessageType>
-void SingletonPostMaster::PostMessage(const RecieverTypes aRecieverType, const MessageType & aMessageToSend)
+void SingletonPostMaster::PostMessage(const MessageType & aMessageToSend)
 {
-	GetInstance().InternalPostMessage(aRecieverType, aMessageToSend);
+	GetInstance().InternalPostMessage(aMessageToSend);
 }
 
 template <typename MessageType>
-void SingletonPostMaster::InternalPostMessage(const RecieverTypes aRecieverType, const MessageType & aMessageToSend)
+void SingletonPostMaster::InternalPostMessage(const MessageType & aMessageToSend)
 {
-	for (unsigned short iReciever = 0; iReciever < myRecievers[static_cast<unsigned short>(aRecieverType)].Size(); ++iReciever)
+	for (unsigned short iReciever = 0; iReciever < myRecievers[static_cast<unsigned short>(aMessageToSend.myType)].Size(); ++iReciever)
 	{
-		DL_ASSERT(myRecievers[static_cast<unsigned short>(aRecieverType)].Size() > 0, "ERROR: No reciever to recieve message");
-		MessageReciever* explainginReciever = myRecievers[static_cast<unsigned short>(aRecieverType)][iReciever];
+		DL_ASSERT(myRecievers[static_cast<unsigned short>(aMessageToSend.myType)].Size() > 0, "ERROR: No reciever to recieve message");
+		MessageReciever* explainginReciever = myRecievers[static_cast<unsigned short>(aMessageToSend.myType)][iReciever];
 		explainginReciever->RecieveMessage(aMessageToSend);
 	}
 }

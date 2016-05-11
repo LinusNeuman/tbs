@@ -118,8 +118,8 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	if (GetInput::GetKeyReleased(DIK_R) == true)
 	{
-		TestPositionMessage testMessage(CU::Vector2f(6.f, 6.f));
-		SingletonPostMaster::PostMessage(RecieverTypes::ePlayer, testMessage);
+		TestPositionMessage testMessage(RecieverTypes::ePlayer, CU::Vector2f(6.f, 6.f));
+		SingletonPostMaster::PostMessage(testMessage);
 	}
 
 	CU::Vector2f InputVector(kRight - kLeft, kDown - kUp);

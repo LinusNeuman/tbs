@@ -24,9 +24,6 @@
     <ClInclude Include="MessageReciever.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RecieverTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SingletonPostMaster.cpp">
