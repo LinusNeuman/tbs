@@ -6,7 +6,7 @@
 
 
 
-RenderConverter * WrappedSprite::myRenderConverter = nullptr;
+//RenderConverter * WrappedSprite::myRenderConverter = nullptr;
 
 CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
 
@@ -51,6 +51,6 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 
 void WrappedSprite::Draw(const CU::Vector2f & aPosition)
 {
-	DL_ASSERT(myRenderConverter != nullptr, "WrappedSprites render pointer is nullptr");
-	myRenderConverter->CalculateAndRenderIso(*this, aPosition);
+	//DL_ASSERT(myRenderConverter != nullptr, "WrappedSprites render pointer is nullptr");
+	RenderConverter::CalculateAndRenderIso(*this, aPosition);
 }
