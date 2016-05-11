@@ -3,7 +3,6 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include "Room/IsometricTile.h"
 
-#include "TestPostMessage.h"
 
 class WrappedSprite;
 class RenderConverter;
@@ -29,6 +28,4 @@ private:
 
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
-
-	TestPostMessage myTester;
 };
