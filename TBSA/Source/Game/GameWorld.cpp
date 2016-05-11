@@ -14,11 +14,11 @@
 #include "Actor/Player.h"
 #include "PlayerController.h"
 #include "Enemy.h"
-#include <JsonWrapper/JsonWrapper.h>
 #include <TiledLoader/TiledLoader.h>
 #include <SingletonPostMaster.h>
 #include <Message/TestPosition.h>
 
+#include "../TiledLoading/TiledLoader/TiledLoader.h"
 
 const float Speed = 10.f;
 const USHORT TileCount = 100;
@@ -49,13 +49,15 @@ void CGameWorld::Init()
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->myLayer = 1;
 
-	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
+	TiledLoader::Load("Data/Tiled/test2.json", myTiles);
+	
+	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
 		myTiles.Add(IsometricTile(tempderp));
-	}
+	}*/
 
-	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
+	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
 
 	
 	myPlayer = new Player(CU::Vector2f(2, 1), eActorType::ePlayerOne);
@@ -70,7 +72,7 @@ void CGameWorld::Init()
 eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
 	(aStateStack);
-	
+
 	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		myPlayerController->NotifyPlayers(aTimeDelta);
@@ -78,7 +80,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	if (GetInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		myPlayerController->SelectPlayer();
-	}	
+	}
 
 	if (GetInput::GetKeyReleased(DIK_Q) == true)
 	{

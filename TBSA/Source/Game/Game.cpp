@@ -41,7 +41,6 @@ CGame::CGame()
 
 CGame::~CGame()
 {
-	JSONWrapper::Destroy();
 	RenderConverter::Destroy();
 }
 
