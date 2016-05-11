@@ -15,6 +15,7 @@
 #include "PlayerController.h"
 #include "Enemy.h"
 
+#include "../TiledLoading/TiledLoader/TiledLoader.h"
 
 const float Speed = 10.f;
 const USHORT TileCount = 100;
@@ -46,17 +47,17 @@ void CGameWorld::Init()
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->myLayer = 1;
 
-	
+	TiledLoader::Load("Data/Tiled/test2.json", myTiles);
 
-	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
+	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
 		
 
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
 		myTiles.Add(IsometricTile(tempderp));
-	}
+	}*/
 
-	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
+	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
 
 	
 	myPlayer = new Player(CU::Vector2f(2, 1), eActorType::ePlayerOne);

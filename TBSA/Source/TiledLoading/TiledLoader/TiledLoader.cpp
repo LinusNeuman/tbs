@@ -2,8 +2,6 @@
 #include "TiledLoader.h"
 #include <JSON/JSONWrapper.h>
 #include <CU/Utility/FileHandling.h>
-#include <CU/DLDebug/DL_Debug.h>
-#include <CU/GrowingArray/GrowingArray.h>
 
 #include "../../Game/Room/IsometricTile.h"
 #include "SpriteSheet/SpriteSheet.h"
@@ -51,7 +49,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 	{
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / height)));
 		newTile.Init();
-		
+
 		for (size_t j = 0; j < layers.size(); ++i)
 		{
 			picojson::object currentLayer = GetObject(layers[i]);
