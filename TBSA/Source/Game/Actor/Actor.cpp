@@ -51,7 +51,7 @@ void Actor::Draw() const
 	mySprite->Draw(myPosition);
 }
 
-void Actor::Move(CU::Vector2f aTargetPosition, const CU::Time  aDeltaTime)
+void Actor::Move(CU::Vector2f aTargetPosition)
 {
 	myTargetPosition = aTargetPosition;
 }

@@ -77,7 +77,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		myPlayerController->NotifyPlayers(aTimeDelta);
+		myPlayerController->NotifyPlayers();
 	}
 	if (GetInput::GetKeyPressed(DIK_TAB) == true)
 	{

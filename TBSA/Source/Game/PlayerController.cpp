@@ -31,10 +31,10 @@ void PlayerController::SelectPlayer()
 	}
 }
 
-void PlayerController::NotifyPlayers(const CU::Time aDeltaTime) const
+void PlayerController::NotifyPlayers() const
 {
 	if (mySelectedPlayer != nullptr)
 	{
-		mySelectedPlayer->Move(GetInput::GetMouseWindowPosition() / 64.f, aDeltaTime);
+		mySelectedPlayer->Move(GetInput::GetMouseWindowPosition() / 64.f);
 	}
 }
