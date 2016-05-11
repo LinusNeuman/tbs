@@ -30,6 +30,9 @@
     <ClCompile Include="Rend\RenderCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rend\LineRenderCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rend\WrappedSprite.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rend\RenderData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rend\LineRenderCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

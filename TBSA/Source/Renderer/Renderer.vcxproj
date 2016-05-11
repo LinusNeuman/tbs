@@ -132,6 +132,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Rend\LineRenderCommand.cpp" />
     <ClCompile Include="Rend\RenderCommand.cpp" />
     <ClCompile Include="Rend\RenderConverter.cpp" />
     <ClCompile Include="Rend\Renderer.cpp" />
@@ -144,6 +145,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Rend\LineRenderCommand.h" />
     <ClInclude Include="Rend\RenderCommand.h" />
     <ClInclude Include="Rend\RenderConverter.h" />
     <ClInclude Include="Rend\RenderData.h" />
