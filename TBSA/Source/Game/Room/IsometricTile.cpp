@@ -6,12 +6,14 @@
 IsometricTile::IsometricTile()
 {
 	myPosition = CommonUtilities::Vector2f::Zero;
+	myGraphicsLayers.Init(1);
 }
 
 
 IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 {
 	myPosition = aPosition;
+	myGraphicsLayers.Init(1);
 }
 
 IsometricTile::~IsometricTile()
