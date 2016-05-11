@@ -77,7 +77,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -101,7 +101,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -116,12 +116,14 @@
     <ClInclude Include="SingletonPostMaster.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MessageReciever.cpp" />
     <ClCompile Include="SingletonPostMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PostMessages\PostMessages.vcxproj">
+      <Project>{12ffe2ce-8ced-46fe-9b19-76f780675f10}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

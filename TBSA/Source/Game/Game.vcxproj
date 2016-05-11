@@ -122,7 +122,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -140,7 +140,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\$(SolutionDir)PostMessages\</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
@@ -197,7 +197,7 @@
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
@@ -251,6 +251,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestPostMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor\Actor.cpp" />
@@ -271,6 +272,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestPostMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Audio\Audio.vcxproj">

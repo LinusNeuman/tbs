@@ -14,7 +14,8 @@
 // TODO: reference additional headers your program requires here
 
 //#include <CU/DLDebug/DL_Debug.h>
-//#include <CU/NameSpaceAliases.h>
+#include <CU/NameSpaceAliases.h>
 //#include <CU/GrowingArray/GrowingArray.h>
 //#include <CU/Vectors/Vector.h>
 //#include <Rend/RenderConverter.h>
+#include "Message/TestPosition.h"
