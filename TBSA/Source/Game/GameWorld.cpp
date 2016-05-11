@@ -51,7 +51,7 @@ void CGameWorld::Init()
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->myLayer = 1;
 
-	
+	myTester.Init();
 
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
