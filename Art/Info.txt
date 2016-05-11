@@ -3,7 +3,7 @@ Information, skalor, anteckningar osv
 
 Camera:
 TX = 16
-TY = 12.641
+TY = 13.4702 (tidigare 12.641)
 TZ = 16
 RX = -30
 RY = 45
@@ -17,3 +17,5 @@ Z = 1
 
 Tile 2d
 128 x 128 pixels
+
+
