@@ -40,7 +40,6 @@ CGame::CGame()
 
 CGame::~CGame()
 {
-	JSONWrapper::Destroy();
 }
 
 
