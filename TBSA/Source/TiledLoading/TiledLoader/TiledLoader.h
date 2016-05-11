@@ -4,12 +4,8 @@
 */
 
 #include "../../Game/Room/IsometricTile.h"
-#include <CU/GrowingArray/GrowingArray.h>
 
-namespace
-{
-	const std::string fileEnding = ".png";
-}
+
 
 class TileMap;
 
