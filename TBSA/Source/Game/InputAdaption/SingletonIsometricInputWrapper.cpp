@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SingletonIsometricInputWrapper.h"
 #include <CU/Camera/Camera2D.h>
+#include <SingletonPostMaster.h>
 //#include <Isometric/IsometricConversion.h>
 //#include <Renderer.h>
 
@@ -16,11 +17,11 @@ SingletonIsometricInputWrapper * SingletonIsometricInputWrapper::ourInstance = n
 //	throw std::logic_error("The method or operation is not implemented.");
 //}
 
-void SingletonIsometricInputWrapper::Create(const CU::Camera2D & aCameraToAdjustInputToo)
+void SingletonIsometricInputWrapper::Create(/*const CU::Camera2D & aCameraToAdjustInputToo*/)
 {
 	if (ourInstance == nullptr)
 	{
-		ourInstance = new SingletonIsometricInputWrapper(aCameraToAdjustInputToo);
+		ourInstance = new SingletonIsometricInputWrapper(/*aCameraToAdjustInputToo*/);
 	}
 }
 
@@ -33,9 +34,10 @@ void SingletonIsometricInputWrapper::Destroy()
 }
 
 
-SingletonIsometricInputWrapper::SingletonIsometricInputWrapper(const CU::Camera2D & aCameraToAdjustInputToo)
+SingletonIsometricInputWrapper::SingletonIsometricInputWrapper(/*const CU::Camera2D & aCameraToAdjustInputToo*/)
 {
-	myCameraToAdjustTo = &aCameraToAdjustInputToo;
+	SingletonPostMaster::AddReciever(RecieverTypes::eWindowProperties, *this);
+	//myCameraToAdjustTo = &aCameraToAdjustInputToo;
 
 	/*myViewPortSettings.x = 0.f;
 	myViewPortSettings.y = 0.f;
@@ -48,6 +50,7 @@ SingletonIsometricInputWrapper::SingletonIsometricInputWrapper(const CU::Camera2
 
 SingletonIsometricInputWrapper::~SingletonIsometricInputWrapper()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eWindowProperties, *this);
 	//SingletonPostMaster::RemoveReciever(RecieverTypes::eWindowProperties, *this);
 }
 
@@ -56,11 +59,11 @@ CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCarte
 
 	CU::Vector2f mousePosition = GetMouseInViewportNormalized();
 
-	mousePosition.x -= 0.5f;
-	mousePosition.y -= 0.5f;
+	/*mousePosition.x -= 0.5f;
+	mousePosition.y -= 0.5f;*/
 
-	mousePosition.x = mousePosition.x * (1920.f / 1.5f);
-	mousePosition.y = mousePosition.y * (1080.f / 1.5f);
+	mousePosition.x = mousePosition.x * (1920.f);
+	mousePosition.y = mousePosition.y * (1080.f);
 
 	//mousePosition = IsometricToCartesian(mousePosition);
 	//mousePosition = PixelCordinateToTileCordinate(mousePosition);
@@ -73,16 +76,13 @@ CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCarte
 
 CU::Vector2f SingletonIsometricInputWrapper::GetMouseInViewportNormalized() const
 {
-	RECT r;
-	//GetClientRect(*DX2D::CEngine::GetInstance()->GetHWND(), &r);
-
 	CU::Vector2f mousePosition = myInputWrapper.GetMouseWindowPosition();
 
 	mousePosition.x -= myViewPortSettings.x;
 	mousePosition.y -= myViewPortSettings.y;
 
-	mousePosition.x /= (r.right - (myViewPortSettings.x * 2.f));
-	mousePosition.y /= (r.bottom - (myViewPortSettings.y * 2.f));
+	mousePosition.x /= (myWindowRect.z - (myViewPortSettings.x * 2.f));
+	mousePosition.y /= (myWindowRect.w - (myViewPortSettings.y * 2.f));
 
 	return mousePosition;
 }
@@ -95,4 +95,10 @@ void SingletonIsometricInputWrapper::Initialize(HINSTANCE aApplicationInstance, 
 void SingletonIsometricInputWrapper::Update()
 {
 	GetInstance().myInputWrapper.Update();
+}
+
+void SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessage aMessage)
+{
+	myViewPortSettings = aMessage.myViewPortRect;
+	myWindowRect = aMessage.myWindowRect;
 }

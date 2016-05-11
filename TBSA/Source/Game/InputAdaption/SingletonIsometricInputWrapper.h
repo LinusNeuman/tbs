@@ -1,6 +1,6 @@
 #pragma once
 #include <CU/InputWrapper/InputWrapper.h>
-//#include <MessageReciever.h>
+#include <MessageReceiver.h>
 //
 
 namespace CommonUtilities
@@ -8,10 +8,10 @@ namespace CommonUtilities
 	class Camera2D;
 }
 
-class SingletonIsometricInputWrapper //: public MessageReciever
+class SingletonIsometricInputWrapper : public MessageReciever
 {
 public:
-	static void Create(const CU::Camera2D & aCameraToAdjustInputToo);
+	static void Create(/*const CU::Camera2D & aCameraToAdjustInputToo*/);
 	static void Destroy();
 
 	static void Initialize(HINSTANCE aApplicationInstance, HWND aWindow);
@@ -41,10 +41,13 @@ public:
 
 	inline static void SetViewPortSettings(const CU::Vector4f & aViewPortStats);
 
+
+	virtual void RecieveMessage(const WindowRectChangedMessage aMessage) override;
+
 	//virtual void RecieveMessage(const Message & aMessageToRecieve) override;
 
 private:
-	SingletonIsometricInputWrapper(const CU::Camera2D & aCameraToAdjustInputToo);
+	SingletonIsometricInputWrapper(/*const CU::Camera2D & aCameraToAdjustInputToo*/);
 	~SingletonIsometricInputWrapper();
 
 	CU::Vector2f ConvertMouseNormalizedPositionCartesianCordiante() const;
@@ -54,6 +57,7 @@ private:
 	inline static SingletonIsometricInputWrapper & GetInstance();
 
 	CU::Vector4f myViewPortSettings;
+	CU::Vector4f myWindowRect;
 
 	CommonUtilities::InputWrapper myInputWrapper;
 	const CU::Camera2D * myCameraToAdjustTo;

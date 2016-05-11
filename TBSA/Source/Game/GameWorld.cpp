@@ -73,23 +73,27 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 {
 	(aStateStack);
 
-	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		myPlayerController->NotifyPlayers();
 	}
-	if (GetInput::GetKeyPressed(DIK_TAB) == true)
+	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		myPlayerController->SelectPlayer();
 	}
 
-	if (GetInput::GetKeyReleased(DIK_Q) == true)
+	if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
 		DL_ASSERT(isFalse, "IT Works!");
 	}
 
 	//RenderConverter::DrawLine();
-	DRAWLINE(CU::Vector2f::Zero, GetInput::GetMouseWindowPosition());
+	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
+	DRAWLINE(CU::Vector2f::Zero, testLine);
+	DRAWLINE(CU::Vector2f(1920.f, 0.f), testLine);
+	DRAWLINE(CU::Vector2f(1920.f, 1080.f), testLine);
+	DRAWLINE(CU::Vector2f(0.f, 1080.f), testLine);
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);

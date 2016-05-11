@@ -287,8 +287,6 @@ void DX2D::CEngine::UpdateWindowSizeChanges()
 		lastWidth = width;
 		lastHeight = height;
 		SetViewPort(vp_x, vp_y, width, height, 0, 1, true);
-		WindowRectChangedMessage tempMessage(RecieverTypes::eWindowProperties, vp_x, vp_y, width, height);
-		SingletonPostMaster::PostMessage(tempMessage);
 	}
 }
 
@@ -362,6 +360,14 @@ void DX2D::CEngine::SetViewPort(float aTopLeftX, float aTopLeftY, float aWidth, 
 			SetResolution(DX2D::Vector2<unsigned int>(static_cast<unsigned int>(aWidth), static_cast<unsigned int>(aHeight)), false);
 		}	
 		myDirect3D->SetViewPort(aTopLeftX, aTopLeftY, aWidth, aHeight, aMinDepth, aMaxDepth);
+
+		RECT r;
+		GetClientRect(*myHwnd, &r); //get window rect of control relative to screen
+
+		WindowRectChangedMessage tempMessage(RecieverTypes::eWindowProperties, aTopLeftX, aTopLeftY, aWidth, aHeight,
+			r.left, r.top, r.right, r.bottom);
+
+		SingletonPostMaster::PostMessage(tempMessage);
 	}
 }
 
