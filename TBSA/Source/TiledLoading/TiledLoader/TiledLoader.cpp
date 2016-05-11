@@ -2,15 +2,19 @@
 #include "TiledLoader.h"
 #include <JSON/JSONWrapper.h>
 #include <CU/Utility/FileHandling.h>
-#include <CU/DLDebug/DL_Debug.h>
-#include <CU/GrowingArray/GrowingArray.h>
 
 #include "../../Game/Room/IsometricTile.h"
 #include "SpriteSheet/SpriteSheet.h"
+#include <JsonWrapper/JsonWrapper.h>
 
 
+namespace
+{
+	const std::string fileEnding = ".png";
+}
 
-picojson::object& GetObject(picojson::value aValue);
+
+picojson::object GetObject(picojson::value aValue);
 double& GetNumber( picojson::value aValue);
 picojson::array GetArray( picojson::value aValue);
 std::string GetString( picojson::value aValue);
@@ -27,7 +31,8 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 	
 	DL_ASSERT(err.empty(), (std::string("ERROR from Json: ") + err).c_str());
 
-	picojson::object rootObject = GetObject(root);
+
+	picojson::object rootObject = JsonWrapper::GetPicoObject(root);
 
 	CommonUtilities::GrowingArray<SpriteSheet> SpriteSheets = LoadSpriteSheets(GetArray(rootObject["tilesets"]), fileEnding);
 	SpriteSheet dataSheet;
@@ -49,12 +54,12 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 	for (size_t i = 0; i < height * width; i++)
 	{
-		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / height)));
+		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / width)));
 		newTile.Init();
 		
-		for (size_t j = 0; j < layers.size(); ++i)
+		for (size_t j = 0; j < layers.size(); ++j)
 		{
-			picojson::object currentLayer = GetObject(layers[i]);
+			picojson::object currentLayer = GetObject(layers[j]);
 			std::string name = GetString(currentLayer["name"]);
 			picojson::array data = GetArray(currentLayer["data"]);
 
@@ -80,7 +85,14 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 			}
 			else
 			{
-				//todo: add code for graphics when availible
+				int tileId = GetNumber(data[i]);
+				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
+				{
+					if (tileId >= SpriteSheets[j].GetFirstIndex())
+					{
+						newTile.AddSpriteLayer(SpriteSheets[j].CreateSprite(tileId));
+					}
+				}
 			}
 		}
 
@@ -89,7 +101,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 }
 
-picojson::object& GetObject(picojson::value aValue)
+picojson::object GetObject(picojson::value aValue)
 {
 	DL_ASSERT(aValue.is<picojson::object>(), "ERROR: Json value is not an object");
 	return aValue.get<picojson::object>();
@@ -124,9 +136,11 @@ CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const pico
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType)
 {
 	CommonUtilities::GrowingArray<SpriteSheet> returnArray;
+	returnArray.Init(2);
+
 	for (size_t i = 0; i < aSpriteSheetArray.size(); ++i)
 	{
-		picojson::object currentObject = GetObject(aSpriteSheetArray[i]);
+		picojson::object  currentObject = GetObject(aSpriteSheetArray[i]);
 
 		std::string name = GetString(currentObject["name"]);
 		unsigned int firstId = GetNumber(currentObject["firstgid"]);

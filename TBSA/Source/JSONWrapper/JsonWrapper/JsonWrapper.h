@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "..\picojson.h"
-#include "../../CommonUtilities/CU/Vectors/vector2.h"
+#include "..\Pico/picojson.h"
+#include <CU/Vectors/vector2.h>
 
 template<typename T>
 class Vector;

@@ -5,18 +5,10 @@
 #include "RenderConverter.h"
 
 
-
-RenderConverter * WrappedSprite::myRenderConverter = nullptr;
-
 CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
-
-
-
-
 
 WrappedSprite::WrappedSprite()
 {
-	myLayer = 0;
 }
 
 WrappedSprite::~WrappedSprite()
@@ -26,6 +18,8 @@ WrappedSprite::~WrappedSprite()
 void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/)
 {
 	myImageIndex = AddImage(aFilePath);
+	myLayer = enumRenderLayer::eFloor;
+	myColor = CU::Vector4f::One;
 }
 
 unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
@@ -43,14 +37,7 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 	return (ourSprites.Size() - 1);
 }
 
-
-//void WrappedSprite::SetColor(const CU::Vector4f& aColor)
-//{
-////	mySprite->SetColor(DX2D::CColor(aColor.r, aColor.g, aColor.b, aColor.a));
-//}
-
 void WrappedSprite::Draw(const CU::Vector2f & aPosition)
 {
-	DL_ASSERT(myRenderConverter != nullptr, "WrappedSprites render pointer is nullptr");
-	myRenderConverter->CalculateAndRenderIso(*this, aPosition);
+	RenderConverter::CalculateAndRenderIso(*this, aPosition);
 }

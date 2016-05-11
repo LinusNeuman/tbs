@@ -3,6 +3,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include "Room/IsometricTile.h"
 
+
 class WrappedSprite;
 class RenderConverter;
 class Actor;
@@ -18,9 +19,7 @@ public:
 	virtual eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	virtual void Draw() const override;
 
-	virtual void SwapBuffers();
 private:
-	RenderConverter * myRenderer;
 	CU::GrowingArray<IsometricTile> myTiles;
 
 	WrappedSprite * testSprite;
