@@ -1,6 +1,7 @@
 #include "SingletonPostMaster.h"
 #include "MessageReciever.h"
-#include "Message.h"
+//#include "Message.h"
+
 
 
 SingletonPostMaster * SingletonPostMaster::ourInstance = nullptr;

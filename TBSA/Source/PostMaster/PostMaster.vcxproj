@@ -112,7 +112,6 @@
   <ItemGroup>
     <ClInclude Include="Message.h" />
     <ClInclude Include="MessageReciever.h" />
-    <ClInclude Include="RecieverTypes.h" />
     <ClInclude Include="SingletonPostMaster.h" />
   </ItemGroup>
   <ItemGroup>
