@@ -13,9 +13,11 @@
 #include "Actor/Actor.h"
 #include "Actor/Player.h"
 #include "PlayerController.h"
-#include "Enemy.h"
+#include "Actor/Enemy.h"
 #include <TiledLoader/TiledLoader.h>
 #include <SingletonPostMaster.h>
+
+
 //#include <Message/TestPosition.h>
 
 //#include "../TiledLoading/TiledLoader/TiledLoader.h"
@@ -50,7 +52,7 @@ void CGameWorld::Init()
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
-	
+	myFactory.LoadFromJson();
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
@@ -58,14 +60,15 @@ void CGameWorld::Init()
 	}*/
 
 	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
-
-	
-	myPlayer = new Player(CU::Vector2f(2, 1), eActorType::ePlayerOne);
 	myPlayerController = new PlayerController();
+	//myPlayer = PlayerFactory::CreatePlayer();
+	//myPlayer2 = new Player(CU::Vector2f(4, 5), eActorType::ePlayerTwo);
+
+	myPlayer = myFactory.CreatePlayer();
+	myPlayer2 = myFactory.CreatePlayer();
 	myPlayerController->AddPlayer(myPlayer);
-	myPlayer2 = new Player(CU::Vector2f(4, 5), eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer2);
-	myEnemy = new Enemy(CU::Vector2f(6, 6), eActorType::eEnemyOne);
+	//myEnemy = new Enemy(CU::Vector2f(6, 6), eActorType::eEnemyOne);
 }
 
 
@@ -91,7 +94,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
-	myEnemy->Update(aTimeDelta);
+	//myEnemy->Update(aTimeDelta);
 	return eStackReturnValue::eStay;
 }
 
@@ -103,5 +106,5 @@ void CGameWorld::Draw() const
 	testSprite->Draw(CU::Vector2f(5.f, 5.f));
 
 	myPlayer2->Draw();
-	myEnemy->Draw();
+	//myEnemy->Draw();
 }

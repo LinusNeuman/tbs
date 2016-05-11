@@ -8,8 +8,9 @@ class WrappedSprite;
 class Player : public Actor 
 {
 public:
-	Player(const CU::Vector2f &aStartPosition, const eActorType &aActorType);
+	Player();
 	~Player();
+	void Init(const CU::Vector2f &aStartPosition, const eActorType &aActorType);
 private:
 };
 
