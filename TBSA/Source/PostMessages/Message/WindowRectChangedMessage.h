@@ -2,7 +2,8 @@
 #include "BaseMessage.h"
 #include <CU/NameSpaceAliases.h>
 #include <CU/Vectors/vector4.h>
-
+#pragma warning  (push)
+#pragma warning(disable : 4512)
 struct WindowRectChangedMessage : public BaseMessage
 {
 	WindowRectChangedMessage(const RecieverTypes aRecieverType, const float aXpos, const float aYpos, const float aWidth, const float aHeight,
@@ -16,3 +17,4 @@ struct WindowRectChangedMessage : public BaseMessage
 	const CU::Vector4f myViewPortRect;
 	const CU::Vector4f myWindowRect;
 };
+#pragma warning (pop)
