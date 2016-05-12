@@ -9,8 +9,8 @@ RenderConverter * RenderConverter::ourInstance = nullptr;
 
 
 const float TileWidth = 10;
-const float TileSize = 64.f;
-const float TileSizeHalf = 32.f;
+const float TileSize = 128.f;
+const float TileSizeHalf = 64.f;
 
 RenderConverter::RenderConverter()
 {
