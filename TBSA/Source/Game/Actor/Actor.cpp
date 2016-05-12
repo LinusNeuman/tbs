@@ -42,9 +42,6 @@ void Actor::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorTyp
 	}
 }
 
-void Actor::SetSelected(const bool aValue)
-{
-}
 
 void Actor::Update(const CU::Time& aDeltaTime)
 {

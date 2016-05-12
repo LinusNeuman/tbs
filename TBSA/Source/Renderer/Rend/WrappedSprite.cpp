@@ -39,8 +39,8 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath, const CU::
 
 	if (aRect != CU::Vector4f::Zero)
 	{
-		const float spriteWidth = tempSprite->GetImageSize().x;
-		const float spriteHeight = tempSprite->GetImageSize().x;
+		const float spriteWidth = static_cast<float>(tempSprite->GetImageSize().x);
+		const float spriteHeight = static_cast<float>(tempSprite->GetImageSize().x);
 
 		const float TempStartPointX = aRect.x / spriteWidth;
 		const float TempStartPointY = aRect.y / spriteHeight;

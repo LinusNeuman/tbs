@@ -104,7 +104,7 @@ void Animation::StartAnimation()
 	myShouldStop = false;
 	SetHasPlayed(true);
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(myAmountOfColumns, myAmountOfRows));
+		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(static_cast<float>(myAmountOfColumns), static_cast<float>(myAmountOfRows)));
 	//ShowSprite();
 }
 
@@ -115,7 +115,7 @@ void Animation::StopAnimation()
 	myCurrentFrame = 0;
 	myIsRunning = false;
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(myAmountOfColumns, myAmountOfRows));
+		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(static_cast<float>(myAmountOfColumns), static_cast<float>(myAmountOfRows)));
 	//HideSprite();
 }
 
@@ -126,7 +126,7 @@ void Animation::StopAnimationAtEnd()
 
 void Animation::SetAnimationFrame()
 {
-	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f(myCurrentColumn* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true, CU::Vector2f(myAmountOfColumns, myAmountOfRows));
+	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f(static_cast<float>(myCurrentColumn)* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true, CU::Vector2f(static_cast<float>(myAmountOfColumns), static_cast<float>(myAmountOfRows)));
 }
 
 void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,

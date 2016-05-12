@@ -18,7 +18,6 @@ public:
 	Actor();
 	~Actor();
 	void Init(const CU::Vector2f &aStartPosition, const eActorType &aActorType);
-	void SetSelected(const bool aValue);
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2f aTargetPosition);
