@@ -1,0 +1,16 @@
+{
+  "Name": "asda",
+  "FilePath": "Sprites\\tga_logo.dds",
+  "SizeX": 64,
+  "SizeY": 64,
+  "AmountOfColumns": 4,
+  "AmountOfRows": 2,
+  "AmountOfFrames": 8,
+  "AnimationSpeed": 20,
+  "LoopStart": 1,
+  "LoopEnd": 8,
+  "ShouldLoop": true,
+  "IsInterruptible": true,
+  "InTransition": "",
+  "OutTransition": ""
+}
