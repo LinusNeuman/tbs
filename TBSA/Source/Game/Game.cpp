@@ -67,7 +67,7 @@ void CGame::Init(const std::wstring& aVersion)
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
 	createParameters.myStartInFullScreen = false;
-    createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
+    createParameters.myClearColor.Set(0.2f, 0.4f, 0.7f, 1.0f);
 
 	
 	std::wstring appname = L"TBS RELEASE [" + aVersion + L"]";
