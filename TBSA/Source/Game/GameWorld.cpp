@@ -48,7 +48,12 @@ void CGameWorld::Init()
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->myLayer = 1;
 	
-	
+	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/ExplosionAnimation.json");
+	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
+	//picojson::object& animation = animationObject["Animation"].get<picojson::object>();
+
+	myAnimation.InitializeAnimation(animationObject);
+	myAnimation.StartAnimation();
 
 	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
@@ -78,6 +83,9 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	float kRight = 0.f;
 	float kUp = 0.f;
 	float kDown = 0.f;
+
+	myAnimation.UpdateAnimation();
+	myAnimation.Render();
 	
 	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{

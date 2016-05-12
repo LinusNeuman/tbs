@@ -3,123 +3,95 @@
 #include "../CommonUtilities/CU/Timer/TimeManager.h"
 #include <map>
 
-void SetTextureRectangle(DX2D::CSprite* newSprite, const CU::Vector2f &aSpriteOffsetStart, const CU::Vector2f &aSpriteSize, bool aResizeSprite);
-void UpdateSpriteSize(const CU::Vector2f &aSpriteSize, DX2D::CSprite* newSprite);
+void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite);
+void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite);
 void ChangeAnimation(const std::string& anAnimation);
 
 Animation::Animation()
 {
 	myName = "";
-	mySpriteSheet = nullptr;
-	mySpriteSize = CU::Vector2f(0, 0);
+	//mySpriteSheet = nullptr;
+	mySpriteSize = CommonUtilities::Vector2f(0, 0);
 	myAmountOfColumns = 0;
 	myAmountOfRows = 0;
 	myAmountOfFrames = 0;
 	myAnimationSpeed = 0;
-	myIsLooping = false;
+	myShouldLoop = false;
 
 	myCurrentColumn = 0;
 	myCurrentRow = 0;
 	myCurrentFrame = 0;
 	myAnimationTimer = 0.f;
 	myIsRunning = false;
-
-	myIsFirstFrame = false;
 }
 
 Animation::~Animation()
 {
 }
 
-/*void Animation::InitializeAnimation(picojson::object& anAnimationObject)
+void Animation::InitializeAnimation(picojson::object& anAnimationObject)
 {
 	myName = JsonWrapper::GetString("Name", anAnimationObject);
-	std::string animationSpriteSheet = JsonWrapper::GetString("SpriteSheet", anAnimationObject);
-	mySpriteSheet = SpriteManager::GetInstance()->CreateSprite(animationSpriteSheet, SpriteManager::RenderLayer::Foreground);
-	mySpriteSize = JsonWrapper::GetVector2f("FrameSize", anAnimationObject);
+	std::string animationSpriteSheet = JsonWrapper::GetString("FilePath", anAnimationObject);
+	mySpriteSheet.Init(animationSpriteSheet.c_str());
+	mySpriteSize = CU::Vector2f(static_cast<float>(JsonWrapper::GetInt("SizeX", anAnimationObject))
+		, static_cast<float>(JsonWrapper::GetInt("SizeY", anAnimationObject)));
 	myAmountOfColumns = JsonWrapper::GetInt("AmountOfColumns", anAnimationObject);
 	myAmountOfRows = JsonWrapper::GetInt("AmountOfRows", anAnimationObject);
 	myAmountOfFrames = JsonWrapper::GetInt("AmountOfFrames", anAnimationObject);
-	myAnimationSpeed = JsonWrapper::GetInt("FramesPerSecond", anAnimationObject);
-	myIsRunning = JsonWrapper::GetBool("StartRunning", anAnimationObject);
-	myIsLooping = JsonWrapper::GetBool("ShouldLoop", anAnimationObject);
-	myIsInteruptable = JsonWrapper::GetBool("IsInteruptable", anAnimationObject);
+	myAnimationSpeed = JsonWrapper::GetInt("AnimationSpeed", anAnimationObject);
+	myLoopStartFrame = JsonWrapper::GetInt("LoopStart", anAnimationObject);
+	myLoopEndFrame = JsonWrapper::GetInt("LoopEnd", anAnimationObject);
+	myShouldLoop = JsonWrapper::GetBool("ShouldLoop", anAnimationObject);
+	myIsInteruptable = JsonWrapper::GetBool("IsInterruptible", anAnimationObject);
 	myInTransition = JsonWrapper::GetString("InTransition", anAnimationObject);
 	myOutTransition = JsonWrapper::GetString("OutTransition", anAnimationObject);
 
 	myCurrentColumn = 1;
 	myCurrentRow = 1;
-	myCurrentFrame = 1;
+	myCurrentFrame = 0;
 	myAnimationTimer = 0.f;
 	myHasPlayed = false;
-
-	if (myIsRunning == false)
-	{
-		SpriteManager::GetInstance()->ShowOrHideBatch(mySpriteSheet, false);
-		SpriteManager::GetInstance()->ShowOrHideSprite(mySpriteSheet, false);
-	}
-}*/
+	myIsRunning = true;
+}
 
 void Animation::UpdateAnimation()
 {	
 	if (myIsRunning == true)
 	{
-		myAnimationTimer += CU::TimeManager::GetDeltaTime().GetSeconds();
+		myAnimationTimer += CommonUtilities::TimeManager::GetDeltaTime().GetSeconds();
 
 		if (myAnimationTimer >= 1.f / myAnimationSpeed)
 		{
-			if (myCurrentFrame < myAmountOfFrames - 1 || (myAmountOfFrames == 2 && myCurrentFrame < 2))
+			if ((myHasPlayed == false && myCurrentFrame < myAmountOfFrames - 1)
+				|| (myHasPlayed == true && myCurrentFrame < myLoopEndFrame - 1))
 			{
-				if (myIsFirstFrame == false)
-				{
-					myCurrentFrame++;
-				}
-				else
-				{
-					myIsFirstFrame = false;
-				}
-
-				if (myCurrentFrame >= myAmountOfColumns * myCurrentRow)
-				{
-					myCurrentRow++;
-				}
-
-				if (myCurrentColumn < myAmountOfColumns)
-				{
-					myCurrentColumn++;
-				}
-				else
-				{
-					myCurrentColumn = 1;
-				}
-
+				myCurrentFrame++;
+				myCurrentRow = myCurrentFrame / myAmountOfColumns + 1;
+				myCurrentColumn = myCurrentFrame - myAmountOfColumns * (myCurrentRow - 1);
 				SetAnimationFrame();
-
 			}
 			else
 			{
-				if (myIsLooping == false || myShouldStop == true)
+				if (myShouldLoop == false || myShouldStop == true)
 				{
 					StopAnimation();
 				}
 				else
 				{
-					//This is what makes animations with 1 frame work.
-					myCurrentColumn = 1;
-					myCurrentRow = 1;
-					myCurrentFrame = 1;
-					myIsFirstFrame = true;
+					myHasPlayed = true;
+					myCurrentFrame = myLoopStartFrame - 1;
+					myCurrentRow = myCurrentFrame / myAmountOfColumns + 1;
+					myCurrentColumn = myCurrentFrame - myAmountOfColumns * (myCurrentRow - 1);
 					SetAnimationFrame();
 				}
 			}
-
 			myAnimationTimer = 0.f;
 		}
 		else
 		{
 			SetAnimationFrame();
 		}
-
 	}
 }
 
@@ -127,13 +99,12 @@ void Animation::StartAnimation()
 {
 	myCurrentColumn = 1;
 	myCurrentRow = 1;
-	myCurrentFrame = 1;
+	myCurrentFrame = 0;
 	myIsRunning = true;
 	myShouldStop = false;
-	myIsFirstFrame = true;
 	SetHasPlayed(true);
-	SetTextureRectangle(mySpriteSheet
-		, CU::Vector2f(0.f, 0.f), CU::Vector2f(0.f, 0.f), true);
+	SetTextureRectangle(&mySpriteSheet
+		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true);
 	//ShowSprite();
 }
 
@@ -143,8 +114,8 @@ void Animation::StopAnimation()
 	myCurrentRow = 0;
 	myCurrentFrame = 0;
 	myIsRunning = false;
-	SetTextureRectangle(mySpriteSheet
-		, CU::Vector2f(0.f, 0.f), CU::Vector2f(0.f, 0.f), true);
+	SetTextureRectangle(&mySpriteSheet
+		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true);
 	//HideSprite();
 }
 
@@ -153,20 +124,25 @@ void Animation::StopAnimationAtEnd()
 	myShouldStop = true;
 }
 
-void SetTextureRectangle(DX2D::CSprite* newSprite, const CU::Vector2f &aSpriteOffsetStart,
-	const CU::Vector2f &aSpriteSize, bool aResizeSprite)
+void Animation::SetAnimationFrame()
+{
+	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f((myCurrentColumn)* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true);
+}
+
+void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
+	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite)
 {
 	// Temps to make it easier to read and understand
-	auto size = newSprite->GetImageSize();
+	auto size = newSprite->GetSprite()->GetImageSize();
 
-	CU::Vector2f fixSize = aSpriteSize;
+	CommonUtilities::Vector2f fixSize = aSpriteSize;
 
 	// Start, in 0-1
-	CU::Vector2f start(aSpriteOffsetStart.x / size.x,
+	CommonUtilities::Vector2f start(aSpriteOffsetStart.x / size.x,
 		aSpriteOffsetStart.y / size.y);
 
 	// Length, in 0-1
-	CU::Vector2f length((start.x + fixSize.x) / size.x,
+	CommonUtilities::Vector2f length((start.x + fixSize.x) / size.x,
 		(start.y + fixSize.y) / size.y);
 
 	if (aSpriteOffsetStart.x > 1024.f)
@@ -181,22 +157,22 @@ void SetTextureRectangle(DX2D::CSprite* newSprite, const CU::Vector2f &aSpriteOf
 		length.y = length.y / 2500;
 	};
 
-	newSprite->SetTextureRect(start.x, start.y, start.x + length.x, start.y + length.y);
+	newSprite->GetSprite()->SetTextureRect(start.x, start.y, start.x + length.x, start.y + length.y);
 	if (aResizeSprite == true)
 	{
 		UpdateSpriteSize(fixSize, newSprite);
 	}
 }
 
-void UpdateSpriteSize(const CU::Vector2f &aSpriteSize, DX2D::CSprite* newSprite)
+void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite)
 {
 	DX2D::Vector2f newSize;
-	auto size = newSprite->GetImageSize();
+	auto size = newSprite->GetSprite()->GetImageSize();
 	// How big in 0-1 it is compared to original size, so using pixels
 	newSize.x = aSpriteSize.x / (size.x);
 	newSize.y = aSpriteSize.y / (size.y);
 
-	newSprite->SetSize(newSize);
+	newSprite->GetSprite()->SetSize(newSize);
 }
 
 /*void ChangeAnimation(const std::string& anAnimation)
