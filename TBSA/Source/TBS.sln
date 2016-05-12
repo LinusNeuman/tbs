@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DX2DEngine", "DX2DEngine\DX2DEngine.vcxproj", "{11F98BF6-7BDB-4CFB-96CF-577DB4AE312F}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSONWrapper", "JSONWrapper\JSONWrapper.vcxproj", "{9EB5704F-4985-4A60-A150-3BA7CC2079E2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Factories", "Factories\Factories.vcxproj", "{B4921203-98D8-43E4-8763-4009B00FE688}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{0A8E37F3-E093-4A13-9336-DE37A5B0AF85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,6 +145,12 @@ Global
 		{B4921203-98D8-43E4-8763-4009B00FE688}.Release|Win32.ActiveCfg = Release|Win32
 		{B4921203-98D8-43E4-8763-4009B00FE688}.Release|Win32.Build.0 = Release|Win32
 		{B4921203-98D8-43E4-8763-4009B00FE688}.Release|x64.ActiveCfg = Release|Win32
+		{0A8E37F3-E093-4A13-9336-DE37A5B0AF85}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0A8E37F3-E093-4A13-9336-DE37A5B0AF85}.Debug|Win32.Build.0 = Debug|Win32
+		{0A8E37F3-E093-4A13-9336-DE37A5B0AF85}.Debug|x64.ActiveCfg = Debug|Win32
+		{0A8E37F3-E093-4A13-9336-DE37A5B0AF85}.Release|Win32.ActiveCfg = Release|Win32
+		{0A8E37F3-E093-4A13-9336-DE37A5B0AF85}.Release|Win32.Build.0 = Release|Win32
+		{0A8E37F3-E093-4A13-9336-DE37A5B0AF85}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

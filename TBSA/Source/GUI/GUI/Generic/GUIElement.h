@@ -1,0 +1,40 @@
+#pragma once
+#include "CU/NameSpaceAliases.h"
+
+#include <CU/Timer/Time.h>
+
+#include <string>
+#include <CU/GrowingArray/GrowingArray.h>
+#include "../../../Renderer/Rend/WrappedSprite.h"
+
+#include <GUI/Messaging/GUIMessageHandler.h>
+#include <CU/Vectors/Vector.h>
+
+#include <SingletonPostMaster.h>
+
+typedef unsigned char uchar;
+
+class GUIMessage;
+
+class GUIElement : public MessageReciever
+{
+public:
+	GUIElement();
+	virtual ~GUIElement();
+	virtual void Destroy();
+
+	virtual void __forceinline SetOnClick(GUIMessage& aGUIMessage);
+	virtual void __forceinline SetOnHover(GUIMessage& aGUIMessage);
+
+	virtual void Update(CommonUtilities::Time &aDelta) = 0;
+
+	virtual void Render(CU::Vector2f aParentSpace);
+protected:
+	GUIMessageHandler myMessageHandler;
+
+	WrappedSprite* mySprite;
+	CU::Vector2f myPosition;
+
+	CU::GrowingArray<GUIElement*, unsigned char> myGUIChilds;
+};
+
