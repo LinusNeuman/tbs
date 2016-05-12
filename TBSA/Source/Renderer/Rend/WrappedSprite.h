@@ -5,7 +5,8 @@
 #include "RenderData.h"
 #include <unordered_map>
 #include <CU/Hashing/HashUtility.h>
-
+#pragma warning  (push)
+#pragma warning(disable : 4512)
 class IndexKey
 {
 public:
@@ -24,7 +25,7 @@ private:
 	const std::string myPath;
 	const CU::Vector4f myRect;
 };
-
+#pragma warning (pop)
 namespace std {
 	template <> struct hash<IndexKey>
 	{

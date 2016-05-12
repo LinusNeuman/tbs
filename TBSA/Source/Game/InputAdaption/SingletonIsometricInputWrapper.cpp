@@ -82,9 +82,6 @@ CU::Vector2f SingletonIsometricInputWrapper::GetMouseWindowPositionIsometric()
 {
 	CU::Vector2f mousePosition = GetInstance().ConvertMouseNormalizedPositionCartesianCordiante();
 
-	float windowX = GetInstance().myWindowRect.z;
-	float windowY = GetInstance().myWindowRect.w;
-
 	CU::Vector2f tempOffset(550.f, 250.f);
 	mousePosition -= tempOffset;
 	//CU::Vector2f newStartPos = CU::Vector2f((mousePosition.x - mousePosition.y) * TileSizeHalf, ((mousePosition.x + mousePosition.y) * TileSizeHalf) / 2.f);

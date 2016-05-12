@@ -31,5 +31,5 @@ private:
 	PlayerController *myPlayerController;
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
-	Animation myAnimation;
+	Animation *myAnimation;
 };

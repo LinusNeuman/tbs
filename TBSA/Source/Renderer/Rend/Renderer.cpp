@@ -7,7 +7,7 @@
 #include <tga2d/drawers/line_drawer.h>
 #include <tga2d/sprite/sprite.h>
 #include <tga2d/text/text.h>
-#include <tga2d/drawers/debug_drawer.h>s
+#include <tga2d/drawers/debug_drawer.h>
 
 
 //#include <CU/NameSpaceAliases.h>
