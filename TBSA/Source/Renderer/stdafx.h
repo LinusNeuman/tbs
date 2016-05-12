@@ -19,5 +19,6 @@
 
 #include <CU/Vectors/Vector.h>
 #include <CU/Vectors/Vector2.h>
+#include <CU/Vectors/Vector4.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <CU/GrowingArray/GrowingArray.h>

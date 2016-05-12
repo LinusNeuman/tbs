@@ -4,7 +4,7 @@
 #include <Rend/WrappedSprite.h>
 
 
-Player::Player(const CU::Vector2f &aStartPosition, const eActorType &aActorType) : Actor(aStartPosition, aActorType)
+Player::Player()
 {
 }
 
@@ -12,3 +12,7 @@ Player::~Player()
 {
 }
 
+void Player::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorType)
+{
+	Actor::Init(aStartPosition, aActorType);
+}

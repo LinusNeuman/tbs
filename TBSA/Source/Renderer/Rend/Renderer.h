@@ -25,6 +25,7 @@ public:
 	void SetWindowSize(const CU::Vector2ui & aWindowSize);
 
 	void AddRenderCommand(RenderCommand & aRenderCommand);
+	void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition);
 
 	void SwapBuffer();
 

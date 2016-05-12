@@ -4,16 +4,12 @@
 */
 
 #include "../../Game/Room/IsometricTile.h"
-#include <CU/GrowingArray/GrowingArray.h>
 
-namespace
-{
-	const std::string fileEnding = ".png";
-}
+
 
 class TileMap;
 
 namespace TiledLoader
 {
-	inline void Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile>& someTiles);
+	void Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile>& someTiles);
 }
