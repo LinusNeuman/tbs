@@ -7,7 +7,8 @@
 #include <functional>
 #include <time.h>
 #include <vector>
-#include <CU/InputWrapper/SingletonInputWrapper.h>
+//#include <CU/InputWrapper/SingletonInputWrapper.h>
+#include "InputAdaption/SingletonIsometricInputWrapper.h"
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
@@ -36,6 +37,7 @@ CGame::CGame()
 	JSONWrapper::ReadAllDocuments("Data/Root.json");
 	JSONWrapper::TestShit();*/
 	SingletonPostMaster::Create();
+	IsometricInput::Create();
 }
 
 
@@ -100,8 +102,12 @@ void CGame::InitCallBack()
 
 	myGameWorld = new CGameWorld();
 
-	GetInput::Create();
-	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
+	/*GetInput::Create();
+	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());*/
+
+	
+	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
+	
 
 	CU::TimeManager::Create();
 
@@ -124,7 +130,7 @@ void CGame::UpdateCallBack()
 void CGame::UpdateWork()
 {
 	//ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "ThreadPool: Update");
-	GetInput::Update();
+	IsometricInput::Update();
 	CU::TimeManager::Update();
 
 
