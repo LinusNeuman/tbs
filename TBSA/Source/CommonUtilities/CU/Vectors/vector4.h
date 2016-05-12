@@ -64,7 +64,7 @@ namespace CommonUtilities
 		// Comparison //
 		friend bool operator ==(const Vector4 &aLeft, const Vector4 &aRight)
 		{
-			return (aLeft.x == aRight.x && aLeft.y == aRight.y);
+			return (aLeft.x == aRight.x && aLeft.y == aRight.y && aLeft.z == aRight.z && aLeft.w == aRight.w);
 		}
 
 
@@ -112,13 +112,15 @@ namespace CommonUtilities
 		union
 		{
 			T    z,
-				b;
+				b,
+			Width;
 		};
 
 		union
 		{
 			T    w,
-				a;
+				a,
+			Height;
 		};
 
 		static Vector4 Normalize(Vector4 aVector);
