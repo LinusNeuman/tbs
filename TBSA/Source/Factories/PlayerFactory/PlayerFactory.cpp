@@ -22,7 +22,7 @@ void PlayerFactory::LoadFromJson()
 	myPlayerOneData.myPosition.y = JsonWrapper::GetInt("startPositionY", playerOneObject);
 
 	//Duplicated code right now, player one and player two might be holding different properties later on :)
-	//Should find a better way to do this
+	//Should find a better way to do this anyway
 	picojson::value playerTwoValues = JsonWrapper::LoadPicoValue("Data/Players/Player2.json");
 	picojson::object& playerTwoObject = JsonWrapper::GetPicoObject(playerTwoValues);
 	myPlayerTwoData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", playerTwoObject));

@@ -15,19 +15,17 @@ EnemyFactory::~EnemyFactory()
 
 void EnemyFactory::LoadFromJson()
 {
-	picojson::value enemyOneValues = JsonWrapper::LoadPicoValue("Data/Enemies/Enemy1.json");
-	picojson::object& enemyOneObject = JsonWrapper::GetPicoObject(enemyOneValues);
-	myEnemyOneData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyOneObject));
-	myEnemyOneData.myPosition.x = JsonWrapper::GetInt("startPositionX", enemyOneObject);
-	myEnemyOneData.myPosition.y = JsonWrapper::GetInt("startPositionY", enemyOneObject);
+	UpdateDataStruct("Data/Enemies/Enemy1.json", myEnemyOneData);
+	UpdateDataStruct("Data/Enemies/Enemy2.json", myEnemyTwoData);
+}
 
-	//Duplicated code right now, enemy one and enemy two might be holding different properties later on :)
-	//Should find a better way to do this
-	picojson::value enemyTwoValues = JsonWrapper::LoadPicoValue("Data/Enemies/Enemy2.json");
-	picojson::object& enemyTwoObject = JsonWrapper::GetPicoObject(enemyTwoValues);
-	myEnemyTwoData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyTwoObject));
-	myEnemyTwoData.myPosition.x = JsonWrapper::GetInt("startPositionX", enemyTwoObject);
-	myEnemyTwoData.myPosition.y = JsonWrapper::GetInt("startPositionY", enemyTwoObject);
+void EnemyFactory::UpdateDataStruct(const std::string &aStringPath,  EnemyData &aEnemyData)
+{
+	picojson::value enemyValue = JsonWrapper::LoadPicoValue(aStringPath);
+	picojson::object& enemyObject = JsonWrapper::GetPicoObject(enemyValue);
+	aEnemyData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyObject));
+	aEnemyData.myPosition.x = JsonWrapper::GetInt("startPositionX", enemyObject);
+	aEnemyData.myPosition.y = JsonWrapper::GetInt("startPositionY", enemyObject);
 }
 
 Enemy* EnemyFactory::CreateEnemy(eActorType aActorType)
