@@ -235,7 +235,7 @@ namespace WindowsFormsApplication1
                 myAnimation.myAnimationData.InTransition = InTransitionText.Text;
                 myAnimation.myAnimationData.OutTransition = OutTransitionText.Text;
             
-                saveExplorer.InitialDirectory = Path.Combine(Application.StartupPath, "../../../../../TBSA/Bin/Data/Animations/");
+                saveExplorer.InitialDirectory = Path.GetFullPath("../../../../../TBSA/Bin/Data/Animations/");
                 saveExplorer.Filter = "JSON (*.json)|*.json";
                 saveExplorer.FileName = myAnimation.myAnimationData.Name + "Animation";
 
