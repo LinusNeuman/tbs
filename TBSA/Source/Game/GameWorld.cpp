@@ -84,7 +84,7 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	{
 		myPlayerController->SelectPlayer();
 	}
-	if (GetInput::GetKeyPressed(DIK_1) == true)
+	if (IsometricInput::GetKeyPressed(DIK_1) == true)
 	{
 
 	}
