@@ -14,8 +14,9 @@ enum class eActorType
 class Actor
 {
 public:
-	Actor(const CU::Vector2f &aStartPosition, const eActorType &aActorType);
+	Actor();
 	~Actor();
+	void Init(const CU::Vector2f &aStartPosition, const eActorType &aActorType);
 	void SetSelected(const bool aValue);
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;

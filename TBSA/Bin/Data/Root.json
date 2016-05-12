@@ -1,3 +1,11 @@
 {
-  "WindowSettings": "Data/WindowSettings.json"
+  "WindowSettings": "Data/WindowSettings.json",
+   "players": [
+    {
+      "path": "Data/Player/Player.json"
+    },
+    {
+      "path": "Data/Player/Player.json"
+    }
+  ]
 }

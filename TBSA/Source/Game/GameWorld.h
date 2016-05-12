@@ -2,6 +2,9 @@
 #include <GameState.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include "Room/IsometricTile.h"
+#include <PlayerFactory/PlayerFactory.h>
+#include <EnemyFactory/EnemyFactory.h>
+#include "Animation\Animation.h"
 
 
 class WrappedSprite;
@@ -26,4 +29,7 @@ private:
 
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
+	PlayerFactory myPlayerFactory;
+	EnemyFactory myEnemyFactory;
+	Animation myAnimation;
 };
