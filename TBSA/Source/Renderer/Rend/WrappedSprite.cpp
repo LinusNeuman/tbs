@@ -35,18 +35,18 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath, const CU::
 
 	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
 	DX2D::CSprite * tempSprite = ourSprites.GetLast();
-	tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
+	
 
 	if (aRect != CU::Vector4f::Zero)
 	{
 		const float spriteWidth = static_cast<float>(tempSprite->GetImageSize().x);
-		const float spriteHeight = static_cast<float>(tempSprite->GetImageSize().x);
+		const float spriteHeight = static_cast<float>(tempSprite->GetImageSize().y);
 
 		const float TempStartPointX = aRect.x / spriteWidth;
 		const float TempStartPointY = aRect.y / spriteHeight;
 
-		const float TempWidth = aRect.z / spriteWidth;
-		const float TempHeight = aRect.w / spriteHeight;
+		const float TempWidth = aRect.Width / spriteWidth;
+		const float TempHeight = aRect.Height / spriteHeight;
 
 		const float TempEndPointX = TempStartPointX + TempWidth;
 		const float TempEndPointY = TempStartPointY + TempHeight;
@@ -54,7 +54,7 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath, const CU::
 		tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
 	}
-
+	tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
 	return ourIndexDictionary[tempKey];
 }
