@@ -17,6 +17,7 @@ private:
 	void InitCallBack();
 	void UpdateCallBack();
 	void UpdateWork();
+
 	void RenderWork();
 	void LogCallback(std::string aText);
 

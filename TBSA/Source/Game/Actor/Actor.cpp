@@ -52,6 +52,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 	{
 		myAnimations[myActiveAnimation]->UpdateAnimation();
 		mySprite = myAnimations[myActiveAnimation]->GetSprite();
+		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 	}
 	if ((myTargetPosition - myPosition).Length() <= distance.Length())
 	{
