@@ -10,7 +10,7 @@ class SpriteSheet
 {
 public:
 	SpriteSheet();
-	SpriteSheet(const std::string& aName, const CommonUtilities::Vector2f& aSubImageSize, const std::string& aFileType, unsigned aFirstId);
+	SpriteSheet(const std::string& aName, const CommonUtilities::Vector2f& aSubImageSize,const CommonUtilities::Vector2f& aSheetSize, const std::string& aFileType, unsigned aFirstId);
 	~SpriteSheet();
 
 	static void SetFolder(const std::string & aPathToAFolder);
@@ -29,5 +29,5 @@ private:
 
 	unsigned int myFirstId;
 	CommonUtilities::Vector2f mySize;
-	
+	CommonUtilities::Vector2f mySheetSize;
 };

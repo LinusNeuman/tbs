@@ -28,7 +28,10 @@ void IsometricTile::Init()
 
 void IsometricTile::Draw() const
 {
-	mySprite->Draw(myPosition);
+	for (size_t i = 0; i < myGraphicsLayers.Size(); i++)
+	{
+		myGraphicsLayers[i]->Draw(myPosition );
+	}
 }
 
 void IsometricTile::AddSpriteLayer(WrappedSprite * aSprite)
