@@ -205,3 +205,5 @@ TBSA/Lib/Game_Debug.lib
 TBSA/Lib/PostMaster_Debug.lib
 TBSA/Source/TBS.VC.opendb
 incrementalSave
+
+!TBSA\Bin\Launcher_DevMode.exe
