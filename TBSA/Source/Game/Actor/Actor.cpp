@@ -3,37 +3,43 @@
 #include <Rend/WrappedSprite.h>
 
 
-Actor::Actor(const CU::Vector2f &aStartPosition, const eActorType &aActorType)
+Actor::Actor()
 {
 	mySprite = new WrappedSprite();
-	myPosition = aStartPosition;
 	myVelocity = CU::Vector2f::Zero;
+}
+
+Actor::~Actor()
+{
+}
+
+void Actor::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorType)
+{
+	myPosition = aStartPosition;
 	myTargetPosition = myPosition;
 	switch (aActorType)
 	{
-	case eActorType::ePlayerOne: 
+	case eActorType::ePlayerOne:
 		mySprite->Init("Sprites/camera3.png");
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
+		/*mySprite->GetSprite()->SetTextureRect(0.25f, 0.0, 0.5f, 0.5f);
+		mySprite->GetSprite()->SetSize(DX2D::Vector2f(mySprite->GetSprite()->GetSize().x / 4, mySprite->GetSprite()->GetSize().y / 2));*/
 		break;
-	case eActorType::ePlayerTwo: 
+	case eActorType::ePlayerTwo:
 		mySprite->Init("Sprites/camera7.png");
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		break;
-	case eActorType::eEnemyOne: 
+	case eActorType::eEnemyOne:
 		mySprite->Init("Sprites/camera4.png");
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		break;
-	case eActorType::eEnemyTwo: 
+	case eActorType::eEnemyTwo:
 		mySprite->Init("Sprites/camera4.png");
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		break;
 	default:
 		break;
 	}
-}
-
-Actor::~Actor()
-{
 }
 
 void Actor::SetSelected(const bool aValue)
@@ -44,6 +50,11 @@ void Actor::Update(const CU::Time& aDeltaTime)
 {
 	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 3.f;
 	myPosition += myVelocity * aDeltaTime.GetSeconds();
+	CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
+	if ((myTargetPosition - myPosition).Length() <= distance.Length())
+	{
+		myTargetPosition = myPosition;
+	}
 }
 
 void Actor::Draw() const

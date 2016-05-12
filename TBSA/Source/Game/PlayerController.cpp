@@ -6,6 +6,8 @@
 PlayerController::PlayerController()
 {
 	myPlayers.Init(2);
+	mySelectedPlayerIndex = 0;
+	mySelectedPlayer = nullptr;
 }
 
 
@@ -16,19 +18,17 @@ PlayerController::~PlayerController()
 void PlayerController::AddPlayer(Actor* aPlayer)
 {
 	myPlayers.Add(aPlayer);
-	mySelectedPlayer = myPlayers[0];
+	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 }
 
 void PlayerController::SelectPlayer()
 {
-	if (mySelectedPlayer == myPlayers[0])
+	++mySelectedPlayerIndex;
+	if (mySelectedPlayerIndex >= myPlayers.Size())
 	{
-		mySelectedPlayer = myPlayers[1];
+		mySelectedPlayerIndex = 0;
 	}
-	else
-	{
-		mySelectedPlayer = myPlayers[0];
-	}
+	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 }
 
 void PlayerController::NotifyPlayers() const
