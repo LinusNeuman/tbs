@@ -186,6 +186,7 @@
     <ClInclude Include="CU\BinaryTree\BinaryTree.h" />
     <ClInclude Include="CU\Camera\Camera2D.h" />
     <ClInclude Include="CU\GridArray\GridArray.h" />
+    <ClInclude Include="CU\Hashing\HashUtility.h" />
     <ClInclude Include="CU\InputWrapper\SingletonInputWrapper.h" />
     <ClInclude Include="CU\Intersection\Shapes2D\AABB2D.h" />
     <ClInclude Include="CU\Intersection\Shapes2D\BaseShape2D.h" />

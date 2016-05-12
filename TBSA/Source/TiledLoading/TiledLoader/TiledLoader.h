@@ -2,7 +2,7 @@
 *Author:  Hampus Huledal
 *Date: 2016-05-06
 */
-
+#pragma once
 #include "../../Game/Room/IsometricTile.h"
 
 

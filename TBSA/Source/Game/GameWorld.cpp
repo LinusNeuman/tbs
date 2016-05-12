@@ -48,7 +48,7 @@ void CGameWorld::Init()
 	myTiles.Init(100);
 
 	testSprite = new WrappedSprite();
-	testSprite->Init("Sprites/camera3.png", false);
+	testSprite->Init("Sprites/camera3.png", false, CU::Vector4f(64.f, 64.f, 64.f, 64.f));
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);
 	
