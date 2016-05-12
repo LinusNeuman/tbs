@@ -34,6 +34,11 @@ namespace CommonUtilities
 			return aLeft -= aRight;
 		}
 
+		friend bool operator <(Vector4 aLeft, const Vector4 &aRight)
+		{
+			return (aLeft.Length() < aRight.Length());
+		}
+
 
 		friend Vector4 operator *(Vector4 aLeft, const T aRight)
 		{

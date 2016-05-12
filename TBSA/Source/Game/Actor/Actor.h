@@ -1,7 +1,8 @@
 #pragma once
+#include <map>
 
 class WrappedSprite;
-
+class Animation;
 
 enum class eActorType
 {
@@ -21,6 +22,8 @@ public:
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2f aTargetPosition);
+	void ChangeAnimation(const std::string& anAnimation);
+	void AddAnimation(Animation* anAnimation);
 	CU::Vector2f GetPosition() const
 	{
 		return myPosition;
@@ -34,6 +37,8 @@ protected:
 	{
 		return mySprite;
 	}
+	std::map<std::string, Animation*> myAnimations;
+	std::string myActiveAnimation;
 private:
 	WrappedSprite *mySprite;
 	CU::Vector2f myPosition;

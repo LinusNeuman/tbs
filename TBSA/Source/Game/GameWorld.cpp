@@ -47,18 +47,11 @@ void CGameWorld::Init()
 {
 	myTiles.Init(100);
 
-	testSprite = new WrappedSprite();
-	testSprite->Init("Sprites/camera3.png", false);
+	testSprite = new WrappedSprite();	
+	testSprite->Init("Sprites/camera3.png", false, CU::Vector4f(64.f, 64.f, 64.f, 64.f));
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);
 	
-	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/ExplosionAnimation.json");
-	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
-	//picojson::object& animation = animationObject["Animation"].get<picojson::object>();
-
-	myAnimation.InitializeAnimation(animationObject);
-	myAnimation.StartAnimation();
-
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
@@ -77,6 +70,14 @@ void CGameWorld::Init()
 	myPlayerController->AddPlayer(myPlayer2);
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
 	myPlayerController->AddPlayer(myEnemy);
+
+	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/PlayerTurnAnimation.json");
+	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
+
+	myAnimation = new Animation();
+	myAnimation->InitializeAnimation(animationObject);
+	myPlayer->AddAnimation(myAnimation);
+	myPlayer->ChangeAnimation("PlayerTurn");
 }
 
 
@@ -85,8 +86,8 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	(aStateStack);
 
 
-	myAnimation.UpdateAnimation();
-	myAnimation.Render();
+	//myAnimation->UpdateAnimation();
+	//myAnimation->Render();
 	
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{

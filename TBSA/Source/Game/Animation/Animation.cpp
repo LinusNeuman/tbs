@@ -3,8 +3,8 @@
 #include "../CommonUtilities/CU/Timer/TimeManager.h"
 #include <map>
 
-void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite);
-void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite);
+void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize);
+void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize);
 void ChangeAnimation(const std::string& anAnimation);
 
 Animation::Animation()
@@ -104,7 +104,7 @@ void Animation::StartAnimation()
 	myShouldStop = false;
 	SetHasPlayed(true);
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true);
+		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(myAmountOfColumns, myAmountOfRows));
 	//ShowSprite();
 }
 
@@ -115,7 +115,7 @@ void Animation::StopAnimation()
 	myCurrentFrame = 0;
 	myIsRunning = false;
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true);
+		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(myAmountOfColumns, myAmountOfRows));
 	//HideSprite();
 }
 
@@ -126,11 +126,11 @@ void Animation::StopAnimationAtEnd()
 
 void Animation::SetAnimationFrame()
 {
-	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f((myCurrentColumn)* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true);
+	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f(myCurrentColumn* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true, CU::Vector2f(myAmountOfColumns, myAmountOfRows));
 }
 
 void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
-	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite)
+	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize)
 {
 	// Temps to make it easier to read and understand
 	auto size = newSprite->GetSprite()->GetImageSize();
@@ -160,75 +160,17 @@ void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector
 	newSprite->GetSprite()->SetTextureRect(start.x, start.y, start.x + length.x, start.y + length.y);
 	if (aResizeSprite == true)
 	{
-		UpdateSpriteSize(fixSize, newSprite);
+		UpdateSpriteSize(fixSize, newSprite, CommonUtilities::Vector2f(aAnimationSize.x, aAnimationSize.y));
 	}
 }
 
-void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite)
+void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize)
 {
 	DX2D::Vector2f newSize;
 	auto size = newSprite->GetSprite()->GetImageSize();
 	// How big in 0-1 it is compared to original size, so using pixels
-	newSize.x = aSpriteSize.x / (size.x);
-	newSize.y = aSpriteSize.y / (size.y);
+	newSize.x = aSpriteSize.x / (size.x * aAnimationSize.y);
+	newSize.y = aSpriteSize.y / (size.y * aAnimationSize.x);
 
 	newSprite->GetSprite()->SetSize(newSize);
 }
-
-/*void ChangeAnimation(const std::string& anAnimation)
-{
-	if (myActiveAnimation != anAnimation)
-	{
-		if (myActiveAnimation != "")
-		{
-			if (myAnimations[myActiveAnimation]->GetIsRunning() == false || myAnimations[myActiveAnimation]->GetIsInteruptable() == true)
-			{
-				myAnimations[myActiveAnimation]->StopAnimation();
-				if (myAnimations[myActiveAnimation]->GetInTransition() != "")
-				{
-					if (myAnimations[myAnimations[myActiveAnimation]->GetInTransition()]->GetHasPlayed() == true)
-					{
-						myAnimations[myAnimations[myActiveAnimation]->GetInTransition()]->SetHasPlayed(false);
-					}
-				}
-				if (myAnimations[myActiveAnimation]->GetOutTransition() != "")
-				{
-					if (myAnimations[myAnimations[myActiveAnimation]->GetOutTransition()]->GetHasPlayed() == true)
-					{
-						myAnimations[myAnimations[myActiveAnimation]->GetOutTransition()]->SetHasPlayed(false);
-					}
-				}
-
-				if (myAnimations[myActiveAnimation]->GetOutTransition() == "" ||
-					myAnimations[myAnimations[myActiveAnimation]->GetOutTransition()]->GetHasPlayed() == true)
-				{
-					if (myAnimations[anAnimation]->GetInTransition() == "" ||
-						myAnimations[myAnimations[anAnimation]->GetInTransition()]->GetHasPlayed() == true)
-					{
-						myActiveAnimation = anAnimation;
-					}
-					else if (myActiveAnimation != myAnimations[anAnimation]->GetInTransition())
-					{
-						myActiveAnimation = myAnimations[anAnimation]->GetInTransition();
-						myAnimations[myActiveAnimation]->StopAnimationAtEnd();
-					}
-				}
-				else if (myActiveAnimation != myAnimations[anAnimation]->GetOutTransition())
-				{
-					myActiveAnimation = myAnimations[myActiveAnimation]->GetOutTransition();
-					myAnimations[myActiveAnimation]->StopAnimationAtEnd();
-				}
-				myAnimations[myActiveAnimation]->StartAnimation();
-			}
-			else
-			{
-				myAnimations[myActiveAnimation]->StopAnimationAtEnd();
-			}
-		}
-		else
-		{
-			myActiveAnimation = anAnimation;
-			myAnimations[myActiveAnimation]->StartAnimation();
-		}
-	}
-}*/
