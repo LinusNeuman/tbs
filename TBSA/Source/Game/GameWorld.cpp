@@ -47,10 +47,10 @@ void CGameWorld::Init()
 {
 	myTiles.Init(100);
 
-	testSprite = new WrappedSprite();	
-	testSprite->Init("Sprites/camera3.png");
+	testSprite = new WrappedSprite();
+	testSprite->Init("Sprites/camera3.png", false);
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
-	testSprite->SetIsIsometric(false);
+	//testSprite->SetIsIsometric(false);
 	
 	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/ExplosionAnimation.json");
 	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);

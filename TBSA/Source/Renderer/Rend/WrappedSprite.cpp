@@ -15,12 +15,12 @@ WrappedSprite::~WrappedSprite()
 {
 }
 
-void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/)
+void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/, bool aIsIsometric/* = true*/)
 {
 	myImageIndex = AddImage(aFilePath);
 	myLayer = enumRenderLayer::eFloor;
 	myColor = CU::Vector4f::One;
-	myIsIsometricFlag = true;
+	myIsIsometricFlag = aIsIsometric;
 }
 
 unsigned short WrappedSprite::AddImage(const std::string & aFilePath)

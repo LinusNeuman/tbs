@@ -3,6 +3,10 @@
 #include "RenderLayerEnum.h"
 #include <CU/Vectors/vector2.h>
 #include "RenderData.h"
+#include <unordered_map>
+
+
+//typedef std::unordered_map<std::string, USHORT> IndexMap;
 
 namespace DX2D
 {
@@ -21,7 +25,7 @@ public:
 	WrappedSprite();
 	~WrappedSprite();
 
-	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png");
+	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true);
 	void Draw(const CU::Vector2f & aPosition);
 
 	enumRenderLayer GetLayer() const;
@@ -40,7 +44,7 @@ public:
 
 private:
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
-	//static std::map<std::string, DX2D::CSprite*> ourSprites;
+	//static std::unordered_map<std::string, USHORT> ourIndexDictionary;
 
 	bool myIsIsometricFlag;
 
