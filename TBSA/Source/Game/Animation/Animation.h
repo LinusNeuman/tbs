@@ -103,5 +103,5 @@ void Animation::SetHasPlayed(bool aHasPlayed)
 
 void Animation::Render()
 {
-	mySpriteSheet.Draw(CU::Vector2f(0.f, 0.f));
+	mySpriteSheet.Draw(CU::Vector2f(10.f, 5.f));
 }
