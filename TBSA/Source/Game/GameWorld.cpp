@@ -95,6 +95,12 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 	DRAWLINE(CU::Vector2f(1920.f, 1080.f), testLine);
 	DRAWLINE(CU::Vector2f(0.f, 1080.f), testLine);
 
+	CU::Vector2f testIsoLine(IsometricInput::GetMouseWindowPositionIsometric());
+	DRAWISOMETRICLINE(CU::Vector2f::Zero, testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(0.f, 10.f), testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(20.f, 10.f), testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(20.f, 0.f), testIsoLine);
+
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
 	myEnemy->Update(aTimeDelta);

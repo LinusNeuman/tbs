@@ -233,14 +233,14 @@ void GetDesktopResolution(int& horizontal, int& vertical, HWND aHwnd)
 	horizontal = r.right - r.left;
 	vertical = r.bottom - r.top;
 
-	RECT windowRect;
+	/*RECT windowRect;
 	GetWindowRect(aHwnd, &windowRect);
 
 	int borderWidth = ((windowRect.right - windowRect.left) - horizontal);
 	int borderHeight = ((windowRect.bottom - windowRect.top) - vertical);
 
 	horizontal += borderWidth;
-	vertical += borderHeight;
+	vertical += borderHeight;*/
 }
 
 void DX2D::CEngine::UpdateWindowSizeChanges()

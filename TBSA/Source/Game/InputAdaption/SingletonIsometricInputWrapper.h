@@ -38,6 +38,7 @@ public:
 	inline static CU::Vector2f GetMouseWindowPosition();
 
 	inline static CU::Vector2f GetMouseWindowPositionNormalizedSpace();
+	static CU::Vector2f GetMouseWindowPositionIsometric();
 
 	inline static void SetViewPortSettings(const CU::Vector4f & aViewPortStats);
 

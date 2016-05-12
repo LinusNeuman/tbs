@@ -7,6 +7,10 @@
 
 
 //
+const float TileWidth = 10;
+const float TileSize = 64.f;
+const float TileSizeHalf = 32.f;
+
 SingletonIsometricInputWrapper * SingletonIsometricInputWrapper::ourInstance = nullptr;
 
 
@@ -72,6 +76,26 @@ CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCarte
 	//mousePosition = GetInstance().myCameraToAdjustTo->GetPosition() + mousePosition;
 
 	return mousePosition;
+}
+
+CU::Vector2f SingletonIsometricInputWrapper::GetMouseWindowPositionIsometric()
+{
+	CU::Vector2f mousePosition = GetInstance().ConvertMouseNormalizedPositionCartesianCordiante();
+
+	float windowX = GetInstance().myWindowRect.z;
+	float windowY = GetInstance().myWindowRect.w;
+
+	CU::Vector2f tempOffset(550.f, 250.f);
+	mousePosition -= tempOffset;
+	//CU::Vector2f newStartPos = CU::Vector2f((mousePosition.x - mousePosition.y) * TileSizeHalf, ((mousePosition.x + mousePosition.y) * TileSizeHalf) / 2.f);
+
+	CU::Vector2f tempPos;
+
+	tempPos.x = (mousePosition.x / TileSizeHalf + (mousePosition.y / (TileSizeHalf / 2.f))) / 2.f;
+	tempPos.y = (mousePosition.y / (TileSizeHalf / 2.f) - (mousePosition.x / TileSizeHalf)) / 2.f;
+
+	return tempPos;
+	//return newStartPos;
 }
 
 CU::Vector2f SingletonIsometricInputWrapper::GetMouseInViewportNormalized() const
