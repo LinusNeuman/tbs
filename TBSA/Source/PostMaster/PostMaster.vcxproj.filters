@@ -21,10 +21,7 @@
     <ClInclude Include="Message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MessageReciever.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RecieverTypes.h">
+    <ClInclude Include="MessageReceiver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,7 +29,7 @@
     <ClCompile Include="SingletonPostMaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MessageReciever.cpp">
+    <ClCompile Include="MessageReceiver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

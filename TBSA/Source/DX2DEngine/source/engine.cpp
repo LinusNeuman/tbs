@@ -12,6 +12,8 @@
 #include "windows/windows_window.h"
 #include <windows.h>
 
+#include <Message/WindowRectChangedMessage.h> 
+#include <SingletonPostMaster.h>
 
 #pragma comment( lib, "user32.lib" )
 
@@ -231,14 +233,14 @@ void GetDesktopResolution(int& horizontal, int& vertical, HWND aHwnd)
 	horizontal = r.right - r.left;
 	vertical = r.bottom - r.top;
 
-	RECT windowRect;
+	/*RECT windowRect;
 	GetWindowRect(aHwnd, &windowRect);
 
 	int borderWidth = ((windowRect.right - windowRect.left) - horizontal);
 	int borderHeight = ((windowRect.bottom - windowRect.top) - vertical);
 
 	horizontal += borderWidth;
-	vertical += borderHeight;
+	vertical += borderHeight;*/
 }
 
 void DX2D::CEngine::UpdateWindowSizeChanges()
@@ -358,6 +360,14 @@ void DX2D::CEngine::SetViewPort(float aTopLeftX, float aTopLeftY, float aWidth, 
 			SetResolution(DX2D::Vector2<unsigned int>(static_cast<unsigned int>(aWidth), static_cast<unsigned int>(aHeight)), false);
 		}	
 		myDirect3D->SetViewPort(aTopLeftX, aTopLeftY, aWidth, aHeight, aMinDepth, aMaxDepth);
+
+		RECT r;
+		GetClientRect(*myHwnd, &r); //get window rect of control relative to screen
+
+		WindowRectChangedMessage tempMessage(RecieverTypes::eWindowProperties, aTopLeftX, aTopLeftY, aWidth, aHeight,
+			r.left, r.top, r.right, r.bottom);
+
+		SingletonPostMaster::PostMessage(tempMessage);
 	}
 }
 

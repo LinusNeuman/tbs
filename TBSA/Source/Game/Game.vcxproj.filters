@@ -25,7 +25,8 @@
     <ClInclude Include="InputAdaption\SingletonIsometricInputWrapper.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Actor\Actor.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Room\Door.h" />
+    <ClInclude Include="Actor\Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -39,6 +40,7 @@
     <ClCompile Include="InputAdaption\SingletonIsometricInputWrapper.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\Actor.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Room\Door.cpp" />
+    <ClCompile Include="Actor\Enemy.cpp" />
   </ItemGroup>
 </Project>

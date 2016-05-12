@@ -21,6 +21,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseIntelMKL>No</UseIntelMKL>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -28,6 +29,7 @@
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseIntelMKL>No</UseIntelMKL>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -47,7 +49,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -63,7 +65,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -78,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TiledLoader\SpriteSheet\SpriteSheet.h" />
     <ClInclude Include="TiledLoader\TiledLoader.h" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +88,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TiledLoader\SpriteSheet\SpriteSheet.cpp" />
     <ClCompile Include="TiledLoader\TiledLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,8 +98,8 @@
     <ProjectReference Include="..\JSONParser\JSONParser.vcxproj">
       <Project>{e94e2940-e22d-495f-9da6-d2895858fa0e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\TileMap\TileMap.vcxproj">
-      <Project>{b82cdc0a-e1e8-4365-8cc6-b91a6a4ba399}</Project>
+    <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
+      <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

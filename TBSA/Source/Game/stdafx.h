@@ -11,7 +11,7 @@
 
 
 
-// TODO: reference additional headers your program requires here
+//  reference additional headers your program requires here
 
 
 #include <CU/Timer/Time.h>
@@ -19,7 +19,9 @@
 #include <CU/NameSpaceAliases.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/Vectors/Vector.h>
-#include <CU/InputWrapper/SingletonInputWrapper.h>
+//#include <CU/InputWrapper/SingletonInputWrapper.h>
+#include "InputAdaption/SingletonIsometricInputWrapper.h"
+#include <SingletonPostMaster.h>
 
 // Audio
 #include "../Audio/Source/Instances/SoundEffect.h"

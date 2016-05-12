@@ -7,12 +7,14 @@
 #include <functional>
 #include <time.h>
 #include <vector>
-#include <CU/InputWrapper/SingletonInputWrapper.h>
+//#include <CU/InputWrapper/SingletonInputWrapper.h>
+#include "InputAdaption/SingletonIsometricInputWrapper.h"
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
 #include <CU/Thread/ThreadHelper.h>
 #include <SingletonPostMaster.h>
+#include <Rend/RenderConverter.h>
 //#include "MainSingleton/MainSingleton.h"
 
 using namespace std::placeholders;
@@ -35,12 +37,13 @@ CGame::CGame()
 	JSONWrapper::ReadAllDocuments("Data/Root.json");
 	JSONWrapper::TestShit();*/
 	SingletonPostMaster::Create();
+	IsometricInput::Create();
 }
 
 
 CGame::~CGame()
 {
-	JSONWrapper::Destroy();
+	RenderConverter::Destroy();
 }
 
 
@@ -64,7 +67,7 @@ void CGame::Init(const std::wstring& aVersion)
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
 	createParameters.myStartInFullScreen = false;
-    createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
+    createParameters.myClearColor.Set(0.2f, 0.4f, 0.7f, 1.0f);
 
 	
 	std::wstring appname = L"TBS RELEASE [" + aVersion + L"]";
@@ -93,13 +96,18 @@ void CGame::Init(const std::wstring& aVersion)
 
 void CGame::InitCallBack()
 {
-	//MainSingleton::Init();
+	RenderConverter::Create();
+	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
 
 	myGameWorld = new CGameWorld();
 
-	GetInput::Create();
-	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
+	/*GetInput::Create();
+	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());*/
+
+	
+	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
+	
 
 	CU::TimeManager::Create();
 
@@ -122,7 +130,7 @@ void CGame::UpdateCallBack()
 void CGame::UpdateWork()
 {
 	//ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "ThreadPool: Update");
-	GetInput::Update();
+	IsometricInput::Update();
 	CU::TimeManager::Update();
 
 
@@ -135,7 +143,7 @@ void CGame::UpdateWork()
 		else
 		{
 			myGameStateStack.Render();
-			reinterpret_cast<CGameWorld*>(myGameWorld)->SwapBuffers();
+			RenderWork();
 		}
 		//myThreadPool.Update();
 	}
@@ -143,7 +151,8 @@ void CGame::UpdateWork()
 
 void CGame::RenderWork()
 {
-	//myGameStateStack.Render();
+	RenderConverter::Draw();
+	RenderConverter::SwapBuffers();
 }
 
 

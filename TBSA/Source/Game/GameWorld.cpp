@@ -2,9 +2,9 @@
 #include "GameWorld.h"
 
 #include <tga2d/Engine.h>
-#include <tga2d/sprite/sprite.h>
+//#include <tga2d/sprite/sprite.h>
 #include <CU/Vectors/Vector2.h>
-#include <Rend/Renderer.h>
+//#include <Rend/Renderer.h>
 #include <Rend/WrappedSprite.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
@@ -13,8 +13,14 @@
 #include "Actor/Actor.h"
 #include "Actor/Player.h"
 #include "PlayerController.h"
-#include "Enemy.h"
+#include "Actor/Enemy.h"
+#include <TiledLoader/TiledLoader.h>
+#include <SingletonPostMaster.h>
 
+
+//#include <Message/TestPosition.h>
+
+//#include "../TiledLoading/TiledLoader/TiledLoader.h"
 
 const float Speed = 10.f;
 const USHORT TileCount = 100;
@@ -28,6 +34,7 @@ CGameWorld::CGameWorld()
 	SoundEffect mySound;
 	mySound.Init("Sounds/Horse-neigh.mp3");
 	mySound.Play(0.5f);
+
 }
 
 
@@ -38,33 +45,38 @@ CGameWorld::~CGameWorld()
 
 void CGameWorld::Init()
 {
-	myRenderer = new RenderConverter();
-	myRenderer->Init(CU::Vector2ui(1920, 1080));
 	myTiles.Init(100);
 
-	testSprite = new WrappedSprite();	
-	testSprite->Init("Sprites/camera3.png");
-	testSprite->myLayer = 1;
-
+	testSprite = new WrappedSprite();
+	testSprite->Init("Sprites/camera3.png", false, CU::Vector4f(64.f, 64.f, 64.f, 64.f));
+	testSprite->SetLayer(enumRenderLayer::eGameObjects);
+	//testSprite->SetIsIsometric(false);
 	
+	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/ExplosionAnimation.json");
+	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
+	//picojson::object& animation = animationObject["Animation"].get<picojson::object>();
 
-	for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
+	myAnimation.InitializeAnimation(animationObject);
+	myAnimation.StartAnimation();
+
+	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
+	myPlayerFactory.LoadFromJson();
+	myEnemyFactory.LoadFromJson();
+	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
 	{
-		
-
 		CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
 		myTiles.Add(IsometricTile(tempderp));
-	}
+	}*/
 
-	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
+	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
 
-	
-	myPlayer = new Player(CU::Vector2f(2, 1), eActorType::ePlayerOne);
 	myPlayerController = new PlayerController();
+	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
+	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer);
-	myPlayer2 = new Player(CU::Vector2f(4, 5), eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer2);
-	myEnemy = new Enemy(CU::Vector2f(6, 6), eActorType::eEnemyOne);
+	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
+	myPlayerController->AddPlayer(myEnemy);
 }
 
 
@@ -72,46 +84,41 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 {
 	(aStateStack);
 
-	float kLeft = 0.f;
-	float kRight = 0.f;
-	float kUp = 0.f;
-	float kDown = 0.f;
+
+	myAnimation.UpdateAnimation();
+	myAnimation.Render();
 	
-	if (GetInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		myPlayerController->NotifyPlayers(aTimeDelta);
+		myPlayerController->NotifyPlayers();
 	}
-	if (GetInput::GetKeyPressed(DIK_TAB) == true)
+	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		myPlayerController->SelectPlayer();
 	}
-	if (GetInput::GetKeyDown(DIK_H) == true)
+	if (IsometricInput::GetKeyPressed(DIK_1) == true)
 	{
-		kLeft = 1.f;
+
 	}
 
-	if (GetInput::GetKeyDown(DIK_K) == true)
-	{
-		kRight = 1.f;
-	}
-
-	if (GetInput::GetKeyDown(DIK_U) == true)
-	{
-		kUp = 1.f;
-	}
-
-	if (GetInput::GetKeyDown(DIK_J) == true)
-	{
-		kDown = 1.f;
-	}
-
-	if (GetInput::GetKeyReleased(DIK_Q) == true)
+	if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
 		DL_ASSERT(isFalse, "IT Works!");
 	}
 
-	CU::Vector2f InputVector(kRight - kLeft, kDown - kUp);
+	//RenderConverter::DrawLine();
+	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
+	DRAWLINE(CU::Vector2f::Zero, testLine);
+	DRAWLINE(CU::Vector2f(1920.f, 0.f), testLine);
+	DRAWLINE(CU::Vector2f(1920.f, 1080.f), testLine);
+	DRAWLINE(CU::Vector2f(0.f, 1080.f), testLine);
+
+	CU::Vector2f testIsoLine(IsometricInput::GetMouseWindowPositionIsometric());
+	DRAWISOMETRICLINE(CU::Vector2f::Zero, testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(0.f, 10.f), testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(20.f, 10.f), testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(20.f, 0.f), testIsoLine);
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
@@ -122,16 +129,10 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 void CGameWorld::Draw() const
 {
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
-	myRenderer->Draw();
 	myPlayer->Draw();
-
-	testSprite->Draw(CU::Vector2f(5.f, 5.f));
-
 	myPlayer2->Draw();
+	testSprite->Draw(CU::Vector2f(100.f, 100.f));
 	myEnemy->Draw();
-}
 
-void CGameWorld::SwapBuffers()
-{
-	myRenderer->SwapBuffers();
+
 }

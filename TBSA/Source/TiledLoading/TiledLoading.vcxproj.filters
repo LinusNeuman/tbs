@@ -19,11 +19,15 @@
     <ClInclude Include="TiledLoader\TiledLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TiledLoader\SpriteSheet\SpriteSheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="TiledLoader\TiledLoader.cpp" />
+    <ClCompile Include="TiledLoader\SpriteSheet\SpriteSheet.cpp" />
   </ItemGroup>
 </Project>

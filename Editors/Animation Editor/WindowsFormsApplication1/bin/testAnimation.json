@@ -1,0 +1,16 @@
+{
+  "Name": "ex",
+  "FilePath": "../Images/animation.dds",
+  "SizeX": 64,
+  "SizeY": 64,
+  "AmountOfColumns": 8,
+  "AmountOfRows": 4,
+  "AmountOfFrames": 32,
+  "AnimationSpeed": 32,
+  "ShouldLoop": true,
+  "IsInterruptible": true,
+  "LoopStart": 1,
+  "LoopEnd": 32,
+  "InTransition": "",
+  "OutTransition": ""
+}
