@@ -50,6 +50,11 @@ void Actor::Update(const CU::Time& aDeltaTime)
 {
 	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 3.f;
 	myPosition += myVelocity * aDeltaTime.GetSeconds();
+	CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
+	if ((myTargetPosition - myPosition).Length() <= distance.Length())
+	{
+		myTargetPosition = myPosition;
+	}
 }
 
 void Actor::Draw() const

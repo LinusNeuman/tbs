@@ -7,6 +7,7 @@ PlayerController::PlayerController()
 {
 	myPlayers.Init(2);
 	mySelectedPlayerIndex = 0;
+	mySelectedPlayer = nullptr;
 }
 
 
