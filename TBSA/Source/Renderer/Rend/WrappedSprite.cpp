@@ -20,6 +20,7 @@ void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*
 	myImageIndex = AddImage(aFilePath);
 	myLayer = enumRenderLayer::eFloor;
 	myColor = CU::Vector4f::One;
+	myIsIsometricFlag = true;
 }
 
 unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
@@ -37,7 +38,15 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath)
 	return (ourSprites.Size() - 1);
 }
 
+
 void WrappedSprite::Draw(const CU::Vector2f & aPosition)
 {
-	RenderConverter::CalculateAndRenderIso(*this, aPosition);
+	if (myIsIsometricFlag == true)
+	{
+		RenderConverter::CalculateAndRenderIso(*this, aPosition);
+	}
+	else
+	{
+		RenderConverter::CalculateAndRenderSprite(*this, aPosition);
+	}
 }

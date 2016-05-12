@@ -50,6 +50,7 @@ void CGameWorld::Init()
 	testSprite = new WrappedSprite();	
 	testSprite->Init("Sprites/camera3.png");
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
+	testSprite->SetIsIsometric(false);
 	
 	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/ExplosionAnimation.json");
 	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
@@ -83,10 +84,6 @@ eStackReturnValue CGameWorld::Update(const CU::Time & aTimeDelta, ProxyStateStac
 {
 	(aStateStack);
 
-	float kLeft = 0.f;
-	float kRight = 0.f;
-	float kUp = 0.f;
-	float kDown = 0.f;
 
 	myAnimation.UpdateAnimation();
 	myAnimation.Render();
@@ -134,7 +131,7 @@ void CGameWorld::Draw() const
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();
-	testSprite->Draw(CU::Vector2f(5.f, 5.f));
+	testSprite->Draw(CU::Vector2f(100.f, 100.f));
 	myEnemy->Draw();
 
 

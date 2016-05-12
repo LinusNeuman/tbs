@@ -34,8 +34,15 @@ public:
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
 
+	const bool GetIsIsometric() const;
+	void SetIsIsometric(const bool aFlag);
+	
+
 private:
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
+	//static std::map<std::string, DX2D::CSprite*> ourSprites;
+
+	bool myIsIsometricFlag;
 
 	enumRenderLayer myLayer;
 
@@ -73,4 +80,14 @@ inline const CU::Vector4f & WrappedSprite::GetColor() const
 inline void WrappedSprite::SetColor(const CU::Vector4f & aColor)
 {
 	myColor = aColor;
+}
+
+inline const bool WrappedSprite::GetIsIsometric() const
+{
+	return myIsIsometricFlag;
+}
+
+inline void WrappedSprite::SetIsIsometric(const bool aFlag)
+{
+	myIsIsometricFlag = aFlag;
 }
