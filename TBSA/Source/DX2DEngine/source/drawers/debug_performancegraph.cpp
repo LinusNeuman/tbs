@@ -118,7 +118,7 @@ void CPerformanceGraph::Render()
 	if (theTos.size() > 0)
 	{
 		
-		myDrawer->DrawLines(&theTos[0], &theFrom[0], &theColors[0], theTos.size());
+		myDrawer->DrawLines(&theTos[0], &theFrom[0], &theColors[0], static_cast<int>(theTos.size()));
 	}
 	
 	myText->Render();

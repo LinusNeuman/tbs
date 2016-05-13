@@ -45,15 +45,19 @@ namespace DX2D
         CShader(CEngine* aEngine);
         virtual ~CShader();
         virtual bool Init(){ return false; }
-        bool CreateShaders(const char* aVertex, const char* aPixel);
+
+		typedef std::function<void(ID3D10Blob* aBlob)> callback_layout;
+		bool CreateShaders(const char* aVertex, const char* aPixel, callback_layout aLayout = nullptr);
         bool Render(CRenderObject* aObject);
-        virtual bool CreateInputLayout( ID3D10Blob* aVS ) { aVS; return false; }
+       
+		ID3D11InputLayout *myLayout;            // the pointer to the input layout
     protected:
+		virtual bool CreateInputLayout(ID3D10Blob* aVS) { aVS; return false; }
         void OnShaderFileModified(std::wstring aFile);
         void DoOneFrameUpdates(CRenderObject* aObject);
         ID3D11VertexShader *myVertexShader;    // the vertex shader
         ID3D11PixelShader *myPixelShader;     // the pixel shader
-        ID3D11InputLayout *myLayout;            // the pointer to the input layout
+       
        
         CDirectEngine* myDirect3dEngine;
         CEngine* myEngine;

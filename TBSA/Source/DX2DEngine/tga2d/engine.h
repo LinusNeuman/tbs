@@ -5,8 +5,8 @@ It takes care of creating everything necessary for window handling and rendering
 */
 
 #pragma once
-#define _X86_
-#include <windef.h>
+//#define _X86_
+#include <windows.h>
 
 #include <functional>
 #include "math/Color.h"
@@ -105,6 +105,7 @@ namespace DX2D
         friend class CShader;
         friend class CErrorManager;
         friend class CDirectEngine;
+		friend class CWindowsWindow;
     public:
         CEngine &operator =( const CEngine &anOther ) = delete;
         static void CreateInstance( const SEngineCreateParameters& aCreateParameters);
@@ -159,22 +160,24 @@ namespace DX2D
         // Clears the frame and prepares engine for rendering. Run at the beginning
         // of the frame.
         //
-        void BeginFrame( const CColor &aClearColor = { 0.0f, 0.0f, 0.0f, 1.0f } );
+        bool BeginFrame( const CColor &aClearColor = { 0.0f, 0.0f, 0.0f, 1.0f } );
 
         // Passes data to GPU. Run at the end of the frame.
         //
         void EndFrame( void );
-
+		
     private:
         CEngine(const SEngineCreateParameters& aCreateParameters);
         ~CEngine();
-
+		
         void StartStep();
         void DoStep();
         void RunFrame();
         void CalculateRatios();
 
-        void UpdateWindowSizeChanges();
+		void UpdateWindowSizeChanges();
+		void SetWantToUpdateSize(){ myWantToUpdateSize = true; }
+       
 
         static CEngine* myInstance;
 
@@ -199,6 +202,7 @@ namespace DX2D
         CLightManager* myLightManager;
         CErrorManager* myErrorManager;
         CFileWatcher* myFileWatcher;
+		bool myWantToUpdateSize;
 
         bool myRunEngine;
         float myWindowRatio;
@@ -207,5 +211,7 @@ namespace DX2D
         std::chrono::system_clock::time_point myStartOfTime;
         float myTotalTime;
         float myDeltaTime;
+
+		bool myShouldExit; // Only used when using beginframe and endframe
     };
 }

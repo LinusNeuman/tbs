@@ -1,6 +1,7 @@
 #include "../CommonUtilities/CU/Vectors/vector2.h"
 #include "../CommonUtilities/CU/Vectors/vector4.h"
 #include "../CommonUtilities/CU/Timer/Time.h"
+#include "Actor\Actor.h"
 #include "WrappedSprite.h"
 #include "Renderer.h"
 
@@ -38,7 +39,7 @@ struct ParticleEmitterData
 	float MaxParSize = 1.f;
 	float MinParRotationSpeed = 10.f;
 	float MaxParRotationSpeed = 25.f;
-	GameObject* myMagnetTarget = nullptr;
+	Actor* myMagnetTarget = nullptr;
 	CommonUtilities::Vector2f Position;
 	CommonUtilities::Vector2f Dimensions;
 	CommonUtilities::Vector2f MinParEmissionVel = { -150.f, -150.f };
@@ -65,7 +66,6 @@ template<unsigned int COUNT>
 class ParticleEmitter
 {
 	public:
-
 		ParticleEmitter();
 		~ParticleEmitter();
 
@@ -74,19 +74,21 @@ class ParticleEmitter
 		void LoadEmitterSettings(const std::string& aFileName);
 		void SetPosition(const Vector2f aPos);
 		void ResetEmitter();
-		void SetMagnetTarget(GameObject* aTarget);
+		void SetMagnetTarget(Actor* aTarget);
 		void SetEmitterSize(Vector2f aSize);
 		void SetDieOnMagnetImpact(bool aBool);
+
 		bool IsActive();
 
 	private:
-
 		void KillParticle(unsigned int aIndex);
 		void ResetParticle(unsigned int aIndex);
 		void UpdateParticle(unsigned int aIndex, CU::Time aTime);
+
 		Vector2f GenerateNewParticlePos();
 
 		ParticleEmitterData myData;
+
 		ParticleData<COUNT> myParticleData;
 };
 
@@ -430,7 +432,7 @@ void ParticleEmitter<COUNT>::ResetEmitter()
 }
 
 template<unsigned int COUNT>
-void ParticleEmitter<COUNT>::SetMagnetTarget(GameObject* aTarget)
+void ParticleEmitter<COUNT>::SetMagnetTarget(Actor* aTarget)
 {
 	myData.myMagnetTarget = aTarget;
 }
