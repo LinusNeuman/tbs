@@ -1,7 +1,7 @@
 #include "../CommonUtilities/CU/Vectors/vector2.h"
 #include "../CommonUtilities/CU/Vectors/vector4.h"
 #include "../CommonUtilities/CU/Timer/Time.h"
-#include "WrappedSprite.h"
+#include "StaticSprite.h"
 #include "Renderer.h"
 
 struct ParticleEmitterData

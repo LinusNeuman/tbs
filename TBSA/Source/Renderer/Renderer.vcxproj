@@ -197,7 +197,7 @@
     <ClCompile Include="Rend\RenderCommand.cpp" />
     <ClCompile Include="Rend\RenderConverter.cpp" />
     <ClCompile Include="Rend\Renderer.cpp" />
-    <ClCompile Include="Rend\WrappedSprite.cpp" />
+    <ClCompile Include="Rend\StaticSprite.cpp" />
     <ClCompile Include="stdafx.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
@@ -214,7 +214,7 @@
     <ClInclude Include="Rend\RenderData.h" />
     <ClInclude Include="Rend\Renderer.h" />
     <ClInclude Include="Rend\RenderLayerEnum.h" />
-    <ClInclude Include="Rend\WrappedSprite.h" />
+    <ClInclude Include="Rend\StaticSprite.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

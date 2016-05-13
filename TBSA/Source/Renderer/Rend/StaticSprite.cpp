@@ -1,23 +1,23 @@
 #include "stdafx.h"
-#include "WrappedSprite.h"
+#include "StaticSprite.h"
 #include "tga2d/sprite/sprite.h"
 //#include "RenderCommand.h"
 #include "RenderConverter.h"
 
 
-CU::GrowingArray<DX2D::CSprite*> WrappedSprite::ourSprites;
-IndexMap WrappedSprite::ourIndexDictionary;
+CU::GrowingArray<DX2D::CSprite*> StaticSprite::ourSprites;
+IndexMap StaticSprite::ourIndexDictionary;
 
-WrappedSprite::WrappedSprite()
+StaticSprite::StaticSprite()
 {
 	myIsInitiedFlag = false;
 }
 
-WrappedSprite::~WrappedSprite()
+StaticSprite::~StaticSprite()
 {
 }
 
-void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
+void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
 {
 	myIsInitiedFlag = true;
 	myImageIndex = AddImage(aFilePath, aRect);
@@ -26,7 +26,7 @@ void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*
 	myIsIsometricFlag = aIsIsometric;
 }
 
-unsigned short WrappedSprite::AddImage(const std::string & aFilePath, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
+unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
 {
 	IndexKey tempKey(aFilePath, aRect);
 
@@ -62,7 +62,7 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath, const CU::
 }
 
 
-void WrappedSprite::Draw(const CU::Vector2f & aPosition)
+void StaticSprite::Draw(const CU::Vector2f & aPosition)
 {
 	DL_ASSERT(myIsInitiedFlag == true, "Static sprite not initialized");
 

@@ -11,7 +11,7 @@
 
 
 //#include <CU/NameSpaceAliases.h>
-#include "WrappedSprite.h"
+#include "StaticSprite.h"
 #include "RenderLayerEnum.h"
 #include "RenderCommand.h"
 
@@ -44,9 +44,9 @@ Renderer::~Renderer()
 
 void Renderer::Init()
 {
-	if (WrappedSprite::ourSprites.IsInitialized() == false)
+	if (StaticSprite::ourSprites.IsInitialized() == false)
 	{
-		WrappedSprite::ourSprites.Init(100);
+		StaticSprite::ourSprites.Init(100);
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "RenderConverter.h"
 #include <tga2d/sprite/sprite.h>
-#include "WrappedSprite.h"
+#include "StaticSprite.h"
 #include <CU/Vectors/vector2.h>
 #include <CU/Utility/Math/Isometric.h>
 
@@ -48,7 +48,7 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 }
 
 
-void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition)
+void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
 	CU::Vector2f tempPosition = aPosition;
 
@@ -63,7 +63,7 @@ void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRende
 	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData));
 }
 
-void RenderConverter::CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition)
+void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
 	RenderData tempRenderData(aSpriteToRender.GetColor());
 	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData));

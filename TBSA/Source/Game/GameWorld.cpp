@@ -5,7 +5,7 @@
 //#include <tga2d/sprite/sprite.h>
 #include <CU/Vectors/Vector2.h>
 //#include <Rend/Renderer.h>
-#include <Rend/WrappedSprite.h>
+#include <Rend/StaticSprite.h>
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <ProxyStateStack.h>
 #include <CU/Memory Pool/MemoryPool.h>
@@ -47,7 +47,7 @@ void CGameWorld::Init()
 {
 	myTiles.Init(100);
 
-	testSprite = new WrappedSprite();
+	testSprite = new StaticSprite();
 	testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);

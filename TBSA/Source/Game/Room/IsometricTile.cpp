@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "IsometricTile.h"
-#include <Rend/WrappedSprite.h>
+#include <Rend/StaticSprite.h>
 
 
 IsometricTile::IsometricTile()
@@ -22,7 +22,7 @@ IsometricTile::~IsometricTile()
 
 void IsometricTile::Init()
 {
-	mySprite = new WrappedSprite();
+	mySprite = new StaticSprite();
 	mySprite->Init();
 }
 
@@ -34,7 +34,7 @@ void IsometricTile::Draw() const
 	}
 }
 
-void IsometricTile::AddSpriteLayer(WrappedSprite * aSprite)
+void IsometricTile::AddSpriteLayer(StaticSprite * aSprite)
 {
 	myGraphicsLayers.Add(aSprite);
 }

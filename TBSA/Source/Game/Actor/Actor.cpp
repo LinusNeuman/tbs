@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "Actor.h"
-#include <Rend/WrappedSprite.h>
+#include <Rend/StaticSprite.h>
 #include <tga2d/math/vector2.h>
 #include "../Animation/Animation.h"
 
 
 Actor::Actor()
 {
-	mySprite = new WrappedSprite();
+	mySprite = new StaticSprite();
 	myVelocity = CU::Vector2f::Zero;
 }
 

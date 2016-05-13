@@ -10,7 +10,7 @@ namespace DX2D
 	class CText;
 }
 
-class WrappedSprite;
+class StaticSprite;
 
 class Renderer
 {
