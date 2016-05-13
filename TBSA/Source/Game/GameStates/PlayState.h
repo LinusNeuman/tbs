@@ -26,6 +26,5 @@ private:
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
 	Animation *myAnimation;
-	DX2D::CCustomShader* myCustomShader; // Create
 };
 

@@ -65,12 +65,13 @@ void PlayState::Init()
 	myPlayer->AddAnimation(myAnimation);
 	myPlayer->ChangeAnimation("PlayerTurn");
 
-	myCustomShader = new DX2D::CCustomShader();
-	myCustomShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
-	myCustomShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/camera7.png"), DX2D::EShaderTextureSlot_1); // Add a texture
-	myCustomShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	DX2D::CCustomShader* customShader;
+	customShader = new DX2D::CCustomShader();
+	customShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
+	customShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/camera7.png"), DX2D::EShaderTextureSlot_1); // Add a texture
+	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 	
-	Shaders::GetInstance()->AddShader(myCustomShader, "testShader");
+	Shaders::GetInstance()->AddShader(customShader, "testShader");
 
 	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
 }
