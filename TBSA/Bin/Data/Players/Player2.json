@@ -1,5 +1,12 @@
 {
     "actorType": 1,
+    "image": "Sprites/Players/Player2/camera7.png",
     "startPositionX": 3,
-    "startPositionY":  5
+    "startPositionY":  5,
+    "animations": 
+    [
+        {
+            "path": "Data/Animations/Player2/PlayerTurnAnimation.json"
+        }
+    ]
 }
