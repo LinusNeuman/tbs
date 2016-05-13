@@ -11,6 +11,9 @@
 #include <tga2d\texture\texture_manager.h>
 #include <tga2d\engine.h>
 
+#include <TiledData/TiledData.h>
+#include <Message/LevelTileMetricsMessage.h>
+#include <SingletonPostMaster.h>
 PlayState::PlayState()
 {
 }
@@ -28,8 +31,12 @@ void PlayState::Init()
 	testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);
+	TiledData someData;
 
-	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
+	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
+	SingletonPostMaster::PostMessageW(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
+
+	myTiles = someData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)

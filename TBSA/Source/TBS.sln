@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSONWrapper", "JSONWrapper\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Factories", "Factories\Factories.vcxproj", "{B4921203-98D8-43E4-8763-4009B00FE688}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PathFinding", "PathFinding\PathFinding.vcxproj", "{88878C34-338E-418A-84E3-1438B4EA5786}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -194,6 +196,15 @@ Global
 		{B4921203-98D8-43E4-8763-4009B00FE688}.Release|Win32.ActiveCfg = Release|Win32
 		{B4921203-98D8-43E4-8763-4009B00FE688}.Release|Win32.Build.0 = Release|Win32
 		{B4921203-98D8-43E4-8763-4009B00FE688}.Release|x64.ActiveCfg = Release|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.Debug|Win32.ActiveCfg = Debug|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.Debug|Win32.Build.0 = Debug|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.Debug|x64.ActiveCfg = Debug|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.DevMode|Win32.ActiveCfg = Debug|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.DevMode|Win32.Build.0 = Debug|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.DevMode|x64.ActiveCfg = Debug|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.Release|Win32.ActiveCfg = Release|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.Release|Win32.Build.0 = Release|Win32
+		{88878C34-338E-418A-84E3-1438B4EA5786}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
