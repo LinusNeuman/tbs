@@ -3,7 +3,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <PlayerFactory/PlayerFactory.h>
 #include <EnemyFactory/EnemyFactory.h>
-#include "../Animation\Animation.h"
+#include <Animation/Animation.h>
 #include "../Room/IsometricTile.h"
 
 class StaticSprite;

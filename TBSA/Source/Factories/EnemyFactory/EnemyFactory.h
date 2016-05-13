@@ -3,13 +3,8 @@
 #include "../Game/Actor/Enemy.h"
 #include <CU/Memory Pool/MemoryPool.h>
 #include <CU/Vectors/vector2.h>
-
-struct EnemyData
-{
-	eActorType myActortype;
-	CU::Vector2f myPosition;
-};
-
+#include "../Game/JsonDataStructs.h"
+#include <Pico/picojson.h>
 
 class EnemyFactory
 {
@@ -17,12 +12,13 @@ public:
 	EnemyFactory();
 	~EnemyFactory();
 	void LoadFromJson();
-	void UpdateDataStruct(const std::string& aStringPath, EnemyData &aEnemyData);
+	void UpdateDataStruct(const std::string& aStringPath, ActorData &aActorData);
+	void AddEnemyAnimation(ActorData &aActorData, picojson::object& aObject);
 	Enemy* CreateEnemy(eActorType aActorType);
 	void ReturnEnemy(Enemy* aPlayer);
 private:
 	CommonUtilities::MemoryPool<Enemy, 5> myEnemyPool;
-	EnemyData myEnemyOneData;
-	EnemyData myEnemyTwoData;
+	ActorData myEnemyOneData;
+	ActorData myEnemyTwoData;
 };
 

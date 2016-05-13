@@ -21,9 +21,6 @@ void PlayState::Init()
 {
 	myTiles.Init(100);
 
-	testSprite = new StaticSprite();
-	testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
-	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
@@ -44,14 +41,9 @@ void PlayState::Init()
 	myPlayerController->AddPlayer(myPlayer2);
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
 	myPlayerController->AddPlayer(myEnemy);
-
-	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/PlayerTurnAnimation.json");
-	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
-
-	myAnimation = new Animation();
-	myAnimation->InitializeAnimation(animationObject);
-	myPlayer->AddAnimation(myAnimation);
 	myPlayer->ChangeAnimation("PlayerTurn");
+	myPlayer2->ChangeAnimation("PlayerTurn");
+	myEnemy->ChangeAnimation("EnemyTurn");
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -105,7 +97,6 @@ void PlayState::Draw() const
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();
-	testSprite->Draw(CU::Vector2f(500.f, 500.f));
 	myEnemy->Draw();
 
 }

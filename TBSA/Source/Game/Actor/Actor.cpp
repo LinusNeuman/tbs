@@ -2,7 +2,8 @@
 #include "Actor.h"
 #include <Rend/StaticSprite.h>
 #include <tga2d/math/vector2.h>
-#include "../Animation/Animation.h"
+#include <Animation/Animation.h>
+#include "../JsonDataStructs.h"
 
 
 Actor::Actor()
@@ -15,33 +16,14 @@ Actor::~Actor()
 {
 }
 
-void Actor::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorType)
+void Actor::Init(ActorData aActorData)
 {
-	myPosition = aStartPosition;
+	myPosition = aActorData.myPosition;
 	myTargetPosition = myPosition;
-	switch (aActorType)
-	{
-	case eActorType::ePlayerOne:
-		mySprite->Init("Sprites/camera3.png");
-		mySprite->SetLayer(enumRenderLayer::eGameObjects);
-		break;
-	case eActorType::ePlayerTwo:
-		mySprite->Init("Sprites/camera7.png");
-		mySprite->SetLayer(enumRenderLayer::eGameObjects);
-		break;
-	case eActorType::eEnemyOne:
-		mySprite->Init("Sprites/camera4.png");
-		mySprite->SetLayer(enumRenderLayer::eGameObjects);
-		break;
-	case eActorType::eEnemyTwo:
-		mySprite->Init("Sprites/camera4.png");
-		mySprite->SetLayer(enumRenderLayer::eGameObjects);
-		break;
-	default:
-		break;
-	}
-
+	mySprite->Init();
+	mySprite->SetLayer(enumRenderLayer::eGameObjects);
 	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
+	myAnimations = aActorData.myAnimations;
 }
 
 

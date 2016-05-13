@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Rend/Renderer.h"
 #include <Rend/StaticSprite.h>
+#include "../JsonDataStructs.h"
 
 
 Player::Player()
@@ -12,7 +13,8 @@ Player::~Player()
 {
 }
 
-void Player::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorType)
+void Player::Init(ActorData aActorData)
 {
-	Actor::Init(aStartPosition, aActorType);
+	Actor::Init(aActorData);
+
 }

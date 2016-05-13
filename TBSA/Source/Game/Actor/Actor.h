@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 
+struct ActorData;
 class StaticSprite;
 class Animation;
 
@@ -12,12 +13,14 @@ enum class eActorType
 	eEnemyTwo
 };
 
+
+
 class Actor
 {
 public:
 	Actor();
 	~Actor();
-	void Init(const CU::Vector2f &aStartPosition, const eActorType &aActorType);
+	void Init(ActorData aActorData);
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2f aTargetPosition);

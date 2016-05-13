@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Enemy.h"
+#include "../JsonDataStructs.h"
 
 
 Enemy::Enemy()
@@ -11,7 +12,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorType)
+void Enemy::Init(ActorData aActorData)
 {
-	Actor::Init(aStartPosition, aActorType);
+	Actor::Init(aActorData);
 }

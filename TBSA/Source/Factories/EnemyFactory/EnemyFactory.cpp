@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EnemyFactory.h"
 #include <JsonWrapper/JsonWrapper.h>
-
+#include <Animation/Animation.h>
 
 EnemyFactory::EnemyFactory()
 {
@@ -19,13 +19,29 @@ void EnemyFactory::LoadFromJson()
 	UpdateDataStruct("Data/Enemies/Enemy2.json", myEnemyTwoData);
 }
 
-void EnemyFactory::UpdateDataStruct(const std::string &aStringPath,  EnemyData &aEnemyData)
+void EnemyFactory::UpdateDataStruct(const std::string &aStringPath, ActorData &aActorData)
 {
 	picojson::value enemyValue = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& enemyObject = JsonWrapper::GetPicoObject(enemyValue);
-	aEnemyData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyObject));
-	aEnemyData.myPosition.x = JsonWrapper::GetFloat("startPositionX", enemyObject);
-	aEnemyData.myPosition.y = JsonWrapper::GetFloat("startPositionY", enemyObject);
+	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyObject));
+	aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", enemyObject);
+	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", enemyObject);
+	AddEnemyAnimation(aActorData, enemyObject);
+}
+
+void EnemyFactory::AddEnemyAnimation(ActorData &aActorData, picojson::object& aObject)
+{
+	Animation *animation = new Animation();
+	picojson::array& animationArray = JsonWrapper::GetPicoArray("animations", aObject);
+	for (size_t i = 0; i < animationArray.size(); i++)
+	{
+		std::string path = JsonWrapper::GetString("path", animationArray[i].get<picojson::object>());
+		picojson::value animationFile = JsonWrapper::LoadPicoValue(path);
+		picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
+		std::string name = JsonWrapper::GetString("Name", animationObject);
+		animation->InitializeAnimation(animationObject);
+		aActorData.myAnimations[name] = animation;
+	}
 }
 
 Enemy* EnemyFactory::CreateEnemy(eActorType aActorType)
@@ -35,10 +51,10 @@ Enemy* EnemyFactory::CreateEnemy(eActorType aActorType)
 	switch (aActorType)
 	{
 	case eActorType::eEnemyOne:
-		Enemy->Init(myEnemyOneData.myPosition, myEnemyOneData.myActortype);
+		Enemy->Init(myEnemyOneData);
 		return Enemy;
 	case eActorType::eEnemyTwo:
-		Enemy->Init(myEnemyTwoData.myPosition, myEnemyTwoData.myActortype);
+		Enemy->Init(myEnemyTwoData);
 		return Enemy;
 	default:
 		DL_ASSERT(false, "Wrong ActorType when creating enemy");
