@@ -58,12 +58,9 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 	}
 	tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
 
+	//SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
+
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
-	myImageIndex = ourIndexDictionary[tempKey];
-	
-
-	SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
-
 	return ourIndexDictionary[tempKey];
 }
 

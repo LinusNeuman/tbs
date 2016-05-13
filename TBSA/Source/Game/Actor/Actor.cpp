@@ -40,6 +40,8 @@ void Actor::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorTyp
 	default:
 		break;
 	}
+
+	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 }
 
 
@@ -53,6 +55,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		myAnimations[myActiveAnimation]->UpdateAnimation();
 		mySprite = myAnimations[myActiveAnimation]->GetSprite();
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
+		mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	}
 	if ((myTargetPosition - myPosition).Length() <= distance.Length())
 	{
