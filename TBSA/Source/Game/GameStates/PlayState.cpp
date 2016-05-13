@@ -8,7 +8,8 @@
 #include "../PlayerController.h"
 #include <TiledLoader/TiledLoader.h>
 #include <TiledData/TiledData.h>
-
+#include <Message/LevelTileMetricsMessage.h>
+#include <SingletonPostMaster.h>
 PlayState::PlayState()
 {
 }
@@ -29,6 +30,7 @@ void PlayState::Init()
 	TiledData someData;
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
+	SingletonPostMaster::PostMessageW(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
 
 	myTiles = someData.myTiles;
 	myPlayerFactory.LoadFromJson();
