@@ -7,7 +7,14 @@
 #include "../Actor/Actor.h"
 #include "../PlayerController.h"
 #include <TiledLoader/TiledLoader.h>
+#include <tga2d\shaders\customshader.h>
+#include <tga2d\texture\texture_manager.h>
+#include <tga2d\engine.h>
+#include "../Shader/Shaders.h"
 
+#include <TiledData/TiledData.h>
+#include <Message/LevelTileMetricsMessage.h>
+#include <SingletonPostMaster.h>
 PlayState::PlayState()
 {
 }
@@ -19,11 +26,16 @@ PlayState::~PlayState()
 
 void PlayState::Init()
 {
+	Shaders::Create();
 	myTiles.Init(100);
 
-	//testSprite->SetIsIsometric(false);
+	
+	TiledData someData;
 
-	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
+	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
+	SingletonPostMaster::PostMessageW(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
+
+	myTiles = someData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
@@ -44,6 +56,16 @@ void PlayState::Init()
 	myPlayer->ChangeAnimation("PlayerTurn");
 	myPlayer2->ChangeAnimation("PlayerTurn");
 	myEnemy->ChangeAnimation("EnemyTurn");
+
+	DX2D::CCustomShader* customShader;
+	customShader = new DX2D::CCustomShader();
+	customShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
+	customShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/camera7.png"), DX2D::EShaderTextureSlot_1); // Add a texture
+	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	
+	Shaders::GetInstance()->AddShader(customShader, "testShader");
+
+	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
