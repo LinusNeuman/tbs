@@ -4,12 +4,14 @@
 #include "StaticSprite.h"
 #include <CU/Vectors/vector2.h>
 #include <CU/Utility/Math/Isometric.h>
+#include <Message/LevelTileMetricsMessage.h>
+#include <SingletonPostMaster.h>
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 
 
 
-const float TileWidth = 10;
+//const float TileWidth = 10;
 const float TileSize = 128.f;
 const float TileSizeHalf = 64.f;
 
@@ -20,6 +22,7 @@ RenderConverter::RenderConverter()
 
 RenderConverter::~RenderConverter()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelTileLayoutSettings, *this);
 }
 
 
@@ -45,6 +48,10 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 {
 	GetInstance().myRenderer.Init();
 	GetInstance().myRenderer.SetWindowSize(aWindowSize);
+
+	GetInstance().myLevelTileLayout = CU::Vector2ui(10, 10);
+
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelTileLayoutSettings, GetInstance());
 }
 
 
@@ -56,7 +63,7 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 
 	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
-	const float Priority = (tempPosition.x + (tempPosition.y * TileWidth));
+	const float Priority = (tempPosition.x + (tempPosition.y * static_cast<float>(GetInstance().myLevelTileLayout.x)));
 
 	RenderData tempRenderData(aSpriteToRender.GetColor());
 
@@ -99,4 +106,9 @@ void RenderConverter::Draw()
 void RenderConverter::SwapBuffers()
 {
 	GetInstance().myRenderer.SwapBuffer();
+}
+
+void RenderConverter::RecieveMessage(const LevelTileMetricsMessage & aMessage)
+{
+	myLevelTileLayout = aMessage.myWidthHeight;
 }

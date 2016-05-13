@@ -1,9 +1,10 @@
 #pragma once
 #include "Renderer.h"
+#include <MessageReceiver.h>
 
 class StaticSprite;
 
-class RenderConverter
+class RenderConverter : public MessageReciever
 {
 public:
 	static void Create();
@@ -22,6 +23,8 @@ public:
 
 	static void SwapBuffers();
 
+	virtual void RecieveMessage(const LevelTileMetricsMessage & aMessage) override;
+
 private:
 	RenderConverter();
 	~RenderConverter();
@@ -30,6 +33,7 @@ private:
 
 	static RenderConverter & GetInstance();
 
+	CU::Vector2ui myLevelTileLayout;
 	Renderer myRenderer;
 };
 

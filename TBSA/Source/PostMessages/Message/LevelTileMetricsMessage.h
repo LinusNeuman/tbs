@@ -5,10 +5,10 @@
 
 struct LevelTileMetricsMessage : public BaseMessage
 {
-	LevelTileMetricsMessage(const RecieverTypes aReceiverType, const CU::Vector2f & aLevelWidthAndHeight) :
+	LevelTileMetricsMessage(const RecieverTypes aReceiverType, const CU::Vector2ui & aLevelWidthAndHeight) :
 		BaseMessage(aReceiverType),
 		myWidthHeight(aLevelWidthAndHeight)
 	{}
 
-	const CU::Vector2f myWidthHeight;
+	const CU::Vector2ui myWidthHeight;
 };
