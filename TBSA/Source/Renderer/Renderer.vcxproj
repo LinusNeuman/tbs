@@ -115,7 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -151,7 +151,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -191,6 +191,9 @@
     <ProjectReference Include="..\DX2DEngine\DX2DEngine.vcxproj">
       <Project>{11f98bf6-7bdb-4cfb-96cf-577db4ae312f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
+      <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\PostMaster\PostMaster.vcxproj">
       <Project>{667e0cb3-dcad-4ee5-a6e3-871ecbe3ab16}</Project>
     </ProjectReference>
@@ -199,6 +202,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Rend\LineRenderCommand.cpp" />
     <ClCompile Include="Rend\RenderCommand.cpp" />
     <ClCompile Include="Rend\RenderConverter.cpp" />
@@ -214,6 +218,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Rend\LineRenderCommand.h" />
     <ClInclude Include="Rend\RenderCommand.h" />
     <ClInclude Include="Rend\RenderConverter.h" />

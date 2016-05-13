@@ -322,8 +322,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Actor.h" />
-    <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Actor\Enemy.h" />
+    <ClInclude Include="JsonDataStructs.h" />
     <ClInclude Include="Shader\Shaders.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameStates\MenuState.h" />
@@ -340,7 +340,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor\Actor.cpp" />
-    <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Actor\Enemy.cpp" />
     <ClCompile Include="Shader\Shaders.cpp" />
     <ClCompile Include="Game.cpp" />
