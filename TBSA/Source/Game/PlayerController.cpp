@@ -35,6 +35,6 @@ void PlayerController::NotifyPlayers() const
 {
 	if (mySelectedPlayer != nullptr)
 	{
-		mySelectedPlayer->Move(IsometricInput::GetMouseWindowPositionIsometric());
+		mySelectedPlayer->Move(CU::Vector2f(floor(IsometricInput::GetMouseWindowPositionIsometric().x), floor(IsometricInput::GetMouseWindowPositionIsometric().y)));
 	}
 }

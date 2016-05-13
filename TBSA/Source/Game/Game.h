@@ -1,10 +1,10 @@
 #pragma once
 #include <tga2d/Engine.h>
-#include "GameWorld.h"
 #include <StateStack.h>
 
 #include "../ThreadPool/Source/ThreadPool.h"
 #include <CU/Thread/ThreadSynchronizer.h>
+#include "GameStates/MenuState.h"
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 class CGame
@@ -21,7 +21,7 @@ private:
 	void RenderWork();
 	void LogCallback(std::string aText);
 
-	GameState * myGameWorld;
+	GameState * myMenuState;
 
 	StateStack myGameStateStack;
 	bool myImRunning;

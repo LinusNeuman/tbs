@@ -325,8 +325,9 @@
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Actor\Enemy.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="InputAdaption\SingletonIsometricInputWrapper.h" />
+    <ClInclude Include="GameStates\PlayState.h" />
     <ClInclude Include="Room\Door.h" />
     <ClInclude Include="Room\IsometricTile.h" />
     <ClInclude Include="particleEmitter.h" />
@@ -341,8 +342,9 @@
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Actor\Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="InputAdaption\SingletonIsometricInputWrapper.cpp" />
+    <ClCompile Include="GameStates\PlayState.cpp" />
     <ClCompile Include="Room\Door.cpp" />
     <ClCompile Include="Room\IsometricTile.cpp" />
     <ClCompile Include="PlayerController.cpp" />
