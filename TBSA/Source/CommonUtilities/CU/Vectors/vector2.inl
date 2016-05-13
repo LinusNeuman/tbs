@@ -124,6 +124,19 @@ namespace CommonUtilities
 		return static_cast<float>(atan2(y, x));
 	}
 
+	template<typename T>
+	inline Vector2<T> CommonUtilities::Vector2<T>::GetFloored(void)
+	{
+		Vector2 returnVector;
+		returnVector.x = floor(x);
+		returnVector.y = floor(y);
+	}
+
+	template<typename T>
+	inline void CommonUtilities::Vector2<T>::Floor(void)
+	{
+		this = GetFloored();
+	}
 }
 /*
 

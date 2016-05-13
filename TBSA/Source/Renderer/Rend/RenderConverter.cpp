@@ -3,6 +3,7 @@
 #include <tga2d/sprite/sprite.h>
 #include "WrappedSprite.h"
 #include <CU/Vectors/vector2.h>
+#include <CU/Utility/Math/Isometric.h>
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 
@@ -44,11 +45,6 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 {
 	GetInstance().myRenderer.Init();
 	GetInstance().myRenderer.SetWindowSize(aWindowSize);
-
-	/*if (WrappedSprite::myRenderConverter == nullptr)
-	{
-		WrappedSprite::myRenderConverter = this;
-	}*/
 }
 
 
@@ -58,7 +54,7 @@ void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRende
 
 	CU::Vector2f tempOffset(550.f, 250.f);
 
-	CU::Vector2f newPos = CU::Vector2f((tempPosition.x - tempPosition.y) * TileSizeHalf, ((tempPosition.x + tempPosition.y) * TileSizeHalf) / 2.f);
+	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
 	const float Priority = (tempPosition.x + (tempPosition.y * TileWidth));
 
@@ -86,10 +82,10 @@ void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Ve
 void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
 {
 	CU::Vector2f tempOffset(550.f, 250.f);
-	CU::Vector2f newStartPos = CU::Vector2f((aStartPosition.x - aStartPosition.y) * TileSizeHalf, ((aStartPosition.x + aStartPosition.y) * TileSizeHalf) / 2.f);
+	CU::Vector2f newStartPos = CU::IsometricToPixel(aStartPosition);
 	newStartPos += tempOffset;
 
-	CU::Vector2f newEndPos = CU::Vector2f((aEndPosition.x - aEndPosition.y) * TileSizeHalf, ((aEndPosition.x + aEndPosition.y) * TileSizeHalf) / 2.f);
+	CU::Vector2f newEndPos = CU::IsometricToPixel(aEndPosition);
 	newEndPos += tempOffset;
 
 	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos);

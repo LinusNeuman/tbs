@@ -10,6 +10,7 @@ IndexMap WrappedSprite::ourIndexDictionary;
 
 WrappedSprite::WrappedSprite()
 {
+	myIsInitiedFlag = false;
 }
 
 WrappedSprite::~WrappedSprite()
@@ -18,6 +19,7 @@ WrappedSprite::~WrappedSprite()
 
 void WrappedSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
 {
+	myIsInitiedFlag = true;
 	myImageIndex = AddImage(aFilePath, aRect);
 	myLayer = enumRenderLayer::eFloor;
 	myColor = CU::Vector4f::One;
@@ -62,6 +64,8 @@ unsigned short WrappedSprite::AddImage(const std::string & aFilePath, const CU::
 
 void WrappedSprite::Draw(const CU::Vector2f & aPosition)
 {
+	DL_ASSERT(myIsInitiedFlag == true, "Static sprite not initialized");
+
 	if (myIsIsometricFlag == true)
 	{
 		RenderConverter::CalculateAndRenderIso(*this, aPosition);

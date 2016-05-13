@@ -79,6 +79,7 @@ public:
 	
 
 private:
+	bool myIsInitiedFlag;
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
 	static IndexMap ourIndexDictionary;
 
