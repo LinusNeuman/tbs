@@ -28,6 +28,7 @@
     <ClInclude Include="Actor\Enemy.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
+    <ClInclude Include="Shader\Shaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -44,5 +45,6 @@
     <ClCompile Include="Actor\Enemy.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
+    <ClCompile Include="Shader\Shaders.cpp" />
   </ItemGroup>
 </Project>

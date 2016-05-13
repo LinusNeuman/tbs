@@ -3,7 +3,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <SingletonPostMaster.h>
 #include <CU/Utility/Math/Isometric.h>
-
+#include <Message/WindowRectChangedMessage.h>
 
 
 SingletonIsometricInputWrapper * SingletonIsometricInputWrapper::ourInstance = nullptr;
@@ -83,7 +83,7 @@ void SingletonIsometricInputWrapper::Update()
 	GetInstance().myInputWrapper.Update();
 }
 
-void SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessage aMessage)
+void SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessage & aMessage)
 {
 	myViewPortSettings = aMessage.myViewPortRect;
 	myWindowRect = aMessage.myWindowRect;
