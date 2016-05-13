@@ -324,6 +324,7 @@
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Actor\Enemy.h" />
+    <ClInclude Include="Shader\Shaders.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="InputAdaption\SingletonIsometricInputWrapper.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Actor\Enemy.cpp" />
+    <ClCompile Include="Shader\Shaders.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="InputAdaption\SingletonIsometricInputWrapper.cpp" />

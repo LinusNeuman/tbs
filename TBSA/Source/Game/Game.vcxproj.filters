@@ -27,6 +27,7 @@
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Room\Door.h" />
     <ClInclude Include="Actor\Enemy.h" />
+    <ClInclude Include="Shader\Shaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,5 +43,6 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Room\Door.cpp" />
     <ClCompile Include="Actor\Enemy.cpp" />
+    <ClCompile Include="Shader\Shaders.cpp" />
   </ItemGroup>
 </Project>
