@@ -187,8 +187,8 @@ void CDebugDrawer::Update(float aTimeDelta)
 		return;
 	}
 
-	int memUsed = memCounter.WorkingSetSize/1024;
-	int memUsedMb = memCounter.WorkingSetSize / 1024 / 1024;
+	int memUsed = static_cast<int>(memCounter.WorkingSetSize) / 1024;
+	int memUsedMb = static_cast<int>(memCounter.WorkingSetSize) / 1024 / 1024;
 	myMemUsage->myText.clear();
 	myMemUsage->myText.append("Mem: ");
 	myMemUsage->myText.append(std::to_string(memUsed));

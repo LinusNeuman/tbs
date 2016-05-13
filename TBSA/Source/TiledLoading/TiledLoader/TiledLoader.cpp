@@ -7,6 +7,7 @@
 #include "SpriteSheet/SpriteSheet.h"
 #include <JsonWrapper/JsonWrapper.h>
 
+#include "../TiledData/TiledData.h"
 
 namespace
 {
@@ -22,7 +23,7 @@ CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const pico
 
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType);
 
-void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile>& someTiles)
+void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
 	picojson::value root;
 
@@ -54,7 +55,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 	for (size_t i = 0; i < height * width; i++)
 	{
-		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(i % width, static_cast<int>(i / width)));
+		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
 		
 		for (size_t j = 0; j < layers.size(); ++j)
@@ -70,7 +71,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 
 				newTile.SetRoomId(roomId);
 
-				int tileId = GetNumber(data[i]) - dataSheet.GetFirstIndex() + 1;
+				int tileId = static_cast<int>(GetNumber(data[i]) - dataSheet.GetFirstIndex() + 1);
 				if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
 				{
 					tileId = 0;
@@ -85,7 +86,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 			}
 			else
 			{
-				int tileId = GetNumber(data[i]);
+				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
 				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 				{
 					if (tileId >= SpriteSheets[j].GetFirstIndex())
@@ -96,7 +97,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 			}
 		}
 
-		someTiles.Add(newTile);
+		someTiles.myTiles.Add(newTile);
 	}
 
 }
@@ -127,8 +128,8 @@ std::string GetString( picojson::value aValue)
 
 CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const picojson::value& aYValue)
 {
-	const float x = GetNumber(aXValue);
-	const float y = GetNumber(aYValue);
+	const float x = static_cast<float>(GetNumber(aXValue));
+	const float y = static_cast<float>(GetNumber(aYValue));
 
 	return CommonUtilities::Vector2f(x, y);
 }
@@ -143,10 +144,11 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 		picojson::object  currentObject = GetObject(aSpriteSheetArray[i]);
 
 		std::string name = GetString(currentObject["name"]);
-		unsigned int firstId = GetNumber(currentObject["firstgid"]);
+		unsigned int firstId = static_cast<unsigned int>(GetNumber(currentObject["firstgid"]));
 		CommonUtilities::Vector2f size = GetVector2f(currentObject["tilewidth"], currentObject["tileheight"]);
-		
-		returnArray.Add(SpriteSheet(name, size, aFileType, firstId));
+		CommonUtilities::Vector2f sheetSize = GetVector2f(currentObject["imageheight"], currentObject["imagewidth"]);
+
+		returnArray.Add(SpriteSheet(name, size, sheetSize, aFileType, firstId));
 	}
 
 	return returnArray;

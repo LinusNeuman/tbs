@@ -99,8 +99,7 @@ void CGame::InitCallBack()
 	RenderConverter::Create();
 	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
-
-	myGameWorld = new CGameWorld();
+	myMenuState = new MenuState();
 
 	/*GetInput::Create();
 	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());*/
@@ -112,10 +111,10 @@ void CGame::InitCallBack()
 	CU::TimeManager::Create();
 
 	
-    myGameWorld->Init();
+	myMenuState->Init();
 	
 
-	myGameStateStack.AddMainState(myGameWorld);
+	myGameStateStack.AddMainState(myMenuState);
 }
 
 

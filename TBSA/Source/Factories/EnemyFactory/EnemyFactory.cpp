@@ -24,8 +24,8 @@ void EnemyFactory::UpdateDataStruct(const std::string &aStringPath,  EnemyData &
 	picojson::value enemyValue = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& enemyObject = JsonWrapper::GetPicoObject(enemyValue);
 	aEnemyData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyObject));
-	aEnemyData.myPosition.x = JsonWrapper::GetInt("startPositionX", enemyObject);
-	aEnemyData.myPosition.y = JsonWrapper::GetInt("startPositionY", enemyObject);
+	aEnemyData.myPosition.x = JsonWrapper::GetFloat("startPositionX", enemyObject);
+	aEnemyData.myPosition.y = JsonWrapper::GetFloat("startPositionY", enemyObject);
 }
 
 Enemy* EnemyFactory::CreateEnemy(eActorType aActorType)
@@ -41,7 +41,8 @@ Enemy* EnemyFactory::CreateEnemy(eActorType aActorType)
 		Enemy->Init(myEnemyTwoData.myPosition, myEnemyTwoData.myActortype);
 		return Enemy;
 	default:
-		break;
+		DL_ASSERT(false, "Wrong ActorType when creating enemy");
+		return Enemy;
 	}
 }
 

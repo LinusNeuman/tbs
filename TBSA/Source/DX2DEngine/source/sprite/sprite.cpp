@@ -3,6 +3,7 @@
 #include "sprite/sprite.h"
 #include "sprite/textured_quad.h"
 #include "texture/texture_manager.h"
+#include "shaders/customshader.h"
 
 using namespace DX2D;
 DX2D::CSprite::CSprite(const char* aTexturePath)
@@ -192,4 +193,12 @@ const std::string DX2D::CSprite::GetImagePath() const
 		return myQuad->myTexture->myPath;
 	}
 	return "";
+}
+
+void DX2D::CSprite::SetCustomShader(CCustomShader* aShader)
+{
+	if (myQuad)
+	{
+		myQuad->myCustomShader = aShader;
+	}
 }

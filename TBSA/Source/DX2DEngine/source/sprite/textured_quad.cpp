@@ -12,6 +12,7 @@ using namespace DX2D;
 
 CTexturedQuad::CTexturedQuad(void)
 		:myTexture(nullptr)
+		, myCustomShader(nullptr)
 {
 	myEngine = CEngine::GetInstance();
 

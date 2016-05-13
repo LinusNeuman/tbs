@@ -10,6 +10,7 @@ namespace DX2D
 		EConstantBufferSlot_Light = 2,
 		EConstantBufferSlot_Object = 3,
 		EConstantBufferSlot_ObjectCustom = 4,
+		EConstantBufferSlot_MAX,
 	};
 	enum SEffect
 	{

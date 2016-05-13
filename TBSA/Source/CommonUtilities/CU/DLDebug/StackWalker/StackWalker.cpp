@@ -920,7 +920,10 @@ BOOL BaseStackWalker::ShowCallstack(HANDLE hThread, const CONTEXT *context, PRea
 	// If no context is provided, capture the context
 	if (hThread == GetCurrentThread())
 	{
+#pragma warning  (push)
+#pragma warning(disable : 4127)
 	  GET_CURRENT_CONTEXT(c, USED_CONTEXT_FLAGS);
+#pragma warning (pop)
 	}
 	else
 	{

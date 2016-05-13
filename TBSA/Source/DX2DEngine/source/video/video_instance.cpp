@@ -234,6 +234,7 @@ bool DX2D::CVideoInstance::IsDone()
 std::mutex DX2D::CVideoInstance::g_pages_mutex;
 void CVideoInstance::StartCruncher(CVideoInstance* aInstance)
 {
+
 	aInstance->myThreadIsDone = false;
 	::CoInitialize(nullptr);
 	HRESULT hr;
@@ -316,7 +317,7 @@ void CVideoInstance::StartCruncher(CVideoInstance* aInstance)
 	SAFE_ARRAYDELETE(aInstance->mytheMediaType);
 
 	BYTE* pValue = new BYTE[5];
-	strcpy((char*)pValue, "TRUE");
+	strcpy_s((char*)pValue, 5, "TRUE");
 	hr = aInstance->mySyncReader->SetOutputSetting(videoIndex, g_wszVideoSampleDurations, WMT_TYPE_BOOL, pValue, sizeof(pValue));
 	delete[]pValue;
 	if (FAILED(hr))
@@ -428,15 +429,21 @@ void CVideoInstance::get_pixel(const unsigned int x, const unsigned int y, unsig
 
 int CVideoInstance::SaveCurrentFrameToBmp(char* filename)
  {
+
 	ULONG theFileLen = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + myBitmapInfoHdr.biSizeImage;
 	BITMAPFILEHEADER theFileHeader = { 'BM', theFileLen, 0, 0, (sizeof(BITMAPFILEHEADER) + myBitmapInfoHdr.biSize + DibPaletteSize(&myBitmapInfoHdr)) };// };
 	theFileHeader.bfType = BFT_BITMAP;// 0X4D42;
 	BITMAPINFOHEADER theInfoHeader = myBitmapInfoHdr;
-	FILE *theFile = fopen(filename, "w");
-	fwrite(&theFileHeader, sizeof(BITMAPFILEHEADER), 1, theFile);
-	fwrite(&theInfoHeader, sizeof(BITMAPINFOHEADER), 1, theFile);
-	fwrite(myBitmapBuffer, myDwrdBitmapBufferLength, 1, theFile);
-	fclose(theFile);
+	FILE *theFile = nullptr;
+	fopen_s(&theFile, filename, "w");
+	if (theFile)
+	{
+		fwrite(&theFileHeader, sizeof(BITMAPFILEHEADER), 1, theFile);
+		fwrite(&theInfoHeader, sizeof(BITMAPINFOHEADER), 1, theFile);
+		fwrite(myBitmapBuffer, myDwrdBitmapBufferLength, 1, theFile);
+		fclose(theFile);
+
+	}
 
 	return 0;
  }

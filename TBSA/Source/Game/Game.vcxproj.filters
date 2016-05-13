@@ -13,7 +13,6 @@
       <Filter>Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameWorld.h" />
     <ClInclude Include="resource.h">
       <Filter>Precompiled</Filter>
     </ClInclude>
@@ -27,13 +26,15 @@
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Room\Door.h" />
     <ClInclude Include="Actor\Enemy.h" />
+    <ClInclude Include="GameStates\MenuState.h" />
+    <ClInclude Include="GameStates\PlayState.h" />
+    <ClInclude Include="Shader\Shaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Room\IsometricTile.cpp" />
@@ -42,5 +43,8 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Room\Door.cpp" />
     <ClCompile Include="Actor\Enemy.cpp" />
+    <ClCompile Include="GameStates\MenuState.cpp" />
+    <ClCompile Include="GameStates\PlayState.cpp" />
+    <ClCompile Include="Shader\Shaders.cpp" />
   </ItemGroup>
 </Project>

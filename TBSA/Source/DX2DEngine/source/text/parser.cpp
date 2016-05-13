@@ -7,7 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 CParser::~CParser()
 {
-	int i = m_pToken.size()-1;
+	int i = static_cast<int>(m_pToken.size()) - 1;
 	while (i >= 0)	// toggle through the list of pointers
 	{
 		CToken* pCurrentToken = m_pToken[i];
@@ -65,7 +65,7 @@ bool CParser::Add(int tokenID, std::string tokenAsStr)
 // was found.
 int CParser::CheckForToken(unsigned char currentChar)
 {
-	int i = m_pToken.size();
+	int i = static_cast<int>(m_pToken.size());
 	while (i--) // foreach token
 	{
 		CToken dummyToken = *m_pToken[i];
@@ -93,7 +93,7 @@ int CParser::CheckForToken(unsigned char currentChar)
 ///////////////////////////////////////////////////////////////////////////////////////////
 void CParser::Reset()
 {
-	unsigned int i = m_pToken.size();//-1 + 1;
+	unsigned int i = static_cast<int>(m_pToken.size());//-1 + 1;
 	while (i--)
 	{
 		m_pToken[i]->m_matchPos = 0;

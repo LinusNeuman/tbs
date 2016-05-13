@@ -56,7 +56,7 @@ void CCustomShape::BuildShape()
 
 void DX2D::CCustomShape::SetColorOnPoint(int aIndex, CColor aColor)
 {
-	for (int i = myPoints.size() - 1; i > 0; i--)
+	for (size_t i = myPoints.size() - 1; i > 0; i--)
 	{
 		if (myPoints[i].myIndex == aIndex)
 		{
@@ -67,7 +67,7 @@ void DX2D::CCustomShape::SetColorOnPoint(int aIndex, CColor aColor)
 
 void DX2D::CCustomShape::RemovePoints(int aIndex)
 {
-	for (int i = myPoints.size()-1; i > 0; i--)
+	for (size_t i = myPoints.size() - 1; i > 0; i--)
 	{
 		if (myPoints[i].myIndex == aIndex)
 		{
