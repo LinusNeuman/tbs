@@ -7,6 +7,7 @@
 #include "../Actor/Actor.h"
 #include "../PlayerController.h"
 #include <TiledLoader/TiledLoader.h>
+#include <TiledData/TiledData.h>
 
 PlayState::PlayState()
 {
@@ -25,8 +26,11 @@ void PlayState::Init()
 	testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);
+	TiledData someData;
 
-	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
+	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
+
+	myTiles = someData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
