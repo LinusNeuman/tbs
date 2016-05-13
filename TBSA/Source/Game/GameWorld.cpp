@@ -47,9 +47,9 @@ void CGameWorld::Init()
 {
 	myTiles.Init(100);
 
-	testSprite = new StaticSprite();
-	testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
-	testSprite->SetLayer(enumRenderLayer::eGameObjects);
+	//testSprite = new StaticSprite();
+	//testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
+	//testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiles);
@@ -132,7 +132,7 @@ void CGameWorld::Draw() const
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();
-	testSprite->Draw(CU::Vector2f(500.f, 500.f));
+	//testSprite->Draw(CU::Vector2f(500.f, 500.f));
 	myEnemy->Draw();
 
 

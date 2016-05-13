@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "StaticSprite.h"
 #include "tga2d/sprite/sprite.h"
-//#include "RenderCommand.h"
 #include "RenderConverter.h"
+#include <CU/Utility/Math/Isometric.h>
 
 
 CU::GrowingArray<DX2D::CSprite*> StaticSprite::ourSprites;
@@ -57,9 +57,16 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
 	}
 	tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
+
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
+	myImageIndex = ourIndexDictionary[tempKey];
+	
+
+	SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
+
 	return ourIndexDictionary[tempKey];
 }
+
 
 
 void StaticSprite::Draw(const CU::Vector2f & aPosition)
@@ -68,10 +75,36 @@ void StaticSprite::Draw(const CU::Vector2f & aPosition)
 
 	if (myIsIsometricFlag == true)
 	{
-		RenderConverter::CalculateAndRenderIso(*this, aPosition);
+		RenderConverter::CalculateAndRenderIso(*this, aPosition - myPositionOffset);
 	}
 	else
 	{
 		RenderConverter::CalculateAndRenderSprite(*this, aPosition);
 	}
 }
+
+
+void StaticSprite::SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel)
+{
+	CU::Vector2f tempOffset = aPivotOffsetInPixel;
+	tempOffset.y = -tempOffset.y;
+
+	myPositionOffset = CU::PixelToIsometric(tempOffset);
+}
+
+//void StaticSprite::SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio)
+//{
+//	CU::Vector2f offsetinPixels;
+//
+//	const float ImageSizePixelsX = GetSprite()->GetImageSize().x;
+//	const float ImageSizePixelsY = GetSprite()->GetImageSize().y;
+//
+//	const float ImageRatioSizeX = GetSprite()->GetSize().x;
+//	const float ImageRatioSizeY = GetSprite()->GetSize().y;
+//
+//
+//	offsetinPixels.x = (aPivotOffsetInRatio.x * (ImageRatioSizeX * ImageSizePixelsX));
+//	offsetinPixels.y = (aPivotOffsetInRatio.y * (ImageRatioSizeY * ImageSizePixelsY));
+//	
+//	SetPivotWithPixels(offsetinPixels);
+//}

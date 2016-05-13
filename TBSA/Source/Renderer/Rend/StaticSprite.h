@@ -77,6 +77,11 @@ public:
 	const bool GetIsIsometric() const;
 	void SetIsIsometric(const bool aFlag);
 	
+	void SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel);
+	const CU::Vector2f & GetPivotInPixels() const;
+
+	/*void SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio);
+	const CU::Vector2f & GetPivotInRatio() const;*/
 
 private:
 	bool myIsInitiedFlag;
@@ -89,6 +94,7 @@ private:
 
 	unsigned short myImageIndex;
 
+	CU::Vector2f myPositionOffset;
 	CU::Vector4f myColor;
 };
 
@@ -131,6 +137,11 @@ inline const bool StaticSprite::GetIsIsometric() const
 inline void StaticSprite::SetIsIsometric(const bool aFlag)
 {
 	myIsIsometricFlag = aFlag;
+}
+
+inline const CU::Vector2f & StaticSprite::GetPivotInPixels() const
+{
+	return myPositionOffset;
 }
 
 

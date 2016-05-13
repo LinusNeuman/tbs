@@ -115,7 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -151,7 +151,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
