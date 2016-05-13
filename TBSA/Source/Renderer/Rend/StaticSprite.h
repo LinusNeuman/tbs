@@ -132,3 +132,10 @@ inline void StaticSprite::SetIsIsometric(const bool aFlag)
 {
 	myIsIsometricFlag = aFlag;
 }
+
+
+
+
+
+
+typedef StaticSprite SSprite;
