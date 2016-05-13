@@ -11,7 +11,7 @@
 #include "texture/texture_manager.h"
 #include "windows/windows_window.h"
 #include <windows.h>
-#include <Message\WindowRectChangedMessage.h>
+#include <Message/WindowRectChangedMessage.h>
 #include <SingletonPostMaster.h>
 
 

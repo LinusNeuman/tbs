@@ -10,6 +10,7 @@
 #include <tga2d\shaders\customshader.h>
 #include <tga2d\texture\texture_manager.h>
 #include <tga2d\engine.h>
+#include "../Shader/Shaders.h"
 
 #include <TiledData/TiledData.h>
 #include <Message/LevelTileMetricsMessage.h>
@@ -25,12 +26,13 @@ PlayState::~PlayState()
 
 void PlayState::Init()
 {
+	Shaders::Create();
 	myTiles.Init(100);
 
 	testSprite = new StaticSprite();
 	testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
-	//testSprite->SetIsIsometric(false);
+	testSprite->SetIsIsometric(false);
 	TiledData someData;
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
@@ -47,7 +49,6 @@ void PlayState::Init()
 
 	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
 
-	
 	myPlayerController = new PlayerController();
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
@@ -56,15 +57,6 @@ void PlayState::Init()
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
 	myPlayerController->AddPlayer(myEnemy);
 
-	myCustomShader = new DX2D::CCustomShader();
-	myCustomShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
-	myCustomShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/camera7.png"), DX2D::EShaderTextureSlot_1); // Add a texture
-
-	// Run PostInit to set all the data
-	myCustomShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
-	// Tell the sprite to use this shader
-	myPlayer2->mySprite->GetSprite()->SetCustomShader(myCustomShader);
-
 	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/PlayerTurnAnimation.json");
 	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
 
@@ -72,6 +64,15 @@ void PlayState::Init()
 	myAnimation->InitializeAnimation(animationObject);
 	myPlayer->AddAnimation(myAnimation);
 	myPlayer->ChangeAnimation("PlayerTurn");
+
+	myCustomShader = new DX2D::CCustomShader();
+	myCustomShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
+	myCustomShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/camera7.png"), DX2D::EShaderTextureSlot_1); // Add a texture
+	myCustomShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	
+	Shaders::GetInstance()->AddShader(myCustomShader, "testShader");
+
+	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)

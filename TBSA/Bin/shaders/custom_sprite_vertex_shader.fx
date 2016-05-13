@@ -27,7 +27,7 @@ PixelInputType VShader(VertexInputType input)
     input.position.w = 1.0f;
 	
 	input.position.x -= myPivot.x;
-	input.position.y += myPivot.y;
+	input.position.y += myPivot.y * myPivot.x;
 	
 	input.position.xy *= myRotationAndSize.yz ;
 	
