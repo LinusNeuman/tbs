@@ -1,9 +1,10 @@
 #pragma once
 #include "Renderer.h"
+#include <MessageReceiver.h>
 
-class WrappedSprite;
+class StaticSprite;
 
-class RenderConverter
+class RenderConverter : public MessageReciever
 {
 public:
 	static void Create();
@@ -11,8 +12,8 @@ public:
 
 	static void Init(const CU::Vector2ui & aWindowSize);
 
-	static void CalculateAndRenderIso(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
-	static void CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition);
+	static void CalculateAndRenderIso(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition);
+	static void CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition);
 
 	static void AddRenderCommand(RenderCommand & aRenderCommand);
 	static void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition);
@@ -22,6 +23,8 @@ public:
 
 	static void SwapBuffers();
 
+	virtual void RecieveMessage(const LevelTileMetricsMessage & aMessage) override;
+
 private:
 	RenderConverter();
 	~RenderConverter();
@@ -30,6 +33,7 @@ private:
 
 	static RenderConverter & GetInstance();
 
+	CU::Vector2ui myLevelTileLayout;
 	Renderer myRenderer;
 };
 

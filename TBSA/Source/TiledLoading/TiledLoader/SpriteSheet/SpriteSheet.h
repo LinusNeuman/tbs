@@ -4,7 +4,7 @@
 #include <CU/Vectors/vector2.h>
 #include <string>
 
-class WrappedSprite;
+class StaticSprite;
 
 class SpriteSheet
 {
@@ -17,7 +17,7 @@ public:
 
 	std::string GetPath() const;
 	
-	WrappedSprite* CreateSprite(unsigned int aImageId, bool aUniqueId = true);
+	StaticSprite* CreateSprite(unsigned int aImageId, bool aUniqueId = true);
 	unsigned int GetFirstIndex();
 	std::string GetName();
 

@@ -53,13 +53,13 @@ class RenderCommand;
 class RenderConverter;
 class Renderer;
 
-class WrappedSprite
+class StaticSprite
 {
 	friend Renderer;
 
 public:
-	WrappedSprite();
-	~WrappedSprite();
+	StaticSprite();
+	~StaticSprite();
 
 	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero);
 	void Draw(const CU::Vector2f & aPosition);
@@ -77,8 +77,14 @@ public:
 	const bool GetIsIsometric() const;
 	void SetIsIsometric(const bool aFlag);
 	
+	void SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel);
+	const CU::Vector2f & GetPivotInPixels() const;
+
+	/*void SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio);
+	const CU::Vector2f & GetPivotInRatio() const;*/
 
 private:
+	bool myIsInitiedFlag;
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
 	static IndexMap ourIndexDictionary;
 
@@ -88,46 +94,59 @@ private:
 
 	unsigned short myImageIndex;
 
+	CU::Vector2f myPositionOffset;
 	CU::Vector4f myColor;
 };
 
 
 
-inline unsigned short WrappedSprite::GetImageIndex() const
+inline unsigned short StaticSprite::GetImageIndex() const
 {
 	return myImageIndex;
 }
-inline DX2D::CSprite * WrappedSprite::GetSprite() const
+inline DX2D::CSprite * StaticSprite::GetSprite() const
 {
 	return ourSprites[myImageIndex];
 }
 
 
-inline enumRenderLayer WrappedSprite::GetLayer() const
+inline enumRenderLayer StaticSprite::GetLayer() const
 {
 	return myLayer;
 }
-inline void WrappedSprite::SetLayer(const enumRenderLayer aRenderLayer)
+inline void StaticSprite::SetLayer(const enumRenderLayer aRenderLayer)
 {
 	myLayer = aRenderLayer;
 }
 
 
-inline const CU::Vector4f & WrappedSprite::GetColor() const
+inline const CU::Vector4f & StaticSprite::GetColor() const
 {
 	return myColor;
 }
-inline void WrappedSprite::SetColor(const CU::Vector4f & aColor)
+inline void StaticSprite::SetColor(const CU::Vector4f & aColor)
 {
 	myColor = aColor;
 }
 
-inline const bool WrappedSprite::GetIsIsometric() const
+inline const bool StaticSprite::GetIsIsometric() const
 {
 	return myIsIsometricFlag;
 }
 
-inline void WrappedSprite::SetIsIsometric(const bool aFlag)
+inline void StaticSprite::SetIsIsometric(const bool aFlag)
 {
 	myIsIsometricFlag = aFlag;
 }
+
+inline const CU::Vector2f & StaticSprite::GetPivotInPixels() const
+{
+	return myPositionOffset;
+}
+
+
+
+
+
+
+typedef StaticSprite SSprite;

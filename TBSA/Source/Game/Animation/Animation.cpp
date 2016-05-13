@@ -3,8 +3,8 @@
 #include "../CommonUtilities/CU/Timer/TimeManager.h"
 #include <map>
 
-void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize);
-void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize);
+void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize);
+void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, StaticSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize);
 void ChangeAnimation(const std::string& anAnimation);
 
 Animation::Animation()
@@ -129,7 +129,7 @@ void Animation::SetAnimationFrame()
 	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f(static_cast<float>(myCurrentColumn)* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true, CU::Vector2f(static_cast<float>(myAmountOfColumns), static_cast<float>(myAmountOfRows)));
 }
 
-void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
+void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
 	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize)
 {
 	// Temps to make it easier to read and understand
@@ -164,7 +164,7 @@ void SetTextureRectangle(WrappedSprite* newSprite, const CommonUtilities::Vector
 	}
 }
 
-void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, WrappedSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize)
+void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, StaticSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize)
 {
 	DX2D::Vector2f newSize;
 	auto size = newSprite->GetSprite()->GetImageSize();

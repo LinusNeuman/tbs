@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Rend\WrappedSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Rend\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,11 +30,11 @@
     <ClCompile Include="Rend\LineRenderCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rend\StaticSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Rend\WrappedSprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Rend\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rend\LineRenderCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rend\StaticSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

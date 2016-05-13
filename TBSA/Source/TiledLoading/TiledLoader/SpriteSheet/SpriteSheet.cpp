@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "SpriteSheet.h"
-#include "../../../Renderer/Rend/WrappedSprite.h"
+#include "../../../Renderer/Rend/StaticSprite.h"
 
 
 std::string SpriteSheet::ourFolder = "Sprites/SpriteSheets/";
@@ -33,7 +33,7 @@ std::string SpriteSheet::GetPath() const
 	return ourFolder + myName + myFileFormat;
 }
 
-WrappedSprite* SpriteSheet::CreateSprite(unsigned aImageId, bool aGlobalId)
+StaticSprite* SpriteSheet::CreateSprite(unsigned aImageId, bool aGlobalId)
 {
 	int id = aImageId;
 	if (aGlobalId == true)
@@ -47,7 +47,7 @@ WrappedSprite* SpriteSheet::CreateSprite(unsigned aImageId, bool aGlobalId)
 	CommonUtilities::Vector2f originPoint(mySize.x * column, mySize.y * row);
 	CommonUtilities::Point4f rect(originPoint.x, originPoint.y, mySize.x, mySize.y);
 
-	WrappedSprite* sprite = new WrappedSprite();
+	StaticSprite* sprite = new StaticSprite();
 	sprite->Init(GetPath(), true, rect);
 	sprite->SetLayer(enumRenderLayer::eFloor);
 

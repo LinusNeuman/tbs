@@ -2,7 +2,7 @@
 #include "tga2d/sprite/sprite.h"
 #include <CU/Vectors/vector2.h>
 #include <JsonWrapper\JsonWrapper.h>
-#include <Rend\WrappedSprite.h>
+#include <Rend\StaticSprite.h>
 
 class Animation
 {
@@ -19,7 +19,7 @@ public:
 	inline std::string& GetName();
 	inline std::string& GetInTransition();
 	inline std::string& GetOutTransition();
-	inline WrappedSprite* GetSprite();
+	inline StaticSprite* GetSprite();
 	inline CommonUtilities::Vector2f GetFrameSize() const;
 	inline CommonUtilities::Vector2f GetSpriteGrid() const;
 	inline bool GetIsRunning() const;
@@ -31,7 +31,7 @@ private:
 	std::string myInTransition;
 	std::string myOutTransition;
 	std::string myName;
-	WrappedSprite mySpriteSheet;
+	StaticSprite mySpriteSheet;
 	CommonUtilities::Vector2f mySpriteSize;
 	int myAmountOfColumns;
 	int myAmountOfRows;
@@ -66,7 +66,7 @@ std::string& Animation::GetOutTransition()
 	return myOutTransition;
 }
 
-WrappedSprite* Animation::GetSprite()
+StaticSprite* Animation::GetSprite()
 {
 	return &mySpriteSheet;
 }
