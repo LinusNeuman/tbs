@@ -11,9 +11,9 @@
 #include "texture/texture_manager.h"
 #include "windows/windows_window.h"
 #include <windows.h>
-
-#include <Message/WindowRectChangedMessage.h> 
+#include <Message\WindowRectChangedMessage.h>
 #include <SingletonPostMaster.h>
+
 
 #pragma comment( lib, "user32.lib" )
 
@@ -51,6 +51,8 @@ CEngine::CEngine( const SEngineCreateParameters& aCreateParameters)
 , myRunEngine(true)
 , myTotalTime(0.0f)
 , myDeltaTime(0.0f)
+, myShouldExit(false)
+, myWantToUpdateSize(false)
 {
 	myWindowSize.x = myCreateParameters.myWindowWidth;
 	myWindowSize.y = myCreateParameters.myWindowHeight;
@@ -187,6 +189,7 @@ void DX2D::CEngine::DoStep()
 				INFO_PRINT("%s", "Exiting...");
 				break;
 			}
+
 		}
 		else
 		{
@@ -219,7 +222,11 @@ void DX2D::CEngine::DoStep()
 			
 			myLightManager->PostFrameUpdate();
 
-			UpdateWindowSizeChanges();
+			if (myWantToUpdateSize)
+			{
+				UpdateWindowSizeChanges();
+				myWantToUpdateSize = false;
+			}
 	
 			std::this_thread::yield();
 		}
@@ -232,15 +239,6 @@ void GetDesktopResolution(int& horizontal, int& vertical, HWND aHwnd)
 	GetClientRect(aHwnd, &r); //get window rect of control relative to screen
 	horizontal = r.right - r.left;
 	vertical = r.bottom - r.top;
-
-	/*RECT windowRect;
-	GetWindowRect(aHwnd, &windowRect);
-
-	int borderWidth = ((windowRect.right - windowRect.left) - horizontal);
-	int borderHeight = ((windowRect.bottom - windowRect.top) - vertical);
-
-	horizontal += borderWidth;
-	vertical += borderHeight;*/
 }
 
 void DX2D::CEngine::UpdateWindowSizeChanges()
@@ -266,13 +264,13 @@ void DX2D::CEngine::UpdateWindowSizeChanges()
 
 	// figure out the largest area that fits in this resolution at the desired aspect ratio
 	float  width = screen_width;
-	float  height = (float)(width / targetAspectRatio + 0.5f);
+	float  height = (float)(width / targetAspectRatio);
 
 	if (height > screen_height)
 	{
 		//It doesn't fit our height, we must switch to pillarbox then
 		height = screen_height;
-		width = (float)(height * targetAspectRatio + 0.5f);
+		width = (float)(height * targetAspectRatio );
 	}
 
 	// set up the new viewport centered in the backbuffer
@@ -282,7 +280,6 @@ void DX2D::CEngine::UpdateWindowSizeChanges()
 	static float lastWidth = 0.0f;
 	static float lastHeight = 0.0f;
 
-	if (lastWidth != width || lastHeight != height)
 	{
 		lastWidth = width;
 		lastHeight = height;
@@ -360,15 +357,15 @@ void DX2D::CEngine::SetViewPort(float aTopLeftX, float aTopLeftY, float aWidth, 
 			SetResolution(DX2D::Vector2<unsigned int>(static_cast<unsigned int>(aWidth), static_cast<unsigned int>(aHeight)), false);
 		}	
 		myDirect3D->SetViewPort(aTopLeftX, aTopLeftY, aWidth, aHeight, aMinDepth, aMaxDepth);
-
-		RECT r;
-		GetClientRect(*myHwnd, &r); //get window rect of control relative to screen
-
-		WindowRectChangedMessage tempMessage(RecieverTypes::eWindowProperties, aTopLeftX, aTopLeftY, aWidth, aHeight,
-			r.left, r.top, r.right, r.bottom);
-
-		SingletonPostMaster::PostMessage(tempMessage);
 	}
+
+	RECT r;
+	GetClientRect(*myHwnd, &r); //get window rect of control relative to screen
+
+	WindowRectChangedMessage tempMessage(RecieverTypes::eWindowProperties, aTopLeftX, aTopLeftY, aWidth, aHeight,
+		r.left, r.top, r.right, r.bottom);
+
+	SingletonPostMaster::PostMessage(tempMessage);
 }
 
 void DX2D::CEngine::SetFullScreen(bool aFullScreen)
@@ -392,12 +389,31 @@ bool DX2D::CEngine::IsDebugFeatureOn(eDebugFeatures aFeature) const
 }
 
 
-void CEngine::BeginFrame( const CColor &aClearColor )
+bool CEngine::BeginFrame( const CColor &aClearColor )
 {
+	if (myShouldExit)
+	{
+		return false;
+	}
+	MSG msg = { 0 };
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+		if (msg.message == WM_QUIT)
+		{
+			INFO_PRINT("%s", "Exiting...");
+			myShouldExit = true;
+			return false;
+		}
+	}
+
     myFileWatcher->FlushChanges();
     myDirect3D->Clear( aClearColor );
     myTextureManager->Update();
     myTextService->Update();
+	return true;
 }
 
 
@@ -425,7 +441,11 @@ void CEngine::EndFrame( void )
 
     myLightManager->PostFrameUpdate();
 
-    UpdateWindowSizeChanges();
+	if (myWantToUpdateSize)
+	{
+		UpdateWindowSizeChanges();
+		myWantToUpdateSize = false;
+	}
 
     std::this_thread::yield();
 }

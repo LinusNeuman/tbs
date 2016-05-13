@@ -9,5 +9,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\WindowRectChangedMessage.h" />
+    <ClInclude Include="Message\LevelTileMetricsMessage.h" />
   </ItemGroup>
 </Project>

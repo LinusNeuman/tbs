@@ -2,6 +2,7 @@
 
 #include "sprite/sprite_batch.h"
 #include "sprite/sprite.h"
+#include "sprite/textured_quad.h"
 #include "sprite/textured_quad_batch.h"
 #include "texture/texture_manager.h"
 #include "shaders/shader_common.h"
@@ -43,6 +44,10 @@ void CSpriteBatch::Init(const char* aTexturePath)
 
 bool CSpriteBatch::AddObject(CSprite* aSpriteObject)
 {
+	if (aSpriteObject->GetTexturedQuad()->myCustomShader)
+	{
+		INFO_PRINT("CSpriteBatch::AddObject() a sprite with a custom shader added. This will not work in a batch");
+	}
 	if (myCurrentSpriteCount > SPRITE_BATCH_COUNT)
 	{
 		std::vector<CSprite*> newSpriteAdder;

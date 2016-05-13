@@ -36,15 +36,16 @@ std::string string_vsprintf(const char* format, std::va_list args)
 {
 	va_list tmp_args; //unfortunately you cannot consume a va_list twice
 	va_copy(tmp_args, args); //so we have to copy it
-	const int required_len = vsnprintf(nullptr, 0, format, tmp_args) + 1;
+	const int required_len = _vscprintf(format, tmp_args) + 1;
 	va_end(tmp_args);
 
-	std::string buf(required_len, '\0');
-	if (std::vsnprintf(&buf[0], buf.size(), format, args) < 0)
+	char buff[256];
+	memset(buff, 0, required_len);
+	if (vsnprintf_s(buff, required_len, format, args) < 0)
 	{
 		return "string_vsprintf encoding error";
 	}
-	return buf;
+	return std::string(buff);
 }
 
 

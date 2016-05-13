@@ -146,6 +146,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -159,6 +160,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -193,6 +195,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -209,6 +212,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -292,6 +296,7 @@
     <ClInclude Include="CU\Timer\Timer.h" />
     <ClInclude Include="CU\Utility\FileHandling.h" />
     <ClInclude Include="CU\Utility\MathHelper.h" />
+    <ClInclude Include="CU\Utility\Math\Isometric.h" />
     <ClInclude Include="CU\Utility\Randomizer\Randomizer.h" />
     <ClInclude Include="CU\Utility\WindowsFunctions.h" />
     <ClInclude Include="CU\VectonOnStack\VectorOnStack.h" />
@@ -327,6 +332,7 @@
     <ClCompile Include="CU\Timer\TimeManager.cpp" />
     <ClCompile Include="CU\Timer\Timer.cpp" />
     <ClCompile Include="CU\Utility\FileHandling.cpp" />
+    <ClCompile Include="CU\Utility\Math\Isometric.cpp" />
     <ClCompile Include="CU\Utility\Randomizer\Randomizer.cpp" />
     <ClCompile Include="CU\Utility\WindowsFunctions.cpp" />
     <ClCompile Include="stdafx.cpp">

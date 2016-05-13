@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "Actor.h"
-#include <Rend/WrappedSprite.h>
+#include <Rend/StaticSprite.h>
 #include <tga2d/math/vector2.h>
 #include "../Animation/Animation.h"
 
 
 Actor::Actor()
 {
-	mySprite = new WrappedSprite();
+	mySprite = new StaticSprite();
 	myVelocity = CU::Vector2f::Zero;
 }
 
@@ -40,6 +40,8 @@ void Actor::Init(const CU::Vector2f& aStartPosition, const eActorType& aActorTyp
 	default:
 		break;
 	}
+
+	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 }
 
 
@@ -53,6 +55,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		myAnimations[myActiveAnimation]->UpdateAnimation();
 		mySprite = myAnimations[myActiveAnimation]->GetSprite();
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
+		mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	}
 	if ((myTargetPosition - myPosition).Length() <= distance.Length())
 	{

@@ -19,16 +19,16 @@ namespace DX2D
 		CTexture* GetTexture(const char* aTexturePath);
 		CRendertarget* GetRendertarget(const Vector2ui& aSize);
 		CTexture* GetWhiteSquareTexture(){ return myWhiteSquareTexture; }
-		Vector2f GetTextureSize(ID3D11ShaderResourceView* aResourceView, bool aNormalize = true) const;
+		Vector2f GetTextureSize(struct ID3D11ShaderResourceView* aResourceView, bool aNormalize = true) const;
 
 		void ReleaseTexture(CTexture* aTexture);
 
 		void Update();
 
 		/* Requires DX11 includes */
-		ID3D11ShaderResourceView* GetDefaultNormalMapResource() const { return myDefaultNormalMapResource; }
+		struct ID3D11ShaderResourceView* GetDefaultNormalMapResource() const { return myDefaultNormalMapResource; }
 		/* Requires DX11 includes */
-		ID3D11ShaderResourceView* GetNoiseTexture() const { return myNoiseResource; }
+		struct ID3D11ShaderResourceView* GetNoiseTexture() const { return myNoiseResource; }
 	private:
 		std::vector<CTexture*> myResourceViews;
 		void GeneratePerlinNoiseTexture(unsigned short aWidth, unsigned short aHeight);
@@ -36,12 +36,12 @@ namespace DX2D
 		ID3D11ShaderResourceView* CreateWhiteSquareTexture();
 		void CreateDefaultNormalmapTexture();
 		
-		ID3D11Texture2D *myNoiseTexture;
-		ID3D11ShaderResourceView* myNoiseResource;
-		ID3D11ShaderResourceView* myFailedResource;
+		struct ID3D11Texture2D *myNoiseTexture;
+		struct ID3D11ShaderResourceView* myNoiseResource;
+		struct ID3D11ShaderResourceView* myFailedResource;
 		/*ID3D11ShaderResourceView* myWhiteSquareResource;*/
-		ID3D11ShaderResourceView* myDefaultNormalMapResource;
-		CDirectEngine* myDirect3D;
-		CTexture* myWhiteSquareTexture;
+		struct ID3D11ShaderResourceView* myDefaultNormalMapResource;
+		class CDirectEngine* myDirect3D;
+		class CTexture* myWhiteSquareTexture;
 	};
 }
