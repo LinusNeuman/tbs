@@ -7,6 +7,9 @@
 #include "../Actor/Actor.h"
 #include "../PlayerController.h"
 #include <TiledLoader/TiledLoader.h>
+#include <tga2d\shaders\customshader.h>
+#include <tga2d\texture\texture_manager.h>
+#include <tga2d\engine.h>
 
 PlayState::PlayState()
 {
@@ -37,6 +40,7 @@ void PlayState::Init()
 
 	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
 
+	
 	myPlayerController = new PlayerController();
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
@@ -44,6 +48,15 @@ void PlayState::Init()
 	myPlayerController->AddPlayer(myPlayer2);
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
 	myPlayerController->AddPlayer(myEnemy);
+
+	myCustomShader = new DX2D::CCustomShader();
+	myCustomShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
+	myCustomShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/camera7.png"), DX2D::EShaderTextureSlot_1); // Add a texture
+
+	// Run PostInit to set all the data
+	myCustomShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	// Tell the sprite to use this shader
+	myPlayer2->mySprite->GetSprite()->SetCustomShader(myCustomShader);
 
 	picojson::value animationFile = JsonWrapper::LoadPicoValue("Data/Animations/PlayerTurnAnimation.json");
 	picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
