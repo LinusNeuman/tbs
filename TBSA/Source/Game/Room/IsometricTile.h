@@ -3,7 +3,8 @@
 #include "Door.h"
 
 
-class WrappedSprite;
+class StaticSprite;
+
 enum class eTileType
 {
 	EMPTY,
@@ -24,7 +25,7 @@ public:
 	void Init();
 
 	void Draw() const;
-	void AddSpriteLayer(WrappedSprite* aSprite);
+	void AddSpriteLayer(StaticSprite* aSprite);
 	inline eTileType GetTileType()const;
 	inline void SetTileType(eTileType);
 
@@ -35,11 +36,11 @@ public:
 
 private:
 	CommonUtilities::Vector2f myPosition;
-	WrappedSprite * mySprite;
+	StaticSprite * mySprite;
 
 	eTileType myType;
 	unsigned int myRoomId;
-	CommonUtilities::GrowingArray<WrappedSprite *> myGraphicsLayers;
+	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 };

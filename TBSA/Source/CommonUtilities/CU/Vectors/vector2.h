@@ -73,6 +73,8 @@ namespace CommonUtilities
 		T Dot(const Vector2<T> &aRight) const;
 		Vector2 GetNormalized(void) const;
 		T GetAngle() const;
+		void Floor(void);
+		Vector2 GetFloored(void);
 
 		//// Manipulation ////
 		Vector2 &Normalize(void);

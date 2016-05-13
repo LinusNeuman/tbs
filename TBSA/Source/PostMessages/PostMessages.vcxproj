@@ -124,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -160,7 +160,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Message\BaseMessage.h" />
+    <ClInclude Include="Message\LevelTileMetricsMessage.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\TestPosition.h" />
     <ClInclude Include="Message\WindowRectChangedMessage.h" />

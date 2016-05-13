@@ -115,7 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -151,7 +151,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -191,13 +191,19 @@
     <ProjectReference Include="..\DX2DEngine\DX2DEngine.vcxproj">
       <Project>{11f98bf6-7bdb-4cfb-96cf-577db4ae312f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\PostMaster\PostMaster.vcxproj">
+      <Project>{667e0cb3-dcad-4ee5-a6e3-871ecbe3ab16}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PostMessages\PostMessages.vcxproj">
+      <Project>{12ffe2ce-8ced-46fe-9b19-76f780675f10}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rend\LineRenderCommand.cpp" />
     <ClCompile Include="Rend\RenderCommand.cpp" />
     <ClCompile Include="Rend\RenderConverter.cpp" />
     <ClCompile Include="Rend\Renderer.cpp" />
-    <ClCompile Include="Rend\WrappedSprite.cpp" />
+    <ClCompile Include="Rend\StaticSprite.cpp" />
     <ClCompile Include="stdafx.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
@@ -214,7 +220,7 @@
     <ClInclude Include="Rend\RenderData.h" />
     <ClInclude Include="Rend\Renderer.h" />
     <ClInclude Include="Rend\RenderLayerEnum.h" />
-    <ClInclude Include="Rend\WrappedSprite.h" />
+    <ClInclude Include="Rend\StaticSprite.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

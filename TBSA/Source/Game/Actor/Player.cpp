@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Rend/Renderer.h"
-#include <Rend/WrappedSprite.h>
+#include <Rend/StaticSprite.h>
 
 
 Player::Player()

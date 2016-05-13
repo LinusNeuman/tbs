@@ -7,7 +7,7 @@
 #include "Animation\Animation.h"
 
 
-class WrappedSprite;
+class StaticSprite;
 class RenderConverter;
 class Actor;
 class PlayerController;
@@ -25,7 +25,7 @@ public:
 private:
 	CU::GrowingArray<IsometricTile> myTiles;
 
-	WrappedSprite * testSprite;
+	StaticSprite * testSprite;
 
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;

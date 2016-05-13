@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 
-class WrappedSprite;
+class StaticSprite;
 class Animation;
 
 enum class eActorType
@@ -32,14 +32,14 @@ public:
 		return myType;
 	}
 protected:
-	WrappedSprite* GetSprite() const
+	StaticSprite* GetSprite() const
 	{
 		return mySprite;
 	}
 	std::map<std::string, Animation*> myAnimations;
 	std::string myActiveAnimation;
 private:
-	WrappedSprite *mySprite;
+	StaticSprite *mySprite;
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
 	CU::Vector2f myTargetPosition;
