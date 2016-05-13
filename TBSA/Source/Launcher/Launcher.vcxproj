@@ -357,6 +357,9 @@
     <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
       <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\PathFinding\PathFinding.vcxproj">
+      <Project>{88878c34-338e-418a-84e3-1438b4ea5786}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\PostMaster\PostMaster.vcxproj">
       <Project>{667e0cb3-dcad-4ee5-a6e3-871ecbe3ab16}</Project>
     </ProjectReference>

@@ -7,6 +7,7 @@
 #include "SpriteSheet/SpriteSheet.h"
 #include <JsonWrapper/JsonWrapper.h>
 
+#include "../TiledData/TiledData.h"
 
 namespace
 {
@@ -22,7 +23,7 @@ CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const pico
 
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType);
 
-void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile>& someTiles)
+void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
 	picojson::value root;
 
@@ -96,7 +97,7 @@ void TiledLoader::Load(std::string aFilePath, CommonUtilities::GrowingArray<Isom
 			}
 		}
 
-		someTiles.Add(newTile);
+		someTiles.myTiles.Add(newTile);
 	}
 
 }
