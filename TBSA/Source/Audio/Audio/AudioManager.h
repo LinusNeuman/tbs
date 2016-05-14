@@ -10,7 +10,7 @@ class AudioManager
 public:
 	~AudioManager();
 
-	static void CreateInstance()
+	static void Create()
 	{
 		if (myAudioManager == nullptr)
 		{
@@ -20,10 +20,6 @@ public:
 
 	static AudioManager* const GetInstance()
 	{
-		if (myAudioManager == nullptr)
-		{
-			myAudioManager = new AudioManager();
-		}
 		return myAudioManager;
 	}
 

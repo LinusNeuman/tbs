@@ -1,6 +1,7 @@
 #pragma once
 #include <CU/Timer/Time.h>
 #include <CU/NameSpaceAliases.h>
+#include "../GUI/GUI/Generic/GUIElement.h"
 
 class ProxyStateStack;
 
@@ -16,7 +17,7 @@ enum class eStackReturnValue
 class GameState
 {
 public:
-	GameState();
+	GameState(const char* aName);
 	virtual ~GameState();
 
 	virtual void Init();
@@ -29,4 +30,7 @@ public:
 protected:
 	bool myLetThroughRender;
 
+	CU::GrowingArray<GUIElement*, uchar> myGUIElements;
+
+	const char* myName;
 };

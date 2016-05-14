@@ -3,8 +3,8 @@
 #include "GameWorld.h"
 #include <StateStack.h>
 
-#include "../ThreadPool/Source/ThreadPool.h"
-#include <CU/Thread/ThreadSynchronizer.h>
+#include "../ThreadPool/ThreadPool/ThreadPool.h"
+
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 class CGame

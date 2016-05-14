@@ -66,12 +66,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GUI\Managing\GUIFactory.h" />
+    <ClInclude Include="GUI\Managing\GUIManager.h" />
     <ClInclude Include="GUI\Messaging\GUIMessageHandler.h" />
     <ClInclude Include="GUI\Messaging\GUIMessage.h" />
     <ClInclude Include="GUI\Instances\GUIButton.h" />
     <ClInclude Include="GUI\Generic\GUIElement.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GUI\Managing\GUIFactory.cpp" />
+    <ClCompile Include="GUI\Managing\GUIManager.cpp" />
     <ClCompile Include="GUI\Messaging\GUIMessageHandler.cpp" />
     <ClCompile Include="GUI\Messaging\GUIMessage.cpp" />
     <ClCompile Include="GUI\Instances\GUIButton.cpp" />

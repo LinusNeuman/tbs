@@ -12,10 +12,10 @@ GUIMessageHandler::~GUIMessageHandler()
 
 void GUIMessageHandler::SetOnClick(GUIMessage& aGUIMessage)
 {
-	myMessageEvents[0] = aGUIMessage;
+	myMessageEvents[0] = &aGUIMessage;
 }
 
 void GUIMessageHandler::SetOnHover(GUIMessage& aGUIMessage)
 {
-	myMessageEvents[1] = aGUIMessage;
+	myMessageEvents[1] = &aGUIMessage;
 }

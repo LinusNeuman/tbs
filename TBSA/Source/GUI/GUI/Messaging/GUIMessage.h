@@ -1,8 +1,13 @@
 #pragma once
-class GUIMessage
+#include "../PostMessages/Message/BaseMessage.h"
+#include <string>
+
+class GUIMessage : public BaseMessage
 {
 public:
-	GUIMessage();
+	GUIMessage(const RecieverTypes aType);
 	~GUIMessage();
+
+	//const std::string myEventString;
 };
 

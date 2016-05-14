@@ -25,6 +25,14 @@ void GUIElement::Destroy()
 	}
 }
 
+void GUIElement::Init(const char* aName, const char* aSpritePath, bool aIsEnabled)
+{
+	myName = aName;
+	mySprite->Init(aSpritePath);
+
+	myIsEnabled = aIsEnabled;
+}
+
 void GUIElement::SetOnClick(GUIMessage& aGUIMessage)
 {
 	myMessageHandler.SetOnClick(aGUIMessage);

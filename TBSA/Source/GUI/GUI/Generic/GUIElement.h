@@ -5,12 +5,12 @@
 
 #include <string>
 #include <CU/GrowingArray/GrowingArray.h>
-#include "../../../Renderer/Rend/WrappedSprite.h"
+#include "../Renderer/Rend/WrappedSprite.h"
 
-#include <GUI/Messaging/GUIMessageHandler.h>
+#include "../Messaging/GUIMessageHandler.h"
 #include <CU/Vectors/Vector.h>
 
-#include <SingletonPostMaster.h>
+#include "../PostMaster/SingletonPostMaster.h"
 
 typedef unsigned char uchar;
 
@@ -23,6 +23,8 @@ public:
 	virtual ~GUIElement();
 	virtual void Destroy();
 
+	virtual void Init(const char* aName, const char* aSpritePath, bool aIsEnabled);
+
 	virtual void __forceinline SetOnClick(GUIMessage& aGUIMessage);
 	virtual void __forceinline SetOnHover(GUIMessage& aGUIMessage);
 
@@ -34,6 +36,10 @@ protected:
 
 	WrappedSprite* mySprite;
 	CU::Vector2f myPosition;
+
+	std::string myName;
+
+	bool myIsEnabled;
 
 	CU::GrowingArray<GUIElement*, unsigned char> myGUIChilds;
 };

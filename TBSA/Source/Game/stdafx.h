@@ -24,5 +24,5 @@
 #include <SingletonPostMaster.h>
 
 // Audio
-#include "../Audio/Source/Instances/SoundEffect.h"
-#include "../Audio/Source/Instances/Song.h"
+#include <Audio/Instances/SoundEffect.h>
+#include <Audio/Instances/Song.h>

@@ -15,6 +15,8 @@
 #include <CU/Thread/ThreadHelper.h>
 #include <SingletonPostMaster.h>
 #include <Rend/RenderConverter.h>
+#include <Audio/AudioManager.h>
+#include <GUI/Managing/GUIFactory.h>
 //#include "MainSingleton/MainSingleton.h"
 
 using namespace std::placeholders;
@@ -38,6 +40,9 @@ CGame::CGame()
 	JSONWrapper::TestShit();*/
 	SingletonPostMaster::Create();
 	IsometricInput::Create();
+
+	GUIFactory::Create();
+	AudioManager::Create();
 }
 
 
@@ -99,6 +104,9 @@ void CGame::InitCallBack()
 	RenderConverter::Create();
 	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
+
+
+	GUIFactory::GetInstance()->Load();
 
 	myGameWorld = new CGameWorld();
 
