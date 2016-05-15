@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "RenderCommand.h"
+#include <tga2d/sprite/sprite.h>
 
 //const USHORT TileWidth = 10;
 

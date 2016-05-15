@@ -1,6 +1,10 @@
 #pragma once
-#include <tga2d/sprite/sprite.h>
-#include "RenderData.h"
+#include "Rend/RenderData.h"
+
+namespace DX2D
+{
+	class CSprite;
+}
 
 class RenderCommand
 {

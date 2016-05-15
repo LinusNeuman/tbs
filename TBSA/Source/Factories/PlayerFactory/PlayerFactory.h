@@ -1,8 +1,8 @@
 #pragma once
 #include <CU/DLDebug/DL_Debug.h>
-#include "../Game/Actor/Player.h"
+#include <GameObjects/Actor/Player.h>
 #include <CU/Memory Pool/MemoryPool.h>
-#include "../../Game/JsonDataStructs.h"
+#include <GameObjects/JsonDataStructs.h>
 #include <Pico/picojson.h>
 
 class PlayerFactory

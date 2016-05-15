@@ -4,7 +4,8 @@
 #include <Rend/StaticSprite.h>
 #include <ProxyStateStack.h>
 #include <Rend/RenderConverter.h>
-#include "../Actor/Actor.h"
+//#include "../Actor/Actor.h"
+#include <GameObjects/Actor/Actor.h>
 #include "../PlayerController.h"
 #include <TiledLoader/TiledLoader.h>
 #include <tga2d\shaders\customshader.h>

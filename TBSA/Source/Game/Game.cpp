@@ -8,7 +8,8 @@
 #include <time.h>
 #include <vector>
 //#include <CU/InputWrapper/SingletonInputWrapper.h>
-#include "InputAdaption/SingletonIsometricInputWrapper.h"
+//#include "InputAdaption/SingletonIsometricInputWrapper.h"
+#include <Input/SingletonIsometricInputWrapper.h>
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PlayerController.h"
-#include "Actor/Actor.h"
+//#include "Actor/Actor.h"
+#include <GameObjects/Actor/Actor.h>
 
 
 PlayerController::PlayerController()

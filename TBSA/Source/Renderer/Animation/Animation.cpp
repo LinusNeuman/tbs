@@ -4,6 +4,8 @@
 #include <map>
 #include <tga2d/sprite/sprite.h>
 
+
+
 void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize);
 void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, StaticSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize);
 void ChangeAnimation(const std::string& anAnimation);
