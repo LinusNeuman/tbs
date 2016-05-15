@@ -2,7 +2,7 @@
 #include "MenuState.h"
 #include <CU/Vectors/Vector2.h>
 #include <Rend/StaticSprite.h>
-#include <ProxyStateStack.h>
+#include <StateStack/ProxyStateStack.h>
 #include "PlayState.h"
 
 MenuState::MenuState()

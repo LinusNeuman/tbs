@@ -1,5 +1,5 @@
 #pragma once
-#include <GameState.h>
+#include <StateStack/GameState.h>
 
 class StaticSprite;
 class RenderConverter;

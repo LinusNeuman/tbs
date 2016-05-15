@@ -1,10 +1,8 @@
 #pragma once
 #include <CU/DLDebug/DL_Debug.h>
-//#include "../Game/Actor/Enemy.h"
 #include <GameObjects/Actor/Enemy.h>
 #include <CU/Memory Pool/MemoryPool.h>
 #include <CU/Vectors/vector2.h>
-//#include "../Game/JsonDataStructs.h"
 #include <GameObjects/JsonDataStructs.h>
 #include <Pico/picojson.h>
 

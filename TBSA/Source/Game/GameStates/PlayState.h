@@ -1,5 +1,5 @@
 #pragma once
-#include <GameState.h>
+#include <StateStack/GameState.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <PlayerFactory/PlayerFactory.h>
 #include <EnemyFactory/EnemyFactory.h>

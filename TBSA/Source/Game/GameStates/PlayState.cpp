@@ -2,7 +2,7 @@
 #include "PlayState.h"
 #include <CU/Vectors/Vector2.h>
 #include <Rend/StaticSprite.h>
-#include <ProxyStateStack.h>
+#include <StateStack/ProxyStateStack.h>
 #include <Rend/RenderConverter.h>
 //#include "../Actor/Actor.h"
 #include <GameObjects/Actor/Actor.h>
