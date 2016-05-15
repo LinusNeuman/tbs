@@ -38,13 +38,7 @@ void PlayState::Init()
 	myTiles = someData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
-	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
-	{
-	CU::Vector2f tempderp = CU::Vector2f(static_cast<float>(iSprite % TileRowShift), (static_cast<float>(iSprite / TileRowShift)));
-	myTiles.Add(IsometricTile(tempderp));
-	}*/
-
-	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Init));
+	
 
 	myPlayerController = new PlayerController();
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
@@ -72,10 +66,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 {
 	(aStateStack);
 
-
-	//myAnimation->UpdateAnimation();
-	//myAnimation->Render();
-
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		myPlayerController->NotifyPlayers();
@@ -95,7 +85,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		DL_ASSERT(isFalse, "IT Works!");
 	}
 
-	//RenderConverter::DrawLine();
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
 	DRAWLINE(CU::Vector2f::Zero, testLine);
 	DRAWLINE(CU::Vector2f(1920.f, 0.f), testLine);
