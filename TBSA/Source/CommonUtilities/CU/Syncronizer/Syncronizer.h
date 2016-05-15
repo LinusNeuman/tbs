@@ -2,7 +2,7 @@
 
 #include <thread>
 
-#include "..\GrowingArray\GrowingArray.h"
+#include "CU/GrowingArray/GrowingArray.h"
 
 namespace CommonUtilities
 {

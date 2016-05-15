@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "../Vectors/vector4.h"
-#include "../Vectors/vector3.h"
+#include "CU/Vectors/vector4.h"
+#include "CU/Vectors/vector3.h"
 #include <array>
 
 

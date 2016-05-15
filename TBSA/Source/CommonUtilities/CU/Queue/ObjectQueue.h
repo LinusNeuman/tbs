@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../DLDebug/DL_Debug.h"
-#include "..\GrowingArray\GrowingArray.h"
+#include "CU/DLDebug/DL_Debug.h"
+#include "CU/GrowingArray/GrowingArray.h"
 
 namespace CommonUtilities
 {

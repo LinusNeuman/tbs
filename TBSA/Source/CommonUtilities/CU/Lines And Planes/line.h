@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../Vectors/vector2.h"
+#include "CU/Vectors/vector2.h"
 
 
 template<typename T>
