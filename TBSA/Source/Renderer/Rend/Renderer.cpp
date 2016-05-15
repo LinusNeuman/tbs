@@ -22,17 +22,13 @@ Renderer::Renderer()
 	myBuffer = new CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>>();
 
 	myCommandsToRender->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
+	myBuffer->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
 
 	for (USHORT iLayer = 0; iLayer < static_cast<USHORT>(enumRenderLayer::enumLength); ++iLayer)
 	{
 		myCommandsToRender->Add(CommonUtilities::GrowingArray<RenderCommand>());
 		myCommandsToRender->GetLast().Init(128);
-	}
 
-	myBuffer->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
-
-	for (USHORT iLayer = 0; iLayer < static_cast<USHORT>(enumRenderLayer::enumLength); ++iLayer)
-	{
 		myBuffer->Add(CommonUtilities::GrowingArray<RenderCommand>());
 		myBuffer->GetLast().Init(128);
 	}
