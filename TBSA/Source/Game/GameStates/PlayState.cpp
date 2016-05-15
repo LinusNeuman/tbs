@@ -14,7 +14,7 @@
 
 #include <TiledData/TiledData.h>
 #include <Message/LevelTileMetricsMessage.h>
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 PlayState::PlayState()
 {
 }

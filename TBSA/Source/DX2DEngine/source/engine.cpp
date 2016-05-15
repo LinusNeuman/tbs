@@ -12,7 +12,7 @@
 #include "windows/windows_window.h"
 #include <windows.h>
 #include <Message/WindowRectChangedMessage.h>
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 
 
 #pragma comment( lib, "user32.lib" )

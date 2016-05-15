@@ -21,7 +21,7 @@
 #include <CU/Vectors/Vector.h>
 //#include <CU/InputWrapper/SingletonInputWrapper.h>
 #include "InputAdaption/SingletonIsometricInputWrapper.h"
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 
 // Audio
 #include "../Audio/Source/Instances/SoundEffect.h"

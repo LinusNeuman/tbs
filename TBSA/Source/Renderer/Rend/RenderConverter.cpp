@@ -5,7 +5,7 @@
 #include <CU/Vectors/vector2.h>
 #include <CU/Utility/Math/Isometric.h>
 #include <Message/LevelTileMetricsMessage.h>
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 

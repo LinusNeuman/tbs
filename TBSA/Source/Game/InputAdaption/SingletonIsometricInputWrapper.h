@@ -1,6 +1,6 @@
 #pragma once
 #include <CU/InputWrapper/InputWrapper.h>
-#include <MessageReceiver.h>
+#include <PostMaster/MessageReceiver.h>
 //
 
 namespace CommonUtilities

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SingletonIsometricInputWrapper.h"
 #include <CU/Camera/Camera2D.h>
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 #include <CU/Utility/Math/Isometric.h>
 #include <Message/WindowRectChangedMessage.h>
 

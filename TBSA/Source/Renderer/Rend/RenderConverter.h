@@ -1,6 +1,6 @@
 #pragma once
 #include "Rend/Renderer.h"
-#include <MessageReceiver.h>
+#include <PostMaster/MessageReceiver.h>
 
 class StaticSprite;
 

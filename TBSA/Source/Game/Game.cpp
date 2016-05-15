@@ -13,7 +13,7 @@
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
 #include <CU/Thread/ThreadHelper.h>
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 #include <Rend/RenderConverter.h>
 //#include "MainSingleton/MainSingleton.h"
 
