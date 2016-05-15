@@ -1,12 +1,10 @@
 #pragma once
 #include <CU/DLDebug/DL_Debug.h>
-#include <CU/GrowingArray/GrowingArray.h>
-#include <CU/NameSpaceAliases.h>
 #include <Message/RecieverTypes.h>
+#include <CU/GrowingArray/GrowingArray.h>
 #include "PostMaster/MessageReceiver.h"
 
 class MessageReciever;
-//struct Message;
 
 class SingletonPostMaster
 {

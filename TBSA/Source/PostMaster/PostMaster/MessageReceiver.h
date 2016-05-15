@@ -1,8 +1,4 @@
 #pragma once
-
-//#include <Message/TestPosition.h>
-
-
 struct WindowRectChangedMessage;
 struct LevelTileMetricsMessage;
 

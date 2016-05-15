@@ -1,6 +1,5 @@
+#include "stdafx.h"
 #include "SingletonPostMaster.h"
-#include "MessageReceiver.h"
-//#include "Message.h"
 
 
 

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "MessageReceiver.h"
 #include <Message/WindowRectChangedMessage.h>
 #include <Message/LevelTileMetricsMessage.h>
