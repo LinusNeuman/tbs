@@ -48,7 +48,7 @@ void Renderer::Init()
 {
 	if (StaticSprite::ourSprites.IsInitialized() == false)
 	{
-		StaticSprite::ourSprites.Init(100);
+		StaticSprite::ourSprites.Init(128);
 	}
 }
 
