@@ -1,5 +1,5 @@
 #pragma once
-#include "Renderer.h"
+#include "Rend/Renderer.h"
 #include <MessageReceiver.h>
 
 class StaticSprite;

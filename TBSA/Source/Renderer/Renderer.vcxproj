@@ -115,7 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -151,7 +151,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjektDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)CommonUtilities\;$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -203,7 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
-    <ClCompile Include="Rend\LineRenderCommand.cpp" />
     <ClCompile Include="Rend\RenderCommand.cpp" />
     <ClCompile Include="Rend\RenderConverter.cpp" />
     <ClCompile Include="Rend\Renderer.cpp" />
@@ -219,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Rend\LineRenderCommand.h" />
     <ClInclude Include="Rend\RenderCommand.h" />
     <ClInclude Include="Rend\RenderConverter.h" />
     <ClInclude Include="Rend\RenderData.h" />

@@ -1,7 +1,6 @@
 #pragma once
-#include "RenderCommand.h"
+#include "Rend/RenderCommand.h"
 #include <CU/Vectors/vector2.h>
-//#include <CU/GrowingArray/GrowingArray.h>
 
 namespace DX2D
 {
