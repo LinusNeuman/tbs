@@ -325,8 +325,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
-    <ClInclude Include="Room\Door.h" />
-    <ClInclude Include="Room\IsometricTile.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="resource.h" />
@@ -338,8 +336,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
-    <ClCompile Include="Room\Door.cpp" />
-    <ClCompile Include="Room\IsometricTile.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -1,5 +1,5 @@
 #pragma once
-#include "Actor.h"
+#include "GameObjects/Actor/Actor.h"
 
 struct ActorData;
 

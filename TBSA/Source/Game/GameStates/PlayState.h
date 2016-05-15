@@ -4,7 +4,7 @@
 #include <PlayerFactory/PlayerFactory.h>
 #include <EnemyFactory/EnemyFactory.h>
 #include <Animation/Animation.h>
-#include "../Room/IsometricTile.h"
+#include <GameObjects/Room/IsometricTile.h>
 
 class StaticSprite;
 class RenderConverter;

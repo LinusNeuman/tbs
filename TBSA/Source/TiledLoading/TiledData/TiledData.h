@@ -1,8 +1,7 @@
 ﻿// Author:   Hampus Huledal
 // CreationDate: 13/05/2016
 #pragma once
-#include "../../Game/Room/IsometricTile.h"
-#
+#include <GameObjects/Room/IsometricTile.h>
 
 struct TiledData
 {

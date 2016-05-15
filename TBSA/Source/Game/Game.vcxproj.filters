@@ -19,8 +19,6 @@
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="Room\IsometricTile.h" />
-    <ClInclude Include="Room\Door.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
     <ClInclude Include="Shader\Shaders.h" />
@@ -31,8 +29,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="Room\IsometricTile.cpp" />
-    <ClCompile Include="Room\Door.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
     <ClCompile Include="Shader\Shaders.cpp" />

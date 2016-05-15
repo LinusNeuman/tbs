@@ -3,11 +3,12 @@
 #include <JSON/JSONWrapper.h>
 #include <CU/Utility/FileHandling.h>
 
-#include "../../Game/Room/IsometricTile.h"
+//#include "../../Game/Room/IsometricTile.h"
+#include <GameObjects/Room/IsometricTile.h>
 #include "SpriteSheet/SpriteSheet.h"
 #include <JsonWrapper/JsonWrapper.h>
 
-#include "../TiledData/TiledData.h"
+#include "TiledData/TiledData.h"
 
 namespace
 {
