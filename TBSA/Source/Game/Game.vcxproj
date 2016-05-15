@@ -157,7 +157,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -175,7 +175,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
@@ -232,7 +232,7 @@
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
@@ -257,7 +257,7 @@
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
@@ -321,7 +321,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Shader\Shaders.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
@@ -332,7 +331,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Shader\Shaders.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />

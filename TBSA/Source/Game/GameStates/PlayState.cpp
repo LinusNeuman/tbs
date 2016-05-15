@@ -11,7 +11,7 @@
 #include <tga2d\shaders\customshader.h>
 #include <tga2d\texture\texture_manager.h>
 #include <tga2d\engine.h>
-#include "../Shader/Shaders.h"
+#include <Shader/Shaders.h>
 
 #include <TiledData/TiledData.h>
 #include <Message/LevelTileMetricsMessage.h>

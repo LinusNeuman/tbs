@@ -2,7 +2,7 @@
 #include <tga2d/Engine.h>
 #include <StateStack/StateStack.h>
 
-#include "../ThreadPool/Source/ThreadPool.h"
+#include <Source/ThreadPool.h>
 #include <CU/Thread/ThreadSynchronizer.h>
 #include "GameStates/MenuState.h"
 #pragma warning  (push)
