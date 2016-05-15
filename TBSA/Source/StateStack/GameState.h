@@ -13,24 +13,21 @@ enum class eStackReturnValue
 	ePopCurrentSubStates
 };
 
-
 class GameState
 {
 public:
-	GameState(const char* aName);
+	GameState();
 	virtual ~GameState();
 
 	virtual void Init();
+	void LoadGUI(const char* aName);
 	
 	virtual eStackReturnValue Update(const CU::Time & aDeltaTime, ProxyStateStack & aStateStack) = 0;
 	virtual void Draw() const = 0;
 
 	bool GetShouldLetThroughRendering();
-
 protected:
 	bool myLetThroughRender;
 
 	CU::GrowingArray<GUIElement*, uchar> myGUIElements;
-
-	const char* myName;
 };

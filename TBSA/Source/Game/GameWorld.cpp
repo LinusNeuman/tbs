@@ -76,6 +76,8 @@ void CGameWorld::Init()
 	myPlayerController->AddPlayer(myPlayer2);
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
 	myPlayerController->AddPlayer(myEnemy);
+
+	LoadGUI("InGame");
 }
 
 

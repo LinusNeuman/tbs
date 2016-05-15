@@ -105,7 +105,7 @@ void CGame::InitCallBack()
 	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
 
-
+	CU::TimeManager::Create();
 	GUIFactory::GetInstance()->Load();
 
 	myGameWorld = new CGameWorld();
@@ -115,9 +115,6 @@ void CGame::InitCallBack()
 
 	
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
-	
-
-	CU::TimeManager::Create();
 
 	
     myGameWorld->Init();

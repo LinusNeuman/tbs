@@ -4,10 +4,9 @@
 #include <GUI/Managing/GUIFactory.h>
 
 
-GameState::GameState(const char* aName)
+GameState::GameState()
 {
 	myLetThroughRender = false;
-	myName = aName;
 }
 
 
@@ -17,8 +16,14 @@ GameState::~GameState()
 
 void GameState::Init()
 {
-	myGUIElements = GUIFactory::GetInstance()->GetLoadedGUI(myName);
+	
 }
+
+void GameState::LoadGUI(const char* aName)
+{
+	myGUIElements = GUIFactory::GetInstance()->GetLoadedGUI(aName);
+}
+
 
 bool GameState::GetShouldLetThroughRendering()
 {

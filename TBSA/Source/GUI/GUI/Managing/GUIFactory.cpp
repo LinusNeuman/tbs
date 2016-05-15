@@ -1,6 +1,10 @@
 #include "GUIFactory.h"
 #include <iostream>
 
+#include <CU/Timer/Timer.h>
+
+#include "../JSONWrapper/JsonWrapper/JsonWrapper.h"
+
 GUIFactory* GUIFactory::myInstance = nullptr;
 
 GUIFactory::GUIFactory()
@@ -14,7 +18,17 @@ GUIFactory::~GUIFactory()
 
 void GUIFactory::Load()
 {
+	std::cout << "Started loading all GUI.." << std::endl;
+	CU::Timer loadTimer;
 
+	// json wrapper load all gui files
+
+	// one master file that tells which states we have
+	// then load them and put them into the map with growingarrays
+
+
+	
+	std::cout << "Loading all GUI took " << loadTimer.GetTime().GetMilliSeconds() << " ms" << std::endl;
 }
 
 CU::GrowingArray<GUIElement*, uchar>& GUIFactory::GetLoadedGUI(const char* aStateName)
