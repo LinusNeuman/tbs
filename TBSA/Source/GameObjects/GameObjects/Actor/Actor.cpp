@@ -5,6 +5,7 @@
 #include <Animation/Animation.h>
 //#include "../JsonDataStructs.h"
 #include "GameObjects/JsonDataStructs.h"
+#include <CU\DLDebug\DL_Debug.h>
 
 
 Actor::Actor()
@@ -63,6 +64,7 @@ void Actor::AddAnimation(Animation* anAnimation)
 
 void Actor::ChangeAnimation(const std::string& anAnimation)
 {
+	DL_ASSERT(myAnimations.find(anAnimation) != myAnimations.end(), "Animation does not exist");
 	if (myActiveAnimation != anAnimation)
 	{
 		if (myActiveAnimation != "")
