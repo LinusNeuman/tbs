@@ -4,9 +4,8 @@
 #include <Rend/StaticSprite.h>
 #include <StateStack/ProxyStateStack.h>
 #include <Rend/RenderConverter.h>
-//#include "../Actor/Actor.h"
 #include <GameObjects/Actor/Actor.h>
-#include "../PlayerController.h"
+#include <Controllers/PlayerController.h>
 #include <TiledLoader/TiledLoader.h>
 #include <tga2d\shaders\customshader.h>
 #include <tga2d\texture\texture_manager.h>
@@ -34,7 +33,7 @@ void PlayState::Init()
 	TiledData someData;
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
-	SingletonPostMaster::PostMessageW(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
+	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
 
 	myTiles = someData.myTiles;
 	myPlayerFactory.LoadFromJson();

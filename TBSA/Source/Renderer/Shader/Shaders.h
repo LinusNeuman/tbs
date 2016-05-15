@@ -1,9 +1,13 @@
 #pragma once
 #include <unordered_map>
-#include <tga2d\shaders\customshader.h>
-#include <tga2d\texture\texture_manager.h>
+
 
 class StaticSprite;
+
+namespace DX2D
+{
+	class CCustomShader;
+}
 
 class Shaders
 {
@@ -12,11 +16,12 @@ public:
 	{
 		Shader(DX2D::CCustomShader* aShader, const std::string& aName)
 		{
-			myShader = *aShader;
+			myShader = aShader;
 			myName = aName;
-		};
+		}
+
 		~Shader(){};
-		DX2D::CCustomShader myShader;
+		DX2D::CCustomShader * myShader;
 		std::string myName;
 	};
 	static Shaders* GetInstance();
