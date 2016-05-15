@@ -1,7 +1,7 @@
 ﻿// Author:   Hampus Huledal
 // CreationDate: 13/05/2016
 #pragma once
-#include <CU/GrowingArray/GrowingArray.h>
+//#include <CU/GrowingArray/GrowingArray.h>
 
 class NavVertex;
 class NavEdge;
