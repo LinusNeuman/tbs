@@ -206,4 +206,4 @@ TBSA/Source/TBS.VC.opendb
 incrementalSave
 
 !TBSA\Bin\Launcher_DevMode.exe
-!ExternalLib/*
+!TBSA/ExternalLib/*
