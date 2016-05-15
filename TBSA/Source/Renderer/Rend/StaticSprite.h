@@ -2,6 +2,7 @@
 
 #include "Rend/RenderLayerEnum.h"
 #include <CU/Vectors/vector2.h>
+#include <CU/Vectors/vector4.h>
 #include "Rend/RenderData.h"
 #include <unordered_map>
 #include <CU/Hashing/HashUtility.h>

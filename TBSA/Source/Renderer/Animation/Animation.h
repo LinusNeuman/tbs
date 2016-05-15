@@ -1,6 +1,6 @@
 #pragma once
 #include <CU/Vectors/vector2.h>
-#include <JsonWrapper\JsonWrapper.h>
+#include <JsonWrapper/JsonWrapper.h>
 #include <Rend/StaticSprite.h>
 
 class Animation
