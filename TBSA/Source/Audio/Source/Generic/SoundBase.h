@@ -1,5 +1,5 @@
 #pragma once
-#include "../../External/fmod.hpp"
+#include "External/fmod.hpp"
 #include <string>
 
 enum class eFade
