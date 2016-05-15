@@ -18,6 +18,9 @@
     <ClInclude Include="JsonWrapper\JsonWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pico\picojson.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JsonWrapper\JsonWrapper.cpp">

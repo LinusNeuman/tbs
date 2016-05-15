@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "..\Pico/picojson.h"
+#include "Pico/picojson.h"
 #include <CU/Vectors/vector2.h>
 
 template<typename T>
