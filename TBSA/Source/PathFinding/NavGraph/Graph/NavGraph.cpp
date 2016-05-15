@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "NavGraph.h"
-#include "../NavHandle.h"
-#include "../Vertex/NavVertex.h"
+#include "NavGraph/NavHandle.h"
+#include "NavGraph/Vertex/NavVertex.h"
 
 NavGraph::NavGraph()
 {

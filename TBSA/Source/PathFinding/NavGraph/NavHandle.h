@@ -3,7 +3,7 @@
 *Date: 2016-05-13
 */
 #pragma once
-#include "../Graph/NavGraph.h"
+#include "NavGraph/Graph/NavGraph.h"
 
 
 class NavEdge;

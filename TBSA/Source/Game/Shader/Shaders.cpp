@@ -15,10 +15,9 @@ Shaders::~Shaders()
 
 Shaders* Shaders::GetInstance()
 {
-	if (ourInstance != nullptr)
-	{
-		return ourInstance;
-	}
+	DL_ASSERT(ourInstance != nullptr, "Shader ourinstance is nullptrs");
+
+	return ourInstance;
 }
 
 void Shaders::Create()

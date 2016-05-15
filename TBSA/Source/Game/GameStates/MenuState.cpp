@@ -22,6 +22,7 @@ void MenuState::Init()
 
 eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
+	(aTimeDelta);
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true || IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eRight) == true)
 	{
 		PlayState *newState = new PlayState();

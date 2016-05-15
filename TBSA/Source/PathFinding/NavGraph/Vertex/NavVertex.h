@@ -1,9 +1,9 @@
 ﻿// Author:   Hampus Huledal
 // CreationDate: 13/05/2016
 #pragma once
-#include "../NavHandle.h"
+#include "NavGraph/NavHandle.h"
 #include <CU/GrowingArray/GrowingArray.h>
-#include "../Edge/NavEdge.h"
+#include "NavGraph/Edge/NavEdge.h"
 
 class NavVertex
 {

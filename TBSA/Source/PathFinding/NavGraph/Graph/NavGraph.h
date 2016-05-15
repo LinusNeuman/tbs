@@ -3,11 +3,11 @@
 #pragma once
 #include <CU/GrowingArray/GrowingArray.h>
 
-struct NavVertex;
-struct NavEdge;
+class NavVertex;
+class NavEdge;
 
 typedef unsigned int NavHandle;
-class  VertexHandle;
+struct  VertexHandle;
 
 class NavGraph
 {

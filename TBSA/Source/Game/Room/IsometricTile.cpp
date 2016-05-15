@@ -28,7 +28,7 @@ void IsometricTile::Init()
 
 void IsometricTile::Draw() const
 {
-	for (size_t i = 0; i < myGraphicsLayers.Size(); i++)
+	for (USHORT i = 0; i < myGraphicsLayers.Size(); i++)
 	{
 		myGraphicsLayers[i]->Draw(myPosition );
 	}
