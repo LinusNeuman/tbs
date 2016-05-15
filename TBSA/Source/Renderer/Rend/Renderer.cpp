@@ -11,11 +11,9 @@
 #include <tga2d/text/text.h>
 #include <tga2d/drawers/debug_drawer.h>
 
-
-//#include <CU/NameSpaceAliases.h>
-#include "StaticSprite.h"
-#include "RenderLayerEnum.h"
-#include "RenderCommand.h"
+#include "Rend/StaticSprite.h"
+#include "Rend/RenderLayerEnum.h"
+#include "Rend/RenderCommand.h"
 
 
 Renderer::Renderer()
