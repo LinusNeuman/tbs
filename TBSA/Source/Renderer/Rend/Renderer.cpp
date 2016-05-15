@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Renderer.h"
 
+#include "Rend/RenderCommand.h"
+
 #include <tga2d/Engine.h>
 #include <tga2d/sprite/sprite_batch.h>
 #include <tga2d/drawers/debug_drawer.h>

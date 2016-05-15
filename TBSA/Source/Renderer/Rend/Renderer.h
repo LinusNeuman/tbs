@@ -1,5 +1,4 @@
 #pragma once
-#include "Rend/RenderCommand.h"
 #include <CU/Vectors/vector2.h>
 
 namespace DX2D
@@ -10,6 +9,7 @@ namespace DX2D
 }
 
 class StaticSprite;
+class RenderCommand;
 
 class Renderer
 {

@@ -6,6 +6,7 @@
 #include <CU/Utility/Math/Isometric.h>
 #include <Message/LevelTileMetricsMessage.h>
 #include <PostMaster/SingletonPostMaster.h>
+#include "Rend/RenderCommand.h"
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 
