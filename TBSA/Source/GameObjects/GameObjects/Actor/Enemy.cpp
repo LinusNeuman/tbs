@@ -12,7 +12,8 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Init(ActorData aActorData)
+void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 {
 	Actor::Init(aActorData);
+	//Do stuff with enemydata
 }

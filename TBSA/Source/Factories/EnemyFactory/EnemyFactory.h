@@ -18,7 +18,9 @@ public:
 	void ReturnEnemy(Enemy* aPlayer);
 private:
 	CommonUtilities::MemoryPool<Enemy, 5> myEnemyPool;
-	ActorData myEnemyOneData;
-	ActorData myEnemyTwoData;
+	ActorData myActorOneData;
+	ActorData myActorTwoData;
+	EnemyData myEnemyOneData;
+	EnemyData myEnemyTwoData;
 };
 

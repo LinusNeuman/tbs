@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObjects/Actor/Actor.h"
 
+struct EnemyData;
 struct ActorData;
 
 class Enemy : public Actor
@@ -8,6 +9,6 @@ class Enemy : public Actor
 public:
 	Enemy();
 	~Enemy();
-	void Init(ActorData aActorData);
+	void Init(const ActorData &aActorData, const EnemyData &aEnemyData);
 };
 
