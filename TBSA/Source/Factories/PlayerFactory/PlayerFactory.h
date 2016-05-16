@@ -17,7 +17,9 @@ public:
 	void ReturnPlayer(Player* aPlayer);
 private:
 	CommonUtilities::MemoryPool<Player, 2> myPlayerPool;
-	ActorData myPlayerOneData;
-	ActorData myPlayerTwoData;
+	ActorData myActorOneData;
+	ActorData myActorTwoData;
+	PlayerData myPlayerOneData;
+	PlayerData myPlayerTwoData;
 };
 

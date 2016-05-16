@@ -16,8 +16,8 @@ PlayerFactory::~PlayerFactory()
 
 void PlayerFactory::LoadFromJson()
 {
-	UpdateDataStruct("Data/Players/Player1.json", myPlayerOneData);
-	UpdateDataStruct("Data/Players/Player2.json", myPlayerTwoData);
+	UpdateDataStruct("Data/Players/Player1.json", myActorOneData);
+	UpdateDataStruct("Data/Players/Player2.json", myActorTwoData);
 }
 
 void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& aActorData)
@@ -52,10 +52,10 @@ Player* PlayerFactory::CreatePlayer(eActorType aActorType)
 	switch (aActorType)
 	{
 	case eActorType::ePlayerOne:	 
-		player->Init(myPlayerOneData);
+		player->Init(myActorOneData, myPlayerOneData);
 		return player;
 	case eActorType::ePlayerTwo:
-		player->Init(myPlayerTwoData);
+		player->Init(myActorTwoData, myPlayerTwoData);
 		return player;
 	default:
 		DL_ASSERT(false, "Wrong ActorType when creating player");
