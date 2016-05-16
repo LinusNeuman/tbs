@@ -28,11 +28,20 @@ void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFile
 
 unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
 {
+	static int imageCount = 0;
+	++imageCount;
+
+	std::stringstream tempStream;
+	tempStream << "sprites have been created times: ";
+	tempStream << imageCount;
+	DL_PRINT(tempStream.str().c_str());	
+
 	IndexKey tempKey(aFilePath, aRect);
 
 	if (ourIndexDictionary.count(tempKey) > 0)
 	{
-		return ourIndexDictionary[tempKey];
+		unsigned short tempIndex = ourIndexDictionary[tempKey];
+		return tempIndex;
 	}
 
 	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
