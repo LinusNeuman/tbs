@@ -12,8 +12,8 @@ public:
 	EnemyFactory();
 	~EnemyFactory();
 	void LoadFromJson();
-	void UpdateDataStruct(const std::string& aStringPath, ActorData &aActorData);
-	void AddEnemyAnimation(ActorData &aActorData, picojson::object& aObject);
+	void UpdateDataStruct(const std::string& aStringPath, ActorData &aActorData, EnemyData &aEnemyData);
+	void AddEnemyAnimation(ActorData &aActorData, EnemyData &aEnemyData, picojson::object& aObject);
 	Enemy* CreateEnemy(eActorType aActorType);
 	void ReturnEnemy(Enemy* aPlayer);
 private:

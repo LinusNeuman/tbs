@@ -15,21 +15,21 @@ EnemyFactory::~EnemyFactory()
 
 void EnemyFactory::LoadFromJson()
 {
-	UpdateDataStruct("Data/Enemies/Enemy1.json", myActorOneData);
-	UpdateDataStruct("Data/Enemies/Enemy2.json", myActorTwoData);
+	UpdateDataStruct("Data/Enemies/Enemy1.json", myActorOneData, myEnemyOneData);
+	UpdateDataStruct("Data/Enemies/Enemy2.json", myActorTwoData, myEnemyTwoData);
 }
 
-void EnemyFactory::UpdateDataStruct(const std::string &aStringPath, ActorData &aActorData)
+void EnemyFactory::UpdateDataStruct(const std::string &aStringPath, ActorData &aActorData, EnemyData &aEnemyData)
 {
 	picojson::value enemyValue = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& enemyObject = JsonWrapper::GetPicoObject(enemyValue);
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyObject));
 	aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", enemyObject);
 	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", enemyObject);
-	AddEnemyAnimation(aActorData, enemyObject);
+	AddEnemyAnimation(aActorData, aEnemyData, enemyObject);
 }
 
-void EnemyFactory::AddEnemyAnimation(ActorData &aActorData, picojson::object& aObject)
+void EnemyFactory::AddEnemyAnimation(ActorData &aActorData, EnemyData &aEnemyData,picojson::object& aObject)
 {
 	Animation *animation = new Animation();
 	picojson::array& animationArray = JsonWrapper::GetPicoArray("animations", aObject);
