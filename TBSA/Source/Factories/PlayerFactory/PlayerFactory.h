@@ -11,8 +11,8 @@ public:
 	PlayerFactory();
 	~PlayerFactory();
 	void LoadFromJson();
-	void UpdateDataStruct(const std::string& aStringPath, ActorData &aActorData);
-	void AddPlayerAnimation(ActorData &aActorData, picojson::object& aObject);
+	void UpdateDataStruct(const std::string& aStringPath, ActorData &aActorData, PlayerData &aPlayerData);
+	void AddPlayerAnimation(ActorData &aActorData, PlayerData &aPlayerData, picojson::object& aObject);
 	Player* CreatePlayer(eActorType aActorType);
 	void ReturnPlayer(Player* aPlayer);
 private:

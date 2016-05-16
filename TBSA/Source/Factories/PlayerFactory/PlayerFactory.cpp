@@ -16,21 +16,21 @@ PlayerFactory::~PlayerFactory()
 
 void PlayerFactory::LoadFromJson()
 {
-	UpdateDataStruct("Data/Players/Player1.json", myActorOneData);
-	UpdateDataStruct("Data/Players/Player2.json", myActorTwoData);
+	UpdateDataStruct("Data/Players/Player1.json", myActorOneData, myPlayerOneData);
+	UpdateDataStruct("Data/Players/Player2.json", myActorTwoData, myPlayerTwoData);
 }
 
-void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& aActorData)
+void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& aActorData, PlayerData &aPlayerData)
 {
 	picojson::value values = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& object = JsonWrapper::GetPicoObject(values);
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", object));
 	aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", object);
 	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", object);
-	AddPlayerAnimation(aActorData, object);
+	AddPlayerAnimation(aActorData, aPlayerData, object);
 }
 
-void PlayerFactory::AddPlayerAnimation(ActorData &aActorData, picojson::object& aObject)
+void PlayerFactory::AddPlayerAnimation(ActorData &aActorData, PlayerData &aPlayerData, picojson::object& aObject)
 {
 	Animation *animation = new Animation();
 	picojson::array& animationArray = JsonWrapper::GetPicoArray("animations", aObject);
