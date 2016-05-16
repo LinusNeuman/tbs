@@ -2,6 +2,8 @@
 This class will store a texture bound to DX11
 */
 #pragma once
+#include <tga2d\math\vector2.h>
+#include <tga2d\math/color.h>
 
 struct ID3D11ShaderResourceView;
 struct ID3D11RenderTargetView;

@@ -1,5 +1,5 @@
 #pragma once
-#include "../GrowingArray/GrowingArray.h"
+#include "CU/GrowingArray/GrowingArray.h"
 
 class ObserverPatternListener;
 class Event;

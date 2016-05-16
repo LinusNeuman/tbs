@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Vectors/Vector.h"
-#include "../../NameSpaceAliases.h"
+#include "CU/Vectors/Vector.h"
+#include "CU/NameSpaceAliases.h"
 
 namespace Intersection3D
 {

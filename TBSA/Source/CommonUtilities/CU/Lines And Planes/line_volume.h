@@ -2,7 +2,7 @@
 
 
 #include "line.h"
-#include "../GrowingArray/GrowingArray.h"
+#include "CU/GrowingArray/GrowingArray.h"
 
 
 template<typename T>

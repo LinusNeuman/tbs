@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../Vectors/vector3.h"
+#include "CU/Vectors/vector3.h"
 
 
 

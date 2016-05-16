@@ -1,7 +1,7 @@
 ﻿// Author:   Hampus Huledal
 // CreationDate: 13/05/2016
 #pragma once
-#include "../NavHandle.h"
+#include "NavGraph//NavHandle.h"
 
 class NavEdge
 {

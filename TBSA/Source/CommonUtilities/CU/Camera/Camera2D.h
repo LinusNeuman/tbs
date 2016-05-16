@@ -4,10 +4,10 @@
 
 
 
-#include "../Vectors/Vector.h"
-#include "../Matriser/matrix.h"
-#include "../Utility/Randomizer/Randomizer.h"
-#include "../NameSpaceAliases.h"
+#include "CU/Vectors/Vector.h"
+#include "CU/Matriser/matrix.h"
+#include "CU/Utility/Randomizer/Randomizer.h"
+#include "CU/NameSpaceAliases.h"
 
 class Camera2D
 {

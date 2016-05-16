@@ -3,6 +3,7 @@ This class handles all the textures created, please use this when you create a t
 */
 
 #pragma once
+#include <vector>
 #include "Texture.h"
 
 struct ID3D11ShaderResourceView;

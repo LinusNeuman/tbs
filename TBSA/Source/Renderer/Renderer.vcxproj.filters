@@ -27,10 +27,13 @@
     <ClCompile Include="Rend\RenderCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rend\LineRenderCommand.cpp">
+    <ClCompile Include="Rend\StaticSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rend\StaticSprite.cpp">
+    <ClCompile Include="Animation\Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\Shaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +56,13 @@
     <ClInclude Include="Rend\RenderData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rend\LineRenderCommand.h">
+    <ClInclude Include="Rend\StaticSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rend\StaticSprite.h">
+    <ClInclude Include="Animation\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\Shaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

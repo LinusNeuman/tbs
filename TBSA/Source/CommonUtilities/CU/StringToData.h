@@ -1,11 +1,12 @@
 #pragma once
-#include "Vectors/Vector.h"
+#include "CU/Vectors/Vector.h"
 #include <string>
-#include "DLDebug/DL_Debug.h"
+#include "CU/DLDebug/DL_Debug.h"
+#include "CU/NameSpaceAliases.h"
 
 namespace StringToData
 {
-	inline Vector2f StringToVector2f(const std::string& aVectorString)
+	inline CU::Vector2f StringToVector2f(const std::string& aVectorString)
 	{
 		DL_ASSERT(aVectorString.size() != 0, "Invalid vector input in cutscene!");
 
@@ -33,10 +34,10 @@ namespace StringToData
 
 		DL_ASSERT(numberOfParameters == 2, "Unexpected numer of parameters to vector in cutscene, expected 2, got " + numberOfParameters);
 
-		return Vector2f(pos[0], pos[1]);
+		return CU::Vector2f(pos[0], pos[1]);
 	}
 
-	inline Vector4f StringToVector4f(const std::string& aVectorString)
+	inline CU::Vector4f StringToVector4f(const std::string& aVectorString)
 	{
 		DL_ASSERT(aVectorString.size() != 0, "Invalid vector input in cutscene!");
 
@@ -64,6 +65,6 @@ namespace StringToData
 
 		DL_ASSERT(numberOfParameters == 4, "Unexpected numer of parameters to vector in cutscene, expected 2, got " + numberOfParameters);
 
-		return Vector4f(pos[0], pos[1], pos[2], pos[3]);
+		return CU::Vector4f(pos[0], pos[1], pos[2], pos[3]);
 	}
 }

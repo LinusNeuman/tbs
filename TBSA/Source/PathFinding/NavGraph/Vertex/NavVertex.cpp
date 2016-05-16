@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "NavVertex.h"
-#include "../Edge/NavEdge.h"
+#include "NavGraph/Edge/NavEdge.h"
 
 
 NavVertex::NavVertex()

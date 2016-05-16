@@ -1,9 +1,10 @@
-#include "../CommonUtilities/CU/Vectors/vector2.h"
-#include "../CommonUtilities/CU/Vectors/vector4.h"
-#include "../CommonUtilities/CU/Timer/Time.h"
-#include "Actor\Actor.h"
-#include "WrappedSprite.h"
-#include "Renderer.h"
+#pragma once
+#include <CU/Vectors/vector2.h>
+#include <CU/Vectors/vector4.h>
+#include <CU/Timer/Time.h>
+#include <GameObjects/Actor/Actor.h>
+#include <Rend/StaticSprite.h>
+#include <Rend/Renderer.h>
 
 struct ParticleEmitterData
 {

@@ -3,6 +3,8 @@
 #include <CU/Vectors/vector2.h>
 #include <CU/NameSpaceAliases.h>
 
+#pragma warning  (push)
+#pragma warning(disable : 4512)
 struct LevelTileMetricsMessage : public BaseMessage
 {
 	LevelTileMetricsMessage(const RecieverTypes aReceiverType, const CU::Vector2ui & aLevelWidthAndHeight) :
@@ -12,3 +14,4 @@ struct LevelTileMetricsMessage : public BaseMessage
 
 	const CU::Vector2ui myWidthHeight;
 };
+#pragma warning (pop)

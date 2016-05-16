@@ -1,10 +1,10 @@
 #pragma once
 #include <tga2d/Engine.h>
-#include <StateStack.h>
+#include <StateStack/StateStack.h>
 
-#include "../ThreadPool/Source/ThreadPool.h"
+#include <Source/ThreadPool.h>
 #include <CU/Thread/ThreadSynchronizer.h>
-#include "GameStates/MenuState.h"
+#include <GameStates/MenuState.h>
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 class CGame

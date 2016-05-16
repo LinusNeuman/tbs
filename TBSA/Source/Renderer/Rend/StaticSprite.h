@@ -1,8 +1,9 @@
 #pragma once
 
-#include "RenderLayerEnum.h"
+#include "Rend/RenderLayerEnum.h"
 #include <CU/Vectors/vector2.h>
-#include "RenderData.h"
+#include <CU/Vectors/vector4.h>
+#include "Rend/RenderData.h"
 #include <unordered_map>
 #include <CU/Hashing/HashUtility.h>
 #pragma warning  (push)

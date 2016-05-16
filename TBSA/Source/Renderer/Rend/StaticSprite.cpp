@@ -17,7 +17,7 @@ StaticSprite::~StaticSprite()
 {
 }
 
-void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/Magnus.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
+void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFiles/biggerTestTile.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::Zero*/)
 {
 	myIsInitiedFlag = true;
 	myImageIndex = AddImage(aFilePath, aRect);
