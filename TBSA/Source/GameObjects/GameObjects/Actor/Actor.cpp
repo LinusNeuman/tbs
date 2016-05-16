@@ -18,7 +18,7 @@ Actor::~Actor()
 {
 }
 
-void Actor::Init(ActorData aActorData)
+void Actor::Init(const ActorData &aActorData)
 {
 	myPosition = aActorData.myPosition;
 	myTargetPosition = myPosition;

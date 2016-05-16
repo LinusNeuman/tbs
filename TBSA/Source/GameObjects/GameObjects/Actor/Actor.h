@@ -20,7 +20,7 @@ class Actor
 public:
 	Actor();
 	~Actor();
-	void Init(ActorData aActorData);
+	void Init(const ActorData &aActorData);
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2f aTargetPosition);
