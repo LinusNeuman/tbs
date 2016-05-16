@@ -10,6 +10,10 @@
 #include <TiledData/TiledData.h>
 #include <Message/LevelTileMetricsMessage.h>
 #include <SingletonPostMaster.h>
+#include "../../PathFinding/NavGraph/NavHandle.h"
+#include "../PathFinding/NavGraph/Vertex/NavVertex.h"
+#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+
 PlayState::PlayState()
 {
 }
@@ -27,12 +31,11 @@ void PlayState::Init()
 	testSprite->Init("Sprites/characterSheetTurnaround.PNG", false, CU::Vector4f(0.f, 0.f, 128.f, 128.f));
 	testSprite->SetLayer(enumRenderLayer::eGameObjects);
 	//testSprite->SetIsIsometric(false);
-	TiledData someData;
 
-	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
-	SingletonPostMaster::PostMessageW(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
+	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
+	SingletonPostMaster::PostMessageW(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
-	myTiles = someData.myTiles;
+	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 	/*for (USHORT iSprite = 0; iSprite < TileCount; ++iSprite)
@@ -114,4 +117,50 @@ void PlayState::Draw() const
 	testSprite->Draw(CU::Vector2f(500.f, 500.f));
 	myEnemy->Draw();
 
+}
+
+void PlayState::ConstructNavGraph()
+{
+	for (size_t i = 0; i < myTiles.Size(); i++)
+	{
+		if (myTiles[i].GetTileType() != eTileType::OPEN || myTiles[i].GetTileType() != eTileType::DOOR || myTiles[i].GetTileType() != eTileType::DOOR_2)
+		{
+			continue;
+		}
+
+		VertexHandle currentHandle = myNavGraph.CreateVertex();
+		myTiles[i].SetVertexHandle(currentHandle);
+		currentHandle->SetAnyPurpouseId(static_cast<int>(i));
+
+		//warning names of indexes may not coincide wwith where they are drawn
+		//i.e north may not graphicly be drawn to the north of the current tile
+		
+		const int northWest = i - myTiledData.myMapSize.x - 1;
+		if (northWest > -1 && myTiles[northWest].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northWest].GetVertexHandle());
+		}
+
+		const int north = i - myTiledData.myMapSize.x;
+		if (north > -1 && myTiles[north].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[north].GetVertexHandle());
+		}
+
+		const int northEast = i - myTiledData.myMapSize.x + 1;
+		if (northEast > -1 && myTiles[northEast].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northEast].GetVertexHandle());
+		}
+
+		const int west = i - 1;
+		if (west > -1 && myTiles[west].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[west].GetVertexHandle());
+		}
+	}
 }
