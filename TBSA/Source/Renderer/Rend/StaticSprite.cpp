@@ -28,14 +28,6 @@ void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFile
 
 unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
 {
-	static int imageCount = 0;
-	++imageCount;
-
-	std::stringstream tempStream;
-	tempStream << "sprites have been created times: ";
-	tempStream << imageCount;
-	DL_PRINT(tempStream.str().c_str());	
-
 	IndexKey tempKey(aFilePath, aRect);
 
 	if (ourIndexDictionary.count(tempKey) > 0)
@@ -66,8 +58,6 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
 	}
 	tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
-
-	//SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
 	return ourIndexDictionary[tempKey];

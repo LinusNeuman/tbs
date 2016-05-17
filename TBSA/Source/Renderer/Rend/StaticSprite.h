@@ -22,23 +22,12 @@ public:
 
 	bool operator == (const IndexKey & aRight) const
 	{
-		static int falseHitCounter = 0;
 		if ((myRect == aRight.myRect) && (myPath == aRight.myPath))
 		{
-			/*std::stringstream tempStream;
-			tempStream << "False has been hit times before true on average: ";
-			tempStream << falseHitCounter;
-			DL_PRINT(tempStream.str().c_str());
-			falseHitCounter = 0;*/
 			return true;
 		}
 		else
 		{
-			++falseHitCounter;
-			std::stringstream tempStream;
-			tempStream << "False has been hit times: ";
-			tempStream << falseHitCounter;
-			DL_PRINT(tempStream.str().c_str());
 			return false;
 		}
 	}
