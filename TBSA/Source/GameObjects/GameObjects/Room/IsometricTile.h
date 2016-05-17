@@ -1,7 +1,8 @@
 #pragma once
 #include <CU/GrowingArray/GrowingArray.h>
 #include "Door.h"
-#include "../../PathFinding/NavGraph/NavHandle.h"
+//#include "../PathFinding/NavGraph/Graph/NavGraph.h"
+#include "../PathFinding/NavGraph/NavHandle.h"
 
 
 class StaticSprite;

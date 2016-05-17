@@ -34,10 +34,10 @@ void PlayState::Init()
 	myTiles.Init(100);
 
 	
-	TiledData someData;
 
-	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
-	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
+	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
+	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
+
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
