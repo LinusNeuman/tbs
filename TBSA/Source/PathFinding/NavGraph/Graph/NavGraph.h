@@ -6,7 +6,8 @@ class NavVertex;
 class NavEdge;
 
 typedef unsigned int NavHandle;
-struct  VertexHandle;
+struct VertexHandle;
+struct EdgeHandle;
 
 class NavGraph
 {
@@ -14,8 +15,8 @@ public:
 	NavGraph();
 	~NavGraph();
 	
-	
-	VertexHandle AddVertex();
+	VertexHandle CreateVertex();
+	EdgeHandle CreateEdge();
 
 	NavEdge* GetEdge(NavHandle aHandle);
 	NavVertex* GetVertex(NavHandle aHandle);
