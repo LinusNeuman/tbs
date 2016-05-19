@@ -27,6 +27,14 @@ void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& 
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", object));
 	aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", object);
 	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", object);
+	if (JsonWrapper::HasValue("maxActionPoints", object))
+	{
+		aPlayerData.myActionPointMax = JsonWrapper::GetInt("maxActionPoints", object);
+	}
+	else
+	{
+		aPlayerData.myActionPointMax = 8;
+	}
 	AddPlayerAnimation(aActorData, aPlayerData, object);
 }
 
