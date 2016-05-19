@@ -46,7 +46,7 @@ void EnemyFactory::AddEnemyAnimation(ActorData &aActorData, EnemyData &aEnemyDat
 
 Enemy* EnemyFactory::CreateEnemy(eActorType aActorType)
 {
-	DL_ASSERT(aActorType >= eActorType::eEnemyOne, "Trying to Create a enemy with an PlayerType");
+	DL_ASSERT(aActorType >= eActorType::eEnemyOne, "Trying to Create a enemy with a PlayerType");
 	Enemy *Enemy = myEnemyPool.GetObject();
 	switch (aActorType)
 	{

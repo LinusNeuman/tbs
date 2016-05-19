@@ -43,3 +43,13 @@ void IsometricTile::SetDoor(const Door& aDoor)
 {
 	myDoor = aDoor;
 }
+
+void IsometricTile::SetVertexHandle(VertexHandle aHandle)
+{
+	myNavVertex = aHandle;
+}
+
+VertexHandle IsometricTile::GetVertexHandle()
+{
+	return myNavVertex;
+}

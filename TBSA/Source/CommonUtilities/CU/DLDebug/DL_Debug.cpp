@@ -99,6 +99,7 @@ void Debug::AssertMessage(const char* aFileName, int aLine, const char* aFunctio
 
 void Debug::PrintMessage(const char * aString)
 {
+	std::cout << aString << std::endl;
 	ourInstance->myOutput << aString << std::endl;
 	ourInstance->myOutput << "---------------" << std::endl;
 }

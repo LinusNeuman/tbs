@@ -13,10 +13,17 @@ NavGraph::~NavGraph()
 {
 }
 
-VertexHandle NavGraph::AddVertex()
+VertexHandle NavGraph::CreateVertex()
 {
 	VertexHandle handle = VertexHandle(myVertecies.Size(), this);
 	myVertecies.Add(NavVertex(handle));
+	return handle;
+}
+
+EdgeHandle NavGraph::CreateEdge()
+{
+	EdgeHandle handle = EdgeHandle(myEdges.Size(), this);
+	myEdges.Add(NavEdge());
 	return handle;
 }
 

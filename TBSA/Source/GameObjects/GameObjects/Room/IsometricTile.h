@@ -1,6 +1,8 @@
 #pragma once
 #include <CU/GrowingArray/GrowingArray.h>
 #include "Door.h"
+//#include "../PathFinding/NavGraph/Graph/NavGraph.h"
+#include "../PathFinding/NavGraph/NavHandle.h"
 
 
 class StaticSprite;
@@ -34,6 +36,8 @@ public:
 
 	void SetDoor(const Door& aDoor);
 
+	void SetVertexHandle(VertexHandle aHandle);
+	VertexHandle GetVertexHandle();
 private:
 	CommonUtilities::Vector2f myPosition;
 	StaticSprite * mySprite;
@@ -43,6 +47,7 @@ private:
 	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
+	VertexHandle myNavVertex;
 };
 
 inline eTileType IsometricTile::GetTileType() const

@@ -32,7 +32,8 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 
 	if (ourIndexDictionary.count(tempKey) > 0)
 	{
-		return ourIndexDictionary[tempKey];
+		unsigned short tempIndex = ourIndexDictionary[tempKey];
+		return tempIndex;
 	}
 
 	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
@@ -57,8 +58,6 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
 	}
 	tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
-
-	//SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
 	return ourIndexDictionary[tempKey];

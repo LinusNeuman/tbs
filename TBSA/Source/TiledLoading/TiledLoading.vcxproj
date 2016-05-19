@@ -78,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,6 +152,9 @@
     </ProjectReference>
     <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
       <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PathFinding\PathFinding.vcxproj">
+      <Project>{88878c34-338e-418a-84e3-1438b4ea5786}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Renderer\Renderer.vcxproj">
       <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
