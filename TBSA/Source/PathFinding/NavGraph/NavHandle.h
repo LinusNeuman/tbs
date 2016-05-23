@@ -190,7 +190,6 @@ struct VertexHandle
 		return myGraph->GetVertex(myHandle);
 	}
 
-
 	bool Null() const
 	{
 		return myGraph == nullptr;
