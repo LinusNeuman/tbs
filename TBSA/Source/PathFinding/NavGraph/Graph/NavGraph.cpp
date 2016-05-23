@@ -2,6 +2,8 @@
 #include "NavGraph.h"
 #include "NavGraph/NavHandle.h"
 #include "NavGraph/Vertex/NavVertex.h"
+#include "NavGraph/Edge/NavEdge.h"
+
 
 NavGraph::NavGraph()
 {
@@ -35,4 +37,12 @@ NavEdge* NavGraph::GetEdge(NavHandle aHandle)
 NavVertex* NavGraph::GetVertex(NavHandle aHandle)
 {
 	return &myVertecies[aHandle];
+}
+
+void NavGraph::Dijkstra(VertexHandle& aFirstNode, unsigned aDistance)
+{
+	for (int i = 0; i < myVertecies.Size(); ++i)
+	{
+		
+	}
 }

@@ -7,9 +7,9 @@
 #include <GameObjects/Actor/Actor.h>
 #include <Controllers/PlayerController.h>
 #include <TiledLoader/TiledLoader.h>
-#include <tga2d\shaders\customshader.h>
-#include <tga2d\texture\texture_manager.h>
-#include <tga2d\engine.h>
+#include <tga2d/shaders/customshader.h>
+#include <tga2d/texture/texture_manager.h>
+#include <tga2d/engine.h>
 #include <Shader/Shaders.h>
 
 #include <TiledData/TiledData.h>
