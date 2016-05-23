@@ -9,6 +9,7 @@
 #include <JsonWrapper/JsonWrapper.h>
 
 #include "TiledData/TiledData.h"
+#include <Rend/StaticSprite.h>
 
 namespace
 {
@@ -27,7 +28,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
 	picojson::value root;
-
+	
 	std::string JsonData = CommonUtilities::GetFileAsString(aFilePath);
 	std::string err = picojson::parse(root , JsonData);
 	
@@ -56,6 +57,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 	for (size_t i = 0; i < height * width; i++)
 	{
+		bool isOverFloor = false;
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
 		
@@ -68,8 +70,18 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 			if (name[0] == '_')
 			{
 				unsigned int lastUnderscore = name.find_last_of('_');
-				unsigned int roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
-
+				unsigned int roomId;
+				try
+				{
+					roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
+				}
+				catch (std::invalid_argument)
+				{
+					roomId = 0;
+					DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
+				}
+				
+				isOverFloor = true;
 				newTile.SetRoomId(roomId);
 
 				int tileId = static_cast<int>(GetNumber(data[i]) - dataSheet.GetFirstIndex() + 1);
@@ -90,10 +102,21 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
 				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 				{
-					if (tileId >= SpriteSheets[l].GetFirstIndex())
+					if (tileId >= SpriteSheets[l].GetFirstIndex() && l != 1)
 					{
 						SpriteSheet explainingSpriteSheet = SpriteSheets[l];
-						newTile.AddSpriteLayer(explainingSpriteSheet.CreateSprite(tileId));
+						StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
+						
+						if (isOverFloor == true)
+						{
+							explaingSprite->SetLayer(enumRenderLayer::eGameObjects);
+						}
+						else
+						{
+							explaingSprite->SetLayer(enumRenderLayer::eFloor);
+						}
+
+						newTile.AddSpriteLayer(explaingSprite);
 					}
 				}
 			}

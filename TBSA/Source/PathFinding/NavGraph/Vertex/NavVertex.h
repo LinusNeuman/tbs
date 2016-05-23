@@ -20,13 +20,17 @@ public:
 	void SetAnyPurpouseId(int anID);
 	int GetAnyPurpouseId() const;
 
+	void SetPreviousNode(VertexHandle aPreviousVertex);
+
 	void AddLink(EdgeHandle anEdge, VertexHandle aVertex);
+
 	const CommonUtilities::GrowingArray<EdgeHandle>& GetEdges() const;
+
 private:
 	void AddEdge(const EdgeHandle& anEdge);
 	CommonUtilities::GrowingArray<EdgeHandle> myEdges;
 
-	EdgeHandle myPathBack;
+	VertexHandle myPrevoiusNode;
 	VertexHandle myHandle;
 
 	bool myIsSearched;
