@@ -90,9 +90,10 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
 				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 				{
-					if (tileId >= SpriteSheets[j].GetFirstIndex())
+					if (tileId >= SpriteSheets[l].GetFirstIndex())
 					{
-						newTile.AddSpriteLayer(SpriteSheets[j].CreateSprite(tileId));
+						SpriteSheet explainingSpriteSheet = SpriteSheets[l];
+						newTile.AddSpriteLayer(explainingSpriteSheet.CreateSprite(tileId));
 					}
 				}
 			}
