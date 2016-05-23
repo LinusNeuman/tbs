@@ -186,6 +186,21 @@
     <ClInclude Include="CU\Intersection\Intersections.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CU\Heap\Greater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\Heap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\Lesser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\PointerGreater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\PointerLesser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CU\DLDebug\StackWalker\StackWalker.cpp">
