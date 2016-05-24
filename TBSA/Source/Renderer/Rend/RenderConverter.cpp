@@ -4,10 +4,13 @@
 #include "StaticSprite.h"
 #include <CU/Vectors/vector2.h>
 #include <CU/Utility/Math/Isometric.h>
-#include <Message/LevelTileMetricsMessage.h>
+
 #include <PostMaster/SingletonPostMaster.h>
 #include "Rend/RenderCommand.h"
 #include <CU/Camera/Camera2D.h>
+
+#include <Message/LevelTileMetricsMessage.h>
+#include <Message/SetMainCameraMessage.h>
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 
@@ -25,6 +28,7 @@ RenderConverter::RenderConverter()
 RenderConverter::~RenderConverter()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelTileLayoutSettings, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eCamera, *this);
 }
 
 
@@ -53,6 +57,7 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 
 	GetInstance().myLevelTileLayout = CU::Vector2ui(10, 10);
 
+	SingletonPostMaster::AddReciever(RecieverTypes::eCamera, GetInstance());
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelTileLayoutSettings, GetInstance());
 }
 
@@ -65,9 +70,9 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 
 	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
-	RenderData tempRenderData(aSpriteToRender.GetColor());
+	//RenderData tempRenderData(aSpriteToRender.GetColor());
 
-	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), /*tempOffset +*/ newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData, true));
+	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), /*tempOffset +*/ newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData(), true));
 }
 
 void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
@@ -100,10 +105,10 @@ void RenderConverter::Draw()
 	GetInstance().myRenderer.Draw();
 }
 
-void RenderConverter::SetCamera(const Camera2D & aCamera)
-{
-	GetInstance().myCamera = &aCamera;
-}
+//void RenderConverter::SetCamera(const Camera2D & aCamera)
+//{
+//	GetInstance().myCamera = &aCamera;
+//}
 
 void RenderConverter::SwapBuffers()
 {
@@ -113,4 +118,9 @@ void RenderConverter::SwapBuffers()
 void RenderConverter::RecieveMessage(const LevelTileMetricsMessage & aMessage)
 {
 	myLevelTileLayout = aMessage.myWidthHeight;
+}
+
+void RenderConverter::RecieveMessage(const SetMainCameraMessage & aMessage)
+{
+	myCamera = &aMessage.myCamera;
 }

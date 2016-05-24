@@ -44,20 +44,20 @@ public:
 
 	inline int GetRoomId() const;
 	inline void SetRoomId(unsigned int aId);
+	inline CU::Vector2f GetPosition() const;
 
 	void SetDoor(const Door& aDoor);
 
+	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	void SetVertexHandle(VertexHandle aHandle);
 	VertexHandle GetVertexHandle() const;
 
 	void SetTileState(eTileState aState);
 private:
 	CommonUtilities::Vector2f myPosition;
-	StaticSprite * mySprite;
 
 	eTileType myType;
 	unsigned int myRoomId;
-	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 	VertexHandle myNavVertex;
@@ -75,8 +75,8 @@ inline void IsometricTile::SetTileType(eTileType aType)
 {
 	if (aType != eTileType::EMPTY)
 	{
-		myType = aType;
-	}
+	myType = aType;
+}
 }
 
 inline int IsometricTile::GetRoomId() const
@@ -89,6 +89,10 @@ inline void IsometricTile::SetRoomId(unsigned int anID)
 	myRoomId = anID;
 }
 
+inline CU::Vector2f IsometricTile::GetPosition() const
+{
+	return myPosition;
+}
 inline void IsometricTile::SetTileState(eTileState aState)
 {
 	myState = aState;

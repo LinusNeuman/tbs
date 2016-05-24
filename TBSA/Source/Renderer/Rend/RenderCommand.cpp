@@ -2,8 +2,6 @@
 #include "RenderCommand.h"
 #include <tga2d/sprite/sprite.h>
 
-//const USHORT TileWidth = 10;
-
 RenderCommand::RenderCommand()
 {
 	mySprite = nullptr;
@@ -44,5 +42,10 @@ void RenderCommand::Render() const
 
 	mySprite->SetColor(tempColor);
 	mySprite->SetPosition(tempPosition);
+
+	mySprite->SetCustomShader(myRenderData.myShaderPtr);
+
 	mySprite->Render();
+
+	mySprite->SetCustomShader(nullptr);
 }

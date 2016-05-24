@@ -7,9 +7,10 @@
 #include <GameObjects/Actor/Actor.h>
 #include <Controllers/PlayerController.h>
 #include <TiledLoader/TiledLoader.h>
-#include <tga2d/shaders/customshader.h>
-#include <tga2d/texture/texture_manager.h>
-#include <tga2d/engine.h>
+#include <tga2d\shaders\customshader.h>
+#include <tga2d\texture\texture_manager.h>
+#include <tga2d\engine.h>
+#include "tga2d\sprite\sprite.h"
 #include <Shader/Shaders.h>
 
 #include <TiledData/TiledData.h>
@@ -39,7 +40,6 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 
-	RenderConverter::SetCamera(myCamera);
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
@@ -65,8 +65,8 @@ void PlayState::Init()
 
 	DX2D::CCustomShader* customShader;
 	customShader = new DX2D::CCustomShader();
-	customShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
 	customShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/Players/Player2/characterSheetTurnaround2.png"), DX2D::EShaderTextureSlot_1); // Add a texture
+	customShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
 	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
@@ -139,6 +139,22 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 void PlayState::Draw() const
 {
+	for (unsigned int i = 0; i < myTiles.Size(); i++)
+	{
+		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
+		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
+		{
+			if (distance.Length2() > 16.0f)
+			{
+				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
+			}
+			else
+			{
+				myTiles[i].myGraphicsLayers[j]->SetShader(nullptr);
+			}
+		}
+	}
+
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();

@@ -20,9 +20,9 @@ IsometricTile::~IsometricTile()
 
 void IsometricTile::Init()
 {
-	mySprite = new StaticSprite();
-	mySprite->Init();
 }
+
+#include <Rend/RenderConverter.h>
 
 void IsometricTile::Draw() const
 {
@@ -88,6 +88,7 @@ void IsometricTile::Update()
 
 void IsometricTile::AddSpriteLayer(StaticSprite * aSprite)
 {
+	aSprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	myGraphicsLayers.Add(aSprite);
 }
 
