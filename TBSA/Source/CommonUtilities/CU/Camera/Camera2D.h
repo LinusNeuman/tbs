@@ -25,9 +25,13 @@ public:
 	const float GetResolutionScale() const;
 
 	void Rotate(const float anAngle);
-	void Move(CU::Vector3f aVector);
+
 	void Zoom(float aFraction);
 	void SetPos(const CU::Vector2f aPos);
+
+	void MoveCamera(const CU::Vector2f & aPosition);
+	void MoveCameraIsomertic(const CU::Vector2f & aPosition);
+
 	void SetTargetPos(const CU::Vector2f aPos);
 	void Update(float aDelta);
 	bool IsShaking();

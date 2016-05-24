@@ -61,9 +61,9 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 {
 	CU::Vector2f tempPosition = aPosition * (*GetInstance().myCamera).GetInverse();
 
-	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
-
 	const float Priority = (tempPosition.x + (tempPosition.y * static_cast<float>(GetInstance().myLevelTileLayout.x)));
+
+	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
 	RenderData tempRenderData(aSpriteToRender.GetColor());
 
