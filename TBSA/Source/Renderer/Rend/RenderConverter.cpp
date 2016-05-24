@@ -7,6 +7,7 @@
 #include <Message/LevelTileMetricsMessage.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include "Rend/RenderCommand.h"
+#include <CU/Camera/Camera2D.h>
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 
@@ -58,17 +59,15 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 
 void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
-	CU::Vector2f tempPosition = aPosition;
-
-	CU::Vector2f tempOffset(550.f, 250.f);
-
-	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
+	CU::Vector2f tempPosition = aPosition * (*GetInstance().myCamera).GetInverse();
 
 	const float Priority = (tempPosition.x + (tempPosition.y * static_cast<float>(GetInstance().myLevelTileLayout.x)));
 
+	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
+
 	RenderData tempRenderData(aSpriteToRender.GetColor());
 
-	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData));
+	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), /*tempOffset +*/ newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData, true));
 }
 
 void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
@@ -89,19 +88,21 @@ void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Ve
 
 void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
 {
-	CU::Vector2f tempOffset(550.f, 250.f);
-	CU::Vector2f newStartPos = CU::IsometricToPixel(aStartPosition);
-	newStartPos += tempOffset;
+	CU::Vector2f newStartPos = CU::IsometricToPixel(aStartPosition * (*GetInstance().myCamera).GetInverse());
 
-	CU::Vector2f newEndPos = CU::IsometricToPixel(aEndPosition);
-	newEndPos += tempOffset;
+	CU::Vector2f newEndPos = CU::IsometricToPixel(aEndPosition * (*GetInstance().myCamera).GetInverse());
 
-	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos);
+	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos, true);
 }
 
 void RenderConverter::Draw()
 {
 	GetInstance().myRenderer.Draw();
+}
+
+void RenderConverter::SetCamera(const Camera2D & aCamera)
+{
+	GetInstance().myCamera = &aCamera;
 }
 
 void RenderConverter::SwapBuffers()
