@@ -16,6 +16,15 @@
 #include <TiledData/TiledData.h>
 #include <Message/LevelTileMetricsMessage.h>
 #include <PostMaster/SingletonPostMaster.h>
+#include "../../PathFinding/NavGraph/NavHandle.h"
+#include "../PathFinding/NavGraph/Vertex/NavVertex.h"
+#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+
+#include <Message/SetMainCameraMessage.h>
+
+
+const float CameraSpeed = 10.f;
+
 PlayState::PlayState()
 {
 }
@@ -30,13 +39,15 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 
+	RenderConverter::SetCamera(myCamera);
 	
-	TiledData someData;
+	
+	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
+	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
-	TiledLoader::Load("Data/Tiled/SecondTest.json", someData);
-	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, someData.myMapSize));
+	SendMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
-	myTiles = someData.myTiles;
+	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 	
@@ -78,10 +89,27 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		return eStackReturnValue::ePopMain;
 	}
 
-	if (IsometricInput::GetKeyReleased(DIK_Q) == true)
+	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
 		DL_ASSERT(isFalse, "IT Works!");
+	}*/
+
+	if (IsometricInput::GetKeyDown(DIK_W))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, -CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_S))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_A))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(-CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_D))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
 
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
@@ -107,9 +135,9 @@ void PlayState::Draw() const
 {
 	for (unsigned int i = 0; i < myTiles.Size(); i++)
 	{
+		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
 		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
 		{
-			CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
 			if (distance.Length() > 4.0f)
 			{
 				Shaders::GetInstance()->ApplyShader(myTiles[i].myGraphicsLayers[j], "testShader");
@@ -119,11 +147,58 @@ void PlayState::Draw() const
 				Shaders::GetInstance()->RemoveShader(myTiles[i].myGraphicsLayers[j]);
 			}
 		}
+		myTiles[i].Draw();
 	}
 
-	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
+	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();
 
+}
+
+void PlayState::ConstructNavGraph()
+{
+	for (size_t i = 0; i < myTiles.Size(); i++)
+	{
+		if (myTiles[i].GetTileType() != eTileType::OPEN || myTiles[i].GetTileType() != eTileType::DOOR || myTiles[i].GetTileType() != eTileType::DOOR_2)
+		{
+			continue;
+		}
+
+		VertexHandle currentHandle = myNavGraph.CreateVertex();
+		myTiles[i].SetVertexHandle(currentHandle);
+		currentHandle->SetAnyPurpouseId(static_cast<int>(i));
+
+		//warning names of indexes may not coincide wwith where they are drawn
+		//i.e north may not graphicly be drawn to the north of the current tile
+		
+		const int northWest = i - myTiledData.myMapSize.x - 1;
+		if (northWest > -1 && myTiles[northWest].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northWest].GetVertexHandle());
+		}
+
+		const int north = i - myTiledData.myMapSize.x;
+		if (north > -1 && myTiles[north].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[north].GetVertexHandle());
+		}
+
+		const int northEast = i - myTiledData.myMapSize.x + 1;
+		if (northEast > -1 && myTiles[northEast].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northEast].GetVertexHandle());
+		}
+
+		const int west = i - 1;
+		if (west > -1 && myTiles[west].GetVertexHandle().Null() == false)
+		{
+			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[west].GetVertexHandle());
+		}
+	}
 }

@@ -5,6 +5,9 @@
 #include <EnemyFactory/EnemyFactory.h>
 #include <Animation/Animation.h>
 #include <GameObjects/Room/IsometricTile.h>
+#include "../../PathFinding/NavGraph/Graph/NavGraph.h"
+#include <TiledData/TiledData.h>
+#include <CU/Camera/Camera2D.h>
 
 class StaticSprite;
 class RenderConverter;
@@ -18,7 +21,11 @@ public:
 	void Init();
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
+
+	void ConstructNavGraph();
 private:
+	Camera2D myCamera;
+
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
@@ -26,5 +33,6 @@ private:
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
 	Animation *myAnimation;
+	NavGraph myNavGraph;
+	TiledData myTiledData;
 };
-

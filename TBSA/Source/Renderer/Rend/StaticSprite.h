@@ -8,6 +8,9 @@
 #include <CU/Hashing/HashUtility.h>
 #pragma warning  (push)
 #pragma warning(disable : 4512)
+
+#include <sstream>
+
 class IndexKey
 {
 public:
@@ -19,7 +22,14 @@ public:
 
 	bool operator == (const IndexKey & aRight) const
 	{
-		return (myRect == aRight.myRect) && (myPath == aRight.myPath);
+		if ((myRect == aRight.myRect) && (myPath == aRight.myPath))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 private:
@@ -32,12 +42,13 @@ namespace std {
 	{
 		size_t operator()(const IndexKey & aKey) const
 		{
-			std::hash<std::string> myHasher;
-			size_t aTempHash =  myHasher(aKey.myPath);
+			size_t aTempHash = 0;
+			CU::hash_combine(aTempHash, aKey.myPath);
 			CU::hash_combine(aTempHash, aKey.myRect.x);
 			CU::hash_combine(aTempHash, aKey.myRect.y);
-			CU::hash_combine(aTempHash, aKey.myRect.z);
-			CU::hash_combine(aTempHash, aKey.myRect.w);
+			CU::hash_combine(aTempHash, aKey.myRect.z * 10.f);
+			CU::hash_combine(aTempHash, aKey.myRect.w * 100.f);
+			
 			return aTempHash;
 		}
 	};
@@ -84,6 +95,7 @@ public:
 	/*void SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio);
 	const CU::Vector2f & GetPivotInRatio() const;*/
 
+	std::string myShaderName;
 private:
 	bool myIsInitiedFlag;
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;

@@ -69,10 +69,19 @@ void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 	(*myBuffer)[aRenderCommand.GetLayer()].Add(aRenderCommand);
 }
 
-void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
+void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, bool OffsetToMiddle/* = false*/)
 {
 	DX2D::Vector2f tempStartPosition(aStartPosition.x / myWindowSize.x, aStartPosition.y / myWindowSize.y);
 	DX2D::Vector2f tempEndPosition(aEndPosition.x / myWindowSize.x, aEndPosition.y / myWindowSize.y);
+
+	if (OffsetToMiddle == true)
+	{
+		tempStartPosition.x += 0.5;
+		tempStartPosition.y += 0.5;
+
+		tempEndPosition.x += 0.5;
+		tempEndPosition.y += 0.5;
+	}
 
 	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine(tempStartPosition , tempEndPosition);
 }

@@ -6,7 +6,7 @@
 
 struct PlayerData
 {
-	
+	int myActionPointMax;
 };
 
 struct EnemyData

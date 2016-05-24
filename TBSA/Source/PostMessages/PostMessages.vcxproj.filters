@@ -10,5 +10,6 @@
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\WindowRectChangedMessage.h" />
     <ClInclude Include="Message\LevelTileMetricsMessage.h" />
+    <ClInclude Include="Message\SetMainCameraMessage.h" />
   </ItemGroup>
 </Project>
