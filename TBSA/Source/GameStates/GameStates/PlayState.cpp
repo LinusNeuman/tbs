@@ -22,6 +22,9 @@
 
 #include <Message/SetMainCameraMessage.h>
 
+
+const float CameraSpeed = 10.f;
+
 PlayState::PlayState()
 {
 }
@@ -92,13 +95,28 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		return eStackReturnValue::ePopMain;
 	}
 
-	if (IsometricInput::GetKeyReleased(DIK_Q) == true)
+	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
 		DL_ASSERT(isFalse, "IT Works!");
-	}
+	}*/
 
-	myCamera.SetPos(myPlayer->GetPosition());
+	if (IsometricInput::GetKeyDown(DIK_W))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, -CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_S))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_A))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(-CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_D))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
+	}
 
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
 	DRAWLINE(CU::Vector2f::Zero, testLine);

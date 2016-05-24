@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Camera2D.h"
+#include "CU/Macros/Macros.h"
 
 Camera2D::Camera2D()
 {
@@ -77,17 +78,20 @@ const CU::Vector2f Camera2D::GetScreenOffset() const
 	return (GetPosition() - (myResolution / 2.f)) * myResolutionScale;
 }
 
-void Camera2D::Move(CU::Vector3f aVector)
-{
-	aVector *= myOrientation;
-	myOrientation.myMatrix[6] += aVector.x;
-	myOrientation.myMatrix[7] += aVector.y;
-}
-
 void Camera2D::Zoom(float aFraction)
 {
 	myProjection.myMatrix[0] *= aFraction;
 	myProjection.myMatrix[4] *= aFraction;
+}
+
+void Camera2D::MoveCamera(const CU::Vector2f & aPosition)
+{
+	myOrientation.SetPosition(myOrientation.GetPosition() + aPosition);
+}
+
+void Camera2D::MoveCameraIsomertic(const CU::Vector2f & aPosition)
+{
+	MoveCamera(aPosition * CU::Matrix33f::CreateRotateAroundZ(DEGRESS_TO_RADIANSF(-45.f)));
 }
 
 void Camera2D::SetProjection()
