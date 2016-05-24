@@ -102,7 +102,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
 				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 				{
-					if (tileId >= SpriteSheets[l].GetFirstIndex() && l != 1)//bug: chooses data layers for some reason Should check why temp fix in place
+					if (tileId >= SpriteSheets[l].GetFirstIndex())
 					{
 						SpriteSheet explainingSpriteSheet = SpriteSheets[l];
 						StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
