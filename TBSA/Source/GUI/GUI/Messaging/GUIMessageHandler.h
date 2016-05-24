@@ -1,5 +1,5 @@
 #pragma once
-#include "GUIMessage.h"
+#include "Generic/GUIMessage.h"
 #include <CU/StaticArray/StaticArray.h>
 
 enum class eGUIMessageEvents
@@ -19,7 +19,8 @@ public:
 
 	void __forceinline SetOnClick(GUIMessage& aGUIMessage);
 	void __forceinline SetOnHover(GUIMessage& aGUIMessage);
+
+	void __forceinline Execute(eGUIMessageEvents aGUIMessageEvent);
 private:
 	CommonUtilities::StaticArray<GUIMessage*, 5> myMessageEvents;
 };
-

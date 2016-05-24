@@ -28,6 +28,9 @@ public:
 	virtual void __forceinline SetOnClick(GUIMessage& aGUIMessage);
 	virtual void __forceinline SetOnHover(GUIMessage& aGUIMessage);
 
+	virtual void OnHover();
+	virtual void OnClick();
+
 	virtual void Update(CommonUtilities::Time &aDelta) = 0;
 
 	virtual void Render(CU::Vector2f aParentSpace);

@@ -1,4 +1,5 @@
 #include "GUIMessageHandler.h"
+#include <SingletonPostMaster.h>
 
 
 GUIMessageHandler::GUIMessageHandler()
@@ -18,4 +19,9 @@ void GUIMessageHandler::SetOnClick(GUIMessage& aGUIMessage)
 void GUIMessageHandler::SetOnHover(GUIMessage& aGUIMessage)
 {
 	myMessageEvents[1] = &aGUIMessage;
+}
+
+void GUIMessageHandler::Execute(eGUIMessageEvents aGUIMessageEvent)
+{
+	SingletonPostMaster::PostMessage(myMessageEvents[static_cast<int>(aGUIMessageEvent)]);
 }
