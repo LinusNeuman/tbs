@@ -7,6 +7,7 @@
 #include <GameObjects/Room/IsometricTile.h>
 #include "../../PathFinding/NavGraph/Graph/NavGraph.h"
 #include <TiledData/TiledData.h>
+#include <CU/Camera/Camera2D.h>
 
 class StaticSprite;
 class RenderConverter;
@@ -23,6 +24,8 @@ public:
 
 	void ConstructNavGraph();
 private:
+	Camera2D myCamera;
+
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
@@ -33,4 +36,3 @@ private:
 	NavGraph myNavGraph;
 	TiledData myTiledData;
 };
-

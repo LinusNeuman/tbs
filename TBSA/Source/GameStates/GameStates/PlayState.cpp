@@ -19,6 +19,11 @@
 #include "../PathFinding/NavGraph/Vertex/NavVertex.h"
 #include "../PathFinding/NavGraph/Edge/NavEdge.h"
 
+#include <Message/SetMainCameraMessage.h>
+
+
+const float CameraSpeed = 10.f;
+
 PlayState::PlayState()
 {
 }
@@ -33,11 +38,13 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 
+	RenderConverter::SetCamera(myCamera);
 	
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
+	SendMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
@@ -83,10 +90,27 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		return eStackReturnValue::ePopMain;
 	}
 
-	if (IsometricInput::GetKeyReleased(DIK_Q) == true)
+	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
 		DL_ASSERT(isFalse, "IT Works!");
+	}*/
+
+	if (IsometricInput::GetKeyDown(DIK_W))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, -CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_S))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_A))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(-CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_D))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
 
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
