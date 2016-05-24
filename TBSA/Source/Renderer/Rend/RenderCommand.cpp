@@ -43,11 +43,9 @@ void RenderCommand::Render() const
 	mySprite->SetColor(tempColor);
 	mySprite->SetPosition(tempPosition);
 
-	//SetShader
-
 	mySprite->SetCustomShader(myRenderData.myShaderPtr);
 
 	mySprite->Render();
 
-	//RemoveShader
+	mySprite->SetCustomShader(nullptr);
 }
