@@ -1,5 +1,5 @@
 #pragma once
-#include "../NameSpaceAliases.h"
+#include "CU/NameSpaceAliases.h"
 #include "Shapes2D.h"
 #include <cmath>
 

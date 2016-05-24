@@ -1,7 +1,7 @@
 #pragma once
-#include "../../External/fmod.hpp"
+#include "External/fmod.hpp"
 #include <string>
-#include "../Generic/SoundBase.h"
+#include <Audio/Generic/SoundBase.h>
 
 // Wraps FMOD Sound class with more functionality
 class Song : public SoundBase

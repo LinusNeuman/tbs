@@ -5,12 +5,13 @@
 
 #include <string>
 #include <CU/GrowingArray/GrowingArray.h>
-#include "../Renderer/Rend/WrappedSprite.h"
 
 #include "../Messaging/GUIMessageHandler.h"
 #include <CU/Vectors/Vector.h>
 
-#include "../PostMaster/SingletonPostMaster.h"
+//#include <PostMaster/MessageReceiver.h>
+#include "PostMaster/MessageReceiver.h"
+#include <Rend/StaticSprite.h>
 
 typedef unsigned char uchar;
 
@@ -37,7 +38,7 @@ public:
 protected:
 	GUIMessageHandler myMessageHandler;
 
-	WrappedSprite* mySprite;
+	StaticSprite* mySprite;
 	CU::Vector2f myPosition;
 
 	std::string myName;

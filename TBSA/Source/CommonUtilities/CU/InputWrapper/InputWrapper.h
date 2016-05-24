@@ -4,12 +4,11 @@
 
 #include <dinput.h>
 #include <vector>
-#include "../Utility/WindowsFunctions.h"
-#include "../DLDebug/DL_Debug.h"
-#include "../NameSpaceAliases.h"
-#include "../Vectors/vector2.h"
-//#include "../Vectors/vector2.h"
-//#include "../Vectors/vector4.h"
+#include "CU/Utility/WindowsFunctions.h"
+#include "CU/DLDebug/DL_Debug.h"
+#include "CU/NameSpaceAliases.h"
+#include "CU/Vectors/vector2.h"
+
 
 
 namespace CommonUtilities

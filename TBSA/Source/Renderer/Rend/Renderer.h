@@ -1,7 +1,5 @@
 #pragma once
-#include "RenderCommand.h"
 #include <CU/Vectors/vector2.h>
-//#include <CU/GrowingArray/GrowingArray.h>
 
 namespace DX2D
 {
@@ -10,7 +8,8 @@ namespace DX2D
 	class CText;
 }
 
-class WrappedSprite;
+class StaticSprite;
+class RenderCommand;
 
 class Renderer
 {
@@ -25,7 +24,7 @@ public:
 	void SetWindowSize(const CU::Vector2ui & aWindowSize);
 
 	void AddRenderCommand(RenderCommand & aRenderCommand);
-	void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition);
+	void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, bool OffsetToMiddle = false);
 
 	void SwapBuffer();
 

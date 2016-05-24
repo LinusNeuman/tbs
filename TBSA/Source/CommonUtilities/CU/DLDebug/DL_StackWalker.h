@@ -2,7 +2,7 @@
 #define DL_STACKWALKER_HEADER
 
 #include <windows.h>
-#include "StackWalker\StackWalker.h"
+#include "CU/DLDebug/StackWalker/StackWalker.h"
 
 namespace DL_Debug
 {

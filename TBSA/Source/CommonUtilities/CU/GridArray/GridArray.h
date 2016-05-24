@@ -1,6 +1,5 @@
 #pragma once
-#include "../GrowingArray/GrowingArray.h"
-//#include "../Vectors/vector2.h"
+#include "CU/GrowingArray/GrowingArray.h"
 
 namespace CommonUtilities
 {

@@ -1,6 +1,6 @@
 
-#include "vector4.h"
-#include "vector2.h"
+#include "CU/Vectors/vector4.h"
+#include "CU/Vectors/vector2.h"
 
 namespace CommonUtilities
 {

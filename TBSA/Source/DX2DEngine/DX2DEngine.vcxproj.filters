@@ -273,6 +273,9 @@
     <ClInclude Include="DirectXTK\Inc\ScreenGrab.h">
       <Filter>External\Src</Filter>
     </ClInclude>
+    <ClInclude Include="tga2d\shaders\customshader.h">
+      <Filter>Source\tga2d\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXTK\Src\DDSTextureLoader.cpp">
@@ -397,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="DirectXTK\Src\ScreenGrab.cpp">
       <Filter>External\Inc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shader\customshader.cpp">
+      <Filter>Source\source\shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

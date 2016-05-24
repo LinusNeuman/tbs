@@ -1,16 +1,24 @@
 #include "stdafx.h"
 #include "RenderConverter.h"
 #include <tga2d/sprite/sprite.h>
-#include "WrappedSprite.h"
+#include "StaticSprite.h"
 #include <CU/Vectors/vector2.h>
+#include <CU/Utility/Math/Isometric.h>
+
+#include <PostMaster/SingletonPostMaster.h>
+#include "Rend/RenderCommand.h"
+#include <CU/Camera/Camera2D.h>
+
+#include <Message/LevelTileMetricsMessage.h>
+#include <Message/SetMainCameraMessage.h>
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 
 
 
-const float TileWidth = 10;
-const float TileSize = 64.f;
-const float TileSizeHalf = 32.f;
+//const float TileWidth = 10;
+const float TileSize = 128.f;
+const float TileSizeHalf = 64.f;
 
 RenderConverter::RenderConverter()
 {
@@ -19,6 +27,8 @@ RenderConverter::RenderConverter()
 
 RenderConverter::~RenderConverter()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelTileLayoutSettings, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eCamera, *this);
 }
 
 
@@ -45,29 +55,27 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 	GetInstance().myRenderer.Init();
 	GetInstance().myRenderer.SetWindowSize(aWindowSize);
 
-	/*if (WrappedSprite::myRenderConverter == nullptr)
-	{
-		WrappedSprite::myRenderConverter = this;
-	}*/
+	GetInstance().myLevelTileLayout = CU::Vector2ui(10, 10);
+
+	SingletonPostMaster::AddReciever(RecieverTypes::eCamera, GetInstance());
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelTileLayoutSettings, GetInstance());
 }
 
 
-void RenderConverter::CalculateAndRenderIso(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition)
+void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
-	CU::Vector2f tempPosition = aPosition;
+	CU::Vector2f tempPosition = aPosition * (*GetInstance().myCamera).GetInverse();
 
-	CU::Vector2f tempOffset(550.f, 250.f);
+	const float Priority = (tempPosition.x + (tempPosition.y * static_cast<float>(GetInstance().myLevelTileLayout.x)));
 
-	CU::Vector2f newPos = CU::Vector2f((tempPosition.x - tempPosition.y) * TileSizeHalf, ((tempPosition.x + tempPosition.y) * TileSizeHalf) / 2.f);
+	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
-	const float Priority = (tempPosition.x + (tempPosition.y * TileWidth));
+	//RenderData tempRenderData(aSpriteToRender.GetColor());
 
-	RenderData tempRenderData(aSpriteToRender.GetColor());
-
-	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), tempOffset + newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData));
+	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), /*tempOffset +*/ newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData(), true));
 }
 
-void RenderConverter::CalculateAndRenderSprite(const WrappedSprite & aSpriteToRender, const CU::Vector2f & aPosition)
+void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
 	RenderData tempRenderData(aSpriteToRender.GetColor());
 	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData));
@@ -85,14 +93,11 @@ void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Ve
 
 void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
 {
-	CU::Vector2f tempOffset(550.f, 250.f);
-	CU::Vector2f newStartPos = CU::Vector2f((aStartPosition.x - aStartPosition.y) * TileSizeHalf, ((aStartPosition.x + aStartPosition.y) * TileSizeHalf) / 2.f);
-	newStartPos += tempOffset;
+	CU::Vector2f newStartPos = CU::IsometricToPixel(aStartPosition * (*GetInstance().myCamera).GetInverse());
 
-	CU::Vector2f newEndPos = CU::Vector2f((aEndPosition.x - aEndPosition.y) * TileSizeHalf, ((aEndPosition.x + aEndPosition.y) * TileSizeHalf) / 2.f);
-	newEndPos += tempOffset;
+	CU::Vector2f newEndPos = CU::IsometricToPixel(aEndPosition * (*GetInstance().myCamera).GetInverse());
 
-	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos);
+	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos, true);
 }
 
 void RenderConverter::Draw()
@@ -100,7 +105,22 @@ void RenderConverter::Draw()
 	GetInstance().myRenderer.Draw();
 }
 
+//void RenderConverter::SetCamera(const Camera2D & aCamera)
+//{
+//	GetInstance().myCamera = &aCamera;
+//}
+
 void RenderConverter::SwapBuffers()
 {
 	GetInstance().myRenderer.SwapBuffer();
+}
+
+void RenderConverter::RecieveMessage(const LevelTileMetricsMessage & aMessage)
+{
+	myLevelTileLayout = aMessage.myWidthHeight;
+}
+
+void RenderConverter::RecieveMessage(const SetMainCameraMessage & aMessage)
+{
+	myCamera = &aMessage.myCamera;
 }

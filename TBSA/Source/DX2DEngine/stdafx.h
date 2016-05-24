@@ -7,7 +7,6 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-
 #include "math/matrix44.h"
 #include "math/vector2.h"
 #include "math/vector4.h"

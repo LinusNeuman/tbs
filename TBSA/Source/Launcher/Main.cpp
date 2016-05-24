@@ -11,6 +11,9 @@ void Init();
 #ifdef NDEBUG
 #pragma comment(lib,"Game_Release.lib")
 #endif // DEBUG
+#ifdef DeMov
+#pragma comment(lib,"Game_DevMode.lib")
+#endif
 
 
 // Comment out below define to disable command line

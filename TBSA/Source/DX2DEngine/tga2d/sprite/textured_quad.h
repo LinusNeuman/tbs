@@ -37,7 +37,7 @@ namespace DX2D
 		void SetMap(EShaderMap aMapType, const char* aPath);
 		
 		CTexture* myMaps[MAP_MAX];
-
+		class CCustomShader* myCustomShader;
 	private:
 		void VertexChanged(){ myVertexesDirty = true; }
 		STextureRext myTextureRect;

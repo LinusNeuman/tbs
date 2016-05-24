@@ -35,7 +35,7 @@ bool CWindowsWindow::Init(Vector2<unsigned int> aWindowSize, HWND*& aHwnd, SEngi
 	RegisterClassEx(&myWindowClass);
 
 	RECT wr = {0, 0, aWindowSize.x, aWindowSize.y};    // set the size, but not the position
-	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
+	//AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
 
 	DWORD windowStyle = 0;
 	switch (aSetting->myWindowSetting)
@@ -58,8 +58,8 @@ bool CWindowsWindow::Init(Vector2<unsigned int> aWindowSize, HWND*& aHwnd, SEngi
 			windowStyle,    // window style
 			CW_USEDEFAULT,    // x-position of the window
 			CW_USEDEFAULT,    // y-position of the window
-			wr.right - wr.left + 4,    // width of the window
-			wr.bottom - wr.top + 4,    // height of the window
+			wr.right - wr.left,    // width of the window
+			wr.bottom - wr.top,    // height of the window
 			NULL,    // we have no parent window, NULL
 			NULL,    // we aren't using menus, NULL
 			instance,    // application handle
@@ -93,6 +93,11 @@ LRESULT CALLBACK CWindowsWindow::WindowProc(HWND hWnd, UINT message, WPARAM wPar
 			PostQuitMessage(0);
 			return 0;
 		} break;
+
+	case WM_SIZE:
+		{
+			CEngine::GetInstance()->SetWantToUpdateSize();
+		}
 	}
 
 	// Handle any messages the switch statement didn't

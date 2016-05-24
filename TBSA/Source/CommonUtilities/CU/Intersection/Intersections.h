@@ -4,18 +4,18 @@
 
 namespace Intersection
 {
-	float DistanceToLine(const LineSegment3D & aLine, const Vector3f & aPositition)
+	float DistanceToLine(const LineSegment3D & aLine, const CU::Vector3f & aPositition)
 	{
-		Vector3f d = aLine.myEndPos - aLine.myStartPos;
+		CU::Vector3f d = aLine.myEndPos - aLine.myStartPos;
 		d.Normalize();
 
-		Vector3f e = (aPositition - aLine.myStartPos);
-		Vector3f a = (e * d.Length());
+		CU::Vector3f e = (aPositition - aLine.myStartPos);
+		CU::Vector3f a = (e * d.Length());
 
 		return (e.Length2() - a.Length2());
 	}
 
-	bool CompareRadiusOfLineToDistanceOfPoint(const LineSegment3D & aLine, const Vector3f & aPositition, const float aRadius, const float myRadius = 0.f)
+	bool CompareRadiusOfLineToDistanceOfPoint(const LineSegment3D & aLine, const CU::Vector3f & aPositition, const float aRadius, const float myRadius = 0.f)
 	{
 		if ((aRadius + myRadius) > DistanceToLine(aLine, aPositition))
 		{
@@ -27,9 +27,9 @@ namespace Intersection
 		}
 	}
 
-	bool PointInsideSphere(const Sphere & aSphere, const Vector3f & aPoint)
+	bool PointInsideSphere(const Sphere & aSphere, const CU::Vector3f & aPoint)
 	{
-		Vector3f temp;
+		CU::Vector3f temp;
 		temp = aSphere.myCenterPosition - aPoint;
 
 		if (temp.Length() < aSphere.myRadius)
@@ -39,7 +39,7 @@ namespace Intersection
 		return false;
 	}
 
-	bool PointInsideAABB(const AABB & aAABB, const Vector3f & aPoint)
+	bool PointInsideAABB(const AABB & aAABB, const CU::Vector3f & aPoint)
 	{
 		if (aPoint.x > aAABB.myMinPos.x &&
 			aPoint.x < aAABB.myMaxPos.x &&
@@ -54,14 +54,14 @@ namespace Intersection
 	}
 
 
-	bool LineVsSphere(const LineSegment3D & aLine, const Sphere & aSphere, Vector3f & anIntersectionPoint)
+	bool LineVsSphere(const LineSegment3D & aLine, const Sphere & aSphere, CU::Vector3f & anIntersectionPoint)
 	{
-		Vector3f hypotenuse = aSphere.myCenterPosition - aLine.myStartPos;
+		CU::Vector3f hypotenuse = aSphere.myCenterPosition - aLine.myStartPos;
 
-		Vector3f directionOfLine = aLine.myEndPos - aLine.myStartPos;
+		CU::Vector3f directionOfLine = aLine.myEndPos - aLine.myStartPos;
 		directionOfLine.Normalize();
 
-		Vector3f lineToMiddle = (directionOfLine * hypotenuse.Length());
+		CU::Vector3f lineToMiddle = (directionOfLine * hypotenuse.Length());
 		float toRoot = (aSphere.myRadiusSquared - hypotenuse.Length2() + lineToMiddle.Length2());
 		if (toRoot < 0)
 		{
@@ -86,14 +86,14 @@ namespace Intersection
 		aSphere.myRadius += aRadius;
 		aSphere.myRadiusSquared = aSphere.myRadius * aSphere.myRadius;
 
-		return LineVsSphere(aLine, aSphere, Vector3f());
+		return LineVsSphere(aLine, aSphere, CU::Vector3f());
 	}
 
-	bool LineVsAABB(const LineSegment3D & aLine, const AABB & aAABB, Vector3f & anIntersectionPoint)
+	bool LineVsAABB(const LineSegment3D & aLine, const AABB & aAABB, CU::Vector3f & anIntersectionPoint)
 	{
 		bool isInside = true;
 
-		Vector3f rayDelta = aLine.myEndPos - aLine.myStartPos;
+		CU::Vector3f rayDelta = aLine.myEndPos - aLine.myStartPos;
 		union
 		{
 			float xt;
@@ -281,11 +281,11 @@ namespace Intersection
 	
 	bool SweptSphereVsAABB(const LineSegment3D & aLine, float aRadius, AABB aAABB)
 	{
-		Vector3f distanceToChange = Vector3f::DirectionVector45Deg * aRadius;
+		CU::Vector3f distanceToChange = Vector3f::DirectionVector45Deg * aRadius;
 		aAABB.myMaxPos += distanceToChange;
 		aAABB.myMinPos -= distanceToChange;
 
-		return LineVsAABB(aLine, aAABB, Vector3f());
+		return LineVsAABB(aLine, aAABB, CU::Vector3f());
 
 		/*Vector3f minPos = aAABB.myMinPos;
 		Vector3f maxPos = aAABB.myMaxPos;
@@ -448,8 +448,8 @@ namespace Intersection
 				const float Line1Length = Line1.Length();
 				const float Line2Length = Line2.Length();
 
-				const Vector2f Line1Normalized = Line1.GetNormalized();
-				const Vector2f Line2Normalized = Line2.GetNormalized();
+				const CU::Vector2f Line1Normalized = Line1.GetNormalized();
+				const CU::Vector2f Line2Normalized = Line2.GetNormalized();
 				
 
 				
@@ -492,7 +492,7 @@ namespace Intersection
 			return false;
 		}
 
-		Vector2f tempPoint;
+		CU::Vector2f tempPoint;
 
 		tempPoint.x = numeratorX / denominator;
 		tempPoint.y = numeratorY / denominator;

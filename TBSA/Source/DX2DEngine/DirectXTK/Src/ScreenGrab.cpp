@@ -36,6 +36,7 @@
 #pragma warning(pop)
 #endif
 
+
 #include "ScreenGrab.h"
 
 #include "dds.h"

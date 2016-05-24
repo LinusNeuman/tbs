@@ -177,6 +177,30 @@
     <ClInclude Include="CU\Thread\ThreadSynchronizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CU\Hashing\HashUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Utility\Math\Isometric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Intersection\Intersections.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\Greater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\Heap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\Lesser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\PointerGreater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CU\Heap\PointerLesser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CU\DLDebug\StackWalker\StackWalker.cpp">
@@ -261,6 +285,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CU\Thread\ThreadSynchronizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CU\Utility\Math\Isometric.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

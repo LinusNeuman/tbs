@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DevMode|Win32">
+      <Configuration>DevMode</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -31,6 +35,14 @@
     <CharacterSet>Unicode</CharacterSet>
     <UseIntelMKL>No</UseIntelMKL>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DevMode|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseIntelMKL>No</UseIntelMKL>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -40,8 +52,25 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DevMode|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DevMode|Win32'">
+    <OutDir>$(SolutionDir)..\Lib\</OutDir>
+    <IntDir>$(SolutionDir)..\Temp\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)..\Lib\</OutDir>
+    <IntDir>$(SolutionDir)..\Temp\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)..\Lib\</OutDir>
+    <IntDir>$(SolutionDir)..\Temp\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -49,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -65,7 +94,25 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DevMode|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TiledData\TiledData.h" />
     <ClInclude Include="TiledLoader\SpriteSheet\SpriteSheet.h" />
     <ClInclude Include="TiledLoader\TiledLoader.h" />
   </ItemGroup>
@@ -87,6 +135,7 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DevMode|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TiledLoader\SpriteSheet\SpriteSheet.cpp" />
     <ClCompile Include="TiledLoader\TiledLoader.cpp" />
@@ -95,11 +144,20 @@
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\GameObjects\GameObjects.vcxproj">
+      <Project>{07fec30e-ad37-4adc-ae37-b066481f6b52}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\JSONParser\JSONParser.vcxproj">
       <Project>{e94e2940-e22d-495f-9da6-d2895858fa0e}</Project>
     </ProjectReference>
     <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
       <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PathFinding\PathFinding.vcxproj">
+      <Project>{88878c34-338e-418a-84e3-1438b4ea5786}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Renderer\Renderer.vcxproj">
+      <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

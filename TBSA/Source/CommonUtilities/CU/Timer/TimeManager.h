@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include "Timer.h"
 #include <vector>
-#include "../DLDebug/DL_Debug.h"
+#include "CU/DLDebug/DL_Debug.h"
 
 namespace CommonUtilities
 {

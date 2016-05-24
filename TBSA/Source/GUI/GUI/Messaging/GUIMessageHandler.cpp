@@ -1,5 +1,5 @@
 #include "GUIMessageHandler.h"
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 
 
 GUIMessageHandler::GUIMessageHandler()

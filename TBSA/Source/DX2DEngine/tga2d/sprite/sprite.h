@@ -79,6 +79,8 @@ namespace DX2D
 		CColor GetPixelColor(unsigned short aX, unsigned short aY);
 
 		const std::string GetImagePath() const;
+
+		void SetCustomShader(class CCustomShader* aShader);
 		
 	private:
 		

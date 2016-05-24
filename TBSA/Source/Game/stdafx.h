@@ -19,9 +19,10 @@
 #include <CU/NameSpaceAliases.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/Vectors/Vector.h>
-//#include <CU/InputWrapper/SingletonInputWrapper.h>
-#include "InputAdaption/SingletonIsometricInputWrapper.h"
-#include <SingletonPostMaster.h>
+#include <CU/DLDebug/DL_Debug.h>
+#include <Input/SingletonIsometricInputWrapper.h>
+
+#include <PostMaster/SingletonPostMaster.h>
 
 // Audio
 #include <Audio/Instances/SoundEffect.h>

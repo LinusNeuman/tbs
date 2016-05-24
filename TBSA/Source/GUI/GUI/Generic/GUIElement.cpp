@@ -1,5 +1,6 @@
 #include "GUIElement.h"
 #include <CU/Macros/Macros.h>
+#include <PostMaster/SingletonPostMaster.h>
 
 
 GUIElement::GUIElement()

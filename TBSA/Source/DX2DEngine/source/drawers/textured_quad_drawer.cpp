@@ -7,6 +7,7 @@
 #include "sprite/sprite.h"
 #include "texture/texture.h"
 #include "shaders/shader_normal.h"
+#include "shaders/customshader.h"
 #include "engine.h"
 
 
@@ -78,6 +79,12 @@ void CTexturedQuadDrawer::CreateBuffer()
 
 void DX2D::CTexturedQuadDrawer::Draw(CRenderObjectSprite* aObject)
 {
+	CTexturedQuad* quad = static_cast<CTexturedQuad*>(aObject);
+	if (quad->myCustomShader)
+	{
+		quad->myCustomShader->Render(aObject, myObjectBuffer, myVertexBuffer);
+		return;
+	}
 	myNormalShader->Render(aObject, myObjectBuffer, myVertexBuffer);
 }
 

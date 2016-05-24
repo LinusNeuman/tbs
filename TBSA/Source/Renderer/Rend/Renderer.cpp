@@ -1,19 +1,19 @@
 #include "stdafx.h"
 #include "Renderer.h"
 
+#include "Rend/RenderCommand.h"
+
 #include <tga2d/Engine.h>
 #include <tga2d/sprite/sprite_batch.h>
 #include <tga2d/drawers/debug_drawer.h>
 #include <tga2d/drawers/line_drawer.h>
 #include <tga2d/sprite/sprite.h>
 #include <tga2d/text/text.h>
-#include <tga2d/drawers/debug_drawer.h>s
+#include <tga2d/drawers/debug_drawer.h>
 
-
-//#include <CU/NameSpaceAliases.h>
-#include "WrappedSprite.h"
-#include "RenderLayerEnum.h"
-#include "RenderCommand.h"
+#include "Rend/StaticSprite.h"
+#include "Rend/RenderLayerEnum.h"
+#include "Rend/RenderCommand.h"
 
 
 Renderer::Renderer()
@@ -22,17 +22,13 @@ Renderer::Renderer()
 	myBuffer = new CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>>();
 
 	myCommandsToRender->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
+	myBuffer->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
 
 	for (USHORT iLayer = 0; iLayer < static_cast<USHORT>(enumRenderLayer::enumLength); ++iLayer)
 	{
 		myCommandsToRender->Add(CommonUtilities::GrowingArray<RenderCommand>());
 		myCommandsToRender->GetLast().Init(128);
-	}
 
-	myBuffer->Init(static_cast<USHORT>(enumRenderLayer::enumLength));
-
-	for (USHORT iLayer = 0; iLayer < static_cast<USHORT>(enumRenderLayer::enumLength); ++iLayer)
-	{
 		myBuffer->Add(CommonUtilities::GrowingArray<RenderCommand>());
 		myBuffer->GetLast().Init(128);
 	}
@@ -44,9 +40,9 @@ Renderer::~Renderer()
 
 void Renderer::Init()
 {
-	if (WrappedSprite::ourSprites.IsInitialized() == false)
+	if (StaticSprite::ourSprites.IsInitialized() == false)
 	{
-		WrappedSprite::ourSprites.Init(100);
+		StaticSprite::ourSprites.Init(128);
 	}
 }
 
@@ -73,10 +69,19 @@ void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 	(*myBuffer)[aRenderCommand.GetLayer()].Add(aRenderCommand);
 }
 
-void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
+void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, bool OffsetToMiddle/* = false*/)
 {
 	DX2D::Vector2f tempStartPosition(aStartPosition.x / myWindowSize.x, aStartPosition.y / myWindowSize.y);
 	DX2D::Vector2f tempEndPosition(aEndPosition.x / myWindowSize.x, aEndPosition.y / myWindowSize.y);
+
+	if (OffsetToMiddle == true)
+	{
+		tempStartPosition.x += 0.5;
+		tempStartPosition.y += 0.5;
+
+		tempEndPosition.x += 0.5;
+		tempEndPosition.y += 0.5;
+	}
 
 	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine(tempStartPosition , tempEndPosition);
 }

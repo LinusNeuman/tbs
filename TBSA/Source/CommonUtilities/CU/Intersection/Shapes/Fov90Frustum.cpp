@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Fov90Frustum.h"
-#include "../../Macros/Macros.h"
+#include "CU/Macros/Macros.h"
 #include <math.h>
 
 namespace Intersection3D

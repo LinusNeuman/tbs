@@ -32,7 +32,7 @@ DX2D::CShader::~CShader()
 	
 }
 
-bool DX2D::CShader::CreateShaders(const char* aVertex, const char* aPixel)
+bool DX2D::CShader::CreateShaders(const char* aVertex, const char* aPixel, callback_layout aLayout)
 {
 	myIsReadyToRender = false;
 	myVertexShaderFile = aVertex;
@@ -49,7 +49,8 @@ bool DX2D::CShader::CreateShaders(const char* aVertex, const char* aPixel)
 
 	ID3D10Blob *VS = nullptr;
 	ID3D10Blob *PS = nullptr;
-	INFO_PRINT("%s%s", "Initing Shader: ", aVertex);
+	INFO_PRINT("%s%s", "Initing vertex Shader: ", aVertex);
+	INFO_PRINT("%s%s", "Initing pixel Shader: ", aPixel);
 	if (!myEngine->GetDirect3D().CompileShader(aVertex, "VShader", "vs_5_0", VS))
 	{
 		ERROR_AUTO_PRINT("%s%s", "Shader error in file: ", aVertex);
@@ -69,7 +70,11 @@ bool DX2D::CShader::CreateShaders(const char* aVertex, const char* aPixel)
 		myLayout = nullptr;
 	}
 
-	if (!CreateInputLayout(VS))
+	if (aLayout)
+	{
+		aLayout(VS);
+	}
+	else if (!CreateInputLayout(VS))
 	{
 		// LAYOUT
 		D3D11_INPUT_ELEMENT_DESC polygonLayout[7];

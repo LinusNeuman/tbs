@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" renderorder="right-down" width="100" height="100" tilewidth="128" tileheight="64" nextobjectid="1">
+ <tileset firstgid="1" name="testtiles" tilewidth="128" tileheight="128" tilecount="64" columns="8">
+  <image source="tileSheets/envirionmentTiles.png" width="1024" height="1024"/>
+ </tileset>
+</map>

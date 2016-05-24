@@ -8,12 +8,13 @@
 #include <time.h>
 #include <vector>
 //#include <CU/InputWrapper/SingletonInputWrapper.h>
-#include "InputAdaption/SingletonIsometricInputWrapper.h"
+//#include "InputAdaption/SingletonIsometricInputWrapper.h"
+#include <Input/SingletonIsometricInputWrapper.h>
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
 #include <CU/Thread/ThreadHelper.h>
-#include <SingletonPostMaster.h>
+#include <PostMaster/SingletonPostMaster.h>
 #include <Rend/RenderConverter.h>
 #include <Audio/AudioManager.h>
 #include <GUI/Managing/GUIFactory.h>
@@ -108,19 +109,24 @@ void CGame::InitCallBack()
 	CU::TimeManager::Create();
 	GUIFactory::GetInstance()->Load();
 
-	myGameWorld = new CGameWorld();
+	myMenuState = new MenuState();
+
+	
 
 	/*GetInput::Create();
 	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());*/
 
 	
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
-
-	
-    myGameWorld->Init();
 	
 
-	myGameStateStack.AddMainState(myGameWorld);
+	
+
+	
+	myMenuState->Init();
+	
+
+	myGameStateStack.AddMainState(myMenuState);
 }
 
 

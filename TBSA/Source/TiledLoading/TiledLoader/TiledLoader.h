@@ -2,14 +2,11 @@
 *Author:  Hampus Huledal
 *Date: 2016-05-06
 */
+#pragma once
 
-#include "../../Game/Room/IsometricTile.h"
-
-
-
-class TileMap;
+struct TiledData;
 
 namespace TiledLoader
 {
-	void Load(std::string aFilePath, CommonUtilities::GrowingArray<IsometricTile>& someTiles);
+	void Load(std::string aFilePath, TiledData& someTiles);
 }
