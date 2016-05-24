@@ -56,6 +56,8 @@ public:
 	void SetTileState(eTileState aState);
 
 	bool CheckIfWalkable() const;
+
+	void ToggleDebugMode();
 private:
 	CommonUtilities::Vector2f myPosition;
 
@@ -66,7 +68,8 @@ private:
 	VertexHandle myNavVertex;
 
 	eTileState myState;
-	bool myTypeIsSet;
+
+	bool myDebugMode;
 };
 
 inline eTileType IsometricTile::GetTileType() const
@@ -104,4 +107,9 @@ inline void IsometricTile::SetTileState(eTileState aState)
 inline bool IsometricTile::CheckIfWalkable() const
 {
 	return myType == eTileType::OPEN || myType == eTileType::DOOR || myType == eTileType::DOOR_2;
+}
+
+inline void IsometricTile::ToggleDebugMode()
+{
+	myDebugMode =  !myDebugMode;
 }

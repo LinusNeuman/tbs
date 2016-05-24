@@ -112,7 +112,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		return eStackReturnValue::ePopMain;
 	}
-
 	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
@@ -134,6 +133,11 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (IsometricInput::GetKeyDown(DIK_D))
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
+	}
+
+	if (IsometricInput::GetKeyPressed(DIK_F3))
+	{
+		myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
 
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());

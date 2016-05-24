@@ -12,6 +12,7 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myPosition = aPosition;
 	myGraphicsLayers.Init(1);
 	myState = eTileState::NONE;
+	myDebugMode = false;
 }
 
 IsometricTile::~IsometricTile()
@@ -26,25 +27,28 @@ void IsometricTile::Draw() const
 {
 	CommonUtilities::Vector4f currentColour = CommonUtilities::Vector4f(1, 1, 1, 1);;
 
-	switch (myType)
+	if (myDebugMode == true)
 	{
-	case eTileType::EMPTY: 
-		currentColour = CommonUtilities::Vector4f(1, 1, 1, .5);
-		break;
-	case eTileType::OPEN: 
-		currentColour = CommonUtilities::Vector4f(0, 1, 0, 1);
-		break;
-	case eTileType::BLOCKED:
-		currentColour = CommonUtilities::Vector4f(1, 0, 0, 1);
-		break;
-	case eTileType::DOOR:
-		currentColour = CommonUtilities::Vector4f(1, .7, 0, 1);
-		break;
-	case eTileType::DOOR_2: 
-		currentColour = CommonUtilities::Vector4f(1, .9, 0, 1);
-		break;
-	case eTileType::Size: break;
-	default: break;
+		switch (myType)
+		{
+		case eTileType::EMPTY:
+			currentColour = CommonUtilities::Vector4f(1, 1, 1, .5);
+			break;
+		case eTileType::OPEN:
+			currentColour = CommonUtilities::Vector4f(0, 1, 0, 1);
+			break;
+		case eTileType::BLOCKED:
+			currentColour = CommonUtilities::Vector4f(1, 0, 0, 1);
+			break;
+		case eTileType::DOOR:
+			currentColour = CommonUtilities::Vector4f(1, .7, 0, 1);
+			break;
+		case eTileType::DOOR_2:
+			currentColour = CommonUtilities::Vector4f(1, .9, 0, 1);
+			break;
+		case eTileType::Size: break;
+		default: break;
+		}
 	}
 
 	switch (myState)
