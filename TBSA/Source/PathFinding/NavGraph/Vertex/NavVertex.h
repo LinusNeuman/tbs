@@ -14,8 +14,8 @@ public:
 	bool IsSearched() const;
 	void SetIfSearched(bool aState);
 
-	void SetDistance(const unsigned int aDisctance, const bool aShallCompare = true);
-	unsigned int GetDistance() const;
+	void SetDistance(const float aDisctance, const bool aShallCompare = true);
+	float GetDistance() const;
 
 	void SetAnyPurpouseId(int anID);
 	int GetAnyPurpouseId() const;
@@ -37,7 +37,7 @@ private:
 	VertexHandle myHandle;
 
 	bool myIsSearched;
-	unsigned int myDistance;
+	float myDistance;
 	int myAnyPurpouseId;
 };
 
@@ -46,12 +46,12 @@ inline bool NavVertex::IsSearched() const
 	return myIsSearched;
 }
 
-inline unsigned NavVertex::GetDistance() const
+inline float NavVertex::GetDistance() const
 {
 	return myDistance;
 }
 
-inline void NavVertex::SetDistance(const unsigned aDisctance, const bool aShallCompare)
+inline void NavVertex::SetDistance(float aDisctance, const bool aShallCompare)
 {
 	if (aShallCompare == false || aDisctance < myDistance)
 	{
