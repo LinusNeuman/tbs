@@ -138,19 +138,18 @@ void PlayState::Draw() const
 		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
 		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
 		{
-			if (distance.Length() > 4.0f)
+			if (distance.Length2() > 16.0f)
 			{
-				Shaders::GetInstance()->ApplyShader(myTiles[i].myGraphicsLayers[j], "testShader");
+				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
 			}
 			else
 			{
-				Shaders::GetInstance()->RemoveShader(myTiles[i].myGraphicsLayers[j]);
+				myTiles[i].myGraphicsLayers[j]->SetShader(nullptr);
 			}
 		}
-		myTiles[i].Draw();
 	}
 
-	//myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();

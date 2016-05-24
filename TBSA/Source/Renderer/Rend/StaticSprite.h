@@ -6,6 +6,7 @@
 #include "Rend/RenderData.h"
 #include <unordered_map>
 #include <CU/Hashing/HashUtility.h>
+#include "Rend/RenderData.h"
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 
@@ -59,6 +60,7 @@ typedef std::unordered_map<IndexKey, unsigned short> IndexMap;
 namespace DX2D
 {
 	class CSprite;
+	class CCustomShader;
 }
 
 class RenderCommand;
@@ -67,6 +69,7 @@ class Renderer;
 
 class StaticSprite
 {
+	friend RenderConverter;
 	friend Renderer;
 
 public:
@@ -92,23 +95,23 @@ public:
 	void SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel);
 	const CU::Vector2f & GetPivotInPixels() const;
 
-	/*void SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio);
-	const CU::Vector2f & GetPivotInRatio() const;*/
+	void SetShader(DX2D::CCustomShader * aCustomShader);
 
 	std::string myShaderName;
 private:
-	bool myIsInitiedFlag;
+	const RenderData & GetRenderData() const;
+
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
 	static IndexMap ourIndexDictionary;
 
+	bool myIsInitiedFlag;
 	bool myIsIsometricFlag;
-
-	enumRenderLayer myLayer;
-
 	unsigned short myImageIndex;
 
+	enumRenderLayer myLayer;
+	RenderData myRenderData;
+
 	CU::Vector2f myPositionOffset;
-	CU::Vector4f myColor;
 };
 
 
@@ -135,11 +138,13 @@ inline void StaticSprite::SetLayer(const enumRenderLayer aRenderLayer)
 
 inline const CU::Vector4f & StaticSprite::GetColor() const
 {
-	return myColor;
+	return myRenderData.myColor;
+	//return myColor;
 }
 inline void StaticSprite::SetColor(const CU::Vector4f & aColor)
 {
-	myColor = aColor;
+	myRenderData = aColor;
+	//myColor = aColor;
 }
 
 inline const bool StaticSprite::GetIsIsometric() const
@@ -157,7 +162,10 @@ inline const CU::Vector2f & StaticSprite::GetPivotInPixels() const
 	return myPositionOffset;
 }
 
-
+inline void StaticSprite::SetShader(DX2D::CCustomShader * aCustomShader)
+{
+	myRenderData.myShaderPtr = aCustomShader;
+}
 
 
 

@@ -24,6 +24,8 @@ void IsometricTile::Init()
 {
 }
 
+#include <Rend/RenderConverter.h>
+
 void IsometricTile::Draw() const
 {
 	for (USHORT i = 0; i < myGraphicsLayers.Size(); i++)
@@ -34,6 +36,7 @@ void IsometricTile::Draw() const
 
 void IsometricTile::AddSpriteLayer(StaticSprite * aSprite)
 {
+	aSprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	myGraphicsLayers.Add(aSprite);
 }
 
