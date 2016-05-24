@@ -4,6 +4,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <CU/Utility/Math/Isometric.h>
 #include <Message/WindowRectChangedMessage.h>
+#include <Message/SetMainCameraMessage.h>
 
 
 SingletonIsometricInputWrapper * SingletonIsometricInputWrapper::ourInstance = nullptr;
@@ -29,18 +30,25 @@ void SingletonIsometricInputWrapper::Destroy()
 SingletonIsometricInputWrapper::SingletonIsometricInputWrapper(/*const CU::Camera2D & aCameraToAdjustInputToo*/)
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eWindowProperties, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eCamera, *this);
 }
 
 
 SingletonIsometricInputWrapper::~SingletonIsometricInputWrapper()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eWindowProperties, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eCamera, *this);
 }
 
-CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCartesianCordiante() const
+CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCartesianCordiante(const bool aOffsetToMiddle/* = false*/) const
 {
-
 	CU::Vector2f mousePosition = GetMouseInViewportNormalized();
+
+	if (aOffsetToMiddle == true)
+	{
+		mousePosition.x -= 0.5f;
+		mousePosition.y -= 0.5f;
+	}
 
 	mousePosition.x = mousePosition.x * (1920.f);
 	mousePosition.y = mousePosition.y * (1080.f);
@@ -50,12 +58,11 @@ CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCarte
 
 CU::Vector2f SingletonIsometricInputWrapper::GetMouseWindowPositionIsometric()
 {
-	CU::Vector2f mousePosition = GetInstance().ConvertMouseNormalizedPositionCartesianCordiante();
-
-	CU::Vector2f tempOffset(550.f, 250.f);
-	mousePosition -= tempOffset;
+	CU::Vector2f mousePosition = GetInstance().ConvertMouseNormalizedPositionCartesianCordiante(true);
 
 	CU::Vector2f newPos = CU::PixelToIsometric(mousePosition);
+
+	newPos = GetInstance().myCameraToAdjustTo->GetPosition() + newPos;
 
 	return newPos;
 }
@@ -87,4 +94,9 @@ void SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessa
 {
 	myViewPortSettings = aMessage.myViewPortRect;
 	myWindowRect = aMessage.myWindowRect;
+}
+
+void SingletonIsometricInputWrapper::RecieveMessage(const SetMainCameraMessage & aMessage)
+{
+	myCameraToAdjustTo = &aMessage.myCamera;
 }

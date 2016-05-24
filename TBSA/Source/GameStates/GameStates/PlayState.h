@@ -8,6 +8,7 @@
 #include "../../PathFinding/NavGraph/Graph/NavGraph.h"
 #include <TiledData/TiledData.h>
 #include <PostMaster/MessageReceiver.h>
+#include <CU/Camera/Camera2D.h>
 
 class StaticSprite;
 class RenderConverter;
@@ -26,6 +27,8 @@ public:
 
 	void ConstructNavGraph();
 private:
+	Camera2D myCamera;
+
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
@@ -37,4 +40,3 @@ private:
 	TiledData myTiledData;
 	CommonUtilities::Vector2ui myDimensions;
 };
-

@@ -20,6 +20,8 @@
 //#include "../PathFinding/NavGraph/Edge/NavEdge.h"
 #include <Message/DijkstraMessage.h>
 
+#include <Message/SetMainCameraMessage.h>
+
 PlayState::PlayState()
 {
 }
@@ -34,10 +36,13 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 
+	RenderConverter::SetCamera(myCamera);
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
-
+	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
+
+	SendMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
@@ -92,6 +97,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		bool isFalse = false;
 		DL_ASSERT(isFalse, "IT Works!");
 	}
+
+	myCamera.SetPos(myPlayer->GetPosition());
 
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
 	DRAWLINE(CU::Vector2f::Zero, testLine);
