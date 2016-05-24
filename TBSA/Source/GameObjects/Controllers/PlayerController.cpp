@@ -30,7 +30,7 @@ void PlayerController::SelectPlayer()
 	}
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 
-	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition())+ CommonUtilities::Vector2ui(1,1), mySelectedPlayer->GetMyAP());
 	SingletonPostMaster::PostMessage(dijkstraMessage);
 }
 
@@ -40,9 +40,9 @@ void PlayerController::NotifyPlayers() const
 	{
 		CU::Vector2ui position = CU::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric().x + .5, IsometricInput::GetMouseWindowPositionIsometric().y + .5);
 		std::string printOut;
-		printOut += static_cast<float>(position.x);
+		printOut += std::to_string(position.x);
 		printOut += ",";
-		printOut += static_cast<float>(position.y);
+		printOut += std::to_string(position.y);
 		DL_PRINT(printOut.c_str());
 
 		mySelectedPlayer->Move(position);

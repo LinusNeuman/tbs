@@ -82,6 +82,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(.5,.5));
+	
+
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		myPlayerController->NotifyPlayers();
@@ -220,4 +223,9 @@ void PlayState::ConstructNavGraph()
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[west].GetVertexHandle());
 		}
 	}
+}
+
+IsometricTile& PlayState::GetTile(unsigned aX, unsigned aY)
+{
+	return myTiles[myTiledData.myMapSize.x * aY + aX];
 }

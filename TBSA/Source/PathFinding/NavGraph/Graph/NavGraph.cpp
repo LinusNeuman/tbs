@@ -45,7 +45,7 @@ void NavGraph::Clear()
 {
 	for (size_t i = 0; i < myVertecies.Size(); ++i)
 	{
-		myVertecies[i].SetDistance(INT_MAX);
+		myVertecies[i].SetDistance(INT_MAX, false);
 		myVertecies[i].SetIfSearched(false);
 		myVertecies[i].SetPreviousNode(VertexHandle());
 	}

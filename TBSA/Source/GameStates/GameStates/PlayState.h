@@ -26,6 +26,8 @@ public:
 	void RecieveMessage(const DijkstraMessage & aMessage)override;
 
 	void ConstructNavGraph();
+
+	IsometricTile & GetTile(unsigned int aX, unsigned int aY);
 private:
 	Camera2D myCamera;
 
