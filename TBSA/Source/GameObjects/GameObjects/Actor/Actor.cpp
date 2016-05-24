@@ -12,7 +12,7 @@ Actor::Actor()
 {
 	mySprite = new StaticSprite();
 	myVelocity = CU::Vector2f::Zero;
-	myAP = 1;
+	myAP = 2;
 }
 
 Actor::~Actor()
