@@ -39,7 +39,7 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 
-	RenderConverter::SetCamera(myCamera);
+	//RenderConverter::SetCamera(myCamera);
 	
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
