@@ -76,7 +76,7 @@ void NavGraph::Dijkstra(const VertexHandle& aFirstNode,const unsigned aDistance)
 				continue;
 			}
 
-			const int cost = currentEdges[j]->GetCost();
+			const float cost = currentEdges[j]->GetCost();
 			if (currentNeighbor->GetDistance() > currentNode->GetDistance() + cost)
 			{
 				currentNeighbor->SetDistance(currentNode->GetDistance() + cost);
