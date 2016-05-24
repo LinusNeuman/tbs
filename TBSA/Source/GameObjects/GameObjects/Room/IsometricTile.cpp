@@ -78,7 +78,7 @@ void IsometricTile::Update()
 		if (myNavVertex->IsSearched() == true)
 		{
 			myState = eTileState::IN_RANGE;
-		}
+}
 		else
 		{
 			myState = eTileState::IS_WALKABLE;
