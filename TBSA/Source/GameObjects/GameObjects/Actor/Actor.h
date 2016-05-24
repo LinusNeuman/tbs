@@ -13,8 +13,6 @@ enum class eActorType
 	eEnemyTwo
 };
 
-
-
 class Actor
 {
 public:
@@ -30,6 +28,10 @@ public:
 	{
 		return myPosition;
 	}
+	CU::Vector2f GetDirection() const
+	{
+		return myVelocity.GetNormalized();
+	}
 	eActorType GetType() const
 	{
 		return myType;
@@ -43,7 +45,6 @@ protected:
 	std::map<std::string, Animation*> myAnimations;
 	std::string myActiveAnimation;
 private:
-	
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
 	CU::Vector2f myTargetPosition;
