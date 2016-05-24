@@ -22,8 +22,6 @@ IsometricTile::~IsometricTile()
 
 void IsometricTile::Init()
 {
-	mySprite = new StaticSprite();
-	mySprite->Init();
 }
 
 void IsometricTile::Draw() const

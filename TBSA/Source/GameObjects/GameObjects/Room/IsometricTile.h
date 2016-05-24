@@ -31,16 +31,16 @@ public:
 
 	inline int GetRoomId() const;
 	inline void SetRoomId(unsigned int aId);
+	inline CU::Vector2f GetPosition() const;
 
 	void SetDoor(const Door& aDoor);
 
+	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 private:
 	CommonUtilities::Vector2f myPosition;
-	StaticSprite * mySprite;
 
 	eTileType myType;
 	unsigned int myRoomId;
-	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 };
@@ -65,3 +65,7 @@ inline void IsometricTile::SetRoomId(unsigned int anID)
 	myRoomId = anID;
 }
 
+inline CU::Vector2f IsometricTile::GetPosition() const
+{
+	return myPosition;
+}
