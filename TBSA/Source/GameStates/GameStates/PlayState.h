@@ -28,6 +28,7 @@ public:
 	void ConstructNavGraph();
 
 	IsometricTile & GetTile(unsigned int aX, unsigned int aY);
+	IsometricTile & GetTile(CommonUtilities::Vector2ui aVector2Ui);
 private:
 	Camera2D myCamera;
 
@@ -42,3 +43,22 @@ private:
 	TiledData myTiledData;
 	CommonUtilities::Vector2ui myDimensions;
 };
+
+inline IsometricTile& PlayState::GetTile(unsigned aX, unsigned aY)
+{
+	int index = myTiledData.myMapSize.x * aY + aX;
+	if (index < 0)
+	{
+		index = 0;
+	}
+	else if (index >= myTiles.Size())
+	{
+		index = myTiles.Size() - 1;
+	}
+	return myTiles[index];
+}
+
+inline IsometricTile& PlayState::GetTile(CommonUtilities::Vector2ui aVector2Ui)
+{
+	return  GetTile(aVector2Ui.x, aVector2Ui.y);
+}

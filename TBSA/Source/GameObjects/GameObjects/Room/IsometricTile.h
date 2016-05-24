@@ -23,6 +23,7 @@ enum class eTileState
 	IS_WALKABLE,
 	IN_RANGE,
 	IN_PATH,
+	UNDER_MOUSE,
 	Size
 };
 
@@ -53,6 +54,8 @@ public:
 	VertexHandle GetVertexHandle() const;
 
 	void SetTileState(eTileState aState);
+
+	bool CheckIfWalkable() const;
 private:
 	CommonUtilities::Vector2f myPosition;
 
@@ -96,4 +99,9 @@ inline CU::Vector2f IsometricTile::GetPosition() const
 inline void IsometricTile::SetTileState(eTileState aState)
 {
 	myState = aState;
+}
+
+inline bool IsometricTile::CheckIfWalkable() const
+{
+	return myType == eTileType::OPEN || myType == eTileType::DOOR || myType == eTileType::DOOR_2;
 }

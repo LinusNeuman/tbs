@@ -87,8 +87,18 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 
-	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(.5,.5));
-	
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(1.5,1.5));
+
+	GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
+
+	if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+	{
+		CommonUtilities::GrowingArray<int> path = GetTile(mousePosition).GetVertexHandle()->GetPath();
+		for (size_t i = 0; i < path.Size(); i++)
+		{
+			myTiles[path[i]].SetTileState(eTileState::IN_PATH);
+		}
+	}
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
@@ -228,9 +238,4 @@ void PlayState::ConstructNavGraph()
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[west].GetVertexHandle());
 		}
 	}
-}
-
-IsometricTile& PlayState::GetTile(unsigned aX, unsigned aY)
-{
-	return myTiles[myTiledData.myMapSize.x * aY + aX];
 }

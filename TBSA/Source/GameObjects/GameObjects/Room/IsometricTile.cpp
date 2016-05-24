@@ -22,8 +22,6 @@ void IsometricTile::Init()
 {
 }
 
-#include <Rend/RenderConverter.h>
-
 void IsometricTile::Draw() const
 {
 	CommonUtilities::Vector4f currentColour = CommonUtilities::Vector4f(1, 1, 1, 1);;
@@ -52,11 +50,14 @@ void IsometricTile::Draw() const
 	switch (myState)
 	{
 	case eTileState::IN_RANGE:
-	currentColour = CommonUtilities::Vector4f(0, 0, 1, 1);
-	break;
+		currentColour = CommonUtilities::Vector4f(0, 0, 1, 1);
+		break;
 	case eTileState::IN_PATH:
-	currentColour = CommonUtilities::Vector4f(1, 1, 0, 1);
-	break;
+		currentColour = CommonUtilities::Vector4f(1, 1, 0, 1);
+		break;
+	case eTileState::UNDER_MOUSE:
+		currentColour = CommonUtilities::Vector4f(0, 1, 1, 1);
+		break;
 	case eTileState::IS_WALKABLE:
 	case eTileState::NONE:
 	case eTileState::Size:
