@@ -39,6 +39,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 	CommonUtilities::GrowingArray<SpriteSheet> SpriteSheets = LoadSpriteSheets(GetArray(rootObject["tilesets"]), fileEnding);
 	SpriteSheet dataSheet;
+	size_t dataSheetIndex = INT_MAX;
 
 	for (size_t i = 0; i < SpriteSheets.Size(); i++)
 	{
@@ -46,6 +47,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 		if (name[0] == '_')
 		{
 			dataSheet = SpriteSheets[i];
+			dataSheetIndex = i;
 			break;
 		}
 	}
@@ -108,7 +110,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
 				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 				{
-					if (tileId >= SpriteSheets[l].GetFirstIndex())
+					if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
 					{
 						SpriteSheet explainingSpriteSheet = SpriteSheets[l];
 						StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
