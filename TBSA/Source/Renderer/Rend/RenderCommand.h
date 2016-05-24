@@ -10,7 +10,7 @@ class RenderCommand
 {
 public:
 	RenderCommand();
-	RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f & aPosition, const float aPriority, const USHORT aLayer, const RenderData & aRenderData);
+	RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f & aPosition, const float aPriority, const USHORT aLayer, const RenderData & aRenderData, const bool aOffsetMiddleOfScreen = false);
 	~RenderCommand();
 
 	void Render() const;
@@ -27,6 +27,8 @@ public:
 	CU::Vector2f myPosition;
 
 private:
+	bool myMiddleScreenOffset;
+
 	USHORT myLayer;
 	RenderData myRenderData;
 	float myRenderPriority;

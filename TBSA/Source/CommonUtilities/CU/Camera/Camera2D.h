@@ -15,7 +15,7 @@ public:
 	Camera2D();
 	~Camera2D();
 
-	void Init(const CU::Vector2<float>* aResolutionPtr, const CU::Vector2<float>& aPosition);
+	void Init(const CU::Vector2f & aResolution, const CU::Vector2<float>& aPosition);
 
 	const CU::Matrix33f GetInverse() const;
 	const CU::Matrix33f& GetProjection() const;
@@ -40,7 +40,7 @@ private:
 
 	CU::Matrix33f myOrientation;
 	CU::Matrix33f myProjection;
-	const CU::Vector2f *myResolutionPtr;
+	CU::Vector2f myResolution;
 	CU::Vector2f myTargetPos;
 	float myResolutionScale;
 	float myShakeDuration;
@@ -68,7 +68,7 @@ inline void Camera2D::SetTargetPos(const CU::Vector2f aPos)
 
 inline const CU::Vector2f& Camera2D::GetScreenResolution() const
 {
-	return *myResolutionPtr;
+	return myResolution;
 }
 
 inline const float Camera2D::GetResolutionScale() const

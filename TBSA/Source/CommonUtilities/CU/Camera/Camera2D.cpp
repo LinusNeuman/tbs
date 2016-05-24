@@ -18,14 +18,14 @@ void Camera2D::StopShaking()
 	myShakeDuration = 0;
 }
 
-void Camera2D::Init(const CU::Vector2<float>* aResolutionPtr, const CU::Vector2<float>& aPosition)
+void Camera2D::Init(const CU::Vector2f & aResolution, const CU::Vector2<float>& aPosition)
 {
-	myResolutionPtr = aResolutionPtr;
-	myProjection.myMatrix[0] = 2.f / aResolutionPtr->x;
-	myProjection.myMatrix[4] = 2.f / aResolutionPtr->y;
+	myResolution = aResolution;
+	myProjection.myMatrix[0] = 2.f / aResolution.x;
+	myProjection.myMatrix[4] = 2.f / aResolution.y;
 	myOrientation.myMatrix[6] = aPosition.x;
 	myOrientation.myMatrix[7] = aPosition.y;
-	myResolutionScale = aResolutionPtr->y / 720.f;
+	myResolutionScale = aResolution.y / 720.f;
 	myTargetPos = aPosition;
 
 	myRandomizer.SetMinMax(-0.1f, 0.1f);
@@ -72,12 +72,12 @@ const CU::Matrix33<float> Camera2D::GetInverse() const
 	return inverse;
 }
 
-const CU::Vector2<float> Camera2D::GetScreenOffset() const
+const CU::Vector2f Camera2D::GetScreenOffset() const
 {
-	return (GetPosition() - (*myResolutionPtr / 2.f)) * myResolutionScale;
+	return (GetPosition() - (myResolution / 2.f)) * myResolutionScale;
 }
 
-void Camera2D::Move(CU::Vector3<float> aVector)
+void Camera2D::Move(CU::Vector3f aVector)
 {
 	aVector *= myOrientation;
 	myOrientation.myMatrix[6] += aVector.x;
@@ -92,6 +92,6 @@ void Camera2D::Zoom(float aFraction)
 
 void Camera2D::SetProjection()
 {
-	myProjection.myMatrix[0] = 2.f / myResolutionPtr->x;
-	myProjection.myMatrix[4] = 2.f / myResolutionPtr->y;
+	myProjection.myMatrix[0] = 2.f / myResolution.x;
+	myProjection.myMatrix[4] = 2.f / myResolution.y;
 }
