@@ -46,6 +46,8 @@ void NavGraph::Dijkstra(VertexHandle& aFirstNode, unsigned aDistance)
 	for (size_t i = 0; i < myVertecies.Size(); ++i)
 	{
 		myVertecies[i].SetDistance(INT_MAX);
+		myVertecies[i].SetIfSearched(false);
+		myVertecies[i].SetPreviousNode(VertexHandle());
 	}
 
 	aFirstNode->SetDistance(0);
@@ -63,7 +65,27 @@ void NavGraph::Dijkstra(VertexHandle& aFirstNode, unsigned aDistance)
 		
 		for (size_t j = 0; j < currentEdges.Size(); j++)
 		{
-			//VertexHandle currentNeighbor = currentEdges->
+			VertexHandle currentNeighbor = currentEdges[j]->GoThrough(currentNode);
+			if (currentNeighbor->IsSearched() == true)
+			{
+				continue;
+			}
+
+			const int cost = currentEdges[j]->GetCost();
+			if (currentNeighbor->GetDistance() > currentNode->GetDistance() + cost)
+			{
+				currentNeighbor->SetDistance(currentNode->GetDistance() + cost);
+				currentNeighbor->SetPreviousNode(currentNode);
+			}
+
+			if (openNodes.count(currentNeighbor.myHandle) == 0 && currentNeighbor->GetDistance() < aDistance)
+			{
+				openNodes[currentNeighbor.myHandle] = currentNeighbor;
+			}
+			else if (currentNeighbor->GetDistance() >= aDistance)
+			{
+				currentNeighbor->SetIfSearched(true);
+			}
 		}
 	}
 }

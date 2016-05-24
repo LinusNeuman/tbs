@@ -7,9 +7,10 @@
 #include <GameObjects/Actor/Actor.h>
 #include <Controllers/PlayerController.h>
 #include <TiledLoader/TiledLoader.h>
-#include <tga2d/shaders/customshader.h>
-#include <tga2d/texture/texture_manager.h>
-#include <tga2d/engine.h>
+#include <tga2d\shaders\customshader.h>
+#include <tga2d\texture\texture_manager.h>
+#include <tga2d\engine.h>
+#include "tga2d\sprite\sprite.h"
 #include <Shader/Shaders.h>
 
 #include <TiledData/TiledData.h>
@@ -18,6 +19,11 @@
 #include "../../PathFinding/NavGraph/NavHandle.h"
 #include "../PathFinding/NavGraph/Vertex/NavVertex.h"
 #include "../PathFinding/NavGraph/Edge/NavEdge.h"
+
+#include <Message/SetMainCameraMessage.h>
+
+
+const float CameraSpeed = 10.f;
 
 PlayState::PlayState()
 {
@@ -32,17 +38,17 @@ void PlayState::Init()
 {
 	Shaders::Create();
 	myTiles.Init(100);
-
 	
-
+	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
+	SendMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
-
+	
 
 	myPlayerController = new PlayerController();
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
@@ -57,13 +63,11 @@ void PlayState::Init()
 
 	DX2D::CCustomShader* customShader;
 	customShader = new DX2D::CCustomShader();
-	customShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
 	customShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/Players/Player2/characterSheetTurnaround2.png"), DX2D::EShaderTextureSlot_1); // Add a texture
+	customShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
 	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
-
+	
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
-
-	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -83,10 +87,27 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		return eStackReturnValue::ePopMain;
 	}
 
-	if (IsometricInput::GetKeyReleased(DIK_Q) == true)
+	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
 		DL_ASSERT(isFalse, "IT Works!");
+	}*/
+
+	if (IsometricInput::GetKeyDown(DIK_W))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, -CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_S))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, CameraSpeed) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_A))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(-CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
+	}
+	if (IsometricInput::GetKeyDown(DIK_D))
+	{
+		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
 
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
@@ -104,11 +125,28 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
 	myEnemy->Update(aTimeDelta);
+
 	return eStackReturnValue::eStay;
 }
 
 void PlayState::Draw() const
 {
+	for (unsigned int i = 0; i < myTiles.Size(); i++)
+	{
+		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
+		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
+		{
+			if (distance.Length2() > 16.0f)
+			{
+				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
+			}
+			else
+			{
+				myTiles[i].myGraphicsLayers[j]->SetShader(nullptr);
+			}
+		}
+	}
+
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();

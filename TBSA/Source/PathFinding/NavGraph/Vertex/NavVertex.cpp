@@ -33,6 +33,11 @@ int NavVertex::GetAnyPurpouseId() const
 	return myAnyPurpouseId;
 }
 
+void NavVertex::SetPreviousNode(VertexHandle aPreviousVertex)
+{
+	myPrevoiusNode = aPreviousVertex;
+}
+
 void NavVertex::AddLink(EdgeHandle anEdge, VertexHandle aVertex)
 {
 	aVertex->AddEdge(anEdge);
