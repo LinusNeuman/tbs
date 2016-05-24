@@ -134,8 +134,9 @@ void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
 	const int distance = aMessage.myDistance;
 
 	const CommonUtilities::Vector2ui mapSize = myTiledData.myMapSize;
+	const int id = mapSize.x * position.y + position.x;
 
-	const IsometricTile selectedTile = myTiles[mapSize.x * position.y + position.x];
+	const IsometricTile selectedTile = myTiles[id];
 
 	myNavGraph.Dijkstra(selectedTile.GetVertexHandle(), distance);
 }

@@ -23,7 +23,7 @@ public:
 	void Init(const ActorData &aActorData);
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
-	void Move(CU::Vector2f aTargetPosition);
+	void Move(CU::Vector2ui aTargetPosition);
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
 	CU::Vector2f GetPosition() const
@@ -35,7 +35,7 @@ public:
 		return myType;
 	}
 
-	int GetMyAP();
+	int GetMyAP() const;
 	StaticSprite *mySprite;
 	
 protected:
@@ -50,7 +50,7 @@ private:
 	
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
-	CU::Vector2f myTargetPosition;
+	CU::Vector2ui myTargetPosition;
 	eActorType myType;
 	int myAP;
 };

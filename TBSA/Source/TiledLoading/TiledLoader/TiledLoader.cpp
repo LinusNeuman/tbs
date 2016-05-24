@@ -53,6 +53,8 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 	unsigned int height = static_cast<unsigned int>(GetNumber(rootObject["height"]));
 	unsigned int width = static_cast<unsigned int>(GetNumber(rootObject["width"]));
 
+	someTiles.myMapSize = CommonUtilities::Point2ui(width, height);
+	
 	picojson::array layers = GetArray(rootObject["layers"]);
 
 	for (size_t i = 0; i < height * width; i++)

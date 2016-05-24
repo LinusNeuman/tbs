@@ -38,6 +38,6 @@ void PlayerController::NotifyPlayers() const
 {
 	if (mySelectedPlayer != nullptr)
 	{
-		mySelectedPlayer->Move(CU::Vector2f(IsometricInput::GetMouseWindowPositionIsometric().x, IsometricInput::GetMouseWindowPositionIsometric().y));
+		mySelectedPlayer->Move(CU::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric().x + .5, IsometricInput::GetMouseWindowPositionIsometric().y + .5));
 	}
 }
