@@ -5,6 +5,8 @@
 #include <CU/Utility/Math/Isometric.h>
 
 
+
+
 CU::GrowingArray<DX2D::CSprite*> StaticSprite::ourSprites;
 IndexMap StaticSprite::ourIndexDictionary;
 
@@ -22,7 +24,6 @@ void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFile
 	myIsInitiedFlag = true;
 	myImageIndex = AddImage(aFilePath, aRect);
 	myLayer = enumRenderLayer::eFloor;
-	myColor = CU::Vector4f::One;
 	myIsIsometricFlag = aIsIsometric;
 }
 
@@ -87,6 +88,12 @@ void StaticSprite::SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel)
 
 	myPositionOffset = CU::PixelToIsometric(tempOffset);
 }
+
+const RenderData & StaticSprite::GetRenderData() const
+{
+	return myRenderData;
+}
+
 
 //void StaticSprite::SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio)
 //{
