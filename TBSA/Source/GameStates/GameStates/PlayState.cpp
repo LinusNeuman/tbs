@@ -17,7 +17,8 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include "../../PathFinding/NavGraph/NavHandle.h"
 #include "../PathFinding/NavGraph/Vertex/NavVertex.h"
-#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+//#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+#include <Message/DijkstraMessage.h>
 
 PlayState::PlayState()
 {
@@ -33,11 +34,10 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 
-	
+	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
-
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
@@ -64,11 +64,15 @@ void PlayState::Init()
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
 
 	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
+
+	ConstructNavGraph();
 }
 
-eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
+eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
 {
-	(aStateStack);
+	//(aStateStack);
+
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
@@ -104,6 +108,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
 	myEnemy->Update(aTimeDelta);
+
 	return eStackReturnValue::eStay;
 }
 
@@ -116,11 +121,24 @@ void PlayState::Draw() const
 
 }
 
+void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
+{
+	const CommonUtilities::Vector2ui position = aMessage.myPosition;
+	const int distance = aMessage.myDistance;
+
+	const CommonUtilities::Vector2ui mapSize = myTiledData.myMapSize;
+
+	const IsometricTile selectedTile = myTiles[mapSize.x * position.y + position.x];
+
+	myNavGraph.Dijkstra(selectedTile.GetVertexHandle(), distance);
+}
+
 void PlayState::ConstructNavGraph()
 {
 	for (size_t i = 0; i < myTiles.Size(); i++)
 	{
-		if (myTiles[i].GetTileType() != eTileType::OPEN || myTiles[i].GetTileType() != eTileType::DOOR || myTiles[i].GetTileType() != eTileType::DOOR_2)
+		eTileType explainingType = myTiles[i].GetTileType();
+		if (!(explainingType == eTileType::OPEN || explainingType == eTileType::DOOR|| explainingType == eTileType::DOOR_2))
 		{
 			continue;
 		}

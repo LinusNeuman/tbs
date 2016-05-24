@@ -12,6 +12,7 @@ Actor::Actor()
 {
 	mySprite = new StaticSprite();
 	myVelocity = CU::Vector2f::Zero;
+	myAP = 5;
 }
 
 Actor::~Actor()
@@ -60,6 +61,11 @@ void Actor::Move(CU::Vector2f aTargetPosition)
 void Actor::AddAnimation(Animation* anAnimation)
 {
 	myAnimations[anAnimation->GetName()] = anAnimation;
+}
+
+int Actor::GetMyAP()
+{
+	return myAP;
 }
 
 void Actor::ChangeAnimation(const std::string& anAnimation)

@@ -34,7 +34,10 @@ public:
 	{
 		return myType;
 	}
+
+	int GetMyAP();
 	StaticSprite *mySprite;
+	
 protected:
 	StaticSprite* GetSprite() const
 	{
@@ -42,11 +45,13 @@ protected:
 	}
 	std::map<std::string, Animation*> myAnimations;
 	std::string myActiveAnimation;
+	
 private:
 	
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
 	CU::Vector2f myTargetPosition;
 	eActorType myType;
+	int myAP;
 };
 

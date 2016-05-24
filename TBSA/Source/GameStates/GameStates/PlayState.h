@@ -7,19 +7,22 @@
 #include <GameObjects/Room/IsometricTile.h>
 #include "../../PathFinding/NavGraph/Graph/NavGraph.h"
 #include <TiledData/TiledData.h>
+#include <PostMaster/MessageReceiver.h>
 
 class StaticSprite;
 class RenderConverter;
 class Actor;
 class PlayerController;
-class PlayState : public GameState
+class PlayState : public GameState, public MessageReciever
 {
 public:
 	PlayState();
 	~PlayState();
-	void Init();
+	void Init() override;
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
+
+	void RecieveMessage(const DijkstraMessage & aMessage)override;
 
 	void ConstructNavGraph();
 private:
@@ -32,5 +35,6 @@ private:
 	Animation *myAnimation;
 	NavGraph myNavGraph;
 	TiledData myTiledData;
+	CommonUtilities::Vector2ui myDimensions;
 };
 

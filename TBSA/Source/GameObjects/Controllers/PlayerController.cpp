@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "PlayerController.h"
-//#include "Actor/Actor.h"
 #include <GameObjects/Actor/Actor.h>
-
+#include <Message/DijkstraMessage.h>
 
 PlayerController::PlayerController()
 {
@@ -30,6 +29,9 @@ void PlayerController::SelectPlayer()
 		mySelectedPlayerIndex = 0;
 	}
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+	SingletonPostMaster::PostMessageA(dijkstraMessage);
 }
 
 void PlayerController::NotifyPlayers() const

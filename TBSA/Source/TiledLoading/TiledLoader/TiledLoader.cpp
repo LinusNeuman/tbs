@@ -69,6 +69,8 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 			if (name[0] == '_')
 			{
+				isOverFloor = true;
+
 				unsigned int lastUnderscore = name.find_last_of('_');
 				unsigned int roomId;
 				try
@@ -81,21 +83,23 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
 				}
 				
-				isOverFloor = true;
+				
 				newTile.SetRoomId(roomId);
-
-				int tileId = static_cast<int>(GetNumber(data[i]) - dataSheet.GetFirstIndex() + 1);
+				const int explainingInt = GetNumber(data[i]);
+				int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
 				if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
 				{
 					tileId = 0;
 				}
 
 				eTileType tileType = static_cast<eTileType>(tileId);
+				
 				newTile.SetTileType(tileType);
 				if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
 				{
 					newTile.SetDoor(Door(roomId));
 				}
+				
 			}
 			else
 			{

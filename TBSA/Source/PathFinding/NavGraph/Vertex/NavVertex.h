@@ -26,9 +26,12 @@ public:
 
 	const CommonUtilities::GrowingArray<EdgeHandle>& GetEdges() const;
 
+	CommonUtilities::GrowingArray<int> GetPath() const;
 private:
 	void AddEdge(const EdgeHandle& anEdge);
 	CommonUtilities::GrowingArray<EdgeHandle> myEdges;
+
+	void InternalGetPath(CommonUtilities::GrowingArray<int> & aPath) const;
 
 	VertexHandle myPrevoiusNode;
 	VertexHandle myHandle;
