@@ -81,8 +81,8 @@ inline void IsometricTile::SetTileType(eTileType aType)
 {
 	if (aType != eTileType::EMPTY)
 	{
-	myType = aType;
-}
+		myType = aType;
+	}
 }
 
 inline int IsometricTile::GetRoomId() const

@@ -71,7 +71,10 @@ void IsometricTile::Draw() const
 
 	for (USHORT i = 0; i < myGraphicsLayers.Size(); i++)
 	{
-		myGraphicsLayers[i]->SetColor(currentColour);
+		if (myDebugMode == true)
+		{
+			myGraphicsLayers[i]->SetColor(currentColour);
+		}
 		myGraphicsLayers[i]->Draw(myPosition );
 	}
 }
