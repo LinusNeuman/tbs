@@ -25,7 +25,7 @@ void IsometricTile::Init()
 
 void IsometricTile::Draw() const
 {
-	CommonUtilities::Vector4f currentColour = CommonUtilities::Vector4f(1, 1, 1, 1);;
+	CommonUtilities::Vector4f currentColour = CommonUtilities::Vector4f(1, 1, 1, 1);
 
 	if (myDebugMode == true)
 	{
@@ -75,6 +75,11 @@ void IsometricTile::Draw() const
 		{
 			myGraphicsLayers[i]->SetColor(currentColour);
 		}
+		else if (myGraphicsLayers[i]->GetColor() != CommonUtilities::Vector4f(1, 1, 1, 1))
+		{
+			myGraphicsLayers[i]->SetColor(CommonUtilities::Vector4f(1, 1, 1, 1));
+		}
+		
 		myGraphicsLayers[i]->Draw(myPosition );
 	}
 }
