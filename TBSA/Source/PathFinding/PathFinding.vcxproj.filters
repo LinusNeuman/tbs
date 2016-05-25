@@ -36,6 +36,9 @@
     <ClInclude Include="NavGraph\NavHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NavGraph\Comparers\VertexLesser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

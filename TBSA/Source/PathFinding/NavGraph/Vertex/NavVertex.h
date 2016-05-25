@@ -27,6 +27,9 @@ public:
 	const CommonUtilities::GrowingArray<EdgeHandle>& GetEdges() const;
 
 	CommonUtilities::GrowingArray<int> GetPath() const;
+
+	bool GetIfOpen() const;
+	void SetIfOpen(const bool);
 private:
 	void AddEdge(const EdgeHandle& anEdge);
 	CommonUtilities::GrowingArray<EdgeHandle> myEdges;
@@ -36,6 +39,7 @@ private:
 	VertexHandle myPrevoiusNode;
 	VertexHandle myHandle;
 
+	bool myIsOpen;
 	bool myIsSearched;
 	float myDistance;
 	int myAnyPurpouseId;
@@ -62,4 +66,14 @@ inline void NavVertex::SetDistance(float aDisctance, const bool aShallCompare)
 inline void NavVertex::SetIfSearched(bool aState)
 {
 	myIsSearched = aState;
+}
+
+inline bool NavVertex::GetIfOpen() const
+{
+	return myIsOpen;
+}
+
+inline void NavVertex::SetIfOpen(const bool aState)
+{
+	myIsOpen = aState;
 }

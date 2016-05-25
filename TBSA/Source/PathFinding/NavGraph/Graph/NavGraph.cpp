@@ -5,6 +5,7 @@
 #include "NavGraph/Edge/NavEdge.h"
 #include <CU/Heap/Heap.h>
 #include <map>
+#include <NavGraph/Comparers/VertexLesser.h>
 
 
 NavGraph::NavGraph()
@@ -57,14 +58,19 @@ void NavGraph::Dijkstra(const VertexHandle& aFirstNode,const unsigned aDistance)
 
 	aFirstNode->SetDistance(0);
 
-	std::map<NavHandle, VertexHandle> openNodes;
-	openNodes[aFirstNode.myHandle] = aFirstNode;
+	CommonUtilities::Heap<VertexHandle, CommonUtilities::VertexLesser>openNodes;
+	openNodes.Enqueue(aFirstNode);
 
-	while (openNodes.empty() == false)
+	while (openNodes.IsEmpty() == false)
 	{
-		VertexHandle currentNode = openNodes.begin()->second;
-		openNodes.erase(currentNode.myHandle);
+		if (openNodes.IsHeap() == false)
+		{
+			openNodes.Resort();
+		}
+		VertexHandle currentNode = openNodes.Dequeue();
+		
 		currentNode->SetIfSearched(true);
+		currentNode->SetIfOpen(false);
 
 		CommonUtilities::GrowingArray<EdgeHandle> currentEdges = currentNode->GetEdges();
 		
@@ -83,9 +89,10 @@ void NavGraph::Dijkstra(const VertexHandle& aFirstNode,const unsigned aDistance)
 				currentNeighbor->SetPreviousNode(currentNode);
 			}
 
-			if (openNodes.count(currentNeighbor.myHandle) == 0 && currentNeighbor->GetDistance() < aDistance)
+			if (currentNeighbor->GetIfOpen() == false && currentNeighbor->GetDistance() < aDistance)
 			{
-				openNodes[currentNeighbor.myHandle] = currentNeighbor;
+				currentNeighbor->SetIfOpen(true);
+				openNodes.Enqueue(currentNeighbor);
 			}
 			else if (currentNeighbor->GetDistance() >= aDistance)
 			{

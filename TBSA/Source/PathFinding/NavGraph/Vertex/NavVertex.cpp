@@ -5,14 +5,16 @@
 
 NavVertex::NavVertex()
 {
-	DL_PRINT("WARNING: created a null handle!!!!");
+	//DL_PRINT("WARNING: created a null handle!!!!");
 		//dangerous
 	myEdges.Init(1);
+	myIsOpen = false;
 }
 
 NavVertex::NavVertex(VertexHandle aHandle) : myHandle(aHandle)
 {
 	myEdges.Init(1);
+	myIsOpen = false;
 }
 
 NavVertex::~NavVertex()
