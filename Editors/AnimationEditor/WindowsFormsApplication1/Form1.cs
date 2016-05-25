@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1
 
         private void BrowseButton_Click(object sender, EventArgs e)
         {
-            fileExplorer.InitialDirectory = Path.GetTempPath();// + "../../../../../TBSA/Bin/Sprites/";//Path.GetFullPath("../../../../../TBSA/Bin/Sprites/");
+            fileExplorer.InitialDirectory = Directory.GetCurrentDirectory();//Path.GetFullPath("../../../../../TBSA/Bin/Sprites/");
             fileExplorer.Filter = "DDS (*.dds)|*.dds";
 
             if (fileExplorer.ShowDialog() == System.Windows.Forms.DialogResult.OK)
