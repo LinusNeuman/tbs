@@ -11,10 +11,11 @@ public:
 
 	void AddVertex(VertexHandle aVertex);
 	VertexHandle GoThrough(VertexHandle aPreviousVertex) const;
-	int GetCost()const;
+	float GetCost()const;
+	void Setcost(const float);
 
 private:
 	VertexHandle myFirstVertex;
 	VertexHandle mySecondVertex;
-	int myCost;
+	float myCost;
 };

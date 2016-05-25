@@ -41,14 +41,19 @@ NavVertex* NavGraph::GetVertex(NavHandle aHandle)
 	return &myVertecies[aHandle];
 }
 
-void NavGraph::Dijkstra(VertexHandle& aFirstNode, unsigned aDistance)
+void NavGraph::Clear()
 {
 	for (size_t i = 0; i < myVertecies.Size(); ++i)
 	{
-		myVertecies[i].SetDistance(INT_MAX);
+		myVertecies[i].SetDistance(10000 * 10000, false);
 		myVertecies[i].SetIfSearched(false);
 		myVertecies[i].SetPreviousNode(VertexHandle());
 	}
+}
+
+void NavGraph::Dijkstra(const VertexHandle& aFirstNode,const unsigned aDistance)
+{
+	Clear();
 
 	aFirstNode->SetDistance(0);
 
@@ -71,7 +76,7 @@ void NavGraph::Dijkstra(VertexHandle& aFirstNode, unsigned aDistance)
 				continue;
 			}
 
-			const int cost = currentEdges[j]->GetCost();
+			const float cost = currentEdges[j]->GetCost();
 			if (currentNeighbor->GetDistance() > currentNode->GetDistance() + cost)
 			{
 				currentNeighbor->SetDistance(currentNode->GetDistance() + cost);

@@ -41,7 +41,12 @@ VertexHandle NavEdge::GoThrough(VertexHandle aPreviousVertex) const
 	
 }
 
-int NavEdge::GetCost() const
+float NavEdge::GetCost() const
 {
 	return myCost;
+}
+
+void NavEdge::Setcost(const float aCost)
+{
+	myCost = aCost;
 }
