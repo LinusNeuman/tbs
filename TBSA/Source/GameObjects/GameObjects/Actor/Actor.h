@@ -22,6 +22,8 @@ public:
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
+	void SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>);
+
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
 	CU::Vector2f GetPosition() const
@@ -49,10 +51,16 @@ protected:
 	std::string myActiveAnimation;
 	
 private:
+	void UpdatePath();
+
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
 	CU::Vector2ui myTargetPosition;
+	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
+	unsigned short myCurrentWaypoint;
 	eActorType myType;
 	int myAP;
+
+	bool myAtTarget;
 };
 
