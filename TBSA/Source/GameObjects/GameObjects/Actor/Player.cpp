@@ -18,6 +18,7 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	Actor::Init(aActorData);
 	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
+	myCurrentAP = myActionPointMax;
 }
 
 void Player::EndTurn()
@@ -26,7 +27,7 @@ void Player::EndTurn()
 
 }
 
-int Player::GetAP() const
+int Player::GetMyAP() const
 {
 	return myCurrentAP;
 }

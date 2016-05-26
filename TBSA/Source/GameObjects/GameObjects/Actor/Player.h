@@ -16,7 +16,7 @@ public:
 	void DecideAnimation() override;
 	
 	void EndTurn();
-	int GetAP() const;
+	int GetMyAP() const override;
 	void CostAP(const int aCost);
 	
 private:
