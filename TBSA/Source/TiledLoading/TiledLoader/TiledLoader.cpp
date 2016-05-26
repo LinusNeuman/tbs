@@ -89,7 +89,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 				
 				
 				newTile.SetRoomId(roomId);
-				const int explainingInt = GetNumber(data[i]);
+				const int explainingInt = static_cast<int>( GetNumber(data[i]));
 				int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
 				if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
 				{
