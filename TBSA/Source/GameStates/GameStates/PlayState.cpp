@@ -107,7 +107,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		//myPlayerController->NotifyPlayers();
 		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
 			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
@@ -280,6 +279,11 @@ void PlayState::ConstructNavGraph()
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[west].GetVertexHandle());
 		}
 	}
+}
+
+IsometricTile& PlayState::GetTile(unsigned short aIndex)
+{
+	return  myTiles[aIndex];
 }
 
 void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)

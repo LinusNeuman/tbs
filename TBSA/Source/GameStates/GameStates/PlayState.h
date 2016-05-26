@@ -30,6 +30,7 @@ public:
 
 	IsometricTile & GetTile(unsigned int aX, unsigned int aY);
 	IsometricTile & GetTile(CommonUtilities::Vector2ui aVector2Ui);
+	IsometricTile & GetTile(unsigned short aIndex);
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
 	void CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);

@@ -393,6 +393,9 @@
     <ProjectReference Include="..\TiledLoading\TiledLoading.vcxproj">
       <Project>{b0e30c9f-422d-4ce9-8617-f3b6792c9ca3}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\TurnManager\TurnManager.vcxproj">
+      <Project>{f98e4c60-6bc0-4337-b21d-7c5f7520983c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
