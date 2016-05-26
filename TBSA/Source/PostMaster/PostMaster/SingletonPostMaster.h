@@ -33,7 +33,7 @@ private:
 
 	static inline SingletonPostMaster & GetInstance();
 
-	CU::GrowingArray<CU::GrowingArray<MessageReciever*>> myRecievers;
+	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<MessageReciever*>> myRecievers;
 };
 
 template <typename MessageType>

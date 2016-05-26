@@ -33,7 +33,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="TurnManager\bla.txt" />
-  </ItemGroup>
 </Project>

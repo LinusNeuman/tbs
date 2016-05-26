@@ -84,9 +84,6 @@
     </ClCompile>
     <ClCompile Include="TurnManager\TurnManager.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="TurnManager\bla.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

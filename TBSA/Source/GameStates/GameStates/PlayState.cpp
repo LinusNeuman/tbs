@@ -58,7 +58,8 @@ void PlayState::Init()
 	
 	ConstructNavGraph();
 
-	myPlayerController = new PlayerController();
+	myPlayerController = &myTurnManager.GetPlayerController();
+	myPlayerController->SetMyPlayState(*this);
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer);
@@ -105,7 +106,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		}
 	}
 
-	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	myTurnManager.Update(aTimeDelta);
+	/*if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
@@ -128,7 +130,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		myPlayerController->SelectPlayer();
-	}
+	}*/
+
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
 		return eStackReturnValue::ePopMain;

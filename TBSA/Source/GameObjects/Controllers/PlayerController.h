@@ -1,6 +1,9 @@
 #pragma once
-#include "../../GameStates/GameStates/PlayState.h"
+#include <CU/GrowingArray/GrowingArray.h>
+#include <CU/Timer/Time.h>
+#include <CU/Vectors/vector2.h>
 
+class PlayState;
 class Actor;
 class RenderConverter;
 
@@ -16,11 +19,13 @@ public:
 	int GetPlayerAP();
 	void CostAP(const int anAP);
 	void Update(const CommonUtilities::Time& aTime);
+
+	void SetMyPlayState(PlayState & aPlayState);
 private:
 	PlayState* myPlayState;
 
-	CU::GrowingArray<Actor*> myPlayers;
-	CU::Vector2f myMousePosition;
+	CommonUtilities::GrowingArray<Actor*> myPlayers;
+	CommonUtilities::Vector2f myMousePosition;
 	Actor *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
 };

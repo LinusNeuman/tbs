@@ -4,6 +4,7 @@
 #include <Message/DijkstraMessage.h>
 #include <NavGraph/Vertex/NavVertex.h>
 #include <Message/NavigationClearMessage.h>
+#include "../../GameStates/GameStates/PlayState.h"
 
 PlayerController::PlayerController()
 {
@@ -98,5 +99,14 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		}
 
 	}
+
+	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	{
+		SelectPlayer();
+	}
 }
 
+void PlayerController::SetMyPlayState(PlayState& aPlayStateRef)
+{
+	myPlayState = &aPlayStateRef;
+}

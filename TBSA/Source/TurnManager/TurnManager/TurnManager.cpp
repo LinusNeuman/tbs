@@ -1,5 +1,7 @@
 ﻿#include "stdafx.h"
 #include "TurnManager.h"
+#include <PostMaster/SingletonPostMaster.h>
+#include <Message/NavigationClearMessage.h>
 
 TurnManager::TurnManager(): myCurrentTurn(static_cast<eTurn>(0))
 {
@@ -55,9 +57,27 @@ void TurnManager::EndTurn()
 void TurnManager::PreparePlayer()
 {
 	//TODO: player preparation
+	EndTurn();
 }
 
 void TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 {
 	myPlayerController.Update(aDeltaTime);
+}
+
+void TurnManager::PlayerEndTurn()
+{
+	SingletonPostMaster::PostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+	EndTurn();
+}
+
+void TurnManager::PrepareEnemy()
+{
+	//TODO: Preapre Enemy;
+	EndTurn();
+}
+
+void TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
+{
+	myEnemyController.Update(aDeltaTime);
 }
