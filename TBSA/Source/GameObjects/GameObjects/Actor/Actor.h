@@ -13,8 +13,6 @@ enum class eActorType
 	eEnemyTwo
 };
 
-
-
 class Actor
 {
 public:
@@ -23,18 +21,27 @@ public:
 	void Init(const ActorData &aActorData);
 	void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
-	void Move(CU::Vector2f aTargetPosition);
+	void Move(CU::Vector2ui aTargetPosition);
+	void SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>);
+
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
 	CU::Vector2f GetPosition() const
 	{
 		return myPosition;
 	}
+	CU::Vector2f GetDirection() const
+	{
+		return myVelocity.GetNormalized();
+	}
 	eActorType GetType() const
 	{
 		return myType;
 	}
+
+	int GetMyAP() const;
 	StaticSprite *mySprite;
+	
 protected:
 	StaticSprite* GetSprite() const
 	{
@@ -42,11 +49,18 @@ protected:
 	}
 	std::map<std::string, Animation*> myAnimations;
 	std::string myActiveAnimation;
-private:
 	
+private:
+	void UpdatePath();
+
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
-	CU::Vector2f myTargetPosition;
+	CU::Vector2ui myTargetPosition;
+	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
+	unsigned short myCurrentWaypoint;
 	eActorType myType;
+	int myAP;
+
+	bool myAtTarget;
 };
 

@@ -3,6 +3,7 @@
 #include <PostMaster/MessageReceiver.h>
 
 class StaticSprite;
+class Camera2D;
 
 class RenderConverter : public MessageReciever
 {
@@ -20,10 +21,14 @@ public:
 	static void DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition);
 
 	static void Draw();
+	//static void SetCamera(const Camera2D & aCamera);
 
 	static void SwapBuffers();
 
 	virtual void RecieveMessage(const LevelTileMetricsMessage & aMessage) override;
+	virtual void RecieveMessage(const SetMainCameraMessage & aMessage) override;
+
+	
 
 private:
 	RenderConverter();
@@ -32,6 +37,8 @@ private:
 	static RenderConverter * ourInstance;
 
 	static RenderConverter & GetInstance();
+
+	const Camera2D * myCamera;
 
 	CU::Vector2ui myLevelTileLayout;
 	Renderer myRenderer;

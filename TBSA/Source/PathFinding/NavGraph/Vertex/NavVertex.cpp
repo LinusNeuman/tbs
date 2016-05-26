@@ -5,12 +5,16 @@
 
 NavVertex::NavVertex()
 {
-	DL_PRINT("WARNING: created a null handle!!!!")
-	//dangerous
+	//DL_PRINT("WARNING: created a null handle!!!!");
+		//dangerous
+	myEdges.Init(1);
+	myIsOpen = false;
 }
 
 NavVertex::NavVertex(VertexHandle aHandle) : myHandle(aHandle)
 {
+	myEdges.Init(1);
+	myIsOpen = false;
 }
 
 NavVertex::~NavVertex()
@@ -23,6 +27,15 @@ void NavVertex::AddEdge(const EdgeHandle& anEdge)
 	myEdges.Add(anEdge);
 }
 
+void NavVertex::InternalGetPath(CommonUtilities::GrowingArray<int>& aPath) const
+{
+	aPath.Add(myAnyPurpouseId);
+	if (myPrevoiusNode.Null() != true)
+	{
+		myPrevoiusNode->InternalGetPath(aPath);
+	}
+}
+
 void NavVertex::SetAnyPurpouseId(int anID)
 {
 	myAnyPurpouseId = anID;
@@ -31,6 +44,11 @@ void NavVertex::SetAnyPurpouseId(int anID)
 int NavVertex::GetAnyPurpouseId() const
 {
 	return myAnyPurpouseId;
+}
+
+void NavVertex::SetPreviousNode(VertexHandle aPreviousVertex)
+{
+	myPrevoiusNode = aPreviousVertex;
 }
 
 void NavVertex::AddLink(EdgeHandle anEdge, VertexHandle aVertex)
@@ -42,4 +60,12 @@ void NavVertex::AddLink(EdgeHandle anEdge, VertexHandle aVertex)
 const CommonUtilities::GrowingArray<EdgeHandle>& NavVertex::GetEdges() const
 {
 	return myEdges;
+}
+
+CommonUtilities::GrowingArray<int> NavVertex::GetPath() const
+{
+	CommonUtilities::GrowingArray<int> path;
+	path.Init(1);
+	InternalGetPath(path);
+	return path;
 }

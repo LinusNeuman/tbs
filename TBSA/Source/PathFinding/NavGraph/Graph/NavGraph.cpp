@@ -2,6 +2,11 @@
 #include "NavGraph.h"
 #include "NavGraph/NavHandle.h"
 #include "NavGraph/Vertex/NavVertex.h"
+#include "NavGraph/Edge/NavEdge.h"
+#include <CU/Heap/Heap.h>
+#include <map>
+#include <NavGraph/Comparers/VertexLesser.h>
+
 
 NavGraph::NavGraph()
 {
@@ -35,4 +40,64 @@ NavEdge* NavGraph::GetEdge(NavHandle aHandle)
 NavVertex* NavGraph::GetVertex(NavHandle aHandle)
 {
 	return &myVertecies[aHandle];
+}
+
+void NavGraph::Clear()
+{
+	for (size_t i = 0; i < myVertecies.Size(); ++i)
+	{
+		myVertecies[i].SetDistance(10000 * 10000, false);
+		myVertecies[i].SetIfSearched(false);
+		myVertecies[i].SetPreviousNode(VertexHandle());
+	}
+}
+
+void NavGraph::Dijkstra(const VertexHandle& aFirstNode,const unsigned aDistance)
+{
+	Clear();
+
+	aFirstNode->SetDistance(0);
+
+	CommonUtilities::Heap<VertexHandle, CommonUtilities::VertexLesser>openNodes;
+	openNodes.Enqueue(aFirstNode);
+
+	while (openNodes.IsEmpty() == false)
+	{
+		if (openNodes.IsHeap() == false)
+		{
+			openNodes.Resort();
+		}
+		VertexHandle currentNode = openNodes.Dequeue();
+		
+		currentNode->SetIfSearched(true);
+		currentNode->SetIfOpen(false);
+
+		CommonUtilities::GrowingArray<EdgeHandle> currentEdges = currentNode->GetEdges();
+		
+		for (size_t j = 0; j < currentEdges.Size(); j++)
+		{
+			VertexHandle currentNeighbor = currentEdges[j]->GoThrough(currentNode);
+			if (currentNeighbor->IsSearched() == true)
+			{
+				continue;
+			}
+
+			const float cost = currentEdges[j]->GetCost();
+			if (currentNeighbor->GetDistance() > currentNode->GetDistance() + cost)
+			{
+				currentNeighbor->SetDistance(currentNode->GetDistance() + cost);
+				currentNeighbor->SetPreviousNode(currentNode);
+			}
+
+			if (currentNeighbor->GetIfOpen() == false && currentNeighbor->GetDistance() < aDistance)
+			{
+				currentNeighbor->SetIfOpen(true);
+				openNodes.Enqueue(currentNeighbor);
+			}
+			else if (currentNeighbor->GetDistance() >= aDistance)
+			{
+				currentNeighbor->SetIfSearched(true);
+			}
+		}
+	}
 }

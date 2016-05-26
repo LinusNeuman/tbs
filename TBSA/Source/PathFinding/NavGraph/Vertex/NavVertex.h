@@ -14,23 +14,34 @@ public:
 	bool IsSearched() const;
 	void SetIfSearched(bool aState);
 
-	void SetDistance(const unsigned int aDisctance, const bool aShallCompare = true);
-	unsigned int GetDistance() const;
+	void SetDistance(const float aDisctance, const bool aShallCompare = true);
+	float GetDistance() const;
 
 	void SetAnyPurpouseId(int anID);
 	int GetAnyPurpouseId() const;
 
+	void SetPreviousNode(VertexHandle aPreviousVertex);
+
 	void AddLink(EdgeHandle anEdge, VertexHandle aVertex);
+
 	const CommonUtilities::GrowingArray<EdgeHandle>& GetEdges() const;
+
+	CommonUtilities::GrowingArray<int> GetPath() const;
+
+	bool GetIfOpen() const;
+	void SetIfOpen(const bool);
 private:
 	void AddEdge(const EdgeHandle& anEdge);
 	CommonUtilities::GrowingArray<EdgeHandle> myEdges;
 
-	EdgeHandle myPathBack;
+	void InternalGetPath(CommonUtilities::GrowingArray<int> & aPath) const;
+
+	VertexHandle myPrevoiusNode;
 	VertexHandle myHandle;
 
+	bool myIsOpen;
 	bool myIsSearched;
-	unsigned int myDistance;
+	float myDistance;
 	int myAnyPurpouseId;
 };
 
@@ -39,12 +50,12 @@ inline bool NavVertex::IsSearched() const
 	return myIsSearched;
 }
 
-inline unsigned NavVertex::GetDistance() const
+inline float NavVertex::GetDistance() const
 {
 	return myDistance;
 }
 
-inline void NavVertex::SetDistance(const unsigned aDisctance, const bool aShallCompare)
+inline void NavVertex::SetDistance(float aDisctance, const bool aShallCompare)
 {
 	if (aShallCompare == false || aDisctance < myDistance)
 	{
@@ -55,4 +66,14 @@ inline void NavVertex::SetDistance(const unsigned aDisctance, const bool aShallC
 inline void NavVertex::SetIfSearched(bool aState)
 {
 	myIsSearched = aState;
+}
+
+inline bool NavVertex::GetIfOpen() const
+{
+	return myIsOpen;
+}
+
+inline void NavVertex::SetIfOpen(const bool aState)
+{
+	myIsOpen = aState;
 }

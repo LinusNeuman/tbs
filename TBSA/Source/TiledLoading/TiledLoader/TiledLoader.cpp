@@ -9,6 +9,7 @@
 #include <JsonWrapper/JsonWrapper.h>
 
 #include "TiledData/TiledData.h"
+#include <Rend/StaticSprite.h>
 
 namespace
 {
@@ -27,7 +28,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
 	picojson::value root;
-
+	
 	std::string JsonData = CommonUtilities::GetFileAsString(aFilePath);
 	std::string err = picojson::parse(root , JsonData);
 	
@@ -38,6 +39,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 	CommonUtilities::GrowingArray<SpriteSheet> SpriteSheets = LoadSpriteSheets(GetArray(rootObject["tilesets"]), fileEnding);
 	SpriteSheet dataSheet;
+	size_t dataSheetIndex = INT_MAX;
 
 	for (size_t i = 0; i < SpriteSheets.Size(); i++)
 	{
@@ -45,6 +47,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 		if (name[0] == '_')
 		{
 			dataSheet = SpriteSheets[i];
+			dataSheetIndex = i;
 			break;
 		}
 	}
@@ -52,10 +55,13 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 	unsigned int height = static_cast<unsigned int>(GetNumber(rootObject["height"]));
 	unsigned int width = static_cast<unsigned int>(GetNumber(rootObject["width"]));
 
+	someTiles.myMapSize = CommonUtilities::Point2ui(width, height);
+	
 	picojson::array layers = GetArray(rootObject["layers"]);
 
 	for (size_t i = 0; i < height * width; i++)
 	{
+		bool isOverFloor = false;
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
 		
@@ -67,32 +73,58 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 			if (name[0] == '_')
 			{
+				isOverFloor = true;
+
 				unsigned int lastUnderscore = name.find_last_of('_');
-				unsigned int roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
-
+				unsigned int roomId;
+				try
+				{
+					roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
+				}
+				catch (std::invalid_argument)
+				{
+					roomId = 0;
+					DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
+				}
+				
+				
 				newTile.SetRoomId(roomId);
-
-				int tileId = static_cast<int>(GetNumber(data[i]) - dataSheet.GetFirstIndex() + 1);
+				const int explainingInt = static_cast<int>( GetNumber(data[i]));
+				int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
 				if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
 				{
 					tileId = 0;
 				}
 
 				eTileType tileType = static_cast<eTileType>(tileId);
+				
 				newTile.SetTileType(tileType);
 				if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
 				{
 					newTile.SetDoor(Door(roomId));
 				}
+				
 			}
 			else
 			{
 				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
 				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 				{
-					if (tileId >= SpriteSheets[j].GetFirstIndex())
+					if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
 					{
-						newTile.AddSpriteLayer(SpriteSheets[j].CreateSprite(tileId));
+						SpriteSheet explainingSpriteSheet = SpriteSheets[l];
+						StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
+						
+						if (isOverFloor == true)
+						{
+							explaingSprite->SetLayer(enumRenderLayer::eGameObjects);
+						}
+						else
+						{
+							explaingSprite->SetLayer(enumRenderLayer::eFloor);
+						}
+
+						newTile.AddSpriteLayer(explaingSprite);
 					}
 				}
 			}

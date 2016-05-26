@@ -14,5 +14,7 @@ public:
 	~Player();
 	void Init(const ActorData &aActorData, const PlayerData &aPlayerData);
 private:
+
+	int myActionPointMax;
 };
 

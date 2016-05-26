@@ -20,6 +20,10 @@ public:
 
 	NavEdge* GetEdge(NavHandle aHandle);
 	NavVertex* GetVertex(NavHandle aHandle);
+
+	void Clear();
+
+	void Dijkstra(const VertexHandle& aFirstNode,const unsigned int aDistance);
 private:
 	CommonUtilities::GrowingArray<NavEdge, NavHandle> myEdges;
 	CommonUtilities::GrowingArray<NavVertex, NavHandle> myVertecies;

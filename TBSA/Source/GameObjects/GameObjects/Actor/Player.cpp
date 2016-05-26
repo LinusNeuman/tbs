@@ -17,4 +17,5 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 {
 	Actor::Init(aActorData);
 	//Do stuff with playerdata
+	myActionPointMax = aPlayerData.myActionPointMax;
 }

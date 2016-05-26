@@ -3,10 +3,9 @@
 #include <PostMaster/MessageReceiver.h>
 //
 
-namespace CommonUtilities
-{
-	class Camera2D;
-}
+
+class Camera2D;
+
 
 class SingletonIsometricInputWrapper : public MessageReciever
 {
@@ -42,8 +41,10 @@ public:
 
 	inline static void SetViewPortSettings(const CU::Vector4f & aViewPortStats);
 
-
 	virtual void RecieveMessage(const WindowRectChangedMessage & aMessage) override;
+	virtual void RecieveMessage(const SetMainCameraMessage & aMessage) override;
+
+	
 
 	//virtual void RecieveMessage(const Message & aMessageToRecieve) override;
 
@@ -51,7 +52,7 @@ private:
 	SingletonIsometricInputWrapper(/*const CU::Camera2D & aCameraToAdjustInputToo*/);
 	~SingletonIsometricInputWrapper();
 
-	CU::Vector2f ConvertMouseNormalizedPositionCartesianCordiante() const;
+	CU::Vector2f ConvertMouseNormalizedPositionCartesianCordiante(const bool aOffsetToMiddle = false) const;
 	CU::Vector2f GetMouseInViewportNormalized() const;
 
 	static SingletonIsometricInputWrapper* ourInstance;
@@ -61,7 +62,7 @@ private:
 	CU::Vector4f myWindowRect;
 
 	CommonUtilities::InputWrapper myInputWrapper;
-	const CU::Camera2D * myCameraToAdjustTo;
+	const Camera2D * myCameraToAdjustTo;
 };
 
 inline SingletonIsometricInputWrapper & SingletonIsometricInputWrapper::GetInstance()

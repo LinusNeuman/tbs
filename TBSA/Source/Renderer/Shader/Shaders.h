@@ -29,6 +29,7 @@ public:
 	void AddShader(DX2D::CCustomShader* aShader, const std::string& aName);
 	void ApplyShader(StaticSprite* aSprite, const std::string& aShader);
 	void RemoveShader(StaticSprite* aSprite);
+	inline Shader* GetShader(const std::string& aName);
 private:
 	Shaders();
 	~Shaders();
@@ -36,3 +37,7 @@ private:
 	std::unordered_map<std::string, Shader*> myShaders;
 };
 
+inline Shaders::Shader* Shaders::GetShader(const std::string& aName)
+{
+	return myShaders[aName];
+}

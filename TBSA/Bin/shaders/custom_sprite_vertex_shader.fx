@@ -35,6 +35,7 @@ PixelInputType VShader(VertexInputType input)
 	input.position.xy = mul(input.position.xy, theRotation);
 	input.position.x *= ratio;
 	input.position.xy += myPosition;
+
 	output.position = input.position;
 	output.tex = myUV.xy + (input.tex * myUV.z);
 	output.color = myCustomData; 

@@ -4,6 +4,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include "PostMaster/MessageReceiver.h"
 
+
 class MessageReciever;
 
 class SingletonPostMaster
@@ -57,4 +58,6 @@ inline SingletonPostMaster & SingletonPostMaster::GetInstance()
 	DL_ASSERT(ourInstance != nullptr, "PostMaster pointer is being used but it is nullptr");
 	return *ourInstance;
 }
+
+#define SendPostMessage(message) SingletonPostMaster::PostMessage((message));
 
