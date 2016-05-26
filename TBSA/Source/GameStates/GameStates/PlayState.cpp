@@ -24,6 +24,7 @@
 
 #include <Message/SetMainCameraMessage.h>
 
+#define EDGE_SCROLL_LIMIT 0.05f
 
 const float sqrt2 = static_cast<float>( sqrt(2));
 const float CameraSpeed = 10.f;
@@ -105,7 +106,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		//myPlayerController->NotifyPlayers();
-		if (GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
 			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
 			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
@@ -135,19 +136,19 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		DL_ASSERT(isFalse, "IT Works!");
 	}*/
 
-	if (IsometricInput::GetKeyDown(DIK_W))
+	if (IsometricInput::GetKeyDown(DIK_W) || IsometricInput::GetMouseWindowPositionNormalizedSpace().y <= EDGE_SCROLL_LIMIT)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, -CameraSpeed) * aTimeDelta.GetSeconds()));
 	}
-	if (IsometricInput::GetKeyDown(DIK_S))
+	if (IsometricInput::GetKeyDown(DIK_S) ||IsometricInput::GetMouseWindowPositionNormalizedSpace().y >= 1.f - EDGE_SCROLL_LIMIT)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, CameraSpeed) * aTimeDelta.GetSeconds()));
 	}
-	if (IsometricInput::GetKeyDown(DIK_A))
+	if (IsometricInput::GetKeyDown(DIK_A) || IsometricInput::GetMouseWindowPositionNormalizedSpace().x <= EDGE_SCROLL_LIMIT)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(-CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
-	if (IsometricInput::GetKeyDown(DIK_D))
+	if (IsometricInput::GetKeyDown(DIK_D) || IsometricInput::GetMouseWindowPositionNormalizedSpace().x >= 1.f - EDGE_SCROLL_LIMIT)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
