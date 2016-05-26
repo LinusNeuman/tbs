@@ -16,3 +16,8 @@ void MessageReciever::RecieveMessage(const SetMainCameraMessage & aMessage)
 {
 
 }
+
+void MessageReciever::RecieveMessage(const GUIMessage & aMessage)
+{
+	
+}

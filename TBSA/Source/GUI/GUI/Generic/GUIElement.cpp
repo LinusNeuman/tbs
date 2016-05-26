@@ -1,7 +1,7 @@
 #include "GUIElement.h"
 #include <CU/Macros/Macros.h>
 #include <PostMaster/SingletonPostMaster.h>
-
+#include <Rend/StaticSprite.h>
 
 GUIElement::GUIElement()
 {
@@ -39,7 +39,7 @@ void GUIElement::SetOnClick(GUIMessage& aGUIMessage)
 	myMessageHandler.SetOnClick(aGUIMessage);
 }
 
-void GUIElement::SetOnHover(class GUIMessage& aGUIMessage)
+void GUIElement::SetOnHover(struct GUIMessage& aGUIMessage)
 {
 	myMessageHandler.SetOnHover(aGUIMessage);
 }

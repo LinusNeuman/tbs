@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -97,6 +97,11 @@
     <ProjectReference Include="..\Renderer\Renderer.vcxproj">
       <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GUI\Messaging\GUIMessageHandler.inl">
+      <FileType>CppHeader</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

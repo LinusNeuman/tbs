@@ -1,6 +1,7 @@
 #pragma once
-#include "Generic/GUIMessage.h"
+#include <GUI/Messaging/Generic/GUIMessage.h>
 #include <CU/StaticArray/StaticArray.h>
+#include <PostMaster/SingletonPostMaster.h>
 
 enum class eGUIMessageEvents
 {
@@ -24,3 +25,5 @@ public:
 private:
 	CommonUtilities::StaticArray<GUIMessage*, 5> myMessageEvents;
 };
+
+#include <GUI/Messaging/GUIMessageHandler.inl>

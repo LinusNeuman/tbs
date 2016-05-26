@@ -43,7 +43,7 @@ void PlayState::Init()
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
-	SendMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
+	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
@@ -73,6 +73,8 @@ void PlayState::Init()
 	customFoVShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/customLos_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
 	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
+
+	LoadGUI("InGame");
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)

@@ -1,7 +1,7 @@
 #pragma once
 #include <CU/Timer/Time.h>
 #include <CU/NameSpaceAliases.h>
-#include "../../GUI/GUI/Generic/GUIElement.h"
+#include <GUI/Generic/GUIElement.h>
 
 class ProxyStateStack;
 

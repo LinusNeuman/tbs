@@ -6,16 +6,17 @@
 #include <string>
 #include <CU/GrowingArray/GrowingArray.h>
 
-#include "../Messaging/GUIMessageHandler.h"
+#include "GUI/Messaging/GUIMessageHandler.h"
 #include <CU/Vectors/Vector.h>
 
-//#include <PostMaster/MessageReceiver.h>
-#include "PostMaster/MessageReceiver.h"
-#include <Rend/StaticSprite.h>
+#include <PostMaster/MessageReceiver.h>
+
+
 
 typedef unsigned char uchar;
 
-class GUIMessage;
+class StaticSprite;
+struct GUIMessage;
 
 class GUIElement : public MessageReciever
 {
@@ -26,8 +27,8 @@ public:
 
 	virtual void Init(const char* aName, const char* aSpritePath, bool aIsEnabled);
 
-	virtual void __forceinline SetOnClick(GUIMessage& aGUIMessage);
-	virtual void __forceinline SetOnHover(GUIMessage& aGUIMessage);
+	virtual void SetOnClick(GUIMessage& aGUIMessage);
+	virtual void SetOnHover(GUIMessage& aGUIMessage);
 
 	virtual void OnHover();
 	virtual void OnClick();

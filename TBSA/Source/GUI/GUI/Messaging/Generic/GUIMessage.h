@@ -1,13 +1,16 @@
 #pragma once
-#include "../PostMessages/Message/BaseMessage.h"
+#include <Message/BaseMessage.h>
 #include <string>
 
-class GUIMessage : public BaseMessage
+#pragma warning  (push)
+#pragma warning(disable : 4512)
+
+struct GUIMessage : public BaseMessage
 {
-public:
 	GUIMessage(const RecieverTypes aType);
 	~GUIMessage();
 
 	//const std::string myEventString;
 };
 
+#pragma warning (pop)
