@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <CU/Timer/Time.h>
 
 struct ActorData;
 class StaticSprite;
@@ -19,7 +20,7 @@ public:
 	Actor();
 	~Actor();
 	void Init(const ActorData &aActorData);
-	void Update(const CU::Time &aDeltaTime);
+	void Update(const CommonUtilities::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
 	void SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>);

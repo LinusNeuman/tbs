@@ -2,6 +2,8 @@
 // CreationDate: 13/05/2016
 #pragma once
 #include <GameObjects/Room/IsometricTile.h>
+#include "../../Factories/PlayerFactory/PlayerFactory.h"
+#include "../../Factories/EnemyFactory/EnemyFactory.h"
 
 struct TiledData
 {
@@ -12,4 +14,6 @@ struct TiledData
 
 	CommonUtilities::GrowingArray<IsometricTile> myTiles;
 	CommonUtilities::Point2ui myMapSize;
+	PlayerFactory * myPlayerFactory;
+	EnemyFactory * myEnemyFactory;
 };

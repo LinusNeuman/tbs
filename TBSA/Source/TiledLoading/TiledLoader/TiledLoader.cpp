@@ -69,65 +69,70 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 		{
 			picojson::object currentLayer = GetObject(layers[j]);
 			std::string name = GetString(currentLayer["name"]);
-			picojson::array data = GetArray(currentLayer["data"]);
+			std::string type = GetString(currentLayer["type"]);
 
-			if (name[0] == '_')
+			if (type == "tilelayer")
 			{
-				isOverFloor = true;
+				picojson::array data = GetArray(currentLayer["data"]);
 
-				unsigned int lastUnderscore = name.find_last_of('_');
-				unsigned int roomId;
-				try
+				if (name[0] == '_')
 				{
-					roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
-				}
-				catch (std::invalid_argument)
-				{
-					roomId = 0;
-					DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
-				}
-				
-				
-				newTile.SetRoomId(roomId);
-				const int explainingInt = static_cast<int>( GetNumber(data[i]));
-				int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
-				if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
-				{
-					tileId = 0;
-				}
+					isOverFloor = true;
 
-				eTileType tileType = static_cast<eTileType>(tileId);
-				
-				newTile.SetTileType(tileType);
-				if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
-				{
-					newTile.SetDoor(Door(roomId));
-				}
-				
-			}
-			else
-			{
-				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
-				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
-				{
-					if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
+					unsigned int lastUnderscore = name.find_last_of('_');
+					unsigned int roomId;
+					try
 					{
-						SpriteSheet explainingSpriteSheet = SpriteSheets[l];
-						StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
-						
-						if (isOverFloor == true)
-						{
-							explaingSprite->SetLayer(enumRenderLayer::eGameObjects);
-						}
-						else
-						{
-							explaingSprite->SetLayer(enumRenderLayer::eFloor);
-						}
+						roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
+					}
+					catch (std::invalid_argument)
+					{
+						roomId = 0;
+						DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
+					}
 
-						newTile.AddSpriteLayer(explaingSprite);
+
+					newTile.SetRoomId(roomId);
+					const int explainingInt = static_cast<int>(GetNumber(data[i]));
+					int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
+					if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
+					{
+						tileId = 0;
+					}
+
+					eTileType tileType = static_cast<eTileType>(tileId);
+
+					newTile.SetTileType(tileType);
+					if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
+					{
+						newTile.SetDoor(Door(roomId));
+					}
+				}
+				else
+				{
+					unsigned int tileId = static_cast<int>(GetNumber(data[i]));
+					for (size_t l = 0; l < SpriteSheets.Size(); ++l)
+					{
+						if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
+						{
+							SpriteSheet explainingSpriteSheet = SpriteSheets[l];
+							StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
+
+							if (isOverFloor == true)
+							{
+								explaingSprite->SetLayer(enumRenderLayer::eGameObjects);
+							}
+							else
+							{
+								explaingSprite->SetLayer(enumRenderLayer::eFloor);
+							}
+
+							newTile.AddSpriteLayer(explaingSprite);
+						}
 					}
 				}
 			}
+			//
 		}
 
 		someTiles.myTiles.Add(newTile);
