@@ -1,5 +1,6 @@
 
 #include <cmath>
+#include <CU/Macros/Macros.h>
 
 namespace CommonUtilities
 {
@@ -117,10 +118,26 @@ namespace CommonUtilities
 		return aVector.GetNormalized();
 	}
 
+	//
+	//Returns direction of vector in radians between 0 and 360
 	template<typename T>
 	inline T Vector2<T>::GetAngle() const
 	{
-		//return static_cast<T>(acos(x / Length()));
+		float returnValue = static_cast<float>( atan2(y, x)) + DEGRESS_TO_RADIANSF(360.f);
+
+		while (returnValue > DEGRESS_TO_RADIANSF(360.f))
+		{
+			returnValue -= DEGRESS_TO_RADIANSF(360.f);
+		}
+
+		return returnValue;
+	}
+
+	//
+	//Returns direction of vector in radians between -180 and 180
+	template<typename T>
+	T CommonUtilities::Vector2<T>::GetAngle180() const
+	{
 		return static_cast<float>(atan2(y, x));
 	}
 
