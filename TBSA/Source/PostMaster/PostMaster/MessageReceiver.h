@@ -1,4 +1,5 @@
 #pragma once
+struct NavigationClearMessage;
 struct WindowRectChangedMessage;
 struct LevelTileMetricsMessage;
 struct SetMainCameraMessage;
@@ -14,6 +15,7 @@ public:
 	virtual void RecieveMessage(const LevelTileMetricsMessage & aMessage);
 	virtual void RecieveMessage(const SetMainCameraMessage & aMessage);
 	virtual void RecieveMessage(const DijkstraMessage & aMessage);
+	virtual void RecieveMessage(const NavigationClearMessage & aMessage);
 
 protected:
 	MessageReciever()

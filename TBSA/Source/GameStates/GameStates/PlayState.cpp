@@ -10,7 +10,7 @@
 #include <tga2d\shaders\customshader.h>
 #include <tga2d\texture\texture_manager.h>
 #include <tga2d\engine.h>
-#include "tga2d\sprite\sprite.h"
+//#include "tga2d\sprite\sprite.h"
 #include <Shader/Shaders.h>
 
 #include <TiledData/TiledData.h>
@@ -52,6 +52,7 @@ void PlayState::Init()
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 	
+	ConstructNavGraph();
 
 	myPlayerController = new PlayerController();
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
@@ -79,7 +80,6 @@ void PlayState::Init()
 
 	//Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
 
-	ConstructNavGraph();
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
@@ -117,6 +117,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 			myPlayerController->NotifyPlayers(positionPath);
 		}
+		myNavGraph.Clear();
 
 	}
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
@@ -210,6 +211,11 @@ void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
 	const IsometricTile selectedTile = myTiles[id];
 
 	myNavGraph.Dijkstra(selectedTile.GetVertexHandle(), distance);
+}
+
+void PlayState::RecieveMessage(const NavigationClearMessage& aMessage)
+{
+	myNavGraph.Clear();
 }
 
 void PlayState::ConstructNavGraph()

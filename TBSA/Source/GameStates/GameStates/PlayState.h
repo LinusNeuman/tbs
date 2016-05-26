@@ -24,6 +24,7 @@ public:
 	void Draw() const override;
 
 	void RecieveMessage(const DijkstraMessage & aMessage)override;
+	void RecieveMessage(const NavigationClearMessage & aMessage)override;
 
 	void ConstructNavGraph();
 
