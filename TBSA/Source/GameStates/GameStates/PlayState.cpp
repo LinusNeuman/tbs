@@ -76,7 +76,7 @@ void PlayState::Init()
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
 	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
 
-	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
+	//Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
 
 	ConstructNavGraph();
 }
