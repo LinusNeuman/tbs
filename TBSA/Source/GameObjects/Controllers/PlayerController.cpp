@@ -52,4 +52,24 @@ void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtiliti
 	}
 }
 
+int PlayerController::GetPlayerAP()
+{
+	if (mySelectedPlayer != nullptr)
+	{
+		return mySelectedPlayer->GetMyAP();
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+void PlayerController::CostAP(const int anAP)
+{
+	/*if (mySelectedPlayer != nullptr)
+	{
+		mySelectedPlayer->
+	}*/
+}
+
 

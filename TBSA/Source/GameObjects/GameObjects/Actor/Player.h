@@ -13,8 +13,14 @@ public:
 	Player();
 	~Player();
 	void Init(const ActorData &aActorData, const PlayerData &aPlayerData);
+
+	void EndTurn();
+	int GetAP() const;
+	void CostAP(const int aCost);
+	
 private:
 
 	int myActionPointMax;
+	int myCurrentAP;
 };
 
