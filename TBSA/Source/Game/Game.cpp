@@ -99,6 +99,15 @@ void CGame::Init(const std::wstring& aVersion)
 
 }
 
+void CGame::RecieveMessage(const GUIMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eExitGame)
+	{
+		myImRunning = false;
+		DX2D::CEngine::GetInstance()->Shutdown();
+	}
+}
+
 
 void CGame::InitCallBack()
 {
@@ -127,6 +136,8 @@ void CGame::InitCallBack()
 	
 
 	myGameStateStack.AddMainState(myMenuState);
+
+	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
 }
 
 

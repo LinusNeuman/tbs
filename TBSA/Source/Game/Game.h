@@ -7,12 +7,15 @@
 #include <ThreadPool/ThreadPool.h>
 #pragma warning  (push)
 #pragma warning(disable : 4512)
-class CGame
+
+class CGame : public MessageReciever
 {
 public:
 	CGame();
 	~CGame();
 	void Init(const std::wstring& aVersion = L"");
+
+	void RecieveMessage(const GUIMessage & aMessage) override;
 private:
 	void InitCallBack();
 	void UpdateCallBack();

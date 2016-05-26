@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include <CU/Timer/Timer.h>
+#include <CU/Timer/TimeManager.h>
 
 #include "../JSONWrapper/JsonWrapper/JsonWrapper.h"
 #include <GUI/Instances/GUIButton.h>
@@ -40,6 +41,7 @@ void GUIFactory::Load()
 	myGUILookup["InGame"].myBegin = 0;
 	myGUILookup["InGame"].myEnd = 0;
 	
+	CU::TimeManager::Update();
 	std::cout << "Loading all GUI took " << loadTimer.GetTime().GetMilliSeconds() << " ms" << std::endl;
 }
 
