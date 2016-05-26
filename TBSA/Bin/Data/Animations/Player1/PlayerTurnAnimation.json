@@ -1,6 +1,6 @@
 {
   "Name": "PlayerTurn",
-  "FilePath": "Sprites/Players/Player1/characterSheetTurnaround.dds",
+  "FilePath": "Sprites\\Players\\Player1\\characterSheetTurnaround.dds",
   "SizeX": 128,
   "SizeY": 128,
   "AmountOfColumns": 4,

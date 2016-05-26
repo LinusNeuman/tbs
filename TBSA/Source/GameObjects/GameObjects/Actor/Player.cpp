@@ -36,3 +36,15 @@ void Player::CostAP(const int aCost)
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
 	myCurrentAP -= aCost;
 }
+
+void Player::DecideAnimation()
+{
+	if (myState == eActorState::eIdle)
+	{
+		ChangeAnimation("PlayerIdle");
+	}
+	else if (myState == eActorState::eWalking)
+	{
+		ChangeAnimation("PlayerTurn");
+	}
+}
