@@ -79,8 +79,13 @@ void IsometricTile::Draw() const
 		{
 			myGraphicsLayers[i]->SetColor(CommonUtilities::Vector4f(1, 1, 1, 1));
 		}
-		
-		myGraphicsLayers[i]->Draw(myPosition );
+		CommonUtilities::Vector2f positionModifier = CommonUtilities::Vector2f::Zero;
+		if (myGraphicsLayers[i]->GetLayer() == enumRenderLayer::eGameObjects)
+		{
+			positionModifier -= CommonUtilities::Vector2f(1, 1);
+		}
+
+		myGraphicsLayers[i]->Draw(myPosition + positionModifier);
 	}
 }
 

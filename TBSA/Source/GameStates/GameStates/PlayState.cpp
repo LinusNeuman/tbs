@@ -233,7 +233,7 @@ void PlayState::ConstructNavGraph()
 		if (northWest > -1 && myTiles[northWest].GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
-			currentEdge->Setcost(sqrt2);
+			currentEdge->Setcost(1.1);
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northWest].GetVertexHandle());
 		}
 
@@ -248,7 +248,7 @@ void PlayState::ConstructNavGraph()
 		if (northEast > -1 && myTiles[northEast].GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
-			currentEdge->Setcost(sqrt2);
+			currentEdge->Setcost(1.1);
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northEast].GetVertexHandle());
 		}
 
