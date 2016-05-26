@@ -106,7 +106,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		//myPlayerController->NotifyPlayers();
-		if (GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
 			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
 			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
