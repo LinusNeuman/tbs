@@ -85,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)PathFinding\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)PathFinding\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
@@ -105,7 +105,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)PathFinding\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)PathFinding\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
@@ -128,6 +128,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CollisionHandling\CollisionHandling.vcxproj">
+      <Project>{8ce9acc7-5f0b-4710-957e-9b9a77f6d964}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>

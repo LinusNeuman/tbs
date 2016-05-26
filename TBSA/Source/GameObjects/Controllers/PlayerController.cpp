@@ -21,6 +21,7 @@ void PlayerController::AddPlayer(Actor* aPlayer)
 	myPlayers.Add(aPlayer);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) + CommonUtilities::Vector2ui(1, 1), mySelectedPlayer->GetMyAP());
+	SingletonPostMaster::PostMessage(dijkstraMessage);
 }
 
 void PlayerController::SelectPlayer()

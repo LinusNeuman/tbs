@@ -3,8 +3,8 @@
 *Author:  Hampus Huledal
 *Date: 25-05-2016
 */
-#include "../Vertex/NavVertex.h"
-#include "../NavHandle.h"
+#include "NavGraph/Vertex/NavVertex.h"
+#include "NavGraph/NavHandle.h"
 
 namespace CommonUtilities
 {

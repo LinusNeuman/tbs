@@ -73,6 +73,7 @@ namespace CommonUtilities
 		T Dot(const Vector2<T> &aRight) const;
 		Vector2 GetNormalized(void) const;
 		T GetAngle() const;
+		T GetAngle180() const;
 		void Floor(void);
 		Vector2 GetFloored(void);
 
@@ -106,6 +107,7 @@ namespace CommonUtilities
 	using Vector2ui = Vector2<unsigned int>;
 	using Vector2f = Vector2<float>;
 	using Vector2d = Vector2<double>;
+	using Vector2us = Vector2<unsigned short>;
 
 	using Point2c = Vector2<char>;
 	using Point2i = Vector2<int>;

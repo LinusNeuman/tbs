@@ -30,11 +30,11 @@ namespace WindowsFormsApplication1
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             fileExplorer.InitialDirectory = Directory.GetCurrentDirectory();
-            const string removeString = "/AnimationEditor";
+            /*const string removeString = "/AnimationEditor";
             int stringIndex = fileExplorer.InitialDirectory.IndexOf(removeString);
             string cleanPath = (stringIndex < 0)
                 ? fileExplorer.InitialDirectory
-                : fileExplorer.InitialDirectory.Remove(stringIndex, removeString.Length);
+                : fileExplorer.InitialDirectory.Remove(stringIndex, removeString.Length);*/
 
             fileExplorer.Filter = "DDS (*.dds)|*.dds";
 
@@ -189,7 +189,14 @@ namespace WindowsFormsApplication1
                 InTransitionText.Text = myAnimation.myAnimationData.InTransition;
                 OutTransitionText.Text = myAnimation.myAnimationData.OutTransition;
 
-                ddsImage = new KUtility.DDSImage(File.ReadAllBytes("../../../../../TBSA/Bin/" + ImagePathText.Text));
+                int index = ImagePathText.Text.LastIndexOf("Bin\\");
+                if (index > -1)
+                {
+                    string tempString = ImagePathText.Text.Substring(index + 4, ImagePathText.Text.Length - (index + 4));
+                    ImagePathText.Text = tempString;
+                }
+
+                ddsImage = new KUtility.DDSImage(File.ReadAllBytes("../../" + ImagePathText.Text));
                 SpriteSheet.Image = ddsImage.images[0];
                 SpriteX.Text = "X: " + SpriteSheet.Image.Width;
                 SpriteY.Text = "Y: " + SpriteSheet.Image.Height;
@@ -209,13 +216,6 @@ namespace WindowsFormsApplication1
                         Bitmap newImage = new Bitmap(SpriteSheet.Image, newSize);
                         SpriteSheet.Image = newImage;
                     }
-                }
-
-                int index = ImagePathText.Text.LastIndexOf("Bin\\");
-                if (index > -1)
-                {
-                    string tempString = ImagePathText.Text.Substring(index + 4, ImagePathText.Text.Length - (index + 4));
-                    ImagePathText.Text = tempString;
                 }
             }
         }

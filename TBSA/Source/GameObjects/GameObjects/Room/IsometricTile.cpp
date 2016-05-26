@@ -32,19 +32,19 @@ void IsometricTile::Draw() const
 		switch (myType)
 		{
 		case eTileType::EMPTY:
-			currentColour = CommonUtilities::Vector4f(1, 1, 1, .5);
+			currentColour = CommonUtilities::Vector4f(1.f, 1.f, 1.f, .5f);
 			break;
 		case eTileType::OPEN:
-			currentColour = CommonUtilities::Vector4f(0, 1, 0, 1);
+			currentColour = CommonUtilities::Vector4f(0.f, 1.f, 0.f, 1.f);
 			break;
 		case eTileType::BLOCKED:
-			currentColour = CommonUtilities::Vector4f(1, 0, 0, 1);
+			currentColour = CommonUtilities::Vector4f(1.f, 0.f, 0.f, 1.f);
 			break;
 		case eTileType::DOOR:
-			currentColour = CommonUtilities::Vector4f(1, .7, 0, 1);
+			currentColour = CommonUtilities::Vector4f(1.f, .7f, 0.f, 1.f);
 			break;
 		case eTileType::DOOR_2:
-			currentColour = CommonUtilities::Vector4f(1, .9, 0, 1);
+			currentColour = CommonUtilities::Vector4f(1.f, .9f, 0.f, 1.f);
 			break;
 		case eTileType::Size: break;
 		default: break;
@@ -82,8 +82,13 @@ void IsometricTile::Draw() const
 		{
 			myGraphicsLayers[i]->SetColor(CommonUtilities::Vector4f(1, 1, 1, 1));
 		}
-		
-		myGraphicsLayers[i]->Draw(myPosition );
+		CommonUtilities::Vector2f positionModifier = CommonUtilities::Vector2f::Zero;
+		if (myGraphicsLayers[i]->GetLayer() == enumRenderLayer::eGameObjects)
+		{
+			positionModifier -= CommonUtilities::Vector2f(1, 1);
+		}
+
+		myGraphicsLayers[i]->Draw(myPosition + positionModifier);
 	}
 }
 

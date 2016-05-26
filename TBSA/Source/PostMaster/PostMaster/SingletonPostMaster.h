@@ -59,5 +59,5 @@ inline SingletonPostMaster & SingletonPostMaster::GetInstance()
 	return *ourInstance;
 }
 
-#define SendMessage(message) SingletonPostMaster::PostMessage((message));
+#define SendPostMessage(message) SingletonPostMaster::PostMessage((message));
 
