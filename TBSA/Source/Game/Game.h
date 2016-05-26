@@ -5,6 +5,11 @@
 #include <Source/ThreadPool.h>
 #include <CU/Thread/ThreadSynchronizer.h>
 #include <GameStates/MenuState.h>
+
+
+
+struct StartupData;
+
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 class CGame
@@ -21,6 +26,7 @@ private:
 	void RenderWork();
 	void LogCallback(std::string aText);
 
+	StartupData * myStartupData;
 	GameState * myMenuState;
 
 	StateStack myGameStateStack;

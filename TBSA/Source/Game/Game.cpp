@@ -18,6 +18,9 @@
 #include <Rend/RenderConverter.h>
 //#include "MainSingleton/MainSingleton.h"
 
+#include "StartupReader/StartupReader.h"
+#include "StartupReader/StartupData.h"
+
 using namespace std::placeholders;
 
 
@@ -31,12 +34,13 @@ using namespace std::placeholders;
 
 CGame::CGame()
 {
-	myImRunning = true;
 	DL_Debug::Debug::Create();
-	//MainSingleton::Create();
-	/*JSONWrapper::Create();
-	JSONWrapper::ReadAllDocuments("Data/Root.json");
-	JSONWrapper::TestShit();*/
+	StartupReader tempReader;
+
+	myStartupData = new StartupData(tempReader.LoadAndGetStartupData());
+
+	myImRunning = true;
+	
 	SingletonPostMaster::Create();
 	IsometricInput::Create();
 }
