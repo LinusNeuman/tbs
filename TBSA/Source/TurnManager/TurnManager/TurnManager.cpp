@@ -13,6 +13,8 @@ TurnManager::~TurnManager()
 
 void TurnManager::Update(CommonUtilities::Time aDeltaTime)
 {
+	myEnemyController.ConstantUpdate(aDeltaTime);
+
 	switch (myCurrentTurn)
 	{
 	case eTurn::PRE_PLAYER_TURN: 
@@ -39,6 +41,11 @@ void TurnManager::Update(CommonUtilities::Time aDeltaTime)
 void TurnManager::ForceTurn(eTurn aTurn)
 {
 	myCurrentTurn = aTurn;
+}
+
+void TurnManager::RecieveMessage(const EndTurnMessage&)
+{
+	EndTurn();
 }
 
 void TurnManager::EndTurn()

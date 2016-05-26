@@ -7,5 +7,6 @@ enum class RecieverTypes
 	ePlayer,
 	eLevelTileLayoutSettings,
 	eCamera,
+	eTurn,
 	enumlength
 };

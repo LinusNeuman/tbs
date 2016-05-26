@@ -106,6 +106,14 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 }
 
+void PlayerController::ConstantUpdate(const CommonUtilities::Time& aTime)
+{
+	for (size_t i = 0; i < myPlayers.Size(); i++)
+	{
+		myPlayers[i]->Update(aTime);
+	}
+}
+
 void PlayerController::SetMyPlayState(PlayState& aPlayStateRef)
 {
 	myPlayState = &aPlayStateRef;

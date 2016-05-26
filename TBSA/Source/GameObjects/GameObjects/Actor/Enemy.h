@@ -10,5 +10,6 @@ public:
 	Enemy();
 	~Enemy();
 	void Init(const ActorData &aActorData, const EnemyData &aEnemyData);
+	void UpdateEnemy();
 };
 

@@ -42,10 +42,9 @@ void PlayState::Init()
 {
 	Shaders::Create();
 	myTiles.Init(100);
-	
-	
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));

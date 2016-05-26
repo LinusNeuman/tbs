@@ -24,3 +24,7 @@ void MessageReciever::RecieveMessage(const DijkstraMessage& aMessage)
 void MessageReciever::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 }
+
+void MessageReciever::RecieveMessage(const EndTurnMessage& aMessage)
+{
+}

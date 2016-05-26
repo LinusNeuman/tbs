@@ -19,6 +19,7 @@ public:
 	int GetPlayerAP();
 	void CostAP(const int anAP);
 	void Update(const CommonUtilities::Time& aTime);
+	void ConstantUpdate(const CommonUtilities::Time& aTime);
 
 	void SetMyPlayState(PlayState & aPlayState);
 private:
