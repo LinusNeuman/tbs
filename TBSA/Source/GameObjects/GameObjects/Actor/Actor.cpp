@@ -6,12 +6,16 @@
 //#include "../JsonDataStructs.h"
 #include "GameObjects/JsonDataStructs.h"
 #include <CU\DLDebug\DL_Debug.h>
-
+#include <PostMaster/SingletonPostMaster.h>
+#include <Message/DijkstraMessage.h>
 
 Actor::Actor()
 {
 	mySprite = new StaticSprite();
 	myVelocity = CU::Vector2f::Zero;
+	myAP = 5;
+	myPath.Init(1);
+	myCurrentWaypoint = 0;
 }
 
 Actor::~Actor()
@@ -21,7 +25,7 @@ Actor::~Actor()
 void Actor::Init(const ActorData &aActorData)
 {
 	myPosition = aActorData.myPosition;
-	myTargetPosition = myPosition;
+	myTargetPosition = CommonUtilities::Point2ui(myPosition);
 	mySprite->Init();
 	mySprite->SetLayer(enumRenderLayer::eGameObjects);
 	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
@@ -31,7 +35,7 @@ void Actor::Init(const ActorData &aActorData)
 
 void Actor::Update(const CU::Time& aDeltaTime)
 {
-	myVelocity = (myTargetPosition - myPosition).GetNormalized() * 3.f;
+	myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 	myPosition += myVelocity * aDeltaTime.GetSeconds();
 	CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
 	if (myActiveAnimation != "")
@@ -41,10 +45,17 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	}
-	if ((myTargetPosition - myPosition).Length() <= distance.Length())
+	if ((CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 	{
-		myTargetPosition = myPosition;
+		myAtTarget = true;
+		myPosition = CommonUtilities::Point2f(myTargetPosition);
 	}
+	else
+	{
+		myAtTarget = false;
+	}
+
+	UpdatePath();
 }
 
 void Actor::Draw() const
@@ -52,14 +63,41 @@ void Actor::Draw() const
 	mySprite->Draw(myPosition);
 }
 
-void Actor::Move(CU::Vector2f aTargetPosition)
+void Actor::Move(CU::Vector2ui aTargetPosition)
 {
 	myTargetPosition = aTargetPosition;
+}
+
+void Actor::SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath)
+{
+	if (myCurrentWaypoint == myPath.Size())
+	{
+		myPath = aPath;
+		myCurrentWaypoint = 0;
+	}
 }
 
 void Actor::AddAnimation(Animation* anAnimation)
 {
 	myAnimations[anAnimation->GetName()] = anAnimation;
+}
+
+int Actor::GetMyAP() const
+{
+	return myAP;
+}
+
+void Actor::UpdatePath()
+{
+	if (myAtTarget == true && myCurrentWaypoint < myPath.Size())
+	{
+		Move(myPath[myCurrentWaypoint]);
+		++myCurrentWaypoint;
+		if (myCurrentWaypoint == myPath.Size())
+		{	
+			SingletonPostMaster::PostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1] + CommonUtilities::Vector2ui(1, 1), myAP));
+		}
+	}
 }
 
 void Actor::ChangeAnimation(const std::string& anAnimation)
