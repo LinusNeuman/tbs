@@ -31,10 +31,10 @@ void EnemyFactory::UpdateDataStruct(const std::string &aStringPath, ActorData &a
 
 void EnemyFactory::AddEnemyAnimation(ActorData &aActorData, EnemyData &aEnemyData,picojson::object& aObject)
 {
-	Animation *animation = new Animation();
 	picojson::array& animationArray = JsonWrapper::GetPicoArray("animations", aObject);
 	for (size_t i = 0; i < animationArray.size(); i++)
 	{
+		Animation *animation = new Animation();
 		std::string path = JsonWrapper::GetString("path", animationArray[i].get<picojson::object>());
 		picojson::value animationFile = JsonWrapper::LoadPicoValue(path);
 		picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);

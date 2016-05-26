@@ -19,3 +19,15 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
 }
+
+void Player::DecideAnimation()
+{
+	if (myState == eActorState::eIdle)
+	{
+		ChangeAnimation("PlayerIdle");
+	}
+	else if (myState == eActorState::eWalking)
+	{
+		ChangeAnimation("PlayerTurn");
+	}
+}

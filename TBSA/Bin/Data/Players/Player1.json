@@ -5,6 +5,9 @@
     "animations": 
     [
         {
+            "path": "Data/Animations/Player1/PlayerIdleAnimation.json"
+        },
+        {
             "path": "Data/Animations/Player1/PlayerTurnAnimation.json"
         }
     ]

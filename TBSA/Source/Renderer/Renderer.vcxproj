@@ -211,6 +211,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\AnimationHandler.cpp" />
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Rend\RenderCommand.cpp" />
     <ClCompile Include="Rend\RenderConverter.cpp" />
@@ -227,6 +228,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\AnimationHandler.h" />
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Rend\RenderCommand.h" />
     <ClInclude Include="Rend\RenderConverter.h" />
