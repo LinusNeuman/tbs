@@ -116,10 +116,12 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 			{
 				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()));
 			}
-
-			myPlayerController->NotifyPlayers(positionPath);
+			if (myPlayerController->GetPlayerAP() >= positionPath.Size())
+			{
+				myPlayerController->NotifyPlayers(positionPath);
+				myNavGraph.Clear(); 
+			}
 		}
-		myNavGraph.Clear();
 
 	}
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
