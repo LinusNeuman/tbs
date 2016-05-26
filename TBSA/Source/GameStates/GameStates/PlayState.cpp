@@ -19,12 +19,13 @@
 #include "../../PathFinding/NavGraph/NavHandle.h"
 #include "../PathFinding/NavGraph/Vertex/NavVertex.h"
 //#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+#include <input/SingletonIsometricInputWrapper.h>
 #include <Message/DijkstraMessage.h>
 
 #include <Message/SetMainCameraMessage.h>
 
 
-const float sqrt2 = sqrt(2);
+const float sqrt2 = static_cast<float>( sqrt(2));
 const float CameraSpeed = 10.f;
 
 PlayState::PlayState()
@@ -46,7 +47,7 @@ void PlayState::Init()
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
-	SendMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
+	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
@@ -134,19 +135,19 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		DL_ASSERT(isFalse, "IT Works!");
 	}*/
 
-	if (IsometricInput::GetKeyDown(DIK_W))
+	if (IsometricInput::GetKeyDown(DIK_W) || IsometricInput::GetMouseWindowPositionNormalizedSpace().y <= 0.05f)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, -CameraSpeed) * aTimeDelta.GetSeconds()));
 	}
-	if (IsometricInput::GetKeyDown(DIK_S))
+	if (IsometricInput::GetKeyDown(DIK_S) ||IsometricInput::GetMouseWindowPositionNormalizedSpace().y >= 0.95f)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, CameraSpeed) * aTimeDelta.GetSeconds()));
 	}
-	if (IsometricInput::GetKeyDown(DIK_A))
+	if (IsometricInput::GetKeyDown(DIK_A) || IsometricInput::GetMouseWindowPositionNormalizedSpace().x <= 0.05f)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(-CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
-	if (IsometricInput::GetKeyDown(DIK_D))
+	if (IsometricInput::GetKeyDown(DIK_D) || IsometricInput::GetMouseWindowPositionNormalizedSpace().x >= 0.95f)
 	{
 		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
@@ -239,7 +240,7 @@ void PlayState::ConstructNavGraph()
 		if (northWest > -1 && myTiles[northWest].GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
-			currentEdge->Setcost(1.1);
+			currentEdge->Setcost(1.1f);
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northWest].GetVertexHandle());
 		}
 
@@ -254,7 +255,7 @@ void PlayState::ConstructNavGraph()
 		if (northEast > -1 && myTiles[northEast].GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
-			currentEdge->Setcost(1.1);
+			currentEdge->Setcost(1.1f);
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northEast].GetVertexHandle());
 		}
 
