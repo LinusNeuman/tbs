@@ -23,6 +23,8 @@
 #include <Message/DijkstraMessage.h>
 
 #include <Message/SetMainCameraMessage.h>
+#include <CU/Matriser/matrix.h>
+#include <CU/Intersection/Shapes2D/LineSegment2D.h>
 
 #define EDGE_SCROLL_LIMIT 0.05f
 
@@ -89,7 +91,7 @@ void PlayState::Init()
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
 {
 	//(aStateStack);
-
+	static int index = 0;
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5,0.5));
@@ -162,6 +164,10 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
+	if (IsometricInput::GetKeyPressed(DIK_F4))
+	{
+		index += 25;
+	}
 
 	/*CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
 	DRAWLINE(CU::Vector2f::Zero, testLine);
@@ -181,9 +187,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
-
-	CalculateFoV(myEnemy->GetPosition(), 3.f);
-
+	CalculateFoV(myEnemy->GetPosition(), 4.f, index);
+	if (index > 100)
+		index = 0;
 	return eStackReturnValue::eStay;
 }
 
@@ -209,7 +215,7 @@ void PlayState::Draw() const
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();
-	//std::cout << IsometricInput::GetMouseWindowPositionIsometric().x << " " << IsometricInput::GetMouseWindowPositionIsometric().y << std::endl;
+	std::cout << IsometricInput::GetMouseWindowPositionIsometric().x << " " << IsometricInput::GetMouseWindowPositionIsometric().y << std::endl;
 	for (size_t i = 0; i < myDebugStart.size(); i++)
 	{
 		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
@@ -290,106 +296,81 @@ IsometricTile& PlayState::GetTile(unsigned short aIndex)
 
 void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
 {
-	CU::Vector2f position = aPosition + CU::Vector2f(1, 1);
-	CU::Vector2f secondPosition = anotherPosition + CU::Vector2f(1, 1);
+	CU::Vector2f position = aPosition;
+	CU::Vector2f secondPosition = anotherPosition;
 	double x0, x1, y0, y1;
 	x0 = position.x;
 	y0 = position.y;
 	x1 = secondPosition.x;
 	y1 = secondPosition.y;
-	myDebugStart.push_back(position - CU::Vector2f(1, 1));
-	myDebugEnd.push_back(secondPosition - CU::Vector2f(1, 1));
-
-
-	double dx = fabs(x1 - x0);
-	double dy = fabs(y1 - y0);
-
-	int x = int(floor(x0));
-	int y = int(floor(y0));
-
-	double dt_dx = 1.0 / dx;
-	double dt_dy = 1.0 / dy;
-
-	double t = 0;
-
-	int n = 1;
-	int x_inc, y_inc;
-	double t_next_vertical, t_next_horizontal;
-
-	if (dx == 0)
-	{
-		x_inc = 0;
-		t_next_horizontal = dt_dx; // infinity
-	}
-	else if (x1 > x0)
-	{
-		x_inc = 1;
-		n += int(floor(x1)) - x;
-		t_next_horizontal = (floor(x0) + 1 - x0) * dt_dx;
-	}
-	else
-	{
-		x_inc = -1;
-		n += x - int(floor(x1));
-		t_next_horizontal = (x0 - floor(x0)) * dt_dx;
-	}
-
-	if (dy == 0)
-	{
-		y_inc = 0;
-		t_next_vertical = dt_dy; // infinity
-	}
-	else if (y1 > y0)
-	{
-		y_inc = 1;
-		n += int(floor(y1)) - y;
-		t_next_vertical = (floor(y0) + 1 - y0) * dt_dy;
-	}
-	else
-	{
-		y_inc = -1;
-		n += y - int(floor(y1));
-		t_next_vertical = (y0 - floor(y0)) * dt_dy;
-	}
+	myDebugStart.push_back(position);
+	myDebugEnd.push_back(secondPosition);
+	int dx = abs(x1 - x0);
+	int dy = abs(y1 - y0);
+	int x = x0;
+	int y = y0;
+	int n = 1 + dx + dy;
+	int x_inc = (x1 > x0) ? 1 : -1;
+	int y_inc = (y1 > y0) ? 1 : -1;
+	int error = dx - dy;
+	dx *= 2;
+	dy *= 2;
 
 	for (; n > 0; --n)
 	{
 		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);
 
-		if (t_next_vertical < t_next_horizontal)
+		if (error > 0)
 		{
-			y += y_inc;
-			t = t_next_vertical;
-			t_next_vertical += dt_dy;
+			x += x_inc;
+			error -= dy;
 		}
 		else
 		{
-			x += x_inc;
-			t = t_next_horizontal;
-			t_next_horizontal += dt_dx;
+			y += y_inc;
+			error += dx;
 		}
-
-		//GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);
 	}
-
-
-
 		
 }
 
-void PlayState::CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
+void PlayState::CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, int aIndex)
 {
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.x + anotherPosition.x, aPosition.y + anotherPosition.y));
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.x + anotherPosition.x, aPosition.y + anotherPosition.y));
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.x + anotherPosition.x, -aPosition.y + anotherPosition.y));
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.x + anotherPosition.x, -aPosition.y + anotherPosition.y));
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.y + anotherPosition.x, aPosition.x + anotherPosition.y));
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.y + anotherPosition.x, -aPosition.x + anotherPosition.y));
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.y + anotherPosition.x, aPosition.x + anotherPosition.y));
-	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.y + anotherPosition.x, -aPosition.x + anotherPosition.y));
+	if (aIndex < 25)
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(2, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-2, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(0, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(1, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-1, 4));
+	}
+	else if (aIndex < 50)
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, -2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 0));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 1));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, -1));
+	}
+	else if (aIndex < 75)
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(2, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-2, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(0, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(1, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-1, -4));
+	}
+	else
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, -2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 0));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 1));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, -1));
+	}
 }
 
-void PlayState::CalculateFoV(const CU::Vector2f& aPosition, float aRadius)
+void PlayState::CalculateFoV(const CU::Vector2f& aPosition, float aRadius, int aIndex)
 {
 	int r, xc, yc, pk, x, y;
 	xc = aPosition.x;
@@ -397,18 +378,18 @@ void PlayState::CalculateFoV(const CU::Vector2f& aPosition, float aRadius)
 	r = aRadius;
 	pk = 3 - 2 * r;
 	x = 0; y = r;
-	CalculateRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc));
+	CalculateRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc), aIndex);
 	while (x < y)
 	{
 		if (pk <= 0)
 		{
 			pk = pk + (4 * x) + 6;
-			CalculateRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc));
+			CalculateRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc), aIndex);
 		}
 		else
 		{
 			pk = pk + (4 * (x - y)) + 10;
-			CalculateRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc));
+			CalculateRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc), aIndex);
 		}
 	}
 }

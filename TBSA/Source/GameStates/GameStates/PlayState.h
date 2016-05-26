@@ -34,8 +34,8 @@ public:
 	IsometricTile & GetTile(unsigned short aIndex);
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
-	void CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
-	void CalculateFoV(const CU::Vector2f& aPosition, float aRadius);
+	void CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, int aIndex);
+	void CalculateFoV(const CU::Vector2f& aPosition, float aRadius, int aIndex);
 	Camera2D myCamera;
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
