@@ -24,6 +24,7 @@ enum class eTileState
 	IN_RANGE,
 	IN_PATH,
 	UNDER_MOUSE,
+	FIELD_OF_VIEW,
 	Size
 };
 

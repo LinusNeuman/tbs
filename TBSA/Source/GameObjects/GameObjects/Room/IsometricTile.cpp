@@ -62,6 +62,9 @@ void IsometricTile::Draw() const
 	case eTileState::UNDER_MOUSE:
 		currentColour = CommonUtilities::Vector4f(0, 1, 1, 1);
 		break;
+	case eTileState::FIELD_OF_VIEW:
+		currentColour = CommonUtilities::Vector4f(0.54f, 0.16f, 0.88f, 1.f);
+		break;
 	case eTileState::IS_WALKABLE:
 	case eTileState::NONE:
 	case eTileState::Size:
@@ -91,7 +94,7 @@ void IsometricTile::Update()
 		if (myNavVertex->IsSearched() == true)
 		{
 			myState = eTileState::IN_RANGE;
-}
+		}
 		else
 		{
 			myState = eTileState::IS_WALKABLE;
