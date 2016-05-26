@@ -101,7 +101,7 @@ void Actor::UpdatePath()
 		++myCurrentWaypoint;
 		if (myCurrentWaypoint == myPath.Size())
 		{	
-			SingletonPostMaster::PostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1] + CommonUtilities::Vector2ui(1, 1), myAP));
+			SingletonPostMaster::PostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], myAP));
 		}
 	}
 }

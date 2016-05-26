@@ -43,6 +43,8 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 	
+	
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
@@ -90,7 +92,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 
-	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(1.5,1.5));
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5,0.5));
 
 	GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
 
@@ -114,7 +116,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 			for (size_t i = 0; i < indexPath.Size(); i++)
 			{
-				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()) - CommonUtilities::Vector2ui(1, 1));
+				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()));
 			}
 
 			myPlayerController->NotifyPlayers(positionPath);
@@ -158,21 +160,26 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
 
-	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
+	/*CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
 	DRAWLINE(CU::Vector2f::Zero, testLine);
 	DRAWLINE(CU::Vector2f(1920.f, 0.f), testLine);
 	DRAWLINE(CU::Vector2f(1920.f, 1080.f), testLine);
-	DRAWLINE(CU::Vector2f(0.f, 1080.f), testLine);
+	DRAWLINE(CU::Vector2f(0.f, 1080.f), testLine);*/
 
-	CU::Vector2f testIsoLine(IsometricInput::GetMouseWindowPositionIsometric());
+	/*CU::Vector2f testIsoLine(IsometricInput::GetMouseWindowPositionIsometric());
 	DRAWISOMETRICLINE(CU::Vector2f::Zero, testIsoLine);
 	DRAWISOMETRICLINE(CU::Vector2f(0.f, 10.f), testIsoLine);
 	DRAWISOMETRICLINE(CU::Vector2f(20.f, 10.f), testIsoLine);
-	DRAWISOMETRICLINE(CU::Vector2f(20.f, 0.f), testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(20.f, 0.f), testIsoLine);*/
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
 	myEnemy->Update(aTimeDelta);
+
+	myDebugStart.clear();
+	myDebugEnd.clear();
+
+	CalculateFoV(myEnemy->GetPosition(), 3.f);
 
 	return eStackReturnValue::eStay;
 }
@@ -199,7 +206,11 @@ void PlayState::Draw() const
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();
-
+	//std::cout << IsometricInput::GetMouseWindowPositionIsometric().x << " " << IsometricInput::GetMouseWindowPositionIsometric().y << std::endl;
+	for (size_t i = 0; i < myDebugStart.size(); i++)
+	{
+		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
+	}
 }
 
 void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
@@ -269,4 +280,128 @@ void PlayState::ConstructNavGraph()
 	}
 }
 
+void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
+{
+	CU::Vector2f position = aPosition + CU::Vector2f(1, 1);
+	CU::Vector2f secondPosition = anotherPosition + CU::Vector2f(1, 1);
+	double x0, x1, y0, y1;
+	x0 = position.x;
+	y0 = position.y;
+	x1 = secondPosition.x;
+	y1 = secondPosition.y;
+	myDebugStart.push_back(position - CU::Vector2f(1, 1));
+	myDebugEnd.push_back(secondPosition - CU::Vector2f(1, 1));
+
+
+	double dx = fabs(x1 - x0);
+	double dy = fabs(y1 - y0);
+
+	int x = int(floor(x0));
+	int y = int(floor(y0));
+
+	double dt_dx = 1.0 / dx;
+	double dt_dy = 1.0 / dy;
+
+	double t = 0;
+
+	int n = 1;
+	int x_inc, y_inc;
+	double t_next_vertical, t_next_horizontal;
+
+	if (dx == 0)
+	{
+		x_inc = 0;
+		t_next_horizontal = dt_dx; // infinity
+	}
+	else if (x1 > x0)
+	{
+		x_inc = 1;
+		n += int(floor(x1)) - x;
+		t_next_horizontal = (floor(x0) + 1 - x0) * dt_dx;
+	}
+	else
+	{
+		x_inc = -1;
+		n += x - int(floor(x1));
+		t_next_horizontal = (x0 - floor(x0)) * dt_dx;
+	}
+
+	if (dy == 0)
+	{
+		y_inc = 0;
+		t_next_vertical = dt_dy; // infinity
+	}
+	else if (y1 > y0)
+	{
+		y_inc = 1;
+		n += int(floor(y1)) - y;
+		t_next_vertical = (floor(y0) + 1 - y0) * dt_dy;
+	}
+	else
+	{
+		y_inc = -1;
+		n += y - int(floor(y1));
+		t_next_vertical = (y0 - floor(y0)) * dt_dy;
+	}
+
+	for (; n > 0; --n)
+	{
+		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);
+
+		if (t_next_vertical < t_next_horizontal)
+		{
+			y += y_inc;
+			t = t_next_vertical;
+			t_next_vertical += dt_dy;
+		}
+		else
+		{
+			x += x_inc;
+			t = t_next_horizontal;
+			t_next_horizontal += dt_dx;
+		}
+
+		//GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);
+	}
+
+
+
+		
+}
+
+void PlayState::CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
+{
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.x + anotherPosition.x, aPosition.y + anotherPosition.y));
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.x + anotherPosition.x, aPosition.y + anotherPosition.y));
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.x + anotherPosition.x, -aPosition.y + anotherPosition.y));
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.x + anotherPosition.x, -aPosition.y + anotherPosition.y));
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.y + anotherPosition.x, aPosition.x + anotherPosition.y));
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(aPosition.y + anotherPosition.x, -aPosition.x + anotherPosition.y));
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.y + anotherPosition.x, aPosition.x + anotherPosition.y));
+	RayTrace(myEnemy->GetPosition(), CU::Vector2f(-aPosition.y + anotherPosition.x, -aPosition.x + anotherPosition.y));
+}
+
+void PlayState::CalculateFoV(const CU::Vector2f& aPosition, float aRadius)
+{
+	int r, xc, yc, pk, x, y;
+	xc = aPosition.x;
+	yc = aPosition.y;
+	r = aRadius;
+	pk = 3 - 2 * r;
+	x = 0; y = r;
+	CalculateRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc));
+	while (x < y)
+	{
+		if (pk <= 0)
+		{
+			pk = pk + (4 * x) + 6;
+			CalculateRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc));
+		}
+		else
+		{
+			pk = pk + (4 * (x - y)) + 10;
+			CalculateRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc));
+		}
+	}
+}
 

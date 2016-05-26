@@ -62,6 +62,9 @@ void IsometricTile::Draw() const
 	case eTileState::UNDER_MOUSE:
 		currentColour = CommonUtilities::Vector4f(0, 1, 1, 1);
 		break;
+	case eTileState::FIELD_OF_VIEW:
+		currentColour = CommonUtilities::Vector4f(0.54f, 0.16f, 0.88f, 1.f);
+		break;
 	case eTileState::IS_WALKABLE:
 	case eTileState::NONE:
 	case eTileState::Size:
@@ -80,9 +83,9 @@ void IsometricTile::Draw() const
 			myGraphicsLayers[i]->SetColor(CommonUtilities::Vector4f(1, 1, 1, 1));
 		}
 		CommonUtilities::Vector2f positionModifier = CommonUtilities::Vector2f::Zero;
-		if (myGraphicsLayers[i]->GetLayer() == enumRenderLayer::eGameObjects)
+		if (myGraphicsLayers[i]->GetLayer() == enumRenderLayer::eFloor)
 		{
-			positionModifier -= CommonUtilities::Vector2f(1, 1);
+			positionModifier += CommonUtilities::Vector2f(1, 1);
 		}
 
 		myGraphicsLayers[i]->Draw(myPosition + positionModifier);
@@ -96,7 +99,7 @@ void IsometricTile::Update()
 		if (myNavVertex->IsSearched() == true)
 		{
 			myState = eTileState::IN_RANGE;
-}
+		}
 		else
 		{
 			myState = eTileState::IS_WALKABLE;
