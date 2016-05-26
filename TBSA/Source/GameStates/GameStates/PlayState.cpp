@@ -339,52 +339,52 @@ void PlayState::CalculateRayTrace(int aIndex)
 {
 	if (aIndex < 25)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(0, 1), 45.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(0, 1), 45.f, 4.f);
 	}
 	else if (aIndex < 50)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(1, 0), 45.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(1, 0), 45.f, 4.f);
 	}
 	else if (aIndex < 75)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(0, -1), 45.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(0, -1), 45.f, 4.f);
 	}
 	else
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(-1, 0), 45.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(-1, 0), 45.f, 4.f);
 	}
 }
 
-void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees)
+void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
 {
 	float angle = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f));
 	float angle2 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f));
 	float angle3 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f));
 	float angle4 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f));
 	float angle5 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle());
-	CU::Vector2f test = CU::Vector2f(CalculatePoint(4 * cos(angle)), CalculatePoint(4 * sin(angle)));
-	CU::Vector2f test3 = CU::Vector2f(CalculatePoint(4 * cos(angle3)), CalculatePoint(4 * sin(angle3)));
-	CU::Vector2f test2 = CU::Vector2f(CalculatePoint(4 * cos(angle2)), CalculatePoint(4 * sin(angle2)));
-	CU::Vector2f test4 = CU::Vector2f(CalculatePoint(4 * cos(angle4)), CalculatePoint(4 * sin(angle4)));
+	CU::Vector2f test = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
+	CU::Vector2f test3 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle3))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle3))));
+	CU::Vector2f test2 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle2))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle2))));
+	CU::Vector2f test4 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle4))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle4))));
 
 	CU::Vector2f test5;
-	//this should be alot less messy when enemies has directions, which would probably be with enums or somehting.
+	//this should be alot less messy when enemies has directions, which would probably be with enums or something.
 
 	if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == 1)
 	{
-		test5 = CU::Vector2f(ceil(4 * cos(angle5)), ceil(4 * sin(angle5)));
+		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
 	}
 	else if (aShouldBeEnemyDirection.x == 1 && aShouldBeEnemyDirection.y == 0)
 	{
-		test5 = CU::Vector2f(ceil(4 * cos(angle5)), floor(4 * sin(angle5)));
+		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
 	}
 	else if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == -1)
 	{
-		test5 = CU::Vector2f(floor(4 * cos(angle5)), ceil(4 * sin(angle5)));
+		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
 	}
 	else
 	{
-		test5 = CU::Vector2f(floor(4 * cos(angle5)), floor(4 * sin(angle5)));
+		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
 	}
 	
 	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test);
