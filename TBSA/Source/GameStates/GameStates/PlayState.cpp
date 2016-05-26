@@ -45,6 +45,8 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 	
+	
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
@@ -58,7 +60,8 @@ void PlayState::Init()
 	
 	ConstructNavGraph();
 
-	myPlayerController = new PlayerController();
+	myPlayerController = &myTurnManager.GetPlayerController();
+	myPlayerController->SetMyPlayState(*this);
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer);
@@ -105,9 +108,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		}
 	}
 
-	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	myTurnManager.Update(aTimeDelta);
+	/*if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		//myPlayerController->NotifyPlayers();
 		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
 			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
@@ -118,16 +121,19 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 			{
 				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()));
 			}
-
-			myPlayerController->NotifyPlayers(positionPath);
+			if (myPlayerController->GetPlayerAP() >= positionPath.Size())
+			{
+				myPlayerController->NotifyPlayers(positionPath);
+				myNavGraph.Clear(); 
+			}
 		}
-		myNavGraph.Clear();
 
 	}
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		myPlayerController->SelectPlayer();
-	}
+	}*/
+
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
 		return eStackReturnValue::ePopMain;
@@ -282,6 +288,11 @@ void PlayState::ConstructNavGraph()
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[west].GetVertexHandle());
 		}
 	}
+}
+
+IsometricTile& PlayState::GetTile(unsigned short aIndex)
+{
+	return  myTiles[aIndex];
 }
 
 void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)

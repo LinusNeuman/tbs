@@ -9,6 +9,7 @@
 #include <TiledData/TiledData.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Camera/Camera2D.h>
+#include "../../TurnManager/TurnManager/TurnManager.h"
 
 class StaticSprite;
 class RenderConverter;
@@ -30,6 +31,7 @@ public:
 
 	IsometricTile & GetTile(unsigned int aX, unsigned int aY);
 	IsometricTile & GetTile(CommonUtilities::Vector2ui aVector2Ui);
+	IsometricTile & GetTile(unsigned short aIndex);
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
 	void CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, int aIndex);
@@ -47,6 +49,8 @@ private:
 	CommonUtilities::Vector2ui myDimensions;
 	std::vector<CU::Vector2f> myDebugStart;
 	std::vector<CU::Vector2f> myDebugEnd;
+
+	TurnManager myTurnManager;
 };
 
 inline IsometricTile& PlayState::GetTile(unsigned aX, unsigned aY)

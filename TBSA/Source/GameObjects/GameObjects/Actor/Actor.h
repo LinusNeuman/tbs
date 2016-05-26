@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "../Renderer/Animation/AnimationHandler.h"
+#include <CU/Timer/Time.h>
 
 struct ActorData;
 class StaticSprite;
@@ -46,7 +47,7 @@ public:
 		return myType;
 	}
 
-	int GetMyAP() const;
+	virtual int GetMyAP() const;
 	StaticSprite *mySprite;
 	
 protected:

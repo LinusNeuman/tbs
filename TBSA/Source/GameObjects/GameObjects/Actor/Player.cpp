@@ -18,6 +18,24 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	Actor::Init(aActorData);
 	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
+	myCurrentAP = myActionPointMax;
+}
+
+void Player::EndTurn()
+{
+	myCurrentAP = myActionPointMax;
+
+}
+
+int Player::GetMyAP() const
+{
+	return myCurrentAP;
+}
+
+void Player::CostAP(const int aCost)
+{
+	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
+	myCurrentAP -= aCost;
 }
 
 void Player::DecideAnimation()
