@@ -308,8 +308,8 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 	myDebugEnd.push_back(secondPosition);
 	int dx = abs(static_cast<int>(x1 - x0));
 	int dy = abs(static_cast<int>(y1 - y0));
-	int x = x0;
-	int y = y0;
+	int x = static_cast<int>(x0);
+	int y = static_cast<int>(y0);
 	int n = 1 + dx + dy;
 	int x_inc = (x1 > x0) ? 1 : -1;
 	int y_inc = (y1 > y0) ? 1 : -1;
@@ -398,11 +398,11 @@ int PlayState::CalculatePoint(float aValue)
 {
 	if (aValue <= 0)
 	{
-		return floor(aValue);
+		return static_cast<int>(floor(aValue));
 	}
 	else
 	{
-		return ceil(aValue);
+		return static_cast<int>(ceil(aValue));
 	}
 }
 
