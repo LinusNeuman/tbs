@@ -12,5 +12,6 @@
     <ClInclude Include="Message\LevelTileMetricsMessage.h" />
     <ClInclude Include="Message\DijkstraMessage.h" />
     <ClInclude Include="Message\SetMainCameraMessage.h" />
+    <ClInclude Include="Message\NavigationClearMessage.h" />
   </ItemGroup>
 </Project>

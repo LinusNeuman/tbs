@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include "../Renderer/Animation/AnimationHandler.h"
 
 struct ActorData;
 class StaticSprite;
@@ -13,15 +14,23 @@ enum class eActorType
 	eEnemyTwo
 };
 
+enum class eActorState
+{
+	eIdle,
+	eWalking
+};
+
 class Actor
 {
 public:
 	Actor();
 	~Actor();
 	void Init(const ActorData &aActorData);
-	void Update(const CU::Time &aDeltaTime);
+	virtual void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
+	void SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>);
+
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
 	CU::Vector2f GetPosition() const
@@ -45,14 +54,20 @@ protected:
 	{
 		return mySprite;
 	}
-	std::map<std::string, Animation*> myAnimations;
-	std::string myActiveAnimation;
-	
-private:
+	AnimationHandler myAnimations;
+	virtual void DecideAnimation();
+	CU::Vector2ui myTargetPosition;
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
-	CU::Vector2ui myTargetPosition;
+	eActorState myState;
+private:
+	void UpdatePath();
+
+	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
+	unsigned short myCurrentWaypoint;
 	eActorType myType;
 	int myAP;
+
+	bool myAtTarget;
 };
 

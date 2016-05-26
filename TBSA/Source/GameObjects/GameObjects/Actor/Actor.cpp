@@ -6,13 +6,16 @@
 //#include "../JsonDataStructs.h"
 #include "GameObjects/JsonDataStructs.h"
 #include <CU\DLDebug\DL_Debug.h>
-
+#include <PostMaster/SingletonPostMaster.h>
+#include <Message/DijkstraMessage.h>
 
 Actor::Actor()
 {
 	mySprite = new StaticSprite();
 	myVelocity = CU::Vector2f::Zero;
 	myAP = 5;
+	myPath.Init(1);
+	myCurrentWaypoint = 0;
 }
 
 Actor::~Actor()
@@ -26,7 +29,7 @@ void Actor::Init(const ActorData &aActorData)
 	mySprite->Init();
 	mySprite->SetLayer(enumRenderLayer::eGameObjects);
 	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
-	myAnimations = aActorData.myAnimations;
+	myAnimations.Init(this, aActorData.myAnimations);
 }
 
 
@@ -35,17 +38,35 @@ void Actor::Update(const CU::Time& aDeltaTime)
 	myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 	myPosition += myVelocity * aDeltaTime.GetSeconds();
 	CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
-	if (myActiveAnimation != "")
+	if (myAnimations.GetIsActive() == true)
 	{
-		myAnimations[myActiveAnimation]->UpdateAnimation();
-		mySprite = myAnimations[myActiveAnimation]->GetSprite();
+		myAnimations.Update();
+		mySprite = myAnimations.GetSprite();
 		mySprite->SetLayer(enumRenderLayer::eGameObjects);
 		mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	}
 	if ((CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 	{
+		myAtTarget = true;
 		myPosition = CommonUtilities::Point2f(myTargetPosition);
 	}
+	else
+	{
+		myAtTarget = false;
+	}
+
+	UpdatePath();
+
+	if (myVelocity.Length2() > 0.f)
+	{
+		myState = eActorState::eWalking;
+	}
+	else
+	{
+		myState = eActorState::eIdle;
+	}
+
+	DecideAnimation();
 }
 
 void Actor::Draw() const
@@ -58,9 +79,13 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 	myTargetPosition = aTargetPosition;
 }
 
-void Actor::AddAnimation(Animation* anAnimation)
+void Actor::SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath)
 {
-	myAnimations[anAnimation->GetName()] = anAnimation;
+	if (myCurrentWaypoint == myPath.Size())
+	{
+		myPath = aPath;
+		myCurrentWaypoint = 0;
+	}
 }
 
 int Actor::GetMyAP() const
@@ -68,55 +93,30 @@ int Actor::GetMyAP() const
 	return myAP;
 }
 
-void Actor::ChangeAnimation(const std::string& anAnimation)
+void Actor::UpdatePath()
 {
-	DL_ASSERT(myAnimations.find(anAnimation) != myAnimations.end(), "Animation does not exist");
-	if (myActiveAnimation != anAnimation)
+	if (myAtTarget == true && myCurrentWaypoint < myPath.Size())
 	{
-		if (myActiveAnimation != "")
-		{
-			if (myAnimations[myActiveAnimation]->GetIsRunning() == false || myAnimations[myActiveAnimation]->GetIsInteruptable() == true)
-			{
-				myAnimations[myActiveAnimation]->StopAnimation();
-				if (myAnimations[myActiveAnimation]->GetInTransition() != "")
-				{
-					myAnimations[myAnimations[myActiveAnimation]->GetInTransition()]->SetHasPlayed(false);
-				}
-				if (myAnimations[myActiveAnimation]->GetOutTransition() != "")
-				{
-					myAnimations[myAnimations[myActiveAnimation]->GetOutTransition()]->SetHasPlayed(false);
-				}
-
-				if (myAnimations[myActiveAnimation]->GetOutTransition() == "" ||
-					myAnimations[myAnimations[myActiveAnimation]->GetOutTransition()]->GetHasPlayed() == true)
-				{
-					if (myAnimations[anAnimation]->GetInTransition() == "" ||
-						myAnimations[myAnimations[anAnimation]->GetInTransition()]->GetHasPlayed() == true)
-					{
-						myActiveAnimation = anAnimation;
-					}
-					else if (myActiveAnimation != myAnimations[anAnimation]->GetInTransition())
-					{
-						myActiveAnimation = myAnimations[anAnimation]->GetInTransition();
-						myAnimations[myActiveAnimation]->StopAnimationAtEnd();
-					}
-				}
-				else if (myActiveAnimation != myAnimations[anAnimation]->GetOutTransition())
-				{
-					myActiveAnimation = myAnimations[myActiveAnimation]->GetOutTransition();
-					myAnimations[myActiveAnimation]->StopAnimationAtEnd();
-				}
-				myAnimations[myActiveAnimation]->StartAnimation();
-			}
-			else
-			{
-				myAnimations[myActiveAnimation]->StopAnimationAtEnd();
-			}
-		}
-		else
-		{
-			myActiveAnimation = anAnimation;
-			myAnimations[myActiveAnimation]->StartAnimation();
+		Move(myPath[myCurrentWaypoint]);
+		++myCurrentWaypoint;
+		if (myCurrentWaypoint == myPath.Size())
+		{	
+			SingletonPostMaster::PostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1] + CommonUtilities::Vector2ui(1, 1), myAP));
 		}
 	}
+}
+
+void Actor::ChangeAnimation(const std::string& anAnimation)
+{
+	myAnimations.ChangeAnimation(anAnimation);
+}
+
+void Actor::AddAnimation(Animation* anAnimation)
+{
+	myAnimations.AddAnimation(anAnimation);
+}
+
+void Actor::DecideAnimation()
+{
+
 }

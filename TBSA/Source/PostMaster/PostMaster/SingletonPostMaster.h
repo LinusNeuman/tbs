@@ -4,6 +4,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include "PostMaster/MessageReceiver.h"
 
+
 class MessageReciever;
 
 class SingletonPostMaster
@@ -58,4 +59,5 @@ inline SingletonPostMaster & SingletonPostMaster::GetInstance()
 	return *ourInstance;
 }
 
-#define SendMessage(message) SingletonPostMaster::PostMessage((message));
+#define SendPostMessage(message) SingletonPostMaster::PostMessage((message));
+

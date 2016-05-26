@@ -13,6 +13,7 @@ public:
 	Player();
 	~Player();
 	void Init(const ActorData &aActorData, const PlayerData &aPlayerData);
+	void DecideAnimation() override;
 private:
 
 	int myActionPointMax;
