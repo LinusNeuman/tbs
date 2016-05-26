@@ -306,8 +306,8 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 	y1 = secondPosition.y;
 	myDebugStart.push_back(position);
 	myDebugEnd.push_back(secondPosition);
-	int dx = abs(x1 - x0);
-	int dy = abs(y1 - y0);
+	int dx = abs(static_cast<int>(x1 - x0));
+	int dy = abs(static_cast<int>(y1 - y0));
 	int x = x0;
 	int y = y0;
 	int n = 1 + dx + dy;
