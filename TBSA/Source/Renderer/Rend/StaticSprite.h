@@ -95,8 +95,9 @@ public:
 	void SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel);
 	const CU::Vector2f & GetPivotInPixels() const;
 
-	void SetShader(const DX2D::CCustomShader * aCustomShader);
+	void SetShader(DX2D::CCustomShader * aCustomShader);
 
+	std::string myShaderName;
 private:
 	const RenderData & GetRenderData() const;
 
@@ -106,7 +107,7 @@ private:
 	bool myIsInitiedFlag;
 	bool myIsIsometricFlag;
 	unsigned short myImageIndex;
-	
+
 	enumRenderLayer myLayer;
 	RenderData myRenderData;
 
@@ -161,7 +162,7 @@ inline const CU::Vector2f & StaticSprite::GetPivotInPixels() const
 	return myPositionOffset;
 }
 
-inline void StaticSprite::SetShader(const DX2D::CCustomShader * aCustomShader)
+inline void StaticSprite::SetShader(DX2D::CCustomShader * aCustomShader)
 {
 	myRenderData.myShaderPtr = aCustomShader;
 }

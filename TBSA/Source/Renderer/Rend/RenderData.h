@@ -23,5 +23,5 @@ struct RenderData
 	{}*/
 
 	CU::Vector4f myColor;
-	const DX2D::CCustomShader * myShaderPtr;
+	DX2D::CCustomShader * myShaderPtr;
 };

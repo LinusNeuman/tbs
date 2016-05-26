@@ -7,9 +7,10 @@
 #include <GameObjects/Actor/Actor.h>
 #include <Controllers/PlayerController.h>
 #include <TiledLoader/TiledLoader.h>
-#include <tga2d/shaders/customshader.h>
-#include <tga2d/texture/texture_manager.h>
-#include <tga2d/engine.h>
+#include <tga2d\shaders\customshader.h>
+#include <tga2d\texture\texture_manager.h>
+#include <tga2d\engine.h>
+#include "tga2d\sprite\sprite.h"
 #include <Shader/Shaders.h>
 
 #include <TiledData/TiledData.h>
@@ -17,11 +18,12 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include "../../PathFinding/NavGraph/NavHandle.h"
 #include "../PathFinding/NavGraph/Vertex/NavVertex.h"
-#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+//#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+#include <Message/DijkstraMessage.h>
 
 #include <Message/SetMainCameraMessage.h>
 
-
+const float sqrt2 = sqrt(2);
 const float CameraSpeed = 10.f;
 
 PlayState::PlayState()
@@ -37,10 +39,9 @@ void PlayState::Init()
 {
 	Shaders::Create();
 	myTiles.Init(100);
-
-	RenderConverter::SetCamera(myCamera);
 	
-
+	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
+	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
@@ -49,7 +50,7 @@ void PlayState::Init()
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
-
+	
 
 	myPlayerController = new PlayerController();
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
@@ -63,19 +64,41 @@ void PlayState::Init()
 	myEnemy->ChangeAnimation("EnemyTurn");
 
 	DX2D::CCustomShader* customShader;
+	DX2D::CCustomShader* customFoVShader;
 	customShader = new DX2D::CCustomShader();
-	customShader->SetShaderdataFloat4(DX2D::Vector4f(1, 0, 1, 1), DX2D::EShaderDataID_1); // Add some data to it
+	customFoVShader = new DX2D::CCustomShader();
 	customShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/Players/Player2/characterSheetTurnaround2.png"), DX2D::EShaderTextureSlot_1); // Add a texture
+	customShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customFoVShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
+	
 	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
-
+	customFoVShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/customLos_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
+	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
 
 	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
+
+	ConstructNavGraph();
 }
 
-eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
+eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
 {
-	(aStateStack);
+	//(aStateStack);
+
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
+
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(1.5,1.5));
+
+	GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
+
+	if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+	{
+		CommonUtilities::GrowingArray<int> path = GetTile(mousePosition).GetVertexHandle()->GetPath();
+		for (size_t i = 0; i < path.Size(); i++)
+		{
+			myTiles[path[i]].SetTileState(eTileState::IN_PATH);
+		}
+	}
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
@@ -89,7 +112,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		return eStackReturnValue::ePopMain;
 	}
-
 	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
 	{
 		bool isFalse = false;
@@ -113,6 +135,11 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
 	}
 
+	if (IsometricInput::GetKeyPressed(DIK_F3))
+	{
+		myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::ToggleDebugMode));
+	}
+
 	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
 	DRAWLINE(CU::Vector2f::Zero, testLine);
 	DRAWLINE(CU::Vector2f(1920.f, 0.f), testLine);
@@ -128,11 +155,28 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
 	myEnemy->Update(aTimeDelta);
+
 	return eStackReturnValue::eStay;
 }
 
 void PlayState::Draw() const
 {
+	for (unsigned int i = 0; i < myTiles.Size(); i++)
+	{
+		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
+		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
+		{
+			if (distance.Length2() > 16.0f)
+			{
+				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
+			}
+			else
+			{
+				myTiles[i].myGraphicsLayers[j]->SetShader(nullptr);
+			}
+		}
+	}
+
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 	myPlayer->Draw();
 	myPlayer2->Draw();
@@ -140,11 +184,25 @@ void PlayState::Draw() const
 
 }
 
+void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
+{
+	const CommonUtilities::Vector2ui position = aMessage.myPosition;
+	const int distance = aMessage.myDistance;
+
+	const CommonUtilities::Vector2ui mapSize = myTiledData.myMapSize;
+	const int id = mapSize.x * position.y + position.x;
+
+	const IsometricTile selectedTile = myTiles[id];
+
+	myNavGraph.Dijkstra(selectedTile.GetVertexHandle(), distance);
+}
+
 void PlayState::ConstructNavGraph()
 {
 	for (size_t i = 0; i < myTiles.Size(); i++)
 	{
-		if (myTiles[i].GetTileType() != eTileType::OPEN || myTiles[i].GetTileType() != eTileType::DOOR || myTiles[i].GetTileType() != eTileType::DOOR_2)
+		eTileType explainingType = myTiles[i].GetTileType();
+		if (!(explainingType == eTileType::OPEN || explainingType == eTileType::DOOR|| explainingType == eTileType::DOOR_2))
 		{
 			continue;
 		}
@@ -160,6 +218,7 @@ void PlayState::ConstructNavGraph()
 		if (northWest > -1 && myTiles[northWest].GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			currentEdge->Setcost(sqrt2);
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northWest].GetVertexHandle());
 		}
 
@@ -174,6 +233,7 @@ void PlayState::ConstructNavGraph()
 		if (northEast > -1 && myTiles[northEast].GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
+			currentEdge->Setcost(sqrt2);
 			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northEast].GetVertexHandle());
 		}
 
