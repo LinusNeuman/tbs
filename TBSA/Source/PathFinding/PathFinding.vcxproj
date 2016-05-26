@@ -87,6 +87,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NavGraph\Comparers\VertexLesser.h" />
     <ClInclude Include="NavGraph\Edge\NavEdge.h" />
     <ClInclude Include="NavGraph\Graph\NavGraph.h" />
     <ClInclude Include="NavGraph\NavHandle.h" />
