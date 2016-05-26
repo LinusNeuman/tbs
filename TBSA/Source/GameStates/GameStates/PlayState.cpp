@@ -90,7 +90,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 
-	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(1.5,1.5));
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5,0.5));
 
 	GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
 
@@ -114,7 +114,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 			for (size_t i = 0; i < indexPath.Size(); i++)
 			{
-				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()) - CommonUtilities::Vector2ui(1, 1));
+				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()));
 			}
 
 			myPlayerController->NotifyPlayers(positionPath);
