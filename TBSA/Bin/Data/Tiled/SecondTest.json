@@ -89,8 +89,8 @@
                  "type":"Player_2",
                  "visible":true,
                  "width":128,
-                 "x":255,
-                 "y":249
+                 "x":258.5,
+                 "y":257.5
                 }],
          "opacity":1,
          "type":"objectgroup",
