@@ -47,7 +47,7 @@ public:
 		return myType;
 	}
 
-	int GetMyAP() const;
+	virtual int GetMyAP() const;
 	StaticSprite *mySprite;
 	
 protected:
