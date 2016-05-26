@@ -3,10 +3,35 @@
  <tileset firstgid="1" name="tileSheetFloors" tilewidth="128" tileheight="128" tilecount="256" columns="16">
   <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetFloors.png" width="2048" height="2048"/>
  </tileset>
- <tileset firstgid="257" name="tileSheetProps" tilewidth="128" tileheight="128" tilecount="256" columns="16">
-  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetProps.png" width="2048" height="2048"/>
- </tileset>
- <tileset firstgid="513" name="tileSheetWalls" tilewidth="128" tileheight="128" tilecount="256" columns="16">
+ <tileset firstgid="257" name="tileSheetWalls" tilewidth="128" tileheight="128" tilecount="256" columns="16">
   <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetWalls.png" width="2048" height="2048"/>
  </tileset>
+ <tileset firstgid="513" name="tileSheetProps" tilewidth="128" tileheight="128" tilecount="256" columns="16">
+  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetProps.png" width="2048" height="2048"/>
+ </tileset>
+ <layer name="floor" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1NEJwCAQBUH77zYdpAF/FIVNmIHXwC3cGAAAAAAAAAAAAOueyThndt/VcY4eLXq06NGiR4v7t+z20OiOE/9Km3P0aNGjRY+GGx302KdHix4terTo8Q96tOjRokeLHi16tOgBAAAAAAAAAAAAAAAAAAAAAAAAAAB82Qt2WV81
+  </data>
+ </layer>
+ <layer name="coverBehind" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztzgENAAAIA6CbwP5tjeF0kIAEAAAAAAAAAAAAAAAAuK5rewAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfwweKAAR
+  </data>
+ </layer>
+ <layer name="walls" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2VsKwjAQBdA+dAEq7n+rElQIoUHbTnGQc6AEqx9lbpNJ6zAAAAAAAAAAAEB+8zgMt+o4jb++ov/S1vfTcXnV/z49x6s8Qq2tZ/t7ecTaW095xDI/cmnrWfeTooz36vOl6SeTPEJ9c7/X58yHY23No55H9rxxtuTRrlNn2YSJXq+sZ/vII5f3+lOUcVx4Jp/kcbh5odbFN/Xu7YXr9yms06v72vvf82GMqLrJI4b5kct5oW/3+nnv+2Jt/yGW/VUu8shFHrnIIxd55NLbl/l/CgAAAAAAAAAAAAAAAAAAAAAAAAAAgC0ejYUJ1g==
+  </data>
+ </layer>
+ <layer name="objectives" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1jENADAMBLEoGKqWP9MOWcPgbek4XBUAAAAAAAAAAAAAALC5PUGa1xMAAKQ7vhgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAINYH0qkAeQ==
+  </data>
+ </layer>
+ <layer name="coverFront" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1sEJADAMAsB0gu6/begS1cfdBIIIzgAAAAAAAAAAAAAAkHBPOgH0so8u+gAA+Od9L/+rgx562AUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkLBwJgCB
+  </data>
+ </layer>
 </map>
