@@ -2,7 +2,9 @@
 #include "PlayerController.h"
 #include <GameObjects/Actor/Actor.h>
 #include <Message/DijkstraMessage.h>
-
+#include <NavGraph/Vertex/NavVertex.h>
+#include <Message/NavigationClearMessage.h>
+#include "../../GameStates/GameStates/PlayState.h"
 
 PlayerController::PlayerController()
 {
@@ -20,7 +22,7 @@ void PlayerController::AddPlayer(Actor* aPlayer)
 {
 	myPlayers.Add(aPlayer);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
-	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) + CommonUtilities::Vector2ui(1, 1), mySelectedPlayer->GetMyAP());
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) , mySelectedPlayer->GetMyAP());
 	SingletonPostMaster::PostMessage(dijkstraMessage);
 }
 
@@ -33,7 +35,7 @@ void PlayerController::SelectPlayer()
 	}
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 
-	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition())+ CommonUtilities::Vector2ui(1,1), mySelectedPlayer->GetMyAP());
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SingletonPostMaster::PostMessage(dijkstraMessage);
 }
 
@@ -52,4 +54,59 @@ void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtiliti
 	}
 }
 
+int PlayerController::GetPlayerAP()
+{
+	if (mySelectedPlayer != nullptr)
+	{
+		return mySelectedPlayer->GetMyAP();
+	}
+	else
+	{
+		return 0;
+	}
+}
 
+void PlayerController::CostAP(const int anAP)
+{
+	/*if (mySelectedPlayer != nullptr)
+	{
+		mySelectedPlayer->
+	}*/
+}
+
+void PlayerController::Update(const CommonUtilities::Time& aTime)
+{
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
+
+
+	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	{
+		if (myPlayState->GetTile(mousePosition).CheckIfWalkable() == true && myPlayState->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+		{
+			CommonUtilities::GrowingArray<int> indexPath = myPlayState->GetTile(mousePosition).GetVertexHandle()->GetPath();
+			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
+			positionPath.Init(indexPath.Size());
+
+			for (size_t i = 0; i < indexPath.Size(); i++)
+			{
+				positionPath.Add(CommonUtilities::Vector2ui(myPlayState->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
+			}
+			if (GetPlayerAP() >= positionPath.Size())
+			{
+				NotifyPlayers(positionPath);
+				SingletonPostMaster::PostMessageA(NavigationClearMessage(RecieverTypes::eRoom));
+			}
+		}
+
+	}
+
+	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	{
+		SelectPlayer();
+	}
+}
+
+void PlayerController::SetMyPlayState(PlayState& aPlayStateRef)
+{
+	myPlayState = &aPlayStateRef;
+}

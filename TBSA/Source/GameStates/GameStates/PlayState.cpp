@@ -23,6 +23,8 @@
 #include <Message/DijkstraMessage.h>
 
 #include <Message/SetMainCameraMessage.h>
+#include <CU/Matriser/matrix.h>
+#include <CU/Intersection/Shapes2D/LineSegment2D.h>
 
 #define EDGE_SCROLL_LIMIT 0.05f
 
@@ -43,6 +45,8 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 	
+	
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
@@ -56,7 +60,8 @@ void PlayState::Init()
 	
 	ConstructNavGraph();
 
-	myPlayerController = new PlayerController();
+	myPlayerController = &myTurnManager.GetPlayerController();
+	myPlayerController->SetMyPlayState(*this);
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer);
@@ -87,10 +92,10 @@ void PlayState::Init()
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
 {
 	//(aStateStack);
-
+	static int index = 0;
 	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 
-	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(1.5,1.5));
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5,0.5));
 
 	GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
 
@@ -103,9 +108,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		}
 	}
 
-	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	myTurnManager.Update(aTimeDelta);
+	/*if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		//myPlayerController->NotifyPlayers();
 		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
 			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
@@ -114,18 +119,21 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 			for (size_t i = 0; i < indexPath.Size(); i++)
 			{
-				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()) - CommonUtilities::Vector2ui(1, 1));
+				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()));
 			}
-
-			myPlayerController->NotifyPlayers(positionPath);
+			if (myPlayerController->GetPlayerAP() >= positionPath.Size())
+			{
+				myPlayerController->NotifyPlayers(positionPath);
+				myNavGraph.Clear(); 
+			}
 		}
-		myNavGraph.Clear();
 
 	}
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		myPlayerController->SelectPlayer();
-	}
+	}*/
+
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
 		return eStackReturnValue::ePopMain;
@@ -157,23 +165,32 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
+	if (IsometricInput::GetKeyPressed(DIK_F4))
+	{
+		index += 25;
+	}
 
-	CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
+	/*CU::Vector2f testLine(IsometricInput::GetMouseWindowPosition());
 	DRAWLINE(CU::Vector2f::Zero, testLine);
 	DRAWLINE(CU::Vector2f(1920.f, 0.f), testLine);
 	DRAWLINE(CU::Vector2f(1920.f, 1080.f), testLine);
-	DRAWLINE(CU::Vector2f(0.f, 1080.f), testLine);
+	DRAWLINE(CU::Vector2f(0.f, 1080.f), testLine);*/
 
-	CU::Vector2f testIsoLine(IsometricInput::GetMouseWindowPositionIsometric());
+	/*CU::Vector2f testIsoLine(IsometricInput::GetMouseWindowPositionIsometric());
 	DRAWISOMETRICLINE(CU::Vector2f::Zero, testIsoLine);
 	DRAWISOMETRICLINE(CU::Vector2f(0.f, 10.f), testIsoLine);
 	DRAWISOMETRICLINE(CU::Vector2f(20.f, 10.f), testIsoLine);
-	DRAWISOMETRICLINE(CU::Vector2f(20.f, 0.f), testIsoLine);
+	DRAWISOMETRICLINE(CU::Vector2f(20.f, 0.f), testIsoLine);*/
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
 	myEnemy->Update(aTimeDelta);
 
+	myDebugStart.clear();
+	myDebugEnd.clear();
+	CalculateFoV(myEnemy->GetPosition(), 4.f, index);
+	if (index > 100)
+		index = 0;
 	return eStackReturnValue::eStay;
 }
 
@@ -199,7 +216,11 @@ void PlayState::Draw() const
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();
-
+	std::cout << IsometricInput::GetMouseWindowPositionIsometric().x << " " << IsometricInput::GetMouseWindowPositionIsometric().y << std::endl;
+	for (size_t i = 0; i < myDebugStart.size(); i++)
+	{
+		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
+	}
 }
 
 void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
@@ -269,4 +290,108 @@ void PlayState::ConstructNavGraph()
 	}
 }
 
+IsometricTile& PlayState::GetTile(unsigned short aIndex)
+{
+	return  myTiles[aIndex];
+}
+
+void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
+{
+	CU::Vector2f position = aPosition;
+	CU::Vector2f secondPosition = anotherPosition;
+	double x0, x1, y0, y1;
+	x0 = position.x;
+	y0 = position.y;
+	x1 = secondPosition.x;
+	y1 = secondPosition.y;
+	myDebugStart.push_back(position);
+	myDebugEnd.push_back(secondPosition);
+	int dx = abs(x1 - x0);
+	int dy = abs(y1 - y0);
+	int x = x0;
+	int y = y0;
+	int n = 1 + dx + dy;
+	int x_inc = (x1 > x0) ? 1 : -1;
+	int y_inc = (y1 > y0) ? 1 : -1;
+	int error = dx - dy;
+	dx *= 2;
+	dy *= 2;
+
+	for (; n > 0; --n)
+	{
+		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);
+
+		if (error > 0)
+		{
+			x += x_inc;
+			error -= dy;
+		}
+		else
+		{
+			y += y_inc;
+			error += dx;
+		}
+	}
+		
+}
+
+void PlayState::CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, int aIndex)
+{
+	if (aIndex < 25)
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(2, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-2, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(0, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(1, 4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-1, 4));
+	}
+	else if (aIndex < 50)
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, -2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 0));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 1));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, -1));
+	}
+	else if (aIndex < 75)
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(2, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-2, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(0, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(1, -4));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-1, -4));
+	}
+	else
+	{
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, -2));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 0));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 1));
+		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, -1));
+	}
+}
+
+void PlayState::CalculateFoV(const CU::Vector2f& aPosition, float aRadius, int aIndex)
+{
+	int r, xc, yc, pk, x, y;
+	xc = aPosition.x;
+	yc = aPosition.y;
+	r = aRadius;
+	pk = 3 - 2 * r;
+	x = 0; y = r;
+	CalculateRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc), aIndex);
+	while (x < y)
+	{
+		if (pk <= 0)
+		{
+			pk = pk + (4 * x) + 6;
+			CalculateRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc), aIndex);
+		}
+		else
+		{
+			pk = pk + (4 * (x - y)) + 10;
+			CalculateRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc), aIndex);
+		}
+	}
+}
 

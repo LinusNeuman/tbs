@@ -14,8 +14,14 @@ public:
 	~Player();
 	void Init(const ActorData &aActorData, const PlayerData &aPlayerData);
 	void DecideAnimation() override;
+	
+	void EndTurn();
+	int GetMyAP() const override;
+	void CostAP(const int aCost);
+	
 private:
 
 	int myActionPointMax;
+	int myCurrentAP;
 };
 
