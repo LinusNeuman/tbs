@@ -14,6 +14,14 @@
 // reference additional headers your program requires here
 
 
+#include <tga2d/Engine.h>
+#include <tga2d/sprite/sprite_batch.h>
+#include <tga2d/drawers/debug_drawer.h>
+#include <tga2d/drawers/line_drawer.h>
+#include <tga2d/sprite/sprite.h>
+#include <tga2d/text/text.h>
+#include <tga2d/drawers/debug_drawer.h>
+
 #include <CU/DLDebug/DL_Debug.h>
 #include <CU/NameSpaceAliases.h>
 
