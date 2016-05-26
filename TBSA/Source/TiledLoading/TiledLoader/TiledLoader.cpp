@@ -62,6 +62,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 	for (size_t i = 0; i < height * width; i++)
 	{
 		bool isOverFloor = false;
+
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
 		
@@ -132,7 +133,20 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					}
 				}
 			}
-			//
+			else if (type == "objectgroup")
+			{
+				if (name == "Players" || name == "Player")
+				{
+					picojson::array objects = GetArray(currentLayer["objects"]);
+					for (size_t k = 0; k < objects.size(); k++)
+					{
+						picojson::object player = GetObject(objects[k]);
+						size_t index = k % 2;
+
+						
+					}
+				}
+			}
 		}
 
 		someTiles.myTiles.Add(newTile);
