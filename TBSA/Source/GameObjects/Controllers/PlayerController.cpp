@@ -3,6 +3,7 @@
 #include <GameObjects/Actor/Actor.h>
 #include <Message/DijkstraMessage.h>
 
+
 PlayerController::PlayerController()
 {
 	myPlayers.Init(2);
@@ -19,6 +20,7 @@ void PlayerController::AddPlayer(Actor* aPlayer)
 {
 	myPlayers.Add(aPlayer);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) + CommonUtilities::Vector2ui(1, 1), mySelectedPlayer->GetMyAP());
 }
 
 void PlayerController::SelectPlayer()
@@ -34,17 +36,19 @@ void PlayerController::SelectPlayer()
 	SingletonPostMaster::PostMessage(dijkstraMessage);
 }
 
-void PlayerController::NotifyPlayers() const
+void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const
 {
 	if (mySelectedPlayer != nullptr)
 	{
-		CU::Vector2ui position = CU::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric().x + .5, IsometricInput::GetMouseWindowPositionIsometric().y + .5);
-		std::string printOut;
+		//CU::Vector2ui position = CU::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric().x + .5, IsometricInput::GetMouseWindowPositionIsometric().y + .5);
+		/*std::string printOut;
 		printOut += std::to_string(position.x);
 		printOut += ",";
 		printOut += std::to_string(position.y);
-		DL_PRINT(printOut.c_str());
+		DL_PRINT(printOut.c_str());*/
 
-		mySelectedPlayer->Move(position);
+		mySelectedPlayer->SetPath(aPath);
 	}
 }
+
+

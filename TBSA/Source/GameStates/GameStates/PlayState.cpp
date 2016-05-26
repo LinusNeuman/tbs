@@ -23,6 +23,7 @@
 
 #include <Message/SetMainCameraMessage.h>
 
+
 const float sqrt2 = sqrt(2);
 const float CameraSpeed = 10.f;
 
@@ -76,7 +77,7 @@ void PlayState::Init()
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
 	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
 
-	Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
+	//Shaders::GetInstance()->ApplyShader(myPlayer2->mySprite, "testShader");
 
 	ConstructNavGraph();
 }
@@ -102,7 +103,21 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		myPlayerController->NotifyPlayers();
+		//myPlayerController->NotifyPlayers();
+		if (GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+		{
+			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
+			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
+			positionPath.Init(indexPath.Size());
+
+			for (size_t i = 0; i < indexPath.Size(); i++)
+			{
+				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()) - CommonUtilities::Vector2ui(1, 1));
+			}
+
+			myPlayerController->NotifyPlayers(positionPath);
+		}
+
 	}
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
@@ -245,3 +260,5 @@ void PlayState::ConstructNavGraph()
 		}
 	}
 }
+
+

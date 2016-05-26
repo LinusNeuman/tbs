@@ -29,7 +29,13 @@ namespace WindowsFormsApplication1
 
         private void BrowseButton_Click(object sender, EventArgs e)
         {
-            fileExplorer.InitialDirectory = Path.GetTempPath();// + "../../../../../TBSA/Bin/Sprites/";//Path.GetFullPath("../../../../../TBSA/Bin/Sprites/");
+            fileExplorer.InitialDirectory = Directory.GetCurrentDirectory();
+            const string removeString = "/AnimationEditor";
+            int stringIndex = fileExplorer.InitialDirectory.IndexOf(removeString);
+            string cleanPath = (stringIndex < 0)
+                ? fileExplorer.InitialDirectory
+                : fileExplorer.InitialDirectory.Remove(stringIndex, removeString.Length);
+
             fileExplorer.Filter = "DDS (*.dds)|*.dds";
 
             if (fileExplorer.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -159,7 +165,7 @@ namespace WindowsFormsApplication1
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fileExplorer.InitialDirectory = Path.GetFullPath("../../../../../TBSA/Bin/Data/Animations/");
+            fileExplorer.InitialDirectory = Directory.GetCurrentDirectory();
             fileExplorer.Filter = "JSON (*.json)|*.json";
             if (fileExplorer.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -235,7 +241,7 @@ namespace WindowsFormsApplication1
                 myAnimation.myAnimationData.InTransition = InTransitionText.Text;
                 myAnimation.myAnimationData.OutTransition = OutTransitionText.Text;
             
-                saveExplorer.InitialDirectory = Path.GetFullPath("../../../../../TBSA/Bin/Data/Animations/");
+                saveExplorer.InitialDirectory = Directory.GetCurrentDirectory();
                 saveExplorer.Filter = "JSON (*.json)|*.json";
                 saveExplorer.FileName = myAnimation.myAnimationData.Name + "Animation";
 
