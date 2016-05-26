@@ -8,7 +8,7 @@ public:
 	GUIManager();
 	~GUIManager();
 
+	void Update();
 private:
-	CU::GrowingArray<GUIElement*, uchar> myActiveGUI;
+	CU::GrowingArray<GUIElement*, uchar>* myActiveGUI;
 };
-

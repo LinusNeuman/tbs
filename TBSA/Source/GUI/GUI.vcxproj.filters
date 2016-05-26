@@ -58,5 +58,8 @@
     <None Include="GUI\Messaging\GUIMessageHandler.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="GUI\Generic\GUIElement.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

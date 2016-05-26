@@ -1,11 +1,11 @@
-void GUIMessageHandler::SetOnClick(GUIMessage& aGUIMessage)
+void GUIMessageHandler::SetOnClick(GUIMessage* aGUIMessage)
 {
-	myMessageEvents[0] = &aGUIMessage;
+	myMessageEvents[0] = aGUIMessage;
 }
 
-void GUIMessageHandler::SetOnHover(GUIMessage& aGUIMessage)
+void GUIMessageHandler::SetOnHover(GUIMessage* aGUIMessage)
 {
-	myMessageEvents[1] = &aGUIMessage;
+	myMessageEvents[1] = aGUIMessage;
 }
 
 void GUIMessageHandler::Execute(eGUIMessageEvents aGUIMessageEvent)

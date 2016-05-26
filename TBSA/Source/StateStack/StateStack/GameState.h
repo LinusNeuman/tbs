@@ -31,5 +31,5 @@ public:
 
 protected:
 	bool myLetThroughRender;
-	CU::GrowingArray<GUIElement*, uchar> myGUIElements;
+	CU::GrowingArray<GUIElement*, uchar> *myGUIElements;
 };

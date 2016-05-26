@@ -99,6 +99,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="GUI\Generic\GUIElement.inl">
+      <FileType>CppHeader</FileType>
+    </None>
     <None Include="GUI\Messaging\GUIMessageHandler.inl">
       <FileType>CppHeader</FileType>
     </None>

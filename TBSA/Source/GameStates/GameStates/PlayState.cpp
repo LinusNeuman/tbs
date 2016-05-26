@@ -75,6 +75,7 @@ void PlayState::Init()
 	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
 
 	LoadGUI("InGame");
+	(*myGUIElements)[0]->OnClick();
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)

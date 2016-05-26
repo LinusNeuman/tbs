@@ -15,11 +15,13 @@ GUIFactory::GUIFactory()
 
 GUIFactory::~GUIFactory()
 {
-	myGUIElements.DeleteAll();
+	//myGUIElements.DeleteAll();
 }
 
 void GUIFactory::Load()
 {
+	myGUIElements.Init(1);
+
 	std::cout << "Started loading all GUI.." << std::endl;
 	CU::Timer loadTimer;
 
@@ -29,8 +31,10 @@ void GUIFactory::Load()
 	// then load them and put them into the map with growingarrays
 
 	GUIButton* newButton = new GUIButton();
-	newButton->Init("ExitButton", "", true);
-	newButton->SetOnClick(GUIMessage(RecieverTypes::eExitGame));
+	newButton->SetName("ExitButton");
+	newButton->SetEnabled(true);
+	newButton->SetIsometric(false);
+	newButton->SetOnClick(new GUIMessage(RecieverTypes::eExitGame));
 
 	myGUIElements.Add(newButton);
 	myGUILookup["InGame"].myBegin = 0;
@@ -39,12 +43,11 @@ void GUIFactory::Load()
 	std::cout << "Loading all GUI took " << loadTimer.GetTime().GetMilliSeconds() << " ms" << std::endl;
 }
 
-CU::GrowingArray<GUIElement*, uchar>& GUIFactory::GetLoadedGUI(const char* aStateName)
+CU::GrowingArray<GUIElement*, uchar>* GUIFactory::GetLoadedGUI(const char* aStateName)
 {
 	if (myGUILookup.find(aStateName) == myGUILookup.end())
 	{
 		DL_PRINT(std::string("GUI State was not found in lookup: " + std::string(aStateName)).c_str());
-		std::cout << "GUI State was not found in lookup: " << aStateName << std::endl;
 	}
 	else
 	{
@@ -56,14 +59,15 @@ CU::GrowingArray<GUIElement*, uchar>& GUIFactory::GetLoadedGUI(const char* aStat
 			range = 1;
 		}
 
-		CU::GrowingArray<GUIElement*, uchar> returnArray;
-		returnArray.Init(range);
+		CU::GrowingArray<GUIElement*, uchar>* returnArray = new CU::GrowingArray<GUIElement*, uchar>(range);
 
-		for (uchar ch = begin; ch < end; ++ch)
+		for (uchar ch = begin; ch < range; ++ch)
 		{
-			returnArray.Add(myGUIElements[ch]);
+			returnArray->Add(myGUIElements[ch]);
 		}
 
 		return returnArray;
 	}
+
+	return nullptr;
 }

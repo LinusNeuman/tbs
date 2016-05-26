@@ -11,6 +11,11 @@ GameState::GameState()
 
 GameState::~GameState()
 {
+	if (myGUIElements != nullptr)
+	{
+		myGUIElements->RemoveAll();
+		delete myGUIElements;
+	}
 }
 
 void GameState::Init()

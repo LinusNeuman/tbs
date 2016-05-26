@@ -32,7 +32,7 @@ public:
 
 	//GUIElement* GetGUIElement(std::string aName);
 
-	CU::GrowingArray<GUIElement*, uchar>& GetLoadedGUI(const char* aStateName);
+	CU::GrowingArray<GUIElement*, uchar>* GetLoadedGUI(const char* aStateName);
 private:
 	GUIFactory();
 
