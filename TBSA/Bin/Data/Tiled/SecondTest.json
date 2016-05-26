@@ -17,7 +17,7 @@
          "name":"_room_1",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -28,7 +28,7 @@
          "name":"_room_2",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -39,23 +39,67 @@
          "name":"walls",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":20,
          "x":0,
          "y":0
         }, 
         {
-         "data":[413, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 429, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 445, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "data":[641, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 657, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 673, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":10,
          "name":"props",
          "opacity":1,
          "type":"tilelayer",
+         "visible":false,
+         "width":20,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":10,
+         "name":"Players",
+         "objects":[
+                {
+                 "gid":660,
+                 "height":128,
+                 "id":1,
+                 "name":"Karkat",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"Player_1",
+                 "visible":true,
+                 "width":128,
+                 "x":385,
+                 "y":387
+                }, 
+                {
+                 "gid":661,
+                 "height":128,
+                 "id":2,
+                 "name":"Terezi",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"Player_2",
+                 "visible":true,
+                 "width":128,
+                 "x":258.5,
+                 "y":257.5
+                }],
+         "opacity":1,
+         "type":"objectgroup",
          "visible":true,
          "width":20,
          "x":0,
          "y":0
         }],
- "nextobjectid":1,
+ "nextobjectid":3,
  "orientation":"isometric",
  "properties":
     {
@@ -119,9 +163,9 @@
          "transparentcolor":"#ff00ff"
         }, 
         {
-         "columns":0,
+         "columns":16,
          "firstgid":385,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Dropbox\/Work\/Projekt 4\/Assets\/tileSheets\/tileSheetWalls.png",
+         "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetWalls.png",
          "imageheight":2048,
          "imagewidth":2048,
          "margin":0,
@@ -131,15 +175,15 @@
 
             },
          "spacing":0,
-         "tilecount":7,
+         "tilecount":256,
          "tileheight":128,
          "tilewidth":128,
          "transparentcolor":"#ff00ff"
         }, 
         {
-         "columns":0,
-         "firstgid":413,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Dropbox\/Work\/Projekt 4\/Assets\/tileSheets\/tileSheetProps.png",
+         "columns":16,
+         "firstgid":641,
+         "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetProps.png",
          "imageheight":2048,
          "imagewidth":2048,
          "margin":0,
@@ -149,7 +193,7 @@
 
             },
          "spacing":0,
-         "tilecount":3,
+         "tilecount":256,
          "tileheight":128,
          "tilewidth":128,
          "transparentcolor":"#ff00ff"

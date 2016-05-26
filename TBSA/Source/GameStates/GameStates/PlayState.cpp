@@ -43,6 +43,8 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 	
+	
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
