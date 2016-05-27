@@ -34,10 +34,10 @@ public:
 	IsometricTile & GetTile(unsigned short aIndex);
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition, bool aIsPlayer);
-	void CalculateRayTrace(int aIndex, float aAngle, float aMagnitude);
+	void CreateEnemyRayTrace(int aIndex, float aAngle, float aMagnitude);
 	int CalculatePoint(float aValue) const;
 	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
-	void CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius);
+	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);
 	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
 
 

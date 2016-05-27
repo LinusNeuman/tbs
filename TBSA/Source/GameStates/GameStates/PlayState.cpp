@@ -163,9 +163,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		myTiles[i].SetVisible(false);
 		myTiles[i].SetInEnemyFoV(false);
 	}
-	CalculateRayTrace(index,45.f,4.f);
-	CalculateCircleFoV(myPlayer->GetPosition(), 5.f);
-	CalculateCircleFoV(myPlayer2->GetPosition(), 5.f);
+	CreateEnemyRayTrace(index,45.f,4.f);
+	CreatePlayerFoV(myPlayer->GetPosition(), 5.f);
+	CreatePlayerFoV(myPlayer2->GetPosition(), 5.f);
 	if (index > 100)
 		index = 0;
 	return eStackReturnValue::eStay;
@@ -324,7 +324,7 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 		
 }
 
-void PlayState::CalculateRayTrace(int aIndex, float aAngle, float aMagnitude)
+void PlayState::CreateEnemyRayTrace(int aIndex, float aAngle, float aMagnitude)
 {
 	//Will be replaced when enemies has a direction
 
@@ -385,7 +385,7 @@ void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + normalVector, false);
 }
 
-void PlayState::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
+void PlayState::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
 {
 	int r, xc, yc, pk, x, y;
 	xc = static_cast<int>(aPosition.x);
