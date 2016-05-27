@@ -17,7 +17,22 @@ void MessageReciever::RecieveMessage(const SetMainCameraMessage & aMessage)
 
 }
 
-void MessageReciever::RecieveMessage(const GUIMessage & aMessage)
+void MessageReciever::RecieveMessage(const DijkstraMessage& aMessage)
 {
-	
+}
+
+void MessageReciever::RecieveMessage(const NavigationClearMessage& aMessage)
+{
+}
+
+void MessageReciever::RecieveMessage(const EndTurnMessage& aMessage)
+{
+}
+
+void MessageReciever::RecieveMessage(const StartUpLevelMessage& aMessage)
+{
+}
+
+void MessageReciever::RecieveMessage(const GUIMessage& aMessage)
+{
 }

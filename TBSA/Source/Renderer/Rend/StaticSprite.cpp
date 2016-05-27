@@ -64,7 +64,10 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 	return ourIndexDictionary[tempKey];
 }
 
-
+CU::Vector2f StaticSprite::GetSize()
+{
+	return CU::Vector2f(GetSprite()->GetSize().x, GetSprite()->GetSize().y);
+}
 
 void StaticSprite::Draw(const CU::Vector2f & aPosition)
 {
@@ -93,21 +96,3 @@ const RenderData & StaticSprite::GetRenderData() const
 {
 	return myRenderData;
 }
-
-
-//void StaticSprite::SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio)
-//{
-//	CU::Vector2f offsetinPixels;
-//
-//	const float ImageSizePixelsX = GetSprite()->GetImageSize().x;
-//	const float ImageSizePixelsY = GetSprite()->GetImageSize().y;
-//
-//	const float ImageRatioSizeX = GetSprite()->GetSize().x;
-//	const float ImageRatioSizeY = GetSprite()->GetSize().y;
-//
-//
-//	offsetinPixels.x = (aPivotOffsetInRatio.x * (ImageRatioSizeX * ImageSizePixelsX));
-//	offsetinPixels.y = (aPivotOffsetInRatio.y * (ImageRatioSizeY * ImageSizePixelsY));
-//	
-//	SetPivotWithPixels(offsetinPixels);
-//}

@@ -1,38 +1,25 @@
 #pragma once
 #include <StateStack/GameState.h>
 #include <CU/GrowingArray/GrowingArray.h>
-#include <PlayerFactory/PlayerFactory.h>
-#include <EnemyFactory/EnemyFactory.h>
-#include <Animation/Animation.h>
-#include <GameObjects/Room/IsometricTile.h>
-#include "../../PathFinding/NavGraph/Graph/NavGraph.h"
-#include <TiledData/TiledData.h>
-#include <CU/Camera/Camera2D.h>
+#include <CU/StaticArray/StaticArray.h>
+#include <unordered_map>
 
-class StaticSprite;
-class RenderConverter;
-class Actor;
-class PlayerController;
-class PlayState : public GameState
+
+class GameLevel;
+
+class PlayState : public GameState, public MessageReciever
 {
 public:
 	PlayState();
 	~PlayState();
-	void Init();
+	void Init() override;
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
+	virtual void RecieveMessage(const StartUpLevelMessage & aMessage) override;
 
-	void ConstructNavGraph();
 private:
-	Camera2D myCamera;
-
-	CU::GrowingArray<IsometricTile> myTiles;
-	StaticSprite * testSprite;
-	Actor *myPlayer, *myPlayer2, *myEnemy;
-	PlayerController *myPlayerController;
-	PlayerFactory myPlayerFactory;
-	EnemyFactory myEnemyFactory;
-	Animation *myAnimation;
-	NavGraph myNavGraph;
-	TiledData myTiledData;
+	GameLevel * myLevel;
+	std::string myStartPath;
+	std::string myLevelKey;
+	std::unordered_map<std::string, GameLevel*> myLevels;
 };

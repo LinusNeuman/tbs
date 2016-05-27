@@ -5,6 +5,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include "PostMaster/MessageReceiver.h"
 
+
 class MessageReciever;
 
 class SingletonPostMaster
@@ -33,7 +34,7 @@ private:
 
 	static inline SingletonPostMaster & GetInstance();
 
-	CU::GrowingArray<CU::GrowingArray<MessageReciever*>> myRecievers;
+	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<MessageReciever*>> myRecievers;
 };
 
 template <typename MessageType>

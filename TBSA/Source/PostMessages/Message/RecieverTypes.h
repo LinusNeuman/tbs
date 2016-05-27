@@ -7,6 +7,8 @@ enum class RecieverTypes
 	ePlayer,
 	eLevelTileLayoutSettings,
 	eCamera,
+	eTurn,
+	eStartUpLevel,
 	eEndTurn,
 	eExitGame,
 	enumlength

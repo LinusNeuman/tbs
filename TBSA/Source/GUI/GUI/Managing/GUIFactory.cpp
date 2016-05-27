@@ -35,11 +35,11 @@ void GUIFactory::Load()
 
 	// everything will be read from json later
 	newButton->Create(
-		"ExitButton", 
+		"ExitButton",
 		"Sprites/GUI/InGame/ExitButton/", 
 		{ 1.f, 1.f },
-		{ 264.f / 1920.f, 154.f / 1080.f },
-		{ 33, 11 }
+		{ -(41.f / 1920.f), -(37.f / 1080.f) },
+		{ 223, 117 }
 	);
 	newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
 

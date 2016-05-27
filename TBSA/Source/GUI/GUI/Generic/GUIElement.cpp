@@ -5,7 +5,9 @@
 
 GUIElement::GUIElement()
 {
-	mySprite = nullptr;
+	mySpriteUnpressed = nullptr;
+	mySpritePressed = nullptr;
+	mySpriteHovered = nullptr;
 	myGUIChilds.Init(1);
 }
 
@@ -14,11 +16,64 @@ GUIElement::~GUIElement()
 {
 }
 
+void GUIElement::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric, bool aIsEnabled)
+{
+	myName = aName;
+	myIsIsometric = aIsIsometric;
+
+	mySpritePressed = new StaticSprite();
+	mySpritePressed->SetLayer(enumRenderLayer::eGUI);
+	mySpritePressed->Init(
+		aSpritePath + "Pressed.dds",
+		myIsIsometric,
+		{
+			0.f, 0.f,
+			aImageSize.x,
+			aImageSize.y
+		}
+	);
+
+	mySpriteUnpressed = new StaticSprite();
+	mySpriteUnpressed->SetLayer(enumRenderLayer::eGUI);
+	mySpriteUnpressed->Init(
+		aSpritePath + "Unpressed.dds",
+		myIsIsometric,
+		{
+			0.f, 0.f,
+			aImageSize.x,
+			aImageSize.y
+		}
+	);
+
+	mySpriteHovered = new StaticSprite();
+	mySpriteHovered->SetLayer(enumRenderLayer::eGUI);
+	mySpriteHovered->Init(
+		aSpritePath + "Hover.dds",
+		myIsIsometric,
+		{
+			0.f, 0.f,
+			aImageSize.x,
+			aImageSize.y
+		}
+	);
+
+	myParentSpace = aParentSpace;
+	myPosition = aParentSpace + anOffset;
+	myIsEnabled = aIsEnabled;
+
+	myCollisionBox.SetWithMaxAndMinPos(
+		myPosition,
+		{
+			myPosition.x + mySpriteUnpressed->GetSize().x,
+			myPosition.y + mySpriteUnpressed->GetSize().y
+		});
+}
+
 void GUIElement::Destroy()
 {
 	SingletonPostMaster::RemoveReciever(*this);
 
-	SAFE_DELETE(mySprite);
+	//SAFE_DELETE(mySprite);
 
 	for (uchar u = 0; u < myGUIChilds.Size(); ++u)
 	{
@@ -28,9 +83,9 @@ void GUIElement::Destroy()
 
 void GUIElement::Render()
 {
-	if (mySprite != nullptr)
+	if (mySpriteUnpressed != nullptr)
 	{
-		mySprite->Draw(myParentSpace + myPosition);
+		mySpriteUnpressed->Draw(myPosition);
 	}
 
 	for (uchar u = 0; u < myGUIChilds.Size(); ++u)

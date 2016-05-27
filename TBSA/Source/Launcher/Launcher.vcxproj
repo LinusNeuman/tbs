@@ -166,7 +166,7 @@
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)GUI\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -185,7 +185,7 @@
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -238,7 +238,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -264,7 +264,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;DeMov;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SoulutionDir)PathFinding\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SoulutionDir)PathFinding\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -345,6 +345,9 @@
     <ProjectReference Include="..\Audio\Audio.vcxproj">
       <Project>{58b80636-b81a-4fc6-a5d1-1f6a8cc28617}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\CollisionHandling\CollisionHandling.vcxproj">
+      <Project>{8ce9acc7-5f0b-4710-957e-9b9a77f6d964}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>
@@ -375,6 +378,9 @@
     <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
       <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\LevelProject\LevelProject.vcxproj">
+      <Project>{60c81bef-f58f-4d97-aee4-cd5205a42433}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\PathFinding\PathFinding.vcxproj">
       <Project>{88878c34-338e-418a-84e3-1438b4ea5786}</Project>
     </ProjectReference>
@@ -395,6 +401,9 @@
     </ProjectReference>
     <ProjectReference Include="..\TiledLoading\TiledLoading.vcxproj">
       <Project>{b0e30c9f-422d-4ce9-8617-f3b6792c9ca3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TurnManager\TurnManager.vcxproj">
+      <Project>{f98e4c60-6bc0-4337-b21d-7c5f7520983c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

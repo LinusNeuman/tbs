@@ -25,9 +25,8 @@ class GUIElement : public MessageReciever
 public:
 	GUIElement();
 	virtual ~GUIElement();
+	void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true);
 	virtual void Destroy();
-
-	virtual void __forceinline Create(const char* aName, const char* aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2i aWhiteSpaceInPixels, bool aIsIsometric = false, bool aIsEnabled = true);
 
 	virtual void __forceinline SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent);
 
@@ -39,8 +38,9 @@ public:
 protected:
 	GUIMessageHandler myMessageHandler;
 
-	StaticSprite* myBackground;
-	StaticSprite* mySprite;
+	StaticSprite* mySpritePressed;
+	StaticSprite* mySpriteHovered;
+	StaticSprite* mySpriteUnpressed;
 
 	CU::Vector2f myPosition;
 	CU::Vector2f myParentSpace;

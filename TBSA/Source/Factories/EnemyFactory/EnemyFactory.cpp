@@ -24,17 +24,17 @@ void EnemyFactory::UpdateDataStruct(const std::string &aStringPath, ActorData &a
 	picojson::value enemyValue = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& enemyObject = JsonWrapper::GetPicoObject(enemyValue);
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyObject));
-	aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", enemyObject);
-	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", enemyObject);
+	/*aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", enemyObject);
+	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", enemyObject);*/
 	AddEnemyAnimation(aActorData, aEnemyData, enemyObject);
 }
 
 void EnemyFactory::AddEnemyAnimation(ActorData &aActorData, EnemyData &aEnemyData,picojson::object& aObject)
 {
-	Animation *animation = new Animation();
 	picojson::array& animationArray = JsonWrapper::GetPicoArray("animations", aObject);
 	for (size_t i = 0; i < animationArray.size(); i++)
 	{
+		Animation *animation = new Animation();
 		std::string path = JsonWrapper::GetString("path", animationArray[i].get<picojson::object>());
 		picojson::value animationFile = JsonWrapper::LoadPicoValue(path);
 		picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);

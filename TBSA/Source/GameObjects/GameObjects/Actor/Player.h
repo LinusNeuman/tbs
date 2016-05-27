@@ -13,8 +13,16 @@ public:
 	Player();
 	~Player();
 	void Init(const ActorData &aActorData, const PlayerData &aPlayerData);
+	void DecideAnimation() override;
+	
+	void FreshTurn();
+	int GetMyAP() const override;
+	void CostAP(const int aCost);
+	
+	void ReachedTarget()override;
 private:
 
 	int myActionPointMax;
+	int myCurrentAP;
 };
 

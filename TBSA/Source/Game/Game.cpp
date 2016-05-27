@@ -20,6 +20,10 @@
 #include <GUI/Managing/GUIFactory.h>
 //#include "MainSingleton/MainSingleton.h"
 
+#include "StartupReader/StartupReader.h"
+#include "StartupReader/StartupData.h"
+#include <Message/StartUpLevelMessage.h>
+
 using namespace std::placeholders;
 
 
@@ -33,12 +37,13 @@ using namespace std::placeholders;
 
 CGame::CGame()
 {
-	myImRunning = true;
 	DL_Debug::Debug::Create();
-	//MainSingleton::Create();
-	/*JSONWrapper::Create();
-	JSONWrapper::ReadAllDocuments("Data/Root.json");
-	JSONWrapper::TestShit();*/
+	StartupReader tempReader;
+
+	myStartupData = new StartupData(tempReader.LoadAndGetStartupData());
+
+	myImRunning = true;
+	
 	SingletonPostMaster::Create();
 	IsometricInput::Create();
 
@@ -105,7 +110,7 @@ void CGame::RecieveMessage(const GUIMessage & aMessage)
 	{
 		myImRunning = false;
 		DX2D::CEngine::GetInstance()->Shutdown();
-	}
+}
 }
 
 
@@ -136,6 +141,8 @@ void CGame::InitCallBack()
 	
 
 	myGameStateStack.AddMainState(myMenuState);
+	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
+	SingletonPostMaster::PostMessageW(startLevelMessage);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
 }

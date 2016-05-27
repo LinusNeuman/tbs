@@ -3,7 +3,6 @@
 #include <JSON/JSONWrapper.h>
 #include <CU/Utility/FileHandling.h>
 
-//#include "../../Game/Room/IsometricTile.h"
 #include <GameObjects/Room/IsometricTile.h>
 #include "SpriteSheet/SpriteSheet.h"
 #include <JsonWrapper/JsonWrapper.h>
@@ -27,6 +26,8 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 
 void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
+	
+	bool playersLoaded = false;
 	picojson::value root;
 	
 	std::string JsonData = CommonUtilities::GetFileAsString(aFilePath);
@@ -55,11 +56,17 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 	unsigned int height = static_cast<unsigned int>(GetNumber(rootObject["height"]));
 	unsigned int width = static_cast<unsigned int>(GetNumber(rootObject["width"]));
 
+	someTiles.myMapSize = CommonUtilities::Point2ui(width, height);
+	
 	picojson::array layers = GetArray(rootObject["layers"]);
-
+	bool loadedObjects = false;
 	for (size_t i = 0; i < height * width; i++)
 	{
 		bool isOverFloor = false;
+		
+		bool objectsLoaded = loadedObjects;
+		
+
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
 		
@@ -67,59 +74,111 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 		{
 			picojson::object currentLayer = GetObject(layers[j]);
 			std::string name = GetString(currentLayer["name"]);
-			picojson::array data = GetArray(currentLayer["data"]);
+			std::string type = GetString(currentLayer["type"]);
 
-			if (name[0] == '_')
+			if (type == "tilelayer")
 			{
-				unsigned int lastUnderscore = name.find_last_of('_');
-				unsigned int roomId;
-				try
-				{
-					roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
-				}
-				catch (std::invalid_argument)
-				{
-					roomId = 0;
-					DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
-				}
-				
-				isOverFloor = true;
-				newTile.SetRoomId(roomId);
+				picojson::array data = GetArray(currentLayer["data"]);
 
-				int tileId = static_cast<int>(GetNumber(data[i]) - dataSheet.GetFirstIndex() + 1);
-				if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
+				if (name[0] == '_')
 				{
-					tileId = 0;
-				}
+					isOverFloor = true;
 
-				eTileType tileType = static_cast<eTileType>(tileId);
-				newTile.SetTileType(tileType);
-				if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
+					unsigned int lastUnderscore = name.find_last_of('_');
+					unsigned int roomId;
+					try
+					{
+						roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
+					}
+					catch (std::invalid_argument)
+					{
+						roomId = 0;
+						DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
+					}
+
+
+					newTile.SetRoomId(roomId);
+					const int explainingInt = static_cast<int>(GetNumber(data[i]));
+					int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
+					if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
+					{
+						tileId = 0;
+					}
+
+					eTileType tileType = static_cast<eTileType>(tileId);
+
+					newTile.SetTileType(tileType);
+					if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
+					{
+						newTile.SetDoor(Door(roomId));
+					}
+				}
+				else
 				{
-					newTile.SetDoor(Door(roomId));
+					unsigned int tileId = static_cast<int>(GetNumber(data[i]));
+					for (size_t l = 0; l < SpriteSheets.Size(); ++l)
+					{
+						if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
+						{
+							SpriteSheet explainingSpriteSheet = SpriteSheets[l];
+							StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
+
+							if (isOverFloor == true)
+							{
+								explaingSprite->SetLayer(enumRenderLayer::eGameObjects);
+							}
+							else
+							{
+								explaingSprite->SetLayer(enumRenderLayer::eFloor);
+							}
+
+							newTile.AddSpriteLayer(explaingSprite);
+						}
+					}
 				}
 			}
-			else
+			else if (type == "objectgroup")
 			{
-				unsigned int tileId = static_cast<int>(GetNumber(data[i]));
-				for (size_t l = 0; l < SpriteSheets.Size(); ++l)
+				if (playersLoaded == false && (name == "Players" || name == "Player"))
 				{
-					if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
+					picojson::array objects = GetArray(currentLayer["objects"]);
+					for (size_t k = 0; k < objects.size(); k++)
 					{
-						SpriteSheet explainingSpriteSheet = SpriteSheets[l];
-						StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
 						
-						if (isOverFloor == true)
+						picojson::object player = GetObject(objects[k]);
+						size_t index = k % 2;
+						eActorType playerType = eActorType::ePlayerOne;
+						const std::string typeString =  GetString(player["type"]);
+						int playerIndex;
+						if (typeString == "Player1")
 						{
-							explaingSprite->SetLayer(enumRenderLayer::eGameObjects);
+							playerType = eActorType::ePlayerOne;
+							playerIndex = 0;
+						}
+						else if (typeString == "Player2")
+						{
+							playerType = eActorType::ePlayerTwo;
+							playerIndex = 1;
 						}
 						else
 						{
-							explaingSprite->SetLayer(enumRenderLayer::eFloor);
+							DL_ASSERT(false, "ERROR:  Player type does not exist");
+							playerIndex = 0;
 						}
 
-						newTile.AddSpriteLayer(explaingSprite);
+						Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
+
+						const float posX = static_cast<float>(GetNumber(player["x"])) / 64;
+						const float posY = static_cast<float>(GetNumber(player["y"])) / 64;
+
+						playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+						someTiles.myPlayers[playerIndex] = playerActor;
 					}
+					playersLoaded = true;
+				}
+				else if (name == "Enemy" || name == "Enemies")
+				{
+					
 				}
 			}
 		}

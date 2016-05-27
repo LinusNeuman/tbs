@@ -25,8 +25,8 @@ void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& 
 	picojson::value values = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& object = JsonWrapper::GetPicoObject(values);
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", object));
-	aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", object);
-	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", object);
+	/*aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", object);
+	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", object);*/
 	if (JsonWrapper::HasValue("maxActionPoints", object))
 	{
 		aPlayerData.myActionPointMax = JsonWrapper::GetInt("maxActionPoints", object);
@@ -40,10 +40,10 @@ void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& 
 
 void PlayerFactory::AddPlayerAnimation(ActorData &aActorData, PlayerData &aPlayerData, picojson::object& aObject)
 {
-	Animation *animation = new Animation();
 	picojson::array& animationArray = JsonWrapper::GetPicoArray("animations", aObject);
 	for (size_t i = 0; i < animationArray.size(); i++)
 	{
+		Animation *animation = new Animation();
 		std::string path = JsonWrapper::GetString("path", animationArray[i].get<picojson::object>());
 		picojson::value animationFile = JsonWrapper::LoadPicoValue(path);
 		picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);

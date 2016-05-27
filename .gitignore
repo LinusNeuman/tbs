@@ -205,5 +205,6 @@ Temp/
 TBSA/Source/TBS.VC.opendb
 incrementalSave
 
-!TBSA\Bin\Launcher_DevMode.exe
+!TBSA/Bin/Launcher_DevMode.exe
 !TBSA/ExternalLib/*
+!Editors/AnimationEditor/WindowsFormsApplication1/bin/Release/WindowsFormsApplication1.exe

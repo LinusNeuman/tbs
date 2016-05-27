@@ -17,6 +17,16 @@ enum class eTileType
 	Size
 };
 
+enum class eTileState
+{
+	NONE,
+	IS_WALKABLE,
+	IN_RANGE,
+	IN_PATH,
+	UNDER_MOUSE,
+	Size
+};
+
 class IsometricTile
 {
 public:
@@ -27,6 +37,8 @@ public:
 	void Init();
 
 	void Draw() const;
+	void Update();
+
 	void AddSpriteLayer(StaticSprite* aSprite);
 	inline eTileType GetTileType()const;
 	inline void SetTileType(eTileType);
@@ -39,7 +51,17 @@ public:
 
 	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	void SetVertexHandle(VertexHandle aHandle);
-	VertexHandle GetVertexHandle();
+	VertexHandle GetVertexHandle() const;
+	void SetTileState(eTileState aState);
+	inline eTileState GetTileState() const;
+	bool CheckIfWalkable() const;
+	void ToggleDebugMode();
+
+	void SetVisible(bool aIsVisible);
+	void SetInEnemyFoV(bool aIsInFoV);
+	bool GetVisible() const;
+	bool GetInEnemyFov() const;
+
 private:
 	CommonUtilities::Vector2f myPosition;
 
@@ -48,6 +70,12 @@ private:
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 	VertexHandle myNavVertex;
+
+	eTileState myState;
+	bool myIsVisible;
+	bool myIsInEnemyFoV;
+
+	bool myDebugMode;
 };
 
 inline eTileType IsometricTile::GetTileType() const
@@ -57,7 +85,10 @@ inline eTileType IsometricTile::GetTileType() const
 
 inline void IsometricTile::SetTileType(eTileType aType)
 {
-	myType = aType;
+	if (aType != eTileType::EMPTY)
+	{
+		myType = aType;
+	}
 }
 
 inline int IsometricTile::GetRoomId() const
@@ -74,3 +105,23 @@ inline CU::Vector2f IsometricTile::GetPosition() const
 {
 	return myPosition;
 }
+inline void IsometricTile::SetTileState(eTileState aState)
+{
+	myState = aState;
+}
+inline eTileState IsometricTile::GetTileState() const
+{
+	return myState;
+}
+
+inline bool IsometricTile::CheckIfWalkable() const
+{
+	return myType == eTileType::OPEN || myType == eTileType::DOOR || myType == eTileType::DOOR_2;
+}
+
+inline void IsometricTile::ToggleDebugMode()
+{
+	myDebugMode =  !myDebugMode;
+}
+
+typedef CU::GrowingArray<IsometricTile> TileArray;
