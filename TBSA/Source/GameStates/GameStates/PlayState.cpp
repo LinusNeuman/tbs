@@ -384,23 +384,23 @@ void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 void PlayState::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
 {
 	int r, xc, yc, pk, x, y;
-	xc = aPosition.x;
-	yc = aPosition.y;
-	r = aRadius;
+	xc = static_cast<int>(aPosition.x);
+	yc = static_cast<int>(aPosition.y);
+	r = static_cast<int>(aRadius);
 	pk = 3 - 2 * r;
 	x = 0; y = r;
-	CalculateCircleRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc));
+	CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 	while (x < y)
 	{
 		if (pk <= 0)
 		{
 			pk = pk + (4 * x) + 6;
-			CalculateCircleRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc));
+			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 		}
 		else
 		{
 			pk = pk + (4 * (x - y)) + 10;
-			CalculateCircleRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc));
+			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(--y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 		}
 	}
 

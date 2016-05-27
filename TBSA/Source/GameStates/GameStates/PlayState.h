@@ -43,7 +43,6 @@ private:
 
 	Camera2D myCamera;
 	CU::GrowingArray<IsometricTile> myTiles;
-	//StaticSprite * testSprite;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
 	PlayerFactory myPlayerFactory;
