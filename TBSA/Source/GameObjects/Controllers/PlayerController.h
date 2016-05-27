@@ -2,6 +2,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/Timer/Time.h>
 #include <CU/Vectors/vector2.h>
+#include <CU/Camera/Camera2D.h>
 
 class PlayState;
 class Actor;
@@ -12,6 +13,9 @@ class PlayerController
 public:
 	PlayerController();
 	~PlayerController();
+
+	void Init();
+
 	void AddPlayer(Actor *aPlayer);
 	void SelectPlayer();
 	void NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const;
@@ -23,6 +27,8 @@ public:
 	void SetMyPlayState(PlayState & aPlayState);
 private:
 	PlayState* myPlayState;
+
+	Camera2D myCamera;
 
 	CommonUtilities::GrowingArray<Actor*> myPlayers;
 	CommonUtilities::Vector2f myMousePosition;
