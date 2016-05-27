@@ -37,8 +37,8 @@ void GUIFactory::Load()
 	newButton->Create(
 		"ExitButton",
 		"Sprites/GUI/InGame/ExitButton/", 
-		{ 1.f, 1.f },
-		{ -(41.f / 1920.f), -(37.f / 1080.f) },
+		{ 1920.f, 1080.f },
+		{ -(41.f), -(37.f) },
 		{ 223, 117 }
 	);
 	newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
