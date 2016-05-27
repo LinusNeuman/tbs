@@ -39,7 +39,7 @@ private:
 	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
 	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);
 	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
-
+	void ResetFoV();
 
 	Camera2D myCamera;
 	CU::GrowingArray<IsometricTile> myTiles;

@@ -158,11 +158,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
-	for (unsigned int i = 0; i < myTiles.Size(); i++)
-	{
-		myTiles[i].SetVisible(false);
-		myTiles[i].SetInEnemyFoV(false);
-	}
+	ResetFoV();
 	CreateEnemyRayTrace(index,45.f,4.f);
 	CreatePlayerFoV(myPlayer->GetPosition(), 5.f);
 	CreatePlayerFoV(myPlayer2->GetPosition(), 5.f);
@@ -421,6 +417,15 @@ void PlayState::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU:
 	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y), true);
 	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y), true);
 
+}
+
+void PlayState::ResetFoV()
+{
+	for (unsigned int i = 0; i < myTiles.Size(); i++)
+	{
+		myTiles[i].SetVisible(false);
+		myTiles[i].SetInEnemyFoV(false);
+	}
 }
 
 int PlayState::CalculatePoint(float aValue) const
