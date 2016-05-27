@@ -58,7 +58,15 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
 	}
-	tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
+
+	if (myIsIsometricFlag == true)
+	{
+		tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
+	}
+	else
+	{
+		tempSprite->SetPivot(DX2D::Vector2f(0.f, 0.0f));
+	}
 
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
 	return ourIndexDictionary[tempKey];
