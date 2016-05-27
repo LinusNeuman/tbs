@@ -21,7 +21,6 @@
 #include <input/SingletonIsometricInputWrapper.h>
 #include <Message/DijkstraMessage.h>
 
-#include <Message/SetMainCameraMessage.h>
 #include <CU/Matriser/matrix.h>
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
 #include <Message/EndTurnMessage.h>
@@ -176,10 +175,6 @@ void GameLevel::Draw() const
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();
-	/*for (size_t i = 0; i < myDebugStart.size(); i++)
-	{
-	DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
-	}*/
 }
 
 void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)

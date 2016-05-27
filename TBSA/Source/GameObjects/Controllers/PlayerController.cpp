@@ -11,7 +11,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/SetMainCameraMessage.h>
 
-#define EDGE_SCROLL_LIMIT 0.05f
+#define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
 
@@ -84,7 +84,7 @@ void PlayerController::CostAP(const int anAP)
 {
 	if (mySelectedPlayer != nullptr)
 	{
-		//mySelectedPlayer;
+		mySelectedPlayer->CostAP(anAP);
 	}
 }
 
@@ -125,8 +125,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			{
 				positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
 			}
-			if (GetPlayerAP() >= positionPath.Size())
+			if (GetPlayerAP() >= (positionPath.Size() -1))
 			{
+				CostAP(positionPath.Size() -1);
 				NotifyPlayers(positionPath);
 				SingletonPostMaster::PostMessageA(NavigationClearMessage(RecieverTypes::eRoom));
 			}

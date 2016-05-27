@@ -28,7 +28,7 @@ public:
 	IsometricTile & GetTile(unsigned short aIndex);
 
 private:
-	TileArray myFloor;
+	TileArray myTiles;
 	FloorDimensions myDimensions;
 };
 
@@ -44,7 +44,7 @@ inline const FloorDimensions & GameFloor::GetDimensions() const
 
 inline IsometricTile& GameFloor::GetTile(unsigned short aIndex)
 {
-	return  myFloor[aIndex];
+	return  myTiles[aIndex];
 }
 
 inline IsometricTile& GameFloor::GetTile(unsigned int aX, unsigned int aY)
@@ -54,11 +54,11 @@ inline IsometricTile& GameFloor::GetTile(unsigned int aX, unsigned int aY)
 	{
 		index = 0;
 	}
-	else if (index >= myFloor.Size())
+	else if (index >= myTiles.Size())
 	{
-		index = myFloor.Size() - 1;
+		index = myTiles.Size() - 1;
 	}
-	return myFloor[index];
+	return myTiles[index];
 }
 
 inline IsometricTile& GameFloor::GetTile(CommonUtilities::Vector2ui aVector2Ui)
@@ -68,10 +68,10 @@ inline IsometricTile& GameFloor::GetTile(CommonUtilities::Vector2ui aVector2Ui)
 
 inline void GameFloor::CallFunctionOnAllTiles(std::function<void(IsometricTile&)> aFunction)
 {
-	myFloor.CallFunctionOnAllMembers(aFunction);
+	myTiles.CallFunctionOnAllMembers(aFunction);
 }
 
 inline void GameFloor::CallFunctionOnAllTiles(std::function<void(const IsometricTile&)> aFunction) const
 {
-	myFloor.CallFunctionOnAllMembers(aFunction);
+	myTiles.CallFunctionOnAllMembers(aFunction);
 }

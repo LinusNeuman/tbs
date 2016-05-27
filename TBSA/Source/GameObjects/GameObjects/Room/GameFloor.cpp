@@ -14,22 +14,22 @@ GameFloor::~GameFloor()
 
 void GameFloor::Update()
 {
-	myFloor.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
 }
 
 void GameFloor::Draw() const
 {
-	myFloor.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
+	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
 }
 
 void GameFloor::Init(const unsigned short aSize)
 {
-	myFloor.Init(aSize);
+	myTiles.Init(aSize);
 }
 
 void GameFloor::SetTiles(const TileArray & aTileArray)
 {
-	myFloor = aTileArray;
+	myTiles = aTileArray;
 }
 
 
@@ -38,7 +38,7 @@ void GameFloor::SetTiles(const TileArray & aTileArray)
 
 unsigned short GameFloor::Size() const
 {
-	return myFloor.Size();
+	return myTiles.Size();
 }
 
 

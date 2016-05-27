@@ -47,6 +47,9 @@ public:
 		return myType;
 	}
 
+	void SetActiveState(const bool aActiveFlag);
+	bool GetActiveState();
+
 	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
 	StaticSprite *mySprite;
@@ -56,6 +59,9 @@ protected:
 	{
 		return mySprite;
 	}
+
+	bool myActiveFlag;
+
 	AnimationHandler myAnimations;
 	virtual void DecideAnimation();
 	CU::Vector2ui myTargetPosition;
@@ -75,3 +81,12 @@ private:
 	bool myAtTarget;
 };
 
+inline void Actor::SetActiveState(const bool aActiveFlag)
+{
+	myActiveFlag = aActiveFlag;
+}
+
+inline bool Actor::GetActiveState()
+{
+	return myActiveFlag;
+}

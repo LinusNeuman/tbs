@@ -16,6 +16,8 @@ Actor::Actor()
 	myAP = 5;
 	myPath.Init(1);
 	myCurrentWaypoint = 0;
+
+	
 }
 
 Actor::~Actor()
@@ -24,6 +26,8 @@ Actor::~Actor()
 
 void Actor::Init(const ActorData &aActorData)
 {
+	myActiveFlag = true;
+
 	myPosition = aActorData.myPosition;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
 	mySprite->Init();
@@ -35,43 +39,50 @@ void Actor::Init(const ActorData &aActorData)
 
 void Actor::Update(const CU::Time& aDeltaTime)
 {
-	myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
-	myPosition += myVelocity * aDeltaTime.GetSeconds();
-	CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
-	if (myAnimations.GetIsActive() == true)
+	if (myActiveFlag == true)
 	{
-		myAnimations.Update();
-		mySprite = myAnimations.GetSprite();
-		mySprite->SetLayer(enumRenderLayer::eGameObjects);
-		mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
-	}
-	if ((CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
-	{
-		myAtTarget = true;
-		myPosition = CommonUtilities::Point2f(myTargetPosition);
-	}
-	else
-	{
-		myAtTarget = false;
-	}
 
-	UpdatePath();
+		myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
+		myPosition += myVelocity * aDeltaTime.GetSeconds();
+		CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
+		if (myAnimations.GetIsActive() == true)
+		{
+			myAnimations.Update();
+			mySprite = myAnimations.GetSprite();
+			mySprite->SetLayer(enumRenderLayer::eGameObjects);
+			mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
+		}
+		if ((CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
+		{
+			myAtTarget = true;
+			myPosition = CommonUtilities::Point2f(myTargetPosition);
+		}
+		else
+		{
+			myAtTarget = false;
+		}
 
-	if (myVelocity.Length2() > 0.f)
-	{
-		myState = eActorState::eWalking;
-	}
-	else
-	{
-		myState = eActorState::eIdle;
-	}
+		UpdatePath();
 
-	DecideAnimation();
+		if (myVelocity.Length2() > 0.f)
+		{
+			myState = eActorState::eWalking;
+		}
+		else
+		{
+			myState = eActorState::eIdle;
+		}
+
+		DecideAnimation();
+	}
 }
 
 void Actor::Draw() const
 {
-	mySprite->Draw(myPosition);
+	if (myActiveFlag == true)
+	{
+		mySprite->Draw(myPosition);
+	}
 }
 
 void Actor::Move(CU::Vector2ui aTargetPosition)
