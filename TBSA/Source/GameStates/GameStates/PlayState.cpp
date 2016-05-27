@@ -121,6 +121,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 			if (myPlayerController->GetPlayerAP() >= positionPath.Size())
 			{
 				myPlayerController->NotifyPlayers(positionPath);
+				myPlayerController->CostAP(positionPath.Size());
 				myNavGraph.Clear(); 
 			}
 		}
