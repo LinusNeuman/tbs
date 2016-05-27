@@ -56,6 +56,9 @@ protected:
 	{
 		return mySprite;
 	}
+
+	bool myActiveFlag;
+
 	AnimationHandler myAnimations;
 	virtual void DecideAnimation();
 	CU::Vector2ui myTargetPosition;

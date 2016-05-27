@@ -93,21 +93,3 @@ const RenderData & StaticSprite::GetRenderData() const
 {
 	return myRenderData;
 }
-
-
-//void StaticSprite::SetPivotWithRatios(const CU::Vector2f & aPivotOffsetInRatio)
-//{
-//	CU::Vector2f offsetinPixels;
-//
-//	const float ImageSizePixelsX = GetSprite()->GetImageSize().x;
-//	const float ImageSizePixelsY = GetSprite()->GetImageSize().y;
-//
-//	const float ImageRatioSizeX = GetSprite()->GetSize().x;
-//	const float ImageRatioSizeY = GetSprite()->GetSize().y;
-//
-//
-//	offsetinPixels.x = (aPivotOffsetInRatio.x * (ImageRatioSizeX * ImageSizePixelsX));
-//	offsetinPixels.y = (aPivotOffsetInRatio.y * (ImageRatioSizeY * ImageSizePixelsY));
-//	
-//	SetPivotWithPixels(offsetinPixels);
-//}

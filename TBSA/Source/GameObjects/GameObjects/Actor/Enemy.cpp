@@ -25,37 +25,41 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 
 void Enemy::UpdateEnemy()
 {
-	if (myHasMoved == false)
+	if (myActiveFlag == true)
 	{
-		CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
-		path.Init(1);
 
-		for (size_t i = 0; i < static_cast<size_t>(myAP); i++)
+		if (myHasMoved == false)
 		{
-			if (myHasTurned == false)
-			{
-				path.Add(myEnemyPath[myCurrentPathIndex]);
-				++myCurrentPathIndex;
-				if (myCurrentPathIndex >= myEnemyPath.Size())
-				{
-					myHasTurned = true;
-					--myCurrentPathIndex;
-				}
-			}
-			else
-			{
-				--myCurrentPathIndex;
-				path.Add(myEnemyPath[myCurrentPathIndex]);
-				if (myCurrentPathIndex <= 0)
-				{
-					myHasTurned = false;
-					++myCurrentPathIndex;
-				}
-			}
-		}
+			CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
+			path.Init(1);
 
-		SetPath(path);
-		myHasMoved = true;
+			for (size_t i = 0; i < static_cast<size_t>(myAP); i++)
+			{
+				if (myHasTurned == false)
+				{
+					path.Add(myEnemyPath[myCurrentPathIndex]);
+					++myCurrentPathIndex;
+					if (myCurrentPathIndex >= myEnemyPath.Size())
+					{
+						myHasTurned = true;
+						--myCurrentPathIndex;
+					}
+				}
+				else
+				{
+					--myCurrentPathIndex;
+					path.Add(myEnemyPath[myCurrentPathIndex]);
+					if (myCurrentPathIndex <= 0)
+					{
+						myHasTurned = false;
+						++myCurrentPathIndex;
+					}
+				}
+			}
+
+			SetPath(path);
+			myHasMoved = true;
+		}
 	}
 }
 
