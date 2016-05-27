@@ -13,6 +13,8 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myGraphicsLayers.Init(1);
 	myState = eTileState::NONE;
 	myDebugMode = false;
+	myIsVisible = false;
+	myIsInEnemyFoV = false;
 }
 
 IsometricTile::~IsometricTile()
@@ -61,9 +63,6 @@ void IsometricTile::Draw() const
 		break;
 	case eTileState::UNDER_MOUSE:
 		currentColour = CommonUtilities::Vector4f(0, 1, 1, 1);
-		break;
-	case eTileState::FIELD_OF_VIEW:
-		currentColour = CommonUtilities::Vector4f(0.54f, 0.16f, 0.88f, 1.f);
 		break;
 	case eTileState::IS_WALKABLE:
 	case eTileState::NONE:
@@ -121,6 +120,26 @@ void IsometricTile::SetDoor(const Door& aDoor)
 void IsometricTile::SetVertexHandle(VertexHandle aHandle)
 {
 	myNavVertex = aHandle;
+}
+
+void IsometricTile::SetVisible(bool aIsVisible)
+{
+	myIsVisible = aIsVisible;
+}
+
+void IsometricTile::SetInEnemyFoV(bool aIsInFoV)
+{
+	myIsInEnemyFoV = aIsInFoV;
+}
+
+bool IsometricTile::GetVisible() const
+{
+	return myIsVisible;
+}
+
+bool IsometricTile::GetInEnemyFov() const
+{
+	return myIsInEnemyFoV;
 }
 
 VertexHandle IsometricTile::GetVertexHandle() const
