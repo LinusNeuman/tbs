@@ -326,6 +326,8 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 
 void PlayState::CalculateRayTrace(int aIndex, float aAngle, float aMagnitude)
 {
+	//Will be replaced when enemies has a direction
+
 	if (aIndex < 25)
 	{
 		CalculateFoVBasedOnAngle(CU::Vector2f(0, 1), aAngle, aMagnitude);
