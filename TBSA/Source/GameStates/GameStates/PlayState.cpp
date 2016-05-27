@@ -188,7 +188,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
-	CalculateRayTrace(index);
+	CalculateRayTrace(index,45.f,4.f);
 	if (index > 100)
 		index = 0;
 	return eStackReturnValue::eStay;
@@ -335,32 +335,32 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 		
 }
 
-void PlayState::CalculateRayTrace(int aIndex)
+void PlayState::CalculateRayTrace(int aIndex, float aAngle, float aMagnitude)
 {
 	if (aIndex < 25)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(0, 1), 45.f, 4.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(0, 1), aAngle, aMagnitude);
 	}
 	else if (aIndex < 50)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(1, 0), 45.f, 4.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(1, 0), aAngle, aMagnitude);
 	}
 	else if (aIndex < 75)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(0, -1), 45.f, 4.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(0, -1), aAngle, aMagnitude);
 	}
 	else
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(-1, 0), 45.f, 4.f);
+		CalculateFoVBasedOnAngle(CU::Vector2f(-1, 0), aAngle, aMagnitude);
 	}
 }
 
 void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
 {
-	float angle = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f));
-	float angle2 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f));
-	float angle3 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f));
-	float angle4 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f));
+	float angle = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	float angle2 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	float angle3 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
+	float angle4 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
 	float angle5 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle());
 	CU::Vector2f test = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
 	CU::Vector2f test3 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle3))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle3))));

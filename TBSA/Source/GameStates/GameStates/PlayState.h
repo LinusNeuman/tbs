@@ -34,7 +34,7 @@ public:
 	IsometricTile & GetTile(unsigned short aIndex);
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
-	void CalculateRayTrace(int aIndex);
+	void CalculateRayTrace(int aIndex, float aAngle, float aMagnitude);
 	int CalculatePoint(float aValue);
 	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
 	Camera2D myCamera;
