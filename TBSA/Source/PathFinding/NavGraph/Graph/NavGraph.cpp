@@ -56,6 +56,13 @@ void NavGraph::Dijkstra(const VertexHandle& aFirstNode,const unsigned aDistance)
 	Clear();
 
 	aFirstNode->SetDistance(0);
+	if (aDistance == 0)
+	{
+		aFirstNode->SetIfSearched(true);
+		return;
+	}
+
+	
 
 	CommonUtilities::Heap<VertexHandle, CommonUtilities::VertexLesser>openNodes;
 	openNodes.Enqueue(aFirstNode);
