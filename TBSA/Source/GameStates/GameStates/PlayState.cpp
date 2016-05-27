@@ -27,10 +27,7 @@
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
 #include <Message/EndTurnMessage.h>
 
-#define EDGE_SCROLL_LIMIT 0.05f
-
 const float sqrt2 = static_cast<float>( sqrt(2));
-const float CameraSpeed = 10.f;
 
 PlayState::PlayState()
 {
@@ -45,14 +42,13 @@ void PlayState::Init()
 {
 	Shaders::Create();
 	myTiles.Init(100);
-
+	
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
-	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
 	
 
@@ -64,6 +60,7 @@ void PlayState::Init()
 
 	myPlayerController = &myTurnManager.GetPlayerController();
 	myEnemyController = &myTurnManager.GetEnemyController();
+	myPlayerController->Init();
 	myPlayerController->SetMyPlayState(*this);
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
@@ -121,7 +118,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		}
 	}
 
-	myTurnManager.Update(aTimeDelta);	
+	myTurnManager.Update(aTimeDelta);
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
@@ -132,22 +129,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
 	}
 
-	if (IsometricInput::GetKeyDown(DIK_W) || IsometricInput::GetMouseWindowPositionNormalizedSpace().y <= EDGE_SCROLL_LIMIT)
-	{
-		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, -CameraSpeed) * aTimeDelta.GetSeconds()));
-	}
-	if (IsometricInput::GetKeyDown(DIK_S) ||IsometricInput::GetMouseWindowPositionNormalizedSpace().y >= 1.f - EDGE_SCROLL_LIMIT)
-	{
-		myCamera.MoveCameraIsomertic((CU::Vector2f(0.f, CameraSpeed) * aTimeDelta.GetSeconds()));
-	}
-	if (IsometricInput::GetKeyDown(DIK_A) || IsometricInput::GetMouseWindowPositionNormalizedSpace().x <= EDGE_SCROLL_LIMIT)
-	{
-		myCamera.MoveCameraIsomertic((CU::Vector2f(-CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
-	}
-	if (IsometricInput::GetKeyDown(DIK_D) || IsometricInput::GetMouseWindowPositionNormalizedSpace().x >= 1.f - EDGE_SCROLL_LIMIT)
-	{
-		myCamera.MoveCameraIsomertic((CU::Vector2f(CameraSpeed, 0.0f) * aTimeDelta.GetSeconds()));
-	}
+
 
 	if (IsometricInput::GetKeyPressed(DIK_F3))
 	{
@@ -176,7 +158,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
-	CalculateFoV(myEnemy->GetPosition(), 4.f, index);
+	CalculateRayTrace(index,45.f,4.f);
+	CalculateCircleFoV(myPlayer->GetPosition(), 5.f);
 	if (index > 100)
 		index = 0;
 	return eStackReturnValue::eStay;
@@ -189,7 +172,7 @@ void PlayState::Draw() const
 		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
 		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
 		{
-			if (distance.Length2() > 16.0f)
+			if (distance.Length2() > 36.0f)
 			{
 				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
 			}
@@ -294,10 +277,10 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 	y1 = secondPosition.y;
 	myDebugStart.push_back(position);
 	myDebugEnd.push_back(secondPosition);
-	int dx = abs(x1 - x0);
-	int dy = abs(y1 - y0);
-	int x = x0;
-	int y = y0;
+	int dx = abs(static_cast<int>(x1 - x0));
+	int dy = abs(static_cast<int>(y1 - y0));
+	int x = static_cast<int>(x0);
+	int y = static_cast<int>(y0);
 	int n = 1 + dx + dy;
 	int x_inc = (x1 > x0) ? 1 : -1;
 	int y_inc = (y1 > y0) ? 1 : -1;
@@ -307,8 +290,11 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 
 	for (; n > 0; --n)
 	{
+		if (GetTile(x,y).GetTileType() == eTileType::BLOCKED)
+		{
+			break;
+		}
 		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);
-
 		if (error > 0)
 		{
 			x += x_inc;
@@ -323,63 +309,108 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 		
 }
 
-void PlayState::CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, int aIndex)
+void PlayState::CalculateRayTrace(int aIndex, float aAngle, float aMagnitude)
 {
 	if (aIndex < 25)
 	{
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(2, 4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-2, 4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(0, 4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(1, 4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-1, 4));
+		CalculateFoVBasedOnAngle(CU::Vector2f(0, 1), aAngle, aMagnitude);
 	}
 	else if (aIndex < 50)
 	{
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 2));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, -2));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 0));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, 1));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(4, -1));
+		CalculateFoVBasedOnAngle(CU::Vector2f(1, 0), aAngle, aMagnitude);
 	}
 	else if (aIndex < 75)
 	{
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(2, -4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-2, -4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(0, -4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(1, -4));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-1, -4));
+		CalculateFoVBasedOnAngle(CU::Vector2f(0, -1), aAngle, aMagnitude);
 	}
 	else
 	{
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 2));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, -2));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 0));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, 1));
-		RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + CU::Vector2f(-4, -1));
+		CalculateFoVBasedOnAngle(CU::Vector2f(-1, 0), aAngle, aMagnitude);
 	}
 }
 
-void PlayState::CalculateFoV(const CU::Vector2f& aPosition, float aRadius, int aIndex)
+void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
+{
+	float angle = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	float angle2 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	float angle3 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
+	float angle4 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
+	float angle5 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle());
+	CU::Vector2f test = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
+	CU::Vector2f test3 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle3))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle3))));
+	CU::Vector2f test2 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle2))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle2))));
+	CU::Vector2f test4 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle4))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle4))));
+
+	CU::Vector2f test5;
+	//this should be alot less messy when enemies has directions, which would probably be with enums or something.
+
+	if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == 1)
+	{
+		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
+	}
+	else if (aShouldBeEnemyDirection.x == 1 && aShouldBeEnemyDirection.y == 0)
+	{
+		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
+	}
+	else if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == -1)
+	{
+		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
+	}
+	else
+	{
+		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
+	}
+	
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test2);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test3);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test4);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5);
+}
+
+void PlayState::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
 {
 	int r, xc, yc, pk, x, y;
-	xc = aPosition.x;
-	yc = aPosition.y;
-	r = aRadius;
+	xc = static_cast<int>(aPosition.x);
+	yc = static_cast<int>(aPosition.y);
+	r = static_cast<int>(aRadius);
 	pk = 3 - 2 * r;
 	x = 0; y = r;
-	CalculateRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc), aIndex);
+	CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 	while (x < y)
 	{
 		if (pk <= 0)
 		{
 			pk = pk + (4 * x) + 6;
-			CalculateRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc), aIndex);
+			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 		}
 		else
 		{
 			pk = pk + (4 * (x - y)) + 10;
-			CalculateRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc), aIndex);
+			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(--y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 		}
+		}
+
 	}
+
+void PlayState::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& aPlayerPosition)
+{
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+
 }
 
+int PlayState::CalculatePoint(float aValue) const
+{
+	if (aValue <= 0)
+	{
+		return static_cast<int>(floor(aValue));
+	}
+	return static_cast<int>(ceil(aValue));
+}

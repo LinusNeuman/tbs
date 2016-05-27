@@ -85,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
@@ -105,7 +105,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Controllers\EnemyController.cpp" />
+    <ClCompile Include="Level\GameLevel.cpp" />
     <ClCompile Include="GameObjects\Actor\Actor.cpp" />
     <ClCompile Include="GameObjects\Actor\Enemy.cpp" />
     <ClCompile Include="GameObjects\Actor\Player.cpp" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controllers\EnemyController.h" />
+    <ClInclude Include="Level\GameLevel.h" />
     <ClInclude Include="GameObjects\Actor\Actor.h" />
     <ClInclude Include="GameObjects\Actor\Enemy.h" />
     <ClInclude Include="GameObjects\Actor\Player.h" />

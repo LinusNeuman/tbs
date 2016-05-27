@@ -34,8 +34,13 @@ public:
 	IsometricTile & GetTile(unsigned short aIndex);
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
-	void CalculateRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, int aIndex);
-	void CalculateFoV(const CU::Vector2f& aPosition, float aRadius, int aIndex);
+	void CalculateRayTrace(int aIndex, float aAngle, float aMagnitude);
+	int CalculatePoint(float aValue) const;
+	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
+	void CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius);
+	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
+
+
 	Camera2D myCamera;
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
@@ -47,7 +52,7 @@ private:
 
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
-	Animation *myAnimation;
+	
 	NavGraph myNavGraph;
 	TiledData myTiledData;
 	CommonUtilities::Vector2ui myDimensions;

@@ -39,6 +39,9 @@
     <ClCompile Include="Controllers\EnemyController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Level\GameLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Actor\Actor.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Controllers\EnemyController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\GameLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
