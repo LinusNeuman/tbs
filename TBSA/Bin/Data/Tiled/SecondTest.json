@@ -73,8 +73,8 @@
                  "type":"Player1",
                  "visible":true,
                  "width":128,
-                 "x":390,
-                 "y":382
+                 "x":905,
+                 "y":309
                 }, 
                 {
                  "gid":661,
@@ -89,8 +89,8 @@
                  "type":"Player2",
                  "visible":true,
                  "width":128,
-                 "x":258.5,
-                 "y":257.5
+                 "x":256,
+                 "y":322
                 }],
          "opacity":1,
          "type":"objectgroup",
