@@ -22,9 +22,10 @@ StaticSprite::~StaticSprite()
 void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFiles/biggerTestTile.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::Zero*/)
 {
 	myIsInitiedFlag = true;
+	myIsIsometricFlag = aIsIsometric;
 	myImageIndex = AddImage(aFilePath, aRect);
 	myLayer = enumRenderLayer::eFloor;
-	myIsIsometricFlag = aIsIsometric;
+	
 }
 
 unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
