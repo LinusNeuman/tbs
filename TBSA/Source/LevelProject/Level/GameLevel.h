@@ -32,9 +32,9 @@ public:
 
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition, bool aIsPlayer);
-	void CreateEnemyRayTrace(int aIndex, float aAngle, float aMagnitude);
+	void CreateEnemyRayTrace(const CU::Vector2f &aPosition, int aIndex, float aAngle, float aMagnitude);
 	int CalculatePoint(float aValue) const;
-	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
+	void CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
 	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);
 	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
 	void ResetFoV();
