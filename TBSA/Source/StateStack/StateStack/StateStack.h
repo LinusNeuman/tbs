@@ -2,6 +2,9 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include "StateStack/GameState.h"
 #include "StateStack/ProxyStateStack.h"
+
+#include <GUI/Managing/GUIManager.h>
+
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 
@@ -31,4 +34,3 @@ private:
 	ProxyStateStack myProxy;
 };
 #pragma warning (pop)
-

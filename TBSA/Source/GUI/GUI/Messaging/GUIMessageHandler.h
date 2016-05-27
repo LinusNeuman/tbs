@@ -20,10 +20,9 @@ public:
 	GUIMessageHandler();
 	~GUIMessageHandler();
 
-	void __forceinline SetOnClick(GUIMessage* aGUIMessage);
-	void __forceinline SetOnHover(GUIMessage* aGUIMessage);
+	void __forceinline SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aGUIMessageEvent);
 
-	void __forceinline Execute(eGUIMessageEvents aGUIMessageEvent);
+	bool __forceinline Execute(eGUIMessageEvents aGUIMessageEvent);
 private:
 	CommonUtilities::StaticArray<GUIMessage*, static_cast<int>(eGUIMessageEvents::eEnumLength)> myMessageEvents;
 };

@@ -1,14 +1,10 @@
-void GUIMessageHandler::SetOnClick(GUIMessage* aGUIMessage)
+void GUIMessageHandler::SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aGUIMessageEvent)
 {
-	myMessageEvents[0] = aGUIMessage;
+	myMessageEvents[static_cast<int>(aGUIMessageEvent)] = aGUIMessage;
 }
 
-void GUIMessageHandler::SetOnHover(GUIMessage* aGUIMessage)
-{
-	myMessageEvents[1] = aGUIMessage;
-}
-
-void GUIMessageHandler::Execute(eGUIMessageEvents aGUIMessageEvent)
+bool GUIMessageHandler::Execute(eGUIMessageEvents aGUIMessageEvent)
 {
 	SingletonPostMaster::PostMessage(*myMessageEvents[static_cast<int>(aGUIMessageEvent)]);
+	return true;
 }

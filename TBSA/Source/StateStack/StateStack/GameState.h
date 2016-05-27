@@ -2,6 +2,7 @@
 #include <CU/Timer/Time.h>
 #include <CU/NameSpaceAliases.h>
 #include <GUI/Generic/GUIElement.h>
+#include <GUI/Managing/GUIManager.h>
 
 class ProxyStateStack;
 
@@ -31,5 +32,6 @@ public:
 
 protected:
 	bool myLetThroughRender;
-	CU::GrowingArray<GUIElement*, uchar> *myGUIElements;
+
+	GUIManager myGUIManager;
 };

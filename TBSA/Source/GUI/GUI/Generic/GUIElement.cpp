@@ -26,12 +26,15 @@ void GUIElement::Destroy()
 	}
 }
 
-void GUIElement::Render(CU::Vector2f aParentSpace)
+void GUIElement::Render()
 {
-	mySprite->Draw(aParentSpace + myPosition);
+	if (mySprite != nullptr)
+	{
+		mySprite->Draw(myParentSpace + myPosition);
+	}
 
 	for (uchar u = 0; u < myGUIChilds.Size(); ++u)
 	{
-		myGUIChilds[u]->Render(myPosition);
+		myGUIChilds[u]->Render();
 	}
 }

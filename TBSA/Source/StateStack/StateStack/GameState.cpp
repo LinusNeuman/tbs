@@ -11,11 +11,6 @@ GameState::GameState()
 
 GameState::~GameState()
 {
-	if (myGUIElements != nullptr)
-	{
-		myGUIElements->RemoveAll();
-		delete myGUIElements;
-	}
 }
 
 void GameState::Init()
@@ -25,7 +20,7 @@ void GameState::Init()
 
 void GameState::LoadGUI(const char* aName)
 {
-	myGUIElements = GUIFactory::GetInstance()->GetLoadedGUI(aName);
+	myGUIManager.LoadActiveGUI(GUIFactory::GetInstance()->GetLoadedGUI(aName));
 }
 
 bool GameState::GetShouldLetThroughRendering()

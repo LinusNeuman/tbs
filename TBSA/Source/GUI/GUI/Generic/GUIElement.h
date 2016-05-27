@@ -12,6 +12,9 @@
 #include <PostMaster/MessageReceiver.h>
 
 #include <Rend/StaticSprite.h>
+#include <CU/Intersection/Shapes2D/AABB2D.h>
+#include <CU/Intersection/Intersection2D.h>
+#include <Input/SingletonIsometricInputWrapper.h>
 
 typedef unsigned char uchar;
 
@@ -24,26 +27,33 @@ public:
 	virtual ~GUIElement();
 	virtual void Destroy();
 
+	virtual void __forceinline Create(const char* aName, const char* aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, bool aIsIsometric = false, bool aIsEnabled = true);
+	virtual void __forceinline SetParentSpace(CU::Vector2f aParentSpace);
+	virtual void __forceinline SetPosition(CU::Vector2f aPosition);
+	virtual void __forceinline SetSize(CU::Vector2f aSize);
 	virtual void __forceinline SetIsometric(bool aIsIsometric);
 	virtual void __forceinline SetEnabled(bool aIsEnabled);
 	virtual void __forceinline SetName(const char* aName);
 	virtual void __forceinline SetSprite(const char* aFilePath);
 
-	virtual void __forceinline SetOnClick(GUIMessage* aGUIMessage);
-	virtual void __forceinline SetOnHover(GUIMessage* aGUIMessage);
+	virtual void __forceinline SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent);
 
-	virtual void __forceinline OnHover();
-	virtual void __forceinline OnClick();
+	virtual bool __forceinline OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePosition);
 
 	virtual void Update(CommonUtilities::Time &aDelta) = 0;
 
-	virtual void Render(CU::Vector2f aParentSpace);
+	virtual void Render();
 protected:
 	GUIMessageHandler myMessageHandler;
 
 	StaticSprite* myBackground;
 	StaticSprite* mySprite;
+
 	CU::Vector2f myPosition;
+	CU::Vector2f myParentSpace;
+	CU::Vector2f mySize;
+
+	Intersection2D::AABB2D myCollisionBox;
 
 	std::string myName;
 

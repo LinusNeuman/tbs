@@ -166,7 +166,7 @@
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Game\;$(SolutionDir)PostMaster\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)PostMessages\;$(SolutionDir)Factories\;$(SolutionDir)ThreadPool\;$(SolutionDir)GameStates\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>

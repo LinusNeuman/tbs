@@ -78,7 +78,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)GUI\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)GUI\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -132,6 +132,9 @@
     </ProjectReference>
     <ProjectReference Include="..\GUI\GUI.vcxproj">
       <Project>{0a8e37f3-e093-4a13-9336-de37a5b0af85}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Input\Input.vcxproj">
+      <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>
     </ProjectReference>
     <ProjectReference Include="..\PostMaster\PostMaster.vcxproj">
       <Project>{667e0cb3-dcad-4ee5-a6e3-871ecbe3ab16}</Project>

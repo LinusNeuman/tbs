@@ -35,7 +35,9 @@ void GUIFactory::Load()
 	newButton->SetName("ExitButton");
 	newButton->SetEnabled(true);
 	newButton->SetIsometric(false);
-	newButton->SetOnClick(new GUIMessage(RecieverTypes::eExitGame));
+	newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
+	newButton->SetPosition({ 0.f, 0.f });
+	newButton->SetSize({ 0.1f, 0.1f });
 
 	myGUIElements.Add(newButton);
 	myGUILookup["InGame"].myBegin = 0;
