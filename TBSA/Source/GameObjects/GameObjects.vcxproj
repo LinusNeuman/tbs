@@ -155,7 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Controllers\EnemyController.cpp" />
-    <ClCompile Include="Level\GameLevel.cpp" />
+    <ClCompile Include="GameObjects\Room\GameFloor.cpp" />
     <ClCompile Include="GameObjects\Actor\Actor.cpp" />
     <ClCompile Include="GameObjects\Actor\Enemy.cpp" />
     <ClCompile Include="GameObjects\Actor\Player.cpp" />
@@ -169,7 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controllers\EnemyController.h" />
-    <ClInclude Include="Level\GameLevel.h" />
+    <ClInclude Include="GameObjects\Room\GameFloor.h" />
     <ClInclude Include="GameObjects\Actor\Actor.h" />
     <ClInclude Include="GameObjects\Actor\Enemy.h" />
     <ClInclude Include="GameObjects\Actor\Player.h" />
