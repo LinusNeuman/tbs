@@ -1,11 +1,20 @@
-void GUIElement::Create(const char* aName, const char* aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, bool aIsIsometric = false, bool aIsEnabled = true)
+void GUIElement::Create(const char* aName, const char* aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2i aWhiteSpaceInPixels, bool aIsIsometric = false, bool aIsEnabled = true)
 {
 	myName = aName;
+	myIsIsometric = aIsIsometric;
 	mySprite = new StaticSprite();
-	mySprite->Init(aSpritePath);
+	mySprite->Init(
+		aSpritePath, 
+		myIsIsometric, 
+		{	
+			0.f, 0.f, 
+			static_cast<float>(1.f - aWhiteSpaceInPixels.x), 
+			static_cast<float>(1.f - aWhiteSpaceInPixels.y) 
+		}
+	);
+
 	myParentSpace = aParentSpace;
 	myPosition = aParentSpace + anOffset;
-	myIsIsometric = aIsIsometric;
 	myIsEnabled = aIsEnabled;
 
 	myCollisionBox.SetWithMaxAndMinPos(
@@ -14,45 +23,6 @@ void GUIElement::Create(const char* aName, const char* aSpritePath, CU::Vector2f
 			myPosition.x + mySprite->GetSize().x,
 			myPosition.y + mySprite->GetSize().y
 		});
-}
-
-void GUIElement::SetParentSpace(CU::Vector2f aParentSpace)
-{
-	myParentSpace = aParentSpace;
-	myCollisionBox.SetPosition(aParentSpace);
-}
-
-void GUIElement::SetPosition(CU::Vector2f aPosition)
-{
-	myPosition = aPosition;
-	myCollisionBox.SetPosition(myPosition + myParentSpace);
-}
-
-void GUIElement::SetSize(CU::Vector2f aSize)
-{
-	mySize = aSize;
-	myCollisionBox.SetSize(mySize);
-}
-
-void GUIElement::SetIsometric(bool aIsIsometric)
-{
-	myIsIsometric = aIsIsometric;
-}
-
-void GUIElement::SetEnabled(bool aIsEnabled)
-{
-	myIsEnabled = aIsEnabled;
-}
-
-void GUIElement::SetName(const char* aName)
-{
-	myName = aName;
-}
-
-void GUIElement::SetSprite(const char* aFilePath)
-{
-	mySprite = new StaticSprite();
-	mySprite->Init(aFilePath, myIsIsometric);
 }
 
 void GUIElement::SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent)

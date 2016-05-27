@@ -27,14 +27,7 @@ public:
 	virtual ~GUIElement();
 	virtual void Destroy();
 
-	virtual void __forceinline Create(const char* aName, const char* aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, bool aIsIsometric = false, bool aIsEnabled = true);
-	virtual void __forceinline SetParentSpace(CU::Vector2f aParentSpace);
-	virtual void __forceinline SetPosition(CU::Vector2f aPosition);
-	virtual void __forceinline SetSize(CU::Vector2f aSize);
-	virtual void __forceinline SetIsometric(bool aIsIsometric);
-	virtual void __forceinline SetEnabled(bool aIsEnabled);
-	virtual void __forceinline SetName(const char* aName);
-	virtual void __forceinline SetSprite(const char* aFilePath);
+	virtual void __forceinline Create(const char* aName, const char* aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2i aWhiteSpaceInPixels, bool aIsIsometric = false, bool aIsEnabled = true);
 
 	virtual void __forceinline SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent);
 

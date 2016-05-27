@@ -32,12 +32,16 @@ void GUIFactory::Load()
 	// then load them and put them into the map with growingarrays
 
 	GUIButton* newButton = new GUIButton();
-	newButton->SetName("ExitButton");
-	newButton->SetEnabled(true);
-	newButton->SetIsometric(false);
+
+	// everything will be read from json later
+	newButton->Create(
+		"ExitButton", 
+		"Sprites/GUI/InGame/ExitButton/", 
+		{ 1.f, 1.f },
+		{ 264.f / 1920.f, 154.f / 1080.f },
+		{ 33, 11 }
+	);
 	newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
-	newButton->SetPosition({ 0.f, 0.f });
-	newButton->SetSize({ 0.1f, 0.1f });
 
 	myGUIElements.Add(newButton);
 	myGUILookup["InGame"].myBegin = 0;
