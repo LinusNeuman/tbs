@@ -26,6 +26,8 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 
 void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
+	
+	bool playersLoaded = false;
 	picojson::value root;
 	
 	std::string JsonData = CommonUtilities::GetFileAsString(aFilePath);
@@ -135,13 +137,14 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					}
 				}
 			}
-			else if (objectsLoaded == false, type == "objectgroup")
+			else if (type == "objectgroup")
 			{
-				if (name == "Players" || name == "Player")
+				if (playersLoaded == false && (name == "Players" || name == "Player"))
 				{
 					picojson::array objects = GetArray(currentLayer["objects"]);
 					for (size_t k = 0; k < objects.size(); k++)
 					{
+						
 						picojson::object player = GetObject(objects[k]);
 						size_t index = k % 2;
 						eActorType playerType = eActorType::ePlayerOne;
@@ -165,18 +168,18 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 						Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
 
-						const float posX = static_cast<float>(GetNumber(player["x"]));
-						const float posY = static_cast<float>(GetNumber(player["y"]));
+						const float posX = static_cast<float>(GetNumber(player["x"])) / 64;
+						const float posY = static_cast<float>(GetNumber(player["y"])) / 64;
 
 						playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
 						someTiles.myPlayers[playerIndex] = playerActor;
 					}
+					playersLoaded = true;
 				}
 				else if (name == "Enemy" || name == "Enemies")
 				{
 					
 				}
-				loadedObjects = true;
 			}
 		}
 

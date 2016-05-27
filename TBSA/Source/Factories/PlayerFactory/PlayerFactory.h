@@ -16,7 +16,7 @@ public:
 	Player* CreatePlayer(eActorType aActorType);
 	void ReturnPlayer(Player* aPlayer);
 private:
-	CommonUtilities::MemoryPool<Player, 2> myPlayerPool;
+	CommonUtilities::MemoryPool<Player, 3> myPlayerPool;
 	ActorData myActorOneData;
 	ActorData myActorTwoData;
 	PlayerData myPlayerOneData;

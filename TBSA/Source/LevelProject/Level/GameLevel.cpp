@@ -41,6 +41,12 @@ void GameLevel::Init()
 	Shaders::Create();
 	myFloor.Init(100);
 
+	myPlayerFactory.LoadFromJson();
+	myEnemyFactory.LoadFromJson();
+
+	myTiledData.myPlayerFactory = &myPlayerFactory;
+	myTiledData.myEnemyFactory = &myEnemyFactory;
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 
@@ -51,8 +57,7 @@ void GameLevel::Init()
 	myFloor.SetTiles(myTiledData.myTiles);
 	myFloor.SetFloorDimensions(myTiledData.myMapSize);
 
-	myPlayerFactory.LoadFromJson();
-	myEnemyFactory.LoadFromJson();
+	
 
 	ConstructNavGraph();
 
@@ -61,8 +66,8 @@ void GameLevel::Init()
 	myPlayerController->Init();
 	myPlayerController->SetFloor(myFloor);
 
-	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
-	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
+	myPlayer = myTiledData.myPlayers[0];
+	myPlayer2 = myTiledData.myPlayers[1];
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);

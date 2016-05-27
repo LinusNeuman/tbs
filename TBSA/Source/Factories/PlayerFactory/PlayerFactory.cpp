@@ -25,8 +25,8 @@ void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& 
 	picojson::value values = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& object = JsonWrapper::GetPicoObject(values);
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", object));
-	aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", object);
-	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", object);
+	/*aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", object);
+	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", object);*/
 	if (JsonWrapper::HasValue("maxActionPoints", object))
 	{
 		aPlayerData.myActionPointMax = JsonWrapper::GetInt("maxActionPoints", object);
