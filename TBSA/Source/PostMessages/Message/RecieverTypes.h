@@ -8,5 +8,6 @@ enum class RecieverTypes
 	eLevelTileLayoutSettings,
 	eCamera,
 	eTurn,
+	eStartUpLevel,
 	enumlength
 };
