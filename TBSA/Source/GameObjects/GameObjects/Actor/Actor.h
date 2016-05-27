@@ -3,9 +3,11 @@
 #include <Animation/AnimationHandler.h>
 #include <CU/Timer/Time.h>
 
+
 struct ActorData;
 class StaticSprite;
 class Animation;
+class BoxCollider;
 
 enum class eActorType
 {
@@ -71,6 +73,9 @@ protected:
 	int myAP;
 	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
 	unsigned short myCurrentWaypoint;
+
+	BoxCollider * myBoxCollider;
+
 private:
 	void UpdatePath();
 

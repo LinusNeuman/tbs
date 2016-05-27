@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "BoxCollider.h"
 #include "CircleCollider.h"
+#include <Rend/RenderConverter.h>
 
 BoxCollider::BoxCollider()
 {
@@ -23,25 +24,25 @@ bool BoxCollider::CheckCollision(const GameObjectCollider &aColliderToCheckColli
 
 void BoxCollider::DrawCollider(const CU::Vector4f & aRenderColor /*= Vector4f::One*/) const
 {
-	//Vector2f aLinePos1 = myMinPos;
-	//Vector2f aLinePos2 = myMinPos;
+	CU::Vector2f aLinePos1 = myMinPos;
+	CU::Vector2f aLinePos2 = myMinPos;
 
-	//aLinePos2.x = myMaxPos.x;
+	aLinePos2.x = myMaxPos.x;
 
-	////Renderer::GetInstance()->AddLineToDraw(DebugLineRenderCommand(aLinePos1, aLinePos2, aRenderColor));
+	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2);
 
-	//aLinePos1 = myMaxPos;
+	aLinePos1 = myMaxPos;
 
-	////Renderer::GetInstance()->AddLineToDraw(DebugLineRenderCommand(aLinePos2, aLinePos1, aRenderColor));
+	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2);
 
-	//aLinePos2 = myMaxPos;
-	//aLinePos2.y = myMinPos.y;
+	aLinePos2 = myMaxPos;
+	aLinePos2.y = myMinPos.y;
 
-	////Renderer::GetInstance()->AddLineToDraw(DebugLineRenderCommand(aLinePos1, aLinePos2, aRenderColor));
+	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2);
 
-	//aLinePos1 = myMinPos;
+	aLinePos1 = myMinPos;
 
-	////Renderer::GetInstance()->AddLineToDraw(DebugLineRenderCommand(aLinePos2, aLinePos1, aRenderColor));
+	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2);
 }
 
 bool BoxCollider::CheckCollisionAgainstCircle(const CircleCollider & aColliderToCheckAgainst) const
