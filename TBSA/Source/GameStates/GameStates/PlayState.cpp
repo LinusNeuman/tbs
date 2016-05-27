@@ -201,7 +201,7 @@ void PlayState::Draw() const
 		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
 		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
 		{
-			if (distance.Length2() > 16.0f)
+			if (distance.Length2() > 36.0f)
 			{
 				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
 			}
