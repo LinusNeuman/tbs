@@ -4,7 +4,6 @@
 #include <Message/DijkstraMessage.h>
 #include <NavGraph/Vertex/NavVertex.h>
 #include <Message/NavigationClearMessage.h>
-//#include "../../GameStates/GameStates/PlayState.h"
 #include <GameObjects/Actor/Player.h>
 
 

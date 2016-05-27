@@ -8,15 +8,10 @@ namespace CommonUtilities
 	{
 	public:
 		StaticArray();
-		//StaticArray(const StaticArray& aStaticArray);
-
 		~StaticArray();
-
-		//StaticArray& operator=(const StaticArray& aStaticArray);
 
 		inline const Type& operator[](const int& aIndex) const;
 		inline Type& operator[](const int& aIndex);
-
 
 		// Utility functions
 		inline int GetSize();

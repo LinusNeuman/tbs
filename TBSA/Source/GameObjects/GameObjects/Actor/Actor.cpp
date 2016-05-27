@@ -8,6 +8,7 @@
 #include <CU\DLDebug\DL_Debug.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
+#include <Collision/BoxCollider.h>
 
 Actor::Actor()
 {
@@ -17,11 +18,12 @@ Actor::Actor()
 	myPath.Init(1);
 	myCurrentWaypoint = 0;
 
-	
+	myBoxCollider = new BoxCollider();
 }
 
 Actor::~Actor()
 {
+	SAFE_DELETE(myBoxCollider);
 }
 
 void Actor::Init(const ActorData &aActorData)
@@ -34,6 +36,8 @@ void Actor::Init(const ActorData &aActorData)
 	mySprite->SetLayer(enumRenderLayer::eGameObjects);
 	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	myAnimations.Init(this, aActorData.myAnimations);
+
+	myBoxCollider->SetPositionAndSize(myPosition, CU::Vector2f::One);
 }
 
 
@@ -81,8 +85,9 @@ void Actor::Draw() const
 {
 	if (myActiveFlag == true)
 	{
-	mySprite->Draw(myPosition);
-}
+		myBoxCollider->DrawCollider();
+		mySprite->Draw(myPosition);
+	}
 }
 
 void Actor::Move(CU::Vector2ui aTargetPosition)

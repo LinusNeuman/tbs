@@ -86,6 +86,8 @@ public:
 	unsigned short GetImageIndex() const;
 	unsigned short AddImage(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
 	
+	CU::Vector2f GetSize();
+
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
 

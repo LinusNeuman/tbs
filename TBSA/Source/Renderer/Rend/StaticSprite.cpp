@@ -64,7 +64,10 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 	return ourIndexDictionary[tempKey];
 }
 
-
+CU::Vector2f StaticSprite::GetSize()
+{
+	return CU::Vector2f(GetSprite()->GetSize().x, GetSprite()->GetSize().y);
+}
 
 void StaticSprite::Draw(const CU::Vector2f & aPosition)
 {
