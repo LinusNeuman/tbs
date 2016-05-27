@@ -171,8 +171,14 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
+	for (unsigned int i = 0; i < myTiles.Size(); i++)
+	{
+		myTiles[i].SetVisible(false);
+		myTiles[i].SetInEnemyFoV(false);
+	}
 	CalculateRayTrace(index,45.f,4.f);
 	CalculateCircleFoV(myPlayer->GetPosition(), 5.f);
+	CalculateCircleFoV(myPlayer2->GetPosition(), 5.f);
 	if (index > 100)
 		index = 0;
 	return eStackReturnValue::eStay;
@@ -182,12 +188,15 @@ void PlayState::Draw() const
 {
 	for (unsigned int i = 0; i < myTiles.Size(); i++)
 	{
-		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
 		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
 		{
-			if (distance.Length2() > 36.0f)
+			if (myTiles[i].GetVisible() == false)
 			{
 				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
+			}
+			else if (myTiles[i].GetInEnemyFov() == true && myTiles[i].GetVisible() == true)
+			{
+				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FieldOfViewShader")->myShader);
 			}
 			else
 			{
@@ -200,11 +209,10 @@ void PlayState::Draw() const
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();
-	std::cout << IsometricInput::GetMouseWindowPositionIsometric().x << " " << IsometricInput::GetMouseWindowPositionIsometric().y << std::endl;
-	for (size_t i = 0; i < myDebugStart.size(); i++)
+	/*for (size_t i = 0; i < myDebugStart.size(); i++)
 	{
 		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
-	}
+	}*/
 }
 
 void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
@@ -279,7 +287,7 @@ IsometricTile& PlayState::GetTile(unsigned short aIndex)
 	return  myTiles[aIndex];
 }
 
-void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
+void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, bool aIsPlayer)
 {
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
@@ -307,7 +315,14 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 		{
 			break;
 		}
-		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);		
+		if (aIsPlayer == true)
+		{
+			GetTile(x, y).SetVisible(true);
+		}
+		else
+		{
+			GetTile(x, y).SetInEnemyFoV(true);
+		}
 		if (error > 0)
 		{
 			x += x_inc;
@@ -374,11 +389,11 @@ void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
 	}
 	
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test2);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test3);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test4);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test, false);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test2, false);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test3, false);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test4, false);
+	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5, false);
 }
 
 void PlayState::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
@@ -408,14 +423,14 @@ void PlayState::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
 
 void PlayState::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& aPlayerPosition)
 {
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y), true);
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y), true);
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y), true);
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y), true);
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y), true);
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y), true);
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y), true);
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y), true);
 
 }
 
