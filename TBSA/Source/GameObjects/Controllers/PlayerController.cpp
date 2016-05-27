@@ -4,7 +4,6 @@
 #include <Message/DijkstraMessage.h>
 #include <NavGraph/Vertex/NavVertex.h>
 #include <Message/NavigationClearMessage.h>
-//#include "../../GameStates/GameStates/PlayState.h"
 #include <GameObjects/Actor/Player.h>
 
 
@@ -151,3 +150,12 @@ void PlayerController::PrePlayer()
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SingletonPostMaster::PostMessage(dijkstraMessage);
 }
+
+void PlayerController::RefillAllAP()
+{
+	for (unsigned int i = 0; i < myPlayers.Size(); ++i)
+	{
+		myPlayers[i]->FreshTurn();
+	}
+}
+

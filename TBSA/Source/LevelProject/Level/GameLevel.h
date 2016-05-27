@@ -29,6 +29,7 @@ public:
 	void RecieveMessage(const NavigationClearMessage & aMessage);
 
 	void ConstructNavGraph();
+
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition, bool aIsPlayer);
 	void CreateEnemyRayTrace(int aIndex, float aAngle, float aMagnitude);

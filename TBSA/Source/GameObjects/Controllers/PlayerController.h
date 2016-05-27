@@ -28,6 +28,7 @@ public:
 
 	void SetFloor(GameFloor & aFloor);
 	void PrePlayer();
+	void RefillAllAP();
 private:
 	//PlayState* myPlayState;
 	GameFloor * myFloor;

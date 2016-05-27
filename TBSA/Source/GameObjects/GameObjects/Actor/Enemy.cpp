@@ -27,7 +27,6 @@ void Enemy::UpdateEnemy()
 {
 	if (GetActiveState() == true)
 	{
-
 		if (myHasMoved == false)
 		{
 			CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
@@ -60,6 +59,10 @@ void Enemy::UpdateEnemy()
 			SetPath(path);
 			myHasMoved = true;
 		}
+	}
+	else
+	{
+		myController->EnemyDone();
 	}
 }
 
