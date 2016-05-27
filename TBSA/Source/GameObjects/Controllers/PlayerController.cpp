@@ -80,10 +80,10 @@ int PlayerController::GetPlayerAP()
 
 void PlayerController::CostAP(const int anAP)
 {
-	/*if (mySelectedPlayer != nullptr)
+	if (mySelectedPlayer != nullptr)
 	{
-		mySelectedPlayer->
-	}*/
+		//mySelectedPlayer;
+	}
 }
 
 void PlayerController::Update(const CommonUtilities::Time& aTime)

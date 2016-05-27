@@ -121,6 +121,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 			if (myPlayerController->GetPlayerAP() >= positionPath.Size())
 			{
 				myPlayerController->NotifyPlayers(positionPath);
+				myPlayerController->CostAP(positionPath.Size());
 				myNavGraph.Clear(); 
 			}
 		}
@@ -183,7 +184,7 @@ void PlayState::Draw() const
 		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
 		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
 		{
-			if (distance.Length2() > 16.0f)
+			if (distance.Length2() > 36.0f)
 			{
 				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
 			}
@@ -301,8 +302,11 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 
 	for (; n > 0; --n)
 	{
-		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);
-
+		if (GetTile(x,y).GetTileType() == eTileType::BLOCKED)
+		{
+			break;
+		}
+		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);		
 		if (error > 0)
 		{
 			x += x_inc;
@@ -376,15 +380,11 @@ void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5);
 }
 
-int PlayState::CalculatePoint(float aValue)
+int PlayState::CalculatePoint(float aValue) const
 {
 	if (aValue <= 0)
 	{
 		return static_cast<int>(floor(aValue));
 	}
-	else
-	{
-		return static_cast<int>(ceil(aValue));
-	}
+	return static_cast<int>(ceil(aValue));
 }
-
