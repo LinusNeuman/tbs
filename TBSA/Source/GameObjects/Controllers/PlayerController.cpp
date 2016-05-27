@@ -11,7 +11,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/SetMainCameraMessage.h>
 
-#define EDGE_SCROLL_LIMIT 0.05f
+#define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
 

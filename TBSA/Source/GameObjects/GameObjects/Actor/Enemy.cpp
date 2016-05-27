@@ -25,7 +25,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 
 void Enemy::UpdateEnemy()
 {
-	if (myActiveFlag == true)
+	if (GetActiveState() == true)
 	{
 
 		if (myHasMoved == false)
