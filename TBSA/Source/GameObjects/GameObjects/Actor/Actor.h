@@ -14,7 +14,10 @@ enum class eActorType
 	ePlayerOne,
 	ePlayerTwo,
 	eEnemyOne,
-	eEnemyTwo
+	eEnemyTwo,
+	eEnemyThree,
+	eEnemyFour,
+	eEnemyFive
 };
 
 enum class eActorState

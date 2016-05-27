@@ -70,21 +70,28 @@ void GameLevel::Init(const std::string& aLevelPath)
 	myPlayer2 = myTiledData.myPlayers[1];
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
-	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
-	myEnemyController->AddEnemy(myEnemy);
+	myEnemies = myTiledData.myEnemies;
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemyController->AddEnemy(myEnemies[i]);
+	}
 
 	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 	path.Init(5);
 
 	for (size_t i = 0; i < 5; i++)
 	{
-		path.Add(CommonUtilities::Vector2ui(myEnemy->GetPosition()) + CommonUtilities::Vector2ui(i, 0));
+		path.Add(CommonUtilities::Vector2ui(myEnemies[0]->GetPosition()) + CommonUtilities::Vector2ui(i, 0));
 	}
-	myEnemy->SetEnemyPath(path);
+	myEnemies[0]->SetEnemyPath(path);
 
 	myPlayer->ChangeAnimation("PlayerTurn");
 	myPlayer2->ChangeAnimation("PlayerTurn");
-	myEnemy->ChangeAnimation("EnemyTurn");
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->ChangeAnimation("EnemyTurn");
+	}
+
 
 	DX2D::CCustomShader* customShader;
 	DX2D::CCustomShader* customFoVShader;
@@ -139,7 +146,10 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
-	myEnemy->Update(aTimeDelta);
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->Update(aTimeDelta);
+	}
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
@@ -179,7 +189,10 @@ void GameLevel::Draw() const
 	myFloor.Draw();
 	myPlayer->Draw();
 	myPlayer2->Draw();
-	myEnemy->Draw();
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->Draw();
+	}
 }
 
 void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
@@ -323,41 +336,41 @@ void GameLevel::CreateEnemyRayTrace(int aIndex, float aAngle, float aMagnitude)
 
 void GameLevel::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
 {
-	float angle = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
-	float angle2 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
-	float angle3 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
-	float angle4 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
-	float angle5 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle());
-	CU::Vector2f test = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
-	CU::Vector2f test3 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle3))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle3))));
-	CU::Vector2f test2 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle2))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle2))));
-	CU::Vector2f test4 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle4))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle4))));
+	//float angle = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	//float angle2 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	//float angle3 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
+	//float angle4 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
+	//float angle5 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle());
+	//CU::Vector2f test = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
+	//CU::Vector2f test3 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle3))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle3))));
+	//CU::Vector2f test2 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle2))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle2))));
+	//CU::Vector2f test4 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle4))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle4))));
 
-	CU::Vector2f test5;
-	//this should be alot less messy when enemies has directions, which would probably be with enums or something.
+	//CU::Vector2f test5;
+	////this should be alot less messy when enemies has directions, which would probably be with enums or something.
 
-	if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == 1)
-	{
-		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
-	}
-	else if (aShouldBeEnemyDirection.x == 1 && aShouldBeEnemyDirection.y == 0)
-	{
-		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
-	}
-	else if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == -1)
-	{
-		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
-	}
-	else
-	{
-		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
-	}
+	//if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == 1)
+	//{
+	//	test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
+	//}
+	//else if (aShouldBeEnemyDirection.x == 1 && aShouldBeEnemyDirection.y == 0)
+	//{
+	//	test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
+	//}
+	//else if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == -1)
+	//{
+	//	test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
+	//}
+	//else
+	//{
+	//	test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
+	//}
 
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test2, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test3, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test4, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5, false);
+	//RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test, false);
+	//RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test2, false);
+	//RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test3, false);
+	//RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test4, false);
+	//RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5, false);
 }
 
 void GameLevel::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
