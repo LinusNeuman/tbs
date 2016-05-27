@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include "../Renderer/Animation/AnimationHandler.h"
+#include <Animation/AnimationHandler.h>
 #include <CU/Timer/Time.h>
 
 struct ActorData;

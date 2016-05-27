@@ -39,12 +39,12 @@ private:
 	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
 	
 	CU::GrowingArray<IsometricTile> myTiles;
-	StaticSprite * testSprite;
+	//StaticSprite * testSprite;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
-	Animation *myAnimation;
+	
 	NavGraph myNavGraph;
 	TiledData myTiledData;
 	CommonUtilities::Vector2ui myDimensions;
