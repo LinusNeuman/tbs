@@ -2,10 +2,12 @@
 #include "PlayState.h"
 
 #include <Level/GameLevel.h>
+#include <Message/StartUpLevelMessage.h>
 
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
+	myStartPath = "Data/Tiled/";;
 }
 
 
@@ -16,7 +18,10 @@ PlayState::~PlayState()
 
 void PlayState::Init()
 {
-	myLevel->Init();
+	//myLevel->Init();
+	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
+	myLevels[myLevelKey] = new GameLevel();
+	myLevels[myLevelKey]->Init(myStartPath + myLevelKey);
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
@@ -24,8 +29,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	//(aStateStack);
 	static int index = 0;
 	
-
-	myLevel->Update(aTimeDelta);
+	myLevels[myLevelKey]->Update(aTimeDelta);
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
@@ -37,6 +41,10 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 void PlayState::Draw() const
 {
-	myLevel->Draw();
+	myLevels.at(myLevelKey)->Draw();
 }
 
+void PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
+{
+	myLevelKey = aMessage.myPath;
+}

@@ -17,7 +17,6 @@ struct EnemyData
 struct ActorData
 {
 	eActorType myActortype;
-	CU::Vector2f myPosition;
 	std::map<std::string, Animation*> myAnimations;
 };
 

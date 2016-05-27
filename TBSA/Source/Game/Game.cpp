@@ -20,6 +20,7 @@
 
 #include "StartupReader/StartupReader.h"
 #include "StartupReader/StartupData.h"
+#include <Message/StartUpLevelMessage.h>
 
 using namespace std::placeholders;
 
@@ -120,6 +121,8 @@ void CGame::InitCallBack()
 	
 
 	myGameStateStack.AddMainState(myMenuState);
+	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
+	SingletonPostMaster::PostMessageW(startLevelMessage);
 }
 
 

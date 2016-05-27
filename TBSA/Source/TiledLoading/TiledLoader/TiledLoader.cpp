@@ -3,7 +3,6 @@
 #include <JSON/JSONWrapper.h>
 #include <CU/Utility/FileHandling.h>
 
-//#include "../../Game/Room/IsometricTile.h"
 #include <GameObjects/Room/IsometricTile.h>
 #include "SpriteSheet/SpriteSheet.h"
 #include <JsonWrapper/JsonWrapper.h>
@@ -27,6 +26,8 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 
 void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
+	
+	bool playersLoaded = false;
 	picojson::value root;
 	
 	std::string JsonData = CommonUtilities::GetFileAsString(aFilePath);
@@ -58,10 +59,13 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 	someTiles.myMapSize = CommonUtilities::Point2ui(width, height);
 	
 	picojson::array layers = GetArray(rootObject["layers"]);
-
+	bool loadedObjects = false;
 	for (size_t i = 0; i < height * width; i++)
 	{
 		bool isOverFloor = false;
+		
+		bool objectsLoaded = loadedObjects;
+		
 
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
@@ -135,16 +139,46 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 			}
 			else if (type == "objectgroup")
 			{
-				if (name == "Players" || name == "Player")
+				if (playersLoaded == false && (name == "Players" || name == "Player"))
 				{
 					picojson::array objects = GetArray(currentLayer["objects"]);
 					for (size_t k = 0; k < objects.size(); k++)
 					{
+						
 						picojson::object player = GetObject(objects[k]);
 						size_t index = k % 2;
+						eActorType playerType = eActorType::ePlayerOne;
+						const std::string typeString =  GetString(player["type"]);
+						int playerIndex;
+						if (typeString == "Player1")
+						{
+							playerType = eActorType::ePlayerOne;
+							playerIndex = 0;
+						}
+						else if (typeString == "Player2")
+						{
+							playerType = eActorType::ePlayerTwo;
+							playerIndex = 1;
+						}
+						else
+						{
+							DL_ASSERT(false, "ERROR:  Player type does not exist");
+							playerIndex = 0;
+						}
 
-						
+						Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
+
+						const float posX = static_cast<float>(GetNumber(player["x"])) / 64;
+						const float posY = static_cast<float>(GetNumber(player["y"])) / 64;
+
+						playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+						someTiles.myPlayers[playerIndex] = playerActor;
 					}
+					playersLoaded = true;
+				}
+				else if (name == "Enemy" || name == "Enemies")
+				{
+					
 				}
 			}
 		}

@@ -8,6 +8,7 @@ struct StartupData
 	unsigned short myWindowHeight;
 
 	bool myFullScreenFlag;
+	std::string myStartLevel;
 
 	//My Level To load
 };

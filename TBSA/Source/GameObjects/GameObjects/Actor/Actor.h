@@ -36,10 +36,18 @@ public:
 
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
+
+	void SetPosition(const CommonUtilities::Vector2f & aPos)
+	{
+		myPosition = aPos;
+	}
+	
 	CU::Vector2f GetPosition() const
 	{
 		return myPosition;
 	}
+
+
 	CU::Vector2f GetDirection() const
 	{
 		return myVelocity.GetNormalized();

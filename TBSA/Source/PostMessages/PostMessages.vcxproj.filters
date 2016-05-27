@@ -14,5 +14,6 @@
     <ClInclude Include="Message\SetMainCameraMessage.h" />
     <ClInclude Include="Message\NavigationClearMessage.h" />
     <ClInclude Include="Message\EndTurnMessage.h" />
+    <ClInclude Include="Message\StartUpLevelMessage.h" />
   </ItemGroup>
 </Project>
