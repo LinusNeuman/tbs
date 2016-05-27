@@ -24,7 +24,7 @@ Actor::~Actor()
 
 void Actor::Init(const ActorData &aActorData)
 {
-	myPosition = aActorData.myPosition;
+	myPosition = CommonUtilities::Vector2f::Zero;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
 	mySprite->Init();
 	mySprite->SetLayer(enumRenderLayer::eGameObjects);

@@ -3,7 +3,6 @@
 #include <JSON/JSONWrapper.h>
 #include <CU/Utility/FileHandling.h>
 
-//#include "../../Game/Room/IsometricTile.h"
 #include <GameObjects/Room/IsometricTile.h>
 #include "SpriteSheet/SpriteSheet.h"
 #include <JsonWrapper/JsonWrapper.h>
@@ -58,10 +57,13 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 	someTiles.myMapSize = CommonUtilities::Point2ui(width, height);
 	
 	picojson::array layers = GetArray(rootObject["layers"]);
-
+	bool loadedObjects = false;
 	for (size_t i = 0; i < height * width; i++)
 	{
 		bool isOverFloor = false;
+		
+		bool objectsLoaded = loadedObjects;
+		
 
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
@@ -133,7 +135,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					}
 				}
 			}
-			else if (type == "objectgroup")
+			else if (objectsLoaded == false, type == "objectgroup")
 			{
 				if (name == "Players" || name == "Player")
 				{
@@ -142,10 +144,39 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					{
 						picojson::object player = GetObject(objects[k]);
 						size_t index = k % 2;
+						eActorType playerType = eActorType::ePlayerOne;
+						const std::string typeString =  GetString(player["type"]);
+						int playerIndex;
+						if (typeString == "Player1")
+						{
+							playerType = eActorType::ePlayerOne;
+							playerIndex = 0;
+						}
+						else if (typeString == "Player2")
+						{
+							playerType = eActorType::ePlayerTwo;
+							playerIndex = 1;
+						}
+						else
+						{
+							DL_ASSERT(false, "ERROR:  Player type does not exist");
+							playerIndex = 0;
+						}
 
-						
+						Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
+
+						const float posX = static_cast<float>(GetNumber(player["x"]));
+						const float posY = static_cast<float>(GetNumber(player["y"]));
+
+						playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+						someTiles.myPlayers[playerIndex] = playerActor;
 					}
 				}
+				else if (name == "Enemy" || name == "Enemies")
+				{
+					
+				}
+				loadedObjects = true;
 			}
 		}
 
