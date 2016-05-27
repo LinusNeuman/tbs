@@ -16,26 +16,22 @@ EnemyController::~EnemyController()
 void EnemyController::PreTurn()
 {
 	myCurrentEnemy = 0;
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->Reset();
+	}
 }
 
 void EnemyController::Update(CommonUtilities::Time)
 {
-	myEnemies[myCurrentEnemy].UpdateEnemy();
-}
-
-void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
-{
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		myEnemies[i].Update(aDeltaTime);
-	}
+	myEnemies[myCurrentEnemy]->UpdateEnemy();
 }
 
 void EnemyController::Draw()
 {
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
-		myEnemies[i].Draw();
+		myEnemies[i]->Draw();
 	}
 }
 
@@ -47,3 +43,10 @@ void EnemyController::EnemyDone()
 		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
 	}
 }
+
+void EnemyController::AddEnemy(Enemy* aEnemy)
+{
+	aEnemy->myController = this;
+	myEnemies.Add(aEnemy);
+}
+

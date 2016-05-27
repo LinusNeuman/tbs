@@ -10,13 +10,13 @@ public:
 	~EnemyController();
 	void PreTurn();
 	void Update(CommonUtilities::Time aDetltaTime);
-	void ConstantUpdate(CommonUtilities::Time aDeltaTime);
 	void Draw();
-
-private:
 	void EnemyDone();
+	void AddEnemy(Enemy* aEnemy);
+private:
+	
 
-	CommonUtilities::GrowingArray<Enemy> myEnemies;
+	CommonUtilities::GrowingArray<Enemy*> myEnemies;
 	
 	unsigned short myCurrentEnemy;
 };

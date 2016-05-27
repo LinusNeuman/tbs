@@ -25,6 +25,7 @@
 #include <Message/SetMainCameraMessage.h>
 #include <CU/Matriser/matrix.h>
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
+#include <Message/EndTurnMessage.h>
 
 #define EDGE_SCROLL_LIMIT 0.05f
 
@@ -53,6 +54,8 @@ void PlayState::Init()
 
 	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 
+	
+
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
@@ -60,13 +63,24 @@ void PlayState::Init()
 	ConstructNavGraph();
 
 	myPlayerController = &myTurnManager.GetPlayerController();
+	myEnemyController = &myTurnManager.GetEnemyController();
 	myPlayerController->SetMyPlayState(*this);
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
-	myPlayerController->AddPlayer(myEnemy);
+	myEnemyController->AddEnemy(myEnemy);
+
+	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
+	path.Init(5);
+
+	for (size_t i = 0; i < 5; i++)
+	{
+		path.Add(CommonUtilities::Vector2ui(myEnemy->GetPosition()) + CommonUtilities::Vector2ui(i, 0));
+	}
+	myEnemy->SetEnemyPath(path);
+
 	myPlayer->ChangeAnimation("PlayerTurn");
 	myPlayer2->ChangeAnimation("PlayerTurn");
 	myEnemy->ChangeAnimation("EnemyTurn");
@@ -107,41 +121,16 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		}
 	}
 
-	myTurnManager.Update(aTimeDelta);
-	/*if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
-	{
-		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
-		{
-			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
-			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
-			positionPath.Init(indexPath.Size());
-
-			for (size_t i = 0; i < indexPath.Size(); i++)
-			{
-				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()));
-			}
-			if (myPlayerController->GetPlayerAP() >= positionPath.Size())
-			{
-				myPlayerController->NotifyPlayers(positionPath);
-				myNavGraph.Clear(); 
-			}
-		}
-
-	}
-	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
-	{
-		myPlayerController->SelectPlayer();
-	}*/
+	myTurnManager.Update(aTimeDelta);	
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
 		return eStackReturnValue::ePopMain;
 	}
-	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
+	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		bool isFalse = false;
-		DL_ASSERT(isFalse, "IT Works!");
-	}*/
+		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
+	}
 
 	if (IsometricInput::GetKeyDown(DIK_W) || IsometricInput::GetMouseWindowPositionNormalizedSpace().y <= EDGE_SCROLL_LIMIT)
 	{

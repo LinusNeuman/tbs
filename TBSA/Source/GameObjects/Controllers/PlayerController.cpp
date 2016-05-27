@@ -18,7 +18,7 @@ PlayerController::~PlayerController()
 {
 }
 
-void PlayerController::AddPlayer(Actor* aPlayer)
+void PlayerController::AddPlayer(Player* aPlayer)
 {
 	myPlayers.Add(aPlayer);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
@@ -106,15 +106,13 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 }
 
-void PlayerController::ConstantUpdate(const CommonUtilities::Time& aTime)
-{
-	for (size_t i = 0; i < myPlayers.Size(); i++)
-	{
-		myPlayers[i]->Update(aTime);
-	}
-}
-
 void PlayerController::SetMyPlayState(PlayState& aPlayStateRef)
 {
 	myPlayState = &aPlayStateRef;
+}
+
+void PlayerController::PrePlayer()
+{
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+	SingletonPostMaster::PostMessage(dijkstraMessage);
 }

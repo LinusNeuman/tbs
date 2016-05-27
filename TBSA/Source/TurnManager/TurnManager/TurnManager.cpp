@@ -13,8 +13,6 @@ TurnManager::~TurnManager()
 
 void TurnManager::Update(CommonUtilities::Time aDeltaTime)
 {
-	myEnemyController.ConstantUpdate(aDeltaTime);
-
 	switch (myCurrentTurn)
 	{
 	case eTurn::PRE_PLAYER_TURN: 
@@ -63,7 +61,7 @@ void TurnManager::EndTurn()
 
 void TurnManager::PreparePlayer()
 {
-	//TODO: player preparation
+	myPlayerController.PrePlayer();
 	EndTurn();
 }
 
@@ -80,7 +78,7 @@ void TurnManager::PlayerEndTurn()
 
 void TurnManager::PrepareEnemy()
 {
-	//TODO: Preapre Enemy;
+	myEnemyController.PreTurn();
 	EndTurn();
 }
 

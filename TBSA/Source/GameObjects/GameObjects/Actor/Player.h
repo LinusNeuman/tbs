@@ -19,6 +19,7 @@ public:
 	int GetMyAP() const override;
 	void CostAP(const int aCost);
 	
+	void ReachedTarget()override;
 private:
 
 	int myActionPointMax;
