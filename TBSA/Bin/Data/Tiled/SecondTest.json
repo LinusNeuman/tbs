@@ -98,8 +98,36 @@
          "width":20,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":10,
+         "name":"Enemies",
+         "objects":[
+                {
+                 "gid":658,
+                 "height":128,
+                 "id":3,
+                 "name":"Gamzee",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"Enemy1",
+                 "visible":true,
+                 "width":128,
+                 "x":509,
+                 "y":325
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":20,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":3,
+ "nextobjectid":4,
  "orientation":"isometric",
  "properties":
     {

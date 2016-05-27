@@ -17,10 +17,17 @@ public:
 	Enemy* CreateEnemy(eActorType aActorType);
 	void ReturnEnemy(Enemy* aPlayer);
 private:
-	CommonUtilities::MemoryPool<Enemy, 5> myEnemyPool;
+	CommonUtilities::MemoryPool<Enemy, 10> myEnemyPool;
 	ActorData myActorOneData;
 	ActorData myActorTwoData;
+	ActorData myActorThreeData;
+	ActorData myActorFourData;
+	ActorData myActorFiveData;
+
 	EnemyData myEnemyOneData;
 	EnemyData myEnemyTwoData;
+	EnemyData myEnemyThreeData;
+	EnemyData myEnemyFourData;
+	EnemyData myEnemyFiveData;
 };
 

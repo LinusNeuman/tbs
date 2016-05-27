@@ -17,6 +17,9 @@ void EnemyFactory::LoadFromJson()
 {
 	UpdateDataStruct("Data/Enemies/Enemy1.json", myActorOneData, myEnemyOneData);
 	UpdateDataStruct("Data/Enemies/Enemy2.json", myActorTwoData, myEnemyTwoData);
+	UpdateDataStruct("Data/Enemies/Enemy3.json", myActorThreeData, myEnemyThreeData);
+	UpdateDataStruct("Data/Enemies/Enemy4.json", myActorFourData, myEnemyFourData);
+	UpdateDataStruct("Data/Enemies/Enemy5.json", myActorFiveData, myEnemyFiveData);
 }
 
 void EnemyFactory::UpdateDataStruct(const std::string &aStringPath, ActorData &aActorData, EnemyData &aEnemyData)
@@ -56,9 +59,19 @@ Enemy* EnemyFactory::CreateEnemy(eActorType aActorType)
 	case eActorType::eEnemyTwo:
 		Enemy->Init(myActorTwoData, myEnemyTwoData);
 		return Enemy;
+	case eActorType::eEnemyThree:
+		Enemy->Init(myActorThreeData, myEnemyThreeData);
+		return Enemy;
+	case eActorType::eEnemyFour:
+		Enemy->Init(myActorFourData, myEnemyFourData);
+		return Enemy;
+	case eActorType::eEnemyFive:
+		Enemy->Init(myActorFiveData, myEnemyFiveData);
+		return Enemy;
 	default:
 		DL_ASSERT(false, "Wrong ActorType when creating enemy");
 		return Enemy;
+
 	}
 }
 

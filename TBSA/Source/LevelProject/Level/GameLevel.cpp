@@ -70,21 +70,28 @@ void GameLevel::Init(const std::string& aLevelPath)
 	myPlayer2 = myTiledData.myPlayers[1];
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
-	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
-	myEnemyController->AddEnemy(myEnemy);
+	myEnemies = myTiledData.myEnemies;
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemyController->AddEnemy(myEnemies[i]);
+	}
 
 	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 	path.Init(5);
 
 	for (size_t i = 0; i < 5; i++)
 	{
-		path.Add(CommonUtilities::Vector2ui(myEnemy->GetPosition()) + CommonUtilities::Vector2ui(i, 0));
+		path.Add(CommonUtilities::Vector2ui(myEnemies[0]->GetPosition()) + CommonUtilities::Vector2ui(i, 0));
 	}
-	myEnemy->SetEnemyPath(path);
+	myEnemies[0]->SetEnemyPath(path);
 
 	myPlayer->ChangeAnimation("PlayerTurn");
 	myPlayer2->ChangeAnimation("PlayerTurn");
-	myEnemy->ChangeAnimation("EnemyTurn");
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->ChangeAnimation("EnemyTurn");
+	}
+
 
 	DX2D::CCustomShader* customShader;
 	DX2D::CCustomShader* customFoVShader;
@@ -134,21 +141,27 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	}
 	if (IsometricInput::GetKeyPressed(DIK_F4))
 	{
-		index += 25;
+		index += 10;
 	}
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
-	myEnemy->Update(aTimeDelta);
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->Update(aTimeDelta);
+	}
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
 
 	ResetFoV();
-	CreateEnemyRayTrace(index, 45.f, 4.f);
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
+	}
 	CreatePlayerFoV(myPlayer->GetPosition(), 5.f);
 	CreatePlayerFoV(myPlayer2->GetPosition(), 5.f);
-	if (index > 100)
+	if (index > 80)
 		index = 0;
 
 
@@ -179,7 +192,14 @@ void GameLevel::Draw() const
 	myFloor.Draw();
 	myPlayer->Draw();
 	myPlayer2->Draw();
-	myEnemy->Draw();
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->Draw();
+	}
+	for (size_t i = 0; i < myDebugEnd.size(); i++)
+	{
+		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
+	}
 }
 
 void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
@@ -258,8 +278,11 @@ void GameLevel::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 	y0 = position.y;
 	x1 = secondPosition.x;
 	y1 = secondPosition.y;
-	myDebugStart.push_back(position);
-	myDebugEnd.push_back(secondPosition);
+	if (aIsPlayer == false)
+	{
+		myDebugStart.push_back(position);
+		myDebugEnd.push_back(secondPosition);
+	}
 	int dx = abs(static_cast<int>(x1 - x0));
 	int dy = abs(static_cast<int>(y1 - y0));
 	int x = static_cast<int>(x0);
@@ -299,35 +322,51 @@ void GameLevel::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 
 }
 
-void GameLevel::CreateEnemyRayTrace(int aIndex, float aAngle, float aMagnitude)
+void GameLevel::CreateEnemyRayTrace(const CU::Vector2f &aPosition, int aIndex, float aAngle, float aMagnitude)
 {
 	//Will be replaced when enemies has a direction
 
-	if (aIndex < 25)
+	if (aIndex < 10)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(0, 1), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, 1), aAngle, aMagnitude);
+	}
+	else if (aIndex < 20)
+	{
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 1), aAngle, aMagnitude);
+	}
+	else if (aIndex < 30)
+	{
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 0), aAngle, aMagnitude);
+	}
+	else if (aIndex < 40)
+	{
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, -1), aAngle, aMagnitude);
 	}
 	else if (aIndex < 50)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(1, 0), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, -1), aAngle, aMagnitude);
 	}
-	else if (aIndex < 75)
+	else if (aIndex < 60)
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(0, -1), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, -1), aAngle, aMagnitude);
+	}
+	else if (aIndex < 70)
+	{
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 0), aAngle, aMagnitude);
 	}
 	else
 	{
-		CalculateFoVBasedOnAngle(CU::Vector2f(-1, 0), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 1), aAngle, aMagnitude);
 	}
 }
 
-void GameLevel::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
+void GameLevel::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
 {
-	float angle = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
-	float angle2 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
-	float angle3 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
-	float angle4 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
-	float angle5 = abs((myEnemy->GetPosition() - myEnemy->GetPosition() + aShouldBeEnemyDirection).GetAngle());
+	float angle = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	float angle2 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
+	float angle3 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
+	float angle4 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
+	float angle5 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle());
 	CU::Vector2f test = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
 	CU::Vector2f test3 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle3))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle3))));
 	CU::Vector2f test2 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle2))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle2))));
@@ -353,11 +392,11 @@ void GameLevel::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
 	}
 
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test2, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test3, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test4, false);
-	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5, false);
+	RayTrace(aPosition, aPosition + test, false);
+	RayTrace(aPosition, aPosition + test2, false);
+	RayTrace(aPosition, aPosition + test3, false);
+	RayTrace(aPosition, aPosition + test4, false);
+	RayTrace(aPosition, aPosition + test5, false);
 }
 
 void GameLevel::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
