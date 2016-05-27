@@ -41,6 +41,11 @@ void TurnManager::ForceTurn(eTurn aTurn)
 	myCurrentTurn = aTurn;
 }
 
+void TurnManager::RecieveMessage(const EndTurnMessage&)
+{
+	EndTurn();
+}
+
 void TurnManager::EndTurn()
 {
 	int turnIndex = static_cast<int>(myCurrentTurn);
@@ -56,7 +61,7 @@ void TurnManager::EndTurn()
 
 void TurnManager::PreparePlayer()
 {
-	//TODO: player preparation
+	myPlayerController.PrePlayer();
 	EndTurn();
 }
 
@@ -73,7 +78,7 @@ void TurnManager::PlayerEndTurn()
 
 void TurnManager::PrepareEnemy()
 {
-	//TODO: Preapre Enemy;
+	myEnemyController.PreTurn();
 	EndTurn();
 }
 

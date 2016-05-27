@@ -24,7 +24,6 @@ enum class eTileState
 	IN_RANGE,
 	IN_PATH,
 	UNDER_MOUSE,
-	FIELD_OF_VIEW,
 	Size
 };
 
@@ -53,12 +52,16 @@ public:
 	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	void SetVertexHandle(VertexHandle aHandle);
 	VertexHandle GetVertexHandle() const;
-
 	void SetTileState(eTileState aState);
-
+	inline eTileState GetTileState() const;
 	bool CheckIfWalkable() const;
-
 	void ToggleDebugMode();
+
+	void SetVisible(bool aIsVisible);
+	void SetInEnemyFoV(bool aIsInFoV);
+	bool GetVisible() const;
+	bool GetInEnemyFov() const;
+
 private:
 	CommonUtilities::Vector2f myPosition;
 
@@ -69,6 +72,8 @@ private:
 	VertexHandle myNavVertex;
 
 	eTileState myState;
+	bool myIsVisible;
+	bool myIsInEnemyFoV;
 
 	bool myDebugMode;
 };
@@ -103,6 +108,10 @@ inline CU::Vector2f IsometricTile::GetPosition() const
 inline void IsometricTile::SetTileState(eTileState aState)
 {
 	myState = aState;
+}
+inline eTileState IsometricTile::GetTileState() const
+{
+	return myState;
 }
 
 inline bool IsometricTile::CheckIfWalkable() const

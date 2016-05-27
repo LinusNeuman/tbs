@@ -35,7 +35,7 @@ public:
 	IsometricTile & GetTile(CommonUtilities::Vector2ui aVector2Ui);
 	IsometricTile & GetTile(unsigned short aIndex);*/
 private:
-	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
+	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition, bool aIsPlayer);
 	void CalculateRayTrace(int aIndex, float aAngle, float aMagnitude);
 	int CalculatePoint(float aValue) const;
 	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
@@ -46,6 +46,8 @@ private:
 	GameFloor myFloor;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
+	EnemyController *myEnemyController;
+
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
 	

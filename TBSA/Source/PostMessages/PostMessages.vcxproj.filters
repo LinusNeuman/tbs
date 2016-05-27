@@ -13,5 +13,6 @@
     <ClInclude Include="Message\DijkstraMessage.h" />
     <ClInclude Include="Message\SetMainCameraMessage.h" />
     <ClInclude Include="Message\NavigationClearMessage.h" />
+    <ClInclude Include="Message\EndTurnMessage.h" />
   </ItemGroup>
 </Project>

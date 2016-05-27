@@ -32,6 +32,8 @@ public:
 	EnemyController & GetEnemyController();
 
 	void ForceTurn(eTurn aTurn);
+
+	void RecieveMessage(const EndTurnMessage &)override;
 private:
 	void EndTurn();
 

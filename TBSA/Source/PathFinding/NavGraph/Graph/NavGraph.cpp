@@ -4,7 +4,6 @@
 #include "NavGraph/Vertex/NavVertex.h"
 #include "NavGraph/Edge/NavEdge.h"
 #include <CU/Heap/Heap.h>
-#include <map>
 #include <NavGraph/Comparers/VertexLesser.h>
 
 

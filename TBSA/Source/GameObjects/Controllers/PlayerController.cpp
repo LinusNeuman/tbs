@@ -30,7 +30,7 @@ void PlayerController::Init()
 	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 }
 
-void PlayerController::AddPlayer(Actor* aPlayer)
+void PlayerController::AddPlayer(Player* aPlayer)
 {
 	myPlayers.Add(aPlayer);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
@@ -143,7 +143,8 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 	myFloor = &aFloor;
 }
 
-//void PlayerController::SetMyPlayState(PlayState& aPlayStateRef)
-//{
-//	myPlayState = &aPlayStateRef;
-//}
+void PlayerController::PrePlayer()
+{
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+	SingletonPostMaster::PostMessage(dijkstraMessage);
+}

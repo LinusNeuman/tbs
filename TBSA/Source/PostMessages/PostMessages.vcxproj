@@ -215,6 +215,7 @@
   <ItemGroup>
     <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\DijkstraMessage.h" />
+    <ClInclude Include="Message\EndTurnMessage.h" />
     <ClInclude Include="Message\LevelTileMetricsMessage.h" />
     <ClInclude Include="Message\NavigationClearMessage.h" />
     <ClInclude Include="Message\RecieverTypes.h" />

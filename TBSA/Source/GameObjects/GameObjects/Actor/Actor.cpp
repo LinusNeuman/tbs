@@ -79,7 +79,7 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 	myTargetPosition = aTargetPosition;
 }
 
-void Actor::SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath)
+void Actor::SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>& aPath)
 {
 	if (myCurrentWaypoint == myPath.Size())
 	{
@@ -100,8 +100,8 @@ void Actor::UpdatePath()
 		Move(myPath[myCurrentWaypoint]);
 		++myCurrentWaypoint;
 		if (myCurrentWaypoint == myPath.Size())
-		{	
-			SingletonPostMaster::PostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], myAP));
+		{
+			ReachedTarget();
 		}
 	}
 }
