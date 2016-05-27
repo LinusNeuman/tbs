@@ -114,3 +114,5 @@ inline void IsometricTile::ToggleDebugMode()
 {
 	myDebugMode =  !myDebugMode;
 }
+
+typedef CU::GrowingArray<IsometricTile> TileArray;

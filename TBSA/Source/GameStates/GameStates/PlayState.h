@@ -4,11 +4,13 @@
 #include <PlayerFactory/PlayerFactory.h>
 #include <EnemyFactory/EnemyFactory.h>
 #include <Animation/Animation.h>
-#include <GameObjects/Room/IsometricTile.h>
 #include <NavGraph/Graph/NavGraph.h>
 #include <TiledData/TiledData.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Camera/Camera2D.h>
+
+#include <GameObjects/Room/GameFloor.h>
+
 #include "../../TurnManager/TurnManager/TurnManager.h"
 
 class StaticSprite;
@@ -29,9 +31,9 @@ public:
 
 	void ConstructNavGraph();
 
-	IsometricTile & GetTile(unsigned int aX, unsigned int aY);
+	/*IsometricTile & GetTile(unsigned int aX, unsigned int aY);
 	IsometricTile & GetTile(CommonUtilities::Vector2ui aVector2Ui);
-	IsometricTile & GetTile(unsigned short aIndex);
+	IsometricTile & GetTile(unsigned short aIndex);*/
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
 	void CalculateRayTrace(int aIndex, float aAngle, float aMagnitude);
@@ -41,8 +43,7 @@ private:
 	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
 
 
-	Camera2D myCamera;
-	CU::GrowingArray<IsometricTile> myTiles;
+	GameFloor myFloor;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
 	PlayerController *myPlayerController;
 	PlayerFactory myPlayerFactory;
@@ -57,21 +58,21 @@ private:
 	TurnManager myTurnManager;
 };
 
-inline IsometricTile& PlayState::GetTile(unsigned aX, unsigned aY)
-{
-	int index = myTiledData.myMapSize.x * aY + aX;
-	if (index < 0)
-	{
-		index = 0;
-	}
-	else if (index >= myTiles.Size())
-	{
-		index = myTiles.Size() - 1;
-	}
-	return myTiles[index];
-}
-
-inline IsometricTile& PlayState::GetTile(CommonUtilities::Vector2ui aVector2Ui)
-{
-	return  GetTile(aVector2Ui.x, aVector2Ui.y);
-}
+//inline IsometricTile& PlayState::GetTile(unsigned aX, unsigned aY)
+//{
+//	int index = myTiledData.myMapSize.x * aY + aX;
+//	if (index < 0)
+//	{
+//		index = 0;
+//	}
+//	else if (index >= myTiles.Size())
+//	{
+//		index = myTiles.Size() - 1;
+//	}
+//	return myTiles[index];
+//}
+//
+//inline IsometricTile& PlayState::GetTile(CommonUtilities::Vector2ui aVector2Ui)
+//{
+//	return  GetTile(aVector2Ui.x, aVector2Ui.y);
+//}

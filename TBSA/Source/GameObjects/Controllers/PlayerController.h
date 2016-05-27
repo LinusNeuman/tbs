@@ -3,6 +3,8 @@
 #include <CU/Timer/Time.h>
 #include <CU/Vectors/vector2.h>
 #include <CU/Camera/Camera2D.h>
+#include <GameObjects/Room/GameFloor.h>
+
 
 class PlayState;
 class Actor;
@@ -24,9 +26,9 @@ public:
 	void CostAP(const int anAP);
 	void Update(const CommonUtilities::Time& aTime);
 
-	void SetMyPlayState(PlayState & aPlayState);
+	void SetFloor(GameFloor & aFloor);
 private:
-	PlayState* myPlayState;
+	GameFloor * myFloor;
 
 	Camera2D myCamera;
 

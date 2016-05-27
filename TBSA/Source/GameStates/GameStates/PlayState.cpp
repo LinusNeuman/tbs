@@ -16,9 +16,8 @@
 #include <TiledData/TiledData.h>
 #include <Message/LevelTileMetricsMessage.h>
 #include <PostMaster/SingletonPostMaster.h>
-#include "../../PathFinding/NavGraph/NavHandle.h"
-#include "../PathFinding/NavGraph/Vertex/NavVertex.h"
-//#include "../PathFinding/NavGraph/Edge/NavEdge.h"
+#include <NavGraph/NavHandle.h>
+#include <NavGraph/Vertex/NavVertex.h>
 #include <input/SingletonIsometricInputWrapper.h>
 #include <Message/DijkstraMessage.h>
 
@@ -40,7 +39,7 @@ PlayState::~PlayState()
 void PlayState::Init()
 {
 	Shaders::Create();
-	myTiles.Init(100);
+	myFloor.Init(100);
 	
 	
 
@@ -50,7 +49,9 @@ void PlayState::Init()
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
 
-	myTiles = myTiledData.myTiles;
+	myFloor.SetTiles(myTiledData.myTiles);
+	myFloor.SetFloorDimensions(myTiledData.myMapSize);
+
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 	
@@ -58,7 +59,8 @@ void PlayState::Init()
 
 	myPlayerController = &myTurnManager.GetPlayerController();
 	myPlayerController->Init();
-	myPlayerController->SetMyPlayState(*this);
+	myPlayerController->SetFloor(myFloor);
+
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
 	myPlayer2 = myPlayerFactory.CreatePlayer(eActorType::ePlayerTwo);
 	myPlayerController->AddPlayer(myPlayer);
@@ -90,18 +92,18 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 {
 	//(aStateStack);
 	static int index = 0;
-	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Update));
+	myFloor.Update();
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5,0.5));
 
-	GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
+	myFloor.GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
 
-	if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+	if (myFloor.GetTile(mousePosition).CheckIfWalkable() == true && myFloor.GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 	{
-		CommonUtilities::GrowingArray<int> path = GetTile(mousePosition).GetVertexHandle()->GetPath();
+		CommonUtilities::GrowingArray<int> path = myFloor.GetTile(mousePosition).GetVertexHandle()->GetPath();
 		for (size_t i = 0; i < path.Size(); i++)
 		{
-			myTiles[path[i]].SetTileState(eTileState::IN_PATH);
+			myFloor.GetTile(path[i]).SetTileState(eTileState::IN_PATH);
 		}
 	}
 
@@ -146,7 +148,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (IsometricInput::GetKeyPressed(DIK_F3))
 	{
-		myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::ToggleDebugMode));
+		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
 	if (IsometricInput::GetKeyPressed(DIK_F4))
 	{
@@ -175,28 +177,29 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	CalculateCircleFoV(myPlayer->GetPosition(), 5.f);
 	if (index > 100)
 		index = 0;
+
+	for (unsigned int i = 0; i < myFloor.Size(); i++)
+	{
+		CU::Vector2f distance = myFloor.GetTile(i).GetPosition() - myPlayer->GetPosition();
+		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
+		{
+			if (distance.Length2() > 36.0f)
+			{
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
+			}
+			else
+			{
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(nullptr);
+			}
+		}
+	}
+
 	return eStackReturnValue::eStay;
 }
 
 void PlayState::Draw() const
 {
-	for (unsigned int i = 0; i < myTiles.Size(); i++)
-	{
-		CU::Vector2f distance = myTiles[i].GetPosition() - myPlayer->GetPosition();
-		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
-		{
-			if (distance.Length2() > 36.0f)
-			{
-				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
-			}
-			else
-			{
-				myTiles[i].myGraphicsLayers[j]->SetShader(nullptr);
-			}
-		}
-	}
-
-	myTiles.CallFunctionOnAllMembers(std::mem_fn(&IsometricTile::Draw));
+	myFloor.Draw();
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemy->Draw();
@@ -215,7 +218,7 @@ void PlayState::RecieveMessage(const DijkstraMessage& aMessage)
 	const CommonUtilities::Vector2ui mapSize = myTiledData.myMapSize;
 	const int id = mapSize.x * position.y + position.x;
 
-	const IsometricTile selectedTile = myTiles[id];
+	const IsometricTile selectedTile = myFloor.GetTile(id);
 
 	myNavGraph.Dijkstra(selectedTile.GetVertexHandle(), distance);
 }
@@ -227,57 +230,54 @@ void PlayState::RecieveMessage(const NavigationClearMessage& aMessage)
 
 void PlayState::ConstructNavGraph()
 {
-	for (size_t i = 0; i < myTiles.Size(); i++)
+	for (size_t i = 0; i < myFloor.Size(); i++)
 	{
-		eTileType explainingType = myTiles[i].GetTileType();
+		eTileType explainingType = myFloor.GetTile(i).GetTileType();
 		if (!(explainingType == eTileType::OPEN || explainingType == eTileType::DOOR|| explainingType == eTileType::DOOR_2))
 		{
 			continue;
 		}
 
 		VertexHandle currentHandle = myNavGraph.CreateVertex();
-		myTiles[i].SetVertexHandle(currentHandle);
+		myFloor.GetTile(i).SetVertexHandle(currentHandle);
 		currentHandle->SetAnyPurpouseId(static_cast<int>(i));
 
 		//warning names of indexes may not coincide wwith where they are drawn
 		//i.e north may not graphicly be drawn to the north of the current tile
 		
 		const int northWest = i - myTiledData.myMapSize.x - 1;
-		if (northWest > -1 && myTiles[northWest].GetVertexHandle().Null() == false)
+		if (northWest > -1 && myFloor.GetTile(northWest).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
 			currentEdge->Setcost(1.1f);
-			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northWest].GetVertexHandle());
+			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(northWest).GetVertexHandle());
 		}
 
 		const int north = i - myTiledData.myMapSize.x;
-		if (north > -1 && myTiles[north].GetVertexHandle().Null() == false)
+		if (north > -1 && myFloor.GetTile(north).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
-			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[north].GetVertexHandle());
+			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(north).GetVertexHandle());
 		}
 
 		const int northEast = i - myTiledData.myMapSize.x + 1;
-		if (northEast > -1 && myTiles[northEast].GetVertexHandle().Null() == false)
+		if (northEast > -1 && myFloor.GetTile(northEast).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
 			currentEdge->Setcost(1.1f);
-			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[northEast].GetVertexHandle());
+			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(northEast).GetVertexHandle());
 		}
 
 		const int west = i - 1;
-		if (west > -1 && myTiles[west].GetVertexHandle().Null() == false)
+		if (west > -1 && myFloor.GetTile(west).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
-			myTiles[i].GetVertexHandle()->AddLink(currentEdge, myTiles[west].GetVertexHandle());
+			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(west).GetVertexHandle());
 		}
 	}
 }
 
-IsometricTile& PlayState::GetTile(unsigned short aIndex)
-{
-	return  myTiles[aIndex];
-}
+
 
 void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
 {
@@ -303,11 +303,11 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 
 	for (; n > 0; --n)
 	{
-		if (GetTile(x,y).GetTileType() == eTileType::BLOCKED)
+		if (myFloor.GetTile(x,y).GetTileType() == eTileType::BLOCKED)
 		{
 			break;
 		}
-		GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);		
+		myFloor.GetTile(x, y).SetTileState(eTileState::FIELD_OF_VIEW);		
 		if (error > 0)
 		{
 			x += x_inc;
