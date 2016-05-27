@@ -189,6 +189,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myDebugStart.clear();
 	myDebugEnd.clear();
 	CalculateRayTrace(index,45.f,4.f);
+	CalculateCircleFoV(myPlayer->GetPosition(), 5.f);
 	if (index > 100)
 		index = 0;
 	return eStackReturnValue::eStay;
@@ -395,6 +396,44 @@ void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test3);
 	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test4);
 	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5);
+}
+
+void PlayState::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
+{
+	int r, xc, yc, pk, x, y;
+	xc = aPosition.x;
+	yc = aPosition.y;
+	r = aRadius;
+	pk = 3 - 2 * r;
+	x = 0; y = r;
+	CalculateCircleRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc));
+	while (x < y)
+	{
+		if (pk <= 0)
+		{
+			pk = pk + (4 * x) + 6;
+			CalculateCircleRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc));
+		}
+		else
+		{
+			pk = pk + (4 * (x - y)) + 10;
+			CalculateCircleRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc));
+		}
+	}
+
+}
+
+void PlayState::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& aPlayerPosition)
+{
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+
 }
 
 int PlayState::CalculatePoint(float aValue) const

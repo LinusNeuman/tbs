@@ -37,6 +37,10 @@ private:
 	void CalculateRayTrace(int aIndex, float aAngle, float aMagnitude);
 	int CalculatePoint(float aValue) const;
 	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
+	void CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius);
+	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
+
+
 	Camera2D myCamera;
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
