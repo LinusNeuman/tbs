@@ -21,7 +21,7 @@ public:
 	void AddPlayer(Player * aPlayer);
 	void SelectPlayer();
 	void NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const;
-	Actor* GetSelectedPlayer();
+	Player* GetSelectedPlayer();
 	int GetPlayerAP();
 	void CostAP(const int anAP);
 	void Update(const CommonUtilities::Time& aTime);
@@ -34,13 +34,13 @@ private:
 
 	Camera2D myCamera;
 
-	CommonUtilities::GrowingArray<Actor*> myPlayers;
+	CommonUtilities::GrowingArray<Player*> myPlayers;
 	CommonUtilities::Vector2f myMousePosition;
-	Actor *mySelectedPlayer;
+	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
 };
 
-inline Actor* PlayerController::GetSelectedPlayer()
+inline Player* PlayerController::GetSelectedPlayer()
 {
 	return mySelectedPlayer;
 }
