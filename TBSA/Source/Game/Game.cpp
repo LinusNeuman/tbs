@@ -16,6 +16,8 @@
 #include <CU/Thread/ThreadHelper.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Rend/RenderConverter.h>
+#include <Audio/AudioManager.h>
+#include <GUI/Managing/GUIFactory.h>
 //#include "MainSingleton/MainSingleton.h"
 
 #include "StartupReader/StartupReader.h"
@@ -44,6 +46,9 @@ CGame::CGame()
 	
 	SingletonPostMaster::Create();
 	IsometricInput::Create();
+
+	GUIFactory::Create();
+	AudioManager::Create();
 }
 
 
@@ -99,13 +104,28 @@ void CGame::Init(const std::wstring& aVersion)
 
 }
 
+void CGame::RecieveMessage(const GUIMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eExitGame)
+	{
+		myImRunning = false;
+		DX2D::CEngine::GetInstance()->Shutdown();
+}
+}
+
 
 void CGame::InitCallBack()
 {
 	RenderConverter::Create();
 	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
+
+	CU::TimeManager::Create();
+	GUIFactory::GetInstance()->Load();
+
 	myMenuState = new MenuState();
+
+	
 
 	/*GetInput::Create();
 	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());*/
@@ -114,7 +134,7 @@ void CGame::InitCallBack()
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
 	
 
-	CU::TimeManager::Create();
+	
 
 	
 	myMenuState->Init();
@@ -123,6 +143,8 @@ void CGame::InitCallBack()
 	myGameStateStack.AddMainState(myMenuState);
 	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
 	SingletonPostMaster::PostMessageW(startLevelMessage);
+
+	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
 }
 
 

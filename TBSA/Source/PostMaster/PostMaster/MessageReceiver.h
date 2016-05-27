@@ -6,6 +6,7 @@ struct LevelTileMetricsMessage;
 struct SetMainCameraMessage;
 struct DijkstraMessage;
 struct EndTurnMessage;
+struct GUIMessage;
 
 class MessageReciever
 {
@@ -20,6 +21,7 @@ public:
 	virtual void RecieveMessage(const NavigationClearMessage & aMessage);
 	virtual void RecieveMessage(const EndTurnMessage & aMessage);
 	virtual void RecieveMessage(const StartUpLevelMessage & aMessage);
+	virtual void RecieveMessage(const GUIMessage & aMessage);
 
 protected:
 	MessageReciever()

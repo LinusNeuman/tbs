@@ -18,6 +18,8 @@ void MenuState::Init()
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/mainMenu.dds", false);
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGameObjects);
+
+	LoadGUI("MainMenu");
 }
 
 eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)

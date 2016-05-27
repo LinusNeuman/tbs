@@ -28,6 +28,8 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
 	
 	bool playersLoaded = false;
+	bool enemiesLoaded = false;
+
 	picojson::value root;
 	
 	std::string JsonData = CommonUtilities::GetFileAsString(aFilePath);
@@ -146,7 +148,6 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					{
 						
 						picojson::object player = GetObject(objects[k]);
-						size_t index = k % 2;
 						eActorType playerType = eActorType::ePlayerOne;
 						const std::string typeString =  GetString(player["type"]);
 						int playerIndex;
@@ -176,9 +177,48 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					}
 					playersLoaded = true;
 				}
-				else if (name == "Enemy" || name == "Enemies")
+				else if (enemiesLoaded == false && (name == "Enemy" || name == "Enemies"))
 				{
-					
+					picojson::array objects = GetArray(currentLayer["objects"]);
+					for (size_t k = 0; k < objects.size(); k++)
+					{
+						picojson::object enemy = GetObject(objects[k]);
+						eActorType enemyType = eActorType::eEnemyOne;
+						const std::string typeString = GetString(enemy["type"]);
+						if (typeString == "Enemy1")
+						{
+							enemyType = eActorType::eEnemyOne;
+						}
+						else if (typeString == "Enemy2")
+						{
+							enemyType = eActorType::eEnemyTwo;
+						}
+						else if (typeString == "Enemy3")
+						{
+							enemyType = eActorType::eEnemyThree;
+						}
+						else if (typeString == "Enemy4")
+						{
+							enemyType = eActorType::eEnemyFour;
+						}
+						else if (typeString == "Enemy5")
+						{
+							enemyType = eActorType::eEnemyFive;
+						}
+						else
+						{
+							DL_ASSERT(false, "ERROR:  Player type does not exist");
+						}
+
+						Enemy *const enemyActor = someTiles.myEnemyFactory->CreateEnemy(enemyType);
+
+						const float posX = static_cast<float>(GetNumber(enemy["x"])) / 64;
+						const float posY = static_cast<float>(GetNumber(enemy["y"])) / 64;
+
+						enemyActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+						someTiles.myEnemies.Add(enemyActor);
+					}
+					enemiesLoaded = true;
 				}
 			}
 		}

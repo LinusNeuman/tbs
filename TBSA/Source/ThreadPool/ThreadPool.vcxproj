@@ -109,14 +109,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ThreadPool.cpp" />
-    <ClCompile Include="Source\Workplace\Work.cpp" />
-    <ClCompile Include="Source\Workplace\Worker.cpp" />
+    <ClCompile Include="ThreadPool\ThreadPool.cpp" />
+    <ClCompile Include="ThreadPool\Workplace\Work.cpp" />
+    <ClCompile Include="ThreadPool\Workplace\Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\ThreadPool.h" />
-    <ClInclude Include="Source\Workplace\Work.h" />
-    <ClInclude Include="Source\Workplace\Worker.h" />
+    <ClInclude Include="ThreadPool\ThreadPool.h" />
+    <ClInclude Include="ThreadPool\Workplace\Work.h" />
+    <ClInclude Include="ThreadPool\Workplace\Worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

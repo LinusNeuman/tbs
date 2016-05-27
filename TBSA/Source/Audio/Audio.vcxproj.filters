@@ -39,30 +39,30 @@
     <ClInclude Include="External\fmod_output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AudioManager.h">
+    <ClInclude Include="Audio\Generic\SoundBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Generic\SoundBase.h">
+    <ClInclude Include="Audio\Instances\Song.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Instances\SoundEffect.h">
+    <ClInclude Include="Audio\Instances\SoundEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Instances\Song.h">
+    <ClInclude Include="Audio\AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\AudioManager.cpp">
+    <ClCompile Include="Audio\Generic\SoundBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Generic\SoundBase.cpp">
+    <ClCompile Include="Audio\Instances\Song.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Instances\SoundEffect.cpp">
+    <ClCompile Include="Audio\Instances\SoundEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Instances\Song.cpp">
+    <ClCompile Include="Audio\AudioManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

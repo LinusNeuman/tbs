@@ -9,5 +9,7 @@ enum class RecieverTypes
 	eCamera,
 	eTurn,
 	eStartUpLevel,
+	eEndTurn,
+	eExitGame,
 	enumlength
 };

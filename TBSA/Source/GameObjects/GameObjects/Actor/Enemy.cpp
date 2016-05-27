@@ -27,7 +27,7 @@ void Enemy::UpdateEnemy()
 {
 	if (GetActiveState() == true)
 	{
-		if (myHasMoved == false)
+		if (myHasMoved == false && myPath.Size() > 0)
 		{
 			CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 			path.Init(1);
