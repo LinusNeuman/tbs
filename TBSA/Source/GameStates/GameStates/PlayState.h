@@ -44,11 +44,15 @@ private:
 	Camera2D myCamera;
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
-	Actor *myPlayer, *myPlayer2, *myEnemy;
+	Player *myPlayer, *myPlayer2;
+	Enemy *myEnemy;
+
 	PlayerController *myPlayerController;
+	EnemyController *myEnemyController;
+
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
-	Animation *myAnimation;
+	
 	NavGraph myNavGraph;
 	TiledData myTiledData;
 	CommonUtilities::Vector2ui myDimensions;

@@ -25,6 +25,7 @@
 #include <Message/SetMainCameraMessage.h>
 #include <CU/Matriser/matrix.h>
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
+#include <Message/EndTurnMessage.h>
 
 const float sqrt2 = static_cast<float>( sqrt(2));
 
@@ -42,13 +43,14 @@ void PlayState::Init()
 	Shaders::Create();
 	myTiles.Init(100);
 	
-	
-
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 	
 	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
+
+	
 
 	myTiles = myTiledData.myTiles;
 	myPlayerFactory.LoadFromJson();
@@ -57,6 +59,7 @@ void PlayState::Init()
 	ConstructNavGraph();
 
 	myPlayerController = &myTurnManager.GetPlayerController();
+	myEnemyController = &myTurnManager.GetEnemyController();
 	myPlayerController->Init();
 	myPlayerController->SetMyPlayState(*this);
 	myPlayer = myPlayerFactory.CreatePlayer(eActorType::ePlayerOne);
@@ -64,7 +67,17 @@ void PlayState::Init()
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
 	myEnemy = myEnemyFactory.CreateEnemy(eActorType::eEnemyOne);
-	myPlayerController->AddPlayer(myEnemy);
+	myEnemyController->AddEnemy(myEnemy);
+
+	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
+	path.Init(5);
+
+	for (size_t i = 0; i < 5; i++)
+	{
+		path.Add(CommonUtilities::Vector2ui(myEnemy->GetPosition()) + CommonUtilities::Vector2ui(i, 0));
+	}
+	myEnemy->SetEnemyPath(path);
+
 	myPlayer->ChangeAnimation("PlayerTurn");
 	myPlayer2->ChangeAnimation("PlayerTurn");
 	myEnemy->ChangeAnimation("EnemyTurn");
@@ -106,43 +119,17 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	}
 
 	myTurnManager.Update(aTimeDelta);
-	/*if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
-	{
-		if (GetTile(mousePosition).CheckIfWalkable() == true && GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
-		{
-			CommonUtilities::GrowingArray<int> indexPath = GetTile(mousePosition).GetVertexHandle()->GetPath();
-			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
-			positionPath.Init(indexPath.Size());
-
-			for (size_t i = 0; i < indexPath.Size(); i++)
-			{
-				positionPath.Add(CommonUtilities::Vector2ui(myTiles[indexPath[indexPath.Size() - (i + 1)]].GetPosition()));
-			}
-			if (myPlayerController->GetPlayerAP() >= positionPath.Size())
-			{
-				myPlayerController->NotifyPlayers(positionPath);
-				myPlayerController->CostAP(positionPath.Size());
-				myNavGraph.Clear(); 
-			}
-		}
-
-	}
-	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
-	{
-		myPlayerController->SelectPlayer();
-	}*/
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
 		return eStackReturnValue::ePopMain;
 	}
-	/*if (IsometricInput::GetKeyReleased(DIK_Q) == true)
+	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		bool isFalse = false;
-		DL_ASSERT(isFalse, "IT Works!");
-	}*/
+		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
+	}
 
-	
+
 
 	if (IsometricInput::GetKeyPressed(DIK_F3))
 	{
@@ -399,27 +386,27 @@ void PlayState::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 void PlayState::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
 {
 	int r, xc, yc, pk, x, y;
-	xc = aPosition.x;
-	yc = aPosition.y;
-	r = aRadius;
+	xc = static_cast<int>(aPosition.x);
+	yc = static_cast<int>(aPosition.y);
+	r = static_cast<int>(aRadius);
 	pk = 3 - 2 * r;
 	x = 0; y = r;
-	CalculateCircleRayTrace(CU::Vector2f(x, y), CU::Vector2f(xc, yc));
+	CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 	while (x < y)
 	{
 		if (pk <= 0)
 		{
 			pk = pk + (4 * x) + 6;
-			CalculateCircleRayTrace(CU::Vector2f(++x, y), CU::Vector2f(xc, yc));
+			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 		}
 		else
 		{
 			pk = pk + (4 * (x - y)) + 10;
-			CalculateCircleRayTrace(CU::Vector2f(++x, --y), CU::Vector2f(xc, yc));
+			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(--y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
 		}
-	}
+		}
 
-}
+	}
 
 void PlayState::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& aPlayerPosition)
 {

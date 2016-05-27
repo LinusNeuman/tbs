@@ -79,7 +79,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -166,6 +166,9 @@
     </ProjectReference>
     <ProjectReference Include="..\TiledLoading\TiledLoading.vcxproj">
       <Project>{b0e30c9f-422d-4ce9-8617-f3b6792c9ca3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TurnManager\TurnManager.vcxproj">
+      <Project>{f98e4c60-6bc0-4337-b21d-7c5f7520983c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -7,6 +7,7 @@
 class PlayState;
 class Actor;
 class RenderConverter;
+class Player;
 
 class PlayerController
 {
@@ -16,27 +17,30 @@ public:
 
 	void Init();
 
-	void AddPlayer(Actor *aPlayer);
+	void AddPlayer(Player *aPlayer);
 	void SelectPlayer();
 	void NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const;
-	Actor* GetSelectedPlayer();
+	Player* GetSelectedPlayer();
 	int GetPlayerAP();
 	void CostAP(const int anAP);
+
 	void Update(const CommonUtilities::Time& aTime);
 
 	void SetMyPlayState(PlayState & aPlayState);
+	void PrePlayer();
+
 private:
 	PlayState* myPlayState;
 
 	Camera2D myCamera;
 
-	CommonUtilities::GrowingArray<Actor*> myPlayers;
+	CommonUtilities::GrowingArray<Player*> myPlayers;
 	CommonUtilities::Vector2f myMousePosition;
-	Actor *mySelectedPlayer;
+	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
 };
 
-inline Actor* PlayerController::GetSelectedPlayer()
+inline Player* PlayerController::GetSelectedPlayer()
 {
 	return mySelectedPlayer;
 }

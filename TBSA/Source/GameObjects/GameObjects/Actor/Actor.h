@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include "../Renderer/Animation/AnimationHandler.h"
+#include <Animation/AnimationHandler.h>
 #include <CU/Timer/Time.h>
 
 struct ActorData;
@@ -25,12 +25,12 @@ class Actor
 {
 public:
 	Actor();
-	~Actor();
+	virtual ~Actor();
 	void Init(const ActorData &aActorData);
 	virtual void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
-	void SetPath(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>);
+	void SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>& aPath);
 
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
@@ -47,6 +47,7 @@ public:
 		return myType;
 	}
 
+	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
 	StaticSprite *mySprite;
 	
@@ -61,13 +62,15 @@ protected:
 	CU::Vector2f myPosition;
 	CU::Vector2f myVelocity;
 	eActorState myState;
+	int myAP;
+	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
+	unsigned short myCurrentWaypoint;
 private:
 	void UpdatePath();
 
-	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
-	unsigned short myCurrentWaypoint;
+	
 	eActorType myType;
-	int myAP;
+	
 
 	bool myAtTarget;
 };
