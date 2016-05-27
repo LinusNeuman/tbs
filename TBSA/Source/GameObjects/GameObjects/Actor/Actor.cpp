@@ -85,7 +85,7 @@ void Actor::Draw() const
 {
 	if (myActiveFlag == true)
 	{
-		myBoxCollider->DrawCollider();
+		//myBoxCollider->DrawCollider(); it crashed everything :fu:
 		mySprite->Draw(myPosition);
 	}
 }
