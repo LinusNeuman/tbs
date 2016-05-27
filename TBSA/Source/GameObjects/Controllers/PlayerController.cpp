@@ -4,12 +4,14 @@
 #include <Message/DijkstraMessage.h>
 #include <NavGraph/Vertex/NavVertex.h>
 #include <Message/NavigationClearMessage.h>
-#include "../../GameStates/GameStates/PlayState.h"
+//#include "../../GameStates/GameStates/PlayState.h"
+#include <GameObjects/Actor/Player.h>
+
 
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/SetMainCameraMessage.h>
 
-#define EDGE_SCROLL_LIMIT 0.05f
+#define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
 
@@ -82,7 +84,7 @@ void PlayerController::CostAP(const int anAP)
 {
 	if (mySelectedPlayer != nullptr)
 	{
-		//mySelectedPlayer;
+		mySelectedPlayer->CostAP(anAP);
 	}
 }
 
@@ -113,18 +115,19 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		if (myPlayState->GetTile(mousePosition).CheckIfWalkable() == true && myPlayState->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+		if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
-			CommonUtilities::GrowingArray<int> indexPath = myPlayState->GetTile(mousePosition).GetVertexHandle()->GetPath();
+			CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
 			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
 			positionPath.Init(indexPath.Size());
 
 			for (size_t i = 0; i < indexPath.Size(); i++)
 			{
-				positionPath.Add(CommonUtilities::Vector2ui(myPlayState->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
+				positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
 			}
-			if (GetPlayerAP() >= positionPath.Size())
+			if (GetPlayerAP() >= (positionPath.Size() -1))
 			{
+				CostAP(positionPath.Size() -1);
 				NotifyPlayers(positionPath);
 				SingletonPostMaster::PostMessageA(NavigationClearMessage(RecieverTypes::eRoom));
 			}
@@ -138,9 +141,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 }
 
-void PlayerController::SetMyPlayState(PlayState& aPlayStateRef)
+void PlayerController::SetFloor(GameFloor & aFloor)
 {
-	myPlayState = &aPlayStateRef;
+	myFloor = &aFloor;
 }
 
 void PlayerController::PrePlayer()

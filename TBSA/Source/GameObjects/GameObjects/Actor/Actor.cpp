@@ -16,6 +16,8 @@ Actor::Actor()
 	myAP = 5;
 	myPath.Init(1);
 	myCurrentWaypoint = 0;
+
+	
 }
 
 Actor::~Actor()
@@ -24,6 +26,8 @@ Actor::~Actor()
 
 void Actor::Init(const ActorData &aActorData)
 {
+	myActiveFlag = true;
+
 	myPosition = CommonUtilities::Vector2f::Zero;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
 	mySprite->Init();
@@ -35,6 +39,9 @@ void Actor::Init(const ActorData &aActorData)
 
 void Actor::Update(const CU::Time& aDeltaTime)
 {
+	if (myActiveFlag == true)
+	{
+
 	myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 	myPosition += myVelocity * aDeltaTime.GetSeconds();
 	CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
@@ -68,10 +75,14 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 	DecideAnimation();
 }
+}
 
 void Actor::Draw() const
 {
+	if (myActiveFlag == true)
+	{
 	mySprite->Draw(myPosition);
+}
 }
 
 void Actor::Move(CU::Vector2ui aTargetPosition)
