@@ -57,6 +57,7 @@ void TurnManager::EndTurn()
 	}
 
 	myCurrentTurn = static_cast<eTurn>(turnIndex);
+	myPlayerController.RefillAllAP();
 }
 
 void TurnManager::PreparePlayer()

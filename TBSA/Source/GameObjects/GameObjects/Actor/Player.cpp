@@ -22,7 +22,7 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myCurrentAP = myActionPointMax;
 }
 
-void Player::EndTurn()
+void Player::FreshTurn()
 {
 	myCurrentAP = myActionPointMax;
 

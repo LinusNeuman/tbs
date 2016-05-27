@@ -15,7 +15,7 @@ public:
 	void Init(const ActorData &aActorData, const PlayerData &aPlayerData);
 	void DecideAnimation() override;
 	
-	void EndTurn();
+	void FreshTurn();
 	int GetMyAP() const override;
 	void CostAP(const int aCost);
 	

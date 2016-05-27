@@ -40,6 +40,7 @@ public:
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
 	{
 		myPosition = aPos;
+		myTargetPosition = CommonUtilities::Vector2ui(aPos);
 	}
 	
 	CU::Vector2f GetPosition() const
