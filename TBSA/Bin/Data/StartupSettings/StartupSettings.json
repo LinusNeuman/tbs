@@ -10,5 +10,6 @@
   "MuteAllSounds": true,
   "CreateDebugLogs": true,
   "DebugFolderLocation": "Debug_Logs",
-  "StartingGameState": 2
+  "StartingGameState": 2,
+  "StartLevel":  "SecondTest.json"
 }

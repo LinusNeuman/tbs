@@ -36,7 +36,7 @@ GameLevel::~GameLevel()
 {
 }
 
-void GameLevel::Init()
+void GameLevel::Init(const std::string& aLevelPath)
 {
 	Shaders::Create();
 	myFloor.Init(100);
@@ -144,17 +144,10 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	myDebugStart.clear();
 	myDebugEnd.clear();
 
-
-	for (unsigned int i = 0; i < myFloor.Size(); i++)
-	{
-		myFloor.GetTile(i).SetVisible(false);
-		myFloor.GetTile(i).SetInEnemyFoV(false);
-	}
-
-
-	CalculateRayTrace(index, 45.f, 4.f);
-	CalculateCircleFoV(myPlayer->GetPosition(), 5.f);
-	CalculateCircleFoV(myPlayer2->GetPosition(), 5.f);
+	ResetFoV();
+	CreateEnemyRayTrace(index, 45.f, 4.f);
+	CreatePlayerFoV(myPlayer->GetPosition(), 5.f);
+	CreatePlayerFoV(myPlayer2->GetPosition(), 5.f);
 	if (index > 100)
 		index = 0;
 
@@ -177,6 +170,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 			}
 		}
 	}
+
+
 }
 
 void GameLevel::Draw() const
@@ -254,8 +249,6 @@ void GameLevel::ConstructNavGraph()
 	}
 }
 
-
-
 void GameLevel::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, bool aIsPlayer)
 {
 	CU::Vector2f position = aPosition;
@@ -306,7 +299,7 @@ void GameLevel::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 
 }
 
-void GameLevel::CalculateRayTrace(int aIndex, float aAngle, float aMagnitude)
+void GameLevel::CreateEnemyRayTrace(int aIndex, float aAngle, float aMagnitude)
 {
 	//Will be replaced when enemies has a direction
 
@@ -367,7 +360,7 @@ void GameLevel::CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirec
 	RayTrace(myEnemy->GetPosition(), myEnemy->GetPosition() + test5, false);
 }
 
-void GameLevel::CalculateCircleFoV(const CU::Vector2f& aPosition, float aRadius)
+void GameLevel::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
 {
 	int r, xc, yc, pk, x, y;
 	xc = static_cast<int>(aPosition.x);
@@ -403,6 +396,15 @@ void GameLevel::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU:
 	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y), true);
 	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y), true);
 
+}
+
+void GameLevel::ResetFoV()
+{
+	for (unsigned int i = 0; i < myFloor.Size(); i++)
+	{
+		myFloor.GetTile(i).SetVisible(false);
+		myFloor.GetTile(i).SetInEnemyFoV(false);
+	}
 }
 
 int GameLevel::CalculatePoint(float aValue) const

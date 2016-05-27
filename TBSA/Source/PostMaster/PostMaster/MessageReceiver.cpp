@@ -28,3 +28,7 @@ void MessageReciever::RecieveMessage(const NavigationClearMessage& aMessage)
 void MessageReciever::RecieveMessage(const EndTurnMessage& aMessage)
 {
 }
+
+void MessageReciever::RecieveMessage(const StartUpLevelMessage& aMessage)
+{
+}

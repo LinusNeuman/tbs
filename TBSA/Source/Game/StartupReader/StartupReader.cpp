@@ -22,13 +22,13 @@ StartupData StartupReader::LoadAndGetStartupData()
 	picojson::object objectOfRoot = myJsonWrapper->GetPicoObject(settingsRoot);
 	picojson::object resolutionObject = myJsonWrapper->GetPicoObject(settingsRoot.get("ResolutionSettings"));
 
-
 	StartupData tempData;
 
 	tempData.myWindowWidth = static_cast<unsigned short>(myJsonWrapper->GetInt("X", resolutionObject));
 	tempData.myWindowHeight = static_cast<unsigned short>(myJsonWrapper->GetInt("Y", resolutionObject));
 
 	tempData.myFullScreenFlag = myJsonWrapper->GetBool("IsFullscreen", objectOfRoot);
+	tempData.myStartLevel = myJsonWrapper->GetString("StartLevel", objectOfRoot);
 
 	return tempData;
 }
