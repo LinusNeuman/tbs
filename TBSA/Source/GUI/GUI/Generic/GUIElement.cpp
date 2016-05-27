@@ -22,7 +22,6 @@ void GUIElement::Create(const char* aName, const std::string& aSpritePath, CU::V
 	myIsIsometric = aIsIsometric;
 
 	mySpritePressed = new StaticSprite();
-	mySpritePressed->SetLayer(enumRenderLayer::eGUI);
 	mySpritePressed->Init(
 		aSpritePath + "Pressed.dds",
 		myIsIsometric,
@@ -32,9 +31,9 @@ void GUIElement::Create(const char* aName, const std::string& aSpritePath, CU::V
 			aImageSize.y
 		}
 	);
+	mySpritePressed->SetLayer(enumRenderLayer::eGUI);
 
 	mySpriteUnpressed = new StaticSprite();
-	mySpriteUnpressed->SetLayer(enumRenderLayer::eGUI);
 	mySpriteUnpressed->Init(
 		aSpritePath + "Unpressed.dds",
 		myIsIsometric,
@@ -44,9 +43,9 @@ void GUIElement::Create(const char* aName, const std::string& aSpritePath, CU::V
 			aImageSize.y
 		}
 	);
+	mySpriteUnpressed->SetLayer(enumRenderLayer::eGUI);
 
 	mySpriteHovered = new StaticSprite();
-	mySpriteHovered->SetLayer(enumRenderLayer::eGUI);
 	mySpriteHovered->Init(
 		aSpritePath + "Hover.dds",
 		myIsIsometric,
@@ -56,16 +55,17 @@ void GUIElement::Create(const char* aName, const std::string& aSpritePath, CU::V
 			aImageSize.y
 		}
 	);
+	mySpriteHovered->SetLayer(enumRenderLayer::eGUI);
 
 	myParentSpace = aParentSpace;
 	myPosition = aParentSpace + anOffset;
 	myIsEnabled = aIsEnabled;
 
 	myCollisionBox.SetWithMaxAndMinPos(
-		myPosition,
+		{ myPosition.x / 1920.f, myPosition.y / 1080.f },
 		{
-			myPosition.x + mySpriteUnpressed->GetSize().x,
-			myPosition.y + mySpriteUnpressed->GetSize().y
+			(myPosition.x / 1920.f) + mySpriteUnpressed->GetSize().x,
+			(myPosition.y / 1080.f) + mySpriteUnpressed->GetSize().y
 		});
 }
 

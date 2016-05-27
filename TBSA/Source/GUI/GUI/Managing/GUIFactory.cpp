@@ -38,10 +38,10 @@ void GUIFactory::Load()
 		"ExitButton",
 		"Sprites/GUI/InGame/ExitButton/", 
 		{ 1920.f, 1080.f },
-		{ -(41.f), -(37.f) },
+		{ -(41.f + 223.f), -(37.f + 117.f) },
 		{ 223, 117 }
 	);
-	newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
+	newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
 
 	myGUIElements.Add(newButton);
 	myGUILookup["InGame"].myBegin = 0;
