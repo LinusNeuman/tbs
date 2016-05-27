@@ -37,7 +37,7 @@ private:
 	void CalculateRayTrace(int aIndex, float aAngle, float aMagnitude);
 	int CalculatePoint(float aValue);
 	void CalculateFoVBasedOnAngle(const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
-	Camera2D myCamera;
+	
 	CU::GrowingArray<IsometricTile> myTiles;
 	StaticSprite * testSprite;
 	Actor *myPlayer, *myPlayer2, *myEnemy;
