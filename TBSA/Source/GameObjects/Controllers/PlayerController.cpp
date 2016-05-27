@@ -5,6 +5,8 @@
 #include <NavGraph/Vertex/NavVertex.h>
 #include <Message/NavigationClearMessage.h>
 //#include "../../GameStates/GameStates/PlayState.h"
+#include <GameObjects/Actor/Player.h>
+
 
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/SetMainCameraMessage.h>

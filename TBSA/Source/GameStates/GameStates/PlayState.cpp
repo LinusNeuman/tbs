@@ -105,7 +105,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	static int index = 0;
 	myFloor.Update();
 
-	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5,0.5));
+	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
 
 	myFloor.GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
 
@@ -158,30 +158,33 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	myDebugStart.clear();
 	myDebugEnd.clear();
-	for (unsigned int i = 0; i < myTiles.Size(); i++)
+
+
+	for (unsigned int i = 0; i < myFloor.Size(); i++)
 	{
-		myTiles[i].SetVisible(false);
-		myTiles[i].SetInEnemyFoV(false);
+		myFloor.GetTile(i).SetVisible(false);
+		myFloor.GetTile(i).SetInEnemyFoV(false);
 	}
-	CalculateRayTrace(index,45.f,4.f);
+
+
+	CalculateRayTrace(index, 45.f, 4.f);
 	CalculateCircleFoV(myPlayer->GetPosition(), 5.f);
 	CalculateCircleFoV(myPlayer2->GetPosition(), 5.f);
 	if (index > 100)
 		index = 0;
 
-void PlayState::Draw() const
-{
-	for (unsigned int i = 0; i < myTiles.Size(); i++)
+
+	for (unsigned int i = 0; i < myFloor.Size(); i++)
 	{
-		for (unsigned int j = 0; j < myTiles[i].myGraphicsLayers.Size(); j++)
+		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
 		{
-			if (myTiles[i].GetVisible() == false)
+			if (myFloor.GetTile(i).GetVisible() == false)
 			{
 				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
 			}
-			else if (myTiles[i].GetInEnemyFov() == true && myTiles[i].GetVisible() == true)
+			else if (myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
 			{
-				myTiles[i].myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FieldOfViewShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FieldOfViewShader")->myShader);
 			}
 			else
 			{
@@ -189,6 +192,7 @@ void PlayState::Draw() const
 			}
 		}
 	}
+	
 
 	return eStackReturnValue::eStay;
 }
@@ -304,11 +308,11 @@ void PlayState::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anot
 		}
 		if (aIsPlayer == true)
 		{
-			GetTile(x, y).SetVisible(true);
+			myFloor.GetTile(x, y).SetVisible(true);
 		}
 		else
 		{
-			GetTile(x, y).SetInEnemyFoV(true);
+			myFloor.GetTile(x, y).SetInEnemyFoV(true);
 		}
 		if (error > 0)
 		{

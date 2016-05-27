@@ -44,7 +44,8 @@ private:
 
 
 	GameFloor myFloor;
-	Actor *myPlayer, *myPlayer2, *myEnemy;
+	Player * myPlayer, * myPlayer2;
+	Enemy *myEnemy;
 	PlayerController *myPlayerController;
 	EnemyController *myEnemyController;
 

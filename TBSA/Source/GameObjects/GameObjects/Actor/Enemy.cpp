@@ -30,7 +30,7 @@ void Enemy::UpdateEnemy()
 		CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 		path.Init(1);
 
-		for (size_t i = 0; i < myAP; i++)
+		for (size_t i = 0; i < static_cast<size_t>(myAP); i++)
 		{
 			if (myHasTurned == false)
 			{

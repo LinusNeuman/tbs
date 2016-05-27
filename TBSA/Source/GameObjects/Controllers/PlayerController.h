@@ -3,10 +3,12 @@
 #include <CU/Timer/Time.h>
 #include <CU/Vectors/vector2.h>
 #include <CU/Camera/Camera2D.h>
+#include <GameObjects/Room/GameFloor.h>
 
 class PlayState;
 class Actor;
 class RenderConverter;
+class Player;
 
 class PlayerController
 {
@@ -16,7 +18,7 @@ public:
 
 	void Init();
 
-	void AddPlayer(Actor *aPlayer);
+	void AddPlayer(Player * aPlayer);
 	void SelectPlayer();
 	void NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const;
 	Actor* GetSelectedPlayer();
@@ -27,7 +29,8 @@ public:
 	void SetFloor(GameFloor & aFloor);
 	void PrePlayer();
 private:
-	PlayState* myPlayState;
+	//PlayState* myPlayState;
+	GameFloor * myFloor;
 
 	Camera2D myCamera;
 
