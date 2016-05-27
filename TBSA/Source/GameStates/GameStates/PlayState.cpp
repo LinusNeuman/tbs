@@ -22,11 +22,16 @@ void PlayState::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
 	myLevels[myLevelKey] = new GameLevel();
 	myLevels[myLevelKey]->Init(myStartPath + myLevelKey);
+
+	LoadGUI("InGame");
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
 {
 	//(aStateStack);
+
+	myGUIManager.Update();
+
 	static int index = 0;
 	
 	myLevels[myLevelKey]->Update(aTimeDelta);
@@ -42,6 +47,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 void PlayState::Draw() const
 {
 	myLevels.at(myLevelKey)->Draw();
+
+	myGUIManager.Render();
 }
 
 void PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)

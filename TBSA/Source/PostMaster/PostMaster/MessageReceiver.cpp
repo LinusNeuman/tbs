@@ -32,3 +32,7 @@ void MessageReciever::RecieveMessage(const EndTurnMessage& aMessage)
 void MessageReciever::RecieveMessage(const StartUpLevelMessage& aMessage)
 {
 }
+
+void MessageReciever::RecieveMessage(const GUIMessage& aMessage)
+{
+}

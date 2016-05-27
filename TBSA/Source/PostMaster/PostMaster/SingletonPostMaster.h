@@ -1,6 +1,7 @@
 #pragma once
 #include <CU/DLDebug/DL_Debug.h>
 #include <Message/RecieverTypes.h>
+#include <CU/NameSpaceAliases.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include "PostMaster/MessageReceiver.h"
 
@@ -60,4 +61,3 @@ inline SingletonPostMaster & SingletonPostMaster::GetInstance()
 }
 
 #define SendPostMessage(message) SingletonPostMaster::PostMessage((message));
-

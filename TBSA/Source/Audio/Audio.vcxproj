@@ -134,16 +134,16 @@
     <ClInclude Include="External\fmod_dsp_effects.h" />
     <ClInclude Include="External\fmod_errors.h" />
     <ClInclude Include="External\fmod_output.h" />
-    <ClInclude Include="Source\AudioManager.h" />
-    <ClInclude Include="Source\Instances\Song.h" />
-    <ClInclude Include="Source\Generic\SoundBase.h" />
-    <ClInclude Include="Source\Instances\SoundEffect.h" />
+    <ClInclude Include="Audio\AudioManager.h" />
+    <ClInclude Include="Audio\Instances\Song.h" />
+    <ClInclude Include="Audio\Generic\SoundBase.h" />
+    <ClInclude Include="Audio\Instances\SoundEffect.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\AudioManager.cpp" />
-    <ClCompile Include="Source\Instances\Song.cpp" />
-    <ClCompile Include="Source\Generic\SoundBase.cpp" />
-    <ClCompile Include="Source\Instances\SoundEffect.cpp" />
+    <ClCompile Include="Audio\AudioManager.cpp" />
+    <ClCompile Include="Audio\Instances\Song.cpp" />
+    <ClCompile Include="Audio\Generic\SoundBase.cpp" />
+    <ClCompile Include="Audio\Instances\SoundEffect.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

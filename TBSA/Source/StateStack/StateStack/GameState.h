@@ -1,6 +1,8 @@
 #pragma once
 #include <CU/Timer/Time.h>
 #include <CU/NameSpaceAliases.h>
+#include <GUI/Generic/GUIElement.h>
+#include <GUI/Managing/GUIManager.h>
 
 class ProxyStateStack;
 
@@ -20,7 +22,9 @@ public:
 	virtual ~GameState();
 
 	virtual void Init();
-	
+
+	void LoadGUI(const char* aName);
+
 	virtual eStackReturnValue Update(const CU::Time & aDeltaTime, ProxyStateStack & aStateStack) = 0;
 	virtual void Draw() const = 0;
 
@@ -29,4 +33,5 @@ public:
 protected:
 	bool myLetThroughRender;
 
+	GUIManager myGUIManager;
 };

@@ -79,7 +79,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -145,6 +145,9 @@
     </ProjectReference>
     <ProjectReference Include="..\GameObjects\GameObjects.vcxproj">
       <Project>{07fec30e-ad37-4adc-ae37-b066481f6b52}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.vcxproj">
+      <Project>{0a8e37f3-e093-4a13-9336-de37a5b0af85}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>

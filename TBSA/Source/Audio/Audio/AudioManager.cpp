@@ -24,10 +24,15 @@ AudioManager::AudioManager()
 	}
 
 	mySystem->init(36, FMOD_INIT_NORMAL, nullptr);
+
+	system("color B");
+
 	DL_PRINT("Created a sound device");
 
 	GetChannelGroup("SFX")->setVolume(1.0f);
 	GetChannelGroup("Song")->setVolume(0.8f);
+
+	system("color");
 }
 
 SoundClass AudioManager::CreateSound(const char* aFile)
@@ -39,9 +44,11 @@ SoundClass AudioManager::CreateSound(const char* aFile)
 	aRes = mySystem->createSound(aFile, FMOD_2D, 0, &tempSoundClass);
 	if (aRes == 18)
 	{
+		system("color B");
 		std::string outputstring = "Sound file could not be found. File name was: '" + std::string(aFile) + "'";
 		DL_DEBUG(outputstring.c_str());
 		std::cout << "Sound file could not be found! File name was: " + std::string(aFile) + " Check empty playsound events" << std::endl;
+		system("color");
 	}
 	return tempSoundClass;
 }
@@ -53,15 +60,19 @@ SoundClass AudioManager::CreateStream(const char* aFile)
 	aRes = mySystem->createStream(aFile, FMOD_2D, 0, &tempSoundClass);
 	if (aRes == 18)
 	{
+		system("color B");
 		std::string outputstring = "Stream error: Sound file could not be found. File name was: '" + std::string(aFile) + "'";
 		DL_DEBUG(outputstring.c_str());
 		std::cout << "Stream error: Sound file could not be found! File name was: " + std::string(aFile) + " Check empty playsound events" << std::endl;
+		system("color");
 	}
 	else if (aRes != FMOD_OK)
 	{
+		system("color B");
 		std::string outputstring = "Sound Error: " + std::to_string(aRes) + std::string(". File name was: '") + std::string(aFile) + "'";
 		DL_DEBUG(outputstring.c_str());
 		std::cout << "Sound Error: " + std::to_string(aRes) + std::string(". File name was: '") + std::string(aFile) + "'" << std::endl;
+		system("color");
 	}
 	return tempSoundClass;
 }
@@ -76,9 +87,10 @@ FMOD::ChannelGroup* AudioManager::GetChannelGroup(const std::string &aName)
 		FMOD::ChannelGroup* aChannelGroupToAdd = nullptr;
 		mySystem->createChannelGroup(aName.c_str(), &aChannelGroupToAdd);
 		
+		system("color B");
 		DL_PRINT(std::string("Created new channel group: " + aName).c_str());
-		std::cout << "Created new channel group: " << aName << std::endl;
 		return myChannelGroups[aName] = aChannelGroupToAdd;
+		system("color");
 	}
 
 	return myChannelGroups[aName];
@@ -105,9 +117,11 @@ FMOD::Channel* AudioManager::PlaySound(SoundClass aSound, bool isLooping)
 
 	if (res != FMOD_OK)
 	{
+		system("color B");
 		std::string toPrint;
 		toPrint = "Error while trying to play sound: " + std::to_string(res);
 		DL_PRINT(toPrint.c_str());
+		system("color");
 	}
 
 	return tempChannel;
