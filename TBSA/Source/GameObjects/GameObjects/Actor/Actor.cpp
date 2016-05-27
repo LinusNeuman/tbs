@@ -85,7 +85,7 @@ void Actor::Draw() const
 {
 	if (myActiveFlag == true)
 	{
-		myBoxCollider->DrawCollider();
+		//myBoxCollider->DrawCollider();
 		mySprite->Draw(myPosition);
 	}
 }
