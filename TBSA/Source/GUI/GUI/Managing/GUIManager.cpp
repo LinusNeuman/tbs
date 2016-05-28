@@ -12,7 +12,7 @@ GUIManager::~GUIManager()
 {
 }
 
-void GUIManager::Update()
+void GUIManager::Update(const CU::Time& aDelta)
 {
 	if (myActiveGUI == nullptr)
 	{
@@ -28,6 +28,21 @@ void GUIManager::Update()
 				break;
 			}
 		}
+	}
+	else
+	{
+		for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
+		{
+			if ((*myActiveGUI)[ch]->OnAction(eGUIMessageEvents::eOnHover, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+			{
+				break;
+			}
+		}
+	}
+
+	for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
+	{
+		(*myActiveGUI)[ch]->Update(aDelta);
 	}
 }
 

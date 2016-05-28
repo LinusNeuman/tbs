@@ -30,7 +30,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 {
 	//(aStateStack);
 
-	myGUIManager.Update();
+	myGUIManager.Update(aTimeDelta);
 
 	static int index = 0;
 	

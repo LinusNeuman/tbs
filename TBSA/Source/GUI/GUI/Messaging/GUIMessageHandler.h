@@ -7,6 +7,7 @@ enum class eGUIMessageEvents
 {
 	eOnClick,
 	eOnHover,
+	eOnLeave,
 	eOnDrag,
 	eOnOpen,
 	eOnClose,

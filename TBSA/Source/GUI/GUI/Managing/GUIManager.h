@@ -8,7 +8,7 @@ public:
 	GUIManager();
 	~GUIManager();
 
-	void Update();
+	void Update(const CU::Time& aDelta);
 	void Render() const;
 
 	void LoadActiveGUI(CU::GrowingArray<GUIElement*, uchar>* anActiveGUI);

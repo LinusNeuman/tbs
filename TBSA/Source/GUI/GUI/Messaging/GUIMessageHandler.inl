@@ -5,6 +5,10 @@ void GUIMessageHandler::SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aGU
 
 bool GUIMessageHandler::Execute(eGUIMessageEvents aGUIMessageEvent)
 {
-	SingletonPostMaster::PostMessage(*myMessageEvents[static_cast<int>(aGUIMessageEvent)]);
-	return true;
+	if (myMessageEvents[static_cast<int>(aGUIMessageEvent)] != nullptr)
+	{
+		SingletonPostMaster::PostMessage(*myMessageEvents[static_cast<int>(aGUIMessageEvent)]);
+		return true;
+	}
+	return false;
 }

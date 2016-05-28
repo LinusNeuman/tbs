@@ -25,26 +25,29 @@ class GUIElement : public MessageReciever
 public:
 	GUIElement();
 	virtual ~GUIElement();
-	void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true);
+	
+	virtual void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true) = 0;
+
 	virtual void Destroy();
 
-	virtual void __forceinline SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent);
+	void __forceinline SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent);
 
-	virtual bool __forceinline OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePosition);
+	bool __forceinline OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePosition);
 
-	virtual void Update(CommonUtilities::Time &aDelta) = 0;
+	virtual void WhenHovered();
+
+	bool __forceinline GetIsHovered();
+
+	virtual void Update(const CU::Time &aDelta) = 0;
 
 	virtual void Render();
 protected:
 	GUIMessageHandler myMessageHandler;
 
-	StaticSprite* mySpritePressed;
-	StaticSprite* mySpriteHovered;
-	StaticSprite* mySpriteUnpressed;
+	StaticSprite* mySprite;
 
 	CU::Vector2f myPosition;
 	CU::Vector2f myParentSpace;
-	CU::Vector2f mySize;
 
 	Intersection2D::AABB2D myCollisionBox;
 
@@ -53,7 +56,10 @@ protected:
 	bool myIsEnabled;
 	bool myIsIsometric;
 
-	CU::GrowingArray<GUIElement*, unsigned char> myGUIChilds;
+	bool myIsCurrentlyHovered;
+	bool myIsCurrentlyPressed;
+
+	//CU::GrowingArray<GUIElement*, unsigned char> myGUIChilds;
 };
 
 #include "GUIElement.inl"
