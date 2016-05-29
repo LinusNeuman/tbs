@@ -1,5 +1,5 @@
 #pragma once
-#include "Collision/GameObjectCollider.h"
+#include "Collision/Colliders/GameObjectCollider.h"
 #include <CU/Intersection/Shapes2D/Circle2D.h>
 
 class CircleCollider : public GameObjectCollider, public Intersection2D::Circle2D

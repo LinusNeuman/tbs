@@ -1,14 +1,6 @@
 #include "stdafx.h"
 #include "GameObjectCollider.h"
-//#include <Intersection/Intersection2D.h>
-//#include <Renderer.h>
-//#include <DebugLineRenderCommand.h>
-//#include <Isometric/IsometricConversion.h>
-////#include "tga2d/drawers/line_drawer.h"
-//
-//#include "tga2d\engine.h"
-//#include "tga2d\drawers\debug_drawer.h"
-//#include <Isometric\IsometricConversion.h>
+
 
 
 
