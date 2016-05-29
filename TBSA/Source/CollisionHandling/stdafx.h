@@ -11,6 +11,7 @@
 
 
 #include "CU/NameSpaceAliases.h"
+#include <CU/Utility/CommonTypeCasts.h>
 #include "CU/GrowingArray/GrowingArray.h"
 #include <CU/Vectors/Vector.h>
 #include <CU/Intersection/Intersection2D.h>

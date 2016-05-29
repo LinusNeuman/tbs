@@ -18,13 +18,22 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collision\BoxCollider.h">
+    <ClInclude Include="Collision\Colliders\BoxCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collision\CircleCollider.h">
+    <ClInclude Include="Collision\Colliders\CircleCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collision\GameObjectCollider.h">
+    <ClInclude Include="Collision\Colliders\GameObjectCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\CollisionGrid\CollisionGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\CollisionGrid\GridDweller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\CollisionGrid\GridTile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,13 +41,16 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\BoxCollider.cpp">
+    <ClCompile Include="Collision\Colliders\BoxCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\CircleCollider.cpp">
+    <ClCompile Include="Collision\Colliders\CircleCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\GameObjectCollider.cpp">
+    <ClCompile Include="Collision\Colliders\GameObjectCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\CollisionGrid\CollisionGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

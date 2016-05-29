@@ -128,15 +128,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Collision\BoxCollider.h" />
-    <ClInclude Include="Collision\CircleCollider.h" />
-    <ClInclude Include="Collision\GameObjectCollider.h" />
+    <ClInclude Include="Collision\CollisionGrid\CollisionGrid.h" />
+    <ClInclude Include="Collision\Colliders\BoxCollider.h" />
+    <ClInclude Include="Collision\Colliders\CircleCollider.h" />
+    <ClInclude Include="Collision\Colliders\GameObjectCollider.h" />
+    <ClInclude Include="Collision\CollisionGrid\GridDweller.h" />
+    <ClInclude Include="Collision\CollisionGrid\GridTile.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Collision\BoxCollider.cpp" />
-    <ClCompile Include="Collision\CircleCollider.cpp" />
-    <ClCompile Include="Collision\GameObjectCollider.cpp" />
+    <ClCompile Include="Collision\CollisionGrid\CollisionGrid.cpp" />
+    <ClCompile Include="Collision\Colliders\BoxCollider.cpp" />
+    <ClCompile Include="Collision\Colliders\CircleCollider.cpp" />
+    <ClCompile Include="Collision\Colliders\GameObjectCollider.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
