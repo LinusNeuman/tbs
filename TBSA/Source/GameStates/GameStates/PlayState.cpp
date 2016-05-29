@@ -8,7 +8,7 @@ PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";;
-}
+} 
 
 
 PlayState::~PlayState()

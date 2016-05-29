@@ -36,5 +36,5 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 void MenuState::Draw() const
 {
-	myBackgroundSprite->Draw(CU::Vector2f(0, 2048));
+	myBackgroundSprite->Draw(CU::Vector2f(0, 0));
 }
