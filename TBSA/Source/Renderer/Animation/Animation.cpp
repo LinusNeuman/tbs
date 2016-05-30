@@ -135,14 +135,14 @@ void Animation::SetAnimationFrame()
 void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
 	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize)
 {
-	/*DX2D::Vector2f imageSize(newSprite->GetSprite()->GetImageSize().x, newSprite->GetSprite()->GetImageSize().y);
+	DX2D::Vector2f imageSize(newSprite->GetSprite()->GetImageSize().x, newSprite->GetSprite()->GetImageSize().y);
 	newSprite->GetSprite()->SetTextureRect(aSpriteOffsetStart.x / imageSize.x, aSpriteOffsetStart.y / imageSize.y, (aSpriteOffsetStart.x + aSpriteSize.x) / imageSize.x, (aSpriteOffsetStart.y + aSpriteSize.y) / imageSize.y);
 	DX2D::Vector2f newSize;
 	newSize.x = newSprite->GetSprite()->GetSize().x;
 	newSize.y = newSprite->GetSprite()->GetSize().y;
-	newSprite->GetSprite()->SetSize(newSize);*/
+	newSprite->GetSprite()->SetSize(newSize);
 
-	// Temps to make it easier to read and understand
+	/*// Temps to make it easier to read and understand
 	auto size = newSprite->GetSprite()->GetImageSize();
 
 	CommonUtilities::Vector2f fixSize = aSpriteSize;
@@ -171,7 +171,7 @@ void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2
 	if (aResizeSprite == true)
 	{
 		UpdateSpriteSize(fixSize, newSprite, CommonUtilities::Vector2f(aAnimationSize.x, aAnimationSize.y));
-	}
+	}*/
 }
 
 void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, StaticSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize)
