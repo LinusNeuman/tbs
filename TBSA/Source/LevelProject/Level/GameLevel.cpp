@@ -107,7 +107,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 	DX2D::CCustomShader* customHighlightShader;
 	customHighlightShader = new DX2D::CCustomShader();
 	customHighlightShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
-	customHighlightShader->PostInit("shaders/custom_highlight_vertex_shader.fx", "shaders/custom_highlight_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	customHighlightShader->PostInit("shaders/custom_highlightBlue_vertex_shader.fx", "shaders/custom_highlightBlue_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 
 	DX2D::CCustomShader* customHighlightRedShader;
 	customHighlightRedShader = new DX2D::CCustomShader();
