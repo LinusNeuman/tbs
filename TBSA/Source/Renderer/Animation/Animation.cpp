@@ -135,43 +135,12 @@ void Animation::SetAnimationFrame()
 void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
 	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize)
 {
-	/*DX2D::Vector2f imageSize(newSprite->GetSprite()->GetImageSize().x, newSprite->GetSprite()->GetImageSize().y);
+	DX2D::Vector2f imageSize(newSprite->GetSprite()->GetImageSize().x, newSprite->GetSprite()->GetImageSize().y);
 	newSprite->GetSprite()->SetTextureRect(aSpriteOffsetStart.x / imageSize.x, aSpriteOffsetStart.y / imageSize.y, (aSpriteOffsetStart.x + aSpriteSize.x) / imageSize.x, (aSpriteOffsetStart.y + aSpriteSize.y) / imageSize.y);
 	DX2D::Vector2f newSize;
-	newSize.x = newSprite->GetSprite()->GetSize().x;
-	newSize.y = newSprite->GetSprite()->GetSize().y;
-	newSprite->GetSprite()->SetSize(newSize);*/
-
-	// Temps to make it easier to read and understand
-	auto size = newSprite->GetSprite()->GetImageSize();
-
-	CommonUtilities::Vector2f fixSize = aSpriteSize;
-
-	// Start, in 0-1
-	CommonUtilities::Vector2f start(aSpriteOffsetStart.x / size.x,
-		aSpriteOffsetStart.y / size.y);
-
-	// Length, in 0-1
-	CommonUtilities::Vector2f length((start.x + fixSize.x) / size.x,
-		(start.y + fixSize.y) / size.y);
-
-	if (aSpriteOffsetStart.x > 1024.f)
-	{
-		length.x = floor(((length.x) * 2000));
-		length.x = length.x / 2000;
-	}
-
-	if (aSpriteOffsetStart.y > 1024.f)
-	{
-		length.y = floor(((length.y) * 2500));
-		length.y = length.y / 2500;
-	};
-
-	newSprite->GetSprite()->SetTextureRect(start.x, start.y, start.x + length.x, start.y + length.y);
-	if (aResizeSprite == true)
-	{
-		UpdateSpriteSize(fixSize, newSprite, CommonUtilities::Vector2f(aAnimationSize.x, aAnimationSize.y));
-	}
+	newSize.x = aSpriteSize.x / DX2D::CEngine::GetInstance()->GetWindowSize().x;
+	newSize.y = aSpriteSize.y / (DX2D::CEngine::GetInstance()->GetWindowSize().y * (16.f/9.f));
+	newSprite->GetSprite()->SetSize(newSize);
 }
 
 void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, StaticSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize)
