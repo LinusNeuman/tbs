@@ -24,7 +24,14 @@ void EnemyController::PreTurn()
 
 void EnemyController::Update(CommonUtilities::Time)
 {
-	myEnemies[myCurrentEnemy]->UpdateEnemy();
+	if (myEnemies.Size() > 0)
+	{
+		myEnemies[myCurrentEnemy]->UpdateEnemy();
+	}
+	else
+	{
+		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
+	}
 }
 
 void EnemyController::Draw()

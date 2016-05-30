@@ -20,6 +20,7 @@ public:
 	void Init(const std::wstring& aVersion = L"");
 
 	void RecieveMessage(const GUIMessage & aMessage) override;
+	void RecieveMessage(const GetStartLevelMessage& aMessage) override;
 private:
 	void InitCallBack();
 	void UpdateCallBack();

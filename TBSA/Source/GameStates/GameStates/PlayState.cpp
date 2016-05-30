@@ -3,6 +3,7 @@
 
 #include <Level/GameLevel.h>
 #include <Message/StartUpLevelMessage.h>
+#include <Message/GetStartLevelMessage.h>
 
 PlayState::PlayState()
 {
@@ -20,6 +21,7 @@ void PlayState::Init()
 {
 	//myLevel->Init();
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
+	SingletonPostMaster::PostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
 	myLevels[myLevelKey] = new GameLevel();
 	myLevels[myLevelKey]->Init(myStartPath + myLevelKey);
 

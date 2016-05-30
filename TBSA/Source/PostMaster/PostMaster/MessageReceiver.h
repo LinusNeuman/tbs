@@ -7,6 +7,7 @@ struct SetMainCameraMessage;
 struct DijkstraMessage;
 struct EndTurnMessage;
 struct GUIMessage;
+struct GetStartLevelMessage;
 
 class MessageReciever
 {
@@ -22,6 +23,7 @@ public:
 	virtual void RecieveMessage(const EndTurnMessage & aMessage);
 	virtual void RecieveMessage(const StartUpLevelMessage & aMessage);
 	virtual void RecieveMessage(const GUIMessage & aMessage);
+	virtual void RecieveMessage(const GetStartLevelMessage & aMessage);
 
 protected:
 	MessageReciever()
