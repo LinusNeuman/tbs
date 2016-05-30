@@ -94,18 +94,30 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 
 	DX2D::CCustomShader* customShader;
-	DX2D::CCustomShader* customFoVShader;
 	customShader = new DX2D::CCustomShader();
-	customFoVShader = new DX2D::CCustomShader();
-	customShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/Players/Player2/characterSheetTurnaround2.png"), DX2D::EShaderTextureSlot_1); // Add a texture
 	customShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
-	customFoVShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
-
+	customShader->SetTextureAtRegister(DX2D::CEngine::GetInstance()->GetTextureManager().GetTexture("Sprites/Players/Player2/characterSheetTurnaround2.png"), DX2D::EShaderTextureSlot_1); // Add a texture
 	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	DX2D::CCustomShader* customFoVShader;
+	customFoVShader = new DX2D::CCustomShader();
+	customFoVShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
 	customFoVShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/customLos_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	
+	DX2D::CCustomShader* customHighlightShader;
+	customHighlightShader = new DX2D::CCustomShader();
+	customHighlightShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customHighlightShader->PostInit("shaders/custom_highlight_vertex_shader.fx", "shaders/custom_highlight_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	DX2D::CCustomShader* customHighlightRedShader;
+	customHighlightRedShader = new DX2D::CCustomShader();
+	customHighlightRedShader->SetShaderdataFloat4(DX2D::Vector4f(myPlayer->GetPosition().x, myPlayer->GetPosition().y, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customHighlightRedShader->PostInit("shaders/custom_highlightRed_vertex_shader.fx", "shaders/custom_highlightRed_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	
 	Shaders::GetInstance()->AddShader(customShader, "testShader");
 	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
-
+	Shaders::GetInstance()->AddShader(customHighlightShader, "HighlightShader");
+	Shaders::GetInstance()->AddShader(customHighlightRedShader, "HighlightRedShader");
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
@@ -172,6 +184,14 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 			if (myFloor.GetTile(i).GetVisible() == false)
 			{
 				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("testShader")->myShader);
+			}
+			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH && myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
+			{
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightRedShader")->myShader);
+			}
+			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH)
+			{
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
 			{
