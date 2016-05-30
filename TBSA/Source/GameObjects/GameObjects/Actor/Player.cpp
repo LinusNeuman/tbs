@@ -52,6 +52,38 @@ void Player::DecideAnimation()
 	}
 	else if (myState == eActorState::eWalking)
 	{
-		ChangeAnimation("PlayerTurn");
+		//Determine direction animation
+		if (myVelocity.x < 0.f && myVelocity.y < 0.f)
+		{
+			ChangeAnimation("gingerWalk00");
+		}
+		else if (myVelocity.x == 0.f && myVelocity.y < 0.f)
+		{
+			ChangeAnimation("gingerWalk045");
+		}
+		else if (myVelocity.x > 0.f && myVelocity.y < 0.f)
+		{
+			ChangeAnimation("gingerWalk090");
+		}
+		else if (myVelocity.x > 0.f && myVelocity.y == 0.f)
+		{
+			ChangeAnimation("gingerWalk135");
+		}
+		else if (myVelocity.x > 0.f && myVelocity.y > 0.f)
+		{
+			ChangeAnimation("gingerWalk180");
+		}
+		else if (myVelocity.x == 0.f && myVelocity.y > 0.f)
+		{
+			ChangeAnimation("gingerWalk225");
+		}
+		else if (myVelocity.x < 0.f && myVelocity.y > 0.f)
+		{
+			ChangeAnimation("gingerWalk270");
+		}
+		else if (myVelocity.x < 0.f && myVelocity.y == 0.f)
+		{
+			ChangeAnimation("gingerWalk315");
+		}
 	}
 }

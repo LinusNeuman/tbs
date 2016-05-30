@@ -10,29 +10,29 @@
         {
             "path": "Data/Animations/Player1/PlayerTurnAnimation.json"
         },
-	{
-	    "path": "Data/Animations/Player1/gingerWalk000Animation.json"
-	},
-	{
-	    "path": "Data/Animations/Player1/gingerWalk045Animation.json"
-	},
-	{
-	    "path": "Data/Animations/Player1/gingerWalk090Animation.json"
-	},
-	{
-	    "path": "Data/Animations/Player1/gingerWalk135Animation.json"
-	},
-	{
-	    "path": "Data/Animations/Player1/gingerWalk180Animation.json"
-	},
-	{
-	    "path": "Data/Animations/Player1/gingerWalk225Animation.json"
-	},
-	{
-	    "path": "Data/Animations/Player1/gingerWalk270Animation.json"
-	},
-	{
-	    "path": "Data/Animations/Player1/gingerWalk315Animation.json"
-	}
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk000Animation.json"
+	    },
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk045Animation.json"
+	    },
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk090Animation.json"
+	    },
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk135Animation.json"
+	    },
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk180Animation.json"
+	    },
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk225Animation.json"
+	    },
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk270Animation.json"
+	    },
+	    {
+	        "path": "Data/Animations/Player1/gingerWalk315Animation.json"
+	    }
     ]
 }
