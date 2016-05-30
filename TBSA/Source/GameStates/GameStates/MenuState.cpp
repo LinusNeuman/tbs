@@ -24,17 +24,21 @@ void MenuState::Init()
 
 eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
-	(aTimeDelta);
+	myGUIManager.Update(aTimeDelta);
+
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true || IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eRight) == true)
 	{
 		PlayState *newState = new PlayState();
 		newState->Init();
 		aStateStack.AddMainState(newState);
 	}
+
 	return eStackReturnValue::eStay;
 }
 
 void MenuState::Draw() const
 {
 	myBackgroundSprite->Draw(CU::Vector2f(0, 0));
+
+	myGUIManager.Render();
 }

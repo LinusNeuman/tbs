@@ -78,7 +78,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;$(SolutionDir)GUI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)GUI\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -91,7 +91,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;$(SolutionDir)GUI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)GUI\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -106,7 +106,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;$(SolutionDir)GUI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)GUI\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

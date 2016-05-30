@@ -1,7 +1,6 @@
 #include "GUIManager.h"
 #include <Input/SingletonIsometricInputWrapper.h>
 
-
 GUIManager::GUIManager()
 {
 	myActiveGUI = nullptr;
