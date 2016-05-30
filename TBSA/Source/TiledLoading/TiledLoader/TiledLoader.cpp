@@ -64,43 +64,46 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 	bool loadedObjects = false;
 	for (size_t i = 0; i < height * width; i++)
 	{
-		bool isOverFloor = false;
-		
-		bool objectsLoaded = loadedObjects;
-		
-
 		IsometricTile newTile = IsometricTile(CommonUtilities::Vector2f(static_cast<float>(i % width), static_cast<float>(static_cast<int>(i / width))));
 		newTile.Init();
-		
-		for (size_t j = 0; j < layers.size(); ++j)
+		someTiles.myTiles.Add(newTile);
+	}
+
+	bool isOverFloor = false;
+	for (size_t i = 0; i < layers.size(); ++i)
+	{
+		picojson::object currentLayer = GetObject(layers[i]);
+		std::string name = GetString(currentLayer["name"]);
+		std::string type = GetString(currentLayer["type"]);
+
+		if (type == "tilelayer")
 		{
-			picojson::object currentLayer = GetObject(layers[j]);
-			std::string name = GetString(currentLayer["name"]);
-			std::string type = GetString(currentLayer["type"]);
+			picojson::array data = GetArray(currentLayer["data"]);
 
-			if (type == "tilelayer")
+			if (name[0] == '_')
 			{
-				picojson::array data = GetArray(currentLayer["data"]);
+				isOverFloor = true;
 
-				if (name[0] == '_')
+				unsigned int lastUnderscore = name.find_last_of('_');
+				unsigned int roomId;
+				try
 				{
-					isOverFloor = true;
+					roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
+				}
+				catch (std::invalid_argument)
+				{
+					roomId = 0;
+					DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
+				}
 
-					unsigned int lastUnderscore = name.find_last_of('_');
-					unsigned int roomId;
-					try
-					{
-						roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
-					}
-					catch (std::invalid_argument)
-					{
-						roomId = 0;
-						DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
-					}
+				for (size_t j = 0; j < data.size(); j++)
+				{
+					const int explainingInt = static_cast<int>(GetNumber(data[j]));
 
+					IsometricTile& newTile = someTiles.myTiles[j];
 
 					newTile.SetRoomId(roomId);
-					const int explainingInt = static_cast<int>(GetNumber(data[i]));
+						
 					int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
 					if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
 					{
@@ -115,9 +118,17 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 						newTile.SetDoor(Door(roomId));
 					}
 				}
-				else
+			}
+			else
+			{
+				for (size_t j = 0; j < data.size(); ++j)
 				{
-					unsigned int tileId = static_cast<int>(GetNumber(data[i]));
+					unsigned int tileId = static_cast<int>(GetNumber(data[j]));
+					if (tileId == 0)
+					{
+						continue;
+					}
+
 					for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 					{
 						if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
@@ -134,98 +145,93 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 								explaingSprite->SetLayer(enumRenderLayer::eFloor);
 							}
 
-							newTile.AddSpriteLayer(explaingSprite);
+							someTiles.myTiles[j].AddSpriteLayer(explaingSprite);
 						}
 					}
-				}
-			}
-			else if (type == "objectgroup")
-			{
-				if (playersLoaded == false && (name == "Players" || name == "Player"))
-				{
-					picojson::array objects = GetArray(currentLayer["objects"]);
-					for (size_t k = 0; k < objects.size(); k++)
-					{
-						
-						picojson::object player = GetObject(objects[k]);
-						eActorType playerType = eActorType::ePlayerOne;
-						const std::string typeString =  GetString(player["type"]);
-						int playerIndex;
-						if (typeString == "Player1")
-						{
-							playerType = eActorType::ePlayerOne;
-							playerIndex = 0;
-						}
-						else if (typeString == "Player2")
-						{
-							playerType = eActorType::ePlayerTwo;
-							playerIndex = 1;
-						}
-						else
-						{
-							DL_ASSERT(false, "ERROR:  Player type does not exist");
-							playerIndex = 0;
-						}
-
-						Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
-
-						const float posX = static_cast<float>(GetNumber(player["x"])) / 64;
-						const float posY = static_cast<float>(GetNumber(player["y"])) / 64;
-
-						playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
-						someTiles.myPlayers[playerIndex] = playerActor;
-					}
-					playersLoaded = true;
-				}
-				else if (enemiesLoaded == false && (name == "Enemy" || name == "Enemies"))
-				{
-					picojson::array objects = GetArray(currentLayer["objects"]);
-					for (size_t k = 0; k < objects.size(); k++)
-					{
-						picojson::object enemy = GetObject(objects[k]);
-						eActorType enemyType = eActorType::eEnemyOne;
-						const std::string typeString = GetString(enemy["type"]);
-						if (typeString == "Enemy1")
-						{
-							enemyType = eActorType::eEnemyOne;
-						}
-						else if (typeString == "Enemy2")
-						{
-							enemyType = eActorType::eEnemyTwo;
-						}
-						else if (typeString == "Enemy3")
-						{
-							enemyType = eActorType::eEnemyThree;
-						}
-						else if (typeString == "Enemy4")
-						{
-							enemyType = eActorType::eEnemyFour;
-						}
-						else if (typeString == "Enemy5")
-						{
-							enemyType = eActorType::eEnemyFive;
-						}
-						else
-						{
-							DL_ASSERT(false, "ERROR:  Player type does not exist");
-						}
-
-						Enemy *const enemyActor = someTiles.myEnemyFactory->CreateEnemy(enemyType);
-
-						const float posX = static_cast<float>(GetNumber(enemy["x"])) / 64;
-						const float posY = static_cast<float>(GetNumber(enemy["y"])) / 64;
-
-						enemyActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
-						someTiles.myEnemies.Add(enemyActor);
-					}
-					enemiesLoaded = true;
 				}
 			}
 		}
+		else if (type == "objectgroup")
+		{
+			if (name == "Players" || name == "Player")
+			{
+				picojson::array objects = GetArray(currentLayer["objects"]);
+				for (size_t k = 0; k < objects.size(); k++)
+				{
+						
+					picojson::object player = GetObject(objects[k]);
+					eActorType playerType = eActorType::ePlayerOne;
+					const std::string typeString =  GetString(player["type"]);
+					int playerIndex;
+					if (typeString == "Player1")
+					{
+						playerType = eActorType::ePlayerOne;
+						playerIndex = 0;
+					}
+					else if (typeString == "Player2")
+					{
+						playerType = eActorType::ePlayerTwo;
+						playerIndex = 1;
+					}
+					else
+					{
+						DL_ASSERT(false, "ERROR:  Player type does not exist");
+						playerIndex = 0;
+					}
 
-		someTiles.myTiles.Add(newTile);
+					Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
+
+					const float posX = static_cast<float>(GetNumber(player["x"])) / 64;
+					const float posY = static_cast<float>(GetNumber(player["y"])) / 64;
+
+					playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+					someTiles.myPlayers[playerIndex] = playerActor;
+				}
+			}
+			else if (name == "Enemy" || name == "Enemies")
+			{
+				picojson::array objects = GetArray(currentLayer["objects"]);
+				for (size_t k = 0; k < objects.size(); k++)
+				{
+					picojson::object enemy = GetObject(objects[k]);
+					eActorType enemyType = eActorType::eEnemyOne;
+					const std::string typeString = GetString(enemy["type"]);
+					if (typeString == "Enemy1")
+					{
+						enemyType = eActorType::eEnemyOne;
+					}
+					else if (typeString == "Enemy2")
+					{
+						enemyType = eActorType::eEnemyTwo;
+					}
+					else if (typeString == "Enemy3")
+					{
+						enemyType = eActorType::eEnemyThree;
+					}
+					else if (typeString == "Enemy4")
+					{
+						enemyType = eActorType::eEnemyFour;
+					}
+					else if (typeString == "Enemy5")
+					{
+						enemyType = eActorType::eEnemyFive;
+					}
+					else
+					{
+						DL_ASSERT(false, "ERROR:  Player type does not exist");
+					}
+
+					Enemy *const enemyActor = someTiles.myEnemyFactory->CreateEnemy(enemyType);
+
+					const float posX = static_cast<float>(GetNumber(enemy["x"])) / 64;
+					const float posY = static_cast<float>(GetNumber(enemy["y"])) / 64;
+
+					enemyActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+					someTiles.myEnemies.Add(enemyActor);
+				}
+			}
+		}
 	}
-
 }
 
 picojson::object GetObject(picojson::value aValue)
