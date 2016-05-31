@@ -96,7 +96,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
 {
-	static int index = 0;
+	static float index = 0;
 	myFloor.Update();
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
@@ -126,7 +126,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
 
-	index += 1;
+	index += 10 * aTimeDelta.GetSeconds();
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
@@ -141,7 +141,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	ResetFoV();
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
-		CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
+		if (myEnemies[i]->GetActiveState() == true)
+			CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
 	}
 	CreatePlayerFoV(myPlayer->GetPosition(), 5.f);
 	CreatePlayerFoV(myPlayer2->GetPosition(), 5.f);
