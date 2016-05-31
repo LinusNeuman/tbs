@@ -4,7 +4,7 @@
 class StaticSprite;
 class RenderConverter;
 
-class MenuState : public GameState
+class MenuState : public GameState, public MessageReciever
 {
 public:
 	MenuState();
@@ -12,7 +12,10 @@ public:
 	void Init();
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
+
+	void RecieveMessage(const GUIMessage & aMessage) override;
 private:
 	StaticSprite * myBackgroundSprite;
+	bool myShouldAdd;
 };
 

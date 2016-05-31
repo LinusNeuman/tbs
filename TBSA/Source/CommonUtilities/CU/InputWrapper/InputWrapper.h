@@ -16,8 +16,8 @@ namespace CommonUtilities
 
 	enum class enumMouseButtons
 	{
-		eRight,
 		eLeft,
+		eRight,
 		eMiddle,
 		enumLength
 	};

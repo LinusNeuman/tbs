@@ -43,7 +43,7 @@ void PlayerController::AddPlayer(Player* aPlayer)
 	myPlayers.Add(aPlayer);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) , mySelectedPlayer->GetMyAP());
-	SingletonPostMaster::PostMessage(dijkstraMessage);
+	SendPostMessage(dijkstraMessage);
 }
 
 void PlayerController::SelectPlayer()
@@ -56,7 +56,7 @@ void PlayerController::SelectPlayer()
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
-	SingletonPostMaster::PostMessage(dijkstraMessage);
+	SendPostMessage(dijkstraMessage);
 }
 
 void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const
@@ -141,7 +141,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			{
 				CostAP(positionPath.Size() -1);
 				NotifyPlayers(positionPath);
-				SingletonPostMaster::PostMessageA(NavigationClearMessage(RecieverTypes::eRoom));
+				SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
 			}
 		}
 
@@ -161,7 +161,7 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 void PlayerController::PrePlayer()
 {
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
-	SingletonPostMaster::PostMessage(dijkstraMessage);
+	SendPostMessage(dijkstraMessage);
 }
 
 void PlayerController::RefillAllAP()

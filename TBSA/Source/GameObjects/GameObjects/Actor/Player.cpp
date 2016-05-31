@@ -44,7 +44,7 @@ void Player::CostAP(const int aCost)
 
 void Player::ReachedTarget()
 {
-	SingletonPostMaster::PostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
+	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
 }
 
 void Player::OnClick()

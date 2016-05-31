@@ -13,5 +13,6 @@ enum class RecieverTypes
 	eExitGame,
 	eMouseClicked,
 	eChangeSelectedPlayer,
+	ePlayGame,
 	enumlength
 };
