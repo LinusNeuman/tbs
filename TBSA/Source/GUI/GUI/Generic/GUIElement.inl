@@ -17,6 +17,22 @@ bool GUIElement::OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePo
 			return myMessageHandler.Execute(aMessageEvent);
 		}
 	}
+	if (aMessageEvent == eGUIMessageEvents::eOnDown)
+	{
+		if (Intersection2D::PointInsideAABB2D(myCollisionBox, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+		{
+			myIsCurrentlyPressed = true;
+			return myMessageHandler.Execute(aMessageEvent);
+		}
+	}
+	if (aMessageEvent == eGUIMessageEvents::eOnUp)
+	{
+		if (myIsCurrentlyPressed == true)
+		{
+			myIsCurrentlyPressed = false;
+			return myMessageHandler.Execute(eGUIMessageEvents::eOnUp);
+		}
+	}
 	if (aMessageEvent == eGUIMessageEvents::eOnHover)
 	{
 		if (Intersection2D::PointInsideAABB2D(myCollisionBox, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
@@ -25,14 +41,11 @@ bool GUIElement::OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePo
 			WhenHovered();
 			return myMessageHandler.Execute(aMessageEvent);
 		}
-		else
+		if (myIsCurrentlyHovered == true)
 		{
-			if (myIsCurrentlyHovered == true)
-			{
-				myIsCurrentlyHovered = false;
+			myIsCurrentlyHovered = false;
 
-				return myMessageHandler.Execute(eGUIMessageEvents::eOnLeave);
-			}
+			return myMessageHandler.Execute(eGUIMessageEvents::eOnLeave);
 		}
 	}
 	return false;

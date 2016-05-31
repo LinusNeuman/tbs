@@ -131,12 +131,14 @@
     <ClInclude Include="Collision\BoxCollider.h" />
     <ClInclude Include="Collision\CircleCollider.h" />
     <ClInclude Include="Collision\GameObjectCollider.h" />
+    <ClInclude Include="Collision\PointCollider.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision\BoxCollider.cpp" />
     <ClCompile Include="Collision\CircleCollider.cpp" />
     <ClCompile Include="Collision\GameObjectCollider.cpp" />
+    <ClCompile Include="Collision\PointCollider.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

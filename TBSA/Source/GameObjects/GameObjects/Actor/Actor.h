@@ -1,7 +1,9 @@
 #pragma once
 #include <map>
 #include <Animation/AnimationHandler.h>
+#include <Collision/BoxCollider.h>
 #include <CU/Timer/Time.h>
+#include <PostMaster/MessageReceiver.h>
 
 
 struct ActorData;
@@ -26,7 +28,7 @@ enum class eActorState
 	eWalking
 };
 
-class Actor
+class Actor : public MessageReciever
 {
 public:
 	Actor();
@@ -42,9 +44,10 @@ public:
 
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
 	{
-		myPosition = aPos;
+		UpdatePosition(aPos);
 		myTargetPosition = CommonUtilities::Vector2ui(aPos);
 	}
+	
 	
 	CU::Vector2f GetPosition() const
 	{
@@ -61,19 +64,24 @@ public:
 		return myType;
 	}
 
+	virtual void RecieveMessage(const ColliderMessage & aMessage) override;
+
+	virtual void OnClick() = 0;
+
 	void SetActiveState(const bool aActiveFlag);
 	bool GetActiveState();
 
+	
+
 	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
-	StaticSprite *mySprite;
-	
-protected:
 	StaticSprite* GetSprite() const
 	{
 		return mySprite;
 	}
-
+	
+protected:
+	void UpdatePosition(const CU::Vector2f & aPosition);
 	bool myActiveFlag;
 
 	AnimationHandler myAnimations;
@@ -86,7 +94,7 @@ protected:
 	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
 	unsigned short myCurrentWaypoint;
 
-	BoxCollider * myBoxCollider;
+	BoxCollider myBoxCollider;
 
 private:
 	void UpdatePath();
@@ -94,7 +102,7 @@ private:
 	
 	eActorType myType;
 	
-
+	StaticSprite *mySprite;
 	bool myAtTarget;
 };
 

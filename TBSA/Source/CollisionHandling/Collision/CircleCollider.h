@@ -13,6 +13,7 @@ public:
 
 	bool virtual CheckCollisionAgainstCircle(const CircleCollider & aColliderToCheckAgainst) const override;
 	bool virtual CheckCollisionAgainstBox(const BoxCollider & aColliderToCheckAgainst) const;
+	bool virtual CheckCollisionAgainstPoint(const PointCollider & aColliderToCheckAgainst) const;
 
 	void virtual DrawCollider(const CU::Vector4f & aRenderColor = CU::Vector4f::One) const override;
 };

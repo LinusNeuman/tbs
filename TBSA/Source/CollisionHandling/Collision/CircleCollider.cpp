@@ -2,6 +2,7 @@
 #include "CircleCollider.h"
 #include "BoxCollider.h"
 #include <CU/Matriser/matrix33.h>
+#include "Collision/PointCollider.h"
 
 
 CircleCollider::CircleCollider()
@@ -33,6 +34,11 @@ bool CircleCollider::CheckCollisionAgainstBox(const BoxCollider & aColliderToChe
 	return Intersection2D::AABBvsCircle(aColliderToCheckAgainst, *this);
 }
 
+bool CircleCollider::CheckCollisionAgainstPoint(const PointCollider & aColliderToCheckAgainst) const
+{
+	return Intersection2D::PointVsCircle(aColliderToCheckAgainst.GetPosition(), *this);
+}
+
 void CircleCollider::DrawCollider(const CU::Vector4f & aRenderColor /*= CU::Vector4f::One*/) const
 {
 	/*Vector2f startVector(myRadius, 0.f);
@@ -46,5 +52,3 @@ void CircleCollider::DrawCollider(const CU::Vector4f & aRenderColor /*= CU::Vect
 	startVector = Vector2f(myRadius, 0.f);
 	Renderer::GetInstance()->AddLineToDraw(DebugLineRenderCommand(myMainPoint + startVector, myMainPoint + endVector, aRenderColor));*/
 }
-
-

@@ -2,6 +2,7 @@
 
 class CircleCollider;
 class BoxCollider;
+class PointCollider;
 
 class GameObjectCollider
 {
@@ -15,6 +16,7 @@ public:
 
 	bool virtual CheckCollisionAgainstCircle(const CircleCollider & aColliderToCheckAgainst) const;
 	bool virtual CheckCollisionAgainstBox(const BoxCollider & aColliderToCheckAgainst) const;
+	bool virtual CheckCollisionAgainstPoint(const PointCollider & aColliderToCheckAgainst) const;
 
 protected:
 	GameObjectCollider();

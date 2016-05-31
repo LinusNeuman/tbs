@@ -6,6 +6,8 @@
 
 struct TiledData;
 
+
+
 namespace TiledLoader
 {
 	void Load(std::string aFilePath, TiledData& someTiles);

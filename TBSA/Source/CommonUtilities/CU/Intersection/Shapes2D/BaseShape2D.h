@@ -12,4 +12,3 @@ public:
 
 	CU::Vector2f myMainPoint;
 };
-
