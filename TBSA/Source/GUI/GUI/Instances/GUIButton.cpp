@@ -72,7 +72,18 @@ void GUIButton::Update(const CU::Time& aDelta)
 {
 	if (myIsCurrentlyHovered == true)
 	{
-		mySprite = mySpriteHovered;
+		if (myIsCurrentlyPressed == true)
+		{
+			mySprite = mySpritePressed;
+		}
+		else
+		{
+			mySprite = mySpriteHovered;
+		}
+	}
+	else if (myIsCurrentlyPressed == true)
+	{
+		mySprite = mySpritePressed;
 	}
 	else
 	{
