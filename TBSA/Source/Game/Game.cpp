@@ -218,5 +218,5 @@ void CGame::RenderWork()
 
 void CGame::LogCallback( std::string aText )
 {
-	DL_PRINT(aText.c_str());
+	//DL_PRINT(aText.c_str());
 }
