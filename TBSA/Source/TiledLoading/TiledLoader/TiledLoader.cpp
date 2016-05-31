@@ -9,6 +9,7 @@
 
 #include "TiledData/TiledData.h"
 #include <Rend/StaticSprite.h>
+#include "PathAndName.h"
 
 namespace
 {
@@ -24,11 +25,13 @@ CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const pico
 
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType);
 
+
+
 void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
-	
-	bool playersLoaded = false;
-	bool enemiesLoaded = false;
+	std::map<std::string, unsigned short> myEnemyIndexes;
+	CommonUtilities::GrowingArray<PathAndName> myPaths;
+	myPaths.Init(1);
 
 	picojson::value root;
 	
@@ -82,40 +85,55 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 			if (name[0] == '_')
 			{
+				
 				isOverFloor = true;
-
 				unsigned int lastUnderscore = name.find_last_of('_');
-				unsigned int roomId;
-				try
-				{
-					roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
-				}
-				catch (std::invalid_argument)
-				{
-					roomId = 0;
-					DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
-				}
 
-				for (size_t j = 0; j < data.size(); j++)
+
+				const std::string dataType = name.substr(1, lastUnderscore - 1);
+				if (dataType == "path" || dataType == "Path")
 				{
-					const int explainingInt = static_cast<int>(GetNumber(data[j]));
 
-					IsometricTile& newTile = someTiles.myTiles[j];
-
-					newTile.SetRoomId(roomId);
-						
-					int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
-					if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
+					for (size_t j = 0; j < data.size(); j++)
 					{
-						tileId = 0;
+						
+					}
+				}
+				else
+				{
+					
+					unsigned int roomId;
+					try
+					{
+						roomId = std::stoi(name.substr(lastUnderscore + 1, name.size() - lastUnderscore));
+					}
+					catch (std::invalid_argument)
+					{
+						roomId = 0;
+						DL_ASSERT(false, "ERROR! layers with a name starting with underscore is data layer and needs a number in the en preceeded by another underscore")
 					}
 
-					eTileType tileType = static_cast<eTileType>(tileId);
-
-					newTile.SetTileType(tileType);
-					if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
+					for (size_t j = 0; j < data.size(); j++)
 					{
-						newTile.SetDoor(Door(roomId));
+						const int explainingInt = static_cast<int>(GetNumber(data[j]));
+
+						IsometricTile& newTile = someTiles.myTiles[j];
+
+						newTile.SetRoomId(roomId);
+
+						int tileId = static_cast<int>(explainingInt - dataSheet.GetFirstIndex() + 1);
+						if (tileId < 0 || tileId >= static_cast<int>(eTileType::Size))
+						{
+							tileId = 0;
+						}
+
+						eTileType tileType = static_cast<eTileType>(tileId);
+
+						newTile.SetTileType(tileType);
+						if (tileType == eTileType::DOOR || tileType == eTileType::DOOR_2)
+						{
+							newTile.SetDoor(Door(roomId));
+						}
 					}
 				}
 			}
