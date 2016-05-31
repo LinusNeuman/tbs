@@ -2,7 +2,7 @@
 
 #include <CU/GrowingArray/GrowingArray.h>
 #include <Animation/Animation.h>
-#include <NavGraph/Graph/NavGraph.h>
+#include <NavGraph\Graph\NavGraph.h>
 #include <TiledData/TiledData.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Camera/Camera2D.h>

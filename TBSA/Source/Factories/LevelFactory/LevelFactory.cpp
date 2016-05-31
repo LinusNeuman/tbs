@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LevelFactory.h"
 #include <TiledLoader\TiledLoader.h>
+#include <TiledData/TiledData.h>
 
 LevelFactory::LevelFactory()
 {
@@ -17,11 +18,13 @@ GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath)
 	LoadLevel(aLevelPath);
 	GameLevel* level = new GameLevel();
 	level->Init(*myTileData);
+	return level;
 }
 
 void LevelFactory::LoadLevel(const std::string& aLevelPath)
 {
 	myTileData = new TiledData();
+
 	myPlayerFactory.LoadFromJson();
 	myEnemyFactory.LoadFromJson();
 

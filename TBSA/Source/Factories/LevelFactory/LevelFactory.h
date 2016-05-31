@@ -2,7 +2,8 @@
 #include <Level\GameLevel.h>
 #include "EnemyFactory\EnemyFactory.h"
 #include "PlayerFactory\PlayerFactory.h"
-#include <TiledData/TiledData.h>
+
+struct TiledData;
 
 class LevelFactory
 {
