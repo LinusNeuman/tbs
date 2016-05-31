@@ -24,7 +24,7 @@ Actor::Actor()
 
 Actor::~Actor()
 {
-	SAFE_DELETE(myBoxCollider);
+	//SAFE_DELETE(myBoxCollider);
 }
 
 void Actor::Init(const ActorData &aActorData)
