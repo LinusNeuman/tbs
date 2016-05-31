@@ -37,6 +37,7 @@ public:
 	virtual void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
+	virtual void OnMove(CU::Vector2ui aTargetPosition);
 	void SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>& aPath);
 
 	void ChangeAnimation(const std::string& anAnimation);
@@ -70,7 +71,8 @@ public:
 
 	void SetActiveState(const bool aActiveFlag);
 	bool GetActiveState();
-
+	void SetVisibleState(const bool aVisibleFlag);
+	bool GetVisibleState() const;
 	
 
 	virtual void ReachedTarget() = 0;
@@ -83,6 +85,7 @@ public:
 protected:
 	void UpdatePosition(const CU::Vector2f & aPosition);
 	bool myActiveFlag;
+	bool myVisibleFlag;
 
 	AnimationHandler myAnimations;
 	virtual void DecideAnimation();

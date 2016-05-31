@@ -4,20 +4,22 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Message\BaseMessage.h" />
-    <ClInclude Include="Message\TestPosition.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Message\RecieverTypes.h" />
-    <ClInclude Include="Message\WindowRectChangedMessage.h" />
-    <ClInclude Include="Message\LevelTileMetricsMessage.h" />
-    <ClInclude Include="Message\DijkstraMessage.h" />
-    <ClInclude Include="Message\SetMainCameraMessage.h" />
-    <ClInclude Include="Message\NavigationClearMessage.h" />
-    <ClInclude Include="Message\EndTurnMessage.h" />
-    <ClInclude Include="Message\StartUpLevelMessage.h" />
-    <ClInclude Include="Message\GetStartLevelMessage.h" />
-    <ClInclude Include="Message\ColliderMessage.h" />
     <ClInclude Include="Message\ActorPositionChangedMessage.h" />
+    <ClInclude Include="Message\BaseMessage.h" />
+    <ClInclude Include="Message\ColliderMessage.h" />
+    <ClInclude Include="Message\DijkstraMessage.h" />
+    <ClInclude Include="Message\EndTurnMessage.h" />
+    <ClInclude Include="Message\GetStartLevelMessage.h" />
+    <ClInclude Include="Message\LevelTileMetricsMessage.h" />
+    <ClInclude Include="Message\NavigationClearMessage.h" />
     <ClInclude Include="Message\PlayerObjectMesssage.h" />
+    <ClInclude Include="Message\RecieverTypes.h" />
+    <ClInclude Include="Message\SetMainCameraMessage.h" />
+    <ClInclude Include="Message\StartUpLevelMessage.h" />
+    <ClInclude Include="Message\TestPosition.h" />
+    <ClInclude Include="Message\WindowRectChangedMessage.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Message\PlayerAddedMessage.h" />
+    <ClInclude Include="Message\EnemyChangedDirectionMessage.h" />
   </ItemGroup>
 </Project>
