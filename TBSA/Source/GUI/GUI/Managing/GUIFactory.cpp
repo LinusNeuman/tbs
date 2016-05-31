@@ -9,6 +9,9 @@
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
+#define VIRTUALSCREENWIDTH 1920.f
+#define VIRTUALSCREENHEIGHT 1080.f
+
 GUIFactory::GUIFactory()
 {
 }
@@ -38,8 +41,8 @@ void GUIFactory::Load()
 		"ExitButton",
 		"Sprites/GUI/InGame/ExitButton/",
 		{ 1920.f, 1080.f },
-		{ -(41.f + 223.f), -(37.f + 117.f) },
-		{ 223, 117 }
+		{ -(41.f + 223.f), -(37.f + 117.f)},
+		{ 223, 117}
 	);
 	newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
 
