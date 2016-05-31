@@ -25,7 +25,6 @@ void GUIManager::Update(const CU::Time& aDelta)
 			if ((*myActiveGUI)[ch]->OnAction(eGUIMessageEvents::eOnClick, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
 			{
 				(*myActiveGUI)[ch]->Update(aDelta);
-				break;
 			}
 			if ((*myActiveGUI)[ch]->OnAction(eGUIMessageEvents::eOnUp, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
 			{
@@ -34,7 +33,7 @@ void GUIManager::Update(const CU::Time& aDelta)
 			}
 		}
 	}
-	else if (IsometricInput::GetMouseButtonDown(CU::enumMouseButtons::eLeft) == true)
+	else if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 	{
 		for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
 		{
