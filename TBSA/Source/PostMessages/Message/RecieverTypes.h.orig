@@ -1,0 +1,21 @@
+#pragma once
+
+enum class RecieverTypes
+{
+	eRoom,
+	eWindowProperties,
+	ePlayer,
+	eLevelTileLayoutSettings,
+	eCamera,
+	eTurn,
+	eStartUpLevel,
+	eEndTurn,
+	eExitGame,
+<<<<<<< HEAD
+	eMouseClicked,
+	eChangeSelectedPlayer,
+=======
+	ePlayGame,
+>>>>>>> 724f6eeeccf8ff7d5a5ed55571b1259f26b5b963
+	enumlength
+};

@@ -83,5 +83,5 @@ void Enemy::Reset()
 
 void Enemy::OnClick()
 {
-
+	myActiveFlag = false;
 }
