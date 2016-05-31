@@ -42,9 +42,10 @@ public:
 
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
 	{
-		myPosition = aPos;
+		UpdatePosition(aPos);
 		myTargetPosition = CommonUtilities::Vector2ui(aPos);
 	}
+	
 	
 	CU::Vector2f GetPosition() const
 	{
@@ -69,6 +70,7 @@ public:
 	StaticSprite *mySprite;
 	
 protected:
+	void UpdatePosition(const CU::Vector2f & aPosition);
 	StaticSprite* GetSprite() const
 	{
 		return mySprite;

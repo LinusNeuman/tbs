@@ -196,7 +196,7 @@ void GameLevel::Draw() const
 	}
 	for (size_t i = 0; i < myDebugEnd.size(); i++)
 	{
-		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
+		//DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
 	}
 }
 

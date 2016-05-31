@@ -61,7 +61,7 @@ void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 	(*myBuffer)[aRenderCommand.GetLayer()].Add(aRenderCommand);
 }
 
-void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, bool OffsetToMiddle/* = false*/)
+void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/, bool OffsetToMiddle/* = false*/)
 {
 	DX2D::Vector2f tempStartPosition(aStartPosition.x / myWindowSize.x, aStartPosition.y / myWindowSize.y);
 	DX2D::Vector2f tempEndPosition(aEndPosition.x / myWindowSize.x, aEndPosition.y / myWindowSize.y);
@@ -75,7 +75,9 @@ void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f 
 		tempEndPosition.y += 0.5;
 	}
 
-	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine(tempStartPosition , tempEndPosition);
+	DX2D::Vector4f tempColor(aColor.r, aColor.g, aColor.b, aColor.a);
+
+	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine(tempStartPosition , tempEndPosition, tempColor);
 }
 
 void Renderer::SwapBuffer()

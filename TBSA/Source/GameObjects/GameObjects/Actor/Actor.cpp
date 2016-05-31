@@ -19,11 +19,12 @@ Actor::Actor()
 	myCurrentWaypoint = 0;
 
 	myBoxCollider = new BoxCollider();
+	//myBoxCollider->SetPositionAndSize(CU::Vector2f::One, CU::Vector2f::Half);
 }
 
 Actor::~Actor()
 {
-	SAFE_DELETE(myBoxCollider);
+	//SAFE_DELETE(myBoxCollider);
 }
 
 void Actor::Init(const ActorData &aActorData)
@@ -37,7 +38,7 @@ void Actor::Init(const ActorData &aActorData)
 	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	myAnimations.Init(this, aActorData.myAnimations);
 
-	myBoxCollider->SetPositionAndSize(myPosition, CU::Vector2f::One);
+	myBoxCollider->SetPositionAndSize(myPosition, CU::Vector2f::Half);
 }
 
 
@@ -47,7 +48,8 @@ void Actor::Update(const CU::Time& aDeltaTime)
 	{
 
 		myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
-		myPosition += myVelocity * aDeltaTime.GetSeconds();
+		UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
+		//myPosition += myVelocity * aDeltaTime.GetSeconds();
 		CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
 		if (myAnimations.GetIsActive() == true)
 		{
@@ -59,7 +61,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		if ((CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 		{
 			myAtTarget = true;
-			myPosition = CommonUtilities::Point2f(myTargetPosition);
+			UpdatePosition(CU::Point2f(myTargetPosition));
 		}
 		else
 		{
@@ -85,8 +87,8 @@ void Actor::Draw() const
 {
 	if (myActiveFlag == true)
 	{
-		//myBoxCollider->DrawCollider();
 		mySprite->Draw(myPosition);
+		myBoxCollider->DrawCollider();
 	}
 }
 
@@ -130,6 +132,13 @@ void Actor::ChangeAnimation(const std::string& anAnimation)
 void Actor::AddAnimation(Animation* anAnimation)
 {
 	myAnimations.AddAnimation(anAnimation);
+}
+
+
+void Actor::UpdatePosition(const CU::Vector2f & aPosition)
+{
+	myPosition = aPosition;
+	myBoxCollider->ChangePosition(aPosition);
 }
 
 void Actor::DecideAnimation()
