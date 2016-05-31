@@ -8,7 +8,7 @@
 #include <CU\DLDebug\DL_Debug.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
-#include <Collision/BoxCollider.h>
+
 
 Actor::Actor()
 {
@@ -18,7 +18,7 @@ Actor::Actor()
 	myPath.Init(1);
 	myCurrentWaypoint = 0;
 
-	myBoxCollider = new BoxCollider();
+	//myBoxCollider = new BoxCollider();
 	//myBoxCollider->SetPositionAndSize(CU::Vector2f::One, CU::Vector2f::Half);
 }
 
@@ -36,9 +36,9 @@ void Actor::Init(const ActorData &aActorData)
 	mySprite->Init();
 	mySprite->SetLayer(enumRenderLayer::eGameObjects);
 	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
-	myAnimations.Init(this, aActorData.myAnimations);
+	myAnimations.Init(aActorData.myAnimations);
 
-	myBoxCollider->SetPositionAndSize(myPosition, CU::Vector2f::Half);
+	myBoxCollider.SetPositionAndSize(myPosition, CU::Vector2f::Half);
 }
 
 
@@ -88,7 +88,7 @@ void Actor::Draw() const
 	if (myActiveFlag == true)
 	{
 		mySprite->Draw(myPosition);
-		myBoxCollider->DrawCollider();
+		myBoxCollider.DrawCollider();
 	}
 }
 
@@ -138,7 +138,7 @@ void Actor::AddAnimation(Animation* anAnimation)
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {
 	myPosition = aPosition;
-	myBoxCollider->ChangePosition(aPosition);
+	myBoxCollider.ChangePosition(aPosition);
 }
 
 void Actor::DecideAnimation()

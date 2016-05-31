@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <Animation/AnimationHandler.h>
+#include <Collision/BoxCollider.h>
 #include <CU/Timer/Time.h>
 
 
@@ -88,7 +89,7 @@ protected:
 	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
 	unsigned short myCurrentWaypoint;
 
-	BoxCollider * myBoxCollider;
+	BoxCollider myBoxCollider;
 
 private:
 	void UpdatePath();
