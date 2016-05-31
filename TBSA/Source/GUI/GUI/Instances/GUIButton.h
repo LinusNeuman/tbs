@@ -1,5 +1,5 @@
 #pragma once
-#include "../Generic/GUIElement.h"
+#include "GUI/Generic/GUIElement.h"
 #include <Audio/Instances/SoundEffect.h>
 
 class GUIButton : public GUIElement

@@ -46,7 +46,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
