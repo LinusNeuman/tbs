@@ -87,6 +87,7 @@ public:
 	unsigned short AddImage(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
 	
 	CU::Vector2f GetSize();
+	CU::Vector2f GetSizeWithoutWhiteSpace();
 
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
@@ -114,6 +115,8 @@ private:
 	RenderData myRenderData;
 
 	CU::Vector2f myPositionOffset;
+
+	CU::Vector2f mySizeWithoutWhitespace;
 };
 
 
