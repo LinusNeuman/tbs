@@ -93,9 +93,15 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 				const std::string dataType = name.substr(1, lastUnderscore - 1);
 				if (dataType == "path" || dataType == "Path")
 				{
-
+					CommonUtilities::GrowingArray<CommonUtilities::Vector2i> myPathTiles;
+					myPathTiles.Init(1);
 					for (size_t j = 0; j < data.size(); j++)
 					{
+						if (GetNumber(data[j]) >= 1)
+						{
+							myPathTiles.Add(CommonUtilities::Vector2i(j, static_cast<int>(GetNumber(data[j]))));
+						}
+
 						
 					}
 				}
