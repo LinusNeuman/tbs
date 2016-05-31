@@ -25,6 +25,7 @@
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
 #include <Message/EndTurnMessage.h>
 
+struct ActorPositionChangedMessage;
 const float sqrt2 = static_cast<float>(sqrt(2));
 
 GameLevel::GameLevel()
@@ -48,15 +49,14 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
+	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
 
 	TiledLoader::Load(aLevelPath, myTiledData);
-	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
+	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
 
 	myFloor.SetTiles(myTiledData.myTiles);
 	myFloor.SetFloorDimensions(myTiledData.myMapSize);
-
-	
 
 	ConstructNavGraph();
 
@@ -96,7 +96,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
 {
-	static int index = 0;
+	static float index = 0;
 	myFloor.Update();
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
@@ -116,7 +116,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
 	}
 
 
@@ -125,10 +125,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	{
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
-	if (IsometricInput::GetKeyPressed(DIK_F4))
-	{
-		index += 10;
-	}
+
+	index += 10 * aTimeDelta.GetSeconds();
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
@@ -143,7 +141,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	ResetFoV();
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
-		CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
+		if (myEnemies[i]->GetActiveState() == true)
+			CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
 	}
 	CreatePlayerFoV(myPlayer->GetPosition(), 5.f);
 	CreatePlayerFoV(myPlayer2->GetPosition(), 5.f);
@@ -216,6 +215,14 @@ void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 	myNavGraph.Clear();
+}
+
+void GameLevel::RecieveMessage(const ActorPositionChangedMessage& aMessage)
+{
+	if(myFloor.GetTile(aMessage.myPosition.x,aMessage.myPosition.y).GetInEnemyFov() == true)
+	{
+		std::cout << "I SEE YOU!!" << std::endl;
+	}
 }
 
 void GameLevel::ConstructNavGraph()

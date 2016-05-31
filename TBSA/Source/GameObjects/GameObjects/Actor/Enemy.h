@@ -17,6 +17,9 @@ public:
 
 	void SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath);
 	void Reset();
+
+	virtual void OnClick() override;
+
 private:
 	bool myHasMoved;
 	bool myHasTurned;

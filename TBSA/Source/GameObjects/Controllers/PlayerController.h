@@ -4,13 +4,14 @@
 #include <CU/Vectors/vector2.h>
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
+#include <PostMaster/MessageReceiver.h>
 
 class PlayState;
 class Actor;
 class RenderConverter;
 class Player;
 
-class PlayerController
+class PlayerController : public MessageReciever
 {
 public:
 	PlayerController();
@@ -30,6 +31,9 @@ public:
 	void PrePlayer();
 	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
+
+	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
+
 private:
 	//PlayState* myPlayState;
 	GameFloor * myFloor;
@@ -40,6 +44,8 @@ private:
 	CommonUtilities::Vector2f myMousePosition;
 	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
+
+	bool myClickedOnPlayer;
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

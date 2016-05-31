@@ -68,7 +68,9 @@ void CGame::Init(const std::wstring& aVersion)
 
 
     DX2D::SEngineCreateParameters createParameters;
+#ifdef _DEBUG
 	createParameters.myActivateDebugSystems = DX2D::eDebugFeature_Fps | DX2D::eDebugFeature_Mem | DX2D::eDebugFeature_Filewatcher | DX2D::eDebugFeature_Cpu | DX2D::eDebugFeature_Drawcalls;
+#endif
     
     createParameters.myInitFunctionToCall = std::bind( &CGame::InitCallBack, this );
     createParameters.myUpdateFunctionToCall = std::bind( &CGame::UpdateCallBack, this );
@@ -119,7 +121,7 @@ void CGame::RecieveMessage(const GUIMessage & aMessage)
 void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
 {
 	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
-	SingletonPostMaster::PostMessage(startLevelMessage);
+	SendPostMessage(startLevelMessage);
 }
 
 
