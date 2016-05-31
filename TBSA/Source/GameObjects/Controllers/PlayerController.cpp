@@ -159,3 +159,7 @@ void PlayerController::RefillAllAP()
 	}
 }
 
+void PlayerController::SetCameraPositionToPlayer(int aIndex)
+{
+	myCamera.SetPos(myPlayers[aIndex]->GetPosition());
+}

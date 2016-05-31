@@ -15,5 +15,6 @@
     <ClInclude Include="Message\NavigationClearMessage.h" />
     <ClInclude Include="Message\EndTurnMessage.h" />
     <ClInclude Include="Message\StartUpLevelMessage.h" />
+    <ClInclude Include="Message\GetStartLevelMessage.h" />
   </ItemGroup>
 </Project>

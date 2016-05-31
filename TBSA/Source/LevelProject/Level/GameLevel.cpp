@@ -50,7 +50,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 
-	TiledLoader::Load("Data/Tiled/SecondTest.json", myTiledData);
+	TiledLoader::Load(aLevelPath, myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
 
@@ -76,14 +76,14 @@ void GameLevel::Init(const std::string& aLevelPath)
 		myEnemyController->AddEnemy(myEnemies[i]);
 	}
 
-	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
+	/*CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 	path.Init(5);
 
 	for (size_t i = 0; i < 5; i++)
 	{
 		path.Add(CommonUtilities::Vector2ui(myEnemies[0]->GetPosition()) + CommonUtilities::Vector2ui(i, 0));
 	}
-	myEnemies[0]->SetEnemyPath(path);
+	myEnemies[0]->SetEnemyPath(path);*/
 
 	myPlayer->ChangeAnimation("PlayerTurn");
 	myPlayer2->ChangeAnimation("PlayerTurn");
@@ -92,6 +92,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 		myEnemies[i]->ChangeAnimation("EnemyTurn");
 	}
 
+	myPlayerController->SetCameraPositionToPlayer(1);
 
 	DX2D::CCustomShader* customShader;
 	customShader = new DX2D::CCustomShader();

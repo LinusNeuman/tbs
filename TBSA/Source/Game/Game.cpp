@@ -23,6 +23,7 @@
 #include "StartupReader/StartupReader.h"
 #include "StartupReader/StartupData.h"
 #include <Message/StartUpLevelMessage.h>
+#include <Message/GetStartLevelMessage.h>
 
 using namespace std::placeholders;
 
@@ -110,16 +111,25 @@ void CGame::RecieveMessage(const GUIMessage & aMessage)
 	{
 		myImRunning = false;
 		DX2D::CEngine::GetInstance()->Shutdown();
+	}
 }
+
+void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
+{
+	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
+	SingletonPostMaster::PostMessage(startLevelMessage);
 }
+
 
 
 void CGame::InitCallBack()
 {
+	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
+
 	RenderConverter::Create();
 	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
-
+	
 	CU::TimeManager::Create();
 	GUIFactory::GetInstance()->Load();
 
@@ -141,8 +151,7 @@ void CGame::InitCallBack()
 	
 
 	myGameStateStack.AddMainState(myMenuState);
-	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
-	SingletonPostMaster::PostMessageW(startLevelMessage);
+	
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
 }
