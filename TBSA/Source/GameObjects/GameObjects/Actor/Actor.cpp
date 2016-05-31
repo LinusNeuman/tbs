@@ -8,6 +8,7 @@
 #include <CU\DLDebug\DL_Debug.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
+#include <Message/ColliderMessage.h>
 
 
 Actor::Actor()
@@ -24,7 +25,7 @@ Actor::Actor()
 
 Actor::~Actor()
 {
-	//SAFE_DELETE(myBoxCollider);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eMouseClicked, *this);
 }
 
 void Actor::Init(const ActorData &aActorData)
@@ -39,6 +40,8 @@ void Actor::Init(const ActorData &aActorData)
 	myAnimations.Init(aActorData.myAnimations);
 
 	myBoxCollider.SetPositionAndSize(myPosition, CU::Vector2f::Half);
+
+	SingletonPostMaster::AddReciever(RecieverTypes::eMouseClicked, *this);
 }
 
 
@@ -144,4 +147,12 @@ void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 void Actor::DecideAnimation()
 {
 
+}
+
+void Actor::RecieveMessage(const ColliderMessage & aMessage)
+{
+	if (myBoxCollider.CheckCollision(aMessage.myCollider) == true)
+	{
+		OnClick();
+	}
 }

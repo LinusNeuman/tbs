@@ -10,6 +10,11 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/SetMainCameraMessage.h>
 
+#include <Collision/PointCollider.h>
+#include <Message/ColliderMessage.h>
+#include <Message/PlayerObjectMesssage.h>
+
+
 #define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
@@ -24,11 +29,13 @@ PlayerController::PlayerController()
 
 PlayerController::~PlayerController()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 }
 
 void PlayerController::Init()
 {
 	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
+	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -114,6 +121,12 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
+		PointCollider tempCollider;
+
+		tempCollider.ChangePosition(IsometricInput::GetMouseWindowPositionIsometric());
+
+		SendPostMessage(ColliderMessage(RecieverTypes::eMouseClicked, tempCollider));
+
 		if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 		{
 			CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
@@ -162,4 +175,12 @@ void PlayerController::RefillAllAP()
 void PlayerController::SetCameraPositionToPlayer(int aIndex)
 {
 	myCamera.SetPos(myPlayers[aIndex]->GetPosition());
+}
+
+void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
+{
+	if (mySelectedPlayer != &aMessage.myPlayer)
+	{
+		SelectPlayer();
+	}
 }

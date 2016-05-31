@@ -4,10 +4,11 @@
 
 struct PlayerData;
 struct ActorData;
+
 class RenderConverter;
 class WrappedSprite;
 
-class Player : public Actor 
+class Player : public Actor
 {
 public:
 	Player();
@@ -20,6 +21,10 @@ public:
 	void CostAP(const int aCost);
 	
 	void ReachedTarget()override;
+
+
+	virtual void OnClick() override;
+
 private:
 
 	int myActionPointMax;

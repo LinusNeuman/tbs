@@ -9,6 +9,7 @@ struct EndTurnMessage;
 struct GUIMessage;
 struct GetStartLevelMessage;
 struct ColliderMessage;
+struct PlayerObjectMessage;
 
 class MessageReciever
 {
@@ -26,6 +27,7 @@ public:
 	virtual void RecieveMessage(const GUIMessage & aMessage);
 	virtual void RecieveMessage(const GetStartLevelMessage & aMessage);
 	virtual void RecieveMessage(const ColliderMessage & aMessage);
+	virtual void RecieveMessage(const PlayerObjectMessage & aMessage);
 
 protected:
 	MessageReciever()

@@ -80,3 +80,8 @@ void Enemy::Reset()
 {
 	myHasMoved = false;
 }
+
+void Enemy::OnClick()
+{
+
+}

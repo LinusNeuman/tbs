@@ -17,5 +17,6 @@
     <ClInclude Include="Message\StartUpLevelMessage.h" />
     <ClInclude Include="Message\GetStartLevelMessage.h" />
     <ClInclude Include="Message\ColliderMessage.h" />
+    <ClInclude Include="Message\PlayerObjectMesssage.h" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include <Animation/AnimationHandler.h>
 #include <Collision/BoxCollider.h>
 #include <CU/Timer/Time.h>
+#include <PostMaster/MessageReceiver.h>
 
 
 struct ActorData;
@@ -27,7 +28,7 @@ enum class eActorState
 	eWalking
 };
 
-class Actor
+class Actor : public MessageReciever
 {
 public:
 	Actor();
@@ -63,8 +64,14 @@ public:
 		return myType;
 	}
 
+	virtual void RecieveMessage(const ColliderMessage & aMessage) override;
+
+	virtual void OnClick() = 0;
+
 	void SetActiveState(const bool aActiveFlag);
 	bool GetActiveState();
+
+	
 
 	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
