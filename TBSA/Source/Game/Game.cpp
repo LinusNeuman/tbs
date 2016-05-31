@@ -86,8 +86,8 @@ void CGame::Init(const std::wstring& aVersion)
 #ifdef _DEBUG
 	appname = L"TBS DEBUG  [" + aVersion + L"]";
 
-	createParameters.myWindowWidth = 1280;
-	createParameters.myWindowHeight = 720;
+	createParameters.myWindowWidth = windowWidth;// 1280;
+	createParameters.myWindowHeight = windowHeight;// 720;
 	createParameters.myStartInFullScreen = false;
 #endif
 
