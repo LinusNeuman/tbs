@@ -64,8 +64,7 @@ void Init()
 	} 
 	versionNumber.pop_back();  
 
-	myGame.Init(CharArrayToLPCWSTR(versionNumber.c_str())); 
-
+	myGame.Init(CharArrayToLPCWSTR(versionNumber.c_str()));
 }
 
 

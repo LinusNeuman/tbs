@@ -2,6 +2,8 @@
 #include "windows/windows_window.h"
 #include "../resource.h"
 
+#include <Message/SetHWNDMessage.h>
+#include <PostMaster/SingletonPostMaster.h>
 
 using namespace DX2D;
 
@@ -73,8 +75,7 @@ bool CWindowsWindow::Init(Vector2<unsigned int> aWindowSize, HWND*& aHwnd, SEngi
 		myWindowHandle = *aHwnd;
 	}
 
-
-	
+	SendPostMessage(SetHWNDMessage(RecieverTypes::eWindowHandleChange, myWindowHandle));
 
 	INFO_PRINT("%s %i %i", "Windows created with size ", aWindowSize.x, aWindowSize.y);
 

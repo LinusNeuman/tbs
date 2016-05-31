@@ -15,5 +15,6 @@ enum class RecieverTypes
 	eChangeSelectedPlayer,
 	ePlayGame,
 	eActorPositionChanged,
+	eWindowHandleChange,
 	enumlength
 };

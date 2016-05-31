@@ -19,5 +19,6 @@
     <ClInclude Include="Message\ColliderMessage.h" />
     <ClInclude Include="Message\ActorPositionChangedMessage.h" />
     <ClInclude Include="Message\PlayerObjectMesssage.h" />
+    <ClInclude Include="Message\SetHWNDMessage.h" />
   </ItemGroup>
 </Project>
