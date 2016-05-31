@@ -24,6 +24,8 @@
 #include "StartupReader/StartupData.h"
 #include <Message/StartUpLevelMessage.h>
 #include <Message/GetStartLevelMessage.h>
+#include <Shader/Shaders.h>
+#include <tga2d/shaders/customshader.h>
 
 using namespace std::placeholders;
 
@@ -124,36 +126,54 @@ void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
 
 void CGame::InitCallBack()
 {
+	Shaders::Create();
+	DX2D::CCustomShader* customShader;
+	customShader = new DX2D::CCustomShader();
+	customShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	DX2D::CCustomShader* customFoVShader;
+	customFoVShader = new DX2D::CCustomShader();
+	customFoVShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customFoVShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/customLos_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	DX2D::CCustomShader* customHighlightShader;
+	customHighlightShader = new DX2D::CCustomShader();
+	customHighlightShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customHighlightShader->PostInit("shaders/custom_highlightBlue_vertex_shader.fx", "shaders/custom_highlightBlue_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	DX2D::CCustomShader* customHighlightRedShader;
+	customHighlightRedShader = new DX2D::CCustomShader();
+	customHighlightRedShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customHighlightRedShader->PostInit("shaders/custom_highlightRed_vertex_shader.fx", "shaders/custom_highlightRed_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	DX2D::CCustomShader* customInRangeShader;
+	customInRangeShader = new DX2D::CCustomShader();
+	customInRangeShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customInRangeShader->PostInit("shaders/custom_inRange_vertex_shader.fx", "shaders/custom_inRange_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	Shaders::GetInstance()->AddShader(customShader, "FogOfWarShader");
+	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
+	Shaders::GetInstance()->AddShader(customHighlightShader, "HighlightShader");
+	Shaders::GetInstance()->AddShader(customHighlightRedShader, "HighlightRedShader");
+	Shaders::GetInstance()->AddShader(customInRangeShader, "InRangeShader");
+
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
 
 	RenderConverter::Create();
 	RenderConverter::Init(CU::Vector2ui(1920, 1080));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
-	
+
 	CU::TimeManager::Create();
 	GUIFactory::GetInstance()->Load();
-
 	myMenuState = new MenuState();
-
-	
-
-	/*GetInput::Create();
-	GetInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());*/
-
-	
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
-	
-
-	
-
-	
 	myMenuState->Init();
-	
-
 	myGameStateStack.AddMainState(myMenuState);
-	
-
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
+
+	
 }
 
 
