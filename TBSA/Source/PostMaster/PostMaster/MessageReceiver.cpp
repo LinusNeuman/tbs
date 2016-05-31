@@ -49,3 +49,8 @@ void MessageReciever::RecieveMessage(const ColliderMessage & aMessage)
 void MessageReciever::RecieveMessage(const ActorPositionChangedMessage& aMessage)
 {
 }
+
+void MessageReciever::RecieveMessage(const PlayerObjectMessage & aMessage)
+{
+
+}

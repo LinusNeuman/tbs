@@ -10,6 +10,11 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/SetMainCameraMessage.h>
 
+#include <Collision/PointCollider.h>
+#include <Message/ColliderMessage.h>
+#include <Message/PlayerObjectMesssage.h>
+
+
 #define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
@@ -19,16 +24,19 @@ PlayerController::PlayerController()
 	myPlayers.Init(2);
 	mySelectedPlayerIndex = 0;
 	mySelectedPlayer = nullptr;
+	myClickedOnPlayer = false;
 }
 
 
 PlayerController::~PlayerController()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 }
 
 void PlayerController::Init()
 {
 	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
+	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -114,21 +122,33 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
-		if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
-		{
-			CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
-			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
-			positionPath.Init(indexPath.Size());
+		myClickedOnPlayer = false;
 
-			for (size_t i = 0; i < indexPath.Size(); i++)
+		PointCollider tempCollider;
+
+		tempCollider.ChangePosition(IsometricInput::GetMouseWindowPositionIsometric());
+
+		SendPostMessage(ColliderMessage(RecieverTypes::eMouseClicked, tempCollider));
+
+		
+		if (myClickedOnPlayer == false)
+		{
+			if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 			{
-				positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
-			}
-			if (GetPlayerAP() >= (positionPath.Size() -1))
-			{
-				CostAP(positionPath.Size() -1);
-				NotifyPlayers(positionPath);
-				SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+				CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
+				CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
+				positionPath.Init(indexPath.Size());
+
+				for (size_t i = 0; i < indexPath.Size(); i++)
+				{
+					positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
+				}
+				if (GetPlayerAP() >= (positionPath.Size() - 1))
+				{
+					CostAP(positionPath.Size() - 1);
+					NotifyPlayers(positionPath);
+					SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+				}
 			}
 		}
 
@@ -162,4 +182,13 @@ void PlayerController::RefillAllAP()
 void PlayerController::SetCameraPositionToPlayer(int aIndex)
 {
 	myCamera.SetPos(myPlayers[aIndex]->GetPosition());
+}
+
+void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
+{
+	if (mySelectedPlayer != &aMessage.myPlayer)
+	{
+		myClickedOnPlayer = true;
+		SelectPlayer();
+	}
 }

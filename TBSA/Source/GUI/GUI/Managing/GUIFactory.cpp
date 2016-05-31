@@ -39,7 +39,7 @@ void GUIFactory::Load()
 	// everything will be read from json later
 	newButton->Create(
 		"ExitButton",
-		"Sprites/GUI/InGame/ExitButton/",
+		"Sprites/GUI/InGame/EndTurnButton/",
 		{ 1920.f, 1080.f },
 		{ -(41.f + 223.f), -(37.f + 117.f)},
 		{ 223, 117}
@@ -47,8 +47,55 @@ void GUIFactory::Load()
 	newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
 
 	myGUIElements.Add(newButton);
+
+
+	GUIButton* menuButton = new GUIButton();
+
+	menuButton->Create(
+		"MenuButton",
+		"Sprites/GUI/InGame/MenuButton/",
+		{ 0, 0 },
+		{ 26, 175 },
+		{ 129, 69 }
+	);
+
+	GUIButton* portrait = new GUIButton();
+
+	portrait->Create(
+		"NPCPortrait",
+		"Sprites/GUI/InGame/PortraitNPC/",
+		{ 0, 0 },
+		{ 26, 29 },
+		{ 130, 130 }
+	);
+
+	GUIButton* textbox = new GUIButton();
+
+	textbox->Create(
+		"NPCTextBox",
+		"Sprites/GUI/InGame/NPCTextBox/",
+		{ 0, 0 },
+		{ 165, 29 },
+		{ 381, 214 }
+	);
+
+	GUIButton* playerPortrait = new GUIButton();
+
+	playerPortrait->Create(
+		"PlayerPortrait",
+		"Sprites/GUI/InGame/PlayerPortrait/",
+		{ 0, 1080 },
+		{ 26, -(192 + 29)},
+		{ 192, 192 }
+	);
+
+	// set action click open new substate
+	myGUIElements.Add(playerPortrait);
+	myGUIElements.Add(textbox);
+	myGUIElements.Add(portrait);
+	myGUIElements.Add(menuButton);
 	myGUILookup["InGame"].myBegin = 0;
-	myGUILookup["InGame"].myEnd = 0;
+	myGUILookup["InGame"].myEnd = 4;
 
 	GUIButton* quitButton = new GUIButton();
 
@@ -67,11 +114,11 @@ void GUIFactory::Load()
 		"Sprites/GUI/MainMenu/PlayButton/",
 		{ 0.f, 0.f }, { 1920.f / 2.f, 1080.f / 2.f }, { 200, 100 });
 
-	playButton->SetAction(new GUIMessage(RecieverTypes::eStartUpLevel), eGUIMessageEvents::eOnClick);
+	playButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
 	myGUIElements.Add(playButton);
 
-	myGUILookup["MainMenu"].myBegin = 1;
-	myGUILookup["MainMenu"].myEnd = 2;
+	myGUILookup["MainMenu"].myBegin = 5;
+	myGUILookup["MainMenu"].myEnd = 6;
 
 	CU::TimeManager::Update();
 

@@ -11,6 +11,9 @@ enum class RecieverTypes
 	eStartUpLevel,
 	eEndTurn,
 	eExitGame,
+	eMouseClicked,
+	eChangeSelectedPlayer,
+	ePlayGame,
 	eActorPositionChanged,
 	enumlength
 };
