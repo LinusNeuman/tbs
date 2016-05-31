@@ -59,10 +59,10 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myIsEnabled = aIsEnabled;
 
 	myCollisionBox.SetWithMaxAndMinPos(
-	{ myPosition.x / 1920.f, myPosition.y / 1080.f },
+	{ myPosition.x / 1920.f, myPosition.y / 1080.f},
 	{
-		(myPosition.x / 1920.f) + mySpriteUnpressed->GetSize().x,
-		(myPosition.y / 1080.f) + mySpriteUnpressed->GetSize().y
+		(myPosition.x / 1920.f) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().x / 1920.f,
+		(myPosition.y / 1080.f) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().y / 1080.f
 	});
 
 	mySprite = mySpriteUnpressed;

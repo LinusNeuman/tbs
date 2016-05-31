@@ -58,6 +58,8 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 
 		tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
+
+		mySizeWithoutWhitespace = { aRect.z, aRect.w };
 	}
 
 	if (myIsIsometricFlag == true)
@@ -76,6 +78,11 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 CU::Vector2f StaticSprite::GetSize()
 {
 	return CU::Vector2f(GetSprite()->GetSize().x, GetSprite()->GetSize().y);
+}
+
+CU::Vector2f StaticSprite::GetSizeWithoutWhiteSpace()
+{
+	return mySizeWithoutWhitespace;
 }
 
 void StaticSprite::Draw(const CU::Vector2f & aPosition)
