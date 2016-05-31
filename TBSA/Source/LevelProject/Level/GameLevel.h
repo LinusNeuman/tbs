@@ -26,19 +26,11 @@ public:
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
 
-	void RecieveMessage(const DijkstraMessage & aMessage);
-	void RecieveMessage(const NavigationClearMessage & aMessage);
-	void RecieveMessage(const ActorPositionChangedMessage& aMessage);
+	void RecieveMessage(const DijkstraMessage & aMessage) override;
+	void RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
 
 private:
-	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition, bool aIsPlayer);
-	void CreateEnemyRayTrace(const CU::Vector2f &aPosition, int aIndex, float aAngle, float aMagnitude);
-	int CalculatePoint(float aValue) const;
-	void CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
-	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);
-	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
-	void ResetFoV();
 
 	GameFloor myFloor;
 	Player * myPlayer, *myPlayer2;
@@ -52,8 +44,6 @@ private:
 	NavGraph myNavGraph;
 	TiledData myTiledData;
 	CommonUtilities::Vector2ui myDimensions;
-	std::vector<CU::Vector2f> myDebugStart;
-	std::vector<CU::Vector2f> myDebugEnd;
 
 	TurnManager myTurnManager;
 };

@@ -7,6 +7,7 @@
 #include <Message/ColliderMessage.h>
 #include <Collision/BoxCollider.h>
 #include <Message/PlayerObjectMesssage.h>
+#include <Message/ActorPositionChangedMessage.h>
 
 
 Player::Player()
@@ -94,4 +95,9 @@ void Player::DecideAnimation()
 			ChangeAnimation("gingerWalk315");
 		}
 	}
+}
+
+void Player::OnMove(CU::Vector2ui aTargetPosition)
+{
+	SendPostMessage(ActorPositionChangedMessage(RecieverTypes::eActorPositionChanged, aTargetPosition));
 }

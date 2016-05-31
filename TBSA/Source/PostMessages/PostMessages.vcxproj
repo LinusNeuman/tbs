@@ -218,9 +218,11 @@
     <ClInclude Include="Message\ColliderMessage.h" />
     <ClInclude Include="Message\DijkstraMessage.h" />
     <ClInclude Include="Message\EndTurnMessage.h" />
+    <ClInclude Include="Message\EnemyChangedDirectionMessage.h" />
     <ClInclude Include="Message\GetStartLevelMessage.h" />
     <ClInclude Include="Message\LevelTileMetricsMessage.h" />
     <ClInclude Include="Message\NavigationClearMessage.h" />
+    <ClInclude Include="Message\PlayerAddedMessage.h" />
     <ClInclude Include="Message\PlayerObjectMesssage.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\SetHWNDMessage.h" />

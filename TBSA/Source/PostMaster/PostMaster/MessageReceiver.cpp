@@ -59,3 +59,13 @@ void MessageReciever::RecieveMessage(const SetHWNDMessage & aMessage)
 {
 
 }
+
+void MessageReciever::RecieveMessage(const PlayerAddedMessage& aMessage)
+{
+
+}
+
+void MessageReciever::RecieveMessage(const EnemyChangedDirectionMessage & aMessage)
+{
+
+}

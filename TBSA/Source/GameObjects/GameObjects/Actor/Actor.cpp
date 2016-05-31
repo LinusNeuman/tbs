@@ -32,6 +32,7 @@ Actor::~Actor()
 void Actor::Init(const ActorData &aActorData)
 {
 	myActiveFlag = true;
+	myVisibleFlag = false;
 
 	myPosition = CommonUtilities::Vector2f::Zero;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
@@ -100,9 +101,14 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 {
 	if (aTargetPosition != myTargetPosition)
 	{
-		SendPostMessage(ActorPositionChangedMessage(RecieverTypes::eActorPositionChanged, aTargetPosition));
+		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
+}
+
+void Actor::OnMove(CU::Vector2ui aTargetPosition)
+{
+
 }
 
 void Actor::SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>& aPath)
@@ -112,6 +118,16 @@ void Actor::SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2
 		myPath = aPath;
 		myCurrentWaypoint = 0;
 	}
+}
+
+void Actor::SetVisibleState(const bool aVisibleFlag)
+{
+	myVisibleFlag = aVisibleFlag;
+}
+
+bool Actor::GetVisibleState() const
+{
+	return myVisibleFlag;
 }
 
 int Actor::GetMyAP() const
