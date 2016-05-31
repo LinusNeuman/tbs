@@ -8,6 +8,7 @@ struct DijkstraMessage;
 struct EndTurnMessage;
 struct GUIMessage;
 struct GetStartLevelMessage;
+struct ColliderMessage;
 
 class MessageReciever
 {
@@ -24,6 +25,7 @@ public:
 	virtual void RecieveMessage(const StartUpLevelMessage & aMessage);
 	virtual void RecieveMessage(const GUIMessage & aMessage);
 	virtual void RecieveMessage(const GetStartLevelMessage & aMessage);
+	virtual void RecieveMessage(const ColliderMessage & aMessage);
 
 protected:
 	MessageReciever()

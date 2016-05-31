@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <Animation/AnimationHandler.h>
+#include <Collision/BoxCollider.h>
 #include <CU/Timer/Time.h>
 
 
@@ -42,9 +43,10 @@ public:
 
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
 	{
-		myPosition = aPos;
+		UpdatePosition(aPos);
 		myTargetPosition = CommonUtilities::Vector2ui(aPos);
 	}
+	
 	
 	CU::Vector2f GetPosition() const
 	{
@@ -69,6 +71,7 @@ public:
 	StaticSprite *mySprite;
 	
 protected:
+	void UpdatePosition(const CU::Vector2f & aPosition);
 	StaticSprite* GetSprite() const
 	{
 		return mySprite;
@@ -86,7 +89,7 @@ protected:
 	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
 	unsigned short myCurrentWaypoint;
 
-	BoxCollider * myBoxCollider;
+	BoxCollider myBoxCollider;
 
 private:
 	void UpdatePath();

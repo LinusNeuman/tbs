@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "AnimationHandler.h"
-#include "../GameObjects/GameObjects/Actor/Actor.h"
+//#include "../GameObjects/GameObjects/Actor/Actor.h"
 
 AnimationHandler::AnimationHandler()
 {
@@ -15,9 +15,9 @@ AnimationHandler::~AnimationHandler()
 	}
 }
 
-void AnimationHandler::Init(Actor* aHolder, std::map<std::string, Animation*> someAnimations)
+void AnimationHandler::Init(/*Actor* aHolder,*/ std::map<std::string, Animation*> someAnimations)
 {
-	myHolder = aHolder;
+	//myHolder = aHolder;
 	myAnimations = someAnimations;
 }
 

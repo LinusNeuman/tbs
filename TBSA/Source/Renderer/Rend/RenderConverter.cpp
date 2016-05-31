@@ -86,18 +86,18 @@ void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
 	GetInstance().myRenderer.AddRenderCommand(aRenderCommand);
 }
 
-void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
+void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/)
 {
-	GetInstance().myRenderer.DrawLine(aStartPosition, aEndPosition);
+	GetInstance().myRenderer.DrawLine(aStartPosition, aEndPosition, aColor);
 }
 
-void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition)
+void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/)
 {
 	CU::Vector2f newStartPos = CU::IsometricToPixel(aStartPosition * (*GetInstance().myCamera).GetInverse());
 
 	CU::Vector2f newEndPos = CU::IsometricToPixel(aEndPosition * (*GetInstance().myCamera).GetInverse());
 
-	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos, true);
+	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos, aColor, true);
 }
 
 void RenderConverter::Draw()

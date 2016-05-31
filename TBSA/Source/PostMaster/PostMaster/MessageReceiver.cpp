@@ -40,3 +40,8 @@ void MessageReciever::RecieveMessage(const GUIMessage& aMessage)
 void MessageReciever::RecieveMessage(const GetStartLevelMessage& aMessage)
 {
 }
+
+void MessageReciever::RecieveMessage(const ColliderMessage & aMessage)
+{
+
+}
