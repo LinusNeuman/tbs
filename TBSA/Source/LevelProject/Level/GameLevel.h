@@ -10,6 +10,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <TurnManager/TurnManager.h>
+#include <Message/ActorPositionChangedMessage.h>
 
 class StaticSprite;
 class RenderConverter;
@@ -27,7 +28,7 @@ public:
 
 	void RecieveMessage(const DijkstraMessage & aMessage);
 	void RecieveMessage(const NavigationClearMessage & aMessage);
-
+	void RecieveMessage(const ActorPositionChangedMessage& aMessage);
 	void ConstructNavGraph();
 
 private:

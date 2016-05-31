@@ -68,15 +68,13 @@ public:
 
 	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
-	StaticSprite *mySprite;
-	
-protected:
-	void UpdatePosition(const CU::Vector2f & aPosition);
 	StaticSprite* GetSprite() const
 	{
 		return mySprite;
 	}
-
+	
+protected:
+	void UpdatePosition(const CU::Vector2f & aPosition);
 	bool myActiveFlag;
 
 	AnimationHandler myAnimations;
@@ -97,7 +95,7 @@ private:
 	
 	eActorType myType;
 	
-
+	StaticSprite *mySprite;
 	bool myAtTarget;
 };
 

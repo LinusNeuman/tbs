@@ -25,6 +25,7 @@
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
 #include <Message/EndTurnMessage.h>
 
+struct ActorPositionChangedMessage;
 const float sqrt2 = static_cast<float>(sqrt(2));
 
 GameLevel::GameLevel()
@@ -48,6 +49,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
+	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
 
 	TiledLoader::Load(aLevelPath, myTiledData);
 	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
@@ -55,8 +57,6 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 	myFloor.SetTiles(myTiledData.myTiles);
 	myFloor.SetFloorDimensions(myTiledData.myMapSize);
-
-	
 
 	ConstructNavGraph();
 
@@ -125,10 +125,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	{
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
-	if (IsometricInput::GetKeyPressed(DIK_F4))
-	{
-		index += 10;
-	}
+
+	index += 1;
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
@@ -216,6 +214,14 @@ void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 	myNavGraph.Clear();
+}
+
+void GameLevel::RecieveMessage(const ActorPositionChangedMessage& aMessage)
+{
+	if(myFloor.GetTile(aMessage.myPosition.x,aMessage.myPosition.y).GetInEnemyFov() == true)
+	{
+		std::cout << "I SEE YOU!!" << std::endl;
+	}
 }
 
 void GameLevel::ConstructNavGraph()

@@ -213,6 +213,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Message\ActorPositionChangedMessage.h" />
     <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\ColliderMessage.h" />
     <ClInclude Include="Message\DijkstraMessage.h" />

@@ -8,6 +8,7 @@
 #include <CU\DLDebug\DL_Debug.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
+#include <Message/ActorPositionChangedMessage.h>
 
 
 Actor::Actor()
@@ -94,6 +95,10 @@ void Actor::Draw() const
 
 void Actor::Move(CU::Vector2ui aTargetPosition)
 {
+	if (aTargetPosition != myTargetPosition)
+	{
+		SendPostMessage(ActorPositionChangedMessage(RecieverTypes::eActorPositionChanged, aTargetPosition));
+	}
 	myTargetPosition = aTargetPosition;
 }
 
