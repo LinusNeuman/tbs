@@ -6,8 +6,8 @@ struct PathAndName
 {
 	PathAndName()
 	{
-		myPaths.Init(1);
+		myPath.Init(1);
 	}
-	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> myPaths;
+	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> myPath;
 	std::string myName;
 };
