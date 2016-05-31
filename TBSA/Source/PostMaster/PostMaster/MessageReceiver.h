@@ -1,4 +1,5 @@
 #pragma once
+struct PlayerAddedMessage;
 struct ActorPositionChangedMessage;
 struct StartUpLevelMessage;
 struct NavigationClearMessage;
@@ -30,6 +31,7 @@ public:
 	virtual void RecieveMessage(const ColliderMessage & aMessage);
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage);
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage);
+	virtual void RecieveMessage(const PlayerAddedMessage & aMessage);
 
 protected:
 	MessageReciever()

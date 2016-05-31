@@ -26,6 +26,7 @@ public:
 	int GetPlayerAP();
 	void CostAP(const int anAP);
 	void Update(const CommonUtilities::Time& aTime);
+	void ConstantUpdate(const CommonUtilities::Time& aDeltaTime);
 
 	void SetFloor(GameFloor & aFloor);
 	void PrePlayer();
@@ -33,9 +34,16 @@ public:
 	void SetCameraPositionToPlayer(int aIndex);
 
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
+	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
+	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
 
 private:
-	//PlayState* myPlayState;
+	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
+	int CalculatePoint(float aValue) const;
+	void ResetTileShaders();
+	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);
+	void CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition);
+
 	GameFloor * myFloor;
 
 	Camera2D myCamera;

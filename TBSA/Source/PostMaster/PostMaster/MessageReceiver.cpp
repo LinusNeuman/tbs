@@ -54,3 +54,7 @@ void MessageReciever::RecieveMessage(const PlayerObjectMessage & aMessage)
 {
 
 }
+
+void MessageReciever::RecieveMessage(const PlayerAddedMessage& aMessage)
+{
+}

@@ -32,7 +32,6 @@ GameLevel::GameLevel()
 {
 }
 
-
 GameLevel::~GameLevel()
 {
 }
@@ -49,7 +48,6 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
-	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
 
 	TiledLoader::Load(aLevelPath, myTiledData);
 	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
@@ -64,6 +62,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 	myEnemyController = &myTurnManager.GetEnemyController();
 	myPlayerController->Init();
 	myPlayerController->SetFloor(myFloor);
+	myEnemyController->SetFloor(myFloor);
 
 	myPlayer = myTiledData.myPlayers[0];
 	myPlayer2 = myTiledData.myPlayers[1];
@@ -96,7 +95,6 @@ void GameLevel::Init(const std::string& aLevelPath)
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
 {
-	static float index = 0;
 	myFloor.Update();
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
@@ -112,6 +110,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		}
 	}
 
+	myEnemyController->ConstantUpdate(aTimeDelta);
+	myPlayerController->ConstantUpdate(aTimeDelta);
 	myTurnManager.Update(aTimeDelta);
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
@@ -119,14 +119,10 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
 	}
 
-
-
 	if (IsometricInput::GetKeyPressed(DIK_F3))
 	{
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
-
-	index += 10 * aTimeDelta.GetSeconds();
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
@@ -134,21 +130,6 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	{
 		myEnemies[i]->Update(aTimeDelta);
 	}
-
-	myDebugStart.clear();
-	myDebugEnd.clear();
-
-	ResetFoV();
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		if (myEnemies[i]->GetActiveState() == true)
-			CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
-	}
-	CreatePlayerFoV(myPlayer->GetPosition(), 5.f);
-	CreatePlayerFoV(myPlayer2->GetPosition(), 5.f);
-	if (index > 80)
-		index = 0;
-
 
 	for (unsigned int i = 0; i < myFloor.Size(); i++)
 	{
@@ -180,8 +161,6 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 			}
 		}
 	}
-
-
 }
 
 void GameLevel::Draw() const
@@ -192,10 +171,6 @@ void GameLevel::Draw() const
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
 		myEnemies[i]->Draw();
-	}
-	for (size_t i = 0; i < myDebugEnd.size(); i++)
-	{
-		//DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
 	}
 }
 
@@ -215,14 +190,6 @@ void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 	myNavGraph.Clear();
-}
-
-void GameLevel::RecieveMessage(const ActorPositionChangedMessage& aMessage)
-{
-	if(myFloor.GetTile(aMessage.myPosition.x,aMessage.myPosition.y).GetInEnemyFov() == true)
-	{
-		std::cout << "I SEE YOU!!" << std::endl;
-	}
 }
 
 void GameLevel::ConstructNavGraph()
@@ -274,188 +241,3 @@ void GameLevel::ConstructNavGraph()
 	}
 }
 
-void GameLevel::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, bool aIsPlayer)
-{
-	CU::Vector2f position = aPosition;
-	CU::Vector2f secondPosition = anotherPosition;
-	double x0, x1, y0, y1;
-	x0 = position.x;
-	y0 = position.y;
-	x1 = secondPosition.x;
-	y1 = secondPosition.y;
-	if (aIsPlayer == false)
-	{
-		myDebugStart.push_back(position);
-		myDebugEnd.push_back(secondPosition);
-	}
-	int dx = abs(static_cast<int>(x1 - x0));
-	int dy = abs(static_cast<int>(y1 - y0));
-	int x = static_cast<int>(x0);
-	int y = static_cast<int>(y0);
-	int n = 1 + dx + dy;
-	int x_inc = (x1 > x0) ? 1 : -1;
-	int y_inc = (y1 > y0) ? 1 : -1;
-	int error = dx - dy;
-	dx *= 2;
-	dy *= 2;
-
-	for (; n > 0; --n)
-	{
-		if (myFloor.GetTile(x, y).GetTileType() == eTileType::BLOCKED)
-		{
-			break;
-		}
-		if (aIsPlayer == true)
-		{
-			myFloor.GetTile(x, y).SetVisible(true);
-		}
-		else
-		{
-			myFloor.GetTile(x, y).SetInEnemyFoV(true);
-		}
-		if (error > 0)
-		{
-			x += x_inc;
-			error -= dy;
-		}
-		else
-		{
-			y += y_inc;
-			error += dx;
-		}
-	}
-
-}
-
-void GameLevel::CreateEnemyRayTrace(const CU::Vector2f &aPosition, int aIndex, float aAngle, float aMagnitude)
-{
-	//Will be replaced when enemies has a direction
-
-	if (aIndex < 10)
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, 1), aAngle, aMagnitude);
-	}
-	else if (aIndex < 20)
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 1), aAngle, aMagnitude);
-	}
-	else if (aIndex < 30)
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 0), aAngle, aMagnitude);
-	}
-	else if (aIndex < 40)
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, -1), aAngle, aMagnitude);
-	}
-	else if (aIndex < 50)
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, -1), aAngle, aMagnitude);
-	}
-	else if (aIndex < 60)
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, -1), aAngle, aMagnitude);
-	}
-	else if (aIndex < 70)
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 0), aAngle, aMagnitude);
-	}
-	else
-	{
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 1), aAngle, aMagnitude);
-	}
-}
-
-void GameLevel::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
-{
-	float angle = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
-	float angle2 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
-	float angle3 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
-	float angle4 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
-	float angle5 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle());
-	CU::Vector2f test = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
-	CU::Vector2f test3 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle3))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle3))));
-	CU::Vector2f test2 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle2))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle2))));
-	CU::Vector2f test4 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle4))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle4))));
-
-	CU::Vector2f test5;
-	//this should be alot less messy when enemies has directions, which would probably be with enums or something.
-
-	if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == 1)
-	{
-		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
-	}
-	else if (aShouldBeEnemyDirection.x == 1 && aShouldBeEnemyDirection.y == 0)
-	{
-		test5 = CU::Vector2f(ceil(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
-	}
-	else if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == -1)
-	{
-		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), ceil(aMagnitude * sin(angle5)));
-	}
-	else
-	{
-		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
-	}
-
-	RayTrace(aPosition, aPosition + test, false);
-	RayTrace(aPosition, aPosition + test2, false);
-	RayTrace(aPosition, aPosition + test3, false);
-	RayTrace(aPosition, aPosition + test4, false);
-	RayTrace(aPosition, aPosition + test5, false);
-}
-
-void GameLevel::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
-{
-	int r, xc, yc, pk, x, y;
-	xc = static_cast<int>(aPosition.x);
-	yc = static_cast<int>(aPosition.y);
-	r = static_cast<int>(aRadius);
-	pk = 3 - 2 * r;
-	x = 0; y = r;
-	CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
-	while (x < y)
-	{
-		if (pk <= 0)
-		{
-			pk = pk + (4 * x) + 6;
-			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
-		}
-		else
-		{
-			pk = pk + (4 * (x - y)) + 10;
-			CalculateCircleRayTrace(CU::Vector2f(static_cast<float>(++x), static_cast<float>(--y)), CU::Vector2f(static_cast<float>(xc), static_cast<float>(yc)));
-		}
-	}
-
-}
-
-void GameLevel::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& aPlayerPosition)
-{
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y), true);
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y), true);
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y), true);
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y), true);
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y), true);
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y), true);
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y), true);
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y), true);
-
-}
-
-void GameLevel::ResetFoV()
-{
-	for (unsigned int i = 0; i < myFloor.Size(); i++)
-	{
-		myFloor.GetTile(i).SetVisible(false);
-		myFloor.GetTile(i).SetInEnemyFoV(false);
-	}
-}
-
-int GameLevel::CalculatePoint(float aValue) const
-{
-	if (aValue <= 0)
-	{
-		return static_cast<int>(floor(aValue));
-	}
-	return static_cast<int>(ceil(aValue));
-}
