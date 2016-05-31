@@ -58,7 +58,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\;$(SolutionDir)PathFinding\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CollisionHandling\;$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\;$(SolutionDir)PathFinding\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -74,7 +74,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\;$(SolutionDir)PathFinding\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CollisionHandling\;$(SolutionDir)DX2DEngine\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)JSONParser\;$(SolutionDir)StateStack\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)TiledLoading\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)ThreadPool\;$(SolutionDir)PathFinding\;$(SolutionDir)GameStates\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -94,6 +94,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TurnManager\TurnManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CollisionHandling\CollisionHandling.vcxproj">
+      <Project>{8ce9acc7-5f0b-4710-957e-9b9a77f6d964}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

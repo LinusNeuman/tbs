@@ -11,14 +11,14 @@ class AnimationHandler
 public:
 	AnimationHandler();
 	~AnimationHandler();
-	void Init(Actor* aHolder, std::map<std::string, Animation*> someAnimations);
+	void Init(/*Actor* aHolder,*/ std::map<std::string, Animation*> someAnimations);
 	void Update();
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
 	inline StaticSprite* GetSprite();
 	inline bool GetIsActive();
 private:
-	Actor* myHolder;
+	//Actor* myHolder;
 	std::string myActiveAnimation;
 	std::map<std::string, Animation*> myAnimations;
 };
