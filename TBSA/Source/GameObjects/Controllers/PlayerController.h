@@ -44,6 +44,8 @@ private:
 	CommonUtilities::Vector2f myMousePosition;
 	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
+
+	bool myClickedOnPlayer;
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

@@ -24,6 +24,7 @@ PlayerController::PlayerController()
 	myPlayers.Init(2);
 	mySelectedPlayerIndex = 0;
 	mySelectedPlayer = nullptr;
+	myClickedOnPlayer = false;
 }
 
 
@@ -121,27 +122,33 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
+		myClickedOnPlayer = false;
+
 		PointCollider tempCollider;
 
 		tempCollider.ChangePosition(IsometricInput::GetMouseWindowPositionIsometric());
 
 		SendPostMessage(ColliderMessage(RecieverTypes::eMouseClicked, tempCollider));
 
-		if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+		
+		if (myClickedOnPlayer == false)
 		{
-			CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
-			CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
-			positionPath.Init(indexPath.Size());
+			if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+			{
+				CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
+				CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
+				positionPath.Init(indexPath.Size());
 
-			for (size_t i = 0; i < indexPath.Size(); i++)
-			{
-				positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
-			}
-			if (GetPlayerAP() >= (positionPath.Size() -1))
-			{
-				CostAP(positionPath.Size() -1);
-				NotifyPlayers(positionPath);
-				SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+				for (size_t i = 0; i < indexPath.Size(); i++)
+				{
+					positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
+				}
+				if (GetPlayerAP() >= (positionPath.Size() - 1))
+				{
+					CostAP(positionPath.Size() - 1);
+					NotifyPlayers(positionPath);
+					SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+				}
 			}
 		}
 
@@ -181,6 +188,7 @@ void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 {
 	if (mySelectedPlayer != &aMessage.myPlayer)
 	{
+		myClickedOnPlayer = true;
 		SelectPlayer();
 	}
 }
