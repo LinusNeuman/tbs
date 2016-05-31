@@ -162,7 +162,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 					for (size_t l = 0; l < SpriteSheets.Size(); ++l)
 					{
-						if (tileId >= SpriteSheets[l].GetFirstIndex() && dataSheetIndex != l)
+						if (tileId >= SpriteSheets[l].GetFirstIndex() && (l == SpriteSheets.Size()- 1 || tileId < SpriteSheets[l + 1].GetFirstIndex()))
 						{
 							SpriteSheet explainingSpriteSheet = SpriteSheets[l];
 							StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
