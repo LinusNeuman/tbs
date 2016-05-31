@@ -36,6 +36,7 @@ public:
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
+	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage) override;
 
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);

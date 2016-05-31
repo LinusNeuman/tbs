@@ -4,6 +4,7 @@
 #include <Message/EndTurnMessage.h>
 #include <GameObjects/Room/IsometricTile.h>
 #include <GameObjects/Room/GameFloor.h>
+#include <Message/EnemyChangedDirectionMessage.h>
 
 EnemyController::EnemyController()
 {
@@ -119,41 +120,49 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, int aIn
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, 1), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else if (aIndex == 20)
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 1), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else if (aIndex ==30)
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 0), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else if (aIndex == 40)
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, -1), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else if (aIndex == 50)
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, -1), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else if (aIndex == 60)
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, -1), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else if (aIndex == 70)
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 0), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else if (aIndex == 80)
 	{
 		ResetTileShaders();
 		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 1), aAngle, aMagnitude);
+		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 	}
 	else
 	{

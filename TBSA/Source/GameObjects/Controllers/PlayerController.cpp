@@ -41,6 +41,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyChangedDirection, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -213,7 +214,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
-		DL_PRINT("I SEE YOU!!");
+		DL_PRINT("An enemy can see you!");
 	}
 }
 
@@ -223,6 +224,17 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
 		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), 5.f);
+	}
+}
+
+void PlayerController::RecieveMessage(const EnemyChangedDirectionMessage& aMessage)
+{
+	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
+	{
+		if (myFloor->GetTile(CU::Vector2ui(myPlayers[iPlayer]->GetPosition().x, myPlayers[iPlayer]->GetPosition().y)).GetInEnemyFov() == true)
+		{
+			DL_PRINT("An enemy can see you!");
+		}
 	}
 }
 

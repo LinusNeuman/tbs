@@ -20,5 +20,6 @@
     <ClInclude Include="Message\WindowRectChangedMessage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Message\PlayerAddedMessage.h" />
+    <ClInclude Include="Message\EnemyChangedDirectionMessage.h" />
   </ItemGroup>
 </Project>
