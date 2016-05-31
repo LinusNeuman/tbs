@@ -14,6 +14,7 @@ bool GUIElement::OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePo
 	{
 		if (Intersection2D::PointInsideAABB2D(myCollisionBox, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
 		{
+			WhenClicked();
 			return myMessageHandler.Execute(aMessageEvent);
 		}
 	}
@@ -37,8 +38,9 @@ bool GUIElement::OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePo
 	{
 		if (Intersection2D::PointInsideAABB2D(myCollisionBox, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
 		{
-			myIsCurrentlyHovered = true;
+			
 			WhenHovered();
+			myIsCurrentlyHovered = true;
 			return myMessageHandler.Execute(aMessageEvent);
 		}
 		if (myIsCurrentlyHovered == true)
