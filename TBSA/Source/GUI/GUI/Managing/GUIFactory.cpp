@@ -79,12 +79,23 @@ void GUIFactory::Load()
 		{ 381, 214 }
 	);
 
+	GUIButton* playerPortrait = new GUIButton();
+
+	playerPortrait->Create(
+		"PlayerPortrait",
+		"Sprites/GUI/InGame/PlayerPortrait/",
+		{ 0, 1080 },
+		{ 26, -(192 + 29)},
+		{ 192, 192 }
+	);
+
 	// set action click open new substate
+	myGUIElements.Add(playerPortrait);
 	myGUIElements.Add(textbox);
 	myGUIElements.Add(portrait);
 	myGUIElements.Add(menuButton);
 	myGUILookup["InGame"].myBegin = 0;
-	myGUILookup["InGame"].myEnd = 3;
+	myGUILookup["InGame"].myEnd = 4;
 
 	GUIButton* quitButton = new GUIButton();
 
@@ -106,8 +117,8 @@ void GUIFactory::Load()
 	playButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
 	myGUIElements.Add(playButton);
 
-	myGUILookup["MainMenu"].myBegin = 4;
-	myGUILookup["MainMenu"].myEnd = 5;
+	myGUILookup["MainMenu"].myBegin = 5;
+	myGUILookup["MainMenu"].myEnd = 6;
 
 	CU::TimeManager::Update();
 
