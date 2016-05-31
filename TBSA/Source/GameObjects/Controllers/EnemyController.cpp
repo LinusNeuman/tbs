@@ -39,6 +39,18 @@ void EnemyController::Update(CommonUtilities::Time aDeltaTime)
 
 void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 {
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myEnemies[i]->Update(aDeltaTime);
+		if(myFloor->GetTile(CU::Vector2ui(myEnemies[i]->GetPosition().x, myEnemies[i]->GetPosition().y)).GetVisible() == true)
+		{
+			myEnemies[i]->SetVisibleState(true);
+		}
+		else
+		{
+			myEnemies[i]->SetVisibleState(false);
+		}
+	}
 	static float index = 0;
 	index += 10 * aDeltaTime.GetSeconds();
 	for (unsigned short i = 0; i < myEnemies.Size(); i++)
@@ -48,13 +60,17 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 	}
 	if (index >= 80)
 		index = 0;
+
 }
 
 void EnemyController::Draw()
 {
 	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		myEnemies[i]->Draw();
+	{		
+		if (myEnemies[i]->GetVisibleState() == true)
+		{
+			myEnemies[i]->Draw();
+		}
 	}
 }
 

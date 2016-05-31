@@ -126,10 +126,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	myPlayer->Update(aTimeDelta);
 	myPlayer2->Update(aTimeDelta);
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		myEnemies[i]->Update(aTimeDelta);
-	}
+
 
 	for (unsigned int i = 0; i < myFloor.Size(); i++)
 	{
@@ -168,10 +165,7 @@ void GameLevel::Draw() const
 	myFloor.Draw();
 	myPlayer->Draw();
 	myPlayer2->Draw();
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		myEnemies[i]->Draw();
-	}
+	myEnemyController->Draw();
 }
 
 void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
