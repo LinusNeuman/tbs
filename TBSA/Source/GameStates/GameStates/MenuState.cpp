@@ -7,6 +7,7 @@
 
 MenuState::MenuState()
 {
+	myShouldAdd = false;
 }
 
 MenuState::~MenuState()
@@ -15,6 +16,8 @@ MenuState::~MenuState()
 
 void MenuState::Init()
 {
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayGame, *this);
+
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/mainMenu.dds", false);
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGameObjects);
@@ -26,7 +29,7 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 {
 	myGUIManager.Update(aTimeDelta);
 
-	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true || IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eRight) == true)
+	if (myShouldAdd == true)
 	{
 		PlayState *newState = new PlayState();
 		newState->Init();
@@ -41,4 +44,12 @@ void MenuState::Draw() const
 	myBackgroundSprite->Draw(CU::Vector2f(0, 0));
 
 	myGUIManager.Render();
+}
+
+void MenuState::RecieveMessage(const GUIMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::ePlayGame)
+	{
+		myShouldAdd = true;
+	}
 }

@@ -11,5 +11,6 @@ enum class RecieverTypes
 	eStartUpLevel,
 	eEndTurn,
 	eExitGame,
+	ePlayGame,
 	enumlength
 };
