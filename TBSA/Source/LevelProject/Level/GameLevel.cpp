@@ -36,28 +36,21 @@ GameLevel::~GameLevel()
 {
 }
 
-void GameLevel::Init(const std::string& aLevelPath)
+void GameLevel::Init(TiledData& aTileData)
 {
+	myTiledData = aTileData;
+
 	Shaders::Create();
 	myFloor.Init(100);
-
-	myPlayerFactory.LoadFromJson();
-	myEnemyFactory.LoadFromJson();
-
-	myTiledData.myPlayerFactory = &myPlayerFactory;
-	myTiledData.myEnemyFactory = &myEnemyFactory;
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 
-	TiledLoader::Load(aLevelPath, myTiledData);
 	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
 
 	myFloor.SetTiles(myTiledData.myTiles);
 	myFloor.SetFloorDimensions(myTiledData.myMapSize);
-
-	
 
 	ConstructNavGraph();
 

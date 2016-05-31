@@ -1,8 +1,6 @@
 #pragma once
 
 #include <CU/GrowingArray/GrowingArray.h>
-#include <PlayerFactory/PlayerFactory.h>
-#include <EnemyFactory/EnemyFactory.h>
 #include <Animation/Animation.h>
 #include <NavGraph/Graph/NavGraph.h>
 #include <TiledData/TiledData.h>
@@ -21,7 +19,7 @@ class GameLevel : public MessageReciever
 public:
 	GameLevel();
 	~GameLevel();
-	void Init(const std::string& aLevelPath);
+	void Init(TiledData& aTileData);
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
 
@@ -44,9 +42,6 @@ private:
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
 	PlayerController *myPlayerController;
 	EnemyController *myEnemyController;
-
-	PlayerFactory myPlayerFactory;
-	EnemyFactory myEnemyFactory;
 
 	NavGraph myNavGraph;
 	TiledData myTiledData;
