@@ -21,7 +21,7 @@ void PlayState::Init()
 {
 	//myLevel->Init();
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
-	SingletonPostMaster::PostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+	SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
 	myLevels[myLevelKey] = new GameLevel();
 	myLevels[myLevelKey]->Init(myStartPath + myLevelKey);
 

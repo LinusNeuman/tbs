@@ -121,7 +121,7 @@ void CGame::RecieveMessage(const GUIMessage & aMessage)
 void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
 {
 	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
-	SingletonPostMaster::PostMessage(startLevelMessage);
+	SendPostMessage(startLevelMessage);
 }
 
 

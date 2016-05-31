@@ -73,7 +73,7 @@ void TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 
 void TurnManager::PlayerEndTurn()
 {
-	SingletonPostMaster::PostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+	SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
 	EndTurn();
 }
 

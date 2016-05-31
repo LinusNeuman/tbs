@@ -50,7 +50,7 @@ void GameLevel::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 
 	TiledLoader::Load(aLevelPath, myTiledData);
-	SingletonPostMaster::PostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
+	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
 
 
 	myFloor.SetTiles(myTiledData.myTiles);
@@ -116,7 +116,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
 	}
 
 

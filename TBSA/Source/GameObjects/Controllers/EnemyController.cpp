@@ -30,7 +30,7 @@ void EnemyController::Update(CommonUtilities::Time)
 	}
 	else
 	{
-		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
 	}
 }
 
@@ -47,7 +47,7 @@ void EnemyController::EnemyDone()
 	++myCurrentEnemy;
 	if (myCurrentEnemy == myEnemies.Size())
 	{
-		SingletonPostMaster::PostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
 	}
 }
 
