@@ -53,7 +53,6 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		}
 	}
 	static float index = 0;
-	//index += 10 * aDeltaTime.GetSeconds();
 	
 	for (unsigned short i = 0; i < myEnemies.Size(); i++)
 	{
@@ -61,8 +60,6 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		if (myEnemies[i]->GetActiveState() == true)
 			CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
 	}
-	/*if (index >= 80)
-		index = 0;*/
 
 }
 
@@ -80,7 +77,7 @@ void EnemyController::Draw()
 void EnemyController::EnemyDone()
 {
 	++myCurrentEnemy;
-	if (myCurrentEnemy <= myEnemies.Size())
+	if (myCurrentEnemy >= myEnemies.Size())
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
 	}

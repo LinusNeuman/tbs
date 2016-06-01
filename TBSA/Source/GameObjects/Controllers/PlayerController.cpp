@@ -17,6 +17,7 @@
 #include <Message/PlayerAddedMessage.h>
 #include <Message/PlayerSeenMessage.h>
 #include <Rend/RenderConverter.h>
+#include <Message/PlayerReachedTargetMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -210,6 +211,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
 		DL_PRINT("An enemy can see you!");
+		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
 	}
 
@@ -222,12 +224,6 @@ void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage
 	{
 		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), PlayerFoWRadius);
 	}
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
-	{
-		DL_PRINT("An enemy can see you!");
-		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
-	}
-
 }
 
 void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
