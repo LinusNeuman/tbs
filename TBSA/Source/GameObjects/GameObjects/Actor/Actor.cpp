@@ -10,6 +10,7 @@
 #include <Message/DijkstraMessage.h>
 #include <Message/ActorPositionChangedMessage.h>
 #include <Message/ColliderMessage.h>
+#include <Message/PlayerReachedTargetMessage.h>
 
 
 Actor::Actor()
@@ -104,6 +105,7 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
+	SendPostMessage(PlayerChangedTargetMessage(RecieverTypes::ePlayerChangedTarget));
 }
 
 void Actor::OnMove(CU::Vector2ui aTargetPosition)

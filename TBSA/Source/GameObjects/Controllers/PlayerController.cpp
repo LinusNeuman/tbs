@@ -15,11 +15,13 @@
 #include <Message/PlayerObjectMesssage.h>
 #include <Message/ActorPositionChangedMessage.h>
 #include <Message/PlayerAddedMessage.h>
+#include <Rend/RenderConverter.h>
 
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
+const float PlayerFoWRadius = 5.f;
 
 PlayerController::PlayerController()
 {
@@ -28,7 +30,6 @@ PlayerController::PlayerController()
 	mySelectedPlayer = nullptr;
 	myClickedOnPlayer = false;
 }
-
 
 PlayerController::~PlayerController()
 {
@@ -42,6 +43,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyChangedDirection, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -87,10 +89,7 @@ int PlayerController::GetPlayerAP()
 	{
 		return mySelectedPlayer->GetMyAP();
 	}
-	else
-	{
-		return 0;
-	}
+	return 0;
 }
 
 void PlayerController::CostAP(const int anAP)
@@ -168,7 +167,6 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
-	
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -206,15 +204,20 @@ void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 
 void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessage)
 {
-	ResetTileShaders();
-	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
-	{
-		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), 5.f);
-	}
-
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
 		DL_PRINT("An enemy can see you!");
+	}
+}
+
+void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
+{
+	ResetTileShaders();
+	myDebugStart.clear();
+	myDebugEnd.clear();
+	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
+	{
+		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), PlayerFoWRadius);
 	}
 }
 
@@ -223,7 +226,7 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 	ResetTileShaders();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), 5.f);
+		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), PlayerFoWRadius);
 	}
 }
 
@@ -240,6 +243,7 @@ void PlayerController::RecieveMessage(const EnemyChangedDirectionMessage& aMessa
 
 void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
 {
+	bool hasAlreadyBeenBlocked = false;
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
 	double x0, x1, y0, y1;
@@ -247,6 +251,11 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 	y0 = position.y;
 	x1 = secondPosition.x;
 	y1 = secondPosition.y;
+
+	myDebugStart.push_back(position);
+	myDebugEnd.push_back(secondPosition);
+
+
 	int dx = abs(static_cast<int>(x1 - x0));
 	int dy = abs(static_cast<int>(y1 - y0));
 	int x = static_cast<int>(x0);
@@ -260,10 +269,19 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 	for (; n > 0; --n)
 	{
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
 			break;
+		}
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED)
+		{
+			break;
+		}
+		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
+		{
+			myFloor->GetTile(x, y).SetVisible(true);
+			hasAlreadyBeenBlocked = true;
 		}
 		myFloor->GetTile(x, y).SetVisible(true);
 		
@@ -283,6 +301,7 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 void PlayerController::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
 {
+	
 	int r, xc, yc, pk, x, y;
 	xc = static_cast<int>(aPosition.x);
 	yc = static_cast<int>(aPosition.y);
@@ -308,6 +327,7 @@ void PlayerController::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRad
 	
 void PlayerController::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& aPlayerPosition)
 {
+	
 	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
 	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
 	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
