@@ -70,6 +70,14 @@ void MessageReciever::RecieveMessage(const EnemyChangedDirectionMessage & aMessa
 
 }
 
+void MessageReciever::RecieveMessage(const PlayerSeenMessage& aMessage)
+{
+}
+
+void MessageReciever::RecieveMessage(const PlayerDiedMessage& aMessage)
+{
+}
+
 void MessageReciever::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
 {
 }

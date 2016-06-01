@@ -16,7 +16,6 @@ namespace
 	const std::string fileEnding = ".png";
 }
 
-
 picojson::object GetObject(picojson::value aValue);
 double& GetNumber( picojson::value aValue);
 picojson::array GetArray( picojson::value aValue);

@@ -17,6 +17,8 @@ struct ColliderMessage;
 struct PlayerObjectMessage;
 struct SetHWNDMessage;
 struct EnemyChangedDirectionMessage;
+struct PlayerSeenMessage;
+struct PlayerDiedMessage;
 
 class MessageReciever
 {
@@ -39,6 +41,8 @@ public:
 	virtual void RecieveMessage(const SetHWNDMessage & aMessage);
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage);
 	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage);
+	virtual void RecieveMessage(const PlayerSeenMessage & aMessage);
+	virtual void RecieveMessage(const PlayerDiedMessage & aMessage);
 	virtual void RecieveMessage(const PlayerChangedTargetMessage & aMessage);
 
 	RecieverOrder myRecieverOrder;

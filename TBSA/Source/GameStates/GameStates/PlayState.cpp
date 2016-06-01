@@ -9,7 +9,8 @@
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
-	myStartPath = "Data/Tiled/";;
+	myStartPath = "Data/Tiled/";
+	
 } 
 
 
@@ -41,8 +42,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	//myLevels[myLevelKey]->Update(aTimeDelta);
 	myLevel->Update(aTimeDelta);
 
-	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
+	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
+		myShouldExit = false;
 		return eStackReturnValue::ePopMain;
 	}
 
@@ -73,4 +75,9 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 		delete(myLevel);
 	}
 	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
+}
+
+void PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
+{
+	myShouldExit = true;
 }

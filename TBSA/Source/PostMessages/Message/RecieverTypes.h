@@ -25,5 +25,6 @@ enum class RecieverTypes
 	eEnemyChangedDirection,
 	eWindowHandleChange,
 	ePlayerChangedTarget,
+	ePlayEvents,
 	enumlength
 };

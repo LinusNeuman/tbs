@@ -183,6 +183,7 @@ void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 	myNavGraph.Clear();
 }
 
+
 void GameLevel::ConstructNavGraph()
 {
 	for (size_t i = 0; i < myFloor.Size(); i++)

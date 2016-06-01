@@ -16,6 +16,8 @@ public:
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
 	virtual void RecieveMessage(const StartUpLevelMessage & aMessage) override;
+	void RecieveMessage(const PlayerDiedMessage & aMessage) override;
+
 	void ChangeLevel(const std::string& aFilePath);
 private:
 	GameLevel * myLevel;
@@ -23,4 +25,5 @@ private:
 	std::string myLevelKey;
 	std::unordered_map<std::string, GameLevel*> myLevels;
 	LevelFactory* myLevelFactory;
+	bool myShouldExit;
 };

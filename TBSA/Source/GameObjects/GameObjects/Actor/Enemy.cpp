@@ -12,6 +12,7 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
@@ -20,7 +21,10 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	//Do stuff with enemydata
 	myHasMoved = false;
 	myHasTurned = false;
+	mySomeoneSeesPlayer = false;
 	myCurrentPathIndex = 0;
+
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 void Enemy::UpdateEnemy()
@@ -59,6 +63,11 @@ void Enemy::UpdateEnemy()
 			SetPath(path);
 			myHasMoved = true;
 		}
+
+		if (mySomeoneSeesPlayer == true && myAtTarget == true)
+		{
+			myController->EnemyDone();
+		}
 	}
 	else
 	{
@@ -71,6 +80,11 @@ void Enemy::ReachedTarget()
 	myController->EnemyDone();
 }
 
+void Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
+{
+	mySomeoneSeesPlayer = true;
+}
+
 void Enemy::SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath)
 {
 	myEnemyPath = aEnemyPath;
@@ -79,6 +93,7 @@ void Enemy::SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui
 void Enemy::Reset()
 {
 	myHasMoved = false;
+	mySomeoneSeesPlayer = false;
 }
 
 void Enemy::OnClick()
