@@ -24,6 +24,7 @@
 #include <CU/Matriser/matrix.h>
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
 #include <Message/EndTurnMessage.h>
+#include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
 struct ActorPositionChangedMessage;
 const float sqrt2 = static_cast<float>(sqrt(2));
@@ -34,6 +35,8 @@ GameLevel::GameLevel()
 
 GameLevel::~GameLevel()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eTurn, myTurnManager);
 	ResetMemoryPools();
 }
 
@@ -111,7 +114,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_F3))

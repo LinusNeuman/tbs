@@ -73,7 +73,10 @@ public:
 	bool GetActiveState();
 	void SetVisibleState(const bool aVisibleFlag);
 	bool GetVisibleState() const;
-	
+	CU::Vector2ui GetTargetPosition() const
+	{
+		return myTargetPosition;
+	}
 
 	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
