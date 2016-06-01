@@ -213,6 +213,14 @@ void PlayerController::SetCameraPositionToPlayer(int aIndex)
 	myCamera.SetPos(myPlayers[aIndex]->GetPosition());
 }
 
+void PlayerController::AfterPlayerTurn()
+{
+	for (size_t i = 0; i < myPlayers.Size(); i++)
+	{
+		myPlayers[i]->AfterTurn();
+	}
+}
+
 void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)

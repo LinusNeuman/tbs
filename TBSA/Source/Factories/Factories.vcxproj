@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="EnemyFactory\EnemyFactory.h" />
     <ClInclude Include="LevelFactory\LevelFactory.h" />
+    <ClInclude Include="ObjectiveFactory\ObjectiveFactory.h" />
     <ClInclude Include="PlayerFactory\PlayerFactory.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="EnemyFactory\EnemyFactory.cpp" />
     <ClCompile Include="LevelFactory\LevelFactory.cpp" />
+    <ClCompile Include="ObjectiveFactory\ObjectiveFactory.cpp" />
     <ClCompile Include="PlayerFactory\PlayerFactory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

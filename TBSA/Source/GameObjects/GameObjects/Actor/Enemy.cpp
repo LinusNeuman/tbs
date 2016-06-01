@@ -65,9 +65,10 @@ void Enemy::UpdateEnemy()
 			myHasMoved = true;
 		}
 
-		if (mySomeoneSeesPlayer == true && myAtTarget == true)
+		if (mySomeoneSeesPlayer == true)
 		{
 			myController->EnemyDone();
+			StopPath();
 		}
 	}
 	else

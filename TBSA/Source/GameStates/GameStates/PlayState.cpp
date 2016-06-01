@@ -10,14 +10,13 @@ PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
-	
 } 
-
 
 PlayState::~PlayState()
 {
 	SAFE_DELETE(myLevel);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 void PlayState::Init()
@@ -28,7 +27,10 @@ void PlayState::Init()
 
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
 	myLevel = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
+	myCurrentLevelpath = myLevelKey;
 	LoadGUI("InGame");
+
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
@@ -79,9 +81,10 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 		delete(myLevel);
 	}
 	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
+	myCurrentLevelpath = aFilePath;
 }
 
 void PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
-	myShouldExit = true;
+	ChangeLevel(myCurrentLevelpath);
 }

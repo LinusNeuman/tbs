@@ -32,6 +32,7 @@ public:
 	void PrePlayer();
 	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
+	void AfterPlayerTurn();
 
 	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition);
 

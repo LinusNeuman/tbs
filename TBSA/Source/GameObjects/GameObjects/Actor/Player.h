@@ -36,6 +36,8 @@ public:
 
 	virtual void AlmostReachTarget() override;
 
+	void AfterTurn();
+	void PreTurn();
 private:
 
 	unsigned short myEnemyTargetIndex;
@@ -44,6 +46,7 @@ private:
 	int myCurrentAP;
 
 	bool myIsSeen;
+	bool myShouldDie;
 };
 
 inline void Player::SetTargetEnemy(const unsigned short aIndex)

@@ -28,6 +28,7 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myCurrentAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
 
+	myIsSeen = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
@@ -56,15 +57,33 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
 	{
+		StopPath();
+		myCurrentAP = 0;
+
 		if (myIsSeen == false)
 		{
 			myIsSeen = true;
 		}
-		else
+		
+		if (myShouldDie == true)
 		{
+			myIsSeen = false;
+			myShouldDie = false;
 			SendPostMessage(PlayerDiedMessage(RecieverTypes::ePlayEvents));
 		}
 	}
+}
+
+void Player::AfterTurn()
+{
+	myShouldDie = myIsSeen;
+	myIsSeen = false;
+}
+
+void Player::PreTurn()
+{
+	myShouldDie = myIsSeen;
+	myIsSeen = false;
 }
 
 void Player::DecideAnimation()
