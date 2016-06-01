@@ -22,7 +22,8 @@ void PlayState::Init()
 {
 	myLevelFactory = new LevelFactory();
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
-	SingletonPostMaster::PostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+	SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
 	myLevel = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
 	LoadGUI("InGame");
@@ -70,5 +71,5 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
-	myLevel = myLevelFactory->CreateLevel(aFilePath);
+	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
 }

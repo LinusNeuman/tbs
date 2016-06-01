@@ -11,7 +11,6 @@ PlayerFactory::PlayerFactory()
 
 PlayerFactory::~PlayerFactory()
 {
-
 }
 
 void PlayerFactory::LoadFromJson()

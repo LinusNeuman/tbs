@@ -7,7 +7,7 @@ bool GUIMessageHandler::Execute(eGUIMessageEvents aGUIMessageEvent)
 {
 	if (myMessageEvents[static_cast<int>(aGUIMessageEvent)] != nullptr)
 	{
-		SingletonPostMaster::PostMessage(*myMessageEvents[static_cast<int>(aGUIMessageEvent)]);
+		SendPostMessage(*myMessageEvents[static_cast<int>(aGUIMessageEvent)]);
 		return true;
 	}
 	return false;

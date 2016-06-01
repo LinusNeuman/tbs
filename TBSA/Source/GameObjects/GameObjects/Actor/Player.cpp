@@ -4,6 +4,9 @@
 #include <Rend/StaticSprite.h>
 #include "../JsonDataStructs.h"
 #include <Message/DijkstraMessage.h>
+#include <Message/ColliderMessage.h>
+#include <Collision/BoxCollider.h>
+#include <Message/PlayerObjectMesssage.h>
 
 
 Player::Player()
@@ -41,7 +44,12 @@ void Player::CostAP(const int aCost)
 
 void Player::ReachedTarget()
 {
-	SingletonPostMaster::PostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
+	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
+}
+
+void Player::OnClick()
+{
+	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
 }
 
 void Player::DecideAnimation()

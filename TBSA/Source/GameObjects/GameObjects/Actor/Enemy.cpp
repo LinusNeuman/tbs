@@ -27,7 +27,7 @@ void Enemy::UpdateEnemy()
 {
 	if (GetActiveState() == true)
 	{
-		if (myHasMoved == false && myPath.Size() > 0)
+		if (myHasMoved == false && myEnemyPath.Size() > 0)
 		{
 			CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 			path.Init(1);
@@ -79,4 +79,9 @@ void Enemy::SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui
 void Enemy::Reset()
 {
 	myHasMoved = false;
+}
+
+void Enemy::OnClick()
+{
+	myActiveFlag = false;
 }

@@ -78,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameObjects;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Renderer\;$(ProjectDir);$(SolutionDir)LevelProject\;$(SolutionDir)TiledLoading\;$(SolutionDir)PathFinding\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)TurnManager\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameObjects;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Renderer\;$(ProjectDir);$(SolutionDir)LevelProject\;$(SolutionDir)TiledLoading\;$(SolutionDir)PathFinding\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)TurnManager\;$(SolutionDir)CollisionHandling\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -94,7 +94,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameObjects;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Renderer\;$(ProjectDir);$(SolutionDir)LevelProject\;$(SolutionDir)TiledLoading\;$(SolutionDir)PathFinding\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)TurnManager\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameObjects;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Renderer\;$(ProjectDir);$(SolutionDir)LevelProject\;$(SolutionDir)TiledLoading\;$(SolutionDir)PathFinding\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)TurnManager\;$(SolutionDir)CollisionHandling\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -112,7 +112,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameObjects;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Renderer\;$(ProjectDir);$(SolutionDir)LevelProject\;$(SolutionDir)TiledLoading\;$(SolutionDir)PathFinding\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)TurnManager\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameObjects;$(SolutionDir)CommonUtilities\;$(SolutionDir)JSONWrapper\;$(SolutionDir)Renderer\;$(ProjectDir);$(SolutionDir)LevelProject\;$(SolutionDir)TiledLoading\;$(SolutionDir)PathFinding\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)TurnManager\;$(SolutionDir)CollisionHandling\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +142,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CollisionHandling\CollisionHandling.vcxproj">
+      <Project>{8ce9acc7-5f0b-4710-957e-9b9a77f6d964}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>

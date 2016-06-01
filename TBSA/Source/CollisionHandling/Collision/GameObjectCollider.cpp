@@ -40,3 +40,8 @@ bool GameObjectCollider::CheckCollisionAgainstBox(const BoxCollider & aColliderT
 {
 	return false;
 }
+
+bool GameObjectCollider::CheckCollisionAgainstPoint(const PointCollider & aColliderToCheckAgainst) const
+{
+	return false;
+}

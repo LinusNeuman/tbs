@@ -25,13 +25,14 @@ CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const pico
 
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType);
 
+void GetPathNodes(const int aINdex, PathAndName & aPath, const picojson::array & someData, const int aMapWidth, const int aLastTile);
 
 
 void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 {
-	std::map<std::string, unsigned short> myEnemyIndexes;
-	CommonUtilities::GrowingArray<PathAndName> myPaths;
-	myPaths.Init(1);
+	std::map<std::string, unsigned short> enemyIndexes;
+	CommonUtilities::GrowingArray<PathAndName> paths;
+	paths.Init(1);
 
 	picojson::value root;
 	
@@ -93,11 +94,23 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 				const std::string dataType = name.substr(1, lastUnderscore - 1);
 				if (dataType == "path" || dataType == "Path")
 				{
-
-					for (size_t j = 0; j < data.size(); j++)
+					int startNodeIndex = -1;
+					int startNodeType = 0;
+					do
 					{
-						
-					}
+						++startNodeIndex;
+						DL_ASSERT(startNodeIndex < data.size(), "ERROR: Path is missing start");
+						const int explainingIndex = GetNumber(data[startNodeIndex]);
+						startNodeType = explainingIndex - dataSheet.GetFirstIndex() + 1;
+					} while (startNodeType != 1);
+
+					PathAndName tempPath;
+					tempPath.myName = name.substr(lastUnderscore + 1, name.size() - lastUnderscore);
+					tempPath.myPath.Add(CommonUtilities::Vector2ui(startNodeIndex % width, startNodeIndex / width));
+
+					GetPathNodes(startNodeIndex, tempPath, data, width,5);
+
+					paths.Add(tempPath);
 				}
 				else
 				{
@@ -246,9 +259,17 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 
 					enemyActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
 					someTiles.myEnemies.Add(enemyActor);
+
+					enemyIndexes[GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;
 				}
 			}
 		}
+	}
+
+	for (size_t i = 0; i < paths.Size(); i++)
+	{
+		const int enemyIndex = enemyIndexes[paths[i].myName];
+		someTiles.myEnemies[enemyIndex]->SetEnemyPath(paths[i].myPath);
 	}
 }
 
@@ -302,4 +323,38 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 	}
 
 	return returnArray;
+}
+
+void GetPathNodes(const int aIndex, PathAndName& aPath, const picojson::array& someData, const int aMapWidth, const int aLastTile)
+{
+
+	
+	if (aLastTile != 3 && aIndex + 1 < someData.size() && GetNumber(someData[aIndex + 1]) >= 1)
+	{
+		int index = aIndex + 1;
+		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
+		GetPathNodes(index, aPath, someData, aMapWidth, 0);
+		return;
+	}
+	if (aLastTile != 2 && aIndex + aMapWidth < someData.size() && GetNumber(someData[aIndex + aMapWidth]) >= 1)
+	{
+		int index = aIndex + aMapWidth;
+		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
+		GetPathNodes(index, aPath, someData, aMapWidth, 1);
+		return;
+	}
+	if (aLastTile != 1 && aIndex - aMapWidth >= 0 && GetNumber(someData[aIndex - aMapWidth]) >= 1)
+	{
+		int index = aIndex - aMapWidth;
+		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
+		GetPathNodes(index, aPath, someData, aMapWidth, 2);
+		return;
+	}
+	if (aLastTile != 0 && aIndex - 1 >= 0 && GetNumber(someData[aIndex - 1]) >= 1)
+	{
+		int index = aIndex - 1;
+		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
+		GetPathNodes(index, aPath, someData, aMapWidth, 3);
+		return;
+	}
 }
