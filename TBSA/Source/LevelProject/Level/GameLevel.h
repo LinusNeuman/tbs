@@ -28,10 +28,7 @@ public:
 
 	void RecieveMessage(const DijkstraMessage & aMessage) override;
 	void RecieveMessage(const NavigationClearMessage & aMessage) override;
-	void RecieveMessage(const PlayerDiedMessage & aMessage)override;
 	void ConstructNavGraph();
-
-	void RestartLevel();
 
 private:
 

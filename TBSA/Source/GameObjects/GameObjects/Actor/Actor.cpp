@@ -11,7 +11,6 @@
 #include <Message/ActorPositionChangedMessage.h>
 #include <Message/ColliderMessage.h>
 
-
 Actor::Actor()
 {
 	mySprite = new StaticSprite();
@@ -46,6 +45,44 @@ void Actor::Init(const ActorData &aActorData)
 	SingletonPostMaster::AddReciever(RecieverTypes::eMouseClicked, *this);
 }
 
+void Actor::UpdateDirection()
+{
+	if (myState == eActorState::eWalking)
+	{
+		if (myVelocity.x < 0.f && myVelocity.y < 0.f)
+		{
+			myDirection = eDirection::NORTH_WEST;
+		}
+		else if (myVelocity.x == 0.f && myVelocity.y < 0.f)
+		{
+			myDirection = eDirection::NORTH;
+		}
+		else if (myVelocity.x > 0.f && myVelocity.y < 0.f)
+		{
+			myDirection = eDirection::NORTH_EAST;
+		}
+		else if (myVelocity.x > 0.f && myVelocity.y == 0.f)
+		{
+			myDirection = eDirection::EAST;
+		}
+		else if (myVelocity.x > 0.f && myVelocity.y > 0.f)
+		{
+			myDirection = eDirection::SOUTH_EAST;
+		}
+		else if (myVelocity.x == 0.f && myVelocity.y > 0.f)
+		{
+			myDirection = eDirection::SOUTH;
+		}
+		else if (myVelocity.x < 0.f && myVelocity.y > 0.f)
+		{
+			myDirection = eDirection::SOUTH_WEST;
+		}
+		else if (myVelocity.x < 0.f && myVelocity.y == 0.f)
+		{
+			myDirection = eDirection::WEST;
+		}
+	}
+}
 
 void Actor::Update(const CU::Time& aDeltaTime)
 {
@@ -67,6 +104,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		{
 			myAtTarget = true;
 			UpdatePosition(CU::Point2f(myTargetPosition));
+			myState = eActorState::eIdle;
 		}
 		else
 		{
@@ -74,16 +112,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		}
 
 		UpdatePath();
-
-		if (myVelocity.Length2() > 0.f)
-		{
-			myState = eActorState::eWalking;
-		}
-		else
-		{
-			myState = eActorState::eIdle;
-		}
-
+		UpdateDirection();
 		DecideAnimation();
 	}
 }
@@ -139,6 +168,7 @@ void Actor::UpdatePath()
 {
 	if (myAtTarget == true && myCurrentWaypoint < myPath.Size())
 	{
+		myState = eActorState::eWalking;
 		Move(myPath[myCurrentWaypoint]);
 		++myCurrentWaypoint;
 		if (myCurrentWaypoint == myPath.Size())

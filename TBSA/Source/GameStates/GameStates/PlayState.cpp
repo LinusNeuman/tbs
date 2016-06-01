@@ -8,7 +8,8 @@
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
-	myStartPath = "Data/Tiled/";;
+	myStartPath = "Data/Tiled/";
+	
 } 
 
 
@@ -38,8 +39,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	
 	myLevels[myLevelKey]->Update(aTimeDelta);
 
-	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
+	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
+		myShouldExit = false;
 		return eStackReturnValue::ePopMain;
 	}
 
@@ -56,4 +58,9 @@ void PlayState::Draw() const
 void PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
 {
 	myLevelKey = aMessage.myPath;
+}
+
+void PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
+{
+	myShouldExit = true;
 }

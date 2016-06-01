@@ -34,6 +34,7 @@ GameLevel::GameLevel()
 
 GameLevel::~GameLevel()
 {
+	SingletonPostMaster::RemoveReciever(*this);
 }
 
 void GameLevel::Init(const std::string& aLevelPath)
@@ -186,9 +187,6 @@ void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 	myNavGraph.Clear();
 }
 
-void GameLevel::RecieveMessage(const PlayerDiedMessage& aMessage)
-{
-}
 
 void GameLevel::ConstructNavGraph()
 {

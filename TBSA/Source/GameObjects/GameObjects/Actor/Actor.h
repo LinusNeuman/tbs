@@ -22,6 +22,18 @@ enum class eActorType
 	eEnemyFive
 };
 
+enum class eDirection
+{
+	NORTH = 50,
+	NORTH_EAST = 40,
+	EAST = 30,
+	SOUTH_EAST = 20,
+	SOUTH = 10,
+	SOUTH_WEST = 80,
+	WEST = 70,
+	NORTH_WEST = 60
+};
+
 enum class eActorState
 {
 	eIdle,
@@ -34,6 +46,7 @@ public:
 	Actor();
 	virtual ~Actor();
 	void Init(const ActorData &aActorData);
+	
 	virtual void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
@@ -63,6 +76,11 @@ public:
 	eActorType GetType() const
 	{
 		return myType;
+	}
+
+	eDirection GetDirectionEnum() const
+	{
+		return myDirection;
 	}
 
 	virtual void RecieveMessage(const ColliderMessage & aMessage) override;
@@ -98,15 +116,15 @@ protected:
 	unsigned short myCurrentWaypoint;
 
 	BoxCollider myBoxCollider;
-
+	void UpdateDirection();
+	bool myAtTarget;
+	
 private:
 	void UpdatePath();
 
-	
 	eActorType myType;
-	
+	eDirection myDirection;
 	StaticSprite *mySprite;
-	bool myAtTarget;
 };
 
 inline void Actor::SetActiveState(const bool aActiveFlag)

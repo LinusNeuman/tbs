@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObjects/Actor/Actor.h"
 
+
 struct EnemyData;
 struct ActorData;
 class EnemyController;
@@ -13,7 +14,9 @@ public:
 	void Init(const ActorData &aActorData, const EnemyData &aEnemyData);
 	void UpdateEnemy();
 	void ReachedTarget()override;
+	
 	EnemyController* myController;
+	void RecieveMessage(const PlayerSeenMessage& aMessage) override;
 
 	void SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath);
 	void Reset();
@@ -23,6 +26,7 @@ public:
 private:
 	bool myHasMoved;
 	bool myHasTurned;
+	bool mySomeoneSeesPlayer;
 	unsigned short myCurrentPathIndex;
 	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> myEnemyPath;
 };

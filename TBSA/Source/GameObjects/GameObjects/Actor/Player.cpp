@@ -17,7 +17,7 @@ Player::Player()
 
 Player::~Player()
 {
-	SingletonPostMaster::RemoveReciever(*this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents,*this);
 }
 
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
@@ -33,7 +33,6 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 void Player::FreshTurn()
 {
 	myCurrentAP = myActionPointMax;
-
 }
 
 int Player::GetMyAP() const
@@ -81,37 +80,37 @@ void Player::DecideAnimation()
 	else if (myState == eActorState::eWalking)
 	{
 		//Determine direction animation
-		if (myVelocity.x < 0.f && myVelocity.y < 0.f)
+		switch (GetDirectionEnum())
 		{
-			ChangeAnimation("gingerWalk00");
-		}
-		else if (myVelocity.x == 0.f && myVelocity.y < 0.f)
-		{
+		case eDirection::NORTH: 
 			ChangeAnimation("gingerWalk045");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y < 0.f)
-		{
+			break;
+		case eDirection::NORTH_EAST: 
 			ChangeAnimation("gingerWalk090");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y == 0.f)
-		{
+			break;
+		case eDirection::EAST: 
 			ChangeAnimation("gingerWalk135");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y > 0.f)
-		{
+			break;
+		case eDirection::SOUTH_EAST: 
 			ChangeAnimation("gingerWalk180");
-		}
-		else if (myVelocity.x == 0.f && myVelocity.y > 0.f)
-		{
+			break;
+		case eDirection::SOUTH: 
 			ChangeAnimation("gingerWalk225");
-		}
-		else if (myVelocity.x < 0.f && myVelocity.y > 0.f)
-		{
+			break;
+		case eDirection::SOUTH_WEST:
 			ChangeAnimation("gingerWalk270");
-		}
-		else if (myVelocity.x < 0.f && myVelocity.y == 0.f)
-		{
+			break;
+		case eDirection::WEST: 
 			ChangeAnimation("gingerWalk315");
+			break;
+		case eDirection::NORTH_WEST: 
+			ChangeAnimation("gingerWalk00");
+			break;
+		default: break;
 		}
 	}
+}
+
+void Player::OnMove(CU::Vector2ui aTargetPosition)
+{
 }
