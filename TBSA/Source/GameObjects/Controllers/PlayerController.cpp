@@ -89,10 +89,7 @@ int PlayerController::GetPlayerAP()
 	{
 		return mySelectedPlayer->GetMyAP();
 	}
-	else
-	{
-		return 0;
-	}
+	return 0;
 }
 
 void PlayerController::CostAP(const int anAP)
