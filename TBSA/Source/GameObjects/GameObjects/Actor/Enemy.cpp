@@ -78,6 +78,11 @@ void Enemy::UpdateEnemy()
 
 void Enemy::ReachedTarget()
 {
+	
+}
+
+void Enemy::AlmostReachTarget()
+{
 	myController->EnemyDone();
 }
 

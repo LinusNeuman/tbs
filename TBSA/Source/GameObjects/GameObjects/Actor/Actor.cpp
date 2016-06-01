@@ -19,6 +19,7 @@ Actor::Actor()
 	myAP = 5;
 	myPath.Init(1);
 	myCurrentWaypoint = 0;
+	myState = eActorState::eWalking;
 
 	//myBoxCollider = new BoxCollider();
 	//myBoxCollider->SetPositionAndSize(CU::Vector2f::One, CU::Vector2f::Half);
@@ -89,11 +90,35 @@ void Actor::Update(const CU::Time& aDeltaTime)
 {
 	if (myActiveFlag == true)
 	{
+		eActorState tempState = GetActorState();
+		if (tempState == eActorState::eWalking)
+		{
+			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
+			UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
+			//myPosition += myVelocity * aDeltaTime.GetSeconds();
+			CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
+			
 
-		myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
-		UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
-		//myPosition += myVelocity * aDeltaTime.GetSeconds();
-		CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
+
+
+			if ((CU::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
+			{
+				myAtTarget = true;
+				UpdatePosition(CU::Point2f(myTargetPosition));
+
+				if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+				{
+					SetActorState(eActorState::eIdle);
+				}
+			}
+			else
+			{
+				myAtTarget = false;
+			}
+
+			UpdatePath();
+		}
+
 		if (myAnimations.GetIsActive() == true)
 		{
 			myAnimations.Update();
@@ -101,22 +126,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			mySprite->SetLayer(enumRenderLayer::eGameObjects);
 			mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 		}
-		if ( (CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
-		{
-			myAtTarget = true;
-			UpdatePosition(CU::Point2f(myTargetPosition));
-			
-			if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
-			{
-				SetActorState(eActorState::eIdle);
-			}
-		}
-		else
-		{
-			myAtTarget = false;
-		}
 
-		UpdatePath();
 		UpdateDirection();
 		DecideAnimation();
 	}
@@ -150,6 +160,7 @@ void Actor::SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2
 {
 	if (myCurrentWaypoint == myPath.Size())
 	{
+		SetActorState(eActorState::eWalking);
 		myPath = aPath;
 		myCurrentWaypoint = 0;
 	}
@@ -172,12 +183,19 @@ int Actor::GetMyAP() const
 
 void Actor::UpdatePath()
 {
-	if (myAtTarget == true && myCurrentWaypoint < myPath.Size())
+	if (myAtTarget == true )
 	{
-		SetActorState(eActorState::eWalking);
-		Move(myPath[myCurrentWaypoint]);
-		++myCurrentWaypoint;
-		if (myCurrentWaypoint == myPath.Size())
+		if (myCurrentWaypoint < myPath.Size())
+		{
+			SetActorState(eActorState::eWalking);
+			Move(myPath[myCurrentWaypoint]);
+			++myCurrentWaypoint;
+			if (myCurrentWaypoint == myPath.Size())
+			{
+				AlmostReachTarget();
+			}
+		}
+		else if (myCurrentWaypoint == myPath.Size())
 		{
 			ReachedTarget();
 		}

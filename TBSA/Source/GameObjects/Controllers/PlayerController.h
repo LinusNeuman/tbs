@@ -43,6 +43,8 @@ public:
 	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
+	void ActivePlayerFight();
+
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
 	int CalculatePoint(float aValue) const;
 	void ResetTileShaders();
