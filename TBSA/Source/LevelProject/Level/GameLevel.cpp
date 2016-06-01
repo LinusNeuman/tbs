@@ -37,7 +37,6 @@ GameLevel::~GameLevel()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eTurn, myTurnManager);
-	ResetMemoryPools();
 }
 
 void GameLevel::Init(TiledData* aTileData)
@@ -230,16 +229,5 @@ void GameLevel::ConstructNavGraph()
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
 			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(west).GetVertexHandle());
 		}
-	}
-}
-
-void GameLevel::ResetMemoryPools()
-{
-	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer);
-	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer2);
-
-	for (int i = 0; i < myEnemies.Size(); i++)
-	{
-		myTiledData->myEnemyFactory->ReturnEnemy(myEnemies[i]);
 	}
 }

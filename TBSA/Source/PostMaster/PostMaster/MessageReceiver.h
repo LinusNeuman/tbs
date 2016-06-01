@@ -1,4 +1,6 @@
 #pragma once
+#include <Message/RecieverTypes.h>
+
 struct PlayerChangedTargetMessage;
 struct PlayerAddedMessage;
 struct ActorPositionChangedMessage;
@@ -39,7 +41,10 @@ public:
 	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage);
 	virtual void RecieveMessage(const PlayerChangedTargetMessage & aMessage);
 
+	RecieverOrder myRecieverOrder;
 protected:
 	MessageReciever()
-	{}
+	{
+		myRecieverOrder = RecieverOrder::eDefault;
+	}
 };

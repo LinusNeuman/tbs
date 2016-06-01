@@ -8,13 +8,35 @@
 
 class MessageReciever;
 
+struct Reciever
+{
+	Reciever()
+	{
+		myReciever = nullptr;
+		myOrder = RecieverOrder::eDefault;
+	}
+	Reciever(MessageReciever & aReciever, RecieverOrder aPriority = RecieverOrder::eDefault)
+	{
+		myReciever = &aReciever;
+		myOrder = aPriority;
+	}
+
+	bool operator == (const Reciever & aRight) const
+	{
+		return myReciever == aRight.myReciever;
+	}
+
+	MessageReciever * myReciever;
+	RecieverOrder myOrder;
+};
+
 class SingletonPostMaster
 {
 public:
 	static void Create();
 	static void Destroy();
 
-	static void AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd);
+	static void AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd, const RecieverOrder aPriority = RecieverOrder::eDefault);
 	static void RemoveReciever(const RecieverTypes aTypeUnsubscribe, MessageReciever & aRecieverToRemove);
 
 	static void RemoveReciever(MessageReciever &aReceiver);
@@ -34,7 +56,7 @@ private:
 
 	static inline SingletonPostMaster & GetInstance();
 
-	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<MessageReciever*>> myRecievers;
+	CU::GrowingArray<CU::GrowingArray<Reciever>> myRecievers;
 };
 
 template <typename MessageType>
@@ -49,8 +71,13 @@ void SingletonPostMaster::InternalPostMessage(const MessageType & aMessageToSend
 	for (unsigned short iReciever = 0; iReciever < myRecievers[static_cast<unsigned short>(aMessageToSend.myType)].Size(); ++iReciever)
 	{
 		DL_ASSERT(myRecievers[static_cast<unsigned short>(aMessageToSend.myType)].Size() > 0, "ERROR: No reciever to recieve message");
-		MessageReciever* explainginReciever = myRecievers[static_cast<unsigned short>(aMessageToSend.myType)][iReciever];
+		MessageReciever* explainginReciever = myRecievers[static_cast<unsigned short>(aMessageToSend.myType)][iReciever].myReciever;
 		explainginReciever->RecieveMessage(aMessageToSend);
+		
+		if (aMessageToSend.myLetThroughMessage == false)
+		{
+			break;
+		}
 	}
 }
 

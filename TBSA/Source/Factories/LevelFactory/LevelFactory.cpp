@@ -28,6 +28,21 @@ void LevelFactory::LoadLevel(const std::string& aLevelPath)
 	myTileData.myEnemyFactory = &myEnemyFactory;
 
 	myTileData.myEnemies.RemoveAll();
+	myTileData.myTiles.RemoveAll();
+
+	if (myTileData.myPlayers[0] != nullptr && myTileData.myPlayers[1] != nullptr)
+	{
+		myTileData.myPlayerFactory->ReturnPlayer(myTileData.myPlayers[0]);
+		myTileData.myPlayerFactory->ReturnPlayer(myTileData.myPlayers[1]);
+	}
+
+	for (int i = 0; i < myTileData.myEnemies.Size(); i++)
+	{
+		if (myTileData.myEnemies[i] != nullptr)
+		{
+			myTileData.myEnemyFactory->ReturnEnemy(myTileData.myEnemies[i]);
+		}
+	}
 
 	TiledLoader::Load(aLevelPath, myTileData);
 
