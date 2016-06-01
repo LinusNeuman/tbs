@@ -17,10 +17,13 @@ class CGame : public MessageReciever
 public:
 	CGame();
 	~CGame();
-	void Init(const std::wstring& aVersion = L"");
+	void Init(const std::wstring& aVersion = L"", HWND aHandle = nullptr);
 
-	void RecieveMessage(const GUIMessage & aMessage) override;
-	void RecieveMessage(const GetStartLevelMessage& aMessage) override;
+	virtual void RecieveMessage(const GUIMessage & aMessage) override;
+	virtual void RecieveMessage(const GetStartLevelMessage& aMessage) override;
+	virtual void RecieveMessage(const SetHWNDMessage & aMessage) override;
+	
+
 private:
 	void InitCallBack();
 	void UpdateCallBack();
@@ -28,6 +31,8 @@ private:
 
 	void RenderWork();
 	void LogCallback(std::string aText);
+
+	HWND myWindowHandle;
 
 	StartupData * myStartupData;
 	GameState * myMenuState;

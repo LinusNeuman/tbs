@@ -1,16 +1,20 @@
 #include "GUIButton.h"
 
 
-GUIButton::GUIButton()
+GUIButton::GUIButton() : 
+	mySpritePressed(nullptr), 
+	mySpriteHovered(nullptr),
+	mySpriteUnpressed(nullptr),
+	myHoverSound(nullptr),
+	myClickSound(nullptr)
 {
-	mySpriteHovered = nullptr;
-	mySpritePressed = nullptr;
-	mySpriteUnpressed = nullptr;
 }
 
 
 GUIButton::~GUIButton()
 {
+	SAFE_DELETE(myHoverSound);
+	SAFE_DELETE(myClickSound);
 }
 
 void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric, bool aIsEnabled)
@@ -66,6 +70,12 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	});
 
 	mySprite = mySpriteUnpressed;
+
+	myHoverSound = new SoundEffect();
+	myHoverSound->Init("Sounds/GUI/HoverMenuItem.ogg");
+
+	myClickSound = new SoundEffect();
+	myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
 }
 
 void GUIButton::Update(const CU::Time& aDelta)
@@ -104,6 +114,13 @@ void GUIButton::WhenHovered()
 	// Was not previously hovered. 
 	// Do things that we only want this button to do once, such as play sound.
 
-	// Change image to hovered image. 
-	// In the future, this needs to have in mind that if the button is pressed, and
+	if (myIsCurrentlyHovered == false)
+	{
+		myHoverSound->Play(1.0f);
+	}
+}
+
+void GUIButton::WhenClicked()
+{
+	myClickSound->Play(1.0f);
 }
