@@ -35,6 +35,8 @@ GameLevel::GameLevel()
 
 GameLevel::~GameLevel()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eTurn, myTurnManager);
 }
 
 void GameLevel::Init(const std::string& aLevelPath)

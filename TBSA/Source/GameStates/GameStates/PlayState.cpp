@@ -15,6 +15,7 @@ PlayState::PlayState()
 PlayState::~PlayState()
 {
 	SAFE_DELETE(myLevel);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 }
 
 void PlayState::Init()
