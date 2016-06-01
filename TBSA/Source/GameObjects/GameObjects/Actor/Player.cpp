@@ -7,7 +7,8 @@
 #include <Message/ColliderMessage.h>
 #include <Collision/BoxCollider.h>
 #include <Message/PlayerObjectMesssage.h>
-#include <Message/ActorPositionChangedMessage.h>
+#include <Message/PlayerSeenMessage.h>
+#include <Message/PlayerDiedMessage.h>
 
 
 Player::Player()
@@ -16,6 +17,7 @@ Player::Player()
 
 Player::~Player()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents,*this);
 }
 
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
@@ -24,12 +26,15 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
 	myCurrentAP = myActionPointMax;
+	myEnemyTargetIndex = USHRT_MAX;
+
+	myIsSeen = false;
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 void Player::FreshTurn()
 {
 	myCurrentAP = myActionPointMax;
-
 }
 
 int Player::GetMyAP() const
@@ -53,6 +58,39 @@ void Player::OnClick()
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
 }
 
+void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
+{
+	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
+	{
+		StopPath();
+		myCurrentAP = 0;
+
+		if (myIsSeen == false)
+		{
+			myIsSeen = true;
+		}
+		
+		if (myShouldDie == true)
+		{
+			myIsSeen = false;
+			myShouldDie = false;
+			SendPostMessage(PlayerDiedMessage(RecieverTypes::ePlayEvents));
+		}
+	}
+}
+
+void Player::AfterTurn()
+{
+	myShouldDie = myIsSeen;
+	myIsSeen = false;
+}
+
+void Player::PreTurn()
+{
+	myShouldDie = myIsSeen;
+	myIsSeen = false;
+}
+
 void Player::DecideAnimation()
 {
 	if (myState == eActorState::eIdle)
@@ -62,42 +100,42 @@ void Player::DecideAnimation()
 	else if (myState == eActorState::eWalking)
 	{
 		//Determine direction animation
-		if (myVelocity.x < 0.f && myVelocity.y < 0.f)
+		switch (GetDirectionEnum())
 		{
-			ChangeAnimation("gingerWalk00");
-		}
-		else if (myVelocity.x == 0.f && myVelocity.y < 0.f)
-		{
+		case eDirection::NORTH: 
 			ChangeAnimation("gingerWalk045");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y < 0.f)
-		{
+			break;
+		case eDirection::NORTH_EAST: 
 			ChangeAnimation("gingerWalk090");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y == 0.f)
-		{
+			break;
+		case eDirection::EAST: 
 			ChangeAnimation("gingerWalk135");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y > 0.f)
-		{
+			break;
+		case eDirection::SOUTH_EAST: 
 			ChangeAnimation("gingerWalk180");
-		}
-		else if (myVelocity.x == 0.f && myVelocity.y > 0.f)
-		{
+			break;
+		case eDirection::SOUTH: 
 			ChangeAnimation("gingerWalk225");
-		}
-		else if (myVelocity.x < 0.f && myVelocity.y > 0.f)
-		{
+			break;
+		case eDirection::SOUTH_WEST:
 			ChangeAnimation("gingerWalk270");
-		}
-		else if (myVelocity.x < 0.f && myVelocity.y == 0.f)
-		{
+			break;
+		case eDirection::WEST: 
 			ChangeAnimation("gingerWalk315");
+			break;
+		case eDirection::NORTH_WEST: 
+			ChangeAnimation("gingerWalk00");
+			break;
+		default: break;
 		}
 	}
 }
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
-	SendPostMessage(ActorPositionChangedMessage(RecieverTypes::eActorPositionChanged, aTargetPosition));
+}
+
+void Player::SetNoTarget()
+{
+	myEnemyTargetIndex = USHRT_MAX;
 }

@@ -32,12 +32,16 @@ public:
 	void PrePlayer();
 	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
+	void AfterPlayerTurn();
+
+	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition);
 
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
 	virtual void RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
 	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage) override;
+	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
@@ -54,7 +58,10 @@ private:
 	CommonUtilities::Vector2f myMousePosition;
 	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
+
 	bool myClickedOnPlayer;
+	bool myClickedOnEnemy;
+
 	std::vector<CU::Vector2f> myDebugStart;
 	std::vector<CU::Vector2f> myDebugEnd;
 

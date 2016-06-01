@@ -85,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)TiledLoading\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -105,7 +105,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)TiledLoading\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
@@ -141,9 +141,6 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Audio\Audio.vcxproj">
-      <Project>{58b80636-b81a-4fc6-a5d1-1f6a8cc28617}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\CollisionHandling\CollisionHandling.vcxproj">
       <Project>{8ce9acc7-5f0b-4710-957e-9b9a77f6d964}</Project>
     </ProjectReference>
@@ -152,9 +149,6 @@
     </ProjectReference>
     <ProjectReference Include="..\GameObjects\GameObjects.vcxproj">
       <Project>{07fec30e-ad37-4adc-ae37-b066481f6b52}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameStates\GameStates.vcxproj">
-      <Project>{b27097b4-6a3b-48b0-851f-3781a986be76}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>

@@ -2,11 +2,13 @@
 #include "GameObjects/Actor/Actor.h"
 
 
+
 struct PlayerData;
 struct ActorData;
 
 class RenderConverter;
 class WrappedSprite;
+class Enemy;
 
 class Player : public Actor
 {
@@ -25,9 +27,32 @@ public:
 
 	virtual void OnClick() override;
 
+	void RecieveMessage(const PlayerSeenMessage & aMessage) override;
+
+	void SetTargetEnemy(const unsigned short aIndex);
+	void SetNoTarget();
+	unsigned short GetEnemyTarget();
+
+	void AfterTurn();
+	void PreTurn();
 private:
+
+	unsigned short myEnemyTargetIndex;
 
 	int myActionPointMax;
 	int myCurrentAP;
+
+	bool myIsSeen;
+	bool myShouldDie;
 };
+
+inline void Player::SetTargetEnemy(const unsigned short aIndex)
+{
+	myEnemyTargetIndex = aIndex;
+}
+
+inline unsigned short Player::GetEnemyTarget()
+{
+	return myEnemyTargetIndex;
+}
 
