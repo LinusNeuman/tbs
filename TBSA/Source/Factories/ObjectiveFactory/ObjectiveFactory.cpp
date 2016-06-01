@@ -12,7 +12,16 @@ ObjectiveFactory::~ObjectiveFactory()
 
 }
 
-//Objective* ObjectiveFactory::CreateObjective(eObjectiveType aType)
-//{
-//	return 
-//}
+Objective* ObjectiveFactory::CreateObjective(eObjectiveType aType)
+{ 
+	//This does nothing so far
+	Objective* objective = new Objective();
+	switch (aType)
+	{
+	case eObjectiveType::eLevelEnd:
+		return objective;
+	default:
+		DL_ASSERT(false, "Wrong ObjectiveType when creating objective");
+		return objective;
+	}
+}
