@@ -5,6 +5,7 @@
 #include <GameObjects/Room/IsometricTile.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <Message/EnemyChangedDirectionMessage.h>
+#include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
 EnemyController::EnemyController()
 {
@@ -33,7 +34,7 @@ void EnemyController::Update(CommonUtilities::Time aDeltaTime)
 	}
 	else
 	{
-		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
 	}
 }
 
@@ -81,7 +82,7 @@ void EnemyController::EnemyDone()
 	++myCurrentEnemy;
 	if (myCurrentEnemy <= myEnemies.Size())
 	{
-		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
 	}
 	else
 	{

@@ -24,5 +24,6 @@
     <ClInclude Include="Message\PlayerSeenMessage.h" />
     <ClInclude Include="Message\PlayerDiedMessage.h" />
     <ClInclude Include="Message\SetHWNDMessage.h" />
+    <ClInclude Include="Message\PlayerReachedTargetMessage.h" />
   </ItemGroup>
 </Project>

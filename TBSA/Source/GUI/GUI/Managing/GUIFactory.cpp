@@ -44,7 +44,7 @@ void GUIFactory::Load()
 		{ -(41.f + 223.f), -(37.f + 117.f)},
 		{ 223, 117}
 	);
-	newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
+	newButton->SetAction(new GUIMessage(RecieverTypes::eTurn), eGUIMessageEvents::eOnClick);
 
 	myGUIElements.Add(newButton);
 
