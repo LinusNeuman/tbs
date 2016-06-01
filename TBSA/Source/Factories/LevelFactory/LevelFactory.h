@@ -16,5 +16,5 @@ private:
 
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
-	TiledData* myTileData;
+	TiledData myTileData;
 };

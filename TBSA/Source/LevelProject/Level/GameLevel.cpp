@@ -34,9 +34,10 @@ GameLevel::GameLevel()
 
 GameLevel::~GameLevel()
 {
+	ResetMemoryPools();
 }
 
-void GameLevel::Init(TiledData& aTileData)
+void GameLevel::Init(TiledData* aTileData)
 {
 	myTiledData = aTileData;
 
@@ -45,10 +46,10 @@ void GameLevel::Init(TiledData& aTileData)
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 
-	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
+	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData->myMapSize));
 
-	myFloor.SetTiles(myTiledData.myTiles);
-	myFloor.SetFloorDimensions(myTiledData.myMapSize);
+	myFloor.SetTiles(myTiledData->myTiles);
+	myFloor.SetFloorDimensions(myTiledData->myMapSize);
 
 	ConstructNavGraph();
 
@@ -58,11 +59,11 @@ void GameLevel::Init(TiledData& aTileData)
 	myPlayerController->SetFloor(myFloor);
 	myEnemyController->SetFloor(myFloor);
 
-	myPlayer = myTiledData.myPlayers[0];
-	myPlayer2 = myTiledData.myPlayers[1];
+	myPlayer = myTiledData->myPlayers[0];
+	myPlayer2 = myTiledData->myPlayers[1];
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
-	myEnemies = myTiledData.myEnemies;
+	myEnemies = myTiledData->myEnemies;
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
 		myEnemyController->AddEnemy(myEnemies[i]);
@@ -167,7 +168,7 @@ void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 	const CommonUtilities::Vector2ui position = aMessage.myPosition;
 	const int distance = aMessage.myDistance;
 
-	const CommonUtilities::Vector2ui mapSize = myTiledData.myMapSize;
+	const CommonUtilities::Vector2ui mapSize = myTiledData->myMapSize;
 	const int id = mapSize.x * position.y + position.x;
 
 	const IsometricTile selectedTile = myFloor.GetTile(id);
@@ -197,7 +198,7 @@ void GameLevel::ConstructNavGraph()
 		//warning names of indexes may not coincide wwith where they are drawn
 		//i.e north may not graphicly be drawn to the north of the current tile
 
-		const int northWest = i - myTiledData.myMapSize.x - 1;
+		const int northWest = i - myTiledData->myMapSize.x - 1;
 		if (northWest > -1 && myFloor.GetTile(northWest).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
@@ -205,14 +206,14 @@ void GameLevel::ConstructNavGraph()
 			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(northWest).GetVertexHandle());
 		}
 
-		const int north = i - myTiledData.myMapSize.x;
+		const int north = i - myTiledData->myMapSize.x;
 		if (north > -1 && myFloor.GetTile(north).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
 			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(north).GetVertexHandle());
 		}
 
-		const int northEast = i - myTiledData.myMapSize.x + 1;
+		const int northEast = i - myTiledData->myMapSize.x + 1;
 		if (northEast > -1 && myFloor.GetTile(northEast).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
@@ -229,3 +230,13 @@ void GameLevel::ConstructNavGraph()
 	}
 }
 
+void GameLevel::ResetMemoryPools()
+{
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer2);
+
+	for (int i = 0; i < myEnemies.Size(); i++)
+	{
+		myTiledData->myEnemyFactory->ReturnEnemy(myEnemies[i]);
+	}
+}

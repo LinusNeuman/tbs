@@ -33,6 +33,9 @@ PlayerController::PlayerController()
 PlayerController::~PlayerController()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyChangedDirection, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eActorPositionChanged, *this);
 }
 
 void PlayerController::Init()

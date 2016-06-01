@@ -20,14 +20,14 @@ class GameLevel : public MessageReciever
 public:
 	GameLevel();
 	~GameLevel();
-	void Init(TiledData& aTileData);
+	void Init(TiledData* aTileData);
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
 
 	void RecieveMessage(const DijkstraMessage & aMessage) override;
 	void RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
-
+	void ResetMemoryPools();
 private:
 
 	GameFloor myFloor;
@@ -37,7 +37,7 @@ private:
 	EnemyController *myEnemyController;
 
 	NavGraph myNavGraph;
-	TiledData myTiledData;
+	TiledData* myTiledData;
 	CommonUtilities::Vector2ui myDimensions;
 
 	TurnManager myTurnManager;
