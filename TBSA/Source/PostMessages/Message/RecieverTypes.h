@@ -1,5 +1,11 @@
 #pragma once
 
+enum class RecieverOrder
+{
+	eDefault = 100,
+	enumLength
+};
+
 enum class RecieverTypes
 {
 	eRoom,
