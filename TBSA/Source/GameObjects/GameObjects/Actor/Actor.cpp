@@ -101,11 +101,15 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			mySprite->SetLayer(enumRenderLayer::eGameObjects);
 			mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 		}
-		if ((CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
+		if ( (CommonUtilities::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 		{
 			myAtTarget = true;
 			UpdatePosition(CU::Point2f(myTargetPosition));
-			myState = eActorState::eIdle;
+			
+			if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+			{
+				SetActorState(eActorState::eIdle);
+			}
 		}
 		else
 		{
@@ -170,7 +174,7 @@ void Actor::UpdatePath()
 {
 	if (myAtTarget == true && myCurrentWaypoint < myPath.Size())
 	{
-		myState = eActorState::eWalking;
+		SetActorState(eActorState::eWalking);
 		Move(myPath[myCurrentWaypoint]);
 		++myCurrentWaypoint;
 		if (myCurrentWaypoint == myPath.Size())
