@@ -69,3 +69,7 @@ void MessageReciever::RecieveMessage(const EnemyChangedDirectionMessage & aMessa
 {
 
 }
+
+void MessageReciever::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
+{
+}
