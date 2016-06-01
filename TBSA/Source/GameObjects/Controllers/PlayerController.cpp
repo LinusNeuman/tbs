@@ -21,6 +21,7 @@
 #define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
+const float PlayerFoWRadius = 5.f;
 
 PlayerController::PlayerController()
 {
@@ -29,7 +30,6 @@ PlayerController::PlayerController()
 	mySelectedPlayer = nullptr;
 	myClickedOnPlayer = false;
 }
-
 
 PlayerController::~PlayerController()
 {
@@ -220,7 +220,7 @@ void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage
 	myDebugEnd.clear();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), 5.f);
+		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), PlayerFoWRadius);
 	}
 }
 
@@ -229,7 +229,7 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 	ResetTileShaders();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), 5.f);
+		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), PlayerFoWRadius);
 	}
 }
 
