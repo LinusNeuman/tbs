@@ -7,7 +7,7 @@
 
 Enemy::Enemy()
 {
-	
+	myIndex = 0;
 }
 
 
@@ -65,9 +65,10 @@ void Enemy::UpdateEnemy()
 			myHasMoved = true;
 		}
 
-		if (mySomeoneSeesPlayer == true && myAtTarget == true)
+		if (mySomeoneSeesPlayer == true)
 		{
 			myController->EnemyDone();
+			StopPath();
 		}
 	}
 	else
@@ -97,10 +98,14 @@ void Enemy::Reset()
 	mySomeoneSeesPlayer = false;
 }
 
+
+
+
+
 void Enemy::OnClick()
 {
 	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
-	Fight();
+	//Fight();
 }
 
 void Enemy::Fight()

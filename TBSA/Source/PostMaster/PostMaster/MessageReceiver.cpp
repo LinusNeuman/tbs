@@ -86,3 +86,8 @@ void MessageReciever::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 
 }
+
+void MessageReciever::RecieveMessage(const FightWithEnemyMessage & aMessage)
+{
+
+}

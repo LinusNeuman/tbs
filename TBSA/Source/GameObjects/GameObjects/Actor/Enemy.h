@@ -23,10 +23,14 @@ public:
 	void SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath);
 	void Reset();
 
+	void SetIndex(const unsigned short aIndex);
+	unsigned short GetIndex() const;
+
 	virtual void OnClick() override;
 	
-private:
 	void Fight();
+private:
+	unsigned short myIndex;
 
 	bool myHasMoved;
 	bool myHasTurned;
@@ -35,3 +39,12 @@ private:
 	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> myEnemyPath;
 };
 
+inline void Enemy::SetIndex(const unsigned short aIndex)
+{
+	myIndex = aIndex;
+}
+
+inline unsigned short Enemy::GetIndex() const
+{
+	return myIndex;
+}

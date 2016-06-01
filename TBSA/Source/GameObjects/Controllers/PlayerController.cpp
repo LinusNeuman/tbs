@@ -18,6 +18,9 @@
 #include <Message/PlayerSeenMessage.h>
 #include <Rend/RenderConverter.h>
 #include <Message/PlayerReachedTargetMessage.h>
+#include <Message/EnemyObjectMessage.h>
+#include <GameObjects/Actor/Enemy.h>
+#include <Message/FightWithEnemyMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -40,6 +43,8 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyChangedDirection, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
+	SingletonPostMaster::RemoveReciever(*this);
 }
 
 void PlayerController::Init()
@@ -207,6 +212,14 @@ void PlayerController::SetCameraPositionToPlayer(int aIndex)
 	myCamera.SetPos(myPlayers[aIndex]->GetPosition());
 }
 
+void PlayerController::AfterPlayerTurn()
+{
+	for (size_t i = 0; i < myPlayers.Size(); i++)
+	{
+		myPlayers[i]->AfterTurn();
+	}
+}
+
 void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 {
 	if (mySelectedPlayer != &aMessage.myPlayer)
@@ -223,7 +236,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 		DL_PRINT("An enemy can see you!");
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
-	}
+}
 
 void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
 {
@@ -248,6 +261,8 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 void PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 	myClickedOnEnemy = true;
+	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex());
+	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
 }
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)

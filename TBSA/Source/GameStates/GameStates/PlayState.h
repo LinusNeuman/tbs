@@ -23,6 +23,7 @@ private:
 	GameLevel * myLevel;
 	std::string myStartPath;
 	std::string myLevelKey;
+	std::string myCurrentLevelpath;
 	std::unordered_map<std::string, GameLevel*> myLevels;
 	LevelFactory* myLevelFactory;
 	bool myShouldExit;

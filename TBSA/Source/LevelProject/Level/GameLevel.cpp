@@ -57,6 +57,7 @@ void GameLevel::Init(TiledData* aTileData)
 
 	myPlayerController = &myTurnManager.GetPlayerController();
 	myEnemyController = &myTurnManager.GetEnemyController();
+	myEnemyController->Init();
 	myPlayerController->Init();
 	myPlayerController->SetFloor(myFloor);
 	myEnemyController->SetFloor(myFloor);
