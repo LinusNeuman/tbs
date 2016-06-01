@@ -90,7 +90,37 @@ void Player::DecideAnimation()
 {
 	if (myState == eActorState::eIdle)
 	{
-		ChangeAnimation("PlayerIdle");
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("playerIdle045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("playerIdle090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("playerIdle135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("playerIdle180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("playerIdle225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("playerIdle270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("playerIdle315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("playerIdle000");
+			break;
+		default:
+			ChangeAnimation("playerIdle180");
+			break;
+		}
 	}
 	else if (myState == eActorState::eWalking)
 	{
@@ -98,28 +128,28 @@ void Player::DecideAnimation()
 		switch (GetDirectionEnum())
 		{
 		case eDirection::NORTH: 
-			ChangeAnimation("gingerWalk045");
+			ChangeAnimation("playerWalk045");
 			break;
 		case eDirection::NORTH_EAST: 
-			ChangeAnimation("gingerWalk090");
+			ChangeAnimation("playerWalk090");
 			break;
 		case eDirection::EAST: 
-			ChangeAnimation("gingerWalk135");
+			ChangeAnimation("playerWalk135");
 			break;
 		case eDirection::SOUTH_EAST: 
-			ChangeAnimation("gingerWalk180");
+			ChangeAnimation("playerWalk180");
 			break;
 		case eDirection::SOUTH: 
-			ChangeAnimation("gingerWalk225");
+			ChangeAnimation("playerWalk225");
 			break;
 		case eDirection::SOUTH_WEST:
-			ChangeAnimation("gingerWalk270");
+			ChangeAnimation("playerWalk270");
 			break;
 		case eDirection::WEST: 
-			ChangeAnimation("gingerWalk315");
+			ChangeAnimation("playerWalk315");
 			break;
 		case eDirection::NORTH_WEST: 
-			ChangeAnimation("gingerWalk00");
+			ChangeAnimation("playerWalk000");
 			break;
 		default: break;
 		}

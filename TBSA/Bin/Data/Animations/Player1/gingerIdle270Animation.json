@@ -1,6 +1,6 @@
 {
-  "Name": "playerWalk045",
-  "FilePath": "Sprites\\Players\\ginger\\gingerWalk045.dds",
+  "Name": "playerIdle270",
+  "FilePath": "Sprites\\Players\\ginger\\gingerIdle270.dds",
   "SizeX": 128,
   "SizeY": 128,
   "AmountOfColumns": 8,

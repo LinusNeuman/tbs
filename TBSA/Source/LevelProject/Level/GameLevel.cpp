@@ -72,6 +72,8 @@ void GameLevel::Init(TiledData* aTileData)
 		myEnemyController->AddEnemy(myEnemies[i]);
 	}
 
+	myObjectives = myTiledData->myObjectives;
+
 	/*CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 	path.Init(5);
 
@@ -81,8 +83,6 @@ void GameLevel::Init(TiledData* aTileData)
 	}
 	myEnemies[0]->SetEnemyPath(path);*/
 
-	myPlayer->ChangeAnimation("PlayerTurn");
-	myPlayer2->ChangeAnimation("PlayerTurn");
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
 		myEnemies[i]->ChangeAnimation("EnemyTurn");
