@@ -11,7 +11,7 @@ struct PlayerData
 
 struct EnemyData
 {
-	
+	int myActionPoints;
 };
 
 struct ActorData

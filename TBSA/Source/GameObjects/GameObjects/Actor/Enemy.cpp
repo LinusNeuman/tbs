@@ -24,7 +24,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myHasTurned = false;
 	mySomeoneSeesPlayer = false;
 	myCurrentPathIndex = 0;
-
+	myAP = aEnemyData.myActionPoints;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
