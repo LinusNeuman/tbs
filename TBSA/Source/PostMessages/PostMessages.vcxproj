@@ -227,6 +227,7 @@
     <ClInclude Include="Message\PlayerObjectMesssage.h" />
     <ClInclude Include="Message\PlayerSeenMessage.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
+    <ClInclude Include="Message\SetHWNDMessage.h" />
     <ClInclude Include="Message\SetMainCameraMessage.h" />
     <ClInclude Include="Message\StartUpLevelMessage.h" />
     <ClInclude Include="Message\TestPosition.h" />

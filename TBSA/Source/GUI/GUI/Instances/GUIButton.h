@@ -1,5 +1,6 @@
 #pragma once
-#include "../Generic/GUIElement.h"
+#include "GUI/Generic/GUIElement.h"
+#include <Audio/Instances/SoundEffect.h>
 
 class GUIButton : public GUIElement
 {
@@ -14,8 +15,12 @@ public:
 	void Render() override;
 
 	void WhenHovered() override;
+	void WhenClicked() override;
 protected:
 	StaticSprite* mySpritePressed;
 	StaticSprite* mySpriteHovered;
 	StaticSprite* mySpriteUnpressed;
+
+	SoundEffect* myHoverSound;
+	SoundEffect* myClickSound;
 };

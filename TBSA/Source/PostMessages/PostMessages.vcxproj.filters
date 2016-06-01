@@ -23,5 +23,6 @@
     <ClInclude Include="Message\EnemyChangedDirectionMessage.h" />
     <ClInclude Include="Message\PlayerSeenMessage.h" />
     <ClInclude Include="Message\PlayerDiedMessage.h" />
+    <ClInclude Include="Message\SetHWNDMessage.h" />
   </ItemGroup>
 </Project>

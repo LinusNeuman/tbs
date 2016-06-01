@@ -15,7 +15,7 @@ public:
 	~Player();
 	void Init(const ActorData &aActorData, const PlayerData &aPlayerData);
 	void DecideAnimation() override;
-	
+	void OnMove(CU::Vector2ui aTargetPosition) override;
 	void FreshTurn();
 	int GetMyAP() const override;
 	void CostAP(const int aCost);

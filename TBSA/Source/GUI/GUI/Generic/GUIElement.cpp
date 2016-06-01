@@ -39,6 +39,10 @@ void GUIElement::WhenHovered()
 {
 }
 
+void GUIElement::WhenClicked()
+{
+}
+
 void GUIElement::Render()
 {
 	if (mySprite != nullptr)

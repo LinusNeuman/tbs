@@ -12,6 +12,7 @@ struct GUIMessage;
 struct GetStartLevelMessage;
 struct ColliderMessage;
 struct PlayerObjectMessage;
+struct SetHWNDMessage;
 struct EnemyChangedDirectionMessage;
 struct PlayerSeenMessage;
 struct PlayerDiedMessage;
@@ -34,6 +35,7 @@ public:
 	virtual void RecieveMessage(const ColliderMessage & aMessage);
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage);
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage);
+	virtual void RecieveMessage(const SetHWNDMessage & aMessage);
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage);
 	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage);
 	virtual void RecieveMessage(const PlayerSeenMessage & aMessage);

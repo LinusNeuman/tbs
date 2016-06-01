@@ -269,6 +269,7 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 	{
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
 		{
+			myFloor->GetTile(x, y).SetVisible(true);
 			break;
 		}
 		myFloor->GetTile(x, y).SetVisible(true);
