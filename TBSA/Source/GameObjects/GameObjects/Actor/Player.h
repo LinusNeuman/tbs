@@ -25,9 +25,13 @@ public:
 
 	virtual void OnClick() override;
 
+	void RecieveMessage(const PlayerSeenMessage & aMessage) override;
+
 private:
 
 	int myActionPointMax;
 	int myCurrentAP;
+
+	bool myIsSeen;
 };
 

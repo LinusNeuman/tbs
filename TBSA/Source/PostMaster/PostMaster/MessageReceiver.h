@@ -13,6 +13,8 @@ struct GetStartLevelMessage;
 struct ColliderMessage;
 struct PlayerObjectMessage;
 struct EnemyChangedDirectionMessage;
+struct PlayerSeenMessage;
+struct PlayerDiedMessage;
 
 class MessageReciever
 {
@@ -34,6 +36,8 @@ public:
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage);
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage);
 	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage);
+	virtual void RecieveMessage(const PlayerSeenMessage & aMessage);
+	virtual void RecieveMessage(const PlayerDiedMessage & aMessage);
 
 protected:
 	MessageReciever()

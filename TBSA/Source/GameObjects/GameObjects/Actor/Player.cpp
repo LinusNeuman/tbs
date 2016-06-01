@@ -7,6 +7,8 @@
 #include <Message/ColliderMessage.h>
 #include <Collision/BoxCollider.h>
 #include <Message/PlayerObjectMesssage.h>
+#include <Message/PlayerSeenMessage.h>
+#include <Message/PlayerDiedMessage.h>
 
 
 Player::Player()
@@ -15,6 +17,7 @@ Player::Player()
 
 Player::~Player()
 {
+	SingletonPostMaster::RemoveReciever(*this);
 }
 
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
@@ -23,6 +26,8 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
 	myCurrentAP = myActionPointMax;
+
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 void Player::FreshTurn()
@@ -50,6 +55,21 @@ void Player::ReachedTarget()
 void Player::OnClick()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
+}
+
+void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
+{
+	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
+	{
+		if (myIsSeen == false)
+		{
+			myIsSeen = true;
+		}
+		else
+		{
+			SendPostMessage(PlayerDiedMessage(RecieverTypes::ePlayEvents));
+		}
+	}
 }
 
 void Player::DecideAnimation()

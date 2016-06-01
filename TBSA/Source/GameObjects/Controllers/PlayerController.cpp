@@ -15,7 +15,7 @@
 #include <Message/PlayerObjectMesssage.h>
 #include <Message/ActorPositionChangedMessage.h>
 #include <Message/PlayerAddedMessage.h>
-
+#include <Message/PlayerSeenMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -215,6 +215,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
 		DL_PRINT("An enemy can see you!");
+		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
 }
 
@@ -227,6 +228,11 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 	}
 }
 
+void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
+{
+	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition));
+}
+
 void PlayerController::RecieveMessage(const EnemyChangedDirectionMessage& aMessage)
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
@@ -234,6 +240,7 @@ void PlayerController::RecieveMessage(const EnemyChangedDirectionMessage& aMessa
 		if (myFloor->GetTile(CU::Vector2ui(myPlayers[iPlayer]->GetPosition().x, myPlayers[iPlayer]->GetPosition().y)).GetInEnemyFov() == true)
 		{
 			DL_PRINT("An enemy can see you!");
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
 		}
 	}
 }

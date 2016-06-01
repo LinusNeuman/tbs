@@ -17,5 +17,6 @@ enum class RecieverTypes
 	eActorPositionChanged,
 	ePlayerAdded,
 	eEnemyChangedDirection,
+	ePlayEvents,
 	enumlength
 };
