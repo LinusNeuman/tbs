@@ -12,6 +12,7 @@ MenuState::MenuState()
 
 MenuState::~MenuState()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayGame, *this);
 }
 
 void MenuState::Init()
