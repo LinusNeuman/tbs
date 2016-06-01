@@ -25,6 +25,8 @@ enum class eActorType
 enum class eActorState
 {
 	eIdle,
+	eFighting,
+	eDead,
 	eWalking
 };
 
@@ -68,6 +70,9 @@ public:
 	virtual void RecieveMessage(const ColliderMessage & aMessage) override;
 
 	virtual void OnClick() = 0;
+
+	void SetActorState(const eActorState aActorState);
+	eActorState GetActorState();
 
 	void SetActiveState(const bool aActiveFlag);
 	bool GetActiveState();
@@ -120,4 +125,14 @@ inline void Actor::SetActiveState(const bool aActiveFlag)
 inline bool Actor::GetActiveState()
 {
 	return myActiveFlag;
+}
+
+inline void Actor::SetActorState(const eActorState aActorState)
+{
+	myState = aActorState;
+}
+
+inline eActorState Actor::GetActorState()
+{
+	return myState;
 }

@@ -6,6 +6,9 @@
     [
         {
             "path": "Data/Animations/Enemy2/EnemyTurnAnimation.json"
+        },
+        {
+            "path": "Data/Animations/CombatAnimationAnimation.json"
         }
     ]
 }

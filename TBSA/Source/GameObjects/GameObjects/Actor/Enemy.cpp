@@ -83,5 +83,13 @@ void Enemy::Reset()
 
 void Enemy::OnClick()
 {
-	myActiveFlag = false;
+	SetActorState(eActorState::eFighting);
+}
+
+void Enemy::DecideAnimation()
+{
+	if (myState == eActorState::eFighting)
+	{
+		ChangeAnimation("CombatAnimation");
+	}
 }

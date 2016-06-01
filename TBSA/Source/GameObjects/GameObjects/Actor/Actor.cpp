@@ -78,11 +78,14 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 		if (myVelocity.Length2() > 0.f)
 		{
-			myState = eActorState::eWalking;
+			SetActorState(eActorState::eWalking);
 		}
 		else
 		{
-			myState = eActorState::eIdle;
+			if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+			{
+				SetActorState(myState = eActorState::eIdle);
+			}
 		}
 
 		DecideAnimation();
