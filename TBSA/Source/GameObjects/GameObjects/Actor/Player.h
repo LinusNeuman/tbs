@@ -26,12 +26,14 @@ public:
 	virtual void OnClick() override;
 
 	void RecieveMessage(const PlayerSeenMessage & aMessage) override;
-
+	void AfterTurn();
+	void PreTurn();
 private:
 
 	int myActionPointMax;
 	int myCurrentAP;
 
 	bool myIsSeen;
+	bool myShouldDie;
 };
 

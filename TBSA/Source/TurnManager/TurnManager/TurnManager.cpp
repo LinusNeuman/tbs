@@ -78,6 +78,7 @@ void TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 void TurnManager::PlayerEndTurn()
 {
 	SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+	myPlayerController.AfterPlayerTurn();
 	EndTurn();
 }
 

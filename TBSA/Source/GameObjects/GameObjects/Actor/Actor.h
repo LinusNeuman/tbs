@@ -56,6 +56,8 @@ public:
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
 
+	void StopPath();
+
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
 	{
 		UpdatePosition(aPos);

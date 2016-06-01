@@ -32,6 +32,7 @@ public:
 	void PrePlayer();
 	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
+	void AfterPlayerTurn();
 
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;

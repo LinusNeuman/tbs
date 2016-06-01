@@ -190,6 +190,10 @@ void Actor::AddAnimation(Animation* anAnimation)
 	myAnimations.AddAnimation(anAnimation);
 }
 
+void Actor::StopPath()
+{
+	myCurrentWaypoint = myPath.Size();
+}
 
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {
