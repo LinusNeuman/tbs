@@ -26,6 +26,7 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
 	myCurrentAP = myActionPointMax;
+	myEnemyTargetIndex = USHRT_MAX;
 
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
@@ -113,4 +114,9 @@ void Player::DecideAnimation()
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
+}
+
+void Player::SetNoTarget()
+{
+	myEnemyTargetIndex = USHRT_MAX;
 }

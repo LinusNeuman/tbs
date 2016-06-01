@@ -2,15 +2,18 @@
 // CreationDate: 26/05/2016
 #pragma once
 #include <GameObjects/Actor/Enemy.h>
+#include <PostMaster/MessageReceiver.h>
 
 
 class GameFloor;
 
-class EnemyController
+class EnemyController : public MessageReciever
 {
 public:
 	EnemyController();
 	~EnemyController();
+
+	void Init();
 	void PreTurn();
 	void Update(CommonUtilities::Time aDeltaTime);
 	void ConstantUpdate(CommonUtilities::Time aDeltaTime);
@@ -18,6 +21,9 @@ public:
 	void EnemyDone();
 	void SetFloor(GameFloor & aFloor);
 	void AddEnemy(Enemy* aEnemy);
+
+	virtual void RecieveMessage(const FightWithEnemyMessage & aMessage) override;
+
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
 	void CreateEnemyRayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &aDirection, float aAngle, float aMagnitude);

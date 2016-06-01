@@ -7,7 +7,7 @@
 
 Enemy::Enemy()
 {
-	
+	myIndex = 0;
 }
 
 
@@ -97,10 +97,14 @@ void Enemy::Reset()
 	mySomeoneSeesPlayer = false;
 }
 
+
+
+
+
 void Enemy::OnClick()
 {
 	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
-	Fight();
+	//Fight();
 }
 
 void Enemy::Fight()

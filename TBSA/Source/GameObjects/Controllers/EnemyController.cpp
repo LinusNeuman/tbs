@@ -5,7 +5,9 @@
 #include <GameObjects/Room/IsometricTile.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <Message/EnemyChangedDirectionMessage.h>
+#include <Message/FightWithEnemyMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
+
 
 EnemyController::EnemyController()
 {
@@ -15,6 +17,12 @@ EnemyController::EnemyController()
 
 EnemyController::~EnemyController()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartFight, *this);
+}
+
+void EnemyController::Init()
+{
+	SingletonPostMaster::AddReciever(RecieverTypes::eStartFight, *this);
 }
 
 void EnemyController::PreTurn()
@@ -195,4 +203,10 @@ void EnemyController::AddEnemy(Enemy* aEnemy)
 {
 	aEnemy->myController = this;
 	myEnemies.Add(aEnemy);
+	myEnemies.GetLast()->SetIndex(myEnemies.Size() - 1);
+}
+
+void EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
+{
+	myEnemies[aMessage.myEnemyIndex]->Fight();
 }
