@@ -2,11 +2,12 @@
 #include "Enemy.h"
 #include "../JsonDataStructs.h"
 #include <Controllers/EnemyController.h>
+#include <Message/EnemyObjectMessage.h>
 
 
 Enemy::Enemy()
 {
-	
+	myIndex = 0;
 }
 
 
@@ -97,7 +98,25 @@ void Enemy::Reset()
 	mySomeoneSeesPlayer = false;
 }
 
+
+
+
+
 void Enemy::OnClick()
 {
-	myActiveFlag = false;
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+	//Fight();
+}
+
+void Enemy::Fight()
+{
+	SetActorState(eActorState::eFighting);
+}
+
+void Enemy::DecideAnimation()
+{
+	if (GetActorState() == eActorState::eFighting)
+	{
+		ChangeAnimation("CombatAnimation");
+	}
 }

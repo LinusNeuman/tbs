@@ -54,6 +54,10 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		ChangeLevel("SecondTest.json");
 	}
+	else if (IsometricInput::GetKeyPressed(DIK_2) == true)
+	{
+		ChangeLevel("2_Backyard.json");
+	}
 
 	return eStackReturnValue::eStay;
 }

@@ -18,6 +18,9 @@
 #include <Message/PlayerSeenMessage.h>
 #include <Rend/RenderConverter.h>
 #include <Message/PlayerReachedTargetMessage.h>
+#include <Message/EnemyObjectMessage.h>
+#include <GameObjects/Actor/Enemy.h>
+#include <Message/FightWithEnemyMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -30,6 +33,7 @@ PlayerController::PlayerController()
 	mySelectedPlayerIndex = 0;
 	mySelectedPlayer = nullptr;
 	myClickedOnPlayer = false;
+	myClickedOnEnemy = false;
 }
 
 PlayerController::~PlayerController()
@@ -38,6 +42,8 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyChangedDirection, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eActorPositionChanged, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
 }
 
 void PlayerController::Init()
@@ -48,6 +54,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyChangedDirection, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -132,6 +139,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
 		myClickedOnPlayer = false;
+		myClickedOnEnemy = false;
 
 		PointCollider tempCollider;
 
@@ -152,6 +160,12 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				{
 					positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
 				}
+
+				if (myClickedOnEnemy == true)
+				{
+					positionPath.RemoveAtIndex(positionPath.Size() - 1);
+				}
+
 				if (GetPlayerAP() >= (positionPath.Size() - 1))
 				{
 					CostAP(positionPath.Size() - 1);
@@ -221,7 +235,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 		DL_PRINT("An enemy can see you!");
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
-	}
+}
 
 void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
 {
@@ -241,6 +255,13 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 	{
 		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), PlayerFoWRadius);
 	}
+}
+
+void PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
+{
+	myClickedOnEnemy = true;
+	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex());
+	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
 }
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)

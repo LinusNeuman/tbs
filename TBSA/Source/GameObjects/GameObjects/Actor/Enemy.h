@@ -18,12 +18,20 @@ public:
 	EnemyController* myController;
 	void RecieveMessage(const PlayerSeenMessage& aMessage) override;
 
+	virtual void DecideAnimation() override;
+
 	void SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath);
 	void Reset();
 
-	virtual void OnClick() override;
+	void SetIndex(const unsigned short aIndex);
+	unsigned short GetIndex() const;
 
+	virtual void OnClick() override;
+	
+	void Fight();
 private:
+	unsigned short myIndex;
+
 	bool myHasMoved;
 	bool myHasTurned;
 	bool mySomeoneSeesPlayer;
@@ -31,3 +39,12 @@ private:
 	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> myEnemyPath;
 };
 
+inline void Enemy::SetIndex(const unsigned short aIndex)
+{
+	myIndex = aIndex;
+}
+
+inline unsigned short Enemy::GetIndex() const
+{
+	return myIndex;
+}

@@ -81,3 +81,13 @@ void MessageReciever::RecieveMessage(const PlayerDiedMessage& aMessage)
 void MessageReciever::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
 {
 }
+
+void MessageReciever::RecieveMessage(const EnemyObjectMessage & aMessage)
+{
+
+}
+
+void MessageReciever::RecieveMessage(const FightWithEnemyMessage & aMessage)
+{
+
+}
