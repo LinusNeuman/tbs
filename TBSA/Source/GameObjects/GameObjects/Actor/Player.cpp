@@ -151,7 +151,9 @@ void Player::DecideAnimation()
 		case eDirection::NORTH_WEST: 
 			ChangeAnimation("playerWalk000");
 			break;
-		default: break;
+		default:
+			ChangeAnimation("playerWalk180");
+			break;
 		}
 	}
 }
