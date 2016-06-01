@@ -13,7 +13,8 @@ public:
 	~Enemy();
 	void Init(const ActorData &aActorData, const EnemyData &aEnemyData);
 	void UpdateEnemy();
-	void ReachedTarget()override;
+	virtual void ReachedTarget()override;
+	virtual void AlmostReachTarget() override;
 	
 	EnemyController* myController;
 	void RecieveMessage(const PlayerSeenMessage& aMessage) override;
@@ -29,6 +30,9 @@ public:
 	virtual void OnClick() override;
 	
 	void Fight();
+
+	
+
 private:
 	unsigned short myIndex;
 

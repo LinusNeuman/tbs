@@ -33,6 +33,9 @@ public:
 	void SetNoTarget();
 	unsigned short GetEnemyTarget();
 
+
+	virtual void AlmostReachTarget() override;
+
 	void AfterTurn();
 	void PreTurn();
 private:
