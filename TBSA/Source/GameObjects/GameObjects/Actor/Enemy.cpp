@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "../JsonDataStructs.h"
 #include <Controllers/EnemyController.h>
+#include <Message/EnemyObjectMessage.h>
 
 
 Enemy::Enemy()
@@ -98,12 +99,18 @@ void Enemy::Reset()
 
 void Enemy::OnClick()
 {
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+	Fight();
+}
+
+void Enemy::Fight()
+{
 	SetActorState(eActorState::eFighting);
 }
 
 void Enemy::DecideAnimation()
 {
-	if (myState == eActorState::eFighting)
+	if (GetActorState() == eActorState::eFighting)
 	{
 		ChangeAnimation("CombatAnimation");
 	}

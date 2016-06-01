@@ -26,6 +26,8 @@ public:
 	virtual void OnClick() override;
 	
 private:
+	void Fight();
+
 	bool myHasMoved;
 	bool myHasTurned;
 	bool mySomeoneSeesPlayer;

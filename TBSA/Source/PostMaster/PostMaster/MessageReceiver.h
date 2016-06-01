@@ -19,6 +19,7 @@ struct SetHWNDMessage;
 struct EnemyChangedDirectionMessage;
 struct PlayerSeenMessage;
 struct PlayerDiedMessage;
+struct EnemyObjectMessage;
 
 class MessageReciever
 {
@@ -44,6 +45,7 @@ public:
 	virtual void RecieveMessage(const PlayerSeenMessage & aMessage);
 	virtual void RecieveMessage(const PlayerDiedMessage & aMessage);
 	virtual void RecieveMessage(const PlayerChangedTargetMessage & aMessage);
+	virtual void RecieveMessage(const EnemyObjectMessage & aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:
