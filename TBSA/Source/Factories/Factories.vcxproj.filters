@@ -30,6 +30,9 @@
     <ClInclude Include="EnemyFactory\EnemyFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectiveFactory\ObjectiveFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="LevelFactory\LevelFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnemyFactory\EnemyFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectiveFactory\ObjectiveFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelFactory\LevelFactory.cpp">

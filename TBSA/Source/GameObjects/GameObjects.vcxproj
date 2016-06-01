@@ -163,6 +163,7 @@
     <ClCompile Include="GameObjects\Room\Door.cpp" />
     <ClCompile Include="GameObjects\Room\IsometricTile.cpp" />
     <ClCompile Include="Controllers\MouseController.cpp" />
+    <ClCompile Include="Objective.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -179,6 +180,7 @@
     <ClInclude Include="GameObjects\Room\Door.h" />
     <ClInclude Include="GameObjects\Room\IsometricTile.h" />
     <ClInclude Include="Controllers\MouseController.h" />
+    <ClInclude Include="Objective.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

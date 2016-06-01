@@ -4,6 +4,8 @@
 #include <GameObjects/Room/IsometricTile.h>
 #include "../../Factories/PlayerFactory/PlayerFactory.h"
 #include "../../Factories/EnemyFactory/EnemyFactory.h"
+#include "../../Factories/ObjectiveFactory/ObjectiveFactory.h"
+
 #include <CU/StaticArray/StaticArray.h>
 
 struct TiledData
@@ -18,6 +20,8 @@ struct TiledData
 	CommonUtilities::Point2ui myMapSize;
 	PlayerFactory * myPlayerFactory;
 	EnemyFactory * myEnemyFactory;
+	ObjectiveFactory* myObjectiveFactory;
 	CommonUtilities::StaticArray<Player*, 2> myPlayers;
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
+	CommonUtilities::GrowingArray<Objective*> myObjectives;
 };
