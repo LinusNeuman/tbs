@@ -5,6 +5,9 @@
 #include <GameObjects/Room/IsometricTile.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <Message/EnemyChangedDirectionMessage.h>
+#include <Message/FightWithEnemyMessage.h>
+#include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
+
 
 EnemyController::EnemyController()
 {
@@ -14,6 +17,12 @@ EnemyController::EnemyController()
 
 EnemyController::~EnemyController()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartFight, *this);
+}
+
+void EnemyController::Init()
+{
+	SingletonPostMaster::AddReciever(RecieverTypes::eStartFight, *this);
 }
 
 void EnemyController::PreTurn()
@@ -33,37 +42,51 @@ void EnemyController::Update(CommonUtilities::Time aDeltaTime)
 	}
 	else
 	{
-		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
 	}
 }
 
 void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 {
-	static float index = 0;
-	index += 10 * aDeltaTime.GetSeconds();
-	for (unsigned short i = 0; i < myEnemies.Size(); i++)
+	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
+		myEnemies[i]->Update(aDeltaTime);
+		if(myFloor->GetTile(CU::Vector2ui(myEnemies[i]->GetPosition().x, myEnemies[i]->GetPosition().y)).GetVisible() == true)
+		{
+			myEnemies[i]->SetVisibleState(true);
+		}
+		else
+		{
+			myEnemies[i]->SetVisibleState(false);
+		}
 		if (myEnemies[i]->GetActiveState() == true)
-			CreateEnemyRayTrace(myEnemies[i]->GetPosition(), index, 45.f, 4.f);
+		{
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirection(), 45.f, 4.f);
+		}
 	}
-	if (index >= 80)
-		index = 0;
 }
 
 void EnemyController::Draw()
 {
 	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		myEnemies[i]->Draw();
+	{		
+		if (myEnemies[i]->GetVisibleState() == true)
+		{
+			myEnemies[i]->Draw();
+		}
 	}
 }
 
 void EnemyController::EnemyDone()
 {
 	++myCurrentEnemy;
-	if (myCurrentEnemy == myEnemies.Size())
+	if (myCurrentEnemy >= myEnemies.Size())
 	{
-		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
+	}
+	else
+	{
+		myEnemies[myCurrentEnemy]->Reset();
 	}
 }
 
@@ -113,61 +136,11 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 
 }
 
-void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, int aIndex, float aAngle, float aMagnitude)
+void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &aDirection, float aAngle, float aMagnitude)
 {
-	//Will be replaced when enemies has a direction
-	if (aIndex == 10)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, 1), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else if (aIndex == 20)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 1), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else if (aIndex ==30)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, 0), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else if (aIndex == 40)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1, -1), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else if (aIndex == 50)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0, -1), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else if (aIndex == 60)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, -1), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else if (aIndex == 70)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 0), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else if (aIndex == 80)
-	{
-		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1, 1), aAngle, aMagnitude);
-		SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
-	}
-	else
-	{
-		
-	}
+	ResetTileShaders();
+	CalculateFoVBasedOnAngle(aPosition, aDirection, aAngle, aMagnitude);
+	SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
 }
 
 void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
@@ -230,4 +203,10 @@ void EnemyController::AddEnemy(Enemy* aEnemy)
 {
 	aEnemy->myController = this;
 	myEnemies.Add(aEnemy);
+	myEnemies.GetLast()->SetIndex(myEnemies.Size() - 1);
+}
+
+void EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
+{
+	myEnemies[aMessage.myEnemyIndex]->Fight();
 }

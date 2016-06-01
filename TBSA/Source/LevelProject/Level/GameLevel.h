@@ -1,10 +1,8 @@
 #pragma once
 
 #include <CU/GrowingArray/GrowingArray.h>
-#include <PlayerFactory/PlayerFactory.h>
-#include <EnemyFactory/EnemyFactory.h>
 #include <Animation/Animation.h>
-#include <NavGraph/Graph/NavGraph.h>
+#include <NavGraph\Graph\NavGraph.h>
 #include <TiledData/TiledData.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Camera/Camera2D.h>
@@ -22,14 +20,13 @@ class GameLevel : public MessageReciever
 public:
 	GameLevel();
 	~GameLevel();
-	void Init(const std::string& aLevelPath);
+	void Init(TiledData* aTileData);
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
 
 	void RecieveMessage(const DijkstraMessage & aMessage) override;
 	void RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
-
 private:
 
 	GameFloor myFloor;
@@ -38,11 +35,8 @@ private:
 	PlayerController *myPlayerController;
 	EnemyController *myEnemyController;
 
-	PlayerFactory myPlayerFactory;
-	EnemyFactory myEnemyFactory;
-
 	NavGraph myNavGraph;
-	TiledData myTiledData;
+	TiledData* myTiledData;
 	CommonUtilities::Vector2ui myDimensions;
 
 	TurnManager myTurnManager;

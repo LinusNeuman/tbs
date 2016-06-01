@@ -24,6 +24,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 
 #include <Input/SingletonIsometricInputWrapper.h>
+#include <climits>
 
 // Audio
 //#include "../Audio/Source/Instances/SoundEffect.h"

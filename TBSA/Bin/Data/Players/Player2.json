@@ -4,13 +4,13 @@
     "startPositionY":  5,
     "animations": 
     [
-    	{
-		"path": "Data/Animations/Player1/PlayerIdleAnimation.json"
-	},
-    	{
-		"path": "Data/Animations/Player1/PlayerTurnAnimation.json"
-	},
         {
+            "path": "Data/Animations/Player1/PlayerIdleAnimation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/PlayerTurnAnimation.json"
+        },
+	    {
             "path": "Data/Animations/Player2/longJohnIdle000Animation.json"
         },
         {

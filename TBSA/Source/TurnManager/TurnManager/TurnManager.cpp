@@ -2,6 +2,7 @@
 #include "TurnManager.h"
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/NavigationClearMessage.h>
+#include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
 TurnManager::TurnManager(): myCurrentTurn(static_cast<eTurn>(0))
 {
@@ -41,9 +42,12 @@ void TurnManager::ForceTurn(eTurn aTurn)
 	myCurrentTurn = aTurn;
 }
 
-void TurnManager::RecieveMessage(const EndTurnMessage&)
+void TurnManager::RecieveMessage(const GUIMessage& aMessage)
 {
-	EndTurn();
+	if (aMessage.myType == RecieverTypes::eTurn)
+	{
+		EndTurn();
+	}
 }
 
 void TurnManager::EndTurn()
@@ -74,6 +78,7 @@ void TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 void TurnManager::PlayerEndTurn()
 {
 	SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+	myPlayerController.AfterPlayerTurn();
 	EndTurn();
 }
 

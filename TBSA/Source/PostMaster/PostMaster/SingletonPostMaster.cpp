@@ -23,22 +23,34 @@ void SingletonPostMaster::Destroy()
 	}
 }
 
-void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd)
+void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd, const RecieverOrder aPriority /*= RecieverOrder::eDefault*/)
 {
-	for (int i = 0; i < GetInstance().myRecievers[static_cast<unsigned short>(aTypeToRecieve)].Size(); ++i)
+	Reciever tempReciver(aRecieverToAdd, aPriority);
+	if (aRecieverToAdd.myRecieverOrder != RecieverOrder::eDefault)
 	{
-		if (GetInstance().myRecievers[static_cast<unsigned short>(aTypeToRecieve)][i] == &aRecieverToAdd)
+		tempReciver = Reciever(aRecieverToAdd, aRecieverToAdd.myRecieverOrder);
+	}
+	
+	if (GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)].Find(tempReciver) != GetInstance().myRecievers.FoundNone)
+	{
+		return;
+	}
+
+	for (unsigned short iReciever = 0; iReciever < GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)].Size(); ++iReciever)
+	{
+		if (tempReciver.myOrder < GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)][iReciever].myOrder)
 		{
-			return;
+			GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)].Insert(iReciever, tempReciver);
 		}
 	}
 
-	GetInstance().myRecievers[static_cast<unsigned short>(aTypeToRecieve)].Add(&aRecieverToAdd);
+	GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)].Add(tempReciver);
 }
 
 void SingletonPostMaster::RemoveReciever(const RecieverTypes aTypeUnsubscribe, MessageReciever & aRecieverToRemove)
 {
-	GetInstance().myRecievers[static_cast<unsigned short>(aTypeUnsubscribe)].RemoveCyclic(&aRecieverToRemove);
+	Reciever tempReciever(aRecieverToRemove);
+	GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)].RemoveCyclic(tempReciever);
 }
 
 void SingletonPostMaster::RemoveReciever(MessageReciever& aReceiver)
@@ -65,7 +77,7 @@ SingletonPostMaster::SingletonPostMaster()
 	myRecievers.Init(static_cast<unsigned short>(RecieverTypes::enumlength));
 	for (unsigned short iRecieverTypes = 0; iRecieverTypes < static_cast<unsigned short>(RecieverTypes::enumlength); ++iRecieverTypes)
 	{
-		myRecievers.Add(CU::GrowingArray<MessageReciever*>());
+		myRecievers.Add(CU::GrowingArray<Reciever>());
 		myRecievers.GetLast().Init(5);
 	}
 }

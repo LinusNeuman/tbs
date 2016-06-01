@@ -32,9 +32,11 @@ public:
 
 	void __forceinline SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent);
 
+	
 	bool __forceinline OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePosition);
 
 	virtual void WhenHovered();
+	virtual void WhenClicked();
 
 	bool __forceinline GetIsHovered();
 

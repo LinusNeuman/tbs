@@ -201,6 +201,9 @@
     <ClInclude Include="CU\Heap\PointerLesser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CU\Utility\CommonCasts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CU\DLDebug\StackWalker\StackWalker.cpp">

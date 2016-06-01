@@ -27,6 +27,8 @@
 #include <Shader/Shaders.h>
 #include <tga2d/shaders/customshader.h>
 
+#include <Message/SetHWNDMessage.h>
+
 using namespace std::placeholders;
 
 
@@ -52,6 +54,7 @@ CGame::CGame()
 
 	GUIFactory::Create();
 	AudioManager::Create();
+	SingletonPostMaster::AddReciever(RecieverTypes::eWindowHandleChange, *this);
 }
 
 
@@ -61,7 +64,7 @@ CGame::~CGame()
 }
 
 
-void CGame::Init(const std::wstring& aVersion)
+void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 {
 	unsigned short windowWidth = static_cast<unsigned short>(GetSystemMetrics(SM_CXSCREEN));
 	unsigned short windowHeight = static_cast<unsigned short>(GetSystemMetrics(SM_CYSCREEN));
@@ -124,7 +127,10 @@ void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
 	SendPostMessage(startLevelMessage);
 }
 
-
+void CGame::RecieveMessage(const SetHWNDMessage & aMessage)
+{
+	myWindowHandle = aMessage.myWindowHandle;
+}
 
 void CGame::InitCallBack()
 {
@@ -174,8 +180,7 @@ void CGame::InitCallBack()
 	myMenuState->Init();
 	myGameStateStack.AddMainState(myMenuState);
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
-
-	
+		
 }
 
 
@@ -190,7 +195,11 @@ void CGame::UpdateCallBack()
 void CGame::UpdateWork()
 {
 	//ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "ThreadPool: Update");
-	IsometricInput::Update();
+
+	if (GetActiveWindow() == myWindowHandle)
+	{
+		IsometricInput::Update();
+	}
 	CU::TimeManager::Update();
 
 
@@ -218,5 +227,5 @@ void CGame::RenderWork()
 
 void CGame::LogCallback( std::string aText )
 {
-	DL_PRINT(aText.c_str());
+	//DL_PRINT(aText.c_str());
 }
