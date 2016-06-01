@@ -36,7 +36,7 @@ void EnemyController::PreTurn()
 
 void EnemyController::Update(CommonUtilities::Time aDeltaTime)
 {
-	if (myEnemies.Size() > 0)
+	if (myEnemies.Size() > 0 && myCurrentEnemy < myEnemies.Size())
 	{
 		myEnemies[myCurrentEnemy]->UpdateEnemy();
 	}

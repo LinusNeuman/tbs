@@ -103,6 +103,7 @@ public:
 		return myTargetPosition;
 	}
 
+	virtual void AlmostReachTarget() = 0;
 	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
 	StaticSprite* GetSprite() const
