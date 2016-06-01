@@ -9,7 +9,6 @@ LevelFactory::LevelFactory()
 
 LevelFactory::~LevelFactory()
 {
-	//delete(myTileData);
 }
 
 GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath)
@@ -28,5 +27,12 @@ void LevelFactory::LoadLevel(const std::string& aLevelPath)
 	myTileData.myPlayerFactory = &myPlayerFactory;
 	myTileData.myEnemyFactory = &myEnemyFactory;
 
+	myTileData.myEnemies.RemoveAll();
+
 	TiledLoader::Load(aLevelPath, myTileData);
+
+	/*for (int i = 0; i < myTileData.myEnemies.Size(); i++)
+	{
+		myTileData.myEnemies[i]->Init()
+	}*/
 }
