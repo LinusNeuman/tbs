@@ -48,11 +48,6 @@ void Player::CostAP(const int aCost)
 	myCurrentAP -= aCost;
 }
 
-void Player::ReachedTarget()
-{
-	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
-}
-
 void Player::OnClick()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
@@ -163,9 +158,20 @@ void Player::DecideAnimation()
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
+
 }
 
 void Player::SetNoTarget()
 {
 	myEnemyTargetIndex = USHRT_MAX;
+}
+
+void Player::AlmostReachTarget()
+{
+	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
+}
+
+void Player::ReachedTarget()
+{
+	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerReachedEndOfPath, *this));
 }

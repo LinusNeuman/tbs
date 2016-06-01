@@ -32,6 +32,7 @@ private:
 	GameFloor myFloor;
 	Player * myPlayer, *myPlayer2;
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
+	CommonUtilities::GrowingArray<Objective*> myObjectives;
 	PlayerController *myPlayerController;
 	EnemyController *myEnemyController;
 

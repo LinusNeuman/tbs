@@ -282,13 +282,13 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 						DL_ASSERT(false, "ERROR:  Objective type does not exist");
 					}
 
-					//Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
+					Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
 
 					const float posX = static_cast<float>(GetNumber(goal["x"])) / 64;
 					const float posY = static_cast<float>(GetNumber(goal["y"])) / 64;
 
-					/*objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
-					someTiles.myObjectives.Add(objectiveObject);*/
+					objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
+					someTiles.myObjectives.Add(objectiveObject);
 
 				}
 			}

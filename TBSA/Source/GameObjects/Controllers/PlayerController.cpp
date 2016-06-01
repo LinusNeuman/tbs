@@ -44,6 +44,8 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
+	SingletonPostMaster::RemoveReciever(*this);
 }
 
 void PlayerController::Init()
@@ -55,6 +57,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyChangedDirection, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -221,10 +224,20 @@ void PlayerController::AfterPlayerTurn()
 
 void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 {
-	if (mySelectedPlayer != &aMessage.myPlayer)
+	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
 	{
-		myClickedOnPlayer = true;
-		SelectPlayer();
+		if (mySelectedPlayer != &aMessage.myPlayer)
+		{
+			myClickedOnPlayer = true;
+			SelectPlayer();
+		}
+	}
+	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)
+	{
+		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX)
+		{
+			ActivePlayerFight();
+		}
 	}
 }
 
@@ -261,7 +274,6 @@ void PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 	myClickedOnEnemy = true;
 	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex());
-	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
 }
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
@@ -279,6 +291,12 @@ void PlayerController::RecieveMessage(const EnemyChangedDirectionMessage& aMessa
 			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
 		}
 	}
+}
+
+void PlayerController::ActivePlayerFight()
+{
+	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
+	mySelectedPlayer->SetNoTarget();
 }
 
 void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)

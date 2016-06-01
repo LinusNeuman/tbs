@@ -72,6 +72,8 @@ void GameLevel::Init(TiledData* aTileData)
 		myEnemyController->AddEnemy(myEnemies[i]);
 	}
 
+	myObjectives = myTiledData->myObjectives;
+
 	/*CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 	path.Init(5);
 
