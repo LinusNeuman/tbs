@@ -10,6 +10,7 @@
 #include "TiledData/TiledData.h"
 #include <Rend/StaticSprite.h>
 #include "PathAndName.h"
+#include "Objective.h"
 
 namespace
 {
@@ -261,6 +262,35 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					someTiles.myEnemies.Add(enemyActor);
 
 					enemyIndexes[GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;
+				}
+			}
+			else if (name == "Objective")
+			{
+				picojson::array objects = GetArray(currentLayer["objects"]);
+				for (size_t k = 0; k < objects.size(); k++)
+				{
+					picojson::object goal = GetObject(objects[k]);
+
+					eObjectiveType objectiveType = eObjectiveType::eLevelEnd;
+					const std::string typeString = GetString(goal["type"]);
+
+					if (typeString == "LevelEnd")
+					{
+						objectiveType = eObjectiveType::eLevelEnd;
+					}
+					else
+					{
+						DL_ASSERT(false, "ERROR:  Objective type does not exist");
+					}
+
+					//Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
+
+					const float posX = static_cast<float>(GetNumber(goal["x"])) / 64;
+					const float posY = static_cast<float>(GetNumber(goal["y"])) / 64;
+
+					/*objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
+					someTiles.myObjectives.Add(objectiveObject);*/
+
 				}
 			}
 		}
