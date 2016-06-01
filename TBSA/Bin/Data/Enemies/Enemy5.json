@@ -1,8 +1,6 @@
 {
 	"actionPoints" : 5,
     "actorType": 6,
-    "startPositionX": 6,
-    "startPositionY":  4,
     "animations": 
     [
         {

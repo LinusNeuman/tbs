@@ -27,8 +27,7 @@ void EnemyFactory::UpdateDataStruct(const std::string &aStringPath, ActorData &a
 	picojson::value enemyValue = JsonWrapper::LoadPicoValue(aStringPath);
 	picojson::object& enemyObject = JsonWrapper::GetPicoObject(enemyValue);
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", enemyObject));
-	/*aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", enemyObject);
-	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", enemyObject);*/
+	aEnemyData.myActionPoints = JsonWrapper::GetInt("actionPoints", enemyObject);
 	AddEnemyAnimation(aActorData, aEnemyData, enemyObject);
 }
 
