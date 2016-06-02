@@ -93,7 +93,7 @@ void GameLevel::Init(TiledData* aTileData)
 	{
 		for (size_t i = 0; i < myObjectives.Size(); i++)
 		{
-			myFloor.GetTile(CU::Vector2ui(myObjectives[i]->GetPosition().x, myObjectives[i]->GetPosition().y)).SetTileType(eTileType::IS_OBJECTIVE);
+			myFloor.GetTile(CU::Vector2ui(USHORTCAST(myObjectives[i]->GetPosition().x), USHORTCAST(myObjectives[i]->GetPosition().y))).SetTileType(eTileType::IS_OBJECTIVE);
 		}
 	}
 

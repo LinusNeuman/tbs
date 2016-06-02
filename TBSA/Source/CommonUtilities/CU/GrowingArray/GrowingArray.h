@@ -463,6 +463,10 @@ namespace CommonUtilities
 		return myImInitialized;
 	}
 
+
+	/*
+		TODO ADD explanation on how to use.
+	*/
 	template<typename T, typename CountType /*= unsigned short*/>
 	void CommonUtilities::GrowingArray<T, CountType>::CallFunctionOnAllMembers(std::function<void(T&)> aFunction)
 	{

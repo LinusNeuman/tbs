@@ -21,9 +21,8 @@ Actor::Actor()
 	myPath.Init(1);
 	myCurrentWaypoint = 0;
 	myState = eActorState::eWalking;
-
-	//myBoxCollider = new BoxCollider();
-	//myBoxCollider->SetPositionAndSize(CU::Vector2f::One, CU::Vector2f::Half);
+	myHasObjectiveFlag = false;
+	myObjectiveTargetPosition = TilePositionf::One;
 }
 
 Actor::~Actor()
@@ -96,12 +95,8 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		{
 			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 			UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
-			//myPosition += myVelocity * aDeltaTime.GetSeconds();
 			CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
 			
-
-
-
 			if ((CU::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 			{
 				myAtTarget = true;
@@ -157,6 +152,16 @@ void Actor::OnMove(CU::Vector2ui aTargetPosition)
 
 }
 
+void Actor::AfterTurn()
+{
+	ResetObjectiveState();
+}
+
+void Actor::NextToObjective()
+{
+
+}
+
 void Actor::SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>& aPath)
 {
 	if (myCurrentWaypoint == myPath.Size())
@@ -182,6 +187,10 @@ int Actor::GetMyAP() const
 	return myAP;
 }
 
+
+
+
+
 void Actor::UpdatePath()
 {
 	if (myAtTarget == true )
@@ -198,7 +207,14 @@ void Actor::UpdatePath()
 		}
 		else if (myCurrentWaypoint == myPath.Size())
 		{
-			ReachedTarget();
+			if (GetObjectiveState() == true && (myPosition - myObjectiveTargetPosition).Length() <= 1.f)
+			{
+				NextToObjective();
+			}
+			else
+			{
+				ReachedTarget();
+			}
 		}
 	}
 }
@@ -217,6 +233,7 @@ void Actor::StopPath()
 {
 	myCurrentWaypoint = myPath.Size();
 }
+
 
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {
