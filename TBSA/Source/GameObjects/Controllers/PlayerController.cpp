@@ -182,6 +182,10 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
+	/*for (size_t i = 0; i < myDebugEnd.size(); i++)
+	{
+		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
+	}*/
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -367,7 +371,6 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 void PlayerController::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
 {
-	
 	int r, xc, yc, pk, x, y;
 	xc = static_cast<int>(aPosition.x);
 	yc = static_cast<int>(aPosition.y);
@@ -393,15 +396,14 @@ void PlayerController::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRad
 	
 void PlayerController::CalculateCircleRayTrace(const TilePositionf & aPosition, const TilePositionf & aPlayerPosition)
 {
-	
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
-
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
 }
 
 int PlayerController::CalculatePoint(float aValue) const
