@@ -207,7 +207,7 @@ void Actor::UpdatePath()
 		}
 		else if (myCurrentWaypoint == myPath.Size())
 		{
-			if ((myPosition - myObjectiveTargetPosition).Length() <= 1.f)
+			if (GetObjectiveState() == true && (myPosition - myObjectiveTargetPosition).Length() <= 1.f)
 			{
 				NextToObjective();
 			}

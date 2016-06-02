@@ -90,6 +90,8 @@ void Player::PreTurn()
 	myIsSeen = false;
 }
 
+
+
 void Player::DecideAnimation()
 {
 	if (myState == eActorState::eIdle)
@@ -181,4 +183,9 @@ void Player::AlmostReachTarget()
 void Player::ReachedTarget()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerReachedEndOfPath, *this));
+}
+
+void Player::NextToObjective()
+{
+	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerNextToObjective, *this));
 }

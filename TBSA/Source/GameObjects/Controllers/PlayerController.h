@@ -54,7 +54,7 @@ public:
 	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
-	void ActivePlayerFight();
+	void ActivePlayerFight(const unsigned short aPlayerIndex);
 
 	void BuildPath(PathArray & aPathContainterToBuild);
 	enumMouseState GetCurrentMouseState();

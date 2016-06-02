@@ -45,6 +45,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::RemoveReciever(*this);
 }
 
@@ -58,11 +59,13 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
 {
 	myPlayers.Add(aPlayer);
+	myPlayers.GetLast()->SetIndex(myPlayers.Size() - 1);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 	SendPostMessage(PlayerAddedMessage(RecieverTypes::ePlayerAdded));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()) , mySelectedPlayer->GetMyAP());
@@ -262,11 +265,11 @@ void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 			//SelectPlayer();
 		}
 	}
-	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)
+	else if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
 	{
 		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX)
 		{
-			ActivePlayerFight();
+			ActivePlayerFight(aMessage.myPlayer.GetIndex());
 		}
 	}
 }
@@ -323,10 +326,10 @@ void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 	}
 }
 
-void PlayerController::ActivePlayerFight()
+void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)
 {
-	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
-	mySelectedPlayer->SetNoTarget();
+	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, myPlayers[aPlayerIndex]->GetEnemyTarget()));
+	myPlayers[aPlayerIndex]->ResetObjectiveState();
 }
 
 void PlayerController::BuildPath(PathArray & aPathContainterToBuild)

@@ -31,14 +31,17 @@ public:
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
 	unsigned short GetEnemyTarget();
-
 	virtual void AlmostReachTarget() override;
+	virtual void NextToObjective() override;
 
 	void SetIndex(const unsigned short aIndex);
 	unsigned short GetIndex() const;
 
 	virtual void AfterTurn() override;
 	void PreTurn();
+
+	
+
 private:
 
 	unsigned short myPlayerIndex;
