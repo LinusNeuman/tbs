@@ -5,6 +5,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <PostMaster/MessageReceiver.h>
+#include <CU/Utility/GameSpecificTypeDefs.h>
 
 class PlayState;
 class Actor;
@@ -40,13 +41,15 @@ public:
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
 	virtual void RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage) override;
+	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
 	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
 	void ActivePlayerFight();
 
-	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
+	void BuildPath(PathArray & aPathContainterToBuild);
+
+	void RayTrace(const TilePositionf &aPosition, const TilePositionf &anotherPosition);
 	int CalculatePoint(float aValue) const;
 	void ResetTileShaders();
 	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);

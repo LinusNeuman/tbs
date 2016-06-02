@@ -110,7 +110,10 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	myEnemyController->ConstantUpdate(aTimeDelta);
 	myPlayerController->ConstantUpdate(aTimeDelta);
-	myTurnManager.Update(aTimeDelta);
+	if(myTurnManager.Update(aTimeDelta) == false)
+	{
+		return;
+	}
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
@@ -130,7 +133,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	{
 		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
 		{
-			if (myFloor.GetTile(i).GetVisible() == false)
+			if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH)
 			{
 				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FogOfWarShader")->myShader);
 			}

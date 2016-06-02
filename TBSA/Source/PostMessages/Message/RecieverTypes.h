@@ -22,13 +22,15 @@ enum class RecieverTypes
 	ePlayGame,
 	eActorPositionChanged,
 	ePlayerAdded,
-	eEnemyChangedDirection,
+	eEnemyDirectionChanged,
 	eWindowHandleChange,
 	ePlayerChangedTarget,
 	ePlayEvents,
 	eClickedOnEnemy,
 	ePlayerReachedEndOfPath,
 	eEnemyReachedEndOfPath,
+	ePlayerTargetEnemy,
 	eStartFight,
+	eFlagPlayerDied,
 	enumlength
 };

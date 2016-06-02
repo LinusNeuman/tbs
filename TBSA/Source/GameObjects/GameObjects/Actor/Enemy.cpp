@@ -26,6 +26,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myCurrentPathIndex = 0;
 	myAP = aEnemyData.myActionPoints;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+	myEnemyPath.Init(1);
 }
 
 void Enemy::UpdateEnemy()
@@ -64,6 +65,10 @@ void Enemy::UpdateEnemy()
 			SetPath(path);
 			myHasMoved = true;
 		}
+		else if (myEnemyPath.Size() == 0)
+		{
+			myController->EnemyDone();
+		}
 
 		if (mySomeoneSeesPlayer == true)
 		{
@@ -79,7 +84,7 @@ void Enemy::UpdateEnemy()
 
 void Enemy::ReachedTarget()
 {
-	
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyReachedEndOfPath, *this));
 }
 
 void Enemy::AlmostReachTarget()
@@ -102,10 +107,6 @@ void Enemy::Reset()
 	myHasMoved = false;
 	mySomeoneSeesPlayer = false;
 }
-
-
-
-
 
 void Enemy::OnClick()
 {
