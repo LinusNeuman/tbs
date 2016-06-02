@@ -55,8 +55,6 @@ public:
 
 private:
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
-
-	void ActivePlayerFight();
 	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;
 
 	void BuildPath(PathArray & aPathContainterToBuild);

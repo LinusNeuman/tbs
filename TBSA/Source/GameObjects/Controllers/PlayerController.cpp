@@ -45,6 +45,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::RemoveReciever(*this);
 }
 
@@ -58,11 +59,14 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
+
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
 {
 	myPlayers.Add(aPlayer);
+	myPlayers.GetLast()->SetIndex(myPlayers.Size() - 1);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 	SendPostMessage(PlayerAddedMessage(RecieverTypes::ePlayerAdded));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) , mySelectedPlayer->GetMyAP());
@@ -78,7 +82,7 @@ void PlayerController::SelectPlayer()
 	}
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
 
-	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
 }
 
@@ -139,45 +143,11 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 #pragma endregion
 
-	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
-	{
-		myClickedOnPlayer = false;
-		myClickedOnEnemy = false;
-
-		PointCollider tempCollider;
-
-		tempCollider.ChangePosition(IsometricInput::GetMouseWindowPositionIsometric());
-
-		SendPostMessage(ColliderMessage(RecieverTypes::eMouseClicked, tempCollider));
-
-		
-		if (myClickedOnPlayer == false)
-		{
-			if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
-			{
-				PathArray positionPath;
-				BuildPath(positionPath);
-
-				if (myClickedOnEnemy == true)
-				{
-					positionPath.RemoveAtIndex(positionPath.Size() - 1);
-				}
-
-				if (GetPlayerAP() >= (positionPath.Size() - 1))
-				{
-					CostAP(positionPath.Size() - 1);
-					NotifyPlayers(positionPath);
-					SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
-				}
-			}
-		}
-	}
-
+#pragma region Keyboard Input
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
-
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
 		for (unsigned int i = 0; i < myPlayers.Size(); ++i)
@@ -187,9 +157,81 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			{
 				CreatePlayerFoV(CU::Vector2f(peakPosition), 3);
 			}
-		}	
+		}
+	}
+#pragma endregion
+
+#pragma region Mouse Input
+	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	{
+		enumMouseState currentState = GetCurrentMouseState();
+
+
+		switch (currentState)
+		{
+		case enumMouseState::eClickedOnPlayer:
+			SelectPlayer();
+			break;
+		case enumMouseState::eClickedOnEmptyTile:
+		case enumMouseState::eClickedOnEnemy:
+		{
+			PathArray positionPath;
+			BuildPath(positionPath);
+
+			if (currentState == enumMouseState::eClickedOnEnemy)
+			{
+				positionPath.RemoveAtIndex(positionPath.Size() - 1);
+			}
+
+			if (GetPlayerAP() >= (positionPath.Size() - 1))
+			{
+				CostAP(positionPath.Size() - 1);
+				NotifyPlayers(positionPath);
+				SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+			}
+		}
+			break;
+		case enumMouseState::enumLength:
+			DL_ASSERT(false, "Error in handling playercontroller mouse input");
+		case enumMouseState::eClickedOnVoid:
+			break;
+		}
+	}
+#pragma  endregion
+
+}
+
+enumMouseState PlayerController::GetCurrentMouseState()
+{
+	const TilePosition mousePosition = TilePosition(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
+
+	myClickedOnPlayer = false;
+	myClickedOnEnemy = false;
+
+	PointCollider tempCollider;
+
+	tempCollider.ChangePosition(IsometricInput::GetMouseWindowPositionIsometric());
+
+	SendPostMessage(ColliderMessage(RecieverTypes::eMouseClicked, tempCollider));
+
+	if (myClickedOnPlayer == true)
+	{
+		return enumMouseState::eClickedOnPlayer;
+	}
+	else if (myClickedOnEnemy == true)
+	{
+		return enumMouseState::eClickedOnEnemy;
+	}
+	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false)
+	{
+		return enumMouseState::eClickedOnVoid;
+	}
+	else if (myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+	{
+		return enumMouseState::eClickedOnEmptyTile;
 	}
 
+	return enumMouseState::enumLength;
 }
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
@@ -239,14 +281,14 @@ void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 		if (mySelectedPlayer != &aMessage.myPlayer)
 		{
 			myClickedOnPlayer = true;
-			SelectPlayer();
+			//SelectPlayer();
 		}
 	}
-	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)
+	else if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
 	{
 		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX)
 		{
-			ActivePlayerFight();
+			ActivePlayerFight(aMessage.myPlayer.GetIndex());
 		}
 	}
 }
@@ -283,7 +325,7 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 void PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 	myClickedOnEnemy = true;
-	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex());
+	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
 }
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
@@ -303,10 +345,10 @@ void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 	}
 }
 
-void PlayerController::ActivePlayerFight()
+void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)
 {
-	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
-	mySelectedPlayer->SetNoTarget();
+	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, myPlayers[aPlayerIndex]->GetEnemyTarget()));
+	myPlayers[aPlayerIndex]->ResetObjectiveState();
 }
 
 bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const
