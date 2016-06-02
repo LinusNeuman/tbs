@@ -176,6 +176,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		}
 	}
 #pragma  endregion
+
 }
 
 enumMouseState PlayerController::GetCurrentMouseState()
@@ -298,7 +299,7 @@ void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 void PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 	myClickedOnEnemy = true;
-	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex());
+	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
 }
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)

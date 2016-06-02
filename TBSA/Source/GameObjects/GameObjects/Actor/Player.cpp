@@ -23,7 +23,6 @@ Player::~Player()
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 {
 	Actor::Init(aActorData);
-	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
 	myCurrentAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
@@ -76,6 +75,7 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 
 void Player::AfterTurn()
 {
+	Actor::AfterTurn();
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
@@ -165,6 +165,7 @@ void Player::OnMove(CU::Vector2ui aTargetPosition)
 
 void Player::SetNoTarget()
 {
+	ResetObjectiveState();
 	myEnemyTargetIndex = USHRT_MAX;
 }
 

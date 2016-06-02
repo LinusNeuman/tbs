@@ -24,23 +24,20 @@ public:
 	
 	void ReachedTarget()override;
 
-
 	virtual void OnClick() override;
 
 	void RecieveMessage(const PlayerSeenMessage & aMessage) override;
 
-	void SetTargetEnemy(const unsigned short aIndex);
+	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
 	unsigned short GetEnemyTarget();
 
-
 	virtual void AlmostReachTarget() override;
 
-	void AfterTurn();
+	virtual void AfterTurn() override;
 	void PreTurn();
 private:
 
-	TilePositionf myEnemyTargetPosition;
 	unsigned short myEnemyTargetIndex;
 
 	int myActionPointMax;
@@ -50,13 +47,13 @@ private:
 	bool myShouldDie;
 };
 
-inline void Player::SetTargetEnemy(const unsigned short aIndex)
+inline void Player::SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition)
 {
 	myEnemyTargetIndex = aIndex;
+	SetObjective(aEnemyPosition);
 }
 
 inline unsigned short Player::GetEnemyTarget()
 {
 	return myEnemyTargetIndex;
 }
-
