@@ -46,7 +46,7 @@ public:
 
 private:
 	void ActivePlayerFight();
-
+	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;
 	void BuildPath(PathArray & aPathContainterToBuild);
 
 	void RayTrace(const TilePositionf &aPosition, const TilePositionf &anotherPosition);

@@ -171,13 +171,25 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				}
 			}
 		}
-
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
+
+	if (IsometricInput::GetKeyPressed(DIK_P) == true)
+	{
+		for (unsigned int i = 0; i < myPlayers.Size(); ++i)
+		{
+			CU::Vector2ui peakPosition;
+			if (CheckIfCloseToDoor(CU::Vector2ui(myPlayers[i]->GetPosition()), peakPosition) == true)
+			{
+				CreatePlayerFoV(CU::Vector2f(peakPosition), 3);
+			}
+		}	
+	}
+
 }
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
@@ -295,6 +307,35 @@ void PlayerController::ActivePlayerFight()
 {
 	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
 	mySelectedPlayer->SetNoTarget();
+}
+
+bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const
+{
+	if (myFloor->GetTile(aPosition.x + 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(aPosition.x + 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeakLocation = aPosition + CU::Vector2ui(2, -1);
+		return true;
+	}
+	if (myFloor->GetTile(aPosition.x + 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(aPosition.x + 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeakLocation = aPosition + CU::Vector2ui(2, 1);
+		return true;
+	}
+	if (myFloor->GetTile(aPosition.x - 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR || 
+		myFloor->GetTile(aPosition.x - 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeakLocation = aPosition + CU::Vector2ui(-2, -1);
+		return true;
+	}
+	if (myFloor->GetTile(aPosition.x - 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR || 
+		myFloor->GetTile(aPosition.x - 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeakLocation = aPosition + CU::Vector2ui(-2, 1);
+		return true;
+	}
+	return false;	
 }
 
 void PlayerController::BuildPath(PathArray & aPathContainterToBuild)
