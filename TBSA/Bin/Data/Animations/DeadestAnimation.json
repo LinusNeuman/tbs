@@ -1,0 +1,16 @@
+{
+  "Name": "DeadestState",
+  "FilePath": "Sprites\\Enemies\\DeadestState.dds",
+  "SizeX": 128,
+  "SizeY": 128,
+  "AmountOfColumns": 1,
+  "AmountOfRows": 1,
+  "AmountOfFrames": 1,
+  "AnimationSpeed": 1,
+  "LoopStart": 1,
+  "LoopEnd": 1,
+  "ShouldLoop": true,
+  "IsInterruptible": true,
+  "InTransition": "",
+  "OutTransition": ""
+}
