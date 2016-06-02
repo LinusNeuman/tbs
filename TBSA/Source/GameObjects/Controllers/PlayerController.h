@@ -49,7 +49,7 @@ private:
 
 	void BuildPath(PathArray & aPathContainterToBuild);
 
-	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
+	void RayTrace(const TilePositionf &aPosition, const TilePositionf &anotherPosition);
 	int CalculatePoint(float aValue) const;
 	void ResetTileShaders();
 	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);
