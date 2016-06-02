@@ -33,5 +33,6 @@ enum class RecieverTypes
 	ePlayerTargetEnemy,
 	eStartFight,
 	eFlagPlayerDied,
+	eEnemyAttacked,
 	enumlength
 };
