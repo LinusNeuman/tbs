@@ -3,13 +3,16 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/NavigationClearMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
+#include <Message/PlayerDiedMessage.h>
 
-TurnManager::TurnManager(): myCurrentTurn(static_cast<eTurn>(0))
+TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(false)
 {
+	SingletonPostMaster::AddReciever(RecieverTypes::eFlagPlayerDied, *this);
 }
 
 TurnManager::~TurnManager()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagPlayerDied, *this);
 }
 
 void TurnManager::Update(CommonUtilities::Time aDeltaTime)
@@ -50,6 +53,11 @@ void TurnManager::RecieveMessage(const GUIMessage& aMessage)
 	}
 }
 
+void TurnManager::RecieveMessage(const FlagPlayerDiedMessage&)
+{
+	myPlayerDied = true;
+}
+
 void TurnManager::EndTurn()
 {
 	int turnIndex = static_cast<int>(myCurrentTurn);
@@ -62,6 +70,7 @@ void TurnManager::EndTurn()
 
 	myCurrentTurn = static_cast<eTurn>(turnIndex);
 	myPlayerController.RefillAllAP();
+
 }
 
 void TurnManager::PreparePlayer()

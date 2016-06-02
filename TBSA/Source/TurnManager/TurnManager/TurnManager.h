@@ -33,6 +33,7 @@ public:
 
 	void ForceTurn(eTurn aTurn);
 	void RecieveMessage(const GUIMessage&) override;
+	void RecieveMessage(const FlagPlayerDiedMessage&) override;
 private:
 	void EndTurn();
 
@@ -44,7 +45,7 @@ private:
 	void UpdateEnemy(CommonUtilities::Time aDeltaTime);
 
 	eTurn myCurrentTurn;
-
+	bool myPlayerDied;
 	PlayerController myPlayerController;
 	EnemyController myEnemyController;
 };

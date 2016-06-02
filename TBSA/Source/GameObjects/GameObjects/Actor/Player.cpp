@@ -8,7 +8,7 @@
 #include <Collision/BoxCollider.h>
 #include <Message/PlayerObjectMesssage.h>
 #include <Message/PlayerSeenMessage.h>
-#include <Message/PlayerDiedMessage.h>
+#include <Message/FlagPlayerDiedMessage.h>
 
 
 Player::Player()
@@ -59,7 +59,7 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	{
 		StopPath();
 		myCurrentAP = 0;
-
+		SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
 		if (myIsSeen == false)
 		{
 			myIsSeen = true;
@@ -69,7 +69,7 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 		{
 			myIsSeen = false;
 			myShouldDie = false;
-			SendPostMessage(PlayerDiedMessage(RecieverTypes::ePlayEvents));
+			
 		}
 	}
 }

@@ -79,7 +79,7 @@ void Enemy::UpdateEnemy()
 
 void Enemy::ReachedTarget()
 {
-	
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyReachedEndOfPath, *this));
 }
 
 void Enemy::AlmostReachTarget()
@@ -102,10 +102,6 @@ void Enemy::Reset()
 	myHasMoved = false;
 	mySomeoneSeesPlayer = false;
 }
-
-
-
-
 
 void Enemy::OnClick()
 {

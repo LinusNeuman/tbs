@@ -4,7 +4,7 @@
 #include <Message/EndTurnMessage.h>
 #include <GameObjects/Room/IsometricTile.h>
 #include <GameObjects/Room/GameFloor.h>
-#include <Message/EnemyChangedDirectionMessage.h>
+#include <Message/EnemyDirectionChangedMessage.h>
 #include <Message/FightWithEnemyMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
@@ -61,7 +61,7 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		}
 		if (myEnemies[i]->GetActiveState() == true)
 		{
-			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirection(), 45.f, 4.f);
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), (CU::Vector2f(myEnemies[i]->GetTargetPosition()) - myEnemies[i]->GetPosition()).GetNormalized(), 45.f, 4.f);
 		}
 	}
 }
@@ -140,7 +140,7 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, const C
 {
 	ResetTileShaders();
 	CalculateFoVBasedOnAngle(aPosition, aDirection, aAngle, aMagnitude);
-	SendPostMessage(EnemyChangedDirectionMessage(RecieverTypes::eEnemyChangedDirection));
+	SendPostMessage(EnemyDirectionChangedMessage(RecieverTypes::eEnemyDirectionChanged));
 }
 
 void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
@@ -210,3 +210,4 @@ void EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
 {
 	myEnemies[aMessage.myEnemyIndex]->Fight();
 }
+

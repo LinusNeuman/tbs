@@ -40,7 +40,7 @@ PlayerController::~PlayerController()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyChangedDirection, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -54,7 +54,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyChangedDirection, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
@@ -281,7 +281,7 @@ void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
 	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition));
 }
 
-void PlayerController::RecieveMessage(const EnemyChangedDirectionMessage& aMessage)
+void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessage)
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
