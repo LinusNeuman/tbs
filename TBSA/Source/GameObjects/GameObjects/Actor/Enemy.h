@@ -36,6 +36,7 @@ public:
 private:
 	unsigned short myIndex;
 
+	bool myIsDeadeastFlag;
 	bool myHasMoved;
 	bool myHasTurned;
 	bool mySomeoneSeesPlayer;
