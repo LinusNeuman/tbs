@@ -6,6 +6,7 @@
 
 TurnManager::TurnManager(): myCurrentTurn(static_cast<eTurn>(0))
 {
+	//ForceTurn(eTurn::ENEMY_END_TURN);
 }
 
 TurnManager::~TurnManager()
