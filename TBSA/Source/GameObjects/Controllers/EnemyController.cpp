@@ -101,10 +101,11 @@ void EnemyController::SetFloor(GameFloor& aFloor)
 	myFloor = &aFloor;
 }
 
-void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
+void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, eDirection aDirection)
 {
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
+	CU::Vector2f direction = (position - secondPosition).GetNormalized();
 	double x0, x1, y0, y1;
 	x0 = position.x;
 	y0 = position.y;
@@ -127,7 +128,15 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 		{
 			break;
 		}
-		myFloor->GetTile(x, y).SetInEnemyFoV(true);
+		for (unsigned int i = 0; i < myFloor->GetTile(x, y).GetAvailableDirections().Size(); i++)
+		{
+			if (myFloor->GetTile(x, y).GetAvailableDirections()[i] == aDirection)
+			{
+				myFloor->GetTile(x, y).SetInEnemyFoV(true);
+				break;
+			}
+		}
+		
 		if (error > 0)
 		{
 			x += x_inc;
@@ -139,6 +148,7 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 			error += dx;
 		}
 	}
+	
 
 }
 
@@ -148,35 +158,35 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirect
 	{
 	case eDirection::NORTH:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, -1.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, -1.0f), aAngle, aMagnitude, aDirection);
 		break;
 	case eDirection::NORTH_EAST:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, -1.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, -1.0f), aAngle, aMagnitude, aDirection);
 		break;
 	case eDirection::EAST:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 0.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 0.0f), aAngle, aMagnitude, aDirection);
 		break;
 	case eDirection::SOUTH_EAST:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 1.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 1.0f), aAngle, aMagnitude, aDirection);
 		break;
 	case eDirection::SOUTH:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, 1.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, 1.0f), aAngle, aMagnitude, aDirection);
 		break;
 	case eDirection::SOUTH_WEST:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 1.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 1.0f), aAngle, aMagnitude, aDirection);
 		break;
 	case eDirection::WEST:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 0.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 0.0f), aAngle, aMagnitude, aDirection);
 		break;
 	case eDirection::NORTH_WEST:
 		ResetTileShaders();
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, -1.0f), aAngle, aMagnitude);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, -1.0f), aAngle, aMagnitude, aDirection);
 		break;
 	default:
 		break;
@@ -185,7 +195,7 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirect
 	
 }
 
-void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
+void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude, eDirection aDirection)
 {
 	float angle = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
 	float angle2 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
@@ -217,11 +227,11 @@ void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, co
 		test5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
 	}
 
-	RayTrace(aPosition, aPosition + test);
-	RayTrace(aPosition, aPosition + test2);
-	RayTrace(aPosition, aPosition + test3);
-	RayTrace(aPosition, aPosition + test4);
-	RayTrace(aPosition, aPosition + test5);
+	RayTrace(aPosition, aPosition + test, aDirection);
+	RayTrace(aPosition, aPosition + test2, aDirection);
+	RayTrace(aPosition, aPosition + test3, aDirection);
+	RayTrace(aPosition, aPosition + test4, aDirection);
+	RayTrace(aPosition, aPosition + test5, aDirection);
 }
 
 int EnemyController::CalculatePoint(float aValue) const
