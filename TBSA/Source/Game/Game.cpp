@@ -66,6 +66,7 @@ CGame::~CGame()
 
 void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 {
+	(aHandle);
 	unsigned short windowWidth = static_cast<unsigned short>(GetSystemMetrics(SM_CXSCREEN));
 	unsigned short windowHeight = static_cast<unsigned short>(GetSystemMetrics(SM_CYSCREEN));
 
@@ -123,6 +124,7 @@ void CGame::RecieveMessage(const GUIMessage & aMessage)
 
 void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
 {
+	(aMessage);
 	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
 	SendPostMessage(startLevelMessage);
 }
@@ -200,6 +202,11 @@ void CGame::UpdateWork()
 	{
 		IsometricInput::Update();
 	}
+	else
+	{
+		IsometricInput::ResetInput();
+	}
+
 	CU::TimeManager::Update();
 
 

@@ -119,6 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameStates\LevelSelectState.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -129,6 +130,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameStates\LevelSelectState.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
     <ClInclude Include="stdafx.h" />

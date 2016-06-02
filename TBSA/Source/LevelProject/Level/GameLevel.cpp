@@ -89,6 +89,14 @@ void GameLevel::Init(TiledData* aTileData)
 	}
 
 	myPlayerController->SetCameraPositionToPlayer(1);
+	if (myObjectives.IsInitialized() == true)
+	{
+		for (size_t i = 0; i < myObjectives.Size(); i++)
+		{
+			myFloor.GetTile(CU::Vector2ui(USHORTCAST(myObjectives[i]->GetPosition().x), USHORTCAST(myObjectives[i]->GetPosition().y))).SetTileType(eTileType::IS_OBJECTIVE);
+		}
+	}
+
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
@@ -110,7 +118,10 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	myEnemyController->ConstantUpdate(aTimeDelta);
 	myPlayerController->ConstantUpdate(aTimeDelta);
-	myTurnManager.Update(aTimeDelta);
+	if(myTurnManager.Update(aTimeDelta) == false)
+	{
+		return;
+	}
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
@@ -130,7 +141,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	{
 		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
 		{
-			if (myFloor.GetTile(i).GetVisible() == false)
+			if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH)
 			{
 				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FogOfWarShader")->myShader);
 			}
@@ -189,6 +200,8 @@ void GameLevel::ConstructNavGraph()
 {
 	for (size_t i = 0; i < myFloor.Size(); i++)
 	{
+		
+
 		eTileType explainingType = myFloor.GetTile(i).GetTileType();
 		if (!(explainingType == eTileType::OPEN || explainingType == eTileType::DOOR || explainingType == eTileType::DOOR_2))
 		{

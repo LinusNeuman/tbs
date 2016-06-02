@@ -8,11 +8,12 @@
 #include <Collision/BoxCollider.h>
 #include <Message/PlayerObjectMesssage.h>
 #include <Message/PlayerSeenMessage.h>
-#include <Message/PlayerDiedMessage.h>
+#include <Message/FlagPlayerDiedMessage.h>
 
 
 Player::Player()
 {
+	myPlayerIndex = 0;
 }
 
 Player::~Player()
@@ -23,7 +24,6 @@ Player::~Player()
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 {
 	Actor::Init(aActorData);
-	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
 	myCurrentAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
@@ -59,7 +59,7 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	{
 		StopPath();
 		myCurrentAP = 0;
-
+		
 		if (myIsSeen == false)
 		{
 			myIsSeen = true;
@@ -69,13 +69,17 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 		{
 			myIsSeen = false;
 			myShouldDie = false;
-			SendPostMessage(PlayerDiedMessage(RecieverTypes::ePlayEvents));
+			SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
+
 		}
 	}
 }
 
+
+
 void Player::AfterTurn()
 {
+	Actor::AfterTurn();
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
@@ -85,6 +89,8 @@ void Player::PreTurn()
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
+
+
 
 void Player::DecideAnimation()
 {
@@ -165,6 +171,7 @@ void Player::OnMove(CU::Vector2ui aTargetPosition)
 
 void Player::SetNoTarget()
 {
+	ResetObjectiveState();
 	myEnemyTargetIndex = USHRT_MAX;
 }
 
@@ -176,4 +183,9 @@ void Player::AlmostReachTarget()
 void Player::ReachedTarget()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerReachedEndOfPath, *this));
+}
+
+void Player::NextToObjective()
+{
+	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerNextToObjective, *this));
 }

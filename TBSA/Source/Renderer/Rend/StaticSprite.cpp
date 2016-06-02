@@ -85,6 +85,9 @@ CU::Vector2f StaticSprite::GetSizeWithoutWhiteSpace()
 	return mySizeWithoutWhitespace;
 }
 
+/*
+	Sprite will be added to buffer and rendered next frame. Changes after this point will not affect the sprite on the buffer.
+*/
 void StaticSprite::Draw(const CU::Vector2f & aPosition)
 {
 	DL_ASSERT(myIsInitiedFlag == true, "Static sprite not initialized");

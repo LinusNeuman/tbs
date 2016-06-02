@@ -15,7 +15,7 @@ enum class eTurn
 	PLAYER_END_TURN,
 	PRE_ENEMY_TURN,
 	ENEMY_TURN,
-	
+	ENEMY_END_TURN,
 	Size
 };
 
@@ -25,7 +25,7 @@ public:
 	TurnManager();
 	~TurnManager();
 
-	void Update(CommonUtilities::Time aDeltaTime);
+	bool Update(CommonUtilities::Time aDeltaTime);
 
 	PlayerController & GetPlayerController();
 
@@ -33,18 +33,20 @@ public:
 
 	void ForceTurn(eTurn aTurn);
 	void RecieveMessage(const GUIMessage&) override;
+	void RecieveMessage(const FlagPlayerDiedMessage&) override;
 private:
 	void EndTurn();
 
-	void PreparePlayer();
-	void UpdatePlayer(CommonUtilities::Time aDeltaTime);
-	void PlayerEndTurn();
+	bool PreparePlayer();
+	bool UpdatePlayer(CommonUtilities::Time aDeltaTime);
+	bool PlayerEndTurn();
 	
-	void PrepareEnemy();
-	void UpdateEnemy(CommonUtilities::Time aDeltaTime);
+	bool PrepareEnemy();
+	bool UpdateEnemy(CommonUtilities::Time aDeltaTime);
+	bool EnemyEndTurn();
 
 	eTurn myCurrentTurn;
-
+	bool myPlayerDied;
 	PlayerController myPlayerController;
 	EnemyController myEnemyController;
 };

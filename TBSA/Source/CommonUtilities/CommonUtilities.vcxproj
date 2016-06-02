@@ -322,6 +322,7 @@
     <ClInclude Include="CU\Timer\Timer.h" />
     <ClInclude Include="CU\Utility\CommonCasts.h" />
     <ClInclude Include="CU\Utility\FileHandling.h" />
+    <ClInclude Include="CU\Utility\GameSpecificTypeDefs.h" />
     <ClInclude Include="CU\Utility\MathHelper.h" />
     <ClInclude Include="CU\Utility\Math\Isometric.h" />
     <ClInclude Include="CU\Utility\Randomizer\Randomizer.h" />

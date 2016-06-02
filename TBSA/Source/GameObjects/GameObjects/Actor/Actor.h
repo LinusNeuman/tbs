@@ -4,6 +4,8 @@
 #include <Collision/BoxCollider.h>
 #include <CU/Timer/Time.h>
 #include <PostMaster/MessageReceiver.h>
+#include <CU/Utility/GameSpecificTypeDefs.h>
+
 
 
 struct ActorData;
@@ -53,7 +55,12 @@ public:
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
 	virtual void OnMove(CU::Vector2ui aTargetPosition);
-	void SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>& aPath);
+	virtual void AfterTurn();
+
+	virtual void NextToObjective();
+	//virtual void OnObjective();
+
+	void SetPath(const PathArray & aPath);
 
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
@@ -111,19 +118,30 @@ public:
 		return mySprite;
 	}
 	
+	void SetObjective(const TilePositionf & aPosition);
+	void ResetObjectiveState();
+	const TilePositionf & GetObjectiveTargetPosition();
+
 protected:
+	bool GetObjectiveState();
+
 	void UpdatePosition(const CU::Vector2f & aPosition);
 	bool myActiveFlag;
 	bool myVisibleFlag;
+	bool myHasObjectiveFlag;
 
 	AnimationHandler myAnimations;
 	virtual void DecideAnimation();
-	CU::Vector2ui myTargetPosition;
-	CU::Vector2f myPosition;
+
+	TilePositionf myObjectiveTargetPosition;
+
+	TilePosition myTargetPosition;
+	TilePositionf myPosition;
 	CU::Vector2f myVelocity;
+
 	eActorState myState;
 	int myAP;
-	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
+	PathArray myPath;
 	unsigned short myCurrentWaypoint;
 
 	BoxCollider myBoxCollider;
@@ -156,4 +174,26 @@ inline void Actor::SetActorState(const eActorState aActorState)
 inline eActorState Actor::GetActorState()
 {
 	return myState;
+}
+
+inline const TilePositionf & Actor::GetObjectiveTargetPosition()
+{
+	return myObjectiveTargetPosition;
+}
+
+inline void Actor::SetObjective(const TilePositionf & aPosition)
+{
+	myHasObjectiveFlag = true;
+	myObjectiveTargetPosition = aPosition;
+}
+
+inline void Actor::ResetObjectiveState()
+{
+	myHasObjectiveFlag = false;
+	myObjectiveTargetPosition = TilePositionf::Zero;
+}
+
+inline bool Actor::GetObjectiveState()
+{
+	return myHasObjectiveFlag;
 }
