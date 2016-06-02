@@ -12,6 +12,15 @@ class Actor;
 class RenderConverter;
 class Player;
 
+enum class enumMouseState
+{
+	eClickedOnEnemy,
+	eClickedOnPlayer,
+	eClickedOnEmptyTile,
+	eClickedOnVoid,
+	enumLength
+};
+
 class PlayerController : public MessageReciever
 {
 public:
@@ -48,6 +57,7 @@ private:
 	void ActivePlayerFight();
 
 	void BuildPath(PathArray & aPathContainterToBuild);
+	enumMouseState GetCurrentMouseState();
 
 	void RayTrace(const TilePositionf &aPosition, const TilePositionf &anotherPosition);
 	int CalculatePoint(float aValue) const;
