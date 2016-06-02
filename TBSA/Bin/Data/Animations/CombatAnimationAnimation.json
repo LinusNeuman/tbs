@@ -9,7 +9,7 @@
   "AnimationSpeed": 24,
   "LoopStart": 1,
   "LoopEnd": 16,
-  "ShouldLoop": true,
+  "ShouldLoop": false,
   "IsInterruptible": true,
   "InTransition": "",
   "OutTransition": ""

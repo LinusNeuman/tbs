@@ -114,6 +114,13 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 			UpdatePath();
 		}
+		else if (tempState == eActorState::eFighting)
+		{
+			if (myAnimations.GetAnimationIsRunning() == false)
+			{
+				SetActorState(eActorState::eDead);
+			}
+		}
 
 		if (myAnimations.GetIsActive() == true)
 		{

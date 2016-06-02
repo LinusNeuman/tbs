@@ -1,0 +1,16 @@
+{
+  "Name": "DeathAnimation",
+  "FilePath": "Sprites\\Enemies\\deathstate.dds",
+  "SizeX": 128,
+  "SizeY": 128,
+  "AmountOfColumns": 5,
+  "AmountOfRows": 1,
+  "AmountOfFrames": 5,
+  "AnimationSpeed": 7,
+  "LoopStart": 1,
+  "LoopEnd": 5,
+  "ShouldLoop": false,
+  "IsInterruptible": true,
+  "InTransition": "",
+  "OutTransition": ""
+}
