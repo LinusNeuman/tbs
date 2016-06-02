@@ -3,7 +3,7 @@
 #include "Door.h"
 //#include "../PathFinding/NavGraph/Graph/NavGraph.h"
 #include "../PathFinding/NavGraph/NavHandle.h"
-
+#include <ActorEnums.h>
 
 class StaticSprite;
 
@@ -61,10 +61,15 @@ public:
 	void SetInEnemyFoV(bool aIsInFoV);
 	bool GetVisible() const;
 	bool GetInEnemyFov() const;
+	void SetAvailAbleDirection(eDirection aDirection);
+	const CU::GrowingArray<eDirection>& GetAvailableDirections() const
+	{
+		return myAvailableDirections;
+	}
 
 private:
 	CommonUtilities::Vector2f myPosition;
-
+	CU::GrowingArray<eDirection> myAvailableDirections;
 	eTileType myType;
 	unsigned int myRoomId;
 	CommonUtilities::Vector2ui myIndex;
@@ -118,6 +123,8 @@ inline bool IsometricTile::CheckIfWalkable() const
 {
 	return myType == eTileType::OPEN || myType == eTileType::DOOR || myType == eTileType::DOOR_2;
 }
+
+
 
 inline void IsometricTile::ToggleDebugMode()
 {
