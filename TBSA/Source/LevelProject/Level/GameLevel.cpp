@@ -89,6 +89,14 @@ void GameLevel::Init(TiledData* aTileData)
 	}
 
 	myPlayerController->SetCameraPositionToPlayer(1);
+	if (myObjectives.IsInitialized() == true)
+	{
+		for (size_t i = 0; i < myObjectives.Size(); i++)
+		{
+			myFloor.GetTile(CU::Vector2ui(myObjectives[i]->GetPosition().x, myObjectives[i]->GetPosition().y)).SetTileType(eTileType::IS_OBJECTIVE);
+		}
+	}
+
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
@@ -192,6 +200,8 @@ void GameLevel::ConstructNavGraph()
 {
 	for (size_t i = 0; i < myFloor.Size(); i++)
 	{
+		
+
 		eTileType explainingType = myFloor.GetTile(i).GetTileType();
 		if (!(explainingType == eTileType::OPEN || explainingType == eTileType::DOOR || explainingType == eTileType::DOOR_2))
 		{

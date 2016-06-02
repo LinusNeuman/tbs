@@ -14,6 +14,7 @@ enum class eTileType
 	BLOCKED,
 	DOOR,
 	DOOR_2,
+	IS_OBJECTIVE,
 	Size
 };
 
