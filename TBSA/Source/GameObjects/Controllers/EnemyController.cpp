@@ -66,8 +66,9 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		}
 		if (myEnemies[i]->GetActiveState() == true)
 		{
-			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), (CU::Vector2f(myEnemies[i]->GetTargetPosition()) - myEnemies[i]->GetPosition()).GetNormalized(), 45.f, 4.f);
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
 		}
+		
 	}
 }
 
@@ -141,11 +142,47 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 
 }
 
-void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &aDirection, float aAngle, float aMagnitude)
+void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirection aDirection, float aAngle, float aMagnitude)
 {
-	ResetTileShaders();
-	CalculateFoVBasedOnAngle(aPosition, aDirection, aAngle, aMagnitude);
+	switch (aDirection)
+	{
+	case eDirection::NORTH:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, -1.0f), aAngle, aMagnitude);
+		break;
+	case eDirection::NORTH_EAST:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, -1.0f), aAngle, aMagnitude);
+		break;
+	case eDirection::EAST:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 0.0f), aAngle, aMagnitude);
+		break;
+	case eDirection::SOUTH_EAST:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 1.0f), aAngle, aMagnitude);
+		break;
+	case eDirection::SOUTH:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, 1.0f), aAngle, aMagnitude);
+		break;
+	case eDirection::SOUTH_WEST:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 1.0f), aAngle, aMagnitude);
+		break;
+	case eDirection::WEST:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 0.0f), aAngle, aMagnitude);
+		break;
+	case eDirection::NORTH_WEST:
+		ResetTileShaders();
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, -1.0f), aAngle, aMagnitude);
+		break;
+	default:
+		break;
+	}
 	SendPostMessage(EnemyDirectionChangedMessage(RecieverTypes::eEnemyDirectionChanged));
+	
 }
 
 void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude)
@@ -223,3 +260,4 @@ void EnemyController::PostTurn()
 		myFloor->SetDiagonals(myEnemies[i]->GetPosition(), 10000 * 10000);
 	}
 }
+

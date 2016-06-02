@@ -240,7 +240,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 {
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
-		DL_PRINT("An enemy can see you!");
+		//DL_PRINT("An enemy can see you!");
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
 }
@@ -282,7 +282,7 @@ void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 	{
 		if (myFloor->GetTile(CU::Vector2ui(myPlayers[iPlayer]->GetPosition().x, myPlayers[iPlayer]->GetPosition().y)).GetInEnemyFov() == true)
 		{
-			DL_PRINT("An enemy can see you!");
+			//DL_PRINT("An enemy can see you!");
 			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
 		}
 	}

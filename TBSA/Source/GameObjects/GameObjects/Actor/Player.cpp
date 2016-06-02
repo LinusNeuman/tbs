@@ -59,7 +59,7 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	{
 		StopPath();
 		myCurrentAP = 0;
-		SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
+		
 		if (myIsSeen == false)
 		{
 			myIsSeen = true;
@@ -69,7 +69,8 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 		{
 			myIsSeen = false;
 			myShouldDie = false;
-			
+			SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
+
 		}
 	}
 }
