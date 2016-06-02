@@ -60,7 +60,6 @@ namespace CommonUtilities
 		myMouse->GetDeviceState(sizeof(DIMOUSESTATE), static_cast<LPVOID>(&myMouseData));
 
 		myPreviousKeyboardData = myKeyboardData;
-	
 		myKeyboard->GetDeviceState(sizeof(BYTE) * myKeyboardData.size(), static_cast<void*>(&myKeyboardData[0]));
 	}
 
