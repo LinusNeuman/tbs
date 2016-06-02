@@ -245,6 +245,26 @@ void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 	{
 		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
 	}*/
+	/*DL_PRINT("----------");
+	for (size_t i = 0; i < myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections().Size(); i++)
+	{
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH)
+		{
+			DL_PRINT("NORTH");
+		}
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::EAST)
+		{
+			DL_PRINT("EAST");
+		}
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH)
+		{
+			DL_PRINT("SOUTH");
+		}
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::WEST)
+		{
+			DL_PRINT("WEST");
+		}
+	}*/
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
