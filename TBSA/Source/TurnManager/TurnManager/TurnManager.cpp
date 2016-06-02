@@ -15,32 +15,26 @@ TurnManager::~TurnManager()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagPlayerDied, *this);
 }
 
-void TurnManager::Update(CommonUtilities::Time aDeltaTime)
+bool TurnManager::Update(CommonUtilities::Time aDeltaTime)
 {
 	switch (myCurrentTurn)
 	{
 	case eTurn::PRE_PLAYER_TURN: 
-		PreparePlayer();
-		break;
+		return PreparePlayer();
 	case eTurn::PLAYER_TURN: 
-		UpdatePlayer(aDeltaTime);
-		break;
+		return UpdatePlayer(aDeltaTime);
 	case eTurn::PLAYER_END_TURN:
-		PlayerEndTurn();
-		break;
+		return PlayerEndTurn();
 	case eTurn::PRE_ENEMY_TURN: 
-		PrepareEnemy();
-		break;
+		return PrepareEnemy();
 	case eTurn::ENEMY_TURN:
-		UpdateEnemy(aDeltaTime);
-		break;
+		return UpdateEnemy(aDeltaTime);
 	case eTurn::ENEMY_END_TURN: 
-		EnemyEndTurn();
-		break;
+		return EnemyEndTurn();
 	case eTurn::Size:
 	default:
 		EndTurn();
-		break;
+		return true;
 	
 	};
 }
@@ -78,37 +72,48 @@ void TurnManager::EndTurn()
 
 }
 
-void TurnManager::PreparePlayer()
+bool TurnManager::PreparePlayer()
 {
 	myPlayerController.PrePlayer();
 	EndTurn();
+	return true;
 }
 
-void TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
+bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 {
 	myPlayerController.Update(aDeltaTime);
+	return true;
 }
 
-void TurnManager::PlayerEndTurn()
+bool TurnManager::PlayerEndTurn()
 {
 	SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
 	myPlayerController.AfterPlayerTurn();
 	EndTurn();
+	return true;
 }
 
-void TurnManager::PrepareEnemy()
+bool TurnManager::PrepareEnemy()
 {
+	if (myPlayerDied == true)
+	{
+		SendPostMessage(PlayerDiedMessage(RecieverTypes::ePlayEvents));
+		return false;
+	}
 	myEnemyController.PreTurn();
 	EndTurn();
+	return true;
 }
 
-void TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
+bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 {
 	myEnemyController.Update(aDeltaTime);
+	return true;
 }
 
-void TurnManager::EnemyEndTurn()
+bool TurnManager::EnemyEndTurn()
 {
 	myEnemyController.PostTurn();
 	EndTurn();
+	return true;
 }
