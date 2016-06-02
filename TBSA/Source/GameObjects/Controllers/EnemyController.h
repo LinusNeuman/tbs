@@ -23,7 +23,7 @@ public:
 	void AddEnemy(Enemy* aEnemy);
 
 	virtual void RecieveMessage(const FightWithEnemyMessage & aMessage) override;
-
+	void PostTurn();
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
 	void CreateEnemyRayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &aDirection, float aAngle, float aMagnitude);
