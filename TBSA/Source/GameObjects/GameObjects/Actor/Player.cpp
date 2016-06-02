@@ -13,6 +13,7 @@
 
 Player::Player()
 {
+	myPlayerIndex = 0;
 }
 
 Player::~Player()
@@ -72,6 +73,8 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 		}
 	}
 }
+
+
 
 void Player::AfterTurn()
 {

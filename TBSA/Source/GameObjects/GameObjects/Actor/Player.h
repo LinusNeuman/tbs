@@ -34,10 +34,14 @@ public:
 
 	virtual void AlmostReachTarget() override;
 
+	void SetIndex(const unsigned short aIndex);
+	unsigned short GetIndex() const;
+
 	virtual void AfterTurn() override;
 	void PreTurn();
 private:
 
+	unsigned short myPlayerIndex;
 	unsigned short myEnemyTargetIndex;
 
 	int myActionPointMax;
@@ -56,4 +60,14 @@ inline void Player::SetTargetEnemy(const unsigned short aIndex, const TilePositi
 inline unsigned short Player::GetEnemyTarget()
 {
 	return myEnemyTargetIndex;
+}
+
+inline void Player::SetIndex(const unsigned short aIndex)
+{
+	myPlayerIndex = aIndex;
+}
+
+inline unsigned short Player::GetIndex() const
+{
+	return myPlayerIndex;
 }

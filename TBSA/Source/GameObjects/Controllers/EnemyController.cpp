@@ -35,7 +35,7 @@ void EnemyController::PreTurn()
 
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
-		myFloor->SetDiagonals(myEnemies[i]->GetPosition(), 1.1);
+		myFloor->SetDiagonals(myEnemies[i]->GetPosition(), 1.1f);
 	}
 }
 
@@ -56,7 +56,7 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
 		myEnemies[i]->Update(aDeltaTime);
-		if(myFloor->GetTile(CU::Vector2ui(myEnemies[i]->GetPosition().x, myEnemies[i]->GetPosition().y)).GetVisible() == true)
+		if(myFloor->GetTile(CU::Vector2ui(USHORTCAST(myEnemies[i]->GetPosition().x), USHORTCAST(myEnemies[i]->GetPosition().y))).GetVisible() == true)
 		{
 			myEnemies[i]->SetVisibleState(true);
 		}

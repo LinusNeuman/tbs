@@ -156,6 +156,11 @@ void Actor::AfterTurn()
 	ResetObjectiveState();
 }
 
+void Actor::NextToObjective()
+{
+
+}
+
 void Actor::SetPath(const CommonUtilities::GrowingArray<CommonUtilities::Vector2ui>& aPath)
 {
 	if (myCurrentWaypoint == myPath.Size())
@@ -201,7 +206,14 @@ void Actor::UpdatePath()
 		}
 		else if (myCurrentWaypoint == myPath.Size())
 		{
-			ReachedTarget();
+			if ((myPosition - myObjectiveTargetPosition).Length() <= 1.f)
+			{
+				NextToObjective();
+			}
+			else
+			{
+				ReachedTarget();
+			}
 		}
 	}
 }

@@ -56,6 +56,10 @@ public:
 	void Move(CU::Vector2ui aTargetPosition);
 	virtual void OnMove(CU::Vector2ui aTargetPosition);
 	virtual void AfterTurn();
+
+	virtual void NextToObjective();
+	//virtual void OnObjective();
+
 	void SetPath(const PathArray & aPath);
 
 	void ChangeAnimation(const std::string& anAnimation);
