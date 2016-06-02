@@ -77,7 +77,7 @@ public:
 	~StaticSprite();
 
 	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero);
-	void Draw(const CU::Vector2f & aPosition);
+	void Draw(const CU::Vector2f & aPositionInPixel);
 
 	enumRenderLayer GetLayer() const;
 	void SetLayer(const enumRenderLayer aRenderLayer);

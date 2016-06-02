@@ -10,11 +10,11 @@
 SingletonIsometricInputWrapper * SingletonIsometricInputWrapper::ourInstance = nullptr;
 
 
-void SingletonIsometricInputWrapper::Create(/*const CU::Camera2D & aCameraToAdjustInputToo*/)
+void SingletonIsometricInputWrapper::Create()
 {
 	if (ourInstance == nullptr)
 	{
-		ourInstance = new SingletonIsometricInputWrapper(/*aCameraToAdjustInputToo*/);
+		ourInstance = new SingletonIsometricInputWrapper();
 	}
 }
 
@@ -27,7 +27,7 @@ void SingletonIsometricInputWrapper::Destroy()
 }
 
 
-SingletonIsometricInputWrapper::SingletonIsometricInputWrapper(/*const CU::Camera2D & aCameraToAdjustInputToo*/)
+SingletonIsometricInputWrapper::SingletonIsometricInputWrapper()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eWindowProperties, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eCamera, *this);
@@ -56,6 +56,9 @@ CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCarte
 	return mousePosition;
 }
 
+/*
+	Gets mouse position in tilecordinates. adapted to camera and viewport.
+*/
 CU::Vector2f SingletonIsometricInputWrapper::GetMouseWindowPositionIsometric()
 {
 	CU::Vector2f mousePosition = GetInstance().ConvertMouseNormalizedPositionCartesianCordiante(true);
@@ -66,6 +69,7 @@ CU::Vector2f SingletonIsometricInputWrapper::GetMouseWindowPositionIsometric()
 
 	return newPos;
 }
+
 
 CU::Vector2f SingletonIsometricInputWrapper::GetMouseInViewportNormalized() const
 {

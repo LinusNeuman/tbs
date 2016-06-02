@@ -10,7 +10,7 @@ class Camera2D;
 class SingletonIsometricInputWrapper : public MessageReciever
 {
 public:
-	static void Create(/*const CU::Camera2D & aCameraToAdjustInputToo*/);
+	static void Create();
 	static void Destroy();
 
 	static void Initialize(HINSTANCE aApplicationInstance, HWND aWindow);
@@ -87,32 +87,50 @@ inline LONG SingletonIsometricInputWrapper::GetWheelDelta()
 	return GetInstance().myInputWrapper.GetWheelDelta();
 }
 
+
+/*
+	returns true if the button is pressed down.
+*/
 inline bool SingletonIsometricInputWrapper::GetMouseButtonDown(CommonUtilities::enumMouseButtons aButton)
 {
 	return GetInstance().myInputWrapper.GetMouseButtonDown(aButton);
 }
 
+/*
+	returns true if button was not pressed down last frame and is pressed this frame.
+*/
 inline bool SingletonIsometricInputWrapper::GetMouseButtonReleased(CommonUtilities::enumMouseButtons aButton)
 {
 	return GetInstance().myInputWrapper.GetMouseButtonReleased(aButton);
 }
 
-
+/*
+	returns true if button was not pressed down last frame and is pressed this frame.
+*/
 inline bool SingletonIsometricInputWrapper::GetMouseButtonPressed(CommonUtilities::enumMouseButtons aButton)
 {
 	return GetInstance().myInputWrapper.GetMouseButtonPressed(aButton);
 }
 
+/*
+	returns true if the key is pressed down.
+*/
 inline bool SingletonIsometricInputWrapper::GetKeyDown(int aButton)
 {
 	return GetInstance().myInputWrapper.GetKeyDown(aButton);
 }
 
+/*
+	returns true if key was not pressed down last frame and is pressed this frame.
+*/
 inline bool SingletonIsometricInputWrapper::GetKeyPressed(int aButton)
 {
 	return GetInstance().myInputWrapper.GetKeyPressed(aButton);
 }
 
+/*
+	returns true if key was pressed down last frame and is not pressed this frame.
+*/
 inline bool SingletonIsometricInputWrapper::GetKeyReleased(int aButton)
 {
 	return GetInstance().myInputWrapper.GetKeyReleased(aButton);
