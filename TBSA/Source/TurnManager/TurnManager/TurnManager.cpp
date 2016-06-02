@@ -8,6 +8,7 @@
 TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(false)
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagPlayerDied, *this);
+	//ForceTurn(eTurn::ENEMY_END_TURN);
 }
 
 TurnManager::~TurnManager()

@@ -120,9 +120,11 @@ protected:
 
 	AnimationHandler myAnimations;
 	virtual void DecideAnimation();
-	CU::Vector2ui myTargetPosition;
-	CU::Vector2f myPosition;
+
+	TilePosition myTargetPosition;
+	TilePositionf myPosition;
 	CU::Vector2f myVelocity;
+
 	eActorState myState;
 	int myAP;
 	PathArray myPath;

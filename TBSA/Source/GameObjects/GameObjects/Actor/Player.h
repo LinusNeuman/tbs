@@ -40,6 +40,7 @@ public:
 	void PreTurn();
 private:
 
+	TilePositionf myEnemyTargetPosition;
 	unsigned short myEnemyTargetIndex;
 
 	int myActionPointMax;
