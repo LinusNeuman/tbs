@@ -213,6 +213,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Message\FlagGoalReachedMessage.h" />
     <ClInclude Include="Message\ActorPositionChangedMessage.h" />
     <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\ColliderMessage.h" />

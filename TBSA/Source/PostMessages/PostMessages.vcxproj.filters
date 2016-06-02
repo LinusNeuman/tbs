@@ -29,5 +29,6 @@
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\FlagPlayerDiedMessage.h" />
     <ClInclude Include="Message\GoalReachedMessage.h" />
+    <ClInclude Include="Message\FlagGoalReachedMessage.h" />
   </ItemGroup>
 </Project>

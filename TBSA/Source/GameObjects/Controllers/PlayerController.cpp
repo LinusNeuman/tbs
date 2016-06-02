@@ -21,6 +21,8 @@
 #include <Message/EnemyObjectMessage.h>
 #include <GameObjects/Actor/Enemy.h>
 #include <Message/FightWithEnemyMessage.h>
+#include <Message/GoalReachedMessage.h>
+#include <Message/FlagGoalReachedMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -327,6 +329,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
 	{
+		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
 		DL_PRINT("You have reached the goal, Aren't you special.");
 	}
 }

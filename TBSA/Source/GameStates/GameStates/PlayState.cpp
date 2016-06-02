@@ -18,7 +18,7 @@ PlayState::~PlayState()
 	SAFE_DELETE(myLevel);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eGoalReached, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -26,7 +26,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	myLevelFactory = new LevelFactory();
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eGoalReached, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
 
 	if (aLevelPath == "")
 	{
@@ -92,7 +92,7 @@ void PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
 
 void PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
-	myShouldExit = true;
+	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
 }
 
 void PlayState::ChangeLevel(const std::string& aFilePath)

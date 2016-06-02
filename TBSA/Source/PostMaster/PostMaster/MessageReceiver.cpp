@@ -100,3 +100,7 @@ void MessageReciever::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 
 }
+
+void MessageReciever::RecieveMessage(const FlagGoalReachedMessage& aMessage)
+{
+}
