@@ -7,7 +7,8 @@
 #include <Message/ColliderMessage.h>
 #include <Collision/BoxCollider.h>
 #include <Message/PlayerObjectMesssage.h>
-#include <Message/ActorPositionChangedMessage.h>
+#include <Message/PlayerSeenMessage.h>
+#include <Message/FlagPlayerDiedMessage.h>
 
 
 Player::Player()
@@ -16,6 +17,7 @@ Player::Player()
 
 Player::~Player()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents,*this);
 }
 
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
@@ -24,12 +26,15 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	//Do stuff with playerdata
 	myActionPointMax = aPlayerData.myActionPointMax;
 	myCurrentAP = myActionPointMax;
+	myEnemyTargetIndex = USHRT_MAX;
+
+	myIsSeen = false;
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 void Player::FreshTurn()
 {
 	myCurrentAP = myActionPointMax;
-
 }
 
 int Player::GetMyAP() const
@@ -43,61 +48,133 @@ void Player::CostAP(const int aCost)
 	myCurrentAP -= aCost;
 }
 
-void Player::ReachedTarget()
-{
-	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
-}
-
 void Player::OnClick()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
+}
+
+void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
+{
+	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
+	{
+		StopPath();
+		myCurrentAP = 0;
+		
+		if (myIsSeen == false)
+		{
+			myIsSeen = true;
+		}
+		
+		if (myShouldDie == true)
+		{
+			myIsSeen = false;
+			myShouldDie = false;
+			SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
+
+		}
+	}
+}
+
+void Player::AfterTurn()
+{
+	myShouldDie = myIsSeen;
+	myIsSeen = false;
+}
+
+void Player::PreTurn()
+{
+	myShouldDie = myIsSeen;
+	myIsSeen = false;
 }
 
 void Player::DecideAnimation()
 {
 	if (myState == eActorState::eIdle)
 	{
-		ChangeAnimation("PlayerIdle");
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("playerIdle045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("playerIdle090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("playerIdle135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("playerIdle180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("playerIdle225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("playerIdle270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("playerIdle315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("playerIdle000");
+			break;
+		default:
+			ChangeAnimation("playerIdle180");
+			break;
+		}
 	}
 	else if (myState == eActorState::eWalking)
 	{
 		//Determine direction animation
-		if (myVelocity.x < 0.f && myVelocity.y < 0.f)
+		switch (GetDirectionEnum())
 		{
-			ChangeAnimation("gingerWalk00");
-		}
-		else if (myVelocity.x == 0.f && myVelocity.y < 0.f)
-		{
-			ChangeAnimation("gingerWalk045");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y < 0.f)
-		{
-			ChangeAnimation("gingerWalk090");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y == 0.f)
-		{
-			ChangeAnimation("gingerWalk135");
-		}
-		else if (myVelocity.x > 0.f && myVelocity.y > 0.f)
-		{
-			ChangeAnimation("gingerWalk180");
-		}
-		else if (myVelocity.x == 0.f && myVelocity.y > 0.f)
-		{
-			ChangeAnimation("gingerWalk225");
-		}
-		else if (myVelocity.x < 0.f && myVelocity.y > 0.f)
-		{
-			ChangeAnimation("gingerWalk270");
-		}
-		else if (myVelocity.x < 0.f && myVelocity.y == 0.f)
-		{
-			ChangeAnimation("gingerWalk315");
+		case eDirection::NORTH: 
+			ChangeAnimation("playerWalk045");
+			break;
+		case eDirection::NORTH_EAST: 
+			ChangeAnimation("playerWalk090");
+			break;
+		case eDirection::EAST: 
+			ChangeAnimation("playerWalk135");
+			break;
+		case eDirection::SOUTH_EAST: 
+			ChangeAnimation("playerWalk180");
+			break;
+		case eDirection::SOUTH: 
+			ChangeAnimation("playerWalk225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("playerWalk270");
+			break;
+		case eDirection::WEST: 
+			ChangeAnimation("playerWalk315");
+			break;
+		case eDirection::NORTH_WEST: 
+			ChangeAnimation("playerWalk000");
+			break;
+		default:
+			ChangeAnimation("playerWalk180");
+			break;
 		}
 	}
 }
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
-	SendPostMessage(ActorPositionChangedMessage(RecieverTypes::eActorPositionChanged, aTargetPosition));
+
+}
+
+void Player::SetNoTarget()
+{
+	myEnemyTargetIndex = USHRT_MAX;
+}
+
+void Player::AlmostReachTarget()
+{
+	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
+}
+
+void Player::ReachedTarget()
+{
+	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerReachedEndOfPath, *this));
 }

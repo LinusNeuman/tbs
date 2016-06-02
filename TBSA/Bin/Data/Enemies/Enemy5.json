@@ -1,11 +1,13 @@
 {
-    "actorType": 2,
-    "startPositionX": 6,
-    "startPositionY":  4,
+	"actionPoints" : 5,
+    "actorType": 6,
     "animations": 
     [
         {
             "path": "Data/Animations/Enemy1/EnemyTurnAnimation.json"
+        },
+        {
+            "path": "Data/Animations/CombatAnimationAnimation.json"
         }
     ]
 }

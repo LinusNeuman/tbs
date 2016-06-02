@@ -1,4 +1,8 @@
 #pragma once
+#include <Message/RecieverTypes.h>
+
+struct FlagPlayerDiedMessage;
+struct PlayerChangedTargetMessage;
 struct PlayerAddedMessage;
 struct ActorPositionChangedMessage;
 struct StartUpLevelMessage;
@@ -13,7 +17,11 @@ struct GetStartLevelMessage;
 struct ColliderMessage;
 struct PlayerObjectMessage;
 struct SetHWNDMessage;
-struct EnemyChangedDirectionMessage;
+struct EnemyDirectionChangedMessage;
+struct PlayerSeenMessage;
+struct PlayerDiedMessage;
+struct EnemyObjectMessage;
+struct FightWithEnemyMessage;
 
 class MessageReciever
 {
@@ -35,9 +43,18 @@ public:
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage);
 	virtual void RecieveMessage(const SetHWNDMessage & aMessage);
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage);
-	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage);
+	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage);
+	virtual void RecieveMessage(const PlayerSeenMessage & aMessage);
+	virtual void RecieveMessage(const PlayerDiedMessage & aMessage);
+	virtual void RecieveMessage(const PlayerChangedTargetMessage & aMessage);
+	virtual void RecieveMessage(const EnemyObjectMessage & aMessage);
+	virtual void RecieveMessage(const FightWithEnemyMessage & aMessage);
+	virtual void RecieveMessage(const FlagPlayerDiedMessage &aMessage);
 
+	RecieverOrder myRecieverOrder;
 protected:
 	MessageReciever()
-	{}
+	{
+		myRecieverOrder = RecieverOrder::eDefault;
+	}
 };

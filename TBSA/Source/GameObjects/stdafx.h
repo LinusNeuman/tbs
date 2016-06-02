@@ -20,10 +20,12 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/Vectors/Vector.h>
 #include <CU/DLDebug/DL_Debug.h>
+#include <CU/Utility/GameSpecificTypeDefs.h>
 //#include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <PostMaster/SingletonPostMaster.h>
 
 #include <Input/SingletonIsometricInputWrapper.h>
+#include <climits>
 
 // Audio
 //#include "../Audio/Source/Instances/SoundEffect.h"

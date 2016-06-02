@@ -5,6 +5,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <PostMaster/MessageReceiver.h>
+#include <CU/Utility/GameSpecificTypeDefs.h>
 
 class PlayState;
 class Actor;
@@ -32,14 +33,23 @@ public:
 	void PrePlayer();
 	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
+	void AfterPlayerTurn();
+
+	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition);
 
 	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
+	virtual void RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage) override;
+	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
+	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
-	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
+	void ActivePlayerFight();
+
+	void BuildPath(PathArray & aPathContainterToBuild);
+
+	void RayTrace(const TilePositionf &aPosition, const TilePositionf &anotherPosition);
 	int CalculatePoint(float aValue) const;
 	void ResetTileShaders();
 	void CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius);
@@ -55,6 +65,11 @@ private:
 	unsigned short mySelectedPlayerIndex;
 
 	bool myClickedOnPlayer;
+	bool myClickedOnEnemy;
+
+	std::vector<CU::Vector2f> myDebugStart;
+	std::vector<CU::Vector2f> myDebugEnd;
+
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

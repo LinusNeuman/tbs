@@ -19,5 +19,6 @@
 //#include <CU/Vectors/Vector.h>
 //#include <Rend/RenderConverter.h>
 #include <CU/Vectors/vector2.h>
+#include <CU/Utility/CommonCasts.h>
 //#include <CU/Vectors/vector4.h>
 //#include "Message/TestPosition.h"

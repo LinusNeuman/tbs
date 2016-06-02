@@ -1,5 +1,11 @@
 #pragma once
 
+enum class RecieverOrder
+{
+	eDefault = 100,
+	enumLength
+};
+
 enum class RecieverTypes
 {
 	eRoom,
@@ -16,7 +22,15 @@ enum class RecieverTypes
 	ePlayGame,
 	eActorPositionChanged,
 	ePlayerAdded,
-	eEnemyChangedDirection,
+	eEnemyDirectionChanged,
 	eWindowHandleChange,
+	ePlayerChangedTarget,
+	ePlayEvents,
+	eClickedOnEnemy,
+	ePlayerReachedEndOfPath,
+	eEnemyReachedEndOfPath,
+	ePlayerTargetEnemy,
+	eStartFight,
+	eFlagPlayerDied,
 	enumlength
 };

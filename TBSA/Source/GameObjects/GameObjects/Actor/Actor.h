@@ -4,6 +4,8 @@
 #include <Collision/BoxCollider.h>
 #include <CU/Timer/Time.h>
 #include <PostMaster/MessageReceiver.h>
+#include <CU/Utility/GameSpecificTypeDefs.h>
+
 
 
 struct ActorData;
@@ -22,9 +24,23 @@ enum class eActorType
 	eEnemyFive
 };
 
+enum class eDirection
+{
+	NORTH = 50,
+	NORTH_EAST = 40,
+	EAST = 30,
+	SOUTH_EAST = 20,
+	SOUTH = 10,
+	SOUTH_WEST = 80,
+	WEST = 70,
+	NORTH_WEST = 60
+};
+
 enum class eActorState
 {
 	eIdle,
+	eFighting,
+	eDead,
 	eWalking
 };
 
@@ -34,6 +50,7 @@ public:
 	Actor();
 	virtual ~Actor();
 	void Init(const ActorData &aActorData);
+	
 	virtual void Update(const CU::Time &aDeltaTime);
 	void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
@@ -42,6 +59,8 @@ public:
 
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
+
+	void StopPath();
 
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
 	{
@@ -65,16 +84,28 @@ public:
 		return myType;
 	}
 
+	eDirection GetDirectionEnum() const
+	{
+		return myDirection;
+	}
+
 	virtual void RecieveMessage(const ColliderMessage & aMessage) override;
 
 	virtual void OnClick() = 0;
+
+	void SetActorState(const eActorState aActorState);
+	eActorState GetActorState();
 
 	void SetActiveState(const bool aActiveFlag);
 	bool GetActiveState();
 	void SetVisibleState(const bool aVisibleFlag);
 	bool GetVisibleState() const;
-	
+	CU::Vector2ui GetTargetPosition() const
+	{
+		return myTargetPosition;
+	}
 
+	virtual void AlmostReachTarget() = 0;
 	virtual void ReachedTarget() = 0;
 	virtual int GetMyAP() const;
 	StaticSprite* GetSprite() const
@@ -89,24 +120,26 @@ protected:
 
 	AnimationHandler myAnimations;
 	virtual void DecideAnimation();
-	CU::Vector2ui myTargetPosition;
-	CU::Vector2f myPosition;
+
+	TilePosition myTargetPosition;
+	TilePositionf myPosition;
 	CU::Vector2f myVelocity;
+
 	eActorState myState;
 	int myAP;
-	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
+	PathArray myPath;
 	unsigned short myCurrentWaypoint;
 
 	BoxCollider myBoxCollider;
-
+	void UpdateDirection();
+	bool myAtTarget;
+	
 private:
 	void UpdatePath();
 
-	
 	eActorType myType;
-	
+	eDirection myDirection;
 	StaticSprite *mySprite;
-	bool myAtTarget;
 };
 
 inline void Actor::SetActiveState(const bool aActiveFlag)
@@ -117,4 +150,14 @@ inline void Actor::SetActiveState(const bool aActiveFlag)
 inline bool Actor::GetActiveState()
 {
 	return myActiveFlag;
+}
+
+inline void Actor::SetActorState(const eActorState aActorState)
+{
+	myState = aActorState;
+}
+
+inline eActorState Actor::GetActorState()
+{
+	return myState;
 }

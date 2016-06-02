@@ -4,11 +4,7 @@
 #include <map>
 #include <tga2d/sprite/sprite.h>
 
-
-
-void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize);
-void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, StaticSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize);
-void ChangeAnimation(const std::string& anAnimation);
+void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite);
 
 Animation::Animation()
 {
@@ -107,7 +103,7 @@ void Animation::StartAnimation()
 	myShouldStop = false;
 	SetHasPlayed(true);
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(static_cast<float>(myAmountOfColumns), static_cast<float>(myAmountOfRows)));
+		, CommonUtilities::Vector2f(0.f, 0.f), mySpriteSize, true);
 	//ShowSprite();
 }
 
@@ -118,7 +114,7 @@ void Animation::StopAnimation()
 	myCurrentFrame = 0;
 	myIsRunning = false;
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true, CU::Vector2f(static_cast<float>(myAmountOfColumns), static_cast<float>(myAmountOfRows)));
+		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true);
 	//HideSprite();
 }
 
@@ -129,27 +125,31 @@ void Animation::StopAnimationAtEnd()
 
 void Animation::SetAnimationFrame()
 {
-	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f(static_cast<float>(myCurrentColumn)* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true, CU::Vector2f(static_cast<float>(myAmountOfColumns), static_cast<float>(myAmountOfRows)));
+	SetTextureRectangle(&mySpriteSheet, CommonUtilities::Vector2f(static_cast<float>(myCurrentColumn)* mySpriteSize.x, (myCurrentRow - 1) * mySpriteSize.y), mySpriteSize, true);
 }
 
+/*
+	MINA SYSTEM FUCKAR ALRDIG UPP //LEON
+*/
 void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
-	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite, const CommonUtilities::Vector2f &aAnimationSize)
+	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite)
 {
-	DX2D::Vector2f imageSize(newSprite->GetSprite()->GetImageSize().x, newSprite->GetSprite()->GetImageSize().y);
-	newSprite->GetSprite()->SetTextureRect(aSpriteOffsetStart.x / imageSize.x, aSpriteOffsetStart.y / imageSize.y, (aSpriteOffsetStart.x + aSpriteSize.x) / imageSize.x, (aSpriteOffsetStart.y + aSpriteSize.y) / imageSize.y);
-	DX2D::Vector2f newSize;
-	newSize.x = aSpriteSize.x / DX2D::CEngine::GetInstance()->GetWindowSize().x;
-	newSize.y = aSpriteSize.y / (DX2D::CEngine::GetInstance()->GetWindowSize().y * (16.f/9.f));
-	newSprite->GetSprite()->SetSize(newSize);
-}
+	const float spriteWidth = static_cast<float>(newSprite->GetSprite()->GetImageSize().x);
+	const float spriteHeight = static_cast<float>(newSprite->GetSprite()->GetImageSize().y);
 
-void UpdateSpriteSize(const CommonUtilities::Vector2f &aSpriteSize, StaticSprite* newSprite, const CommonUtilities::Vector2f &aAnimationSize)
-{
-	DX2D::Vector2f newSize;
-	auto size = newSprite->GetSprite()->GetImageSize();
-	// How big in 0-1 it is compared to original size, so using pixels
-	newSize.x = aSpriteSize.x / (size.x * aAnimationSize.y);
-	newSize.y = aSpriteSize.y / (size.y * aAnimationSize.x);
+	const float TempStartPointX = aSpriteOffsetStart.x / spriteWidth;
+	const float TempStartPointY = aSpriteOffsetStart.y / spriteHeight;
 
-	newSprite->GetSprite()->SetSize(newSize);
+	const float TempWidth = aSpriteSize.x / spriteWidth;
+	const float TempHeight = aSpriteSize.y / spriteHeight;
+
+	const float TempEndPointX = TempStartPointX + TempWidth;
+	const float TempEndPointY = TempStartPointY + TempHeight;
+
+	newSprite->GetSprite()->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
+
+	float normalizedWindowSizeX = newSprite->GetSprite()->GetImageSize().x / 1920.f * (16.f / 9.f);
+	float normalizedWindowSizeY = newSprite->GetSprite()->GetImageSize().y / 1080.f;
+
+	newSprite->GetSprite()->SetSize(DX2D::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
 }

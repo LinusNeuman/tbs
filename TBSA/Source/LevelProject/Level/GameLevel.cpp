@@ -24,6 +24,7 @@
 #include <CU/Matriser/matrix.h>
 #include <CU/Intersection/Shapes2D/LineSegment2D.h>
 #include <Message/EndTurnMessage.h>
+#include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
 struct ActorPositionChangedMessage;
 const float sqrt2 = static_cast<float>(sqrt(2));
@@ -34,45 +35,44 @@ GameLevel::GameLevel()
 
 GameLevel::~GameLevel()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eTurn, myTurnManager);
 }
 
-void GameLevel::Init(const std::string& aLevelPath)
+void GameLevel::Init(TiledData* aTileData)
 {
+	myTiledData = aTileData;
+
 	myFloor.Init(100);
-
-	myPlayerFactory.LoadFromJson();
-	myEnemyFactory.LoadFromJson();
-
-	myTiledData.myPlayerFactory = &myPlayerFactory;
-	myTiledData.myEnemyFactory = &myEnemyFactory;
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
 
-	TiledLoader::Load(aLevelPath, myTiledData);
-	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData.myMapSize));
+	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData->myMapSize));
 
-
-	myFloor.SetTiles(myTiledData.myTiles);
-	myFloor.SetFloorDimensions(myTiledData.myMapSize);
+	myFloor.SetTiles(myTiledData->myTiles);
+	myFloor.SetFloorDimensions(myTiledData->myMapSize);
 
 	ConstructNavGraph();
 
 	myPlayerController = &myTurnManager.GetPlayerController();
 	myEnemyController = &myTurnManager.GetEnemyController();
+	myEnemyController->Init();
 	myPlayerController->Init();
 	myPlayerController->SetFloor(myFloor);
 	myEnemyController->SetFloor(myFloor);
 
-	myPlayer = myTiledData.myPlayers[0];
-	myPlayer2 = myTiledData.myPlayers[1];
+	myPlayer = myTiledData->myPlayers[0];
+	myPlayer2 = myTiledData->myPlayers[1];
 	myPlayerController->AddPlayer(myPlayer);
 	myPlayerController->AddPlayer(myPlayer2);
-	myEnemies = myTiledData.myEnemies;
+	myEnemies = myTiledData->myEnemies;
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
 		myEnemyController->AddEnemy(myEnemies[i]);
 	}
+
+	myObjectives = myTiledData->myObjectives;
 
 	/*CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
 	path.Init(5);
@@ -83,14 +83,20 @@ void GameLevel::Init(const std::string& aLevelPath)
 	}
 	myEnemies[0]->SetEnemyPath(path);*/
 
-	myPlayer->ChangeAnimation("PlayerTurn");
-	myPlayer2->ChangeAnimation("PlayerTurn");
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
 		myEnemies[i]->ChangeAnimation("EnemyTurn");
 	}
 
 	myPlayerController->SetCameraPositionToPlayer(1);
+	if (myObjectives.IsInitialized() == true)
+	{
+		for (size_t i = 0; i < myObjectives.Size(); i++)
+		{
+			myFloor.GetTile(CU::Vector2ui(myObjectives[i]->GetPosition().x, myObjectives[i]->GetPosition().y)).SetTileType(eTileType::IS_OBJECTIVE);
+		}
+	}
+
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
@@ -112,11 +118,14 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	myEnemyController->ConstantUpdate(aTimeDelta);
 	myPlayerController->ConstantUpdate(aTimeDelta);
-	myTurnManager.Update(aTimeDelta);
+	if(myTurnManager.Update(aTimeDelta) == false)
+	{
+		return;
+	}
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		SendPostMessage(EndTurnMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_F3))
@@ -173,7 +182,7 @@ void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 	const CommonUtilities::Vector2ui position = aMessage.myPosition;
 	const int distance = aMessage.myDistance;
 
-	const CommonUtilities::Vector2ui mapSize = myTiledData.myMapSize;
+	const CommonUtilities::Vector2ui mapSize = myTiledData->myMapSize;
 	const int id = mapSize.x * position.y + position.x;
 
 	const IsometricTile selectedTile = myFloor.GetTile(id);
@@ -186,10 +195,13 @@ void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 	myNavGraph.Clear();
 }
 
+
 void GameLevel::ConstructNavGraph()
 {
 	for (size_t i = 0; i < myFloor.Size(); i++)
 	{
+		
+
 		eTileType explainingType = myFloor.GetTile(i).GetTileType();
 		if (!(explainingType == eTileType::OPEN || explainingType == eTileType::DOOR || explainingType == eTileType::DOOR_2))
 		{
@@ -203,7 +215,7 @@ void GameLevel::ConstructNavGraph()
 		//warning names of indexes may not coincide wwith where they are drawn
 		//i.e north may not graphicly be drawn to the north of the current tile
 
-		const int northWest = i - myTiledData.myMapSize.x - 1;
+		const int northWest = i - myTiledData->myMapSize.x - 1;
 		if (northWest > -1 && myFloor.GetTile(northWest).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
@@ -211,14 +223,14 @@ void GameLevel::ConstructNavGraph()
 			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(northWest).GetVertexHandle());
 		}
 
-		const int north = i - myTiledData.myMapSize.x;
+		const int north = i - myTiledData->myMapSize.x;
 		if (north > -1 && myFloor.GetTile(north).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
 			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(north).GetVertexHandle());
 		}
 
-		const int northEast = i - myTiledData.myMapSize.x + 1;
+		const int northEast = i - myTiledData->myMapSize.x + 1;
 		if (northEast > -1 && myFloor.GetTile(northEast).GetVertexHandle().Null() == false)
 		{
 			EdgeHandle currentEdge = myNavGraph.CreateEdge();
@@ -234,4 +246,3 @@ void GameLevel::ConstructNavGraph()
 		}
 	}
 }
-

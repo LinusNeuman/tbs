@@ -14,4 +14,5 @@
 #include "CU/GrowingArray/GrowingArray.h"
 #include <iostream>
 #include <fstream>
+#include <CU/Utility/CommonCasts.h>
 // TODO: reference additional headers your program requires here

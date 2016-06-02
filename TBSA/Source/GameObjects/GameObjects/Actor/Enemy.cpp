@@ -2,16 +2,18 @@
 #include "Enemy.h"
 #include "../JsonDataStructs.h"
 #include <Controllers/EnemyController.h>
+#include <Message/EnemyObjectMessage.h>
 
 
 Enemy::Enemy()
 {
-	
+	myIndex = 0;
 }
 
 
 Enemy::~Enemy()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 }
 
 void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
@@ -20,7 +22,11 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	//Do stuff with enemydata
 	myHasMoved = false;
 	myHasTurned = false;
+	mySomeoneSeesPlayer = false;
 	myCurrentPathIndex = 0;
+	myAP = aEnemyData.myActionPoints;
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+	myEnemyPath.Init(1);
 }
 
 void Enemy::UpdateEnemy()
@@ -59,6 +65,16 @@ void Enemy::UpdateEnemy()
 			SetPath(path);
 			myHasMoved = true;
 		}
+		else if (myEnemyPath.Size() == 0)
+		{
+			myController->EnemyDone();
+		}
+
+		if (mySomeoneSeesPlayer == true)
+		{
+			myController->EnemyDone();
+			StopPath();
+		}
 	}
 	else
 	{
@@ -68,7 +84,17 @@ void Enemy::UpdateEnemy()
 
 void Enemy::ReachedTarget()
 {
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyReachedEndOfPath, *this));
+}
+
+void Enemy::AlmostReachTarget()
+{
 	myController->EnemyDone();
+}
+
+void Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
+{
+	mySomeoneSeesPlayer = true;
 }
 
 void Enemy::SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath)
@@ -79,9 +105,24 @@ void Enemy::SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui
 void Enemy::Reset()
 {
 	myHasMoved = false;
+	mySomeoneSeesPlayer = false;
 }
 
 void Enemy::OnClick()
 {
-	myActiveFlag = false;
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+	//Fight();
+}
+
+void Enemy::Fight()
+{
+	SetActorState(eActorState::eFighting);
+}
+
+void Enemy::DecideAnimation()
+{
+	if (GetActorState() == eActorState::eFighting)
+	{
+		ChangeAnimation("CombatAnimation");
+	}
 }

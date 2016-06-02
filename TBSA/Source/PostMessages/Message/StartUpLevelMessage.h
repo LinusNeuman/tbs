@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "BaseMessage.h"
+#include "Message/BaseMessage.h"
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 
@@ -11,6 +11,6 @@ struct StartUpLevelMessage : BaseMessage
 		myPath(aPath)
 	{}
 
-		const std::string myPath;
+	const std::string & myPath;
 };
 #pragma warning (pop)

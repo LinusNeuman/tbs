@@ -65,7 +65,33 @@ void MessageReciever::RecieveMessage(const PlayerAddedMessage& aMessage)
 
 }
 
-void MessageReciever::RecieveMessage(const EnemyChangedDirectionMessage & aMessage)
+void MessageReciever::RecieveMessage(const EnemyDirectionChangedMessage & aMessage)
 {
 
+}
+
+void MessageReciever::RecieveMessage(const PlayerSeenMessage& aMessage)
+{
+}
+
+void MessageReciever::RecieveMessage(const PlayerDiedMessage& aMessage)
+{
+}
+
+void MessageReciever::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
+{
+}
+
+void MessageReciever::RecieveMessage(const EnemyObjectMessage & aMessage)
+{
+
+}
+
+void MessageReciever::RecieveMessage(const FightWithEnemyMessage & aMessage)
+{
+
+}
+
+void MessageReciever::RecieveMessage(const FlagPlayerDiedMessage& aMessage)
+{
 }

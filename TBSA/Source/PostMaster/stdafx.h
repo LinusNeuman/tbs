@@ -18,3 +18,4 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/NameSpaceAliases.h>
 #include <CU/DLDebug/DL_Debug.h>
+#include <CU/Utility/CommonCasts.h>

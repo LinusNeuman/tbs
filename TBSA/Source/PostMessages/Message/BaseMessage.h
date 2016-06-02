@@ -5,10 +5,13 @@
 struct BaseMessage
 {
 	BaseMessage(const RecieverTypes aType) : myType(aType)
-	{}
+	{
+		myLetThroughMessage = true;
+	}
 	virtual ~BaseMessage()
 	{}
 
 	const RecieverTypes myType;
+	bool myLetThroughMessage;
 };
 #pragma warning (pop)

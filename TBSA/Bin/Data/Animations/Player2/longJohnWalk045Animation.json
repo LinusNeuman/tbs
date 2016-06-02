@@ -1,0 +1,16 @@
+{
+  "Name": "playerWalk045",
+  "FilePath": "Sprites\\Players\\longJohn\\longJohnWalk045.dds",
+  "SizeX": 128,
+  "SizeY": 128,
+  "AmountOfColumns": 8,
+  "AmountOfRows": 3,
+  "AmountOfFrames": 24,
+  "AnimationSpeed": 20,
+  "LoopStart": 1,
+  "LoopEnd": 24,
+  "ShouldLoop": true,
+  "IsInterruptible": true,
+  "InTransition": "",
+  "OutTransition": ""
+}

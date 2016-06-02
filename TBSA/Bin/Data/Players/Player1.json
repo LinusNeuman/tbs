@@ -5,10 +5,28 @@
     "animations": 
     [
         {
-            "path": "Data/Animations/Player1/PlayerIdleAnimation.json"
+            "path": "Data/Animations/Player1/gingerIdle000Animation.json"
         },
         {
-            "path": "Data/Animations/Player1/PlayerTurnAnimation.json"
+            "path": "Data/Animations/Player1/gingerIdle045Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/gingerIdle090Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/gingerIdle135Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/gingerIdle180Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/gingerIdle225Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/gingerIdle270Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/gingerIdle315Animation.json"
         },
 	    {
 	        "path": "Data/Animations/Player1/gingerWalk000Animation.json"
