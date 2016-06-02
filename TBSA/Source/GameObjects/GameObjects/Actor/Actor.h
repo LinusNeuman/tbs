@@ -4,6 +4,8 @@
 #include <Collision/BoxCollider.h>
 #include <CU/Timer/Time.h>
 #include <PostMaster/MessageReceiver.h>
+#include <CU/Utility/GameSpecificTypeDefs.h>
+
 
 
 struct ActorData;
@@ -123,7 +125,7 @@ protected:
 	CU::Vector2f myVelocity;
 	eActorState myState;
 	int myAP;
-	CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> myPath;
+	PathArray myPath;
 	unsigned short myCurrentWaypoint;
 
 	BoxCollider myBoxCollider;

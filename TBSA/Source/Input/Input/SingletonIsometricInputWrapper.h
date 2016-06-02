@@ -46,10 +46,10 @@ public:
 
 	
 
-	//virtual void RecieveMessage(const Message & aMessageToRecieve) override;
+	
 
 private:
-	SingletonIsometricInputWrapper(/*const CU::Camera2D & aCameraToAdjustInputToo*/);
+	SingletonIsometricInputWrapper();
 	~SingletonIsometricInputWrapper();
 
 	CU::Vector2f ConvertMouseNormalizedPositionCartesianCordiante(const bool aOffsetToMiddle = false) const;
@@ -89,7 +89,7 @@ inline LONG SingletonIsometricInputWrapper::GetWheelDelta()
 
 
 /*
-	returns true if the button is pressed down.
+	returns true if button is on this frame.
 */
 inline bool SingletonIsometricInputWrapper::GetMouseButtonDown(CommonUtilities::enumMouseButtons aButton)
 {
@@ -97,7 +97,7 @@ inline bool SingletonIsometricInputWrapper::GetMouseButtonDown(CommonUtilities::
 }
 
 /*
-	returns true if button was not pressed down last frame and is pressed this frame.
+	returns true if button of last frame and on this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetMouseButtonReleased(CommonUtilities::enumMouseButtons aButton)
 {
@@ -105,7 +105,7 @@ inline bool SingletonIsometricInputWrapper::GetMouseButtonReleased(CommonUtiliti
 }
 
 /*
-	returns true if button was not pressed down last frame and is pressed this frame.
+	returns true if button on last frame and off this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetMouseButtonPressed(CommonUtilities::enumMouseButtons aButton)
 {
@@ -113,7 +113,7 @@ inline bool SingletonIsometricInputWrapper::GetMouseButtonPressed(CommonUtilitie
 }
 
 /*
-	returns true if the key is pressed down.
+	returns true if key is on this frame.
 */
 inline bool SingletonIsometricInputWrapper::GetKeyDown(int aButton)
 {
@@ -121,7 +121,7 @@ inline bool SingletonIsometricInputWrapper::GetKeyDown(int aButton)
 }
 
 /*
-	returns true if key was not pressed down last frame and is pressed this frame.
+	returns true if key of last frame and on this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetKeyPressed(int aButton)
 {
@@ -129,7 +129,7 @@ inline bool SingletonIsometricInputWrapper::GetKeyPressed(int aButton)
 }
 
 /*
-	returns true if key was pressed down last frame and is not pressed this frame.
+	returns true if key on last frame and off this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetKeyReleased(int aButton)
 {
