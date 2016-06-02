@@ -122,7 +122,75 @@ void Enemy::Fight()
 
 void Enemy::DecideAnimation()
 {
-	if (GetActorState() == eActorState::eFighting)
+	if (myState == eActorState::eIdle)
+	{
+		//Determine direction animation
+		/*switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("playerIdle045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("playerIdle090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("playerIdle135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("playerIdle180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("playerIdle225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("playerIdle270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("playerIdle315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("playerIdle000");
+			break;
+		default:
+			ChangeAnimation("playerIdle180");
+			break;
+		}*/
+	}
+	else if (myState == eActorState::eWalking)
+	{
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("EnemyWalk045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("EnemyWalk090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("EnemyWalk135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("EnemyWalk180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("EnemyWalk225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("EnemyWalk270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("EnemyWalk315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("EnemyWalk000");
+			break;
+		default:
+			ChangeAnimation("EnemyWalk180");
+			break;
+		}
+	}
+	else if (GetActorState() == eActorState::eFighting)
 	{
 		ChangeAnimation("CombatAnimation");
 	}
