@@ -49,6 +49,9 @@ void IsometricTile::Draw() const
 		case eTileType::DOOR_2:
 			currentColour = CommonUtilities::Vector4f(1.f, .9f, 0.f, 1.f);
 			break;
+		case eTileType::IS_OBJECTIVE:
+			currentColour = CommonUtilities::Vector4f(1.0f, 0.54f, 0.f, 1.0f);
+			break;
 		case eTileType::Size: break;
 		default: break;
 		}

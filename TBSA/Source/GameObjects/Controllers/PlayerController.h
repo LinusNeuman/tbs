@@ -12,6 +12,15 @@ class Actor;
 class RenderConverter;
 class Player;
 
+enum class enumMouseState
+{
+	eClickedOnEnemy,
+	eClickedOnPlayer,
+	eClickedOnEmptyTile,
+	eClickedOnVoid,
+	enumLength
+};
+
 class PlayerController : public MessageReciever
 {
 public:
@@ -45,9 +54,13 @@ public:
 	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
+	void ActivePlayerFight(const unsigned short aPlayerIndex);
+
 	void ActivePlayerFight();
 	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;
+
 	void BuildPath(PathArray & aPathContainterToBuild);
+	enumMouseState GetCurrentMouseState();
 
 	void RayTrace(const TilePositionf &aPosition, const TilePositionf &anotherPosition);
 	int CalculatePoint(float aValue) const;

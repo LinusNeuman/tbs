@@ -10,7 +10,7 @@ PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
-} 
+}
 
 PlayState::~PlayState()
 {
@@ -19,11 +19,20 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 }
 
-void PlayState::Init()
+void PlayState::Init(const std::string& aLevelPath)
 {
 	myLevelFactory = new LevelFactory();
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
-	SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+
+	if (aLevelPath == "")
+	{
+		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+	}
+	else
+	{
+		myLevelKey = aLevelPath;
+	}
 
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
 	myLevel = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
@@ -52,11 +61,15 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (IsometricInput::GetKeyPressed(DIK_1) == true)
 	{
-		ChangeLevel("SecondTest.json");
+		ChangeLevel("1_Treehouse.json");
 	}
 	else if (IsometricInput::GetKeyPressed(DIK_2) == true)
 	{
 		ChangeLevel("2_Backyard.json");
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
+	{
+		ChangeLevel("SecondTest.json");
 	}
 
 	return eStackReturnValue::eStay;

@@ -23,6 +23,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myHasMoved = false;
 	myHasTurned = false;
 	mySomeoneSeesPlayer = false;
+	myIsDeadeastFlag = false;
 	myCurrentPathIndex = 0;
 	myAP = aEnemyData.myActionPoints;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
@@ -31,7 +32,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 
 void Enemy::UpdateEnemy()
 {
-	if (GetActiveState() == true)
+	if (GetActiveState() == true && GetActorState() != eActorState::eDead)
 	{
 		if (myHasMoved == false && myEnemyPath.Size() > 0)
 		{
@@ -97,7 +98,7 @@ void Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 	mySomeoneSeesPlayer = true;
 }
 
-void Enemy::SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath)
+void Enemy::SetEnemyPath(PathArray aEnemyPath)
 {
 	myEnemyPath = aEnemyPath;
 }
@@ -124,5 +125,24 @@ void Enemy::DecideAnimation()
 	if (GetActorState() == eActorState::eFighting)
 	{
 		ChangeAnimation("CombatAnimation");
+	}
+	else if (GetActorState() == eActorState::eIdle)
+	{
+		ChangeAnimation("EnemyTurn");
+	}
+	else if (GetActorState() == eActorState::eDead)
+	{
+		if (myAnimations.GetAnimationIsRunning() == false)
+		{
+			if (myIsDeadeastFlag == false)
+			{
+				ChangeAnimation("DeathAnimation");
+				myIsDeadeastFlag = true;
+			}
+			else
+			{
+				ChangeAnimation("DeadestState");
+			}
+		}
 	}
 }
