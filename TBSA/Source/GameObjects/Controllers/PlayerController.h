@@ -41,7 +41,7 @@ public:
 	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
 	virtual void RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
 	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyChangedDirectionMessage & aMessage) override;
+	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
 	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:

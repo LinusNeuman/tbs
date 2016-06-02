@@ -114,8 +114,8 @@
                  "type":"Enemy1",
                  "visible":true,
                  "width":64,
-                 "x":1279,
-                 "y":1093
+                 "x":1290,
+                 "y":1094
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -145,6 +145,7 @@
  "tileheight":64,
  "tilesets":[
         {
+         "columns":16,
          "firstgid":1,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetWalls.png",
          "imageheight":2048,
@@ -161,6 +162,7 @@
          "tilewidth":128
         }, 
         {
+         "columns":16,
          "firstgid":257,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetFloors.png",
          "imageheight":2048,
@@ -177,6 +179,7 @@
          "tilewidth":128
         }, 
         {
+         "columns":16,
          "firstgid":513,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetProps.png",
          "imageheight":2048,
@@ -193,6 +196,7 @@
          "tilewidth":128
         }, 
         {
+         "columns":8,
          "firstgid":769,
          "image":"..\/..\/Sprites\/SpriteSheets\/dataTileSheet.png",
          "imageheight":1024,
