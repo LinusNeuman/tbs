@@ -171,5 +171,9 @@ namespace CommonUtilities
 		
 		myKeyboardData.resize(256);
 		myPreviousKeyboardData.resize(256);
+
+		/*
+			CLEAR MOUSE BUFFERS
+		*/
 	}
 }

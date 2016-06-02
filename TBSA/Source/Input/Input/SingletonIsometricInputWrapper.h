@@ -168,7 +168,7 @@ void SingletonIsometricInputWrapper::SetViewPortSettings(const CU::Vector4f & aV
 }
 
 /*
-	clears the input buffer
+	clears the input buffer for the keyboard. TODO is for mouse also.
 */
 void SingletonIsometricInputWrapper::ResetInput()
 {
