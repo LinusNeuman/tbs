@@ -15,10 +15,15 @@ public:
 	void Init(const std::string& aLevelPath = "");
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
-	virtual void RecieveMessage(const StartUpLevelMessage & aMessage) override;
-	void RecieveMessage(const PlayerDiedMessage & aMessage) override;
+	
 
 	void ChangeLevel(const std::string& aFilePath);
+
+	virtual void RecieveMessage(const GoalReachedMessage& aMessage) override;
+	virtual void RecieveMessage(const PlayerDiedMessage & aMessage) override;
+	virtual void RecieveMessage(const StartUpLevelMessage & aMessage) override;
+
+
 private:
 	GameLevel * myLevel;
 	std::string myStartPath;
