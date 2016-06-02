@@ -11,6 +11,7 @@
 #include <Message/ActorPositionChangedMessage.h>
 #include <Message/ColliderMessage.h>
 #include <Message/PlayerReachedTargetMessage.h>
+#include <Message/EnemyDirectionChangedMessage.h>
 
 Actor::Actor()
 {

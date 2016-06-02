@@ -110,7 +110,10 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	myEnemyController->ConstantUpdate(aTimeDelta);
 	myPlayerController->ConstantUpdate(aTimeDelta);
-	myTurnManager.Update(aTimeDelta);
+	if(myTurnManager.Update(aTimeDelta) == false)
+	{
+		return;
+	}
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{

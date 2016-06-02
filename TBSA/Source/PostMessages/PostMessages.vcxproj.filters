@@ -20,12 +20,13 @@
     <ClInclude Include="Message\WindowRectChangedMessage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Message\PlayerAddedMessage.h" />
-    <ClInclude Include="Message\EnemyChangedDirectionMessage.h" />
     <ClInclude Include="Message\PlayerSeenMessage.h" />
     <ClInclude Include="Message\PlayerDiedMessage.h" />
     <ClInclude Include="Message\SetHWNDMessage.h" />
     <ClInclude Include="Message\PlayerReachedTargetMessage.h" />
     <ClInclude Include="Message\EnemyObjectMessage.h" />
     <ClInclude Include="Message\FightWithEnemyMessage.h" />
+    <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
+    <ClInclude Include="Message\FlagPlayerDiedMessage.h" />
   </ItemGroup>
 </Project>

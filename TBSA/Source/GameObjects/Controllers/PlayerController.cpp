@@ -40,7 +40,7 @@ PlayerController::~PlayerController()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyChangedDirection, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -54,7 +54,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyChangedDirection, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
@@ -214,6 +214,10 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
+	/*for (size_t i = 0; i < myDebugEnd.size(); i++)
+	{
+		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
+	}*/
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -271,7 +275,7 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 {
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
-		DL_PRINT("An enemy can see you!");
+		//DL_PRINT("An enemy can see you!");
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
 }
@@ -307,13 +311,13 @@ void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
 	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition));
 }
 
-void PlayerController::RecieveMessage(const EnemyChangedDirectionMessage& aMessage)
+void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessage)
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
 		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
 		{
-			DL_PRINT("An enemy can see you!");
+			//DL_PRINT("An enemy can see you!");
 			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
 		}
 	}
@@ -403,7 +407,6 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 void PlayerController::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRadius)
 {
-	
 	int r, xc, yc, pk, x, y;
 	xc = static_cast<int>(aPosition.x);
 	yc = static_cast<int>(aPosition.y);
@@ -429,15 +432,14 @@ void PlayerController::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRad
 	
 void PlayerController::CalculateCircleRayTrace(const TilePositionf & aPosition, const TilePositionf & aPlayerPosition)
 {
-	
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, TilePositionf(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
-
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
 }
 
 int PlayerController::CalculatePoint(float aValue) const
