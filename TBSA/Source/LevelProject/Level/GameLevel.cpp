@@ -106,9 +106,9 @@ void GameLevel::Init(TiledData* aTileData)
 					x - 1 > 0 && y + 1 > 0)
 				{
 					myFloor.GetTile(x + 1, y).SetAvailAbleDirection(eDirection::EAST);
-					myFloor.GetTile(x, y + 1).SetAvailAbleDirection(eDirection::NORTH);
+					myFloor.GetTile(x, y - 1).SetAvailAbleDirection(eDirection::NORTH);
 					myFloor.GetTile(x - 1, y).SetAvailAbleDirection(eDirection::WEST);
-					myFloor.GetTile(x, y - 1).SetAvailAbleDirection(eDirection::SOUTH);
+					myFloor.GetTile(x, y + 1).SetAvailAbleDirection(eDirection::SOUTH);
 				}
 			}
 		}

@@ -14,6 +14,7 @@ struct TiledData
 	{
 		myTiles.Init(1);
 		myEnemies.Init(1);
+		myObjectives.Init(1);
 	}
 
 	CommonUtilities::GrowingArray<IsometricTile> myTiles;
