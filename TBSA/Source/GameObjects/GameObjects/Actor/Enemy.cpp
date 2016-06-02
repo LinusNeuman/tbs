@@ -118,6 +118,7 @@ void Enemy::OnClick()
 void Enemy::Fight()
 {
 	SetActorState(eActorState::eFighting);
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyAttacked, *this));
 }
 
 void Enemy::DecideAnimation()
