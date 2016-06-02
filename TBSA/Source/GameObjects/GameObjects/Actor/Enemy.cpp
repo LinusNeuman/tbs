@@ -162,31 +162,31 @@ void Enemy::DecideAnimation()
 		switch (GetDirectionEnum())
 		{
 		case eDirection::NORTH:
-			ChangeAnimation("playerWalk045");
+			ChangeAnimation("EnemyWalk045");
 			break;
 		case eDirection::NORTH_EAST:
-			ChangeAnimation("playerWalk090");
+			ChangeAnimation("EnemyWalk090");
 			break;
 		case eDirection::EAST:
-			ChangeAnimation("playerWalk135");
+			ChangeAnimation("EnemyWalk135");
 			break;
 		case eDirection::SOUTH_EAST:
-			ChangeAnimation("playerWalk180");
+			ChangeAnimation("EnemyWalk180");
 			break;
 		case eDirection::SOUTH:
-			ChangeAnimation("playerWalk225");
+			ChangeAnimation("EnemyWalk225");
 			break;
 		case eDirection::SOUTH_WEST:
-			ChangeAnimation("playerWalk270");
+			ChangeAnimation("EnemyWalk270");
 			break;
 		case eDirection::WEST:
-			ChangeAnimation("playerWalk315");
+			ChangeAnimation("EnemyWalk315");
 			break;
 		case eDirection::NORTH_WEST:
-			ChangeAnimation("playerWalk000");
+			ChangeAnimation("EnemyWalk000");
 			break;
 		default:
-			ChangeAnimation("playerWalk180");
+			ChangeAnimation("EnemyWalk180");
 			break;
 		}
 	}
