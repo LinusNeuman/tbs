@@ -19,6 +19,7 @@ Objective* ObjectiveFactory::CreateObjective(eObjectiveType aType)
 	switch (aType)
 	{
 	case eObjectiveType::eLevelEnd:
+		objective;
 		return objective;
 	default:
 		DL_ASSERT(false, "Wrong ObjectiveType when creating objective");
