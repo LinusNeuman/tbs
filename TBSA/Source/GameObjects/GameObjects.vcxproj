@@ -170,6 +170,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActorEnums.h" />
     <ClInclude Include="Controllers\EnemyController.h" />
     <ClInclude Include="GameObjects\Room\GameFloor.h" />
     <ClInclude Include="GameObjects\Actor\Actor.h" />

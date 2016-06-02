@@ -95,7 +95,26 @@ void GameLevel::Init(TiledData* aTileData)
 		{
 			myFloor.GetTile(CU::Vector2ui(USHORTCAST(myObjectives[i]->GetPosition().x), USHORTCAST(myObjectives[i]->GetPosition().y))).SetTileType(eTileType::IS_OBJECTIVE);
 		}
+	}	
+	for (size_t y = 0; y < myFloor.GetDimensions().y; y++)
+	{
+		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
+		{
+			if (myFloor.GetTile(x,y).CheckIfWalkable() == true)
+			{
+				if (x + 1 < myFloor.GetDimensions().x && y + 1 < myFloor.GetDimensions().y &&
+					x - 1 > 0 && y + 1 > 0)
+				{
+					myFloor.GetTile(x + 1, y).SetAvailAbleDirection(eDirection::EAST);
+					myFloor.GetTile(x, y + 1).SetAvailAbleDirection(eDirection::NORTH);
+					myFloor.GetTile(x - 1, y).SetAvailAbleDirection(eDirection::WEST);
+					myFloor.GetTile(x, y - 1).SetAvailAbleDirection(eDirection::SOUTH);
+				}
+			}
+		}
 	}
+
+
 
 }
 
@@ -194,7 +213,6 @@ void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 	myNavGraph.Clear();
 }
-
 
 void GameLevel::ConstructNavGraph()
 {
