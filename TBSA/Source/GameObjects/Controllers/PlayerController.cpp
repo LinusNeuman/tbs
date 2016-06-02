@@ -158,7 +158,6 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				PathArray positionPath;
 				BuildPath(positionPath);
 
-
 				if (myClickedOnEnemy == true)
 				{
 					positionPath.RemoveAtIndex(positionPath.Size() - 1);
@@ -392,17 +391,16 @@ void PlayerController::CreatePlayerFoV(const CU::Vector2f& aPosition, float aRad
 
 }
 	
-void PlayerController::CalculateCircleRayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& aPlayerPosition)
+void PlayerController::CalculateCircleRayTrace(const TilePositionf & aPosition, const TilePositionf & aPlayerPosition)
 {
 	
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
-	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, TilePositionf(aPosition.x + aPlayerPosition.x, aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, TilePositionf(aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, TilePositionf(-aPosition.x + aPlayerPosition.x, -aPosition.y + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, TilePositionf(aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, TilePositionf(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, TilePositionf(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
+	RayTrace(aPlayerPosition, TilePositionf(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
 
 }
 

@@ -200,6 +200,11 @@ void CGame::UpdateWork()
 	{
 		IsometricInput::Update();
 	}
+	else
+	{
+		IsometricInput::ResetInput();
+	}
+
 	CU::TimeManager::Update();
 
 
