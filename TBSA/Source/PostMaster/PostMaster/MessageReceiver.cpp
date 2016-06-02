@@ -95,3 +95,8 @@ void MessageReciever::RecieveMessage(const FightWithEnemyMessage & aMessage)
 void MessageReciever::RecieveMessage(const FlagPlayerDiedMessage& aMessage)
 {
 }
+
+void MessageReciever::RecieveMessage(const GoalReachedMessage& aMessage)
+{
+
+}

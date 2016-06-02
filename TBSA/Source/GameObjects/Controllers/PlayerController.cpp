@@ -281,6 +281,11 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 		//DL_PRINT("An enemy can see you!");
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
+
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
+	{
+		DL_PRINT("You have reached the goal, Aren't you special.");
+	}
 }
 
 void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
