@@ -53,6 +53,7 @@ namespace CommonUtilities
 
 		inline Vector2f GetMouseWindowPositionNormalizedSpace() const;
 
+		inline void ResetInput();
 
 	private:
 		LPDIRECTINPUT8 myInputInterface;
@@ -163,4 +164,12 @@ namespace CommonUtilities
 		return Vector2f((static_cast<float>(tempPoint.x) / static_cast<float>(tempWindow.right)), (static_cast<float>(tempPoint.y) / static_cast<float>(tempWindow.bottom)));
 	}
 
+	inline void InputWrapper::ResetInput()
+	{
+		myKeyboardData.clear();
+		myPreviousKeyboardData.clear();
+		
+		myKeyboardData.resize(256);
+		myPreviousKeyboardData.resize(256);
+	}
 }

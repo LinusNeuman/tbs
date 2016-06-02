@@ -25,7 +25,6 @@ namespace CommonUtilities
 
 		myInputInterface->Release();
 		myInputInterface = nullptr;
-
 	}
 
 
@@ -64,5 +63,7 @@ namespace CommonUtilities
 	
 		myKeyboard->GetDeviceState(sizeof(BYTE) * myKeyboardData.size(), static_cast<void*>(&myKeyboardData[0]));
 	}
+
+	
 
 }

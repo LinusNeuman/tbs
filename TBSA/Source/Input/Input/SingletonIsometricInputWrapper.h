@@ -39,14 +39,13 @@ public:
 	inline static CU::Vector2f GetMouseWindowPositionNormalizedSpace();
 	static CU::Vector2f GetMouseWindowPositionIsometric();
 
+	inline static void ResetInput();
+
 	inline static void SetViewPortSettings(const CU::Vector4f & aViewPortStats);
 
 	virtual void RecieveMessage(const WindowRectChangedMessage & aMessage) override;
 	virtual void RecieveMessage(const SetMainCameraMessage & aMessage) override;
 
-	
-
-	
 
 private:
 	SingletonIsometricInputWrapper();
@@ -166,6 +165,14 @@ inline CU::Vector2f SingletonIsometricInputWrapper::GetMouseWindowPositionNormal
 void SingletonIsometricInputWrapper::SetViewPortSettings(const CU::Vector4f & aViewPortStats)
 {
 	GetInstance().myViewPortSettings = aViewPortStats;
+}
+
+/*
+	clears the input buffer
+*/
+void SingletonIsometricInputWrapper::ResetInput()
+{
+	GetInstance().myInputWrapper.ResetInput();
 }
 
 
