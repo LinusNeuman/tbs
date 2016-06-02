@@ -152,10 +152,15 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	{
 		for (unsigned int i = 0; i < myPlayers.Size(); ++i)
 		{
-			CU::Vector2ui peakPosition;
-			if (CheckIfCloseToDoor(CU::Vector2ui(myPlayers[i]->GetPosition()), peakPosition) == true)
+			if (myPlayers[i]->GetMyAP() >= 1)
 			{
-				CreatePlayerFoV(CU::Vector2f(peakPosition), 3);
+				CU::Vector2ui peekPosition;
+				if (CheckIfCloseToDoor(CU::Vector2ui(myPlayers[i]->GetPosition()), peekPosition) == true)
+				{
+					CreatePlayerFoV(CU::Vector2f(peekPosition), 3);
+					myPlayers[i]->CostAP(1);
+					break;
+				}
 			}
 		}
 	}
@@ -297,7 +302,6 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 {
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
-		//DL_PRINT("An enemy can see you!");
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
 	}
 }
@@ -339,7 +343,6 @@ void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 	{
 		if (myFloor->GetTile(CU::Vector2ui(myPlayers[iPlayer]->GetPosition().x, myPlayers[iPlayer]->GetPosition().y)).GetInEnemyFov() == true)
 		{
-			//DL_PRINT("An enemy can see you!");
 			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
 		}
 	}
@@ -351,30 +354,30 @@ void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)
 	myPlayers[aPlayerIndex]->ResetObjectiveState();
 }
 
-bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const
+bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeekLocation) const
 {
 	if (myFloor->GetTile(aPosition.x + 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR ||
 		myFloor->GetTile(aPosition.x + 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR_2)
 	{
-		aPeakLocation = aPosition + CU::Vector2ui(2, -1);
+		aPeekLocation = aPosition + CU::Vector2ui(2, -1);
 		return true;
 	}
 	if (myFloor->GetTile(aPosition.x + 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR ||
 		myFloor->GetTile(aPosition.x + 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR_2)
 	{
-		aPeakLocation = aPosition + CU::Vector2ui(2, 1);
+		aPeekLocation = aPosition + CU::Vector2ui(2, 1);
 		return true;
 	}
 	if (myFloor->GetTile(aPosition.x - 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR || 
 		myFloor->GetTile(aPosition.x - 1.f, aPosition.y - 1.f).GetTileType() == eTileType::DOOR_2)
 	{
-		aPeakLocation = aPosition + CU::Vector2ui(-2, -1);
+		aPeekLocation = aPosition + CU::Vector2ui(-2, -1);
 		return true;
 	}
 	if (myFloor->GetTile(aPosition.x - 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR || 
 		myFloor->GetTile(aPosition.x - 1.f, aPosition.y + 1.f).GetTileType() == eTileType::DOOR_2)
 	{
-		aPeakLocation = aPosition + CU::Vector2ui(-2, 1);
+		aPeekLocation = aPosition + CU::Vector2ui(-2, 1);
 		return true;
 	}
 	return false;	
