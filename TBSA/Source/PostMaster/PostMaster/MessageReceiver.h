@@ -22,6 +22,7 @@ struct PlayerSeenMessage;
 struct PlayerDiedMessage;
 struct EnemyObjectMessage;
 struct FightWithEnemyMessage;
+struct GoalReachedMessage;
 
 class MessageReciever
 {
@@ -50,6 +51,7 @@ public:
 	virtual void RecieveMessage(const EnemyObjectMessage & aMessage);
 	virtual void RecieveMessage(const FightWithEnemyMessage & aMessage);
 	virtual void RecieveMessage(const FlagPlayerDiedMessage &aMessage);
+	virtual void RecieveMessage(const GoalReachedMessage& aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:

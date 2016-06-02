@@ -93,9 +93,28 @@ void GameLevel::Init(TiledData* aTileData)
 	{
 		for (size_t i = 0; i < myObjectives.Size(); i++)
 		{
-			myFloor.GetTile(CU::Vector2ui(myObjectives[i]->GetPosition().x, myObjectives[i]->GetPosition().y)).SetTileType(eTileType::IS_OBJECTIVE);
+			myFloor.GetTile(CU::Vector2ui(USHORTCAST(myObjectives[i]->GetPosition().x), USHORTCAST(myObjectives[i]->GetPosition().y))).SetTileType(eTileType::IS_OBJECTIVE);
+		}
+	}	
+	for (size_t y = 0; y < myFloor.GetDimensions().y; y++)
+	{
+		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
+		{
+			if (myFloor.GetTile(x,y).CheckIfWalkable() == true)
+			{
+				if (x + 1 < myFloor.GetDimensions().x && y + 1 < myFloor.GetDimensions().y &&
+					x - 1 > 0 && y + 1 > 0)
+				{
+					myFloor.GetTile(x + 1, y).SetAvailAbleDirection(eDirection::EAST);
+					myFloor.GetTile(x, y - 1).SetAvailAbleDirection(eDirection::NORTH);
+					myFloor.GetTile(x - 1, y).SetAvailAbleDirection(eDirection::WEST);
+					myFloor.GetTile(x, y + 1).SetAvailAbleDirection(eDirection::SOUTH);
+				}
+			}
 		}
 	}
+
+
 
 }
 
@@ -141,7 +160,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	{
 		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
 		{
-			if (myFloor.GetTile(i).GetVisible() == false)
+			if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH)
 			{
 				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FogOfWarShader")->myShader);
 			}
@@ -194,7 +213,6 @@ void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 	myNavGraph.Clear();
 }
-
 
 void GameLevel::ConstructNavGraph()
 {

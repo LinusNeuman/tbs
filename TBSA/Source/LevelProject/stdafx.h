@@ -23,6 +23,7 @@
 #include <Input/SingletonIsometricInputWrapper.h>
 
 #include <PostMaster/SingletonPostMaster.h>
+#include <CU/Utility/CommonCasts.h>
 
 // Audio
 //#include "Source/Instances/SoundEffect.h"

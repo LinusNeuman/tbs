@@ -29,8 +29,10 @@ enum class RecieverTypes
 	eClickedOnEnemy,
 	ePlayerReachedEndOfPath,
 	eEnemyReachedEndOfPath,
+	ePlayerNextToObjective,
 	ePlayerTargetEnemy,
 	eStartFight,
 	eFlagPlayerDied,
+	eEnemyAttacked,
 	enumlength
 };
