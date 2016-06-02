@@ -141,7 +141,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 	{
 		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
 		{
-			if (myFloor.GetTile(i).GetVisible() == false)
+			if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH)
 			{
 				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FogOfWarShader")->myShader);
 			}

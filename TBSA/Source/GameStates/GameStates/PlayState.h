@@ -12,7 +12,7 @@ class PlayState : public GameState, public MessageReciever
 public:
 	PlayState();
 	~PlayState();
-	void Init() override;
+	void Init(const std::string& aLevelPath = "");
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
 	virtual void RecieveMessage(const StartUpLevelMessage & aMessage) override;
@@ -24,7 +24,6 @@ private:
 	std::string myStartPath;
 	std::string myLevelKey;
 	std::string myCurrentLevelpath;
-	std::unordered_map<std::string, GameLevel*> myLevels;
 	LevelFactory* myLevelFactory;
 	bool myShouldExit;
 };

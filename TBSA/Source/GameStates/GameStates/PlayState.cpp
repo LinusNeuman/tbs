@@ -10,7 +10,7 @@ PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
-} 
+}
 
 PlayState::~PlayState()
 {
@@ -19,11 +19,20 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 }
 
-void PlayState::Init()
+void PlayState::Init(const std::string& aLevelPath)
 {
 	myLevelFactory = new LevelFactory();
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
-	SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+
+	if (aLevelPath == "")
+	{
+		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+	}
+	else
+	{
+		myLevelKey = aLevelPath;
+	}
 
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
 	myLevel = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
