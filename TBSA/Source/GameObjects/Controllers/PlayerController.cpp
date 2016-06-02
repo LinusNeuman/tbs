@@ -116,7 +116,7 @@ void PlayerController::CostAP(const int anAP)
 
 void PlayerController::Update(const CommonUtilities::Time& aTime)
 {
-	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
+	const TilePosition mousePosition = TilePosition(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
 
 #pragma region CameraControls
 
@@ -155,14 +155,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		{
 			if (myFloor->GetTile(mousePosition).CheckIfWalkable() == true && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 			{
-				CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
-				CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> positionPath;
-				positionPath.Init(indexPath.Size());
+				PathArray positionPath;
+				BuildPath(positionPath);
 
-				for (size_t i = 0; i < indexPath.Size(); i++)
-				{
-					positionPath.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
-				}
 
 				if (myClickedOnEnemy == true)
 				{
@@ -297,6 +292,20 @@ void PlayerController::ActivePlayerFight()
 {
 	SendPostMessage(FightWithEnemyMessage(RecieverTypes::eStartFight, mySelectedPlayer->GetEnemyTarget()));
 	mySelectedPlayer->SetNoTarget();
+}
+
+void PlayerController::BuildPath(PathArray & aPathContainterToBuild)
+{
+	const TilePosition mousePosition = TilePosition(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
+
+	CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
+
+	aPathContainterToBuild.Init(indexPath.Size());
+
+	for (size_t i = 0; i < indexPath.Size(); i++)
+	{
+		aPathContainterToBuild.Add(CommonUtilities::Vector2ui(myFloor->GetTile(indexPath[indexPath.Size() - (i + 1)]).GetPosition()));
+	}
 }
 
 void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)

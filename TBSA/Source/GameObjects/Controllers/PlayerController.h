@@ -5,6 +5,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <PostMaster/MessageReceiver.h>
+#include <CU/Utility/GameSpecificTypeDefs.h>
 
 class PlayState;
 class Actor;
@@ -45,6 +46,8 @@ public:
 
 private:
 	void ActivePlayerFight();
+
+	void BuildPath(PathArray & aPathContainterToBuild);
 
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
 	int CalculatePoint(float aValue) const;

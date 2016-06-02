@@ -34,9 +34,14 @@ void TurnManager::Update(CommonUtilities::Time aDeltaTime)
 	case eTurn::ENEMY_TURN:
 		UpdateEnemy(aDeltaTime);
 		break;
+	case eTurn::ENEMY_END_TURN: 
+		EnemyEndTurn();
+		break;
 	case eTurn::Size:
 	default:
+		EndTurn();
 		break;
+	
 	};
 }
 
@@ -100,4 +105,10 @@ void TurnManager::PrepareEnemy()
 void TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 {
 	myEnemyController.Update(aDeltaTime);
+}
+
+void TurnManager::EnemyEndTurn()
+{
+	myEnemyController.PostTurn();
+	EndTurn();
 }

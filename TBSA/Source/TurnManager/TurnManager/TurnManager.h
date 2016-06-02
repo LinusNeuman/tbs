@@ -15,7 +15,7 @@ enum class eTurn
 	PLAYER_END_TURN,
 	PRE_ENEMY_TURN,
 	ENEMY_TURN,
-	
+	ENEMY_END_TURN,
 	Size
 };
 
@@ -43,6 +43,7 @@ private:
 	
 	void PrepareEnemy();
 	void UpdateEnemy(CommonUtilities::Time aDeltaTime);
+	void EnemyEndTurn();
 
 	eTurn myCurrentTurn;
 	bool myPlayerDied;

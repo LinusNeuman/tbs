@@ -19,14 +19,13 @@ public:
 	void SetFloorDimensions(const FloorDimensions aDimensionsSize);
 	const FloorDimensions & GetDimensions() const;
 	unsigned short Size() const;
-
+	void SetDiagonals(const CU::Vector2f& aPosition, float aCost);
 	void CallFunctionOnAllTiles(std::function<void(IsometricTile&)> aFunction);
 	void CallFunctionOnAllTiles(std::function<void(const IsometricTile&)> aFunction) const;
 
 	IsometricTile & GetTile(unsigned int aX, unsigned int aY);
 	IsometricTile & GetTile(CommonUtilities::Vector2ui aVector2Ui);
 	IsometricTile & GetTile(unsigned short aIndex);
-
 private:
 	TileArray myTiles;
 	FloorDimensions myDimensions;
