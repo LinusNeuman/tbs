@@ -25,9 +25,9 @@ public:
 	virtual void RecieveMessage(const FightWithEnemyMessage & aMessage) override;
 	void PostTurn();
 private:
-	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition);
+	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition, const eDirection aDirection);
 	void CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirection aDirection, float aAngle, float aMagnitude);
-	void CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f& aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude);
+	void CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f& aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude, eDirection aDirection);
 	int CalculatePoint(float aValue) const;
 	void ResetTileShaders();
 
