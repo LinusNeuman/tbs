@@ -47,10 +47,11 @@ void MenuState::Draw() const
 	myGUIManager.Render();
 }
 
-void MenuState::RecieveMessage(const GUIMessage& aMessage)
+bool MenuState::RecieveMessage(const GUIMessage& aMessage)
 {
 	if (aMessage.myType == RecieverTypes::ePlayGame)
 	{
 		myShouldAdd = true;
 	}
+	return true;
 }

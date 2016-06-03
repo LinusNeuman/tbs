@@ -301,7 +301,7 @@ void PlayerController::AfterPlayerTurn()
 	}
 }
 
-void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
+bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
 	{
@@ -318,9 +318,10 @@ void PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
 		}
 	}
+	return true;
 }
 
-void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessage)
+bool PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessage)
 {
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
@@ -332,9 +333,10 @@ void PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
 		DL_PRINT("You have reached the goal, Aren't you special.");
 	}
+	return true;
 }
 
-void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
+bool PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
 {
 	ResetTileShaders();
 	myDebugStart.clear();
@@ -343,21 +345,24 @@ void PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage
 	{
 		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), PlayerFoWRadius);
 	}
+	return true;
 }
 
-void PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
+bool PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 {
 	ResetTileShaders();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
 		CreatePlayerFoV(myPlayers[iPlayer]->GetPosition(), PlayerFoWRadius);
 	}
+	return true;
 }
 
-void PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
+bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 	myClickedOnEnemy = true;
 	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
+	return true;
 }
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
@@ -365,7 +370,7 @@ void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
 	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition));
 }
 
-void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessage)
+bool PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessage)
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
@@ -374,6 +379,7 @@ void PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
 		}
 	}
+	return true;
 }
 
 void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)

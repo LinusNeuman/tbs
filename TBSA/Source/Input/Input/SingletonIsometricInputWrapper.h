@@ -43,8 +43,8 @@ public:
 
 	inline static void SetViewPortSettings(const CU::Vector4f & aViewPortStats);
 
-	virtual void RecieveMessage(const WindowRectChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const SetMainCameraMessage & aMessage) override;
+	virtual bool RecieveMessage(const WindowRectChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage) override;
 
 
 private:

@@ -8,6 +8,7 @@
 #include "CU/Matriser/matrix.h"
 #include "CU/Utility/Randomizer/Randomizer.h"
 #include "CU/NameSpaceAliases.h"
+#include <CU/Utility/GameSpecificTypeDefs.h>
 
 class Camera2D
 {
@@ -42,6 +43,7 @@ private:
 
 	Randomizer myRandomizer;
 
+	TilePositionf myMaxConstrains;
 	CU::Matrix33f myOrientation;
 	CU::Matrix33f myProjection;
 	CU::Vector2f myResolution;
@@ -50,8 +52,6 @@ private:
 	float myShakeDuration;
 	float myShakeForce;
 	bool myShaking;
-
-
 };
 
 inline const CU::Vector2f Camera2D::GetPosition() const

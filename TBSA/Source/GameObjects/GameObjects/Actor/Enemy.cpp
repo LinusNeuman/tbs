@@ -93,9 +93,10 @@ void Enemy::AlmostReachTarget()
 	myController->EnemyDone();
 }
 
-void Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
+bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
+	return true;
 }
 
 void Enemy::SetEnemyPath(PathArray aEnemyPath)

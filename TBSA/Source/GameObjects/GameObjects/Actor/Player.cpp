@@ -54,7 +54,7 @@ void Player::OnClick()
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
 }
 
-void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
+bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
 	{
@@ -74,6 +74,7 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 
 		}
 	}
+	return true;
 }
 
 

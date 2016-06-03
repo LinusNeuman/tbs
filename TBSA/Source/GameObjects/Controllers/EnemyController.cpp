@@ -258,9 +258,10 @@ void EnemyController::AddEnemy(Enemy* aEnemy)
 	myEnemies.GetLast()->SetIndex(myEnemies.Size() - 1);
 }
 
-void EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
+bool EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
 {
 	myEnemies[aMessage.myEnemyIndex]->Fight();
+	return true;
 }
 
 void EnemyController::PostTurn()

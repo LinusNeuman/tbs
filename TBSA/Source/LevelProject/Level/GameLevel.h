@@ -24,8 +24,8 @@ public:
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
 
-	void RecieveMessage(const DijkstraMessage & aMessage) override;
-	void RecieveMessage(const NavigationClearMessage & aMessage) override;
+	bool RecieveMessage(const DijkstraMessage & aMessage) override;
+	bool RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
 private:
 

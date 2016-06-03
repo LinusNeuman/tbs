@@ -31,29 +31,29 @@ public:
 	virtual ~MessageReciever()
 	{}
 
-	virtual void RecieveMessage(const WindowRectChangedMessage & aMessage);
-	virtual void RecieveMessage(const LevelTileMetricsMessage & aMessage);
-	virtual void RecieveMessage(const SetMainCameraMessage & aMessage);
-	virtual void RecieveMessage(const DijkstraMessage & aMessage);
-	virtual void RecieveMessage(const NavigationClearMessage & aMessage);
-	virtual void RecieveMessage(const EndTurnMessage & aMessage);
-	virtual void RecieveMessage(const StartUpLevelMessage & aMessage);
-	virtual void RecieveMessage(const GUIMessage & aMessage);
-	virtual void RecieveMessage(const GetStartLevelMessage & aMessage);
-	virtual void RecieveMessage(const ColliderMessage & aMessage);
-	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage);
-	virtual void RecieveMessage(const PlayerObjectMessage & aMessage);
-	virtual void RecieveMessage(const SetHWNDMessage & aMessage);
-	virtual void RecieveMessage(const PlayerAddedMessage & aMessage);
-	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage);
-	virtual void RecieveMessage(const PlayerSeenMessage & aMessage);
-	virtual void RecieveMessage(const PlayerDiedMessage & aMessage);
-	virtual void RecieveMessage(const PlayerChangedTargetMessage & aMessage);
-	virtual void RecieveMessage(const EnemyObjectMessage & aMessage);
-	virtual void RecieveMessage(const FightWithEnemyMessage & aMessage);
-	virtual void RecieveMessage(const FlagPlayerDiedMessage &aMessage);
-	virtual void RecieveMessage(const GoalReachedMessage& aMessage);
-	virtual void RecieveMessage(const FlagGoalReachedMessage& aMessage);
+	virtual bool RecieveMessage(const WindowRectChangedMessage & aMessage);
+	virtual bool RecieveMessage(const LevelTileMetricsMessage & aMessage);
+	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage);
+	virtual bool RecieveMessage(const DijkstraMessage & aMessage);
+	virtual bool RecieveMessage(const NavigationClearMessage & aMessage);
+	virtual bool RecieveMessage(const EndTurnMessage & aMessage);
+	virtual bool RecieveMessage(const StartUpLevelMessage & aMessage);
+	virtual bool RecieveMessage(const GUIMessage & aMessage);
+	virtual bool RecieveMessage(const GetStartLevelMessage & aMessage);
+	virtual bool RecieveMessage(const ColliderMessage & aMessage);
+	virtual bool RecieveMessage(const ActorPositionChangedMessage & aMessage);
+	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage);
+	virtual bool RecieveMessage(const SetHWNDMessage & aMessage);
+	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage);
+	virtual bool RecieveMessage(const EnemyDirectionChangedMessage & aMessage);
+	virtual bool RecieveMessage(const PlayerSeenMessage & aMessage);
+	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage);
+	virtual bool RecieveMessage(const PlayerChangedTargetMessage & aMessage);
+	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage);
+	virtual bool RecieveMessage(const FightWithEnemyMessage & aMessage);
+	virtual bool RecieveMessage(const FlagPlayerDiedMessage &aMessage);
+	virtual bool RecieveMessage(const FlagGoalReachedMessage& aMessage);
+	virtual bool RecieveMessage(const GoalReachedMessage& aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:
