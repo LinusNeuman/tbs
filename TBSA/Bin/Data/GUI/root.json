@@ -1,87 +1,64 @@
 {
-    "GameStates": [
-        {
-            "myName": "MainMenu",
-            "myGUIData": {
-                "guiElements": [
-                    {
-                        "myType": "Button",
-                        "Name": "New Button",
-                        "Tooltip": "",
-                        "mySprite": {
-                            "myPath": "",
-                            "myWidth": 0,
-                            "myHeight": 0
-                        },
-                        "myIsEnabled": true,
-                        "myIsIsometric": false,
-                        "myPositionX": 0,
-                        "myPositionY": 0,
-                        "myParentPositionX": 0,
-                        "myParentPositionY": 0,
-                        "Events": {
-                            "Click": "",
-                            "Hover": ""
-                        }
-                    }
-                ]
+  "GameStates": [
+    {
+      "myName": "MainMenu",
+      "myGUIData": {
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/MainMenu\\PlayButton/Unpressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/MainMenu\\PlayButton/Pressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/MainMenu\\PlayButton/Hover.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/MainMenu\\PlayButton",
+            "mySizeX": 223,
+            "mySizeY": 117,
+            "Name": "PlayButton",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 960,
+            "myPositionY": 540,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "PlayGame",
+              "Hover": ""
             }
-        },
-        {
-            "myName": "LevelSelect",
-            "myGUIData": {
-                "guiElements": [ 
-
-                ]
-            }
-        },
-        {
-            "myName": "InGame",
-            "myGUIData": {
-                "guiElements": [
-                    {
-                        "myUnpressed": {
-                            "myPath": "Sprites/GUI/EndTurnButton/Unpressed.dds",
-                            "myWidth": 225,
-                            "myHeight": 118
-                        },
-                        "myPressed": {
-                            "myPath": "Sprites/GUI/EndTurnButton/Pressed.dds",
-                            "myWidth": 225,
-                            "myHeight": 118
-                        },
-                        "myHover": {
-                            "myPath": "Sprites/GUI/EndTurnButton/Hover.dds",
-                            "myWidth": 225,
-                            "myHeight": 118
-                        },
-                        "myShouldPlayHoverSound": true,
-                        "myShouldPlayClickSound": true,
-                        "myAnimated": true,
-                        "myImagesPath": "Sprites/GUI/EndTurnButton",
-                        "mySizeX": 225,
-                        "mySizeY": 118,
-                        "myType": "Button",
-                        "Name": "TestButton",
-                        "Tooltip": "",
-                        "mySprite": {
-                            "myPath": "",
-                            "myWidth": 0,
-                            "myHeight": 0
-                        },
-                        "myIsEnabled": true,
-                        "myIsIsometric": false,
-                        "myPositionX": 0,
-                        "myPositionY": 0,
-                        "myParentPositionX": 0,
-                        "myParentPositionY": 0,
-                        "Events": {
-                            "Click": "Turn",
-                            "Hover": ""
-                        }
-                    }
-                ]
-            }
-        }
-    ]
+          }
+        ]
+      }
+    },
+    {
+      "myName": "LevelSelect",
+      "myGUIData": {
+        "guiElements": []
+      }
+    },
+    {
+      "myName": "InGame",
+      "myGUIData": {
+        "guiElements": []
+      }
+    }
+  ]
 }

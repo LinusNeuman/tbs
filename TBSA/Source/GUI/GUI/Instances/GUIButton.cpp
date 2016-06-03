@@ -24,7 +24,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 
 	mySpritePressed = new StaticSprite();
 	mySpritePressed->Init(
-		aSpritePath + "Pressed.dds",
+		aSpritePath + "/Pressed.dds",
 		myIsIsometric,
 		{
 			0.f, 0.f,
@@ -36,7 +36,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 
 	mySpriteUnpressed = new StaticSprite();
 	mySpriteUnpressed->Init(
-		aSpritePath + "Unpressed.dds",
+		aSpritePath + "/Unpressed.dds",
 		myIsIsometric,
 		{
 			0.f, 0.f,
@@ -48,7 +48,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 
 	mySpriteHovered = new StaticSprite();
 	mySpriteHovered->Init(
-		aSpritePath + "Hover.dds",
+		aSpritePath + "/Hover.dds",
 		myIsIsometric,
 		{
 			0.f, 0.f,

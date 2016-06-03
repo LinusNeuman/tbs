@@ -92,26 +92,21 @@ void GUIFactory::Load()
 
 					// also add events
 
-					RecieverTypes jsonRecieverTypeClick = RecieverTypes::enumlength;
-					RecieverTypes jsonRecieverTypeHover = RecieverTypes::enumlength;
 
 					if (clickEvent == "Turn")
 					{
-						jsonRecieverTypeClick = RecieverTypes::eTurn;
+						newButton->SetAction(new GUIMessage(RecieverTypes::eTurn), eGUIMessageEvents::eOnClick);
 					}
 
 					if (clickEvent == "ExitGame")
 					{
-						jsonRecieverTypeClick = RecieverTypes::eExitGame;
+						newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
 					}
 
 					if (clickEvent == "PlayGame")
 					{
-						jsonRecieverTypeClick = RecieverTypes::ePlayGame;
+						newButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
 					}
-
-					newButton->SetAction(new GUIMessage(jsonRecieverTypeClick), eGUIMessageEvents::eOnClick);
-					newButton->SetAction(new GUIMessage(jsonRecieverTypeHover), eGUIMessageEvents::eOnHover);
 
 				/*}*/
 			//}
