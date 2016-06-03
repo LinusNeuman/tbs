@@ -44,6 +44,47 @@
               "Click": "PlayGame",
               "Hover": ""
             }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/MainMenu\\QuitButton/Unpressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/MainMenu\\QuitButton/Pressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/MainMenu\\QuitButton/Hover.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/MainMenu\\QuitButton",
+            "mySizeX": 223,
+            "mySizeY": 117,
+            "Name": "QuitButton",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 960,
+            "myPositionY": 640,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "ExitGame",
+              "Hover": ""
+            }
           }
         ]
       }
