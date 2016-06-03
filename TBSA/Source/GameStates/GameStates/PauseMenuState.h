@@ -1,5 +1,5 @@
 #pragma once
-#include "C:\Users\stline1\Source\Repos\tbs\TBSA\Source\StateStack\StateStack\GameState.h"
+#include <StateStack/GameState.h>
 class PauseMenuState : public GameState, public MessageReciever
 {
 public:
