@@ -72,7 +72,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 
     DX2D::SEngineCreateParameters createParameters;
 #ifdef _DEBUG
-	createParameters.myActivateDebugSystems = DX2D::eDebugFeature_Fps | DX2D::eDebugFeature_Mem | DX2D::eDebugFeature_Filewatcher | DX2D::eDebugFeature_Cpu | DX2D::eDebugFeature_Drawcalls;
+	//createParameters.myActivateDebugSystems = DX2D::eDebugFeature_Fps | DX2D::eDebugFeature_Mem | DX2D::eDebugFeature_Filewatcher | DX2D::eDebugFeature_Cpu | DX2D::eDebugFeature_Drawcalls;
 #endif
     
     createParameters.myInitFunctionToCall = std::bind( &CGame::InitCallBack, this );

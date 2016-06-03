@@ -65,7 +65,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 void PlayState::Draw() const
 {
 	myLevel->Draw();
-
+	
 	myGUIManager.Render();
 }
 
