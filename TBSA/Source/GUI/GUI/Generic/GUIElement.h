@@ -26,7 +26,7 @@ public:
 	GUIElement();
 	virtual ~GUIElement();
 	
-	virtual void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true) = 0;
+	virtual void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true);
 
 	virtual void Destroy();
 

@@ -73,6 +73,12 @@ void GUIFactory::Load()
 
 					const bool isometric = myJSON.GetBool("myIsIsometric", arrayElements[j].get<picojson::object>());
 
+					const bool animated = myJSON.GetBool("myAnimated", arrayElements[j].get<picojson::object>());
+
+					const bool shouldplayclick = myJSON.GetBool("myShouldPlayClickSound", arrayElements[j].get<picojson::object>());
+
+					const bool shouldplayhover = myJSON.GetBool("myShouldPlayHoverSound", arrayElements[j].get<picojson::object>());
+
 					picojson::object events = arrayElements[j].get("Events").get<picojson::object>();
 					const std::string clickEvent = myJSON.GetString("Click", events);
 					const std::string hoverEvent = myJSON.GetString("Hover", events);
@@ -84,14 +90,14 @@ void GUIFactory::Load()
 						{ 0.f, 0.f },
 						position,
 						size,
+						animated,
+						shouldplayclick,
+						shouldplayhover,
 						isometric,
 						enabled
 					);
 
 					// also add tooltip 
-
-					// also add events
-
 
 					if (clickEvent == "Turn")
 					{
