@@ -163,6 +163,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 #pragma endregion
 
+
+
+
 #pragma region Mouse Input
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
@@ -331,6 +334,8 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	}
 	CreatePlayerFoV(CU::Vector2f(aMessage.myPosition), PlayerFoWRadius);
 
+
+
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
@@ -478,7 +483,6 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 		}
 		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED)
 		{
-			myFloor->GetTile(x, y).SetVisible(true);
 			break;
 		}
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
