@@ -18,4 +18,3 @@ private:
 	StaticSprite * myBackgroundSprite;
 	bool myShouldAdd;
 };
-
