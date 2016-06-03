@@ -164,9 +164,6 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 #pragma endregion
 
-
-
-
 #pragma region Mouse Input
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
 	{
@@ -307,7 +304,6 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 		if (mySelectedPlayer != &aMessage.myPlayer)
 		{
 			myClickedOnPlayer = true;
-			//SelectPlayer();
 		}
 	}
 	else if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
@@ -317,6 +313,16 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
 		}
 	}
+	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)
+	{
+		CU::Vector2ui peekPosition;
+		if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), peekPosition) == true)
+		{
+			SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, *mySelectedPlayer));
+			DL_PRINT("Can Peek");
+		}
+	}
+
 	return true;
 }
 
@@ -347,15 +353,6 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
 		DL_PRINT("You have reached the goal, Aren't you special.");
 	}
-
-	//this currently gets triggered when you click on the tile, it should be triggered when you reach the tile.
-	CU::Vector2ui peekPosition;
-	if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), peekPosition) == true)
-	{
-		SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, *mySelectedPlayer));
-		DL_PRINT("Can Peek");
-	}
-
 	return true;
 }
 
