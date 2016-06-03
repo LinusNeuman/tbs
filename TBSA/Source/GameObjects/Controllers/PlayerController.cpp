@@ -26,7 +26,7 @@
 #define EDGE_SCROLL_LIMIT -50.05f
 
 const float CameraSpeed = 10.f;
-const float PlayerFoWRadius = 2.f;
+const float PlayerFoWRadius = 5.f;
 
 PlayerController::PlayerController()
 {
