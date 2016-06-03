@@ -122,7 +122,7 @@ inline eTileState IsometricTile::GetTileState() const
 
 inline bool IsometricTile::CheckIfWalkable() const
 {
-	return myType == eTileType::OPEN || myType == eTileType::DOOR || myType == eTileType::DOOR_2;
+	return myType == eTileType::OPEN || myType == eTileType::DOOR || myType == eTileType::DOOR_2 || myType == eTileType::IS_OBJECTIVE;
 }
 
 

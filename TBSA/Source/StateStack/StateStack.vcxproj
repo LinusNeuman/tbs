@@ -78,7 +78,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)GUI\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -91,7 +91,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(SolutionDir)GUI\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -135,6 +135,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
+      <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
     </ProjectReference>
     <ProjectReference Include="..\PostMaster\PostMaster.vcxproj">
       <Project>{667e0cb3-dcad-4ee5-a6e3-871ecbe3ab16}</Project>

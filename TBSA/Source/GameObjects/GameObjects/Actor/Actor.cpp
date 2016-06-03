@@ -151,7 +151,7 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
-	SendPostMessage(PlayerChangedTargetMessage(RecieverTypes::ePlayerChangedTarget));
+	SendPostMessage(ActorPositionChangedMessage(RecieverTypes::eActorPositionChanged, aTargetPosition));
 }
 
 void Actor::OnMove(CU::Vector2ui aTargetPosition)

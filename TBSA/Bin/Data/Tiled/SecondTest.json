@@ -136,7 +136,7 @@
                  "id":4,
                  "name":"endzone1",
                  "rotation":0,
-                 "type":"LeveLEnd",
+                 "type":"LevelEnd",
                  "visible":true,
                  "width":37,
                  "x":849,
