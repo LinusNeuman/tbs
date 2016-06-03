@@ -24,10 +24,11 @@
     <ClInclude Include="Message\SetHWNDMessage.h" />
     <ClInclude Include="Message\EnemyObjectMessage.h" />
     <ClInclude Include="Message\FightWithEnemyMessage.h" />
-    <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\FlagPlayerDiedMessage.h" />
     <ClInclude Include="Message\GoalReachedMessage.h" />
     <ClInclude Include="Message\FlagGoalReachedMessage.h" />
     <ClInclude Include="Message\PlayerPositionChangedMessage.h" />
+    <ClInclude Include="Message\EnemyPositionChangedMessage.h" />
+    <ClInclude Include="Message\PlayerCanPeekMessage.h" />
   </ItemGroup>
 </Project>

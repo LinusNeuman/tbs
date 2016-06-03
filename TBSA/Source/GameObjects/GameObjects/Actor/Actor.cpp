@@ -9,7 +9,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
 #include <Message/ColliderMessage.h>
-#include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/EnemyPositionChangedMessage.h>
 
 Actor::Actor()
 {
@@ -149,7 +149,6 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
-	
 }
 
 void Actor::OnMove(CU::Vector2ui aTargetPosition)

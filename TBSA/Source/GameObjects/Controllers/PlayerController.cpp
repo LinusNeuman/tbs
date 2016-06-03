@@ -22,6 +22,7 @@
 #include <Message/FightWithEnemyMessage.h>
 #include <Message/GoalReachedMessage.h>
 #include <Message/FlagGoalReachedMessage.h>
+#include <Message/PlayerCanPeekMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -41,7 +42,7 @@ PlayerController::~PlayerController()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -56,7 +57,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
@@ -151,21 +152,20 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
-		for (unsigned int i = 0; i < myPlayers.Size(); ++i)
+		if (mySelectedPlayer->GetMyAP() >= 1)
 		{
-			if (myPlayers[i]->GetMyAP() >= 1)
+			CU::Vector2ui peekPosition;
+			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), peekPosition) == true)
 			{
-				CU::Vector2ui peekPosition;
-				if (CheckIfCloseToDoor(CU::Vector2ui(myPlayers[i]->GetPosition()), peekPosition) == true)
-				{
-					CreatePlayerFoV(CU::Vector2f(peekPosition), 3);
-					myPlayers[i]->CostAP(1);
-					break;
-				}
+				CreatePlayerFoV(CU::Vector2f(peekPosition), 3);
+				mySelectedPlayer->CostAP(1);
 			}
 		}
 	}
 #pragma endregion
+
+
+
 
 #pragma region Mouse Input
 	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
@@ -327,8 +327,15 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	myDebugEnd.clear();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), PlayerFoWRadius);
+		if (&aMessage.myPlayer != myPlayers[iPlayer])
+		{
+			CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetPosition()), PlayerFoWRadius);
+			break;
+		}
 	}
+	CreatePlayerFoV(CU::Vector2f(aMessage.myPosition), PlayerFoWRadius);
+
+
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
@@ -340,6 +347,15 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
 		DL_PRINT("You have reached the goal, Aren't you special.");
 	}
+
+	//this currently gets triggered when you click on the tile, it should be triggered when you reach the tile.
+	CU::Vector2ui peekPosition;
+	if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), peekPosition) == true)
+	{
+		SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, *mySelectedPlayer));
+		DL_PRINT("Can Peek");
+	}
+
 	return true;
 }
 
@@ -365,7 +381,7 @@ void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
 	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition));
 }
 
-bool PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessage)
+bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
@@ -389,24 +405,40 @@ bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Ve
 		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(2, -1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, -2);
+		}
 		return true;
 	}
 	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
 		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(2, 1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, 2);
+		}
 		return true;
 	}
 	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR || 
 		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(-2, -1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, -2);
+		}
 		return true;
 	}
 	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR || 
 		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(-2, 1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, 2);
+		}
 		return true;
 	}
 	return false;	
@@ -461,7 +493,6 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 		}
 		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED)
 		{
-			myFloor->GetTile(x, y).SetVisible(true);
 			break;
 		}
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)

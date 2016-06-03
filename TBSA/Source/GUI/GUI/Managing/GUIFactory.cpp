@@ -53,66 +53,66 @@ void GUIFactory::Load()
 			//}
 
 			const std::string name = myJSON.GetString("Name", arrayElements[j].get<picojson::object>());
-			
-
-				const std::string imagePath = myJSON.GetString("myImagesPath", arrayElements[j].get<picojson::object>());
-
-				const CU::Vector2f position = myJSON.GetVector2f("myPositionX", "myPositionY", arrayElements[j].get<picojson::object>());
-
-				const CU::Vector2f size = myJSON.GetVector2f("mySizeX", "mySizeY", arrayElements[j].get<picojson::object>());
-
-				const bool shouldPlayClickSound = myJSON.GetBool("myShouldPlayClickSound", arrayElements[j].get<picojson::object>());
-
-				const bool enabled = myJSON.GetBool("myIsEnabled", arrayElements[j].get<picojson::object>());
-
-				const bool isometric = myJSON.GetBool("myIsIsometric", arrayElements[j].get<picojson::object>());
-
-				const bool animated = myJSON.GetBool("myAnimated", arrayElements[j].get<picojson::object>());
-
-				const bool shouldplayclick = myJSON.GetBool("myShouldPlayClickSound", arrayElements[j].get<picojson::object>());
-
-				const bool shouldplayhover = myJSON.GetBool("myShouldPlayHoverSound", arrayElements[j].get<picojson::object>());
-
-				picojson::object events = arrayElements[j].get("Events").get<picojson::object>();
-				const std::string clickEvent = myJSON.GetString("Click", events);
-				const std::string hoverEvent = myJSON.GetString("Hover", events);
-
-				GUIButton* newButton = new GUIButton();
-				newButton->Create(
-					name.c_str(),
-					imagePath,
-					{ 0.f, 0.f },
-					position,
-					size,
-					animated,
-					shouldplayclick,
-					shouldplayhover,
-					isometric,
-					enabled
-				);
-
-				// also add tooltip 
-
-				if (clickEvent == "Turn")
-				{
-					newButton->SetAction(new GUIMessage(RecieverTypes::eTurn), eGUIMessageEvents::eOnClick);
-				}
-
-				if (clickEvent == "ExitGame")
-				{
-					newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
-				}
-
-				if (clickEvent == "PlayGame")
-				{
-					newButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
-				}
 
 
-				myGUIElements.Add(newButton);
-				myGUILookup[currentStateName].myEnd = elementsAdded;
+					const std::string imagePath = myJSON.GetString("myImagesPath", arrayElements[j].get<picojson::object>());
 
-				++elementsAdded;
+					const CU::Vector2f position = myJSON.GetVector2f("myPositionX", "myPositionY", arrayElements[j].get<picojson::object>());
+
+					const CU::Vector2f size = myJSON.GetVector2f("mySizeX", "mySizeY", arrayElements[j].get<picojson::object>());
+
+					const bool shouldPlayClickSound = myJSON.GetBool("myShouldPlayClickSound", arrayElements[j].get<picojson::object>());
+
+					const bool enabled = myJSON.GetBool("myIsEnabled", arrayElements[j].get<picojson::object>());
+
+					const bool isometric = myJSON.GetBool("myIsIsometric", arrayElements[j].get<picojson::object>());
+
+					const bool animated = myJSON.GetBool("myAnimated", arrayElements[j].get<picojson::object>());
+
+					const bool shouldplayclick = myJSON.GetBool("myShouldPlayClickSound", arrayElements[j].get<picojson::object>());
+
+					const bool shouldplayhover = myJSON.GetBool("myShouldPlayHoverSound", arrayElements[j].get<picojson::object>());
+
+					picojson::object events = arrayElements[j].get("Events").get<picojson::object>();
+					const std::string clickEvent = myJSON.GetString("Click", events);
+					const std::string hoverEvent = myJSON.GetString("Hover", events);
+
+					GUIButton* newButton = new GUIButton();
+					newButton->Create(
+						name.c_str(),
+						imagePath,
+						{ 0.f, 0.f },
+						position,
+						size,
+						animated,
+						shouldplayclick,
+						shouldplayhover,
+						isometric,
+						enabled
+					);
+
+					// also add tooltip 
+
+					if (clickEvent == "Turn")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "ExitGame")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "PlayGame")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
+					}
+
+
+					myGUIElements.Add(newButton);
+					myGUILookup[currentStateName].myEnd = elementsAdded;
+
+					++elementsAdded;
 		}
 	}
 
