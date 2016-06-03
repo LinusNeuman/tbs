@@ -17,12 +17,13 @@ struct GetStartLevelMessage;
 struct ColliderMessage;
 struct PlayerObjectMessage;
 struct SetHWNDMessage;
-struct EnemyDirectionChangedMessage;
+struct EnemyPositionChangedMessage;
 struct PlayerSeenMessage;
 struct PlayerDiedMessage;
 struct EnemyObjectMessage;
 struct FightWithEnemyMessage;
 struct GoalReachedMessage;
+struct PlayerCanPeekMessage;
 
 class MessageReciever
 {
@@ -44,7 +45,7 @@ public:
 	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage);
 	virtual bool RecieveMessage(const SetHWNDMessage & aMessage);
 	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage);
-	virtual bool RecieveMessage(const EnemyDirectionChangedMessage & aMessage);
+	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage);
 	virtual bool RecieveMessage(const PlayerSeenMessage & aMessage);
 	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage);
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage);
@@ -52,6 +53,7 @@ public:
 	virtual bool RecieveMessage(const FlagPlayerDiedMessage &aMessage);
 	virtual bool RecieveMessage(const FlagGoalReachedMessage& aMessage);
 	virtual bool RecieveMessage(const GoalReachedMessage& aMessage);
+	virtual bool RecieveMessage(const PlayerCanPeekMessage& aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:

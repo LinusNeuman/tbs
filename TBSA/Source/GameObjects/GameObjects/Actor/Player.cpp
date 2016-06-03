@@ -76,8 +76,6 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	return true;
 }
 
-
-
 void Player::AfterTurn()
 {
 	Actor::AfterTurn();
@@ -90,8 +88,6 @@ void Player::PreTurn()
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
-
-
 
 void Player::DecideAnimation()
 {
@@ -167,7 +163,7 @@ void Player::DecideAnimation()
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
-	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes::ePlayerPositionChanged, aTargetPosition));
+	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes::ePlayerPositionChanged, aTargetPosition,*this));
 }
 
 void Player::SetNoTarget()

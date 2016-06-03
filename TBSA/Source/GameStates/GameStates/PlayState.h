@@ -3,6 +3,7 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/StaticArray/StaticArray.h>
 #include <unordered_map>
+#include "../TextBox/TextBox.h"
 
 class LevelFactory;
 class GameLevel;

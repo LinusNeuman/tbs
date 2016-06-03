@@ -44,6 +44,47 @@
               "Click": "PlayGame",
               "Hover": ""
             }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/MainMenu\\QuitButton/Unpressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/MainMenu\\QuitButton/Pressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/MainMenu\\QuitButton/Hover.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/MainMenu\\QuitButton",
+            "mySizeX": 223,
+            "mySizeY": 117,
+            "Name": "QuitButton",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 960,
+            "myPositionY": 680,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "ExitGame",
+              "Hover": ""
+            }
           }
         ]
       }
@@ -57,7 +98,90 @@
     {
       "myName": "InGame",
       "myGUIData": {
-        "guiElements": []
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Unpressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Pressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Hover.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn",
+            "mySizeX": 223,
+            "mySizeY": 117,
+            "Name": "endTurn_btn",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 1656,
+            "myPositionY": 926,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "Turn",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 129,
+              "myHeight": 69
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 129,
+              "myHeight": 69
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 129,
+              "myHeight": 69
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 129,
+            "mySizeY": 69,
+            "Name": "menu_btn",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 26,
+            "myPositionY": 174,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "",
+              "Hover": ""
+            }
+          }
+        ]
       }
     }
   ]

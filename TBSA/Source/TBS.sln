@@ -53,6 +53,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TurnManager", "TurnManager\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LevelProject", "LevelProject\LevelProject.vcxproj", "{60C81BEF-F58F-4D97-AEE4-CD5205A42433}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextBox", "TextBox\TextBox.vcxproj", "{B609E812-0662-4864-850F-74B8CF48CEEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -297,6 +299,15 @@ Global
 		{60C81BEF-F58F-4D97-AEE4-CD5205A42433}.Release|Win32.Build.0 = Release|Win32
 		{60C81BEF-F58F-4D97-AEE4-CD5205A42433}.Release|x64.ActiveCfg = Release|x64
 		{60C81BEF-F58F-4D97-AEE4-CD5205A42433}.Release|x64.Build.0 = Release|x64
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.Debug|Win32.Build.0 = Debug|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.Debug|x64.ActiveCfg = Debug|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.DevMode|Win32.ActiveCfg = Debug|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.DevMode|Win32.Build.0 = Debug|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.DevMode|x64.ActiveCfg = Debug|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.Release|Win32.ActiveCfg = Release|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.Release|Win32.Build.0 = Release|Win32
+		{B609E812-0662-4864-850F-74B8CF48CEEE}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
