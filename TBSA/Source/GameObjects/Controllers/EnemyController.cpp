@@ -4,7 +4,7 @@
 #include <Message/EndTurnMessage.h>
 #include <GameObjects/Room/IsometricTile.h>
 #include <GameObjects/Room/GameFloor.h>
-#include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/EnemyPositionChangedMessage.h>
 #include <Message/FightWithEnemyMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
@@ -47,7 +47,7 @@ void EnemyController::Update(CommonUtilities::Time aDeltaTime)
 	}
 	else
 	{
-		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
 }
 
@@ -88,7 +88,7 @@ void EnemyController::EnemyDone()
 	++myCurrentEnemy;
 	if (myCurrentEnemy >= myEnemies.Size())
 	{
-		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
 	else
 	{
@@ -191,7 +191,7 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirect
 	default:
 		break;
 	}
-	SendPostMessage(EnemyDirectionChangedMessage(RecieverTypes::eEnemyDirectionChanged));
+	SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
 	
 }
 
@@ -258,9 +258,10 @@ void EnemyController::AddEnemy(Enemy* aEnemy)
 	myEnemies.GetLast()->SetIndex(myEnemies.Size() - 1);
 }
 
-void EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
+bool EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
 {
 	myEnemies[aMessage.myEnemyIndex]->Fight();
+	return true;
 }
 
 void EnemyController::PostTurn()

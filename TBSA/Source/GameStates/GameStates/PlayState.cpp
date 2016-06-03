@@ -5,6 +5,7 @@
 #include <Message/StartUpLevelMessage.h>
 #include <Message/GetStartLevelMessage.h>
 #include <LevelFactory\LevelFactory.h>
+#include <Message/GoalReachedMessage.h>
 
 PlayState::PlayState()
 {
@@ -17,6 +18,7 @@ PlayState::~PlayState()
 	SAFE_DELETE(myLevel);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -24,6 +26,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	myLevelFactory = new LevelFactory();
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
 
 	if (aLevelPath == "")
 	{
@@ -82,10 +85,24 @@ void PlayState::Draw() const
 	myGUIManager.Render();
 }
 
-void PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
+bool PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
 {
 	myLevelKey = aMessage.myPath;
+	return true;
 }
+
+bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
+{
+	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
+return true;
+}
+
+bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
+{
+	ChangeLevel(myCurrentLevelpath);
+	return true;
+}
+
 
 void PlayState::ChangeLevel(const std::string& aFilePath)
 {
@@ -95,9 +112,4 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	}
 	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
 	myCurrentLevelpath = aFilePath;
-}
-
-void PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
-{
-	ChangeLevel(myCurrentLevelpath);
 }

@@ -8,7 +8,7 @@ public:
 	GUIButton();
 	virtual ~GUIButton();
 
-	void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true) override;
+	void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric = false, bool aIsEnabled = true);
 
 	void Update(const CU::Time &aDelta) override;
 

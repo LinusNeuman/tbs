@@ -94,13 +94,15 @@ void SingletonIsometricInputWrapper::Update()
 	GetInstance().myInputWrapper.Update();
 }
 
-void SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessage & aMessage)
+bool SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessage & aMessage)
 {
 	myViewPortSettings = aMessage.myViewPortRect;
 	myWindowRect = aMessage.myWindowRect;
+	return true;
 }
 
-void SingletonIsometricInputWrapper::RecieveMessage(const SetMainCameraMessage & aMessage)
+bool SingletonIsometricInputWrapper::RecieveMessage(const SetMainCameraMessage & aMessage)
 {
 	myCameraToAdjustTo = &aMessage.myCamera;
+	return true;
 }

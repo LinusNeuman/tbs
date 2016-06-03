@@ -75,10 +75,6 @@
                  "height":64,
                  "id":2,
                  "name":"Ginger",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Player1",
                  "visible":true,
@@ -90,10 +86,6 @@
                  "height":64,
                  "id":5,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Player2",
                  "visible":true,
@@ -117,10 +109,6 @@
                  "height":64,
                  "id":16,
                  "name":"Enemy1",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -132,10 +120,6 @@
                  "height":64,
                  "id":21,
                  "name":"Enemy2",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -147,10 +131,6 @@
                  "height":64,
                  "id":23,
                  "name":"Enemy3",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -162,10 +142,6 @@
                  "height":64,
                  "id":24,
                  "name":"Enemy4",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -177,10 +153,6 @@
                  "height":64,
                  "id":29,
                  "name":"Enemy5",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -192,10 +164,6 @@
                  "height":64,
                  "id":31,
                  "name":"Enemy6",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -242,75 +210,93 @@
          "width":50,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":50,
+         "name":"Objectives",
+         "objects":[
+                {
+                 "height":42.3333333333335,
+                 "id":32,
+                 "name":"endzone1",
+                 "rotation":0,
+                 "type":"LevelEnd",
+                 "visible":true,
+                 "width":43,
+                 "x":1866.66666666667,
+                 "y":1292
+                }, 
+                {
+                 "height":42.3333,
+                 "id":33,
+                 "name":"endzone2",
+                 "rotation":0,
+                 "type":"LevelEnd",
+                 "visible":true,
+                 "width":43,
+                 "x":1931.16666666667,
+                 "y":1292.83335
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":50,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":32,
+ "nextobjectid":34,
  "orientation":"isometric",
- "properties":
-    {
-
-    },
  "renderorder":"right-down",
  "tileheight":64,
  "tilesets":[
         {
+         "columns":16,
          "firstgid":1,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetWalls.png",
          "imageheight":2048,
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetWalls",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":256,
          "tileheight":128,
          "tilewidth":128
         }, 
         {
+         "columns":16,
          "firstgid":257,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetFloors.png",
          "imageheight":2048,
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetFloors",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":256,
          "tileheight":128,
          "tilewidth":128
         }, 
         {
+         "columns":16,
          "firstgid":513,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetProps.png",
          "imageheight":2048,
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetProps",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":256,
          "tileheight":128,
          "tilewidth":128
         }, 
         {
+         "columns":8,
          "firstgid":769,
          "image":"..\/..\/Sprites\/SpriteSheets\/dataTileSheet.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
          "name":"_dataTileSheet",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":64,
          "tileheight":128,
