@@ -115,6 +115,7 @@ bool MessageReciever::RecieveMessage(const GoalReachedMessage& aMessage)
 	return true;
 }
 
-void MessageReciever::RecieveMessage(const FlagGoalReachedMessage& aMessage)
+bool MessageReciever::RecieveMessage(const FlagGoalReachedMessage& aMessage)
 {
+	return true;
 }

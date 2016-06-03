@@ -63,9 +63,10 @@ bool TurnManager::RecieveMessage(const FlagPlayerDiedMessage&)
 	return true;
 }
 
-void TurnManager::RecieveMessage(const FlagGoalReachedMessage&)
+bool TurnManager::RecieveMessage(const FlagGoalReachedMessage&)
 {
 	myReachedGoal = true;
+	return true;
 }
 
 void TurnManager::EndTurn()
