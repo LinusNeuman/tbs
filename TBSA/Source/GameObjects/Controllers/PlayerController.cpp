@@ -276,6 +276,7 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 
 void PlayerController::PrePlayer()
 {
+	SetCameraPositionToPlayer(mySelectedPlayerIndex);
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
 }
