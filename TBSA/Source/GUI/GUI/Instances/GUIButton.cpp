@@ -15,9 +15,12 @@ GUIButton::~GUIButton()
 {
 	SAFE_DELETE(myHoverSound);
 	SAFE_DELETE(myClickSound);
+	SAFE_DELETE(mySpriteUnpressed);
+	SAFE_DELETE(mySpritePressed);
+	SAFE_DELETE(mySpriteHovered);
 }
 
-void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric, bool aIsEnabled)
+void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled)
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
@@ -63,7 +66,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myIsEnabled = aIsEnabled;
 
 	myCollisionBox.SetWithMaxAndMinPos(
-	{ myPosition.x / 1920.f, myPosition.y / 1080.f},
+	{ myPosition.x / 1920.f, myPosition.y / 1080.f },
 	{
 		(myPosition.x / 1920.f) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().x / 1920.f,
 		(myPosition.y / 1080.f) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().y / 1080.f
@@ -71,11 +74,17 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 
 	mySprite = mySpriteUnpressed;
 
-	myHoverSound = new SoundEffect();
-	myHoverSound->Init("Sounds/GUI/HoverMenuItem.ogg");
+	if (aPlayHoverSound == true)
+	{
+		myHoverSound = new SoundEffect();
+		myHoverSound->Init("Sounds/GUI/HoverMenuItem.ogg");
+	}
 
-	myClickSound = new SoundEffect();
-	myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
+	if (aPlayClickSound == true)
+	{
+		myClickSound = new SoundEffect();
+		myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
+	}
 }
 
 void GUIButton::Update(const CU::Time& aDelta)
@@ -116,11 +125,17 @@ void GUIButton::WhenHovered()
 
 	if (myIsCurrentlyHovered == false)
 	{
-		myHoverSound->Play(1.0f);
+		if (myHoverSound != nullptr)
+		{
+			myHoverSound->Play(1.0f);
+		}
 	}
 }
 
 void GUIButton::WhenClicked()
 {
-	myClickSound->Play(1.0f);
+	if (myClickSound != nullptr)
+	{
+		myClickSound->Play(1.0f);
+	}
 }
