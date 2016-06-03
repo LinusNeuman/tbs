@@ -171,6 +171,9 @@
     <ProjectReference Include="..\StateStack\StateStack.vcxproj">
       <Project>{9b5c9f6d-ca46-4bee-950e-5570c2bc5c22}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\TextBox\TextBox.vcxproj">
+      <Project>{b609e812-0662-4864-850f-74b8cf48ceee}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\TiledLoading\TiledLoading.vcxproj">
       <Project>{b0e30c9f-422d-4ce9-8617-f3b6792c9ca3}</Project>
     </ProjectReference>
