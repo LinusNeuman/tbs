@@ -46,12 +46,12 @@ public:
 
 	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition);
 
-	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
-	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
-	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
+	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
 	void ActivePlayerFight(const unsigned short aPlayerIndex);

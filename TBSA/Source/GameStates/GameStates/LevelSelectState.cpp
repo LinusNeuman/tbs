@@ -47,10 +47,11 @@ void LevelSelectState::Draw() const
 	myGUIManager.Render();
 }
 
-void LevelSelectState::RecieveMessage(const GUIMessage& aMessage)
+bool LevelSelectState::RecieveMessage(const GUIMessage& aMessage)
 {
 	if (aMessage.myType == RecieverTypes::ePlayGame)
 	{
 		//mySelectedLevel = något;
 	}
+	return true;
 }

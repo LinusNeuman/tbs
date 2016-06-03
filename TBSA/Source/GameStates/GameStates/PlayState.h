@@ -19,9 +19,9 @@ public:
 
 	void ChangeLevel(const std::string& aFilePath);
 
-	virtual void RecieveMessage(const GoalReachedMessage& aMessage) override;
-	virtual void RecieveMessage(const PlayerDiedMessage & aMessage) override;
-	virtual void RecieveMessage(const StartUpLevelMessage & aMessage) override;
+	virtual bool RecieveMessage(const GoalReachedMessage& aMessage) override;
+	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
+	virtual bool RecieveMessage(const StartUpLevelMessage & aMessage) override;
 
 
 private:

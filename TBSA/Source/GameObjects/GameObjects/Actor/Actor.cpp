@@ -253,10 +253,11 @@ void Actor::DecideAnimation()
 
 }
 
-void Actor::RecieveMessage(const ColliderMessage & aMessage)
+bool Actor::RecieveMessage(const ColliderMessage & aMessage)
 {
 	if (myBoxCollider.CheckCollision(aMessage.myCollider) == true)
 	{
 		OnClick();
 	}
+	return true;
 }

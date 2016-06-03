@@ -45,17 +45,19 @@ void TurnManager::ForceTurn(eTurn aTurn)
 	myCurrentTurn = aTurn;
 }
 
-void TurnManager::RecieveMessage(const GUIMessage& aMessage)
+bool TurnManager::RecieveMessage(const GUIMessage& aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eTurn)
 	{
 		EndTurn();
 	}
+	return true;
 }
 
-void TurnManager::RecieveMessage(const FlagPlayerDiedMessage&)
+bool TurnManager::RecieveMessage(const FlagPlayerDiedMessage&)
 {
 	myPlayerDied = true;
+	return true;
 }
 
 void TurnManager::EndTurn()

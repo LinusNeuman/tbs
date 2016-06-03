@@ -26,7 +26,7 @@ public:
 
 	virtual void OnClick() override;
 
-	void RecieveMessage(const PlayerSeenMessage & aMessage) override;
+	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();

@@ -196,7 +196,7 @@ void GameLevel::Draw() const
 	myEnemyController->Draw();
 }
 
-void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
+bool GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 {
 	const CommonUtilities::Vector2ui position = aMessage.myPosition;
 	const int distance = aMessage.myDistance;
@@ -207,11 +207,13 @@ void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 	const IsometricTile selectedTile = myFloor.GetTile(id);
 
 	myNavGraph.Dijkstra(selectedTile.GetVertexHandle(), distance);
+	return true;
 }
 
-void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
+bool GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 	myNavGraph.Clear();
+	return true;
 }
 
 void GameLevel::ConstructNavGraph()

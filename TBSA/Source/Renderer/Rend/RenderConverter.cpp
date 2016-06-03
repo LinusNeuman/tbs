@@ -115,12 +115,14 @@ void RenderConverter::SwapBuffers()
 	GetInstance().myRenderer.SwapBuffer();
 }
 
-void RenderConverter::RecieveMessage(const LevelTileMetricsMessage & aMessage)
+bool RenderConverter::RecieveMessage(const LevelTileMetricsMessage & aMessage)
 {
 	myLevelTileLayout = aMessage.myWidthHeight;
+	return true;
 }
 
-void RenderConverter::RecieveMessage(const SetMainCameraMessage & aMessage)
+bool RenderConverter::RecieveMessage(const SetMainCameraMessage & aMessage)
 {
 	myCamera = &aMessage.myCamera;
+	return true;
 }

@@ -63,7 +63,7 @@ public:
 		return myDirection;
 	}
 
-	virtual void RecieveMessage(const ColliderMessage & aMessage) override;
+	virtual bool RecieveMessage(const ColliderMessage & aMessage) override;
 
 	virtual void OnClick() = 0;
 

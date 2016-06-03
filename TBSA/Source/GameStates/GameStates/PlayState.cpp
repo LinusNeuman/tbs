@@ -85,15 +85,24 @@ void PlayState::Draw() const
 	myGUIManager.Render();
 }
 
-void PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
+bool PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
 {
 	myLevelKey = aMessage.myPath;
+	return true;
 }
 
-void PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
+bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	myShouldExit = true;
+	return true;
 }
+
+bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
+{
+	ChangeLevel(myCurrentLevelpath);
+	return true;
+}
+
 
 void PlayState::ChangeLevel(const std::string& aFilePath)
 {
@@ -103,9 +112,4 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	}
 	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
 	myCurrentLevelpath = aFilePath;
-}
-
-void PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
-{
-	ChangeLevel(myCurrentLevelpath);
 }
