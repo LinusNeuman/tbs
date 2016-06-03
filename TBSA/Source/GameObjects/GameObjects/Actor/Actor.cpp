@@ -8,9 +8,7 @@
 #include <CU\DLDebug\DL_Debug.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
-#include <Message/ActorPositionChangedMessage.h>
 #include <Message/ColliderMessage.h>
-#include <Message/PlayerReachedTargetMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
 
 Actor::Actor()
@@ -151,7 +149,7 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
-	SendPostMessage(ActorPositionChangedMessage(RecieverTypes::eActorPositionChanged, aTargetPosition));
+	
 }
 
 void Actor::OnMove(CU::Vector2ui aTargetPosition)
@@ -195,12 +193,9 @@ int Actor::GetMyAP() const
 }
 
 
-
-
-
 void Actor::UpdatePath()
 {
-	if (myAtTarget == true )
+ 	if (myAtTarget == true )
 	{
 		if (myCurrentWaypoint < myPath.Size())
 		{

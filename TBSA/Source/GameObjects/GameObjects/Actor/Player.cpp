@@ -9,7 +9,7 @@
 #include <Message/PlayerObjectMesssage.h>
 #include <Message/PlayerSeenMessage.h>
 #include <Message/FlagPlayerDiedMessage.h>
-#include <Message/PlayerReachedTargetMessage.h>
+#include <Message/PlayerPositionChangedMessage.h>
 
 
 Player::Player()
@@ -71,7 +71,6 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 			myIsSeen = false;
 			myShouldDie = false;
 			SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
-
 		}
 	}
 	return true;
@@ -168,7 +167,7 @@ void Player::DecideAnimation()
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
-	SendPostMessage(PlayerChangedTargetMessage(RecieverTypes::ePlayerChangedTarget));
+	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes::ePlayerPositionChanged, aTargetPosition));
 }
 
 void Player::SetNoTarget()

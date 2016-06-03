@@ -74,6 +74,7 @@ void Enemy::UpdateEnemy()
 		if (mySomeoneSeesPlayer == true)
 		{
 			myController->EnemyDone();
+
 			StopPath();
 		}
 	}

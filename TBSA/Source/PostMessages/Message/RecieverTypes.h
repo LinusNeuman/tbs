@@ -20,7 +20,7 @@ enum class RecieverTypes
 	eMouseClicked,
 	eChangeSelectedPlayer,
 	ePlayGame,
-	eActorPositionChanged,
+	ePlayerPositionChanged,
 	ePlayerAdded,
 	eEnemyDirectionChanged,
 	eWindowHandleChange,

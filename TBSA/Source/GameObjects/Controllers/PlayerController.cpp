@@ -13,11 +13,10 @@
 #include <Collision/PointCollider.h>
 #include <Message/ColliderMessage.h>
 #include <Message/PlayerObjectMesssage.h>
-#include <Message/ActorPositionChangedMessage.h>
+#include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAddedMessage.h>
 #include <Message/PlayerSeenMessage.h>
 #include <Rend/RenderConverter.h>
-#include <Message/PlayerReachedTargetMessage.h>
 #include <Message/EnemyObjectMessage.h>
 #include <GameObjects/Actor/Enemy.h>
 #include <Message/FightWithEnemyMessage.h>
@@ -43,7 +42,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eActorPositionChanged, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
@@ -55,7 +54,7 @@ void PlayerController::Init()
 {
 	SendPostMessage(SetMainCameraMessage(RecieverTypes::eCamera, myCamera));
 	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eActorPositionChanged, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -321,8 +320,16 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	return true;
 }
 
-bool PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessage)
+bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessage)
 {
+	ResetTileShaders();
+	myDebugStart.clear();
+	myDebugEnd.clear();
+	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
+	{
+		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), PlayerFoWRadius);
+	}
+
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
@@ -332,18 +339,6 @@ bool PlayerController::RecieveMessage(const ActorPositionChangedMessage& aMessag
 	{
 		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
 		DL_PRINT("You have reached the goal, Aren't you special.");
-	}
-	return true;
-}
-
-bool PlayerController::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
-{
-	ResetTileShaders();
-	myDebugStart.clear();
-	myDebugEnd.clear();
-	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
-	{
-		CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetTargetPosition()), PlayerFoWRadius);
 	}
 	return true;
 }
@@ -466,6 +461,7 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 		}
 		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED)
 		{
+			myFloor->GetTile(x, y).SetVisible(true);
 			break;
 		}
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
