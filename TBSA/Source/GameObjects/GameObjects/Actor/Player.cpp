@@ -76,8 +76,6 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	return true;
 }
 
-
-
 void Player::AfterTurn()
 {
 	Actor::AfterTurn();
@@ -90,8 +88,6 @@ void Player::PreTurn()
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
-
-
 
 void Player::DecideAnimation()
 {

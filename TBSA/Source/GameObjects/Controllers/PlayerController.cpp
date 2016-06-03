@@ -151,17 +151,13 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
-		for (unsigned int i = 0; i < myPlayers.Size(); ++i)
+		if (mySelectedPlayer->GetMyAP() >= 1)
 		{
-			if (myPlayers[i]->GetMyAP() >= 1)
+			CU::Vector2ui peekPosition;
+			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), peekPosition) == true)
 			{
-				CU::Vector2ui peekPosition;
-				if (CheckIfCloseToDoor(CU::Vector2ui(myPlayers[i]->GetPosition()), peekPosition) == true)
-				{
-					CreatePlayerFoV(CU::Vector2f(peekPosition), 3);
-					myPlayers[i]->CostAP(1);
-					break;
-				}
+				CreatePlayerFoV(CU::Vector2f(peekPosition), 3);
+				mySelectedPlayer->CostAP(1);
 			}
 		}
 	}
@@ -394,24 +390,40 @@ bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Ve
 		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(2, -1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, -2);
+		}
 		return true;
 	}
 	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
 		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(2, 1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, 2);
+		}
 		return true;
 	}
 	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR || 
 		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(-2, -1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, -2);
+		}
 		return true;
 	}
 	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR || 
 		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
 		aPeekLocation = aPosition + CU::Vector2ui(-2, 1);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, 2);
+		}
 		return true;
 	}
 	return false;	
