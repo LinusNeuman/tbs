@@ -4,6 +4,7 @@ Use this class to create and show a text
 
 #pragma once
 #include "tga2d/math/Color.h"
+#include "tga2d/math/vector2.h"
 #include <string>
 
 namespace DX2D
