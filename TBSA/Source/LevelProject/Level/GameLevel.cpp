@@ -26,7 +26,7 @@
 #include <Message/EndTurnMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
-struct ActorPositionChangedMessage;
+struct PlayerPositionChangedMessage;
 const float sqrt2 = static_cast<float>(sqrt(2));
 
 GameLevel::GameLevel()

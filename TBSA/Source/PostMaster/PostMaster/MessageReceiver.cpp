@@ -55,7 +55,7 @@ bool MessageReciever::RecieveMessage(const ColliderMessage & aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const ActorPositionChangedMessage & aMessage)
+bool MessageReciever::RecieveMessage(const PlayerPositionChangedMessage & aMessage)
 {
 	return true;
 }
@@ -86,11 +86,6 @@ bool MessageReciever::RecieveMessage(const PlayerSeenMessage & aMessage)
 }
 
 bool MessageReciever::RecieveMessage(const PlayerDiedMessage & aMessage)
-{
-	return true;
-}
-
-bool MessageReciever::RecieveMessage(const PlayerChangedTargetMessage & aMessage)
 {
 	return true;
 }
