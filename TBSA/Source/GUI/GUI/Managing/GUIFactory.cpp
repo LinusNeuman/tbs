@@ -101,7 +101,7 @@ void GUIFactory::Load()
 
 					if (clickEvent == "Turn")
 					{
-						newButton->SetAction(new GUIMessage(RecieverTypes::eTurn), eGUIMessageEvents::eOnClick);
+						newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
 					}
 
 					if (clickEvent == "ExitGame")
@@ -140,7 +140,7 @@ void GUIFactory::Load()
 	//	{ -(41.f + 223.f), -(37.f + 117.f)},
 	//	{ 223, 117}
 	//);
-	//newButton->SetAction(new GUIMessage(RecieverTypes::eTurn), eGUIMessageEvents::eOnClick);
+	//newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
 
 	//myGUIElements.Add(newButton);
 

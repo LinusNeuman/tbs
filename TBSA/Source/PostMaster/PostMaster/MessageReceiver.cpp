@@ -75,7 +75,7 @@ bool MessageReciever::RecieveMessage(const PlayerAddedMessage & aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const EnemyDirectionChangedMessage & aMessage)
+bool MessageReciever::RecieveMessage(const EnemyPositionChangedMessage & aMessage)
 {
 	return true;
 }
