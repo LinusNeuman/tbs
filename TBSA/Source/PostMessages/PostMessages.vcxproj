@@ -214,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Message\FlagGoalReachedMessage.h" />
+    <ClInclude Include="Message\PlayerCanPeekMessage.h" />
     <ClInclude Include="Message\PlayerPositionChangedMessage.h" />
     <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\ColliderMessage.h" />

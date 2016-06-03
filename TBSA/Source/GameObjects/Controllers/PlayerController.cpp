@@ -22,6 +22,7 @@
 #include <Message/FightWithEnemyMessage.h>
 #include <Message/GoalReachedMessage.h>
 #include <Message/FlagGoalReachedMessage.h>
+#include <Message/PlayerCanPeekMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -346,6 +347,15 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
 		DL_PRINT("You have reached the goal, Aren't you special.");
 	}
+
+	//this currently gets triggered when you click on the tile, it should be triggered when you reach the tile.
+	CU::Vector2ui peekPosition;
+	if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), peekPosition) == true)
+	{
+		SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, *mySelectedPlayer));
+		DL_PRINT("Can Peek");
+	}
+
 	return true;
 }
 

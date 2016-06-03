@@ -35,5 +35,6 @@ enum class RecieverTypes
 	eEnemyAttacked,
 	eGoalReached,
 	eFlagGoalReached,
+	ePlayerCanPeek,
 	enumlength
 };

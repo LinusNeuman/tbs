@@ -110,6 +110,11 @@ bool MessageReciever::RecieveMessage(const GoalReachedMessage& aMessage)
 	return true;
 }
 
+bool MessageReciever::RecieveMessage(const PlayerCanPeekMessage& aMessage)
+{
+	return true;
+}
+
 bool MessageReciever::RecieveMessage(const FlagGoalReachedMessage& aMessage)
 {
 	return true;
