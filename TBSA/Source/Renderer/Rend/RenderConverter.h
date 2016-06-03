@@ -25,8 +25,8 @@ public:
 
 	static void SwapBuffers();
 
-	virtual void RecieveMessage(const LevelTileMetricsMessage & aMessage) override;
-	virtual void RecieveMessage(const SetMainCameraMessage & aMessage) override;
+	virtual bool RecieveMessage(const LevelTileMetricsMessage & aMessage) override;
+	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage) override;
 
 	
 

@@ -12,6 +12,15 @@ class Actor;
 class RenderConverter;
 class Player;
 
+enum class enumMouseState
+{
+	eClickedOnEnemy,
+	eClickedOnPlayer,
+	eClickedOnEmptyTile,
+	eClickedOnVoid,
+	enumLength
+};
+
 class PlayerController : public MessageReciever
 {
 public:
@@ -37,17 +46,18 @@ public:
 
 	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition);
 
-	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
-	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
-	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerPositionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 private:
-	void ActivePlayerFight();
+	void ActivePlayerFight(const unsigned short aPlayerIndex);
+	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;
 
 	void BuildPath(PathArray & aPathContainterToBuild);
+	enumMouseState GetCurrentMouseState();
 
 	void RayTrace(const TilePositionf &aPosition, const TilePositionf &anotherPosition);
 	int CalculatePoint(float aValue) const;

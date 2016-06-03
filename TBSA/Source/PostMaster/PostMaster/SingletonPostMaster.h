@@ -72,9 +72,8 @@ void SingletonPostMaster::InternalPostMessage(const MessageType & aMessageToSend
 	{
 		DL_ASSERT(myRecievers[static_cast<unsigned short>(aMessageToSend.myType)].Size() > 0, "ERROR: No reciever to recieve message");
 		MessageReciever* explainginReciever = myRecievers[static_cast<unsigned short>(aMessageToSend.myType)][iReciever].myReciever;
-		explainginReciever->RecieveMessage(aMessageToSend);
 		
-		if (aMessageToSend.myLetThroughMessage == false)
+		if (explainginReciever->RecieveMessage(aMessageToSend) == false)
 		{
 			break;
 		}

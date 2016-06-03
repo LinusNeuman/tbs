@@ -23,6 +23,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myHasMoved = false;
 	myHasTurned = false;
 	mySomeoneSeesPlayer = false;
+	myIsDeadeastFlag = false;
 	myCurrentPathIndex = 0;
 	myAP = aEnemyData.myActionPoints;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
@@ -31,7 +32,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 
 void Enemy::UpdateEnemy()
 {
-	if (GetActiveState() == true)
+	if (GetActiveState() == true && GetActorState() != eActorState::eDead)
 	{
 		if (myHasMoved == false && myEnemyPath.Size() > 0)
 		{
@@ -73,6 +74,7 @@ void Enemy::UpdateEnemy()
 		if (mySomeoneSeesPlayer == true)
 		{
 			myController->EnemyDone();
+
 			StopPath();
 		}
 	}
@@ -92,12 +94,13 @@ void Enemy::AlmostReachTarget()
 	myController->EnemyDone();
 }
 
-void Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
+bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
+	return true;
 }
 
-void Enemy::SetEnemyPath(CommonUtilities::GrowingArray<CommonUtilities::Point2ui> aEnemyPath)
+void Enemy::SetEnemyPath(PathArray aEnemyPath)
 {
 	myEnemyPath = aEnemyPath;
 }
@@ -117,12 +120,100 @@ void Enemy::OnClick()
 void Enemy::Fight()
 {
 	SetActorState(eActorState::eFighting);
+	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyAttacked, *this));
 }
 
 void Enemy::DecideAnimation()
 {
-	if (GetActorState() == eActorState::eFighting)
+	if (myState == eActorState::eIdle)
+	{
+		//Determine direction animation
+		/*switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("playerIdle045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("playerIdle090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("playerIdle135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("playerIdle180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("playerIdle225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("playerIdle270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("playerIdle315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("playerIdle000");
+			break;
+		default:
+			ChangeAnimation("playerIdle180");
+			break;
+		}*/
+	}
+	else if (myState == eActorState::eWalking)
+	{
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("EnemyWalk045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("EnemyWalk090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("EnemyWalk135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("EnemyWalk180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("EnemyWalk225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("EnemyWalk270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("EnemyWalk315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("EnemyWalk000");
+			break;
+		default:
+			ChangeAnimation("EnemyWalk180");
+			break;
+		}
+	}
+	else if (GetActorState() == eActorState::eFighting)
 	{
 		ChangeAnimation("CombatAnimation");
+	}
+	else if (GetActorState() == eActorState::eIdle)
+	{
+		ChangeAnimation("EnemyTurn");
+	}
+	else if (GetActorState() == eActorState::eDead)
+	{
+		if (myAnimations.GetAnimationIsRunning() == false)
+		{
+			if (myIsDeadeastFlag == false)
+			{
+				ChangeAnimation("DeathAnimation");
+				myIsDeadeastFlag = true;
+			}
+			else
+			{
+				ChangeAnimation("DeadestState");
+			}
+		}
 	}
 }

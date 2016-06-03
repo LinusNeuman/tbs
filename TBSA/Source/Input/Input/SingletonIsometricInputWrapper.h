@@ -43,8 +43,8 @@ public:
 
 	inline static void SetViewPortSettings(const CU::Vector4f & aViewPortStats);
 
-	virtual void RecieveMessage(const WindowRectChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const SetMainCameraMessage & aMessage) override;
+	virtual bool RecieveMessage(const WindowRectChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage) override;
 
 
 private:
@@ -88,7 +88,7 @@ inline LONG SingletonIsometricInputWrapper::GetWheelDelta()
 
 
 /*
-	returns true if button is on this frame.
+	returns true if was button is on this frame.
 */
 inline bool SingletonIsometricInputWrapper::GetMouseButtonDown(CommonUtilities::enumMouseButtons aButton)
 {
@@ -96,7 +96,7 @@ inline bool SingletonIsometricInputWrapper::GetMouseButtonDown(CommonUtilities::
 }
 
 /*
-	returns true if button of last frame and on this frame;
+	returns true if button was off last frame and on this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetMouseButtonReleased(CommonUtilities::enumMouseButtons aButton)
 {
@@ -104,7 +104,7 @@ inline bool SingletonIsometricInputWrapper::GetMouseButtonReleased(CommonUtiliti
 }
 
 /*
-	returns true if button on last frame and off this frame;
+	returns true if button was on last frame and off this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetMouseButtonPressed(CommonUtilities::enumMouseButtons aButton)
 {
@@ -120,7 +120,7 @@ inline bool SingletonIsometricInputWrapper::GetKeyDown(int aButton)
 }
 
 /*
-	returns true if key of last frame and on this frame;
+	returns true if key was off last frame and on this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetKeyPressed(int aButton)
 {
@@ -128,7 +128,7 @@ inline bool SingletonIsometricInputWrapper::GetKeyPressed(int aButton)
 }
 
 /*
-	returns true if key on last frame and off this frame;
+	returns true if key was on last frame and off this frame;
 */
 inline bool SingletonIsometricInputWrapper::GetKeyReleased(int aButton)
 {

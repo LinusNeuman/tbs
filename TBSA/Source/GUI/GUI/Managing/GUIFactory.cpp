@@ -3,8 +3,6 @@
 
 #include <CU/Timer/Timer.h>
 #include <CU/Timer/TimeManager.h>
-
-#include "../JSONWrapper/JsonWrapper/JsonWrapper.h"
 #include <GUI/Instances/GUIButton.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
@@ -29,96 +27,94 @@ void GUIFactory::Load()
 	std::cout << "Started loading all GUI.." << std::endl;
 	CU::Timer loadTimer;
 
-	// json wrapper load all gui files
+	picojson::value rootValue = myJSON.LoadPicoValue("Data/GUI/root.json");
+	picojson::array arrayJson = rootValue.get("GameStates").get<picojson::array>();//myJSON.GetPicoArray("GameStates", rootValue.get<picojson::object>());
 
-	// one master file that tells which states we have
-	// then load them and put them into the map with growingarrays
+	int elementsAdded = 0;
+	
+	for (size_t i = 0; i < arrayJson.size(); ++i)
+	{
+		const std::string currentStateName = myJSON.GetString("myName", arrayJson[i].get<picojson::object>());
+		
+		picojson::array arrayElements = myJSON.GetPicoArray("guiElements", arrayJson[i].get("myGUIData").get<picojson::object>());
 
-	GUIButton* newButton = new GUIButton();
+		myGUILookup[currentStateName].myBegin = elementsAdded;
 
-	// everything will be read from json later
-	newButton->Create(
-		"ExitButton",
-		"Sprites/GUI/InGame/EndTurnButton/",
-		{ 1920.f, 1080.f },
-		{ -(41.f + 223.f), -(37.f + 117.f)},
-		{ 223, 117}
-	);
-	newButton->SetAction(new GUIMessage(RecieverTypes::eTurn), eGUIMessageEvents::eOnClick);
+		for (size_t j = 0; j < arrayElements.size(); ++j)
+		{
+			//if (arrayElements[j].contains("myPressed") == true)
+			//{
+			//	//hantera pressed
+			//}
 
-	myGUIElements.Add(newButton);
+			//if (arrayElements[j].contains("myHover") == true)
+			//{
+			//	//hantera Hover
+			//}
+
+			const std::string name = myJSON.GetString("Name", arrayElements[j].get<picojson::object>());
 
 
-	GUIButton* menuButton = new GUIButton();
+					const std::string imagePath = myJSON.GetString("myImagesPath", arrayElements[j].get<picojson::object>());
 
-	menuButton->Create(
-		"MenuButton",
-		"Sprites/GUI/InGame/MenuButton/",
-		{ 0, 0 },
-		{ 26, 175 },
-		{ 129, 69 }
-	);
+					const CU::Vector2f position = myJSON.GetVector2f("myPositionX", "myPositionY", arrayElements[j].get<picojson::object>());
 
-	GUIButton* portrait = new GUIButton();
+					const CU::Vector2f size = myJSON.GetVector2f("mySizeX", "mySizeY", arrayElements[j].get<picojson::object>());
 
-	portrait->Create(
-		"NPCPortrait",
-		"Sprites/GUI/InGame/PortraitNPC/",
-		{ 0, 0 },
-		{ 26, 29 },
-		{ 130, 130 }
-	);
+					const bool shouldPlayClickSound = myJSON.GetBool("myShouldPlayClickSound", arrayElements[j].get<picojson::object>());
 
-	GUIButton* textbox = new GUIButton();
+					const bool enabled = myJSON.GetBool("myIsEnabled", arrayElements[j].get<picojson::object>());
 
-	textbox->Create(
-		"NPCTextBox",
-		"Sprites/GUI/InGame/NPCTextBox/",
-		{ 0, 0 },
-		{ 165, 29 },
-		{ 381, 214 }
-	);
+					const bool isometric = myJSON.GetBool("myIsIsometric", arrayElements[j].get<picojson::object>());
 
-	GUIButton* playerPortrait = new GUIButton();
+					const bool animated = myJSON.GetBool("myAnimated", arrayElements[j].get<picojson::object>());
 
-	playerPortrait->Create(
-		"PlayerPortrait",
-		"Sprites/GUI/InGame/PlayerPortrait/",
-		{ 0, 1080 },
-		{ 26, -(192 + 29)},
-		{ 192, 192 }
-	);
+					const bool shouldplayclick = myJSON.GetBool("myShouldPlayClickSound", arrayElements[j].get<picojson::object>());
 
-	// set action click open new substate
-	myGUIElements.Add(playerPortrait);
-	myGUIElements.Add(textbox);
-	myGUIElements.Add(portrait);
-	myGUIElements.Add(menuButton);
-	myGUILookup["InGame"].myBegin = 0;
-	myGUILookup["InGame"].myEnd = 4;
+					const bool shouldplayhover = myJSON.GetBool("myShouldPlayHoverSound", arrayElements[j].get<picojson::object>());
 
-	GUIButton* quitButton = new GUIButton();
+					picojson::object events = arrayElements[j].get("Events").get<picojson::object>();
+					const std::string clickEvent = myJSON.GetString("Click", events);
+					const std::string hoverEvent = myJSON.GetString("Hover", events);
 
-	quitButton->Create(
-		"QuitButton",
-		"Sprites/GUI/MainMenu/QuitButton/",
-		{ 0.f, 0.f }, { 1920.f / 2.f, 1080.f / 2.f + 250 }, { 200, 100 });
+					GUIButton* newButton = new GUIButton();
+					newButton->Create(
+						name.c_str(),
+						imagePath,
+						{ 0.f, 0.f },
+						position,
+						size,
+						animated,
+						shouldplayclick,
+						shouldplayhover,
+						isometric,
+						enabled
+					);
 
-	quitButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
-	myGUIElements.Add(quitButton);
+					// also add tooltip 
 
-	GUIButton* playButton = new GUIButton();
+					if (clickEvent == "Turn")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
+					}
 
-	playButton->Create(
-		"PlayButton",
-		"Sprites/GUI/MainMenu/PlayButton/",
-		{ 0.f, 0.f }, { 1920.f / 2.f, 1080.f / 2.f }, { 200, 100 });
+					if (clickEvent == "ExitGame")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eExitGame), eGUIMessageEvents::eOnClick);
+					}
 
-	playButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
-	myGUIElements.Add(playButton);
+					if (clickEvent == "PlayGame")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
+					}
 
-	myGUILookup["MainMenu"].myBegin = 5;
-	myGUILookup["MainMenu"].myEnd = 6;
+
+					myGUIElements.Add(newButton);
+					myGUILookup[currentStateName].myEnd = elementsAdded;
+
+					++elementsAdded;
+		}
+	}
 
 	CU::TimeManager::Update();
 

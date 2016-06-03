@@ -14,8 +14,12 @@ JsonWrapper::~JsonWrapper()
 picojson::value JsonWrapper::LoadPicoValue(const std::string& aPath)
 {
 	std::ifstream jsonFile(aPath);
+	std::ifstream derp(aPath);
 	DL_ASSERT(jsonFile.good() == true, ("Could not load file: " + aPath).c_str());
 	picojson::value value;
+	
+	std::string tempstring((std::istreambuf_iterator<char>(derp)),
+		std::istreambuf_iterator<char>());
 	jsonFile >> value;
 	jsonFile.close();
 	return value;

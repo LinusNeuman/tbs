@@ -66,6 +66,7 @@ CGame::~CGame()
 
 void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 {
+	(aHandle);
 	unsigned short windowWidth = static_cast<unsigned short>(GetSystemMetrics(SM_CXSCREEN));
 	unsigned short windowHeight = static_cast<unsigned short>(GetSystemMetrics(SM_CYSCREEN));
 
@@ -112,24 +113,28 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 
 }
 
-void CGame::RecieveMessage(const GUIMessage & aMessage)
+bool CGame::RecieveMessage(const GUIMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eExitGame)
 	{
 		myImRunning = false;
 		DX2D::CEngine::GetInstance()->Shutdown();
 	}
+	return true;
 }
 
-void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
+bool CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
 {
+	(aMessage);
 	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
 	SendPostMessage(startLevelMessage);
+	return true;
 }
 
-void CGame::RecieveMessage(const SetHWNDMessage & aMessage)
+bool CGame::RecieveMessage(const SetHWNDMessage & aMessage)
 {
 	myWindowHandle = aMessage.myWindowHandle;
+	return true;
 }
 
 void CGame::InitCallBack()
