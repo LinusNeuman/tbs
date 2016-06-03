@@ -57,7 +57,49 @@
     {
       "myName": "InGame",
       "myGUIData": {
-        "guiElements": []
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Unpressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Pressed.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Hover.dds",
+              "myWidth": 223,
+              "myHeight": 117
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn",
+            "mySizeX": 223,
+            "mySizeY": 117,
+            "Name": "endTurn_btn",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 1656,
+            "myPositionY": 926,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "Turn",
+              "Hover": ""
+            }
+          }
+        ]
       }
     }
   ]
