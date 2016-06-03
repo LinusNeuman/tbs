@@ -55,7 +55,7 @@ bool MessageReciever::RecieveMessage(const ColliderMessage & aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const ActorPositionChangedMessage & aMessage)
+bool MessageReciever::RecieveMessage(const PlayerPositionChangedMessage & aMessage)
 {
 	return true;
 }
@@ -75,7 +75,7 @@ bool MessageReciever::RecieveMessage(const PlayerAddedMessage & aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const EnemyDirectionChangedMessage & aMessage)
+bool MessageReciever::RecieveMessage(const EnemyPositionChangedMessage & aMessage)
 {
 	return true;
 }
@@ -86,11 +86,6 @@ bool MessageReciever::RecieveMessage(const PlayerSeenMessage & aMessage)
 }
 
 bool MessageReciever::RecieveMessage(const PlayerDiedMessage & aMessage)
-{
-	return true;
-}
-
-bool MessageReciever::RecieveMessage(const PlayerChangedTargetMessage & aMessage)
 {
 	return true;
 }
@@ -111,6 +106,11 @@ bool MessageReciever::RecieveMessage(const FlagPlayerDiedMessage &aMessage)
 }
 
 bool MessageReciever::RecieveMessage(const GoalReachedMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const PlayerCanPeekMessage& aMessage)
 {
 	return true;
 }

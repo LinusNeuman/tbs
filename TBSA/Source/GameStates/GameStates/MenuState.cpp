@@ -35,6 +35,7 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		PlayState *newState = new PlayState();
 		newState->Init();
 		aStateStack.AddMainState(newState);
+		myShouldAdd = false;
 	}
 
 	return eStackReturnValue::eStay;

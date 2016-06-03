@@ -26,7 +26,7 @@
 #include <Message/EndTurnMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
-struct ActorPositionChangedMessage;
+struct PlayerPositionChangedMessage;
 const float sqrt2 = static_cast<float>(sqrt(2));
 
 GameLevel::GameLevel()
@@ -36,7 +36,7 @@ GameLevel::GameLevel()
 GameLevel::~GameLevel()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eTurn, myTurnManager);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEndTurn, myTurnManager);
 }
 
 void GameLevel::Init(TiledData* aTileData)
@@ -46,7 +46,7 @@ void GameLevel::Init(TiledData* aTileData)
 	myFloor.Init(100);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, myTurnManager);
 
 	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData->myMapSize));
 
@@ -144,7 +144,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_F3))

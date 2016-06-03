@@ -10,7 +10,7 @@ TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagPlayerDied, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagGoalReached, *this);
-	//ForceTurn(eTurn::ENEMY_END_TURN);
+	//ForceTurn(eEndTurn::ENEMY_END_TURN);
 }
 
 TurnManager::~TurnManager()
@@ -50,7 +50,7 @@ void TurnManager::ForceTurn(eTurn aTurn)
 
 bool TurnManager::RecieveMessage(const GUIMessage& aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eTurn)
+	if (aMessage.myType == RecieverTypes::eEndTurn)
 	{
 		EndTurn();
 	}

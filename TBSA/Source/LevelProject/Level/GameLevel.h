@@ -8,7 +8,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <TurnManager/TurnManager.h>
-#include <Message/ActorPositionChangedMessage.h>
+#include <Message/PlayerPositionChangedMessage.h>
 
 class StaticSprite;
 class RenderConverter;
