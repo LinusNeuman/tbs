@@ -4,6 +4,7 @@
 
 #include <CU/Thread/ThreadSynchronizer.h>
 #include <GameStates/MenuState.h>
+#include <GameStates/SplashState.h>
 #include <ThreadPool/ThreadPool.h>
 
 
@@ -36,6 +37,7 @@ private:
 
 	StartupData * myStartupData;
 	GameState * myMenuState;
+	GameState * mySplashState;
 
 	StateStack myGameStateStack;
 	bool myImRunning;

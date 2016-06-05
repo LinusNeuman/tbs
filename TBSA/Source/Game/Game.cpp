@@ -87,7 +87,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
 	createParameters.myStartInFullScreen = false;
-    createParameters.myClearColor.Set(0.2f, 0.4f, 0.7f, 1.0f);
+    createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 
 	
 	std::wstring appname = L"TBS RELEASE [" + aVersion + L"]";
@@ -181,9 +181,14 @@ void CGame::InitCallBack()
 	CU::TimeManager::Create();
 	GUIFactory::GetInstance()->Load();
 	myMenuState = new MenuState();
+	mySplashState = new SplashState();
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
 	myMenuState->Init();
+#ifdef _DEBUG
 	myGameStateStack.AddMainState(myMenuState);
+#else
+	myGameStateStack.AddMainState(mySplashState);
+#endif
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
 		
 }
