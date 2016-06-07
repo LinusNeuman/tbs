@@ -4,6 +4,7 @@
 #include <CU/StaticArray/StaticArray.h>
 #include <unordered_map>
 #include "../TextBox/TextBox.h"
+#include "particleEmitter.h"
 
 class LevelFactory;
 class GameLevel;
@@ -16,7 +17,6 @@ public:
 	void Init(const std::string& aLevelPath = "");
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
-	
 
 	void ChangeLevel(const std::string& aFilePath);
 
@@ -27,6 +27,7 @@ public:
 
 
 private:
+	ParticleEmitter<250> myEmitter;
 	GameLevel * myLevel;
 	std::string myStartPath;
 	std::string myLevelKey;

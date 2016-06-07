@@ -15,6 +15,8 @@ PlayState::PlayState()
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
 
+	myEmitter.LoadEmitterSettings("snow");
+
 	myShouldPause = false;
 }
 
@@ -49,6 +51,8 @@ void PlayState::Init(const std::string& aLevelPath)
 	LoadGUI("InGame");
 
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+
+	myEmitter.Activate({0.5f, 0.5f});
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -61,6 +65,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	
 	//myLevels[myLevelKey]->Update(aTimeDelta);
 	myLevel->Update(aTimeDelta);
+	myEmitter.Update(aTimeDelta);
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
@@ -95,7 +100,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 void PlayState::Draw() const
 {
 	myLevel->Draw();
-	
+	myEmitter.Render();
 	myGUIManager.Render();
 }
 
