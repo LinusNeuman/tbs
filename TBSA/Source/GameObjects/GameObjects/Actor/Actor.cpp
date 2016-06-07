@@ -46,6 +46,11 @@ void Actor::Init(const ActorData &aActorData)
 	SingletonPostMaster::AddReciever(RecieverTypes::eMouseClicked, *this);
 }
 
+void Actor::SpriteInit()
+{
+
+}
+
 void Actor::UpdateDirection()
 {
 	if (myState == eActorState::eWalking)

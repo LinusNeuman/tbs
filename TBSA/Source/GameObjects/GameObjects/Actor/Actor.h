@@ -19,7 +19,8 @@ public:
 	Actor();
 	virtual ~Actor();
 	void Init(const ActorData &aActorData);
-	
+	void SpriteInit();
+
 	virtual void Update(const CU::Time &aDeltaTime);
 	virtual void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
