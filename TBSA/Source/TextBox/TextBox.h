@@ -22,12 +22,15 @@ enum class eLinewrappingMode
 class TextBox
 {
 	public:
-		TextBox(const std::string aFontPath, eLinewrappingMode aMode = eLinewrappingMode::Char);
+		TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::string aFontPath, eLinewrappingMode aMode = eLinewrappingMode::Char);
 
 		void AddText(std::string aText);
 		void Render() const;
 		void ScrollUp();
 		void ScrollDown();
+		void SetLineWrappingMode(const eLinewrappingMode aMode);
+		void SetSize(const Vec2f aDimensions);
+		void SetPosition(const Vec2f aPosition);
 
 	private:
 		void Update();
@@ -42,9 +45,9 @@ class TextBox
 		std::string myFontPath;
 
 		FalloffStack<DX2D::CText*, MAX_TEXT_ROWS> myTextRows;
+
 		CU::GrowingArray<DX2D::CText*> myRenderList;
 
 		Vec2f myPosition;
 		Vec2f myDimensions;
 };
-

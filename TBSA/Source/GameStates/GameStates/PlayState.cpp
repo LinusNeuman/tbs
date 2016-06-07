@@ -9,6 +9,8 @@
 #include "PauseMenuState.h"
 
 #include <StateStack/StateStack.h>
+#include <StateStack/ProxyStateStack.h>
+#include "GameOverState.h"
 
 PlayState::PlayState()
 {
@@ -16,6 +18,7 @@ PlayState::PlayState()
 	myStartPath = "Data/Tiled/";
 
 	myShouldPause = false;
+	myGameOver = false;
 }
 
 PlayState::~PlayState()
@@ -89,6 +92,13 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		myShouldPause = false;
 	}
 
+	if (myGameOver == true)
+	{
+		GameOverState *newState = new GameOverState();
+		newState->Init();
+		aStateStack.AddSubState(newState);
+	}
+
 	return eStackReturnValue::eStay;
 }
 
@@ -117,12 +127,21 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
-return true;
+	return true;
 }
 
 bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
-	ChangeLevel(myCurrentLevelpath);
+	if (myGameOver == true)
+	{
+		ChangeLevel(myCurrentLevelpath);
+		myGameOver = false;
+
+	}
+	else
+	{
+		myGameOver = true;
+	}
 	return true;
 }
 

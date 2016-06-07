@@ -38,6 +38,7 @@ enum class RecieverTypes
 	ePlayerCanPeek,
 	eMouseInput,
 	eOpenPauseMenu,
+	eGameOverReset,
 	eClosePauseMenu,
 	enumlength
 };
