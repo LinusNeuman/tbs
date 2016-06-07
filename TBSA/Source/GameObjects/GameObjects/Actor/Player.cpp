@@ -10,6 +10,7 @@
 #include <Message/PlayerSeenMessage.h>
 #include <Message/FlagPlayerDiedMessage.h>
 #include <Message/PlayerPositionChangedMessage.h>
+#include <Message/PlayerAPChangedMessage.h>
 #include <Message/PlayerIDMessage.h>
 
 
@@ -51,6 +52,7 @@ void Player::CostAP(const int aCost)
 {
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
 	myCurrentAP -= aCost;
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 }
 
 void Player::OnClick()
@@ -105,6 +107,7 @@ void Player::AfterTurn()
 
 void Player::PreTurn()
 {
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }

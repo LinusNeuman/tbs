@@ -86,8 +86,16 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 		myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
 	}
 	
+	ResetAnimate();
+}
+
+void GUIButton::ResetAnimate()
+{
+	myAnimateState = GUIAnimateState::eFadingUp;
 	myAnimateTimer = 0.f;
-	myAnimateState = GUIAnimateState::eFadingDown;
+	CU::Vector4f color = mySpriteHovered->GetColor();
+	color.w = 0.7f;
+	mySpriteHovered->SetColor(color);
 }
 
 void GUIButton::Animate(const CommonUtilities::Time aTime)
@@ -103,10 +111,11 @@ void GUIButton::FadeUp(const CommonUtilities::Time aTime)
 		color.w += 0.5f * aTime.GetSeconds();
 		if (color.w  > 1)
 		{
-			myAnimateTimer += 0.5f * aTime.GetSeconds();
+			myAnimateTimer += 2.5f * aTime.GetSeconds();
 			if (myAnimateTimer >= 1.0f)
 			{
 				myAnimateState = GUIAnimateState::eFadingDown;
+				myAnimateTimer = 0.f;
 			}
 			color.w = 1;
 		}
@@ -117,12 +126,17 @@ void GUIButton::FadeUp(const CommonUtilities::Time aTime)
 void GUIButton::FadeDown(const CommonUtilities::Time aTime)
 {
 	CU::Vector4f color = mySpriteHovered->GetColor();
-	if (color.w > 0.0f)
+	if (color.w >= 0.0f)
 	{
-		color.w -= 1.0f * aTime.GetSeconds();
+		color.w -= 0.5f * aTime.GetSeconds();
 		if (color.w < 0)
 		{
-			myAnimateState = GUIAnimateState::eFadingUp;
+			myAnimateTimer += 1.2f * aTime.GetSeconds();
+			if (myAnimateTimer >= 1.0f)
+			{
+				myAnimateState = GUIAnimateState::eFadingUp;
+				myAnimateTimer = 0.f;
+			}
 			color.w = 0;
 		}
 		mySpriteHovered->SetColor(color);
@@ -195,4 +209,9 @@ void GUIButton::WhenClicked()
 	{
 		myClickSound->Play(1.0f);
 	}
+}
+
+void GUIButton::WhenLeaved()
+{
+	ResetAnimate();
 }

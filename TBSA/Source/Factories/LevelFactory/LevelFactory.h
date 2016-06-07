@@ -1,7 +1,9 @@
 #pragma once
-#include <Level\GameLevel.h>
-#include "EnemyFactory\EnemyFactory.h"
-#include "PlayerFactory\PlayerFactory.h"
+#include <Level/GameLevel.h>
+#include "EnemyFactory/EnemyFactory.h"
+#include "PlayerFactory/PlayerFactory.h"
+#include <thread>
+
 
 struct TiledData;
 
@@ -16,5 +18,8 @@ private:
 
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;
-	TiledData myTileData;
+	TiledData* myTileData;
+
+	std::thread* myThread;
+	volatile bool doneLoading;
 };

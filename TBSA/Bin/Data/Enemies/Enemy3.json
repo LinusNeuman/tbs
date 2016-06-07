@@ -14,6 +14,30 @@
         },
         {
             "path": "Data/Animations/DeadestAnimation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle000Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle045Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle090Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle135Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle180Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle225Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle270Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyIdle315Animation.json"
         }
     ]
 }
