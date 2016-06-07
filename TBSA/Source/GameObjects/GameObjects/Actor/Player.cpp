@@ -31,6 +31,9 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 
 	myIsSeen = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+	myDetectedSprite = new StaticSprite();
+	myDetectedSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
+	myDetectedSprite->SetLayer(enumRenderLayer::eGUI);
 }
 
 void Player::FreshTurn()
@@ -52,6 +55,22 @@ void Player::CostAP(const int aCost)
 void Player::OnClick()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
+}
+
+void Player::Draw() const
+{
+	if (myIsSeen == true)
+	{
+		if (myPlayerIndex == 0)
+		{
+			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.0f, -1.0f));
+		}
+		else
+		{
+			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.2f, -1.2f));
+		}
+	}
+	Actor::Draw();
 }
 
 bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
