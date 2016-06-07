@@ -14,6 +14,9 @@ struct TiledData
 	{
 		myTiles.Init(1);
 		myEnemies.Init(1);
+		myIsLoaded = false;
+		myPlayers[0] = nullptr;
+		myPlayers[1] = nullptr;
 	}
 
 	CommonUtilities::GrowingArray<IsometricTile> myTiles;
@@ -24,4 +27,6 @@ struct TiledData
 	CommonUtilities::StaticArray<Player*, 2> myPlayers;
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
 	CommonUtilities::GrowingArray<Objective*> myObjectives;
+
+	volatile bool myIsLoaded;
 };

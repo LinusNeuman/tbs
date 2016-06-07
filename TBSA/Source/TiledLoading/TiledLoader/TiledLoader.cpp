@@ -28,8 +28,9 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void GetPathNodes(const int aINdex, PathAndName & aPath, const picojson::array & someData, const int aMapWidth, const int aLastTile);
 
 
-void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
+void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 {
+	TiledData& someTiles = *aTilePointer;
 	std::map<std::string, unsigned short> enemyIndexes;
 	CommonUtilities::GrowingArray<PathAndName> paths;
 	paths.Init(1);
@@ -300,6 +301,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 		const int enemyIndex = enemyIndexes[paths[i].myName];
 		someTiles.myEnemies[enemyIndex]->SetEnemyPath(paths[i].myPath);
 	}
+	someTiles.myIsLoaded = true;
 }
 
 picojson::object GetObject(picojson::value aValue)
