@@ -107,6 +107,7 @@ void Player::AfterTurn()
 
 void Player::PreTurn()
 {
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
