@@ -64,9 +64,6 @@ CGame::~CGame()
 void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 {
 	(aHandle);
-	unsigned short windowWidth = static_cast<unsigned short>(GetSystemMetrics(SM_CXSCREEN));
-	unsigned short windowHeight = static_cast<unsigned short>(GetSystemMetrics(SM_CYSCREEN));
-
 
     DX2D::SEngineCreateParameters createParameters;
 #ifdef _DEBUG
@@ -76,14 +73,20 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
     createParameters.myInitFunctionToCall = std::bind( &CGame::InitCallBack, this );
     createParameters.myUpdateFunctionToCall = std::bind( &CGame::UpdateCallBack, this );
     createParameters.myLogFunction = std::bind( &CGame::LogCallback, this, _1 );
-    createParameters.myWindowHeight = windowHeight;
-    createParameters.myWindowWidth = windowWidth;
+	//From Launcher
+	picojson::value value = JsonWrapper::LoadPicoValue("Settings.json");
+	picojson::object settings = JsonWrapper::GetPicoObject(value);
+	unsigned short windowWidth = JsonWrapper::GetInt("myResolutionX", settings);
+	unsigned short windowHeight = JsonWrapper::GetInt("myResolutionY", settings);
+	createParameters.myWindowHeight = windowHeight;
+	createParameters.myWindowWidth = windowWidth;
 	createParameters.myRenderHeight = windowHeight;
 	createParameters.myRenderWidth = windowWidth;
 	createParameters.myTargetWidth = 1920;
 	createParameters.myTargetHeight = 1080;
+	createParameters.myStartInFullScreen = JsonWrapper::GetBool("myIsFullscreen", settings);
+
 	createParameters.myAutoUpdateViewportWithWindow = true;
-	createParameters.myStartInFullScreen = false;
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 
 	

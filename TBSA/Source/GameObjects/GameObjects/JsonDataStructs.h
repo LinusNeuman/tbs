@@ -7,6 +7,8 @@
 struct PlayerData
 {
 	int myActionPointMax;
+	int myAttackCost;
+	int myPeekCost;
 };
 
 struct EnemyData
