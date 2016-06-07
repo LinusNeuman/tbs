@@ -36,6 +36,7 @@ void LayerInputReciever::EnableReciever()
 void LayerInputReciever::DisableReceiver()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eMouseInput, *this);
+	ResetInput();
 }
 
 bool LayerInputReciever::RecieveMessage(const MouseButtonDownMessage& aMessage)
