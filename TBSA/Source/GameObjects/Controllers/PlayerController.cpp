@@ -89,7 +89,7 @@ void PlayerController::SelectPlayer()
 
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
 	
-	mySelectPlayerSound->Play(0.1f);
+	mySelectPlayerSound->Play(0.2f);
 
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
