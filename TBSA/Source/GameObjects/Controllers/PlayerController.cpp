@@ -262,6 +262,23 @@ void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 		{
 			DL_PRINT("WEST");
 		}
+
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH_EAST)
+		{
+			DL_PRINT("NORTH_EAST");
+		}
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH_WEST)
+		{
+			DL_PRINT("NORTH_WEST");
+		}
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH_EAST)
+		{
+			DL_PRINT("SOUTH_EAST");
+		}
+		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH_WEST)
+		{
+			DL_PRINT("SOUTH_WEST");
+		}
 	}*/
 }
 

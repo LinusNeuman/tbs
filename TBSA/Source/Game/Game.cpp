@@ -182,7 +182,7 @@ void CGame::InitCallBack()
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
 	myMenuState->Init();
 #ifdef _DEBUG
-	myGameStateStack.AddMainState(myMenuState);
+	myGameStateStack.AddMainState(mySplashState);
 #else
 	myGameStateStack.AddMainState(mySplashState);
 #endif
