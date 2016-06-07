@@ -17,7 +17,7 @@
          "name":"_room_1",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -28,7 +28,7 @@
          "name":"_room_2",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -50,7 +50,7 @@
          "name":"walls",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -61,7 +61,7 @@
          "name":"props",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -76,10 +76,6 @@
                  "height":128,
                  "id":1,
                  "name":"Karkat",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Player1",
                  "visible":true,
@@ -92,10 +88,6 @@
                  "height":128,
                  "id":2,
                  "name":"Terezi",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Player2",
                  "visible":true,
@@ -120,10 +112,6 @@
                  "height":128,
                  "id":3,
                  "name":"Gamzee",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -137,13 +125,32 @@
          "width":20,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":10,
+         "name":"Objectives",
+         "objects":[
+                {
+                 "height":51,
+                 "id":4,
+                 "name":"endzone1",
+                 "rotation":0,
+                 "type":"LevelEnd",
+                 "visible":true,
+                 "width":37,
+                 "x":849,
+                 "y":263
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":20,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":4,
+ "nextobjectid":6,
  "orientation":"isometric",
- "properties":
-    {
-
-    },
  "renderorder":"right-down",
  "tileheight":64,
  "tilesets":[
@@ -155,10 +162,6 @@
          "imagewidth":1024,
          "margin":0,
          "name":"tempisTiles",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":64,
          "tileheight":128,
@@ -173,10 +176,6 @@
          "imagewidth":1024,
          "margin":0,
          "name":"_dataTileSheet",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":64,
          "tileheight":128,
@@ -191,10 +190,6 @@
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetFloors",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":256,
          "tileheight":128,
@@ -209,10 +204,6 @@
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetWalls",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":256,
          "tileheight":128,
@@ -227,10 +218,6 @@
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetProps",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":256,
          "tileheight":128,

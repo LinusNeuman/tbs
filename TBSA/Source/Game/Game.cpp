@@ -66,13 +66,14 @@ CGame::~CGame()
 
 void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 {
+	(aHandle);
 	unsigned short windowWidth = static_cast<unsigned short>(GetSystemMetrics(SM_CXSCREEN));
 	unsigned short windowHeight = static_cast<unsigned short>(GetSystemMetrics(SM_CYSCREEN));
 
 
     DX2D::SEngineCreateParameters createParameters;
 #ifdef _DEBUG
-	createParameters.myActivateDebugSystems = DX2D::eDebugFeature_Fps | DX2D::eDebugFeature_Mem | DX2D::eDebugFeature_Filewatcher | DX2D::eDebugFeature_Cpu | DX2D::eDebugFeature_Drawcalls;
+	//createParameters.myActivateDebugSystems = DX2D::eDebugFeature_Fps | DX2D::eDebugFeature_Mem | DX2D::eDebugFeature_Filewatcher | DX2D::eDebugFeature_Cpu | DX2D::eDebugFeature_Drawcalls;
 #endif
     
     createParameters.myInitFunctionToCall = std::bind( &CGame::InitCallBack, this );
@@ -86,7 +87,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
 	createParameters.myStartInFullScreen = false;
-    createParameters.myClearColor.Set(0.2f, 0.4f, 0.7f, 1.0f);
+    createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 
 	
 	std::wstring appname = L"TBS RELEASE [" + aVersion + L"]";
@@ -112,24 +113,28 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 
 }
 
-void CGame::RecieveMessage(const GUIMessage & aMessage)
+bool CGame::RecieveMessage(const GUIMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eExitGame)
 	{
 		myImRunning = false;
 		DX2D::CEngine::GetInstance()->Shutdown();
 	}
+	return true;
 }
 
-void CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
+bool CGame::RecieveMessage(const GetStartLevelMessage & aMessage)
 {
+	(aMessage);
 	StartUpLevelMessage startLevelMessage = StartUpLevelMessage(RecieverTypes::eStartUpLevel, myStartupData->myStartLevel);
 	SendPostMessage(startLevelMessage);
+	return true;
 }
 
-void CGame::RecieveMessage(const SetHWNDMessage & aMessage)
+bool CGame::RecieveMessage(const SetHWNDMessage & aMessage)
 {
 	myWindowHandle = aMessage.myWindowHandle;
+	return true;
 }
 
 void CGame::InitCallBack()
@@ -176,9 +181,14 @@ void CGame::InitCallBack()
 	CU::TimeManager::Create();
 	GUIFactory::GetInstance()->Load();
 	myMenuState = new MenuState();
+	mySplashState = new SplashState();
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
 	myMenuState->Init();
+#ifdef _DEBUG
 	myGameStateStack.AddMainState(myMenuState);
+#else
+	myGameStateStack.AddMainState(mySplashState);
+#endif
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
 		
 }

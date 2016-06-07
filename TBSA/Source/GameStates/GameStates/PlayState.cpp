@@ -5,25 +5,37 @@
 #include <Message/StartUpLevelMessage.h>
 #include <Message/GetStartLevelMessage.h>
 #include <LevelFactory\LevelFactory.h>
+#include <Message/GoalReachedMessage.h>
 
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
-} 
+}
 
 PlayState::~PlayState()
 {
 	SAFE_DELETE(myLevel);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 }
 
-void PlayState::Init()
+void PlayState::Init(const std::string& aLevelPath)
 {
 	myLevelFactory = new LevelFactory();
+
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
-	SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
+
+	if (aLevelPath == "")
+	{
+		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
+	}
+	else
+	{
+		myLevelKey = aLevelPath;
+	}
 
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
 	myLevel = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
@@ -52,11 +64,15 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (IsometricInput::GetKeyPressed(DIK_1) == true)
 	{
-		ChangeLevel("SecondTest.json");
+		ChangeLevel("1_Treehouse.json");
 	}
 	else if (IsometricInput::GetKeyPressed(DIK_2) == true)
 	{
 		ChangeLevel("2_Backyard.json");
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
+	{
+		ChangeLevel("SecondTest.json");
 	}
 
 	return eStackReturnValue::eStay;
@@ -65,14 +81,28 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 void PlayState::Draw() const
 {
 	myLevel->Draw();
-
+	
 	myGUIManager.Render();
 }
 
-void PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
+bool PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
 {
 	myLevelKey = aMessage.myPath;
+	return true;
 }
+
+bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
+{
+	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
+return true;
+}
+
+bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
+{
+	ChangeLevel(myCurrentLevelpath);
+	return true;
+}
+
 
 void PlayState::ChangeLevel(const std::string& aFilePath)
 {
@@ -82,9 +112,4 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	}
 	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
 	myCurrentLevelpath = aFilePath;
-}
-
-void PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
-{
-	ChangeLevel(myCurrentLevelpath);
 }

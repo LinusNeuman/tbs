@@ -24,23 +24,27 @@ public:
 	
 	void ReachedTarget()override;
 
-
 	virtual void OnClick() override;
 
-	void RecieveMessage(const PlayerSeenMessage & aMessage) override;
+	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
 
-	void SetTargetEnemy(const unsigned short aIndex);
+	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
 	unsigned short GetEnemyTarget();
-
-
 	virtual void AlmostReachTarget() override;
+	virtual void NextToObjective() override;
 
-	void AfterTurn();
+	void SetIndex(const unsigned short aIndex);
+	unsigned short GetIndex() const;
+
+	virtual void AfterTurn() override;
 	void PreTurn();
+
+	
+
 private:
 
-	TilePositionf myEnemyTargetPosition;
+	unsigned short myPlayerIndex;
 	unsigned short myEnemyTargetIndex;
 
 	int myActionPointMax;
@@ -50,9 +54,10 @@ private:
 	bool myShouldDie;
 };
 
-inline void Player::SetTargetEnemy(const unsigned short aIndex)
+inline void Player::SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition)
 {
 	myEnemyTargetIndex = aIndex;
+	SetObjective(aEnemyPosition);
 }
 
 inline unsigned short Player::GetEnemyTarget()
@@ -60,3 +65,12 @@ inline unsigned short Player::GetEnemyTarget()
 	return myEnemyTargetIndex;
 }
 
+inline void Player::SetIndex(const unsigned short aIndex)
+{
+	myPlayerIndex = aIndex;
+}
+
+inline unsigned short Player::GetIndex() const
+{
+	return myPlayerIndex;
+}

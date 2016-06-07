@@ -17,6 +17,7 @@ struct TiledData
 		myIsLoaded = false;
 		myPlayers[0] = nullptr;
 		myPlayers[1] = nullptr;
+		myObjectives.Init(1);
 	}
 
 	CommonUtilities::GrowingArray<IsometricTile> myTiles;

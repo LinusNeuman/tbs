@@ -8,7 +8,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <TurnManager/TurnManager.h>
-#include <Message/ActorPositionChangedMessage.h>
+#include <Message/PlayerPositionChangedMessage.h>
 
 class StaticSprite;
 class RenderConverter;
@@ -24,8 +24,8 @@ public:
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
 
-	void RecieveMessage(const DijkstraMessage & aMessage) override;
-	void RecieveMessage(const NavigationClearMessage & aMessage) override;
+	bool RecieveMessage(const DijkstraMessage & aMessage) override;
+	bool RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
 private:
 	void InternalInit();

@@ -10,6 +10,7 @@ void GUIElement::SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEv
 
 bool GUIElement::OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePosition)
 {
+	(aMousePosition);
 	if (aMessageEvent == eGUIMessageEvents::eOnClick)
 	{
 		if (Intersection2D::PointInsideAABB2D(myCollisionBox, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)

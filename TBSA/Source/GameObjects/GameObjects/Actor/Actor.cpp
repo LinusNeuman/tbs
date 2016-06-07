@@ -8,10 +8,8 @@
 #include <CU\DLDebug\DL_Debug.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
-#include <Message/ActorPositionChangedMessage.h>
 #include <Message/ColliderMessage.h>
-#include <Message/PlayerReachedTargetMessage.h>
-#include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/EnemyPositionChangedMessage.h>
 
 Actor::Actor()
 {
@@ -21,9 +19,8 @@ Actor::Actor()
 	myPath.Init(1);
 	myCurrentWaypoint = 0;
 	myState = eActorState::eWalking;
-
-	//myBoxCollider = new BoxCollider();
-	//myBoxCollider->SetPositionAndSize(CU::Vector2f::One, CU::Vector2f::Half);
+	myHasObjectiveFlag = false;
+	myObjectiveTargetPosition = TilePositionf::One;
 }
 
 Actor::~Actor()
@@ -101,12 +98,8 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		{
 			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 			UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
-			//myPosition += myVelocity * aDeltaTime.GetSeconds();
 			CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
 			
-
-
-
 			if ((CU::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 			{
 				myAtTarget = true;
@@ -123,6 +116,13 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			}
 
 			UpdatePath();
+		}
+		else if (tempState == eActorState::eFighting)
+		{
+			if (myAnimations.GetAnimationIsRunning() == false)
+			{
+				SetActorState(eActorState::eDead);
+			}
 		}
 
 		if (myAnimations.GetIsActive() == true)
@@ -154,10 +154,19 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
-	SendPostMessage(PlayerChangedTargetMessage(RecieverTypes::ePlayerChangedTarget));
 }
 
 void Actor::OnMove(CU::Vector2ui aTargetPosition)
+{
+
+}
+
+void Actor::AfterTurn()
+{
+	ResetObjectiveState();
+}
+
+void Actor::NextToObjective()
 {
 
 }
@@ -187,9 +196,10 @@ int Actor::GetMyAP() const
 	return myAP;
 }
 
+
 void Actor::UpdatePath()
 {
-	if (myAtTarget == true )
+ 	if (myAtTarget == true )
 	{
 		if (myCurrentWaypoint < myPath.Size())
 		{
@@ -203,7 +213,14 @@ void Actor::UpdatePath()
 		}
 		else if (myCurrentWaypoint == myPath.Size())
 		{
-			ReachedTarget();
+			if (GetObjectiveState() == true && (myPosition - myObjectiveTargetPosition).Length() <= 1.f)
+			{
+				NextToObjective();
+			}
+			else
+			{
+				ReachedTarget();
+			}
 		}
 	}
 }
@@ -223,6 +240,7 @@ void Actor::StopPath()
 	myCurrentWaypoint = myPath.Size();
 }
 
+
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {
 	myPosition = aPosition;
@@ -234,10 +252,11 @@ void Actor::DecideAnimation()
 
 }
 
-void Actor::RecieveMessage(const ColliderMessage & aMessage)
+bool Actor::RecieveMessage(const ColliderMessage & aMessage)
 {
 	if (myBoxCollider.CheckCollision(aMessage.myCollider) == true)
 	{
 		OnClick();
 	}
+	return true;
 }

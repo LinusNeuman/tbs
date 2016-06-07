@@ -119,8 +119,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameStates\LevelSelectState.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
+    <ClCompile Include="GameStates\PauseMenuState.cpp" />
+    <ClCompile Include="GameStates\SplashState.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -129,8 +132,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameStates\LevelSelectState.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
+    <ClInclude Include="GameStates\PauseMenuState.h" />
+    <ClInclude Include="GameStates\SplashState.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +172,9 @@
     </ProjectReference>
     <ProjectReference Include="..\StateStack\StateStack.vcxproj">
       <Project>{9b5c9f6d-ca46-4bee-950e-5570c2bc5c22}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TextBox\TextBox.vcxproj">
+      <Project>{b609e812-0662-4864-850f-74b8cf48ceee}</Project>
     </ProjectReference>
     <ProjectReference Include="..\TiledLoading\TiledLoading.vcxproj">
       <Project>{b0e30c9f-422d-4ce9-8617-f3b6792c9ca3}</Project>

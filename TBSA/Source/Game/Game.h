@@ -4,6 +4,7 @@
 
 #include <CU/Thread/ThreadSynchronizer.h>
 #include <GameStates/MenuState.h>
+#include <GameStates/SplashState.h>
 #include <ThreadPool/ThreadPool.h>
 
 
@@ -19,9 +20,9 @@ public:
 	~CGame();
 	void Init(const std::wstring& aVersion = L"", HWND aHandle = nullptr);
 
-	virtual void RecieveMessage(const GUIMessage & aMessage) override;
-	virtual void RecieveMessage(const GetStartLevelMessage& aMessage) override;
-	virtual void RecieveMessage(const SetHWNDMessage & aMessage) override;
+	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
+	virtual bool RecieveMessage(const GetStartLevelMessage& aMessage) override;
+	virtual bool RecieveMessage(const SetHWNDMessage & aMessage) override;
 	
 
 private:
@@ -36,6 +37,7 @@ private:
 
 	StartupData * myStartupData;
 	GameState * myMenuState;
+	GameState * mySplashState;
 
 	StateStack myGameStateStack;
 	bool myImRunning;

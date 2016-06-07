@@ -19,6 +19,7 @@ namespace
 
 picojson::object GetObject(picojson::value aValue);
 double& GetNumber( picojson::value aValue);
+int GetNumberInt(picojson::value aValue);
 picojson::array GetArray( picojson::value aValue);
 std::string GetString( picojson::value aValue);
 CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const picojson::value& aYValue);
@@ -100,8 +101,8 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					do
 					{
 						++startNodeIndex;
-						DL_ASSERT(startNodeIndex < data.size(), "ERROR: Path is missing start");
-						const int explainingIndex = GetNumber(data[startNodeIndex]);
+						DL_ASSERT(SIZE_TTCAST(startNodeIndex) < data.size(), "ERROR: Path is missing start");
+						const int explainingIndex = GetNumberInt(data[startNodeIndex]);
 						startNodeType = explainingIndex - dataSheet.GetFirstIndex() + 1;
 					} while (startNodeType != 1);
 
@@ -264,7 +265,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					enemyIndexes[GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;
 				}
 			}
-			else if (name == "Objective")
+			else if (name == "Objective" || name == "Objectives")
 			{
 				picojson::array objects = GetArray(currentLayer["objects"]);
 				for (size_t k = 0; k < objects.size(); k++)
@@ -316,6 +317,12 @@ double& GetNumber(picojson::value aValue)
 	return aValue.get<double>();
 }
 
+int GetNumberInt(picojson::value aValue)
+{
+	double tempDouble = GetNumber(aValue);
+	return INTCAST(tempDouble);
+};
+
 picojson::array GetArray( picojson::value aValue)
 {
 	DL_ASSERT(aValue.is<picojson::array>(), "ERROR: Json value is not an array");
@@ -360,28 +367,28 @@ void GetPathNodes(const int aIndex, PathAndName& aPath, const picojson::array& s
 {
 
 	
-	if (aLastTile != 3 && aIndex + 1 < someData.size() && GetNumber(someData[aIndex + 1]) >= 1)
+	if (aLastTile != 3 && aIndex + 1 < INTCAST(someData.size()) && GetNumberInt(someData[aIndex + 1]) >= 1)
 	{
 		int index = aIndex + 1;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
 		GetPathNodes(index, aPath, someData, aMapWidth, 0);
 		return;
 	}
-	if (aLastTile != 2 && aIndex + aMapWidth < someData.size() && GetNumber(someData[aIndex + aMapWidth]) >= 1)
+	if (aLastTile != 2 && aIndex + aMapWidth < INTCAST(someData.size()) && GetNumberInt(someData[aIndex + aMapWidth]) >= 1)
 	{
 		int index = aIndex + aMapWidth;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
 		GetPathNodes(index, aPath, someData, aMapWidth, 1);
 		return;
 	}
-	if (aLastTile != 1 && aIndex - aMapWidth >= 0 && GetNumber(someData[aIndex - aMapWidth]) >= 1)
+	if (aLastTile != 1 && aIndex - aMapWidth >= 0 && GetNumberInt(someData[aIndex - aMapWidth]) >= 1)
 	{
 		int index = aIndex - aMapWidth;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
 		GetPathNodes(index, aPath, someData, aMapWidth, 2);
 		return;
 	}
-	if (aLastTile != 0 && aIndex - 1 >= 0 && GetNumber(someData[aIndex - 1]) >= 1)
+	if (aLastTile != 0 && aIndex - 1 >= 0 && GetNumberInt(someData[aIndex - 1]) >= 1)
 	{
 		int index = aIndex - 1;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));

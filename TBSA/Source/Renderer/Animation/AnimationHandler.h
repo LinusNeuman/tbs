@@ -17,6 +17,7 @@ public:
 	void AddAnimation(Animation* anAnimation);
 	inline StaticSprite* GetSprite();
 	inline bool GetIsActive();
+	inline bool GetAnimationIsRunning();
 private:
 	//Actor* myHolder;
 	std::string myActiveAnimation;
@@ -35,4 +36,9 @@ inline bool AnimationHandler::GetIsActive()
 		return true;
 	}
 	return false;
+}
+
+bool AnimationHandler::GetAnimationIsRunning()
+{
+	return myAnimations[myActiveAnimation]->GetIsRunning();
 }

@@ -15,6 +15,11 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myDebugMode = false;
 	myIsVisible = false;
 	myIsInEnemyFoV = false;
+	myAvailableDirections.Init(8);
+	for (size_t i = 1; i < 9; i++)
+	{
+		myAvailableDirections.Add(static_cast<eDirection>(i * 10));
+	}
 }
 
 IsometricTile::~IsometricTile()
@@ -47,6 +52,9 @@ void IsometricTile::Draw() const
 			break;
 		case eTileType::DOOR_2:
 			currentColour = CommonUtilities::Vector4f(1.f, .9f, 0.f, 1.f);
+			break;
+		case eTileType::IS_OBJECTIVE:
+			currentColour = CommonUtilities::Vector4f(1.0f, 0.54f, 0.f, 1.0f);
 			break;
 		case eTileType::Size: break;
 		default: break;
@@ -140,6 +148,11 @@ bool IsometricTile::GetVisible() const
 bool IsometricTile::GetInEnemyFov() const
 {
 	return myIsInEnemyFoV;
+}
+
+void IsometricTile::RemoveAvailableDirection(eDirection aDirection)
+{
+	myAvailableDirections.RemoveCyclic(aDirection);
 }
 
 VertexHandle IsometricTile::GetVertexHandle() const
