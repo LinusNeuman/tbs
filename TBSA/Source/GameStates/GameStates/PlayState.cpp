@@ -6,11 +6,16 @@
 #include <Message/GetStartLevelMessage.h>
 #include <LevelFactory\LevelFactory.h>
 #include <Message/GoalReachedMessage.h>
+#include "PauseMenuState.h"
+
+#include <StateStack/StateStack.h>
 
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
+
+	myShouldPause = false;
 }
 
 PlayState::~PlayState()
@@ -27,6 +32,7 @@ void PlayState::Init(const std::string& aLevelPath)
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
 
 	if (aLevelPath == "")
 	{
@@ -45,7 +51,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
-eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
+eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
 	//(aStateStack);
 
@@ -75,6 +81,14 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		ChangeLevel("SecondTest.json");
 	}
 
+	if (myShouldPause == true)
+	{
+		PauseMenuState *newState = new PauseMenuState();
+		newState->Init();
+		aStateStack.AddMainState(newState);
+		myShouldPause = false;
+	}
+
 	return eStackReturnValue::eStay;
 }
 
@@ -88,6 +102,15 @@ void PlayState::Draw() const
 bool PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
 {
 	myLevelKey = aMessage.myPath;
+	return true;
+}
+
+bool PlayState::RecieveMessage(const GUIMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eOpenPauseMenu)
+	{
+		myShouldPause = true;
+	}
 	return true;
 }
 
