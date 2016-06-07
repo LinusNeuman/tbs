@@ -34,5 +34,6 @@ private:
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
 	bool myShouldExit;
+	bool myGameOver;
 	bool myShouldPause;
 };

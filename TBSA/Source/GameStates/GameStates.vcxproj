@@ -119,6 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameStates\GameOverState.cpp" />
     <ClCompile Include="GameStates\LevelSelectState.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
@@ -132,6 +133,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameStates\GameOverState.h" />
     <ClInclude Include="GameStates\LevelSelectState.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />

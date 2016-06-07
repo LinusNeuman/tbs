@@ -21,6 +21,7 @@ Actor::Actor()
 	myState = eActorState::eWalking;
 	myHasObjectiveFlag = false;
 	myObjectiveTargetPosition = TilePositionf::One;
+	myDirection = eDirection::SOUTH;
 }
 
 Actor::~Actor()
@@ -43,6 +44,11 @@ void Actor::Init(const ActorData &aActorData)
 	myBoxCollider.SetPositionAndSize(myPosition, CU::Vector2f::Half);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eMouseClicked, *this);
+}
+
+void Actor::SpriteInit()
+{
+
 }
 
 void Actor::UpdateDirection()

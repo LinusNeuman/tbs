@@ -144,24 +144,24 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 129,
+              "myWidth": 267,
               "myHeight": 69
             },
             "myPressed": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 129,
+              "myWidth": 267,
               "myHeight": 69
             },
             "myHover": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 129,
+              "myWidth": 267,
               "myHeight": 69
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 129,
+            "mySizeX": 267,
             "mySizeY": 69,
             "Name": "menu_btn",
             "Tooltip": "",
@@ -172,17 +172,71 @@
             },
             "myIsEnabled": true,
             "myIsIsometric": false,
-            "myPositionX": 26,
+            "myPositionX": 1756,
             "myPositionY": 174,
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
-              "Click": "",
+              "Click": "OpenPauseMenu",
               "Hover": ""
             }
           }
         ]
       }
+    },
+    {
+        "myName": "GameOver",
+        "myGUIData": {
+            "guiElements": [
+                {
+                    "$type": "GUIEditor.GUIButton, GUIEditor",
+                    "myUnpressed": {
+                        "myPath": "Sprites/GUI/InGame\\GameOver/Unpressed.dds",
+                        "myWidth": 130,
+                        "myHeight": 70
+                    },
+                    "myPressed": {
+                        "myPath": "Sprites/GUI/InGame\\GameOver/Pressed.dds",
+                        "myWidth": 130,
+                        "myHeight": 70
+                    },
+                    "myHover": {
+                        "myPath": "Sprites/GUI/InGame\\GameOver/Hover.dds",
+                        "myWidth": 130,
+                        "myHeight": 70
+                    },
+                    "myShouldPlayHoverSound": true,
+                    "myShouldPlayClickSound": true,
+                    "myAnimated": true,
+                    "myImagesPath": "Sprites/GUI/InGame\\GameOver",
+                    "mySizeX": 130,
+                    "mySizeY": 70,
+                    "Name": "Reset Button",
+                    "Tooltip": "",
+                    "mySprite": {
+                        "myPath": "",
+                        "myWidth": 0,
+                        "myHeight": 0
+                    },
+                    "myIsEnabled": true,
+                    "myIsIsometric": false,
+                    "myPositionX": 830,
+                    "myPositionY": 720,
+                    "myParentPositionX": 0,
+                    "myParentPositionY": 0,
+                    "Events": {
+                        "Click": "Restart",
+                        "Hover": ""
+                    }
+                }
+            ]
+        }
+    },
+    {
+     "myName": "PauseMenu",
+     "myGUIData": {
+        "guiElements": []
+        }
     }
   ]
 }

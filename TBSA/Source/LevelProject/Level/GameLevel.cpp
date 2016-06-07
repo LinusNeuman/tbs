@@ -31,19 +31,35 @@ const float sqrt2 = static_cast<float>(sqrt(2));
 
 GameLevel::GameLevel()
 {
+	myIsInitialized = false;
 }
 
 GameLevel::~GameLevel()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEndTurn, myTurnManager);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer2);
+
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myTiledData->myEnemyFactory->ReturnEnemy(myEnemies[i]);
+	}
 }
 
 void GameLevel::Init(TiledData* aTileData)
 {
 	myTiledData = aTileData;
+}
 
-	myFloor.Init(100);
+void GameLevel::InternalInit()
+{
+	if (myTiledData->myIsLoaded == false)
+	{
+		return;
+	}
+	StaticSprite::Sync();
+	//myFloor.Init(100);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, myTurnManager);
@@ -126,12 +142,21 @@ void GameLevel::Init(TiledData* aTileData)
 		}
 	}
 
-
+	myIsInitialized = true;
 
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
 {
+	if (myIsInitialized == false)
+	{
+		InternalInit();
+		if (myIsInitialized == false)
+		{
+			return;
+		}
+	}
+
 	myFloor.Update();
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
@@ -202,10 +227,13 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 void GameLevel::Draw() const
 {
+	if (myIsInitialized == true)
+	{
 	myFloor.Draw();
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemyController->Draw();
+}
 }
 
 bool GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
