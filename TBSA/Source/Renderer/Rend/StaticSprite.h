@@ -90,7 +90,7 @@ public:
 
 	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero, const CU::Vector2f & aPivotPoint = CU::Vector2f::Zero,const bool aSync = true);
 	
-	void Draw(const CU::Vector2f & aPositionInPixel);
+	void Draw(const CU::Vector2f & aPositionInPixel) const;
 
 	enumRenderLayer GetLayer() const;
 	void SetLayer(const enumRenderLayer aRenderLayer);
