@@ -21,3 +21,17 @@ void PauseMenuState::Init()
 
 	LoadGUI("PauseMenu");
 }
+
+eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateStack& aStateStack)
+{
+	return eStackReturnValue::eStay;
+}
+
+void PauseMenuState::Draw() const
+{
+}
+
+bool PauseMenuState::RecieveMessage(const GUIMessage& aMessage)
+{
+	return true;
+}
