@@ -97,7 +97,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		GameOverState *newState = new GameOverState();
 		newState->Init();
 		aStateStack.AddSubState(newState);
-		myGameOver = false;
 	}
 
 	return eStackReturnValue::eStay;
@@ -128,13 +127,21 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
-return true;
+	return true;
 }
 
 bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
-	myGameOver = true;
-	//ChangeLevel(myCurrentLevelpath);
+	if (myGameOver == true)
+	{
+		ChangeLevel(myCurrentLevelpath);
+		myGameOver = false;
+
+	}
+	else
+	{
+		myGameOver = true;
+	}
 	return true;
 }
 
