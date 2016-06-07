@@ -100,7 +100,7 @@ void GameLevel::Init(TiledData* aTileData)
 	{
 		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
 		{
-			myFloor.GetTile(x, y).SetVisible(true);
+			//myFloor.GetTile(x, y).SetVisible(true);
 			if (myFloor.GetTile(x,y).CheckIfWalkable() == true)
 			{
 				if (x + 1 < myFloor.GetDimensions().x && y + 1 < myFloor.GetDimensions().y &&
