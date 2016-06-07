@@ -94,6 +94,11 @@ void Enemy::AlmostReachTarget()
 	myController->EnemyDone();
 }
 
+void Enemy::SetDirection(eDirection aDirection)
+{
+	myDirection = aDirection;
+}
+
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;

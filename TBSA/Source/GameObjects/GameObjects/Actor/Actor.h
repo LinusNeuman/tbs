@@ -117,12 +117,12 @@ protected:
 	BoxCollider myBoxCollider;
 	void UpdateDirection();
 	bool myAtTarget;
-	
+	eDirection myDirection;
 private:
 	void UpdatePath();
 
 	eActorType myType;
-	eDirection myDirection;
+	
 	StaticSprite *mySprite;
 };
 
