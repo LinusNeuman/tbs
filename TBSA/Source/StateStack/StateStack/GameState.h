@@ -11,6 +11,8 @@ enum class eStackReturnValue
 	eStay,
 	ePopMain,
 	ePopSubState,
+	eDeleteMainState,
+	eDeleteSubstate,
 	ePopCurrentSubStates
 };
 
