@@ -97,6 +97,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		GameOverState *newState = new GameOverState();
 		newState->Init();
 		aStateStack.AddSubState(newState);
+		myGameOver = false;
 	}
 
 	return eStackReturnValue::eStay;
