@@ -15,7 +15,7 @@ public:
 	void UpdateEnemy();
 	virtual void ReachedTarget()override;
 	virtual void AlmostReachTarget() override;
-	
+	void SetDirection(eDirection aDirection);
 	EnemyController* myController;
 	bool RecieveMessage(const PlayerSeenMessage& aMessage) override;
 

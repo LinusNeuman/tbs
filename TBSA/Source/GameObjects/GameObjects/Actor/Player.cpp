@@ -120,6 +120,7 @@ int Player::GetAttackCost() const
 
 void Player::PreTurn()
 {
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }

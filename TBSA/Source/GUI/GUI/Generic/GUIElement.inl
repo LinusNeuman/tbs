@@ -46,6 +46,7 @@ bool GUIElement::OnAction(eGUIMessageEvents aMessageEvent, CU::Vector2f aMousePo
 		}
 		if (myIsCurrentlyHovered == true)
 		{
+			WhenLeaved();
 			myIsCurrentlyHovered = false;
 
 			return myMessageHandler.Execute(eGUIMessageEvents::eOnLeave);

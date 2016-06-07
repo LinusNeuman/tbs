@@ -59,5 +59,8 @@
     <ClInclude Include="GameStates\GameOverState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="particleEmitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

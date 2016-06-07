@@ -37,6 +37,7 @@ public:
 
 	virtual void WhenHovered();
 	virtual void WhenClicked();
+	virtual void WhenLeaved();
 
 	bool __forceinline GetIsHovered();
 
