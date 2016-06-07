@@ -24,6 +24,10 @@ struct EnemyObjectMessage;
 struct FightWithEnemyMessage;
 struct GoalReachedMessage;
 struct PlayerCanPeekMessage;
+struct MouseButtonDownMessage;
+struct MouseButtonReleasedMessage;
+struct MouseButtonPressedMessage;
+struct MouseInputClearMessage;
 
 class MessageReciever
 {
@@ -54,6 +58,10 @@ public:
 	virtual bool RecieveMessage(const FlagGoalReachedMessage& aMessage);
 	virtual bool RecieveMessage(const GoalReachedMessage& aMessage);
 	virtual bool RecieveMessage(const PlayerCanPeekMessage& aMessage);
+	virtual bool RecieveMessage(const MouseButtonDownMessage& aMessage);
+	virtual bool RecieveMessage(const MouseButtonPressedMessage& aMessage);
+	virtual bool RecieveMessage(const MouseButtonReleasedMessage&aMessage);
+	virtual bool RecieveMessage(const MouseInputClearMessage & aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:

@@ -119,3 +119,23 @@ bool MessageReciever::RecieveMessage(const FlagGoalReachedMessage& aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const MouseButtonDownMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const MouseButtonPressedMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const MouseButtonReleasedMessage&aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const MouseInputClearMessage & aMessage)
+{
+	return true;
+}

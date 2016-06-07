@@ -51,6 +51,8 @@ private:
 	SingletonIsometricInputWrapper();
 	~SingletonIsometricInputWrapper();
 
+	void SendMouseInputMessages();
+
 	CU::Vector2f ConvertMouseNormalizedPositionCartesianCordiante(const bool aOffsetToMiddle = false) const;
 	CU::Vector2f GetMouseInViewportNormalized() const;
 
