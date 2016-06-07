@@ -34,16 +34,16 @@ bool StateStack::Update(const CU::Time & aDeltaTime)
 {
 	switch (myStates.GetLast().GetLast()->Update(aDeltaTime, myProxy))
 	{
-	case eStackReturnValue::ePopMain:
+	/*case eStackReturnValue::ePopMain:
 		PopMainState();
-		return myStates.Size() > 0;
+		return myStates.Size() > 0;*/
 	case eStackReturnValue::eDeleteMainState:
 		PopAndDeleteMainState();
 		return myStates.Size() > 0;
 
-	case eStackReturnValue::ePopCurrentSubStates:
+	/*case eStackReturnValue::ePopCurrentSubStates:
 		PopCurrentSubstates();
-		return true;
+		return true;*/
 	case eStackReturnValue::eDeleteCurrentSubstates:
 		PopAndDeleteCurrentSubstates();
 		return true;
@@ -51,8 +51,8 @@ bool StateStack::Update(const CU::Time & aDeltaTime)
 	case eStackReturnValue::eDeleteSubstate:
 		PopAndDeleteSubstate();
 		return true;
-	case eStackReturnValue::ePopSubState:
-		PopSubState();
+	/*case eStackReturnValue::ePopSubState:
+		PopSubState();*/
 	case eStackReturnValue::eStay:
 		return true;
 	}

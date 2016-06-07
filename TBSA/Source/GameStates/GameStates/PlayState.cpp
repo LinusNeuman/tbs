@@ -68,7 +68,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
 		myShouldExit = false;
-		return eStackReturnValue::ePopMain;
+		//return eStackReturnValue::ePopMain;
+		return eStackReturnValue::eDeleteMainState;
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_1) == true)

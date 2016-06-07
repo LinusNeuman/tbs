@@ -9,12 +9,12 @@ class ProxyStateStack;
 enum class eStackReturnValue
 {
 	eStay,
-	ePopMain,
-	ePopSubState,
+	/*ePopMain,
+	ePopSubState,*/
 	eDeleteMainState,
 	eDeleteSubstate,
 	eDeleteCurrentSubstates,
-	ePopCurrentSubStates
+	//ePopCurrentSubStates
 };
 
 
