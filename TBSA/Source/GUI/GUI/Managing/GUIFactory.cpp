@@ -93,7 +93,7 @@ void GUIFactory::Load()
 
 					// also add tooltip 
 
-					if (clickEvent == "Turn")
+					if (clickEvent == "EndTurn")
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::eEndTurn), eGUIMessageEvents::eOnClick);
 					}
