@@ -31,6 +31,7 @@ enum class RecieverTypes
 	eEnemyReachedEndOfPath,
 	ePlayerNextToObjective,
 	ePlayerTargetEnemy,
+	ePlayerAPChanged,
 	eStartFight,
 	eFlagPlayerDied,
 	eEnemyAttacked,

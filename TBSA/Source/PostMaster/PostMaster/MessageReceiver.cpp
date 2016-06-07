@@ -144,3 +144,8 @@ bool MessageReciever::RecieveMessage(const PlayerIDMessage & aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const PlayerAPChangedMessage& aMessage)
+{
+	return true;
+}
