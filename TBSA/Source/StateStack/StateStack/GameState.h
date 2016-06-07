@@ -13,6 +13,7 @@ enum class eStackReturnValue
 	ePopSubState,
 	eDeleteMainState,
 	eDeleteSubstate,
+	eDeleteCurrentSubstates,
 	ePopCurrentSubStates
 };
 
