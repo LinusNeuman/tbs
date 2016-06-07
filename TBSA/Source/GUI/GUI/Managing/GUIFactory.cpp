@@ -116,6 +116,11 @@ void GUIFactory::Load()
 						newButton->SetAction(new GUIMessage(RecieverTypes::eOpenPauseMenu), eGUIMessageEvents::eOnClick);
 					}
 
+					if (clickEvent == "Restart")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
+					}
+
 
 					myGUIElements.Add(newButton);
 					myGUILookup[currentStateName].myEnd = elementsAdded;
