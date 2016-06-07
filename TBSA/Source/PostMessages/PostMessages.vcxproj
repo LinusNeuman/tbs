@@ -219,6 +219,7 @@
     <ClInclude Include="Message\MouseButtonReleasedMessage.h" />
     <ClInclude Include="Message\MouseInputClear.h" />
     <ClInclude Include="Message\PlayerCanPeekMessage.h" />
+    <ClInclude Include="Message\PlayerIDMessage.h" />
     <ClInclude Include="Message\PlayerPositionChangedMessage.h" />
     <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\ColliderMessage.h" />

@@ -68,7 +68,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
 		myShouldExit = false;
-		return eStackReturnValue::ePopMain;
+		//return eStackReturnValue::ePopMain;
+		return eStackReturnValue::eDeleteMainState;
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_1) == true)
@@ -88,7 +89,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		PauseMenuState *newState = new PauseMenuState();
 		newState->Init();
-		aStateStack.AddMainState(newState);
+		aStateStack.AddSubState(newState);
 		myShouldPause = false;
 	}
 

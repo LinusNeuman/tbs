@@ -35,5 +35,6 @@
     <ClInclude Include="Message\MouseButtonReleasedMessage.h" />
     <ClInclude Include="Message\MouseInputClear.h" />
     <ClInclude Include="Message\PlayerAPChangedMessage.h" />
+    <ClInclude Include="Message\PlayerIDMessage.h" />
   </ItemGroup>
 </Project>

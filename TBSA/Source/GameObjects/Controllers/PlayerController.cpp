@@ -23,6 +23,7 @@
 #include <Message/GoalReachedMessage.h>
 #include <Message/FlagGoalReachedMessage.h>
 #include <Message/PlayerCanPeekMessage.h>
+#include <Message/PlayerIDMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -51,6 +52,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerNextToObjective, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::RemoveReciever(*this);
 }
 
@@ -65,6 +67,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
 
 }
 
@@ -322,16 +325,35 @@ void PlayerController::AfterPlayerTurn()
 	}
 }
 
-bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
+bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
+	{
+		if (aMessage.myPlayerID != mySelectedPlayer->GetIndex())
+		{
+			SelectPlayer();
+		}
+	}
+	else if (aMessage.myType == RecieverTypes::eClickedOnPlayer)
+	{
+		if (mySelectedPlayer->GetIndex() != aMessage.myPlayerID)
+		{
+			myClickedOnPlayer = true;
+		}
+	}
+	return true;
+}
+
+bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
+{
+	/*if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
 	{
 		if (mySelectedPlayer != &aMessage.myPlayer)
 		{
 			myClickedOnPlayer = true;
 		}
-	}
-	else if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
+	}*/
+	if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
 	{
 		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX)
 		{
