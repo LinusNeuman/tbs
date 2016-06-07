@@ -89,7 +89,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		PauseMenuState *newState = new PauseMenuState();
 		newState->Init();
-		aStateStack.AddMainState(newState);
+		aStateStack.AddSubState(newState);
 		myShouldPause = false;
 	}
 
