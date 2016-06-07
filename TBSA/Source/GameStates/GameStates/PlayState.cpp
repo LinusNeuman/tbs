@@ -6,11 +6,14 @@
 #include <Message/GetStartLevelMessage.h>
 #include <LevelFactory\LevelFactory.h>
 #include <Message/GoalReachedMessage.h>
+#include <StateStack/ProxyStateStack.h>
+#include "GameOverState.h"
 
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
+	myGameOver = false;
 }
 
 PlayState::~PlayState()
@@ -45,7 +48,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
-eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
+eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
 	//(aStateStack);
 
@@ -75,6 +78,13 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		ChangeLevel("SecondTest.json");
 	}
 
+	if (myGameOver == true)
+	{
+		GameOverState *newState = new GameOverState();
+		newState->Init();
+		aStateStack.AddSubState(newState);
+	}
+
 	return eStackReturnValue::eStay;
 }
 
@@ -99,7 +109,8 @@ return true;
 
 bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
-	ChangeLevel(myCurrentLevelpath);
+	myGameOver = true;
+	//ChangeLevel(myCurrentLevelpath);
 	return true;
 }
 
