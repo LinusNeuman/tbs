@@ -18,6 +18,7 @@ enum class RecieverTypes
 	eExitGame,
 	eMouseClicked,
 	eChangeSelectedPlayer,
+	eClickedOnPlayer,
 	ePlayGame,
 	ePlayerPositionChanged,
 	eEnemyPositionChanged,
@@ -36,5 +37,9 @@ enum class RecieverTypes
 	eGoalReached,
 	eFlagGoalReached,
 	ePlayerCanPeek,
+	eMouseInput,
+	eOpenPauseMenu,
+	eGameOverReset,
+	eClosePauseMenu,
 	enumlength
 };

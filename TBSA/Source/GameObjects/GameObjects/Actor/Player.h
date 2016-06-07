@@ -26,6 +26,7 @@ public:
 
 	virtual void OnClick() override;
 
+	void Draw() const override;
 	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
@@ -46,7 +47,7 @@ private:
 
 	unsigned short myPlayerIndex;
 	unsigned short myEnemyTargetIndex;
-
+	StaticSprite* myDetectedSprite;
 	int myActionPointMax;
 	int myCurrentAP;
 

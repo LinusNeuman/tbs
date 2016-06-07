@@ -18,7 +18,10 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Input\SingletonIsometricInputWrapper.h">
+    <ClInclude Include="Input\SingletoIsometricInputWrapper\SingletonIsometricInputWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\LayeredInput\LayerInputReciever.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,7 +29,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Input\SingletonIsometricInputWrapper.cpp">
+    <ClCompile Include="Input\SingletoIsometricInputWrapper\SingletonIsometricInputWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\LayeredInput\LayerInputReciever.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

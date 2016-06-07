@@ -30,5 +30,10 @@
     <ClInclude Include="Message\PlayerPositionChangedMessage.h" />
     <ClInclude Include="Message\EnemyPositionChangedMessage.h" />
     <ClInclude Include="Message\PlayerCanPeekMessage.h" />
+    <ClInclude Include="Message\MouseButtonDownMessage.h" />
+    <ClInclude Include="Message\MouseButtonPressedMessage.h" />
+    <ClInclude Include="Message\MouseButtonReleasedMessage.h" />
+    <ClInclude Include="Message\MouseInputClear.h" />
+    <ClInclude Include="Message\PlayerIDMessage.h" />
   </ItemGroup>
 </Project>

@@ -19,16 +19,16 @@ StaticSprite::~StaticSprite()
 {
 }
 
-void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFiles/biggerTestTile.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::Zero*/)
+void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFiles/biggerTestTile.png"*/, bool aIsIsometric/* = true*/, const CU::Vector4f & aRect /*= CU::Vector4f::Zero*/, const CU::Vector2f & aPivotPoint /*= CU::Vector2f::Zero*/)
 {
 	myIsInitiedFlag = true;
 	myIsIsometricFlag = aIsIsometric;
-	myImageIndex = AddImage(aFilePath, aRect);
+	myImageIndex = AddImage(aFilePath, aRect, aPivotPoint);
 	myLayer = enumRenderLayer::eFloor;
 	
 }
 
-unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::Vector4f & aRect /*= CU::Vector4f::One*/)
+unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::Vector4f & aRect /*= CU::Vector4f::One*/, const CU::Vector2f & aPivotPoint /*= CU::Vector2f::Zero*/)
 {
 	IndexKey tempKey(aFilePath, aRect);
 
@@ -68,7 +68,7 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 	}
 	else
 	{
-		tempSprite->SetPivot(DX2D::Vector2f(0.f, 0.0f));
+		tempSprite->SetPivot(DX2D::Vector2f(aPivotPoint.x, aPivotPoint.y));
 	}
 
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);

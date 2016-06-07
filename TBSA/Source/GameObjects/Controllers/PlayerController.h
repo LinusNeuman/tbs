@@ -6,6 +6,8 @@
 #include <GameObjects/Room/GameFloor.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Utility/GameSpecificTypeDefs.h>
+#include <Input/LayeredInput/LayerInputReciever.h>
+#include <Audio\Instances\SoundEffect.h>
 
 class PlayState;
 class Actor;
@@ -51,6 +53,7 @@ public:
 	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
 
 private:
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
@@ -77,8 +80,12 @@ private:
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
 
+	LayerInputReciever myMouseInput;
+
 	std::vector<CU::Vector2f> myDebugStart;
 	std::vector<CU::Vector2f> myDebugEnd;
+
+	SoundEffect* mySelectPlayerSound;
 
 };
 

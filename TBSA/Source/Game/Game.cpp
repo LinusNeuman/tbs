@@ -7,9 +7,7 @@
 #include <functional>
 #include <time.h>
 #include <vector>
-//#include <CU/InputWrapper/SingletonInputWrapper.h>
-//#include "InputAdaption/SingletonIsometricInputWrapper.h"
-#include <Input/SingletonIsometricInputWrapper.h>
+#include <Input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
@@ -18,7 +16,6 @@
 #include <Rend/RenderConverter.h>
 #include <Audio/AudioManager.h>
 #include <GUI/Managing/GUIFactory.h>
-//#include "MainSingleton/MainSingleton.h"
 
 #include "StartupReader/StartupReader.h"
 #include "StartupReader/StartupData.h"
@@ -87,7 +84,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	createParameters.myTargetHeight = 1080;
 	createParameters.myAutoUpdateViewportWithWindow = true;
 	createParameters.myStartInFullScreen = false;
-    createParameters.myClearColor.Set(0.2f, 0.4f, 0.7f, 1.0f);
+    createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 
 	
 	std::wstring appname = L"TBS RELEASE [" + aVersion + L"]";
@@ -181,9 +178,14 @@ void CGame::InitCallBack()
 	CU::TimeManager::Create();
 	GUIFactory::GetInstance()->Load();
 	myMenuState = new MenuState();
+	mySplashState = new SplashState();
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
 	myMenuState->Init();
-	myGameStateStack.AddMainState(myMenuState);
+#ifdef _DEBUG
+	myGameStateStack.AddMainState(mySplashState);
+#else
+	myGameStateStack.AddMainState(mySplashState);
+#endif
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
 		
 }

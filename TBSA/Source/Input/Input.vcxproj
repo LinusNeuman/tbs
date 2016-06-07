@@ -128,11 +128,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Input\SingletonIsometricInputWrapper.h" />
+    <ClInclude Include="Input\SingletoIsometricInputWrapper\SingletonIsometricInputWrapper.h" />
+    <ClInclude Include="Input\LayeredInput\LayerInputReciever.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Input\SingletonIsometricInputWrapper.cpp" />
+    <ClCompile Include="Input\SingletoIsometricInputWrapper\SingletonIsometricInputWrapper.cpp" />
+    <ClCompile Include="Input\LayeredInput\LayerInputReciever.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
