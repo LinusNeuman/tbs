@@ -62,7 +62,7 @@ public:
 	void SetInEnemyFoV(bool aIsInFoV);
 	bool GetVisible() const;
 	bool GetInEnemyFov() const;
-	void SetAvailableDirection(eDirection aDirection);
+	void RemoveAvailableDirection(eDirection aDirection);
 	const CU::GrowingArray<eDirection>& GetAvailableDirections() const
 	{
 		return myAvailableDirections;
