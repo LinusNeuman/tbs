@@ -139,3 +139,8 @@ bool MessageReciever::RecieveMessage(const MouseInputClearMessage & aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const PlayerIDMessage & aMessage)
+{
+	return true;
+}

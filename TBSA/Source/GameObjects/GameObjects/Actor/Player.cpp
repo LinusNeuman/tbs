@@ -10,6 +10,7 @@
 #include <Message/PlayerSeenMessage.h>
 #include <Message/FlagPlayerDiedMessage.h>
 #include <Message/PlayerPositionChangedMessage.h>
+#include <Message/PlayerIDMessage.h>
 
 
 Player::Player()
@@ -54,7 +55,7 @@ void Player::CostAP(const int aCost)
 
 void Player::OnClick()
 {
-	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
+	SendPostMessage(PlayerIDMessage(RecieverTypes::eClickedOnPlayer, GetIndex()));
 }
 
 void Player::Draw() const

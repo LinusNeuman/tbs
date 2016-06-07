@@ -18,6 +18,7 @@ enum class RecieverTypes
 	eExitGame,
 	eMouseClicked,
 	eChangeSelectedPlayer,
+	eClickedOnPlayer,
 	ePlayGame,
 	ePlayerPositionChanged,
 	eEnemyPositionChanged,
@@ -39,5 +40,6 @@ enum class RecieverTypes
 	eMouseInput,
 	eOpenPauseMenu,
 	eGameOverReset,
+	eClosePauseMenu,
 	enumlength
 };
