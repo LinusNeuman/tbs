@@ -6,6 +6,11 @@
 #include <Message/WindowRectChangedMessage.h>
 #include <Message/SetMainCameraMessage.h>
 
+#include <Message/MouseButtonDownMessage.h>
+#include <Message/MouseButtonPressedMessage.h>
+#include <Message/MouseButtonReleasedMessage.h>
+#include <Message/MouseInputClear.h>
+
 
 SingletonIsometricInputWrapper * SingletonIsometricInputWrapper::ourInstance = nullptr;
 
@@ -92,6 +97,7 @@ void SingletonIsometricInputWrapper::Initialize(HINSTANCE aApplicationInstance, 
 void SingletonIsometricInputWrapper::Update()
 {
 	GetInstance().myInputWrapper.Update();
+	GetInstance().SendMouseInputMessages();
 }
 
 bool SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessage & aMessage)
@@ -105,4 +111,16 @@ bool SingletonIsometricInputWrapper::RecieveMessage(const SetMainCameraMessage &
 {
 	myCameraToAdjustTo = &aMessage.myCamera;
 	return true;
+}
+
+void SingletonIsometricInputWrapper::SendMouseInputMessages()
+{
+	SendPostMessage(MouseInputClearMessage(RecieverTypes::eMouseInput));
+
+	for (unsigned short iButton = 0; iButton < USHORTCAST(CU::enumMouseButtons::enumLength); ++iButton)
+	{
+		SendPostMessage(MouseButtonDownMessage(RecieverTypes::eMouseInput, iButton, GetMouseButtonDown(static_cast<CU::enumMouseButtons>(iButton))));
+		SendPostMessage(MouseButtonPressedMessage(RecieverTypes::eMouseInput, iButton, GetMouseButtonPressed(static_cast<CU::enumMouseButtons>(iButton))));
+		SendPostMessage(MouseButtonReleasedMessage(RecieverTypes::eMouseInput, iButton, GetMouseButtonReleased(static_cast<CU::enumMouseButtons>(iButton))));
+	}
 }

@@ -36,6 +36,7 @@ enum class RecieverTypes
 	eGoalReached,
 	eFlagGoalReached,
 	ePlayerCanPeek,
+	eMouseInput,
 	eOpenPauseMenu,
 	enumlength
 };

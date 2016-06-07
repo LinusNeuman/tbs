@@ -1,5 +1,5 @@
 #include "GUIManager.h"
-#include <Input/SingletonIsometricInputWrapper.h>
+#include <Input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 
 GUIManager::GUIManager()
 {

@@ -165,7 +165,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma endregion
 
 #pragma region Mouse Input
-	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft))
+	if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 	{
 		enumMouseState currentState = GetCurrentMouseState();
 
