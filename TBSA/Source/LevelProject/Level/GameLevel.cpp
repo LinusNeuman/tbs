@@ -45,7 +45,6 @@ void GameLevel::Init(TiledData* aTileData)
 	myTiledData = aTileData;
 }
 
-
 void GameLevel::InternalInit()
 {
 	if (myTiledData->myIsLoaded == false)
@@ -53,7 +52,7 @@ void GameLevel::InternalInit()
 		return;
 	}
 	StaticSprite::Sync();
-	myFloor.Init(100);
+	//myFloor.Init(100);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, myTurnManager);
@@ -134,9 +133,9 @@ void GameLevel::InternalInit()
 				}
 			}
 		}
-}
+	}
 
-
+	myIsInitialized = true;
 
 }
 
