@@ -6,6 +6,7 @@
 #include <GameObjects/Room/GameFloor.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Utility/GameSpecificTypeDefs.h>
+#include <Input/LayeredInput/LayerInputReciever.h>
 
 class PlayState;
 class Actor;
@@ -76,6 +77,8 @@ private:
 
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
+
+	LayerInputReciever myMouseInput;
 
 	std::vector<CU::Vector2f> myDebugStart;
 	std::vector<CU::Vector2f> myDebugEnd;

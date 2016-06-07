@@ -20,8 +20,12 @@ public:
 	bool GetMouseButtonPressed(const CU::enumMouseButtons aMouseButtonID);
 	bool GetMouseButtonReleased(const CU::enumMouseButtons aMouseButtonID);
 
+	void SetMessageLetThrough(const bool aLetThroughFlag);
+
 private:
 	void ResetInput();
+
+	bool myLetTroughMessagesFlag;
 
 	CU::GrowingArray<bool> myDownInput;
 	CU::GrowingArray<bool> myPressedInput;
@@ -41,4 +45,9 @@ inline bool LayerInputReciever::GetMouseButtonPressed(const CU::enumMouseButtons
 inline bool LayerInputReciever::GetMouseButtonReleased(const CU::enumMouseButtons aMouseButtonID)
 {
 	return myReleasedInput[USHORTCAST(aMouseButtonID)];
+}
+
+inline void LayerInputReciever::SetMessageLetThrough(const bool aLetThroughFlag)
+{
+	myLetTroughMessagesFlag = aLetThroughFlag;
 }

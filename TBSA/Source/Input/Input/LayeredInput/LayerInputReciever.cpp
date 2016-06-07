@@ -16,6 +16,8 @@ LayerInputReciever::LayerInputReciever()
 	myReleasedInput.Init(USHORTCAST(CU::enumMouseButtons::enumLength));
 	myReleasedInput.Resize(USHORTCAST(CU::enumMouseButtons::enumLength));
 
+	myLetTroughMessagesFlag = true;
+
 	ResetInput();
 	EnableReciever();
 }
@@ -39,19 +41,19 @@ void LayerInputReciever::DisableReceiver()
 bool LayerInputReciever::RecieveMessage(const MouseButtonDownMessage& aMessage)
 {
 	myDownInput[aMessage.myKey] = aMessage.myKeyValue;
-	return true;
+	return myLetTroughMessagesFlag;
 }
 
 bool LayerInputReciever::RecieveMessage(const MouseButtonPressedMessage& aMessage)
 {
 	myPressedInput[aMessage.myKey] = aMessage.myKeyValue;
-	return true;
+	return myLetTroughMessagesFlag;
 }
 
 bool LayerInputReciever::RecieveMessage(const MouseButtonReleasedMessage&aMessage)
 {
 	myReleasedInput[aMessage.myKey] = aMessage.myKeyValue;
-	return true;
+	return myLetTroughMessagesFlag;
 }
 
 bool LayerInputReciever::RecieveMessage(const MouseInputClearMessage & aMessage)
@@ -59,11 +61,6 @@ bool LayerInputReciever::RecieveMessage(const MouseInputClearMessage & aMessage)
 	ResetInput();
 	return true;
 }
-
-
-
-
-
 
 
 void LayerInputReciever::ResetInput()

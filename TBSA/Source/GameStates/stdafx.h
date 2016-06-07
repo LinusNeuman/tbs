@@ -21,6 +21,7 @@
 #include <CU/Vectors/Vector.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <Input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
+#include <CU/Utility/CommonCasts.h>
 
 #include <PostMaster/SingletonPostMaster.h>
 
