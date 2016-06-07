@@ -109,7 +109,7 @@ unsigned short StaticSprite::AddImageAssync(const std::string& aFilePath, const 
 
 	if (ourPromisedIndexes.count(tempKey) > 0)
 	{
-		unsigned short tempIndex = ourIndexDictionary[tempKey];
+		unsigned short tempIndex = ourPromisedIndexes[tempKey];
 		return tempIndex;
 	}
 
@@ -162,6 +162,7 @@ void StaticSprite::Sync()
 		const IndexKey currentKey = ourWaitingSprites[currentSprite->myImageIndex];
 		currentSprite->myImageIndex = currentSprite->AddImage(currentKey.GetPath(), currentKey.GetRect());
 	}
+	ourSpritesWaitingForPromise.RemoveAll();
 }
 
 const RenderData & StaticSprite::GetRenderData() const

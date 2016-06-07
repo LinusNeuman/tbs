@@ -48,7 +48,7 @@ StaticSprite* SpriteSheet::CreateSprite(unsigned aImageId, bool aGlobalId)
 	CommonUtilities::Point4f rect(originPoint.x, originPoint.y, mySize.x, mySize.y);
 
 	StaticSprite* sprite = new StaticSprite();
-	sprite->Init(GetPath(), true, rect);
+	sprite->Init(GetPath(), true, rect, false);
 	sprite->SetLayer(enumRenderLayer::eFloor);
 
 	return  sprite;

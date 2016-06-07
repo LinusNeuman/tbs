@@ -7,6 +7,7 @@
 #include "../../Factories/ObjectiveFactory/ObjectiveFactory.h"
 
 #include <CU/StaticArray/StaticArray.h>
+#include <atomic>
 
 struct TiledData
 {
@@ -29,5 +30,5 @@ struct TiledData
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
 	CommonUtilities::GrowingArray<Objective*> myObjectives;
 
-	volatile bool myIsLoaded;
+	std::atomic<bool> myIsLoaded;
 };
