@@ -22,6 +22,7 @@ public:
 
 	void WhenHovered() override;
 	void WhenClicked() override;
+	void WhenLeaved() override;
 protected:
 	StaticSprite* mySpritePressed;
 	StaticSprite* mySpriteHovered;
@@ -34,6 +35,7 @@ protected:
 	GUIAnimateState myAnimateState;
 	float myAnimateTimer;
 
+	void ResetAnimate();
 	void Animate(const CommonUtilities::Time aTime);
 	void FadeUp(const CommonUtilities::Time aTime);
 	void FadeDown(const CommonUtilities::Time aTime);
