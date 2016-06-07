@@ -14,7 +14,7 @@
 #include <Rend/StaticSprite.h>
 #include <CU/Intersection/Shapes2D/AABB2D.h>
 #include <CU/Intersection/Intersection2D.h>
-#include <Input/SingletonIsometricInputWrapper.h>
+#include <Input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 
 typedef unsigned char uchar;
 

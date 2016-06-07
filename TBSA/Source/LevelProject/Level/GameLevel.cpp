@@ -18,7 +18,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <NavGraph/NavHandle.h>
 #include <NavGraph/Vertex/NavVertex.h>
-#include <input/SingletonIsometricInputWrapper.h>
+#include <input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 #include <Message/DijkstraMessage.h>
 
 #include <CU/Matriser/matrix.h>
