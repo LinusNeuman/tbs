@@ -40,8 +40,8 @@ public:
 
 	virtual void AfterTurn() override;
 	void PreTurn();
-
-	
+	int GetPeekCost() const;
+	int GetAttackCost() const;
 
 private:
 
@@ -49,6 +49,8 @@ private:
 	unsigned short myEnemyTargetIndex;
 	StaticSprite* myDetectedSprite;
 	int myActionPointMax;
+	int myAttackCost;
+	int myPeekCost;
 	int myCurrentAP;
 
 	bool myIsSeen;
