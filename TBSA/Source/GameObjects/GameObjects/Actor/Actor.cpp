@@ -21,6 +21,7 @@ Actor::Actor()
 	myState = eActorState::eWalking;
 	myHasObjectiveFlag = false;
 	myObjectiveTargetPosition = TilePositionf::One;
+	myDirection = eDirection::SOUTH;
 }
 
 Actor::~Actor()

@@ -88,7 +88,8 @@ public:
 	StaticSprite();
 	~StaticSprite();
 
-	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero, const CU::Vector2f & aPivotPoint = CU::Vector2f::Zero);
+	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero, const CU::Vector2f & aPivotPoint = CU::Vector2f::Zero,const bool aSync = true);
+	
 	void Draw(const CU::Vector2f & aPositionInPixel);
 
 	enumRenderLayer GetLayer() const;
@@ -96,7 +97,7 @@ public:
 
 	DX2D::CSprite * GetSprite() const;
 	unsigned short GetImageIndex() const;
-	unsigned short AddImage(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
+	unsigned short AddImage(const std::string& aFilePath, const CU::Vector4f& aRect = CU::Vector4f::One, const CU::Vector2f& aPivotPoint = CU::Vector2f::Zero);
 	unsigned short AddImageAssync(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
 	
 	CU::Vector2f GetSize();

@@ -23,6 +23,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
+	myIsAnimated = aAnimated;
 
 	mySpritePressed = new StaticSprite();
 	mySpritePressed->Init(
@@ -84,6 +85,48 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 		myClickSound = new SoundEffect();
 		myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
 	}
+	
+	myAnimateTimer = 0.f;
+	myAnimateState = GUIAnimateState::eFadingDown;
+}
+
+void GUIButton::Animate(const CommonUtilities::Time aTime)
+{
+	myAnimateState == GUIAnimateState::eFadingUp ? FadeUp(aTime) : FadeDown(aTime);
+}
+
+void GUIButton::FadeUp(const CommonUtilities::Time aTime)
+{
+	CU::Vector4f color = mySpriteHovered->GetColor();
+	if (color.w < 1.1f)
+	{
+		color.w += 0.5f * aTime.GetSeconds();
+		if (color.w  > 1)
+		{
+			myAnimateTimer += 0.5f * aTime.GetSeconds();
+			if (myAnimateTimer >= 1.0f)
+			{
+				myAnimateState = GUIAnimateState::eFadingDown;
+			}
+			color.w = 1;
+		}
+		mySpriteHovered->SetColor(color);
+	}
+}
+
+void GUIButton::FadeDown(const CommonUtilities::Time aTime)
+{
+	CU::Vector4f color = mySpriteHovered->GetColor();
+	if (color.w > 0.0f)
+	{
+		color.w -= 1.0f * aTime.GetSeconds();
+		if (color.w < 0)
+		{
+			myAnimateState = GUIAnimateState::eFadingUp;
+			color.w = 0;
+		}
+		mySpriteHovered->SetColor(color);
+	}
 }
 
 void GUIButton::Update(const CU::Time& aDelta)
@@ -96,7 +139,15 @@ void GUIButton::Update(const CU::Time& aDelta)
 		}
 		else
 		{
-			mySprite = mySpriteHovered;
+			if (myIsAnimated == true)
+			{
+				Animate(aDelta);
+				mySprite = mySpriteUnpressed;
+			}
+			else
+			{
+				mySprite = mySpriteHovered;
+			}
 		}
 	}
 	else if (myIsCurrentlyPressed == true)
@@ -114,6 +165,13 @@ void GUIButton::Render()
 	if (mySprite != nullptr)
 	{
 		mySprite->Draw(myPosition);
+		if (myIsAnimated == true)
+		{
+			if (myIsCurrentlyHovered == true && myIsCurrentlyPressed == false)
+			{
+				mySpriteHovered->Draw(myPosition);
+			}
+		}
 	}
 }
 

@@ -38,6 +38,13 @@ GameLevel::~GameLevel()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEndTurn, myTurnManager);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer2);
+
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myTiledData->myEnemyFactory->ReturnEnemy(myEnemies[i]);
+	}
 }
 
 void GameLevel::Init(TiledData* aTileData)

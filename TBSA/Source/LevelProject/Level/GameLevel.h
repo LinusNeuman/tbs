@@ -19,7 +19,7 @@ class GameLevel : public MessageReciever
 {
 public:
 	GameLevel();
-	~GameLevel();
+	virtual ~GameLevel();
 	void Init(TiledData* aTileData);
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
