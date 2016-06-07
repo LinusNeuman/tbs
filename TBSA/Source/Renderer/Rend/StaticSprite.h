@@ -6,7 +6,6 @@
 #include "Rend/RenderData.h"
 #include <unordered_map>
 #include <CU/Hashing/HashUtility.h>
-#include "Rend/RenderData.h"
 #pragma warning  (push)
 #pragma warning(disable : 4512)
 
@@ -16,6 +15,9 @@ class IndexKey
 {
 public:
 	friend std::hash<IndexKey>;
+	IndexKey() :myPath(""), myRect(CU::Vector4f::Zero)
+	{
+	};
 	IndexKey(const std::string & aPath, const CU::Vector4f & aRect) :
 		myPath(aPath),
 		myRect(aRect)
@@ -33,9 +35,19 @@ public:
 		}
 	}
 
+	std::string GetPath() const
+	{
+		return  myPath;
+	}
+
+	CU::Vector4f GetRect() const
+	{
+		return myRect;
+	}
+
 private:
-	const std::string myPath;
-	const CU::Vector4f myRect;
+	std::string myPath;
+	CU::Vector4f myRect;
 };
 #pragma warning (pop)
 namespace std {
@@ -76,7 +88,8 @@ public:
 	StaticSprite();
 	~StaticSprite();
 
-	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero);
+	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero, const CU::Vector2f & aPivotPoint = CU::Vector2f::Zero,const bool aSync = true);
+	
 	void Draw(const CU::Vector2f & aPositionInPixel);
 
 	enumRenderLayer GetLayer() const;
@@ -84,7 +97,8 @@ public:
 
 	DX2D::CSprite * GetSprite() const;
 	unsigned short GetImageIndex() const;
-	unsigned short AddImage(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
+	unsigned short AddImage(const std::string& aFilePath, const CU::Vector4f& aRect = CU::Vector4f::One, const CU::Vector2f& aPivotPoint = CU::Vector2f::Zero);
+	unsigned short AddImageAssync(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
 	
 	CU::Vector2f GetSize();
 	CU::Vector2f GetSizeWithoutWhiteSpace();
@@ -100,12 +114,19 @@ public:
 
 	void SetShader(DX2D::CCustomShader * aCustomShader);
 
+	static void Sync();
+
 	std::string myShaderName;
 private:
 	const RenderData & GetRenderData() const;
 
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
+	static CU::GrowingArray<IndexKey> ourWaitingSprites;
+	static CU::GrowingArray<StaticSprite*> ourSpritesWaitingForPromise;
+	
 	static IndexMap ourIndexDictionary;
+	static IndexMap ourPromisedIndexes;
+	static unsigned int ourNumberOfPromises;
 
 	bool myIsInitiedFlag;
 	bool myIsIsometricFlag;

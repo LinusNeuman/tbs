@@ -6,11 +6,19 @@
 #include <Message/GetStartLevelMessage.h>
 #include <LevelFactory\LevelFactory.h>
 #include <Message/GoalReachedMessage.h>
+#include "PauseMenuState.h"
+
+#include <StateStack/StateStack.h>
+#include <StateStack/ProxyStateStack.h>
+#include "GameOverState.h"
 
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
+
+	myShouldPause = false;
+	myGameOver = false;
 }
 
 PlayState::~PlayState()
@@ -27,6 +35,7 @@ void PlayState::Init(const std::string& aLevelPath)
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
 
 	if (aLevelPath == "")
 	{
@@ -45,7 +54,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 }
 
-eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & /*aStateStack*/)
+eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
 	//(aStateStack);
 
@@ -59,7 +68,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
 		myShouldExit = false;
-		return eStackReturnValue::ePopMain;
+		//return eStackReturnValue::ePopMain;
+		return eStackReturnValue::eDeleteMainState;
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_1) == true)
@@ -73,6 +83,21 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
 	{
 		ChangeLevel("SecondTest.json");
+	}
+
+	if (myShouldPause == true)
+	{
+		PauseMenuState *newState = new PauseMenuState();
+		newState->Init();
+		aStateStack.AddSubState(newState);
+		myShouldPause = false;
+	}
+
+	if (myGameOver == true)
+	{
+		GameOverState *newState = new GameOverState();
+		newState->Init();
+		aStateStack.AddSubState(newState);
 	}
 
 	return eStackReturnValue::eStay;
@@ -91,15 +116,33 @@ bool PlayState::RecieveMessage(const StartUpLevelMessage& aMessage)
 	return true;
 }
 
+bool PlayState::RecieveMessage(const GUIMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eOpenPauseMenu)
+	{
+		myShouldPause = true;
+	}
+	return true;
+}
+
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
-return true;
+	return true;
 }
 
 bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
-	ChangeLevel(myCurrentLevelpath);
+	if (myGameOver == true)
+	{
+		ChangeLevel(myCurrentLevelpath);
+		myGameOver = false;
+
+	}
+	else
+	{
+		myGameOver = true;
+	}
 	return true;
 }
 

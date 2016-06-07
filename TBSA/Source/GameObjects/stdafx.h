@@ -24,7 +24,7 @@
 //#include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <CU/Utility/CommonCasts.h>
-#include <Input/SingletonIsometricInputWrapper.h>
+#include <Input/SingletoIsometricInputWrapper//SingletonIsometricInputWrapper.h>
 #include <climits>
 
 // Audio

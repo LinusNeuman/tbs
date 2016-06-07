@@ -7,9 +7,7 @@
 #include <functional>
 #include <time.h>
 #include <vector>
-//#include <CU/InputWrapper/SingletonInputWrapper.h>
-//#include "InputAdaption/SingletonIsometricInputWrapper.h"
-#include <Input/SingletonIsometricInputWrapper.h>
+#include <Input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 #include <CU/Timer/TimeManager.h>
 #include <CU/DLDebug/DL_Debug.h>
 #include <JSON/JSONWrapper.h>
@@ -18,7 +16,6 @@
 #include <Rend/RenderConverter.h>
 #include <Audio/AudioManager.h>
 #include <GUI/Managing/GUIFactory.h>
-//#include "MainSingleton/MainSingleton.h"
 
 #include "StartupReader/StartupReader.h"
 #include "StartupReader/StartupData.h"
@@ -185,7 +182,7 @@ void CGame::InitCallBack()
 	IsometricInput::Initialize(DX2D::CEngine::GetInstance()->GetHInstance(), *DX2D::CEngine::GetInstance()->GetHWND());
 	myMenuState->Init();
 #ifdef _DEBUG
-	myGameStateStack.AddMainState(myMenuState);
+	myGameStateStack.AddMainState(mySplashState);
 #else
 	myGameStateStack.AddMainState(mySplashState);
 #endif

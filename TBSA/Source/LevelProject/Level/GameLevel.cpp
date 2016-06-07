@@ -18,7 +18,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <NavGraph/NavHandle.h>
 #include <NavGraph/Vertex/NavVertex.h>
-#include <input/SingletonIsometricInputWrapper.h>
+#include <input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 #include <Message/DijkstraMessage.h>
 
 #include <CU/Matriser/matrix.h>
@@ -31,19 +31,35 @@ const float sqrt2 = static_cast<float>(sqrt(2));
 
 GameLevel::GameLevel()
 {
+	myIsInitialized = false;
 }
 
 GameLevel::~GameLevel()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEndTurn, myTurnManager);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer2);
+
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myTiledData->myEnemyFactory->ReturnEnemy(myEnemies[i]);
+	}
 }
 
 void GameLevel::Init(TiledData* aTileData)
 {
 	myTiledData = aTileData;
+}
 
-	myFloor.Init(100);
+void GameLevel::InternalInit()
+{
+	if (myTiledData->myIsLoaded == false)
+	{
+		return;
+	}
+	StaticSprite::Sync();
+	//myFloor.Init(100);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, myTurnManager);
@@ -100,26 +116,47 @@ void GameLevel::Init(TiledData* aTileData)
 	{
 		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
 		{
-			if (myFloor.GetTile(x,y).CheckIfWalkable() == true)
+			//myFloor.GetTile(x, y).SetVisible(true);
+			if (myFloor.GetTile(x,y).CheckIfWalkable() == false)
 			{
 				if (x + 1 < myFloor.GetDimensions().x && y + 1 < myFloor.GetDimensions().y &&
 					x - 1 > 0 && y + 1 > 0)
 				{
-					myFloor.GetTile(x + 1, y).SetAvailAbleDirection(eDirection::EAST);
-					myFloor.GetTile(x, y - 1).SetAvailAbleDirection(eDirection::NORTH);
-					myFloor.GetTile(x - 1, y).SetAvailAbleDirection(eDirection::WEST);
-					myFloor.GetTile(x, y + 1).SetAvailAbleDirection(eDirection::SOUTH);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH_EAST);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH_WEST);
+
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::EAST);
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::NORTH_EAST);
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::SOUTH_WEST);
+
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::WEST);
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::NORTH_WEST);
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::SOUTH_EAST);
+
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH);
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH_WEST);
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH_EAST);
 				}
 			}
 		}
 	}
 
-
+	myIsInitialized = true;
 
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
 {
+	if (myIsInitialized == false)
+	{
+		InternalInit();
+		if (myIsInitialized == false)
+		{
+			return;
+		}
+	}
+
 	myFloor.Update();
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
@@ -190,10 +227,13 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 void GameLevel::Draw() const
 {
+	if (myIsInitialized == true)
+	{
 	myFloor.Draw();
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemyController->Draw();
+}
 }
 
 bool GameLevel::RecieveMessage(const DijkstraMessage& aMessage)

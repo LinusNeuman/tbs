@@ -2,6 +2,12 @@
 #include "GUI/Generic/GUIElement.h"
 #include <Audio/Instances/SoundEffect.h>
 
+enum class GUIAnimateState
+{
+	eFadingUp,
+	eFadingDown
+};
+
 class GUIButton : public GUIElement
 {
 public:
@@ -23,4 +29,12 @@ protected:
 
 	SoundEffect* myHoverSound;
 	SoundEffect* myClickSound;
+
+	bool myIsAnimated;
+	GUIAnimateState myAnimateState;
+	float myAnimateTimer;
+
+	void Animate(const CommonUtilities::Time aTime);
+	void FadeUp(const CommonUtilities::Time aTime);
+	void FadeDown(const CommonUtilities::Time aTime);
 };

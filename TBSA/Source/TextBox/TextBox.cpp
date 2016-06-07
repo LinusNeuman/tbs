@@ -7,22 +7,14 @@
 #include <tga2d\drawers\debug_drawer.h>
 #endif
 
-TextBox::TextBox(const std::string aFontPath, eLinewrappingMode aMode)
+TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::string aFontPath, const eLinewrappingMode aMode)
 {
 	myRenderList.Init(1);
-	myDimensions.y = 214.f / 1080.f;
-	myDimensions.x = 381.f / 1920.f;
-	myPosition = {0.025f, 0.25f};
 	myCurrentLine = 0;
 	myFontPath = aFontPath;
-	myNumberOfLinesDisplayed = 0;
 	myMode = aMode;
-
-	for (float i = 0.f; i < myDimensions.y; i += TEXT_HEIGHT / 1080.f)
-	{
-		++myNumberOfLinesDisplayed;
-	}
-
+	SetSize(aDimensions);
+	SetPosition(aPosition);
 	Update();
 }
 
@@ -36,7 +28,7 @@ void TextBox::AddText_WordWrap(DX2D::CText* aText)
 
 			for (i = 0; i < aText->myText.length(); ++i)
 			{
-				if (aText->myText[i] == '_') //TODO: should be space not _!
+				if (aText->myText[i] == ' ')
 				{
 					foundSpace = true;
 					aText->myText = aText->myText.substr(0, i);
@@ -50,7 +42,7 @@ void TextBox::AddText_WordWrap(DX2D::CText* aText)
 			}
 			else
 			{
-				std::string newLine(oldLine.substr(i + 1)); //
+				std::string newLine(oldLine.substr(i + 1));
 				AddText(newLine);
 			}
 		}
@@ -98,8 +90,33 @@ TextBox::AddText(std::string aText)
 			break;
 
 		default:
-			AddText_WordWrap(tmp);
+			AddText_CharWrap(tmp);
+			//AddText_WordWrap(tmp);
 			break;
+	}
+}
+
+void
+TextBox::SetLineWrappingMode(const eLinewrappingMode aMode)
+{
+	myMode = aMode;
+}
+
+void
+TextBox::SetPosition(const Vec2f aPosition)
+{
+	myPosition = aPosition;
+}
+
+void
+TextBox::SetSize(const Vec2f aPosition)
+{
+	myPosition = aPosition;
+	myNumberOfLinesDisplayed = 0;
+
+	for (float i = 0.f; i < myDimensions.y; i += TEXT_HEIGHT / 1080.f)
+	{
+		++myNumberOfLinesDisplayed;
 	}
 }
 
