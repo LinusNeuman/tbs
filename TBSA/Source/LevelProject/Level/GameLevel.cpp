@@ -100,15 +100,26 @@ void GameLevel::Init(TiledData* aTileData)
 	{
 		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
 		{
-			if (myFloor.GetTile(x,y).CheckIfWalkable() == true)
+			if (myFloor.GetTile(x,y).CheckIfWalkable() == false)
 			{
 				if (x + 1 < myFloor.GetDimensions().x && y + 1 < myFloor.GetDimensions().y &&
 					x - 1 > 0 && y + 1 > 0)
 				{
-					myFloor.GetTile(x + 1, y).SetAvailAbleDirection(eDirection::EAST);
-					myFloor.GetTile(x, y - 1).SetAvailAbleDirection(eDirection::NORTH);
-					myFloor.GetTile(x - 1, y).SetAvailAbleDirection(eDirection::WEST);
-					myFloor.GetTile(x, y + 1).SetAvailAbleDirection(eDirection::SOUTH);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH_EAST);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH_WEST);
+
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::EAST);
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::NORTH_EAST);
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::SOUTH_WEST);
+
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::WEST);
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::NORTH_WEST);
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::SOUTH_EAST);
+
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH);
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH_WEST);
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH_EAST);
 				}
 			}
 		}
