@@ -1,6 +1,5 @@
 #include "GUIButton.h"
 
-
 GUIButton::GUIButton() : 
 	mySpritePressed(nullptr), 
 	mySpriteHovered(nullptr),
