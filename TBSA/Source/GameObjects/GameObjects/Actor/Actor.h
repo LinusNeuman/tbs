@@ -19,9 +19,10 @@ public:
 	Actor();
 	virtual ~Actor();
 	void Init(const ActorData &aActorData);
-	
+	void SpriteInit();
+
 	virtual void Update(const CU::Time &aDeltaTime);
-	void Draw() const;
+	virtual void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
 	virtual void OnMove(CU::Vector2ui aTargetPosition);
 	virtual void AfterTurn();
@@ -116,12 +117,12 @@ protected:
 	BoxCollider myBoxCollider;
 	void UpdateDirection();
 	bool myAtTarget;
-	
+	eDirection myDirection;
 private:
 	void UpdatePath();
 
 	eActorType myType;
-	eDirection myDirection;
+	
 	StaticSprite *mySprite;
 };
 

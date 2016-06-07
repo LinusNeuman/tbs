@@ -17,6 +17,8 @@ PlayState::PlayState()
 	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
 
+	myEmitter.LoadEmitterSettings("snow");
+
 	myShouldPause = false;
 	myGameOver = false;
 }
@@ -52,6 +54,8 @@ void PlayState::Init(const std::string& aLevelPath)
 	LoadGUI("InGame");
 
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+
+	myEmitter.Activate({0.5f, 0.5f});
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -64,11 +68,13 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	
 	//myLevels[myLevelKey]->Update(aTimeDelta);
 	myLevel->Update(aTimeDelta);
+	myEmitter.Update(aTimeDelta);
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
 		myShouldExit = false;
-		return eStackReturnValue::ePopMain;
+		//return eStackReturnValue::ePopMain;
+		return eStackReturnValue::eDeleteMainState;
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_1) == true)
@@ -88,7 +94,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		PauseMenuState *newState = new PauseMenuState();
 		newState->Init();
-		aStateStack.AddMainState(newState);
+		aStateStack.AddSubState(newState);
 		myShouldPause = false;
 	}
 
@@ -105,7 +111,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 void PlayState::Draw() const
 {
 	myLevel->Draw();
-	
+	myEmitter.Render();
 	myGUIManager.Render();
 }
 

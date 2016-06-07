@@ -1,0 +1,42 @@
+{
+	"Sprite" :  "snow",
+	"EmissionRate" : 0.05,
+	"Lifetime" : 0.0,
+	"FadeIn" :  false,
+	"FadeOut" :  false,
+	"PulseEmission" : false,
+	"PulseEmissionAmount" : 50,
+	"PulseRate" :  0,
+	
+	"ParticleLife" : {"Min" : 2.5,
+        	          "Max" : 25.0},
+
+	"ParticleSpeed" : {"X-Min" :-25.0,
+                           "X-Max" : 25.0,
+                           "Y-Min" :  10.0,
+                           "Y-Max" :  200.0},
+		 			   
+	"EmissionArea" :  {"Width" : 1920,
+                           "Height" : 1},
+					   
+	"Rotation" : {"RotateOverTime" : true,
+                      "RotateCW" : true,
+                      "RotateCCW" : true,
+                      "MinRotationSpeed" : 2.0,
+                      "MaxRotationSpeed" : 10.0},
+
+	"Color" : {"MinRed" : 1.0,
+                   "MaxRed" : 1.0,
+                   "MinGreen" : 1.0,
+                   "MaxGreen" : 1.0,
+                   "MinBlue" : 1.0,
+     	           "MaxBlue" : 1.0},
+
+	"Scale" : {"Min" : 0.1,
+                   "Max" : 10.0},
+
+	"Fade" : {"MinTimeIn" : 0.1,
+                  "MaxTimeIn" : 0.25,
+                  "MinTimeOut" : 0.1,
+                  "MaxTimeOut" : 0.25}
+}

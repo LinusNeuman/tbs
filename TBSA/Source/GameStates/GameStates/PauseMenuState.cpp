@@ -30,7 +30,8 @@ eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateS
 	if (myShouldPop == true || IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{ 
 		myShouldPop = false;
-		return eStackReturnValue::ePopMain;
+		//return eStackReturnValue::ePopSubstate;
+		return eStackReturnValue::eDeleteSubstate;
 	}
 
 	return eStackReturnValue::eStay;

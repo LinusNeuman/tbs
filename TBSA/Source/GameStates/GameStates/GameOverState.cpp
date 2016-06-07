@@ -30,7 +30,8 @@ eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateSt
 	if (myShouldExit == true)
 	{
 		myShouldExit = false;
-		return eStackReturnValue::ePopSubState;
+		//return eStackReturnValue::ePopSubState;
+		return eStackReturnValue::eDeleteSubstate;
 	}
 	return eStackReturnValue::eStay;
 }

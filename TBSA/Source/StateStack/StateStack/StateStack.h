@@ -24,6 +24,10 @@ public:
 	void Render() const;
 
 private:
+	void PopAndDeleteSubstate();
+	void PopAndDeleteCurrentSubstates();
+	void PopAndDeleteMainState();
+
 	void PopMainState();
 	void PopSubState();
 	void PopCurrentSubstates();

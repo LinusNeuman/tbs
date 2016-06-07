@@ -19,7 +19,7 @@ class GameLevel : public MessageReciever
 {
 public:
 	GameLevel();
-	~GameLevel();
+	virtual ~GameLevel();
 	void Init(TiledData* aTileData);
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
@@ -28,6 +28,7 @@ public:
 	bool RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
 private:
+	void InternalInit();
 
 	GameFloor myFloor;
 	Player * myPlayer, *myPlayer2;
@@ -41,4 +42,6 @@ private:
 	CommonUtilities::Vector2ui myDimensions;
 
 	TurnManager myTurnManager;
+
+	bool myIsInitialized;
 };

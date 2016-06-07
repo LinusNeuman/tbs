@@ -29,8 +29,9 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void GetPathNodes(const int aINdex, PathAndName & aPath, const picojson::array & someData, const int aMapWidth, const int aLastTile);
 
 
-void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
+void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 {
+	TiledData& someTiles = *aTilePointer;
 	std::map<std::string, unsigned short> enemyIndexes;
 	CommonUtilities::GrowingArray<PathAndName> paths;
 	paths.Init(1);
@@ -259,6 +260,49 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 					const float posY = static_cast<float>(GetNumber(enemy["y"])) / 64;
 
 					enemyActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+
+					if (enemy.count("properties") > 0)
+					{
+						picojson::object properties = GetObject(enemy["properties"]);
+
+						if (properties.count("direction") > 0)
+						{
+							const std::string direction = GetString(properties["direction"]);
+							if (direction == "N")
+							{
+								enemyActor->SetDirection(eDirection::NORTH);
+							}
+							else if(direction == "NE")
+							{
+								enemyActor->SetDirection(eDirection::NORTH_EAST);
+							}
+							else if (direction == "E")
+							{
+								enemyActor->SetDirection(eDirection::EAST);
+							}
+							else if (direction == "SE")
+							{
+								enemyActor->SetDirection(eDirection::SOUTH_EAST);
+							}
+							else if (direction == "S")
+							{
+								enemyActor->SetDirection(eDirection::SOUTH);
+							}
+							else if (direction == "SW")
+							{
+								enemyActor->SetDirection(eDirection::SOUTH_WEST);
+							}
+							else if (direction == "W")
+							{
+								enemyActor->SetDirection(eDirection::WEST);
+							}
+							else if (direction == "NW")
+							{
+								enemyActor->SetDirection(eDirection::NORTH_WEST);
+							}
+						}
+					}
+
 					someTiles.myEnemies.Add(enemyActor);
 
 					enemyIndexes[GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;
@@ -301,6 +345,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData& someTiles)
 		const int enemyIndex = enemyIndexes[paths[i].myName];
 		someTiles.myEnemies[enemyIndex]->SetEnemyPath(paths[i].myPath);
 	}
+	someTiles.myIsLoaded = true;
 }
 
 picojson::object GetObject(picojson::value aValue)
