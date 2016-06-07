@@ -4,6 +4,7 @@
 #include <CU/Timer/Timer.h>
 #include <CU/Timer/TimeManager.h>
 #include <GUI/Instances/GUIButton.h>
+#include <GUI/Instances/GUITextBox.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -41,6 +42,17 @@ void GUIFactory::Load()
 		if (arrayElements.empty() == false)
 		{
 			myGUILookup[currentStateName].myBegin = elementsAdded;
+		}
+
+		if (currentStateName == "InGame")
+		{
+			GUITextBox* textBox = new GUITextBox({ 1.f, 1.f }, { 640.f, 320.f }, "Text/calibril.ttf_sdf");
+
+			myGUIElements.Add(textBox);
+
+			myGUILookup["InGame"].myEnd = elementsAdded;
+
+			++elementsAdded;
 		}
 
 		for (size_t j = 0; j < arrayElements.size(); ++j)
@@ -125,7 +137,6 @@ void GUIFactory::Load()
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
 					}
-
 
 					myGUIElements.Add(newButton);
 					myGUILookup[currentStateName].myEnd = elementsAdded;

@@ -5,7 +5,7 @@
 #define Vec2f CommonUtilities::Vector2f
 #define MAX_TEXT_ROWS 100
 #define TEXT_HEIGHT 28
-#define DEBUG_TEXTBOX
+//#define DEBUG_TEXTBOX
 
 #include <string>
 #include <tga2d\text\text.h>
@@ -31,9 +31,9 @@ class TextBox
 		void SetLineWrappingMode(const eLinewrappingMode aMode);
 		void SetSize(const Vec2f aDimensions);
 		void SetPosition(const Vec2f aPosition);
+		void Update();
 
 	private:
-		void Update();
 		void AddText_CharWrap(DX2D::CText* aText);
 		void AddText_WordWrap(DX2D::CText* aText);
 

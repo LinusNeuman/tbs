@@ -19,7 +19,8 @@ class FalloffStack
 template<typename T, unsigned int S>
 T& FalloffStack<T, S>::operator[](const unsigned int aIndex)
 {
-	assert(aIndex >= 0 && aIndex < S);
+	assert(aIndex >= 0);
+	assert(aIndex < S);
 
 	return myObjects[aIndex];
 }
