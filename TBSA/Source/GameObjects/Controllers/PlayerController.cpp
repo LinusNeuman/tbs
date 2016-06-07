@@ -162,13 +162,13 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	}
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
-		if (mySelectedPlayer->GetMyAP() >= 1)
+		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
 		{
 			CU::Vector2ui peekPosition;
 			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), peekPosition) == true)
 			{
 				CreatePlayerFoV(CU::Vector2f(peekPosition), 3);
-				mySelectedPlayer->CostAP(1);
+				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
 	}
@@ -290,6 +290,8 @@ void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 			DL_PRINT("SOUTH_WEST");
 		}
 	}*/
+
+	std::cout << mySelectedPlayer->GetMyAP() << std::endl;
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -355,9 +357,10 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	}*/
 	if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
 	{
-		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX)
+		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX && mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetAttackCost())
 		{
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
+			mySelectedPlayer->CostAP(mySelectedPlayer->GetAttackCost());
 		}
 	}
 	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)
