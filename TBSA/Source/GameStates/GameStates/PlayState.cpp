@@ -11,6 +11,7 @@
 #include <StateStack/StateStack.h>
 #include <StateStack/ProxyStateStack.h>
 #include "GameOverState.h"
+#include "LoadState.h"
 
 PlayState::PlayState()
 {
@@ -65,10 +66,12 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myGUIManager.Update(aTimeDelta);
 
 	static int index = 0;
-	
+
 	//myLevels[myLevelKey]->Update(aTimeDelta);
 	myLevel->Update(aTimeDelta);
 	myEmitter.Update(aTimeDelta);
+
+
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
@@ -103,6 +106,11 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		GameOverState *newState = new GameOverState();
 		newState->Init();
 		aStateStack.AddSubState(newState);
+	}
+
+	if (myLevel->GetTiledData()->myIsLoaded == false)
+	{
+		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
 	}
 
 	return eStackReturnValue::eStay;

@@ -306,3 +306,8 @@ void GameLevel::ConstructNavGraph()
 		}
 	}
 }
+
+TiledData* GameLevel::GetTiledData()
+{
+	return myTiledData;
+}
