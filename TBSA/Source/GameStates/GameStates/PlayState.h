@@ -23,6 +23,7 @@ public:
 	virtual bool RecieveMessage(const GoalReachedMessage& aMessage) override;
 	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
 	virtual bool RecieveMessage(const StartUpLevelMessage & aMessage) override;
+	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
 
 
 private:
@@ -32,4 +33,6 @@ private:
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
 	bool myShouldExit;
+	bool myGameOver;
+	bool myShouldPause;
 };

@@ -7,6 +7,7 @@
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Utility/GameSpecificTypeDefs.h>
 #include <Input/LayeredInput/LayerInputReciever.h>
+#include <Audio\Instances\SoundEffect.h>
 
 class PlayState;
 class Actor;
@@ -83,6 +84,8 @@ private:
 
 	std::vector<CU::Vector2f> myDebugStart;
 	std::vector<CU::Vector2f> myDebugEnd;
+
+	SoundEffect* mySelectPlayerSound;
 
 };
 

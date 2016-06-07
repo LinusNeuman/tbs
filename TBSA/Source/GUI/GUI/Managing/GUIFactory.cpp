@@ -38,7 +38,10 @@ void GUIFactory::Load()
 		
 		picojson::array arrayElements = myJSON.GetPicoArray("guiElements", arrayJson[i].get("myGUIData").get<picojson::object>());
 
-		myGUILookup[currentStateName].myBegin = elementsAdded;
+		if (arrayElements.empty() == false)
+		{
+			myGUILookup[currentStateName].myBegin = elementsAdded;
+		}
 
 		for (size_t j = 0; j < arrayElements.size(); ++j)
 		{
@@ -106,6 +109,21 @@ void GUIFactory::Load()
 					if (clickEvent == "PlayGame")
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::ePlayGame), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "OpenPauseMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eOpenPauseMenu), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "ClosePauseMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eClosePauseMenu), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "Restart")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
 					}
 
 

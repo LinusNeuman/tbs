@@ -46,7 +46,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)TextBox\;$(SolutionDir)DX2DEngine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -59,7 +59,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)TextBox\;$(SolutionDir)DX2DEngine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GUI\Instances\GUITextBox.h" />
     <ClInclude Include="GUI\Managing\GUIFactory.h" />
     <ClInclude Include="GUI\Managing\GUIManager.h" />
     <ClInclude Include="GUI\Messaging\GUIMessageHandler.h" />
@@ -76,6 +77,7 @@
     <ClInclude Include="GUI\Generic\GUIElement.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GUI\Instances\GUITextBox.cpp" />
     <ClCompile Include="GUI\Managing\GUIFactory.cpp" />
     <ClCompile Include="GUI\Managing\GUIManager.cpp" />
     <ClCompile Include="GUI\Messaging\GUIMessageHandler.cpp" />
@@ -89,6 +91,9 @@
     </ProjectReference>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\DX2DEngine\DX2DEngine.vcxproj">
+      <Project>{11f98bf6-7bdb-4cfb-96cf-577db4ae312f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>
@@ -104,6 +109,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Renderer\Renderer.vcxproj">
       <Project>{307dc057-1cba-4a4b-a7cf-fb5ce0f1571e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TextBox\TextBox.vcxproj">
+      <Project>{b609e812-0662-4864-850f-74b8cf48ceee}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

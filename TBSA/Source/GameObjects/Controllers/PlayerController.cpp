@@ -37,6 +37,9 @@ PlayerController::PlayerController()
 	mySelectedPlayer = nullptr;
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
+
+	mySelectPlayerSound = new SoundEffect();
+	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -86,6 +89,10 @@ void PlayerController::SelectPlayer()
 		mySelectedPlayerIndex = 0;
 	}
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+
+	SetCameraPositionToPlayer(mySelectedPlayerIndex);
+	
+	mySelectPlayerSound->Play(0.1f);
 
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
