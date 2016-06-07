@@ -13,8 +13,8 @@ Splash::Splash()
 Splash::Splash(const char* aPath)
 {
 	mySprite = new StaticSprite();
+	//mySprite->Init(aPath, false, CU::Vector4f::Zero, );
 	mySprite->Init(aPath, false);
-	mySprite->SetPivotWithPixels({ (mySprite->GetSize().x) * 1920.f, (mySprite->GetSize().y) * 1080.f });
 	mySprite->SetColor({ 1, 1, 1, 0 });
 
 	myFadeState = eSplashFadeState::eFadingUp;
