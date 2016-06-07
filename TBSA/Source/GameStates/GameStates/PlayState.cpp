@@ -66,7 +66,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myGUIManager.Update(aTimeDelta);
 
 	static int index = 0;
-
+	
 	//myLevels[myLevelKey]->Update(aTimeDelta);
 	myLevel->Update(aTimeDelta);
 	myEmitter.Update(aTimeDelta);
