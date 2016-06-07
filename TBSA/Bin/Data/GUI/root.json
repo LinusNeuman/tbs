@@ -183,6 +183,12 @@
           }
         ]
       }
+    },
+     {
+      "myName": "GameOver",
+      "myGUIData": {
+        "guiElements": []
+      }
     }
   ]
 }
