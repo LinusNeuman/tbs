@@ -260,6 +260,49 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					const float posY = static_cast<float>(GetNumber(enemy["y"])) / 64;
 
 					enemyActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+
+					if (enemy.count("properties") > 0)
+					{
+						picojson::object properties = GetObject(enemy["properties"]);
+
+						if (properties.count("direction") > 0)
+						{
+							const std::string direction = GetString(properties["direction"]);
+							if (direction == "N")
+							{
+								enemyActor->SetDirection(eDirection::NORTH);
+							}
+							else if(direction == "NE")
+							{
+								enemyActor->SetDirection(eDirection::NORTH_EAST);
+							}
+							else if (direction == "E")
+							{
+								enemyActor->SetDirection(eDirection::EAST);
+							}
+							else if (direction == "SE")
+							{
+								enemyActor->SetDirection(eDirection::SOUTH_EAST);
+							}
+							else if (direction == "S")
+							{
+								enemyActor->SetDirection(eDirection::SOUTH);
+							}
+							else if (direction == "SW")
+							{
+								enemyActor->SetDirection(eDirection::SOUTH_WEST);
+							}
+							else if (direction == "W")
+							{
+								enemyActor->SetDirection(eDirection::WEST);
+							}
+							else if (direction == "NW")
+							{
+								enemyActor->SetDirection(eDirection::NORTH_WEST);
+							}
+						}
+					}
+
 					someTiles.myEnemies.Add(enemyActor);
 
 					enemyIndexes[GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;

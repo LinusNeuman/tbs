@@ -322,7 +322,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StartupReader\StartupData.h" />
     <ClInclude Include="StartupReader\StartupReader.h" />

@@ -28,6 +28,8 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 {
 	Actor::Init(aActorData);
 	myActionPointMax = aPlayerData.myActionPointMax;
+	myAttackCost = aPlayerData.myAttackCost;
+	myPeekCost = aPlayerData.myPeekCost;
 	myCurrentAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
 
@@ -105,8 +107,20 @@ void Player::AfterTurn()
 	myIsSeen = false;
 }
 
+int Player::GetPeekCost() const
+{
+	return myPeekCost;
+}
+
+
+int Player::GetAttackCost() const
+{
+	return myAttackCost;
+}
+
 void Player::PreTurn()
 {
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
