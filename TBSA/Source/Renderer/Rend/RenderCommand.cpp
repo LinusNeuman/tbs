@@ -5,6 +5,7 @@
 RenderCommand::RenderCommand()
 {
 	mySprite = nullptr;
+	myText = nullptr;
 }
 
 RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer, const RenderData & aRenderData, const bool aOffsetMiddleOfScreen/* = false*/)
@@ -15,12 +16,32 @@ RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f
 	myRenderPriority = aRenderPriority;
 	myLayer = aLayer;
 	myMiddleScreenOffset = aOffsetMiddleOfScreen;
+	myText = nullptr;
+}
+
+USHORT RenderCommand::GetLayer()
+{
+	return myLayer;
+}
+
+float RenderCommand::GetPriority()
+{
+	return myRenderPriority;
+}
+
+RenderCommand::RenderCommand(DX2D::CText & aTextToRender, const float aRenderPriority, const USHORT aLayer, const bool aOffsetMiddleOfScreen/* = false*/)
+	: myText(&aTextToRender),
+	myPosition({ aTextToRender.myPosition.x, aTextToRender.myPosition.y })
+{
+	myRenderPriority = aRenderPriority;
+	myLayer = aLayer;
+	myMiddleScreenOffset = aOffsetMiddleOfScreen;
+	mySprite = nullptr;
 }
 
 RenderCommand::~RenderCommand()
 {
 }
-
 
 void RenderCommand::Render() const
 {
@@ -40,12 +61,22 @@ void RenderCommand::Render() const
 		tempPosition.y = myPosition.y;
 	}
 
-	mySprite->SetColor(tempColor);
-	mySprite->SetPosition(tempPosition);
+	if (mySprite != nullptr)
+	{
+		mySprite->SetColor(tempColor);
+		mySprite->SetPosition(tempPosition);
 
-	mySprite->SetCustomShader(myRenderData.myShaderPtr);
+		mySprite->SetCustomShader(myRenderData.myShaderPtr);
 
-	mySprite->Render();
+		mySprite->Render();
 
-	mySprite->SetCustomShader(nullptr);
+		mySprite->SetCustomShader(nullptr);
+	}
+	else if (myText != nullptr)
+	{
+		myText->myColor = tempColor;
+		myText->myPosition = tempPosition;
+
+		myText->Render();
+	}
 }

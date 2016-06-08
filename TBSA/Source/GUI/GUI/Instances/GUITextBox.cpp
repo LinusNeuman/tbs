@@ -1,14 +1,14 @@
 #include "GUITextBox.h"
+#include "Message\LogTextMessage.h"
 
 GUITextBox::GUITextBox(const CommonUtilities::Vector2f aPosition, const CommonUtilities::Vector2f aDimensions, const std::string aFontPath, const eLinewrappingMode aMode) : myTextBox(aPosition, aDimensions, aFontPath, aMode)
 {
-	myTextBox.AddText("Här var det text!");
-	myTextBox.AddText("Här var det lite mer text!");
-	myTextBox.AddText("Här var det lite obscen text också: Röv och knark!!!");
+	SingletonPostMaster::AddReciever(RecieverTypes::eLogText, *this);
 }
 
 GUITextBox::~GUITextBox()
 {
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eLogText, *this);
 }
 
 void
@@ -21,4 +21,11 @@ void
 GUITextBox::Update(const CU::Time& aTimeDelta)
 {
 	myTextBox.Update();
+}
+
+bool
+GUITextBox::RecieveMessage(const LogTextMessage& aMessage)
+{
+	myTextBox.AddText(aMessage.myText);
+	return true;
 }
