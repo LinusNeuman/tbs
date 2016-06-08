@@ -4,94 +4,153 @@
 #include <Message/LevelTileMetricsMessage.h>
 #include <Message/SetMainCameraMessage.h>
 
-void MessageReciever::RecieveMessage(const WindowRectChangedMessage & aMessage)
+bool MessageReciever::RecieveMessage(const WindowRectChangedMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const LevelTileMetricsMessage & aMessage)
+bool MessageReciever::RecieveMessage(const LevelTileMetricsMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const SetMainCameraMessage & aMessage)
+bool MessageReciever::RecieveMessage(const SetMainCameraMessage & aMessage)
 {
-
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const DijkstraMessage& aMessage)
+bool MessageReciever::RecieveMessage(const DijkstraMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const NavigationClearMessage& aMessage)
+bool MessageReciever::RecieveMessage(const NavigationClearMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const EndTurnMessage& aMessage)
+bool MessageReciever::RecieveMessage(const EndTurnMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const StartUpLevelMessage& aMessage)
+bool MessageReciever::RecieveMessage(const StartUpLevelMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const GUIMessage& aMessage)
+bool MessageReciever::RecieveMessage(const GUIMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const GetStartLevelMessage& aMessage)
+bool MessageReciever::RecieveMessage(const GetStartLevelMessage & aMessage)
 {
-}
-
-void MessageReciever::RecieveMessage(const ColliderMessage & aMessage)
-{
-
-}
-
-void MessageReciever::RecieveMessage(const ActorPositionChangedMessage& aMessage)
-{
-}
-
-void MessageReciever::RecieveMessage(const PlayerObjectMessage & aMessage)
-{
+	return true;
 
 }
 
-void MessageReciever::RecieveMessage(const SetHWNDMessage & aMessage)
+bool MessageReciever::RecieveMessage(const ColliderMessage & aMessage)
 {
-
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const PlayerAddedMessage& aMessage)
+bool MessageReciever::RecieveMessage(const PlayerPositionChangedMessage & aMessage)
 {
-
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const EnemyDirectionChangedMessage & aMessage)
+bool MessageReciever::RecieveMessage(const PlayerObjectMessage & aMessage)
 {
-
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const PlayerSeenMessage& aMessage)
+bool MessageReciever::RecieveMessage(const SetHWNDMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const PlayerDiedMessage& aMessage)
+bool MessageReciever::RecieveMessage(const PlayerAddedMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const PlayerChangedTargetMessage& aMessage)
+bool MessageReciever::RecieveMessage(const EnemyPositionChangedMessage & aMessage)
 {
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const EnemyObjectMessage & aMessage)
+bool MessageReciever::RecieveMessage(const PlayerSeenMessage & aMessage)
 {
-
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const FightWithEnemyMessage & aMessage)
+bool MessageReciever::RecieveMessage(const PlayerDiedMessage & aMessage)
 {
-
+	return true;
 }
 
-void MessageReciever::RecieveMessage(const FlagPlayerDiedMessage& aMessage)
+bool MessageReciever::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const FightWithEnemyMessage & aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const FlagPlayerDiedMessage &aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const GoalReachedMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const PlayerCanPeekMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const FlagGoalReachedMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const MouseButtonDownMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const MouseButtonPressedMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const MouseButtonReleasedMessage&aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const MouseInputClearMessage & aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const PlayerIDMessage & aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const PlayerAPChangedMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const SetTargetResolutionMessage& aMessage)
+{
+	return true;
 }

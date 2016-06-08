@@ -81,7 +81,37 @@
          "draworder":"topdown",
          "height":100,
          "name":"Players",
-         "objects":[],
+         "objects":[
+                {
+                 "height":64,
+                 "id":15,
+                 "name":"Ginger",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"Player1",
+                 "visible":true,
+                 "width":64,
+                 "x":1856,
+                 "y":1984
+                }, 
+                {
+                 "height":64,
+                 "id":20,
+                 "name":"John",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"Player2",
+                 "visible":true,
+                 "width":64,
+                 "x":1856,
+                 "y":1920
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -95,9 +125,8 @@
          "name":"Enemies",
          "objects":[
                 {
-                 "gid":387,
-                 "height":128,
-                 "id":12,
+                 "height":64,
+                 "id":22,
                  "name":"Enemy2",
                  "properties":
                     {
@@ -106,25 +135,66 @@
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
-                 "width":128,
-                 "x":2494.66666666667,
-                 "y":1668
+                 "width":64,
+                 "x":2432,
+                 "y":1600
                 }, 
                 {
-                 "gid":387,
-                 "height":128,
-                 "id":13,
+                 "height":64,
+                 "id":23,
                  "name":"Enemy1",
+                 "properties":
+                    {
+                     "direction":"s"
+                    },
+                 "rotation":0,
+                 "type":"Enemy1",
+                 "visible":true,
+                 "width":64,
+                 "x":2496,
+                 "y":2112
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":100,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":100,
+         "name":"Objectives",
+         "objects":[
+                {
+                 "height":30.6666666666667,
+                 "id":10,
+                 "name":"endzone1",
                  "properties":
                     {
 
                     },
                  "rotation":0,
-                 "type":"Enemy1",
+                 "type":"LevelEnd",
                  "visible":true,
-                 "width":128,
-                 "x":2554,
-                 "y":2120.66666666667
+                 "width":54.6666666666665,
+                 "x":2117.33333333334,
+                 "y":1233.33333333334
+                }, 
+                {
+                 "height":36.666666666667,
+                 "id":11,
+                 "name":"endzone2",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"LevelEnd",
+                 "visible":true,
+                 "width":54,
+                 "x":2181.66666666667,
+                 "y":1229.66666666666
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -144,7 +214,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":15,
+ "nextobjectid":24,
  "orientation":"isometric",
  "properties":
     {

@@ -4,16 +4,19 @@
 #include <Message/NavigationClearMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 #include <Message/PlayerDiedMessage.h>
+#include <Message/GoalReachedMessage.h>
 
-TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(false)
+TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(false), myReachedGoal(false)
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagPlayerDied, *this);
-	//ForceTurn(eTurn::ENEMY_END_TURN);
+	SingletonPostMaster::AddReciever(RecieverTypes::eFlagGoalReached, *this);
+	//ForceTurn(eEndTurn::ENEMY_END_TURN);
 }
 
 TurnManager::~TurnManager()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagPlayerDied, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 }
 
 bool TurnManager::Update(CommonUtilities::Time aDeltaTime)
@@ -45,17 +48,25 @@ void TurnManager::ForceTurn(eTurn aTurn)
 	myCurrentTurn = aTurn;
 }
 
-void TurnManager::RecieveMessage(const GUIMessage& aMessage)
+bool TurnManager::RecieveMessage(const GUIMessage& aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eTurn)
+	if (aMessage.myType == RecieverTypes::eEndTurn)
 	{
 		EndTurn();
 	}
+	return true;
 }
 
-void TurnManager::RecieveMessage(const FlagPlayerDiedMessage&)
+bool TurnManager::RecieveMessage(const FlagPlayerDiedMessage&)
 {
 	myPlayerDied = true;
+	return true;
+}
+
+bool TurnManager::RecieveMessage(const FlagGoalReachedMessage&)
+{
+	myReachedGoal = true;
+	return true;
 }
 
 void TurnManager::EndTurn()
@@ -82,6 +93,11 @@ bool TurnManager::PreparePlayer()
 
 bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 {
+	if (myReachedGoal == true)
+	{
+		SendPostMessage(GoalReachedMessage(RecieverTypes::ePlayEvents, "2_Backyard.json"));
+		return false;
+	}
 	myPlayerController.Update(aDeltaTime);
 	return true;
 }

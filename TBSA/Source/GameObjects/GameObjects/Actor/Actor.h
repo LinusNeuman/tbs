@@ -5,7 +5,7 @@
 #include <CU/Timer/Time.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Utility/GameSpecificTypeDefs.h>
-
+#include <ActorEnums.h>
 
 
 struct ActorData;
@@ -13,46 +13,16 @@ class StaticSprite;
 class Animation;
 class BoxCollider;
 
-enum class eActorType
-{
-	ePlayerOne,
-	ePlayerTwo,
-	eEnemyOne,
-	eEnemyTwo,
-	eEnemyThree,
-	eEnemyFour,
-	eEnemyFive
-};
-
-enum class eDirection
-{
-	NORTH = 50,
-	NORTH_EAST = 40,
-	EAST = 30,
-	SOUTH_EAST = 20,
-	SOUTH = 10,
-	SOUTH_WEST = 80,
-	WEST = 70,
-	NORTH_WEST = 60
-};
-
-enum class eActorState
-{
-	eIdle,
-	eFighting,
-	eDead,
-	eWalking
-};
-
 class Actor : public MessageReciever
 {
 public:
 	Actor();
 	virtual ~Actor();
 	void Init(const ActorData &aActorData);
-	
+	void SpriteInit();
+
 	virtual void Update(const CU::Time &aDeltaTime);
-	void Draw() const;
+	virtual void Draw() const;
 	void Move(CU::Vector2ui aTargetPosition);
 	virtual void OnMove(CU::Vector2ui aTargetPosition);
 	virtual void AfterTurn();
@@ -94,7 +64,7 @@ public:
 		return myDirection;
 	}
 
-	virtual void RecieveMessage(const ColliderMessage & aMessage) override;
+	virtual bool RecieveMessage(const ColliderMessage & aMessage) override;
 
 	virtual void OnClick() = 0;
 
@@ -147,12 +117,12 @@ protected:
 	BoxCollider myBoxCollider;
 	void UpdateDirection();
 	bool myAtTarget;
-	
+	eDirection myDirection;
 private:
 	void UpdatePath();
 
 	eActorType myType;
-	eDirection myDirection;
+	
 	StaticSprite *mySprite;
 };
 

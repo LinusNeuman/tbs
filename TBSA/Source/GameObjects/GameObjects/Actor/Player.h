@@ -26,7 +26,8 @@ public:
 
 	virtual void OnClick() override;
 
-	void RecieveMessage(const PlayerSeenMessage & aMessage) override;
+	void Draw() const override;
+	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
@@ -39,15 +40,17 @@ public:
 
 	virtual void AfterTurn() override;
 	void PreTurn();
-
-	
+	int GetPeekCost() const;
+	int GetAttackCost() const;
 
 private:
 
 	unsigned short myPlayerIndex;
 	unsigned short myEnemyTargetIndex;
-
+	StaticSprite* myDetectedSprite;
 	int myActionPointMax;
+	int myAttackCost;
+	int myPeekCost;
 	int myCurrentAP;
 
 	bool myIsSeen;

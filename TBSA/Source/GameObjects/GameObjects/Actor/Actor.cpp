@@ -8,10 +8,8 @@
 #include <CU\DLDebug\DL_Debug.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Message/DijkstraMessage.h>
-#include <Message/ActorPositionChangedMessage.h>
 #include <Message/ColliderMessage.h>
-#include <Message/PlayerReachedTargetMessage.h>
-#include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/EnemyPositionChangedMessage.h>
 
 Actor::Actor()
 {
@@ -23,6 +21,7 @@ Actor::Actor()
 	myState = eActorState::eWalking;
 	myHasObjectiveFlag = false;
 	myObjectiveTargetPosition = TilePositionf::One;
+	myDirection = eDirection::SOUTH;
 }
 
 Actor::~Actor()
@@ -45,6 +44,11 @@ void Actor::Init(const ActorData &aActorData)
 	myBoxCollider.SetPositionAndSize(myPosition, CU::Vector2f::Half);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eMouseClicked, *this);
+}
+
+void Actor::SpriteInit()
+{
+
 }
 
 void Actor::UpdateDirection()
@@ -114,6 +118,13 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 			UpdatePath();
 		}
+		else if (tempState == eActorState::eFighting)
+		{
+			if (myAnimations.GetAnimationIsRunning() == false)
+			{
+				SetActorState(eActorState::eDead);
+			}
+		}
 
 		if (myAnimations.GetIsActive() == true)
 		{
@@ -144,7 +155,6 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
-	SendPostMessage(PlayerChangedTargetMessage(RecieverTypes::ePlayerChangedTarget));
 }
 
 void Actor::OnMove(CU::Vector2ui aTargetPosition)
@@ -188,12 +198,9 @@ int Actor::GetMyAP() const
 }
 
 
-
-
-
 void Actor::UpdatePath()
 {
-	if (myAtTarget == true )
+ 	if (myAtTarget == true )
 	{
 		if (myCurrentWaypoint < myPath.Size())
 		{
@@ -246,10 +253,11 @@ void Actor::DecideAnimation()
 
 }
 
-void Actor::RecieveMessage(const ColliderMessage & aMessage)
+bool Actor::RecieveMessage(const ColliderMessage & aMessage)
 {
 	if (myBoxCollider.CheckCollision(aMessage.myCollider) == true)
 	{
 		OnClick();
 	}
+	return true;
 }

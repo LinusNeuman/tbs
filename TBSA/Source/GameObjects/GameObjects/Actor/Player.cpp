@@ -9,6 +9,9 @@
 #include <Message/PlayerObjectMesssage.h>
 #include <Message/PlayerSeenMessage.h>
 #include <Message/FlagPlayerDiedMessage.h>
+#include <Message/PlayerPositionChangedMessage.h>
+#include <Message/PlayerAPChangedMessage.h>
+#include <Message/PlayerIDMessage.h>
 
 
 Player::Player()
@@ -25,11 +28,16 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 {
 	Actor::Init(aActorData);
 	myActionPointMax = aPlayerData.myActionPointMax;
+	myAttackCost = aPlayerData.myAttackCost;
+	myPeekCost = aPlayerData.myPeekCost;
 	myCurrentAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
 
 	myIsSeen = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+	myDetectedSprite = new StaticSprite();
+	myDetectedSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
+	myDetectedSprite->SetLayer(enumRenderLayer::eGUI);
 }
 
 void Player::FreshTurn()
@@ -46,14 +54,31 @@ void Player::CostAP(const int aCost)
 {
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
 	myCurrentAP -= aCost;
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 }
 
 void Player::OnClick()
 {
-	SendPostMessage(PlayerObjectMessage(RecieverTypes::eChangeSelectedPlayer, *this));
+	SendPostMessage(PlayerIDMessage(RecieverTypes::eClickedOnPlayer, GetIndex()));
 }
 
-void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
+void Player::Draw() const
+{
+	if (myIsSeen == true)
+	{
+		if (myPlayerIndex == 0)
+		{
+			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.0f, -1.0f));
+		}
+		else
+		{
+			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.2f, -1.2f));
+		}
+	}
+	Actor::Draw();
+}
+
+bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
 	{
@@ -70,12 +95,10 @@ void Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 			myIsSeen = false;
 			myShouldDie = false;
 			SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
-
 		}
 	}
+	return true;
 }
-
-
 
 void Player::AfterTurn()
 {
@@ -84,13 +107,23 @@ void Player::AfterTurn()
 	myIsSeen = false;
 }
 
-void Player::PreTurn()
+int Player::GetPeekCost() const
 {
-	myShouldDie = myIsSeen;
-	myIsSeen = false;
+	return myPeekCost;
 }
 
 
+int Player::GetAttackCost() const
+{
+	return myAttackCost;
+}
+
+void Player::PreTurn()
+{
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
+	myShouldDie = myIsSeen;
+	myIsSeen = false;
+}
 
 void Player::DecideAnimation()
 {
@@ -166,7 +199,7 @@ void Player::DecideAnimation()
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
-
+	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes::ePlayerPositionChanged, aTargetPosition,*this));
 }
 
 void Player::SetNoTarget()

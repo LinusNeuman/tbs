@@ -6,6 +6,8 @@
 #include <GameObjects/Room/GameFloor.h>
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Utility/GameSpecificTypeDefs.h>
+#include <Input/LayeredInput/LayerInputReciever.h>
+#include <Audio\Instances\SoundEffect.h>
 
 class PlayState;
 class Actor;
@@ -46,15 +48,16 @@ public:
 
 	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition);
 
-	virtual void RecieveMessage(const PlayerObjectMessage & aMessage) override;
-	virtual void RecieveMessage(const ActorPositionChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const PlayerChangedTargetMessage& aMessage) override;
-	virtual void RecieveMessage(const PlayerAddedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
-	virtual void RecieveMessage(const EnemyObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerPositionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
 
 private:
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
+	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;
 
 	void BuildPath(PathArray & aPathContainterToBuild);
 	enumMouseState GetCurrentMouseState();
@@ -77,8 +80,12 @@ private:
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
 
+	LayerInputReciever myMouseInput;
+
 	std::vector<CU::Vector2f> myDebugStart;
 	std::vector<CU::Vector2f> myDebugEnd;
+
+	SoundEffect* mySelectPlayerSound;
 
 };
 

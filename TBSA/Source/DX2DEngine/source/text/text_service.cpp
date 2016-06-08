@@ -129,7 +129,6 @@ void CTextService::Update()
 	myCurrentSprite = 0;
 }
 
-
 float DX2D::CTextService::GetSentenceWidth(const std::string& aText, float aSize, const std::string& aName)
 {
 	if (aText.size() <= 0)

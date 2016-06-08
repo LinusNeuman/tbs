@@ -4,7 +4,6 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Message\ActorPositionChangedMessage.h" />
     <ClInclude Include="Message\BaseMessage.h" />
     <ClInclude Include="Message\ColliderMessage.h" />
     <ClInclude Include="Message\DijkstraMessage.h" />
@@ -23,10 +22,20 @@
     <ClInclude Include="Message\PlayerSeenMessage.h" />
     <ClInclude Include="Message\PlayerDiedMessage.h" />
     <ClInclude Include="Message\SetHWNDMessage.h" />
-    <ClInclude Include="Message\PlayerReachedTargetMessage.h" />
     <ClInclude Include="Message\EnemyObjectMessage.h" />
     <ClInclude Include="Message\FightWithEnemyMessage.h" />
-    <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\FlagPlayerDiedMessage.h" />
+    <ClInclude Include="Message\GoalReachedMessage.h" />
+    <ClInclude Include="Message\FlagGoalReachedMessage.h" />
+    <ClInclude Include="Message\PlayerPositionChangedMessage.h" />
+    <ClInclude Include="Message\EnemyPositionChangedMessage.h" />
+    <ClInclude Include="Message\PlayerCanPeekMessage.h" />
+    <ClInclude Include="Message\MouseButtonDownMessage.h" />
+    <ClInclude Include="Message\MouseButtonPressedMessage.h" />
+    <ClInclude Include="Message\MouseButtonReleasedMessage.h" />
+    <ClInclude Include="Message\MouseInputClear.h" />
+    <ClInclude Include="Message\PlayerAPChangedMessage.h" />
+    <ClInclude Include="Message\PlayerIDMessage.h" />
+    <ClInclude Include="Message\SetTargetResolutionMessage.h" />
   </ItemGroup>
 </Project>
