@@ -25,6 +25,7 @@
 #include <tga2d/shaders/customshader.h>
 
 #include <Message/SetHWNDMessage.h>
+#include <Message/SetTargetResolutionMessage.h>
 
 using namespace std::placeholders;
 
@@ -195,7 +196,8 @@ void CGame::InitCallBack()
 	myGameStateStack.AddMainState(mySplashState);
 #endif
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
-		
+	
+	SendPostMessage(SetTargetResolutionMessage(RecieverTypes::eTargetResolutionSet, {myTargetResolutionX, myTargetResolutionY}));
 }
 
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PauseMenuState.h"
-
+#include <Message/SetTargetResolutionMessage.h>
 
 PauseMenuState::PauseMenuState()
 {
@@ -39,7 +39,7 @@ eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateS
 
 void PauseMenuState::Draw() const
 {
-	myBackgroundSprite->Draw({ 1920.f * 0.5f, 1080.f * 0.5f });
+	myBackgroundSprite->Draw({ myTargetResolution.x * 0.5f, myTargetResolution.y * 0.5f });
 }
 
 bool PauseMenuState::RecieveMessage(const GUIMessage& aMessage)
@@ -48,5 +48,11 @@ bool PauseMenuState::RecieveMessage(const GUIMessage& aMessage)
 	{
 		myShouldPop = true;
 	}
+	return true;
+}
+
+bool PauseMenuState::RecieveMessage(const SetTargetResolutionMessage& aMessage)
+{
+	myTargetResolution = aMessage.myResolution;
 	return true;
 }
