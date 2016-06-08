@@ -19,6 +19,7 @@ enum class RecieverTypes
 	eMouseClicked,
 	eChangeSelectedPlayer,
 	eClickedOnPlayer,
+	eTargetResolutionSet,
 	ePlayGame,
 	ePlayerPositionChanged,
 	eEnemyPositionChanged,
