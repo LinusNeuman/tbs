@@ -1,7 +1,7 @@
 {
     "actorType": 1,
-     "attackCost" : 1,
-    "peekCost" : 1,
+     "attackCost" : 2,
+    "peekCost" : 2,
     "animations": 
     [
 	    {
