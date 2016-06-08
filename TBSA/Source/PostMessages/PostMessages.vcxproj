@@ -241,6 +241,7 @@
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\SetHWNDMessage.h" />
     <ClInclude Include="Message\SetMainCameraMessage.h" />
+    <ClInclude Include="Message\SetTargetResolutionMessage.h" />
     <ClInclude Include="Message\StartUpLevelMessage.h" />
     <ClInclude Include="Message\TestPosition.h" />
     <ClInclude Include="Message\WindowRectChangedMessage.h" />

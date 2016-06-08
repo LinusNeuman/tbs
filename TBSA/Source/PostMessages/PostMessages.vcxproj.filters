@@ -37,5 +37,6 @@
     <ClInclude Include="Message\PlayerAPChangedMessage.h" />
     <ClInclude Include="Message\PlayerIDMessage.h" />
     <ClInclude Include="Message\LogTextMessage.h" />
+    <ClInclude Include="Message\SetTargetResolutionMessage.h" />
   </ItemGroup>
 </Project>
