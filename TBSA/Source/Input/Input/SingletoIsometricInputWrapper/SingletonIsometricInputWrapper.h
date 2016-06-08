@@ -45,7 +45,7 @@ public:
 
 	virtual bool RecieveMessage(const WindowRectChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage) override;
-
+	virtual bool RecieveMessage(const SetTargetResolutionMessage& aMessage) override;
 
 private:
 	SingletonIsometricInputWrapper();
@@ -61,6 +61,7 @@ private:
 
 	CU::Vector4f myViewPortSettings;
 	CU::Vector4f myWindowRect;
+	CU::Vector2ui myTargetResolution;
 
 	CommonUtilities::InputWrapper myInputWrapper;
 	const Camera2D * myCameraToAdjustTo;

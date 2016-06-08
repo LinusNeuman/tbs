@@ -25,6 +25,7 @@
 #include <tga2d/shaders/customshader.h>
 
 #include <Message/SetHWNDMessage.h>
+#include <Message/SetTargetResolutionMessage.h>
 
 using namespace std::placeholders;
 
@@ -45,6 +46,8 @@ CGame::CGame()
 	myStartupData = new StartupData(tempReader.LoadAndGetStartupData());
 
 	myImRunning = true;
+	myTargetResolutionX = 1920;
+	myTargetResolutionY = 1080;
 	
 	SingletonPostMaster::Create();
 	IsometricInput::Create();
@@ -78,12 +81,15 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	picojson::object settings = JsonWrapper::GetPicoObject(value);
 	unsigned short windowWidth = JsonWrapper::GetInt("myResolutionX", settings);
 	unsigned short windowHeight = JsonWrapper::GetInt("myResolutionY", settings);
+	myTargetResolutionX = JsonWrapper::GetInt("myResolutionX", settings);
+	myTargetResolutionY = JsonWrapper::GetInt("myResolutionY", settings);
+
 	createParameters.myWindowHeight = windowHeight;
 	createParameters.myWindowWidth = windowWidth;
 	createParameters.myRenderHeight = windowHeight;
 	createParameters.myRenderWidth = windowWidth;
-	createParameters.myTargetWidth = 1920;
-	createParameters.myTargetHeight = 1080;
+	createParameters.myTargetWidth = myTargetResolutionX;
+	createParameters.myTargetHeight = myTargetResolutionY;
 	createParameters.myStartInFullScreen = JsonWrapper::GetBool("myIsFullscreen", settings);
 
 	createParameters.myAutoUpdateViewportWithWindow = true;
@@ -187,7 +193,7 @@ void CGame::InitCallBack()
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
 
 	RenderConverter::Create();
-	RenderConverter::Init(CU::Vector2ui(1920, 1080));
+	RenderConverter::Init(CU::Vector2ui(myTargetResolutionX, myTargetResolutionY));
 	ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "Main Thread");
 
 	CU::TimeManager::Create();
@@ -202,7 +208,8 @@ void CGame::InitCallBack()
 	myGameStateStack.AddMainState(mySplashState);
 #endif
 	SingletonPostMaster::AddReciever(RecieverTypes::eExitGame, *this);
-		
+	
+	SendPostMessage(SetTargetResolutionMessage(RecieverTypes::eTargetResolutionSet, {myTargetResolutionX, myTargetResolutionY}));
 }
 
 
