@@ -30,8 +30,11 @@ struct MouseButtonPressedMessage;
 struct MouseInputClearMessage;
 struct PlayerIDMessage;
 struct PlayerAPChangedMessage;
-struct SetTargetResolutionMessage;
+<<<<<<< HEAD
 struct LogTextMessage;
+=======
+struct SetTargetResolutionMessage;
+>>>>>>> afc7ce7e601832cce8b148d6e18f0548c8fa25d2
 
 class MessageReciever
 {
@@ -68,8 +71,11 @@ public:
 	virtual bool RecieveMessage(const MouseInputClearMessage & aMessage);
 	virtual bool RecieveMessage(const PlayerIDMessage & aMessage);
 	virtual bool RecieveMessage(const PlayerAPChangedMessage& aMessage);
-	virtual bool RecieveMessage(const SetTargetResolutionMessage& aMessage);
+<<<<<<< HEAD
 	virtual bool RecieveMessage(const LogTextMessage& aMessage);
+=======
+	virtual bool RecieveMessage(const SetTargetResolutionMessage& aMessage);
+>>>>>>> afc7ce7e601832cce8b148d6e18f0548c8fa25d2
 
 	RecieverOrder myRecieverOrder;
 protected:

@@ -36,7 +36,10 @@
     <ClInclude Include="Message\MouseInputClear.h" />
     <ClInclude Include="Message\PlayerAPChangedMessage.h" />
     <ClInclude Include="Message\PlayerIDMessage.h" />
+<<<<<<< HEAD
     <ClInclude Include="Message\LogTextMessage.h" />
+=======
     <ClInclude Include="Message\SetTargetResolutionMessage.h" />
+>>>>>>> afc7ce7e601832cce8b148d6e18f0548c8fa25d2
   </ItemGroup>
 </Project>

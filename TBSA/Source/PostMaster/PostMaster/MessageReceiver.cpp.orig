@@ -150,12 +150,14 @@ bool MessageReciever::RecieveMessage(const PlayerAPChangedMessage& aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const SetTargetResolutionMessage& aMessage)
-{
-	return true;
-}
-
+<<<<<<< HEAD
 bool MessageReciever::RecieveMessage(const LogTextMessage& aMessage)
 {
 	return true;
 }
+=======
+bool MessageReciever::RecieveMessage(const SetTargetResolutionMessage& aMessage)
+{
+	return true;
+}
+>>>>>>> afc7ce7e601832cce8b148d6e18f0548c8fa25d2
