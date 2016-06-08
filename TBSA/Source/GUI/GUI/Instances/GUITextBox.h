@@ -14,5 +14,7 @@ class GUITextBox : public GUIElement
 
 	private:
 		TextBox myTextBox;
+
+		bool RecieveMessage(const LogTextMessage& aMessage) override;
 };
 
