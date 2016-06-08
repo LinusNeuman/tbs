@@ -10,6 +10,7 @@
 #include <Message/MouseButtonPressedMessage.h>
 #include <Message/MouseButtonReleasedMessage.h>
 #include <Message/MouseInputClear.h>
+#include <Message/SetTargetResolutionMessage.h>
 
 
 SingletonIsometricInputWrapper * SingletonIsometricInputWrapper::ourInstance = nullptr;
@@ -36,6 +37,7 @@ SingletonIsometricInputWrapper::SingletonIsometricInputWrapper()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eWindowProperties, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eCamera, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eTargetResolutionSet, *this);
 }
 
 
@@ -43,6 +45,7 @@ SingletonIsometricInputWrapper::~SingletonIsometricInputWrapper()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eWindowProperties, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eCamera, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eTargetResolutionSet, *this);
 }
 
 CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCartesianCordiante(const bool aOffsetToMiddle/* = false*/) const
@@ -55,8 +58,8 @@ CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCarte
 		mousePosition.y -= 0.5f;
 	}
 
-	mousePosition.x = mousePosition.x * (1920.f);
-	mousePosition.y = mousePosition.y * (1080.f);
+	mousePosition.x = mousePosition.x * (myTargetResolution.x);
+	mousePosition.y = mousePosition.y * (myTargetResolution.y);
 
 	return mousePosition;
 }
@@ -110,6 +113,12 @@ bool SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessa
 bool SingletonIsometricInputWrapper::RecieveMessage(const SetMainCameraMessage & aMessage)
 {
 	myCameraToAdjustTo = &aMessage.myCamera;
+	return true;
+}
+
+bool SingletonIsometricInputWrapper::RecieveMessage(const SetTargetResolutionMessage& aMessage)
+{
+	myTargetResolution = aMessage.myResolution;
 	return true;
 }
 

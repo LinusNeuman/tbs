@@ -35,6 +35,9 @@ private:
 
 	HWND myWindowHandle;
 
+	unsigned short myTargetResolutionX;
+	unsigned short myTargetResolutionY;
+
 	StartupData * myStartupData;
 	GameState * myMenuState;
 	GameState * mySplashState;
