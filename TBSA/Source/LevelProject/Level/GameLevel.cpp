@@ -18,7 +18,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <NavGraph/NavHandle.h>
 #include <NavGraph/Vertex/NavVertex.h>
-#include <input/SingletonIsometricInputWrapper.h>
+#include <input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 #include <Message/DijkstraMessage.h>
 
 #include <CU/Matriser/matrix.h>
@@ -26,27 +26,43 @@
 #include <Message/EndTurnMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 
-struct ActorPositionChangedMessage;
+struct PlayerPositionChangedMessage;
 const float sqrt2 = static_cast<float>(sqrt(2));
 
 GameLevel::GameLevel()
 {
+	myIsInitialized = false;
 }
 
 GameLevel::~GameLevel()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRoom, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eTurn, myTurnManager);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEndTurn, myTurnManager);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer);
+	myTiledData->myPlayerFactory->ReturnPlayer(myPlayer2);
+
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		myTiledData->myEnemyFactory->ReturnEnemy(myEnemies[i]);
+	}
 }
 
 void GameLevel::Init(TiledData* aTileData)
 {
 	myTiledData = aTileData;
+}
 
-	myFloor.Init(100);
+void GameLevel::InternalInit()
+{
+	if (myTiledData->myIsLoaded == false)
+	{
+		return;
+	}
+	StaticSprite::Sync();
+	//myFloor.Init(100);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eRoom, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eTurn, myTurnManager);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, myTurnManager);
 
 	SendPostMessage(LevelTileMetricsMessage(RecieverTypes::eLevelTileLayoutSettings, myTiledData->myMapSize));
 
@@ -95,12 +111,52 @@ void GameLevel::Init(TiledData* aTileData)
 		{
 			myFloor.GetTile(CU::Vector2ui(USHORTCAST(myObjectives[i]->GetPosition().x), USHORTCAST(myObjectives[i]->GetPosition().y))).SetTileType(eTileType::IS_OBJECTIVE);
 		}
+	}	
+	for (size_t y = 0; y < myFloor.GetDimensions().y; y++)
+	{
+		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
+		{
+			//myFloor.GetTile(x, y).SetVisible(true);
+			if (myFloor.GetTile(x,y).CheckIfWalkable() == false)
+			{
+				if (x + 1 < myFloor.GetDimensions().x && y + 1 < myFloor.GetDimensions().y &&
+					x - 1 > 0 && y + 1 > 0)
+				{
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH_EAST);
+					myFloor.GetTile(x, y - 1).RemoveAvailableDirection(eDirection::NORTH_WEST);
+
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::EAST);
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::NORTH_EAST);
+					myFloor.GetTile(x + 1, y).RemoveAvailableDirection(eDirection::SOUTH_WEST);
+
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::WEST);
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::NORTH_WEST);
+					myFloor.GetTile(x - 1, y).RemoveAvailableDirection(eDirection::SOUTH_EAST);
+
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH);
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH_WEST);
+					myFloor.GetTile(x, y + 1).RemoveAvailableDirection(eDirection::SOUTH_EAST);
+				}
+			}
+		}
 	}
+
+	myIsInitialized = true;
 
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)
 {
+	if (myIsInitialized == false)
+	{
+		InternalInit();
+		if (myIsInitialized == false)
+		{
+			return;
+		}
+	}
+
 	myFloor.Update();
 
 	const CommonUtilities::Vector2ui mousePosition = CommonUtilities::Vector2ui(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
@@ -125,7 +181,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
 	{
-		SendPostMessage(GUIMessage(RecieverTypes::eTurn));
+		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
 
 	if (IsometricInput::GetKeyPressed(DIK_F3))
@@ -147,15 +203,15 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 			}
 			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH && myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
 			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightRedShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightPurpleShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH)
 			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightBlueShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
 			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FieldOfViewShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightRedShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_RANGE)
 			{
@@ -171,13 +227,16 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 void GameLevel::Draw() const
 {
+	if (myIsInitialized == true)
+	{
 	myFloor.Draw();
 	myPlayer->Draw();
 	myPlayer2->Draw();
 	myEnemyController->Draw();
 }
+}
 
-void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
+bool GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 {
 	const CommonUtilities::Vector2ui position = aMessage.myPosition;
 	const int distance = aMessage.myDistance;
@@ -188,13 +247,14 @@ void GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 	const IsometricTile selectedTile = myFloor.GetTile(id);
 
 	myNavGraph.Dijkstra(selectedTile.GetVertexHandle(), distance);
+	return true;
 }
 
-void GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
+bool GameLevel::RecieveMessage(const NavigationClearMessage& aMessage)
 {
 	myNavGraph.Clear();
+	return true;
 }
-
 
 void GameLevel::ConstructNavGraph()
 {
@@ -245,4 +305,9 @@ void GameLevel::ConstructNavGraph()
 			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(west).GetVertexHandle());
 		}
 	}
+}
+
+TiledData* GameLevel::GetTiledData()
+{
+	return myTiledData;
 }

@@ -7,6 +7,8 @@ Camera2D::Camera2D()
 	myShaking = false;
 	myShakeDuration = 0;
 	myShakeForce = 1.f;
+
+	myMaxConstrains = TilePositionf(45.f, 45.f);
 }
 
 Camera2D::~Camera2D()
@@ -86,7 +88,13 @@ void Camera2D::Zoom(float aFraction)
 
 void Camera2D::MoveCamera(const CU::Vector2f & aPosition)
 {
-	myOrientation.SetPosition(myOrientation.GetPosition() + aPosition);
+	TilePositionf tempPosition = myOrientation.GetPosition() + aPosition;
+
+	if (tempPosition.x > 0.f && tempPosition.y > 0.f
+		&& tempPosition.x < myMaxConstrains.x && tempPosition.y < myMaxConstrains.y)
+	{
+		myOrientation.SetPosition(myOrientation.GetPosition() + aPosition);
+	}
 }
 
 void Camera2D::MoveCameraIsomertic(const CU::Vector2f & aPosition)

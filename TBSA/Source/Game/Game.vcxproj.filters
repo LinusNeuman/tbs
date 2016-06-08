@@ -17,7 +17,6 @@
       <Filter>Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="particleEmitter.h" />
-    <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="StartupReader\StartupReader.h" />
     <ClInclude Include="StartupReader\StartupData.h" />
   </ItemGroup>

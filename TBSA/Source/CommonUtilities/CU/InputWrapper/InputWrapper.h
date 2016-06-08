@@ -8,20 +8,12 @@
 #include "CU/DLDebug/DL_Debug.h"
 #include "CU/NameSpaceAliases.h"
 #include "CU/Vectors/vector2.h"
+#include "CU/InputWrapper/MouseButtonsEnum.h"
 
 
 
 namespace CommonUtilities
 {
-
-	enum class enumMouseButtons
-	{
-		eLeft,
-		eRight,
-		eMiddle,
-		enumLength
-	};
-
 	class InputWrapper
 	{
 	public:

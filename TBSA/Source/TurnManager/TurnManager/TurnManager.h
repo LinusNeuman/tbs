@@ -32,8 +32,9 @@ public:
 	EnemyController & GetEnemyController();
 
 	void ForceTurn(eTurn aTurn);
-	void RecieveMessage(const GUIMessage&) override;
-	void RecieveMessage(const FlagPlayerDiedMessage&) override;
+	bool RecieveMessage(const GUIMessage&) override;
+	bool RecieveMessage(const FlagPlayerDiedMessage&) override;
+	bool RecieveMessage(const FlagGoalReachedMessage&) override;
 private:
 	void EndTurn();
 
@@ -47,6 +48,7 @@ private:
 
 	eTurn myCurrentTurn;
 	bool myPlayerDied;
+	bool myReachedGoal;
 	PlayerController myPlayerController;
 	EnemyController myEnemyController;
 };

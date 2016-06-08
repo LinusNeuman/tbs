@@ -8,7 +8,7 @@
 #include <CU/Camera/Camera2D.h>
 #include <GameObjects/Room/GameFloor.h>
 #include <TurnManager/TurnManager.h>
-#include <Message/ActorPositionChangedMessage.h>
+#include <Message/PlayerPositionChangedMessage.h>
 
 class StaticSprite;
 class RenderConverter;
@@ -19,15 +19,18 @@ class GameLevel : public MessageReciever
 {
 public:
 	GameLevel();
-	~GameLevel();
+	virtual ~GameLevel();
 	void Init(TiledData* aTileData);
 	void Update(const CU::Time & aTimeDelta);
 	void Draw() const;
 
-	void RecieveMessage(const DijkstraMessage & aMessage) override;
-	void RecieveMessage(const NavigationClearMessage & aMessage) override;
+	bool RecieveMessage(const DijkstraMessage & aMessage) override;
+	bool RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
+
+	TiledData* GetTiledData();
 private:
+	void InternalInit();
 
 	GameFloor myFloor;
 	Player * myPlayer, *myPlayer2;
@@ -41,4 +44,6 @@ private:
 	CommonUtilities::Vector2ui myDimensions;
 
 	TurnManager myTurnManager;
+
+	bool myIsInitialized;
 };

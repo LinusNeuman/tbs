@@ -15,6 +15,11 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myDebugMode = false;
 	myIsVisible = false;
 	myIsInEnemyFoV = false;
+	myAvailableDirections.Init(8);
+	for (size_t i = 1; i < 9; i++)
+	{
+		myAvailableDirections.Add(static_cast<eDirection>(i * 10));
+	}
 }
 
 IsometricTile::~IsometricTile()
@@ -143,6 +148,11 @@ bool IsometricTile::GetVisible() const
 bool IsometricTile::GetInEnemyFov() const
 {
 	return myIsInEnemyFoV;
+}
+
+void IsometricTile::RemoveAvailableDirection(eDirection aDirection)
+{
+	myAvailableDirections.RemoveCyclic(aDirection);
 }
 
 VertexHandle IsometricTile::GetVertexHandle() const

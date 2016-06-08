@@ -15,9 +15,9 @@ public:
 	void UpdateEnemy();
 	virtual void ReachedTarget()override;
 	virtual void AlmostReachTarget() override;
-	
+	void SetDirection(eDirection aDirection);
 	EnemyController* myController;
-	void RecieveMessage(const PlayerSeenMessage& aMessage) override;
+	bool RecieveMessage(const PlayerSeenMessage& aMessage) override;
 
 	virtual void DecideAnimation() override;
 
@@ -36,6 +36,7 @@ public:
 private:
 	unsigned short myIndex;
 
+	bool myIsDeadeastFlag;
 	bool myHasMoved;
 	bool myHasTurned;
 	bool mySomeoneSeesPlayer;

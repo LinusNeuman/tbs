@@ -8,6 +8,60 @@
         },
         {
             "path": "Data/Animations/CombatAnimationAnimation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk000Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk045Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk090Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk135Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk180Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk225Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk270Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyWalk315Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle000Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle045Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle090Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle135Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle180Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle225Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle270Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy2/EnemyIdle315Animation.json"
+        },
+        {
+            "path": "Data/Animations/DeathAnimationAnimation.json"
+        },
+        {
+            "path": "Data/Animations/DeadestAnimation.json"
         }
     ]
 }

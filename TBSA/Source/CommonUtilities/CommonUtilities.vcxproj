@@ -278,6 +278,7 @@
     <ClInclude Include="CU\Heap\Lesser.h" />
     <ClInclude Include="CU\Heap\PointerGreater.h" />
     <ClInclude Include="CU\Heap\PointerLesser.h" />
+    <ClInclude Include="CU\InputWrapper\MouseButtonsEnum.h" />
     <ClInclude Include="CU\InputWrapper\SingletonInputWrapper.h" />
     <ClInclude Include="CU\Intersection\Intersections.h" />
     <ClInclude Include="CU\Intersection\Shapes2D\AABB2D.h" />

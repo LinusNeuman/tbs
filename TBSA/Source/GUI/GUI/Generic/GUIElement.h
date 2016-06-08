@@ -14,7 +14,7 @@
 #include <Rend/StaticSprite.h>
 #include <CU/Intersection/Shapes2D/AABB2D.h>
 #include <CU/Intersection/Intersection2D.h>
-#include <Input/SingletonIsometricInputWrapper.h>
+#include <Input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
 
 typedef unsigned char uchar;
 
@@ -26,7 +26,7 @@ public:
 	GUIElement();
 	virtual ~GUIElement();
 	
-	virtual void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true) = 0;
+	virtual void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric = false, bool aIsEnabled = true);
 
 	virtual void Destroy();
 
@@ -37,6 +37,7 @@ public:
 
 	virtual void WhenHovered();
 	virtual void WhenClicked();
+	virtual void WhenLeaved();
 
 	bool __forceinline GetIsHovered();
 

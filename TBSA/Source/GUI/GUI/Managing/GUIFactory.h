@@ -3,6 +3,8 @@
 #include <GUI/Generic/GUIElement.h>
 #include <unordered_map>
 
+#include <JsonWrapper/JsonWrapper.h>
+
 struct GUIIndexRange
 {
 	uchar myBegin;
@@ -37,6 +39,8 @@ private:
 	GUIFactory();
 
 	static GUIFactory* myInstance;
+
+	JsonWrapper myJSON;
 
 	//void LoadGUI();
 	//void ReloadGUI();
