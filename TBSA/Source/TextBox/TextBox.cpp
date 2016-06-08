@@ -1,6 +1,9 @@
 #include "TextBox.h"
 #include <iostream>
 #include <stack>
+#include <Rend\RenderCommand.h>
+#include <Rend\RenderConverter.h>
+#include <tga2d\text\text.h>
 
 #ifdef DEBUG_TEXTBOX
 #include <tga2d\engine.h>
@@ -13,8 +16,8 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 	myCurrentLine = 0;
 	myFontPath = aFontPath;
 	myMode = aMode;
-	SetSize(aDimensions);
-	SetPosition(aPosition);
+	SetSize({ aDimensions.x / 1920.f, aDimensions.y / 1080.f});
+	SetPosition({aPosition.x / 1920.f, aPosition.y / 1080.f});
 	Update();
 }
 
@@ -109,19 +112,19 @@ TextBox::SetPosition(const Vec2f aPosition)
 }
 
 void
-TextBox::SetSize(const Vec2f aPosition)
+TextBox::SetSize(const Vec2f aSize)
 {
-	myPosition = aPosition;
+	myDimensions = aSize;
 	myNumberOfLinesDisplayed = 0;
 
-	for (float i = 0.f; i < myDimensions.y; i += TEXT_HEIGHT / 1080.f)
+	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT / 1080.f)
 	{
 		++myNumberOfLinesDisplayed;
 	}
 }
 
 void
-TextBox::Render() const
+TextBox::Render()
 {
 #ifdef DEBUG_TEXTBOX
 	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine({ myPosition.x, myPosition.y }, { myPosition.x + myDimensions.x, myPosition.y }, {1.f, 0.f, 0.f, 1.f});
@@ -132,7 +135,8 @@ TextBox::Render() const
 
 	for (unsigned int i = 0; i < myRenderList.Size(); ++i)
 	{
-		myRenderList[static_cast<const unsigned short>(i)]->Render();
+		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], 1.f, 1));
+		//myRenderList[static_cast<const unsigned short>(i)]->Render();
 	}
 }
 
@@ -167,7 +171,7 @@ TextBox::Update()
 	{
 		if (myTextRows[i] != nullptr)
 		{
-			myTextRows[i]->myPosition = { myPosition.x, myPosition.y + myDimensions.y - (0.025f * row) };
+			myTextRows[i]->myPosition = { myPosition.x * 1920, myPosition.y * 1080 + myDimensions.y * 1080 - (0.025f * 1080 * row) };
 			myRenderList.Add(myTextRows[i]);
 		}
 

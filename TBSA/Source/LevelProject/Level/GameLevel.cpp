@@ -203,15 +203,15 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 			}
 			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH && myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
 			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightRedShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightPurpleShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH)
 			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightBlueShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
 			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FieldOfViewShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightRedShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_RANGE)
 			{
@@ -305,4 +305,9 @@ void GameLevel::ConstructNavGraph()
 			myFloor.GetTile(i).GetVertexHandle()->AddLink(currentEdge, myFloor.GetTile(west).GetVertexHandle());
 		}
 	}
+}
+
+TiledData* GameLevel::GetTiledData()
+{
+	return myTiledData;
 }

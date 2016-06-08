@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(SolutionDir)ParticleEmitter\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Audio\;$(SolutionDir)ParticleEmitter\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="GameStates\GameOverState.cpp" />
     <ClCompile Include="GameStates\LevelSelectState.cpp" />
+    <ClCompile Include="GameStates\LoadState.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
     <ClCompile Include="GameStates\PauseMenuState.cpp" />
@@ -135,10 +136,12 @@
   <ItemGroup>
     <ClInclude Include="GameStates\GameOverState.h" />
     <ClInclude Include="GameStates\LevelSelectState.h" />
+    <ClInclude Include="GameStates\LoadState.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
     <ClInclude Include="GameStates\PauseMenuState.h" />
     <ClInclude Include="GameStates\SplashState.h" />
+    <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

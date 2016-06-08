@@ -24,7 +24,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myHasTurned = false;
 	mySomeoneSeesPlayer = false;
 	myIsDeadeastFlag = false;
-	myCurrentPathIndex = 0;
+	myCurrentPathIndex = 1;
 	myAP = aEnemyData.myActionPoints;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	myEnemyPath.Init(1);
@@ -92,6 +92,11 @@ void Enemy::ReachedTarget()
 void Enemy::AlmostReachTarget()
 {
 	myController->EnemyDone();
+}
+
+void Enemy::SetDirection(eDirection aDirection)
+{
+	myDirection = aDirection;
 }
 
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)

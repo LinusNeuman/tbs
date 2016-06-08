@@ -27,6 +27,8 @@ public:
 	bool RecieveMessage(const DijkstraMessage & aMessage) override;
 	bool RecieveMessage(const NavigationClearMessage & aMessage) override;
 	void ConstructNavGraph();
+
+	TiledData* GetTiledData();
 private:
 	void InternalInit();
 
