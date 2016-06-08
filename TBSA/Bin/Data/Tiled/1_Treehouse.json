@@ -81,9 +81,6 @@
          "draworder":"topdown",
          "height":100,
          "name":"Players",
-<<<<<<< HEAD
-         "objects":[],
-=======
          "objects":[
                 {
                  "height":64,
@@ -115,7 +112,6 @@
                  "x":1856,
                  "y":1920
                 }],
->>>>>>> origin/master
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -129,14 +125,8 @@
          "name":"Enemies",
          "objects":[
                 {
-<<<<<<< HEAD
-                 "gid":387,
-                 "height":128,
-                 "id":12,
-=======
                  "height":64,
                  "id":22,
->>>>>>> origin/master
                  "name":"Enemy2",
                  "properties":
                     {
@@ -145,16 +135,6 @@
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
-<<<<<<< HEAD
-                 "width":128,
-                 "x":2494.66666666667,
-                 "y":1668
-                }, 
-                {
-                 "gid":387,
-                 "height":128,
-                 "id":13,
-=======
                  "width":64,
                  "x":2432,
                  "y":1600
@@ -162,7 +142,6 @@
                 {
                  "height":64,
                  "id":23,
->>>>>>> origin/master
                  "name":"Enemy1",
                  "properties":
                     {
@@ -171,11 +150,6 @@
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
-<<<<<<< HEAD
-                 "width":128,
-                 "x":2554,
-                 "y":2120.66666666667
-=======
                  "width":64,
                  "x":2496,
                  "y":2112
@@ -221,7 +195,6 @@
                  "width":54,
                  "x":2181.66666666667,
                  "y":1229.66666666666
->>>>>>> origin/master
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -241,11 +214,7 @@
          "x":0,
          "y":0
         }],
-<<<<<<< HEAD
- "nextobjectid":15,
-=======
  "nextobjectid":24,
->>>>>>> origin/master
  "orientation":"isometric",
  "properties":
     {
