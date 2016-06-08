@@ -51,6 +51,12 @@ private:
 	bool myReachedGoal;
 	PlayerController myPlayerController;
 	EnemyController myEnemyController;
+
+	StaticSprite* myPlayerTurnImage;
+	StaticSprite* myEnemyTurnImage;
+
+	float myTurnImageTimer;
+
 };
 
 inline PlayerController& TurnManager::GetPlayerController()
