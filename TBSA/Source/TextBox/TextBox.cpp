@@ -13,8 +13,8 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 	myCurrentLine = 0;
 	myFontPath = aFontPath;
 	myMode = aMode;
-	SetSize(aDimensions);
-	SetPosition(aPosition);
+	SetSize({ aDimensions.x / 1920.f, aDimensions.y / 1080.f});
+	SetPosition({aPosition.x / 1920.f, aPosition.y / 1080.f});
 	Update();
 }
 
@@ -109,12 +109,12 @@ TextBox::SetPosition(const Vec2f aPosition)
 }
 
 void
-TextBox::SetSize(const Vec2f aPosition)
+TextBox::SetSize(const Vec2f aSize)
 {
-	myPosition = aPosition;
+	myDimensions = aSize;
 	myNumberOfLinesDisplayed = 0;
 
-	for (float i = 0.f; i < myDimensions.y; i += TEXT_HEIGHT / 1080.f)
+	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT / 1080.f)
 	{
 		++myNumberOfLinesDisplayed;
 	}
