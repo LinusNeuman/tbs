@@ -159,7 +159,7 @@ void CGame::InitCallBack()
 	DX2D::CCustomShader* customHighlightBlackShader;
 	customHighlightBlackShader = new DX2D::CCustomShader();
 	customHighlightBlackShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
-	customHighlightBlackShader->PostInit("shaders/custom_color_vertex_shader.fx", "shaders/custom_highlightRed_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	customHighlightBlackShader->PostInit("shaders/custom_color_vertex_shader.fx", "shaders/custom_highlightBlack_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 
 	DX2D::CCustomShader* customHighlightBlueShader;
 	customHighlightBlueShader = new DX2D::CCustomShader();
