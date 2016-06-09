@@ -4,6 +4,7 @@
 #include <Rend\RenderCommand.h>
 #include <Rend\RenderConverter.h>
 #include <tga2d\text\text.h>
+#include <CU\Utility\DataHolder\SingletonDataHolder.h>
 
 #ifdef DEBUG_TEXTBOX
 #include <tga2d\engine.h>
@@ -16,8 +17,8 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 	myCurrentLine = 0;
 	myFontPath = aFontPath;
 	myMode = aMode;
-	SetSize({ aDimensions.x / 1920.f, aDimensions.y / 1080.f});
-	SetPosition({aPosition.x / 1920.f, aPosition.y / 1080.f});
+	SetSize({ aDimensions.x / SingletonDataHolder::GetTargetResolution().x, aDimensions.y / SingletonDataHolder::GetTargetResolution().y});
+	SetPosition({aPosition.x / SingletonDataHolder::GetTargetResolution().x, aPosition.y / SingletonDataHolder::GetTargetResolution().y});
 	Update();
 }
 
@@ -117,7 +118,7 @@ TextBox::SetSize(const Vec2f aSize)
 	myDimensions = aSize;
 	myNumberOfLinesDisplayed = 0;
 
-	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT / 1080.f)
+	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT / SingletonDataHolder::GetTargetResolution().y)
 	{
 		++myNumberOfLinesDisplayed;
 	}
@@ -171,7 +172,7 @@ TextBox::Update()
 	{
 		if (myTextRows[i] != nullptr)
 		{
-			myTextRows[i]->myPosition = { myPosition.x * 1920, myPosition.y * 1080 + myDimensions.y * 1080 - (0.025f * 1080 * row) };
+			myTextRows[i]->myPosition = { myPosition.x * SingletonDataHolder::GetTargetResolution().x, myPosition.y * SingletonDataHolder::GetTargetResolution().y + myDimensions.y * SingletonDataHolder::GetTargetResolution().y - (0.025f * SingletonDataHolder::GetTargetResolution().y * row) };
 			myRenderList.Add(myTextRows[i]);
 		}
 
