@@ -33,7 +33,6 @@ public:
 	void SetPath(const PathArray & aPath);
 
 	void ChangeAnimation(const std::string& anAnimation);
-	void AddAnimation(Animation* anAnimation);
 
 	void StopPath();
 

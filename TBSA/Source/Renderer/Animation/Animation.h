@@ -3,13 +3,17 @@
 #include <JsonWrapper/JsonWrapper.h>
 #include <Rend/StaticSprite.h>
 
+namespace CommonUtilities{
+	class Time;
+}
+
 class Animation
 {
 public:
 	Animation();
 	~Animation();
 	void InitializeAnimation(picojson::object& anAnimationObject);
-	void UpdateAnimation();
+	void UpdateAnimation(CommonUtilities::Time aDeltaTime);
 	void StartAnimation();
 	void StopAnimation();
 	void StopAnimationAtEnd();
