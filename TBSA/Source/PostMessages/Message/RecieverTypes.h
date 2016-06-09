@@ -2,6 +2,7 @@
 
 enum class RecieverOrder
 {
+	eGUI,
 	eDefault = 100,
 	enumLength
 };
@@ -44,5 +45,8 @@ enum class RecieverTypes
 	eGameOverReset,
 	eClosePauseMenu,
 	eLogText,
+	eClearLog,
+	eScrollLogUp,
+	eScrollLogDown,
 	enumlength
 };

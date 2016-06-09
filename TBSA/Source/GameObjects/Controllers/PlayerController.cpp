@@ -24,6 +24,7 @@
 #include <Message/FlagGoalReachedMessage.h>
 #include <Message/PlayerCanPeekMessage.h>
 #include <Message/PlayerIDMessage.h>
+#include <Message/PlayerAPChangedMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -301,6 +302,8 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 void PlayerController::PrePlayer()
 {
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
+	
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, mySelectedPlayer->GetMyAP()));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
 }
@@ -320,8 +323,17 @@ void PlayerController::SetCameraPositionToPlayer(int aIndex)
 
 void PlayerController::AfterPlayerTurn()
 {
+	ResetTileShaders();
 	for (size_t i = 0; i < myPlayers.Size(); i++)
 	{
+		if (myFloor->GetTile(myPlayers[i]->GetPosition().x, myPlayers[i]->GetPosition().y).GetTileType() == eTileType::DOOR)
+		{
+			CreatePlayerFoV(myPlayers[i]->GetPreviousPosition(), PlayerFoWRadius);
+		}
+		else
+		{
+			CreatePlayerFoV(myPlayers[i]->GetPosition(), PlayerFoWRadius);	
+		}
 		myPlayers[i]->AfterTurn();
 	}
 }
@@ -377,7 +389,6 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 
 bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessage)
 {
-	ResetTileShaders();
 	myDebugStart.clear();
 	myDebugEnd.clear();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
@@ -507,17 +518,8 @@ void PlayerController::BuildPath(PathArray & aPathContainterToBuild)
 void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
 {
 	bool hasAlreadyBeenBlocked = false;
-	bool playerStandingInDoor = false;
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
-	if (myFloor->GetTile(CU::Vector2ui(aPosition.x, aPosition.y)).GetTileType() == eTileType::DOOR)
-	{
-		playerStandingInDoor = true;
-	}
-	else
-	{
-		playerStandingInDoor = false;
-	}
 	double x0, x1, y0, y1;
 	x0 = position.x;
 	y0 = position.y;
@@ -541,30 +543,14 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 	for (; n > 0; --n)
 	{
-		std::cout << playerStandingInDoor << std::endl;
-		if (playerStandingInDoor == false)
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-			{
-				myFloor->GetTile(x, y).SetVisible(true);
-				break;
-			}
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-			{
-				break;
-			}
+			myFloor->GetTile(x, y).SetVisible(true);
+			break;
 		}
-		else
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
-			{
-				myFloor->GetTile(x, y).SetVisible(true);
-				break;
-			}
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED)
-			{
-				break;
-			}
+			break;
 		}
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
 		{

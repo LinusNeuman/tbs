@@ -81,6 +81,15 @@ void TextBox::AddText_CharWrap(DX2D::CText* aText)
 }
 
 void
+TextBox::Clear()
+{
+	for (unsigned int i = 0; i < myNumberOfLinesDisplayed; ++i)
+	{
+		AddText("");
+	}
+}
+
+void
 TextBox::AddText(std::string aText)
 {
 	DX2D::CText* tmp = new DX2D::CText(myFontPath.c_str());

@@ -69,7 +69,6 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		{
 			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
 		}
-		
 	}
 }
 
@@ -106,7 +105,6 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 {
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
-	CU::Vector2f direction = (position - secondPosition).GetNormalized();
 	double x0, x1, y0, y1;
 	x0 = position.x;
 	y0 = position.y;
@@ -125,7 +123,7 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 
 	for (; n > 0; --n)
 	{
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
+		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR || myFloor->GetTile(x, y).GetTileType() == eTileType::COVER)
 		{
 			break;
 		}
@@ -201,7 +199,6 @@ void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, co
 	CU::Vector2f test4 = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle4))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle4))));
 
 	CU::Vector2f test5;
-	//this should be alot less messy when enemies has directions, which would probably be with enums or something.
 
 	if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == 1)
 	{

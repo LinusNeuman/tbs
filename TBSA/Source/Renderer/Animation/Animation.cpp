@@ -55,11 +55,11 @@ void Animation::InitializeAnimation(picojson::object& anAnimationObject)
 	myIsRunning = true;
 }
 
-void Animation::UpdateAnimation()
+void Animation::UpdateAnimation(CommonUtilities::Time aDeltaTime)
 {	
 	if (myIsRunning == true)
 	{
-		myAnimationTimer += CommonUtilities::TimeManager::GetDeltaTime().GetSeconds();
+		myAnimationTimer += aDeltaTime.GetSeconds();
 
 		if (myAnimationTimer >= 1.f / myAnimationSpeed)
 		{
