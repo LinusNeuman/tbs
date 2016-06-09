@@ -15,6 +15,7 @@ enum class eTileType
 	DOOR,
 	DOOR_2,
 	IS_OBJECTIVE,
+	COVER,
 	Size
 };
 
