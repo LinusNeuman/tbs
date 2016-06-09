@@ -2,6 +2,7 @@
 
 enum class RecieverOrder
 {
+	eGUI,
 	eDefault = 100,
 	enumLength
 };
