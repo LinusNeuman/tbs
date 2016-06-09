@@ -6,6 +6,7 @@
 #include <GUI/Instances/GUIButton.h>
 #include <GUI/Instances/GUITextBox.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
+#include <GUI/Instances/GUIActionPointsBar.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -50,6 +51,12 @@ void GUIFactory::Load()
 			GUITextBox* textBox = new GUITextBox({ 1.f, 1.f }, { 640.f, 320.f }, "Text/calibril.ttf_sdf");
 
 			myGUIElements.Add(textBox);
+
+			GUIActionPointsBar* APBar = new GUIActionPointsBar();
+
+			myGUIElements.Add(APBar);
+
+			++elementsAdded;
 
 			myGUILookup["InGame"].myEnd = elementsAdded;
 
