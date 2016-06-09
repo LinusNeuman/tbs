@@ -31,28 +31,28 @@
           "path": "Data/Animations/Enemy1/EnemyWalk315Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle000Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert000Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle045Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert045Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle090Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert090Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle135Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert135Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle180Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert180Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle225Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert225Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle270Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert270Animation.json"
         },
 		{
-          "path": "Data/Animations/Enemy1/EnemyIdle315Animation.json"
+          "path": "Data/Animations/Enemy1/EnemyAlert315Animation.json"
         },
         {
             "path": "Data/Animations/CombatAnimationAnimation.json"
