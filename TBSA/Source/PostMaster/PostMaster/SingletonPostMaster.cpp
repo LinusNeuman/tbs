@@ -25,7 +25,7 @@ void SingletonPostMaster::Destroy()
 
 void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd, const RecieverOrder aPriority /*= RecieverOrder::eDefault*/)
 {
-	Reciever tempReciver(aRecieverToAdd, aPriority);
+	Reciever tempReciver(aRecieverToAdd, aRecieverToAdd.myRecieverOrder);
 	if (aRecieverToAdd.myRecieverOrder != RecieverOrder::eDefault)
 	{
 		tempReciver = Reciever(aRecieverToAdd, aRecieverToAdd.myRecieverOrder);
@@ -41,6 +41,7 @@ void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, Messag
 		if (tempReciver.myOrder < GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)][iReciever].myOrder)
 		{
 			GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)].Insert(iReciever, tempReciver);
+			return;
 		}
 	}
 
