@@ -35,12 +35,9 @@ class SingletonPostMaster
 public:
 	static void Create();
 	static void Destroy();
-
 	static void AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd, const RecieverOrder aPriority = RecieverOrder::eDefault);
 	static void RemoveReciever(const RecieverTypes aTypeUnsubscribe, MessageReciever & aRecieverToRemove);
-
 	static void RemoveReciever(MessageReciever &aReceiver);
-	
 	static bool CheckIfExists();
 	
 	template <typename MessageType>

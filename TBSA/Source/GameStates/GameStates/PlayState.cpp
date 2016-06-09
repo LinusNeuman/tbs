@@ -11,6 +11,11 @@
 #include <StateStack/StateStack.h>
 #include <StateStack/ProxyStateStack.h>
 #include "GameOverState.h"
+#include "LoadState.h"
+#include "Message\LogTextMessage.h"
+#include "Message\ClearLogMessage.h"
+#include "Message\ScrollLogDownMessage.h"
+#include "Message\ScrollLogUpMessage.h"
 
 PlayState::PlayState()
 {
@@ -70,6 +75,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myLevel->Update(aTimeDelta);
 	myEmitter.Update(aTimeDelta);
 
+
+
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
 		myShouldExit = false;
@@ -89,6 +96,22 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		ChangeLevel("SecondTest.json");
 	}
+	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
+	{
+		SendPostMessage(LogTextMessage(RecieverTypes::eLogText, "Wee!"));
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_DELETE) == true)
+	{
+		SendPostMessage(ClearLogMessage(RecieverTypes::eClearLog));
+	}
+	else if (IsometricInput::GetKeyReleased(DIK_PGUP) == true)
+	{
+		SendPostMessage(ScrollLogUpMessage(RecieverTypes::eScrollLogUp));
+	}
+	else if (IsometricInput::GetKeyReleased(DIK_PGDN) == true)
+	{
+		SendPostMessage(ScrollLogDownMessage(RecieverTypes::eScrollLogDown));
+	}
 
 	if (myShouldPause == true)
 	{
@@ -103,6 +126,11 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		GameOverState *newState = new GameOverState();
 		newState->Init();
 		aStateStack.AddSubState(newState);
+	}
+
+	if (myLevel->GetTiledData()->myIsLoaded == false)
+	{
+		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
 	}
 
 	return eStackReturnValue::eStay;

@@ -1,6 +1,10 @@
 #include "TextBox.h"
 #include <iostream>
 #include <stack>
+#include <Rend\RenderCommand.h>
+#include <Rend\RenderConverter.h>
+#include <tga2d\text\text.h>
+#include <CU\Utility\DataHolder\SingletonDataHolder.h>
 
 #ifdef DEBUG_TEXTBOX
 #include <tga2d\engine.h>
@@ -13,8 +17,8 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 	myCurrentLine = 0;
 	myFontPath = aFontPath;
 	myMode = aMode;
-	SetSize(aDimensions);
-	SetPosition(aPosition);
+	SetSize({ aDimensions.x / SingletonDataHolder::GetTargetResolution().x, aDimensions.y / SingletonDataHolder::GetTargetResolution().y});
+	SetPosition({aPosition.x / SingletonDataHolder::GetTargetResolution().x, aPosition.y / SingletonDataHolder::GetTargetResolution().y});
 	Update();
 }
 
@@ -77,6 +81,15 @@ void TextBox::AddText_CharWrap(DX2D::CText* aText)
 }
 
 void
+TextBox::Clear()
+{
+	for (unsigned int i = 0; i < myNumberOfLinesDisplayed; ++i)
+	{
+		AddText("");
+	}
+}
+
+void
 TextBox::AddText(std::string aText)
 {
 	DX2D::CText* tmp = new DX2D::CText(myFontPath.c_str());
@@ -109,19 +122,19 @@ TextBox::SetPosition(const Vec2f aPosition)
 }
 
 void
-TextBox::SetSize(const Vec2f aPosition)
+TextBox::SetSize(const Vec2f aSize)
 {
-	myPosition = aPosition;
+	myDimensions = aSize;
 	myNumberOfLinesDisplayed = 0;
 
-	for (float i = 0.f; i < myDimensions.y; i += TEXT_HEIGHT / 1080.f)
+	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT / SingletonDataHolder::GetTargetResolution().y)
 	{
 		++myNumberOfLinesDisplayed;
 	}
 }
 
 void
-TextBox::Render() const
+TextBox::Render()
 {
 #ifdef DEBUG_TEXTBOX
 	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine({ myPosition.x, myPosition.y }, { myPosition.x + myDimensions.x, myPosition.y }, {1.f, 0.f, 0.f, 1.f});
@@ -132,7 +145,8 @@ TextBox::Render() const
 
 	for (unsigned int i = 0; i < myRenderList.Size(); ++i)
 	{
-		myRenderList[static_cast<const unsigned short>(i)]->Render();
+		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], 1.f, 1));
+		//myRenderList[static_cast<const unsigned short>(i)]->Render();
 	}
 }
 
@@ -167,7 +181,7 @@ TextBox::Update()
 	{
 		if (myTextRows[i] != nullptr)
 		{
-			myTextRows[i]->myPosition = { myPosition.x, myPosition.y + myDimensions.y - (0.025f * row) };
+			myTextRows[i]->myPosition = { myPosition.x * SingletonDataHolder::GetTargetResolution().x, myPosition.y * SingletonDataHolder::GetTargetResolution().y + myDimensions.y * SingletonDataHolder::GetTargetResolution().y - (0.025f * SingletonDataHolder::GetTargetResolution().y * row) };
 			myRenderList.Add(myTextRows[i]);
 		}
 

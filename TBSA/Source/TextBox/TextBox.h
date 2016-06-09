@@ -1,17 +1,23 @@
 #pragma once
 #pragma once
 
-#define CU CommonUtilities
+//#define CU CommonUtilities
 #define Vec2f CommonUtilities::Vector2f
 #define MAX_TEXT_ROWS 100
 #define TEXT_HEIGHT 28
 #define DEBUG_TEXTBOX
 
+#include "../CommonUtilities/CU/NameSpaceAliases.h"
 #include <string>
-#include <tga2d\text\text.h>
+//#include <tga2d\text\text.h>
 #include <CU\Vectors\vector2.h>
 #include <CU\GrowingArray\GrowingArray.h>
 #include "FalloffStack.h"
+
+namespace DX2D
+{
+	class CText;
+}
 
 enum class eLinewrappingMode
 {
@@ -25,15 +31,16 @@ class TextBox
 		TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::string aFontPath, eLinewrappingMode aMode = eLinewrappingMode::Char);
 
 		void AddText(std::string aText);
-		void Render() const;
+		void Render();
 		void ScrollUp();
 		void ScrollDown();
 		void SetLineWrappingMode(const eLinewrappingMode aMode);
 		void SetSize(const Vec2f aDimensions);
 		void SetPosition(const Vec2f aPosition);
+		void Clear();
+		void Update();
 
 	private:
-		void Update();
 		void AddText_CharWrap(DX2D::CText* aText);
 		void AddText_WordWrap(DX2D::CText* aText);
 

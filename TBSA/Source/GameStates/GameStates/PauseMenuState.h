@@ -10,8 +10,14 @@ public:
 	void Draw() const override;
 
 	bool RecieveMessage(const GUIMessage & aMessage) override;
+
+	virtual bool RecieveMessage(const SetTargetResolutionMessage& aMessage) override;
+
 private:
 	StaticSprite* myBackgroundSprite;
+
+	CU::Vector2ui myTargetResolution;
+
 	bool myShouldAdd;
 	bool myShouldPop;
 };

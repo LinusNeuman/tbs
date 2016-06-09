@@ -1,6 +1,7 @@
 {
+    "maxActionPoints" : 6,
     "actorType": 1,
-     "attackCost" : 1,
+    "attackCost" : 1,
     "peekCost" : 1,
     "animations": 
     [
@@ -51,6 +52,30 @@
 	    },
 	    {
 	        "path": "Data/Animations/Player2/longJohnWalk315Animation.json"
-	    }
+	    },
+        {
+            "path": "Data/Animations/Player2/playerAlert000Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player2/playerAlert045Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player2/playerAlert090Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player2/playerAlert135Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player2/playerAlert180Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player2/playerAlert225Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player2/playerAlert270Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player2/playerAlert315Animation.json"
+        }
     ]
 }
