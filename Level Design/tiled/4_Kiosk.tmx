@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="isometric" renderorder="right-down" width="100" height="100" tilewidth="128" tileheight="64" nextobjectid="1">
- <tileset firstgid="1" name="tileSheetFloors" tilewidth="128" tileheight="128" tilecount="256" columns="16">
-  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetFloors.png" width="2048" height="2048"/>
+ <tileset firstgid="1" name="tileSheetFloors" tilewidth="128" tileheight="128" tilecount="129" columns="16">
+  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetFloors.png" width="2048" height="1024"/>
  </tileset>
- <tileset firstgid="257" name="tileSheetWalls" tilewidth="128" tileheight="128" tilecount="256" columns="16">
-  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetWalls.png" width="2048" height="2048"/>
+ <tileset firstgid="242" name="tileSheetWalls" tilewidth="128" tileheight="128" tilecount="128" columns="16">
+  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetWalls.png" width="2048" height="1024"/>
  </tileset>
- <tileset firstgid="513" name="tileSheetProps" tilewidth="128" tileheight="128" tilecount="256" columns="16">
-  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetProps.png" width="2048" height="2048"/>
+ <tileset firstgid="370" name="tileSheetProps" tilewidth="128" tileheight="128" tilecount="128" columns="16">
+  <image source="../../TBSA/Bin/Sprites/SpriteSheets/tileSheetProps.png" width="2048" height="1024"/>
  </tileset>
  <layer name="floor" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt1NEJgEAMBUH779YObOB+Inewygy8BrKQ6wIAAAAAAAAAAJi7F2NudcddY06PFj1a9GjRo8X9u3b00Gifk79Lmzk9WvRo0aPjdAs93tGjRY8WPVr0+Ac9WvRo0aNFjxY9WvQAAAAAAAAAAAAAAAAAAAAAAAAAAAC+7AHraJEa
+   eJzt08EJgEAMAMGz/2rtwAqEO1FZZQbyyytLxgAAAAAAAAAAgL7tZFhzdse7hjV6tOjRokeLHi16tDzdQ5Nr3uiizTw9Wq7ed1/cZ47/aNGjRY8mPVr0aNGjRY9/0KNFjxY9WvRo0aNFDwAAAAAAAAAAAAAAAAAAAAAAAAAA4OsOBdgC2A==
   </data>
  </layer>
  <layer name="coverBehind" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt1sEJADAIBEFTgf1368MWAhoyA1fBfi4CAAAAAAAAAAAA4E15eszTYRc9AOBPPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3FOjCABR
+   eJzt1kERADAIAzBmF/8C9pkHYCR3NUD7IAIAAAAAAAAAAABgqPNCPT30og8A2MkPwEJp92XcHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgN9du3sA3A==
   </data>
  </layer>
  <layer name="walls" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2QFqAjEQBdDdbT2ALd7/qmVphSEkNQ6RTuE9CMIqIvNJZoLbBgAAAAAAAAAA9b3t2/YZ1vv+17/of2rreF+3wfPRuv7U/3Z8v37II2VUt2fr2X5eHjmvqps8cuyPWmbziH3mFHvM6dr0k0MeKZfQv09tf77r5Raf2Q9rPTpvZvOI+8jMm7cij/acusgmbdX+mP1+fiePWnr1j7PU3rmTH/J4mThn9ebVmXqPZuHevMac7P0wc97x2Kq6yWMN+6OWeGeIq9fPR++fnu0/rGW+qkUetcijFnnUIo9aRnOZ/6cAAAAAAAAAAAAAAAAAAAAAAAAAAADI+AJOxQtr
+   eJzt2dFOwjAUBuAuKvj+jyrqNXKxeNZsa1dKLPH7kl5sgWU5f9qeQkoAAAAAAAAAADC+z5/xEcbX377O08rrOI/TtH5/a7xNy+e+ZNfU2arb0Xrmn5dHm0fVTR5tzI+x1OYR95mUlnvMzTnbby79X/Vf+E6/tU3p2P4c75kPfZXWm9o84jzS87a7N495vYrr1Dz3ZHNcr/lR+3z2yWMseb3O07KXel05r192vl96Pvtin7XWr5bqmed3yq7zfo06refDlvWOsl51k0cf5sdY4pkhjvfC7+9xv785uv/Ql/5qLPIYizzGIo+xyGMsW32Z/6cAAAAAAAAAAAAAAAAAAAAAAAAAAABocQWcNFHy
   </data>
  </layer>
  <layer name="objectives" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt17kJADAMA8DgGfLsv2kKr2BwIHegXpVAYwAAAAAAAAAAAAAAUGVGdwMq7cjAb05kAF6w7BEAjfx8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIB/XW2OAKY=
+   eJzt1rENACAMAzA4CU7mFg5j6QUsrcCWsmdLWgMAAAAAAAAAALizenYDAIB6fKS3zAj8ZkQAKvCvAMi07RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwLcOs80DdQ==
   </data>
  </layer>
  <layer name="coverFront" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2IEJACAIBECboP23jWiChMrgDlzARx6MAAAAAAAAAAAAAKbe1gBA1m6P6J2z7Pdv8qtFHgAA9/hT1iGHOtwFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPDCAMoGAME=
+   eJzt2IEJACAMA7D5/9OC+ICCWiGBPbAyCqsCAAAAAAAAAAAAhjYHAHat9ojeOct+/ya/LPIAALjHnzKHHHK4CwAAAAAAAAAAAAAAAAAAAAAAAAAAAADggQ5/EwAN
   </data>
  </layer>
 </map>
