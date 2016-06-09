@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "RenderCommand.h"
 #include <tga2d/sprite/sprite.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 RenderCommand::RenderCommand()
 {
@@ -50,6 +51,12 @@ void RenderCommand::Render() const
 
 	DX2D::Vector2f tempPosition;
 
+	float normalizedWindowSizeX = mySprite->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
+	float normalizedWindowSizeY = mySprite->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
+
+	//DX2D::Vector2f tempSize(normalizedWindowSizeX * myRenderData.mySize.x, normalizedWindowSizeY * myRenderData.mySize.y);
+	DX2D::Vector2f tempSize(myRenderData.mySize.x, myRenderData.mySize.y);
+
 	if (myMiddleScreenOffset == true)
 	{
 		tempPosition.x = myPosition.x + 0.5f;
@@ -65,6 +72,7 @@ void RenderCommand::Render() const
 	{
 		mySprite->SetColor(tempColor);
 		mySprite->SetPosition(tempPosition);
+		mySprite->SetSize(tempSize);
 
 		mySprite->SetCustomShader(myRenderData.myShaderPtr);
 

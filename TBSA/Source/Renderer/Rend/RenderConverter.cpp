@@ -70,6 +70,8 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 
 	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
+
+
 	//RenderData tempRenderData(aSpriteToRender.GetColor());
 
 	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), /*tempOffset +*/ newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData(), true));

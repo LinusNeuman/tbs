@@ -20,6 +20,8 @@ public:
 	static void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor = CU::Vector4f::One);
 	static void DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor = CU::Vector4f::One);
 
+	static void SetRenderSize();
+
 	static void Draw();
 	//static void SetCamera(const Camera2D & aCamera);
 

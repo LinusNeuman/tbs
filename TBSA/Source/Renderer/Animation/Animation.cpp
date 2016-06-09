@@ -152,5 +152,6 @@ void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2
 	float normalizedWindowSizeX = newSprite->GetSprite()->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
 	float normalizedWindowSizeY = newSprite->GetSprite()->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
-	newSprite->GetSprite()->SetSize(DX2D::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
+	//newSprite->GetSprite()->SetSize(DX2D::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
+	newSprite->myRenderData.mySize = CU::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight);
 }

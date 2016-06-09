@@ -95,7 +95,7 @@ public:
 	enumRenderLayer GetLayer() const;
 	void SetLayer(const enumRenderLayer aRenderLayer);
 
-	DX2D::CSprite * GetSprite() const;
+	
 	unsigned short GetImageIndex() const;
 	unsigned short AddImage(const std::string& aFilePath, const CU::Vector4f& aRect = CU::Vector4f::One, const CU::Vector2f& aPivotPoint = CU::Vector2f::Zero);
 	unsigned short AddImageAssync(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
@@ -112,12 +112,15 @@ public:
 	void SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel);
 	const CU::Vector2f & GetPivotInPixels() const;
 
+	DX2D::CSprite * GetSprite() const;
 	void SetShader(DX2D::CCustomShader * aCustomShader);
 
 	static void Sync();
 
 	std::string myShaderName;
+	RenderData myRenderData;
 private:
+	
 	const RenderData & GetRenderData() const;
 
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
@@ -133,7 +136,7 @@ private:
 	unsigned short myImageIndex;
 
 	enumRenderLayer myLayer;
-	RenderData myRenderData;
+	
 
 	CU::Vector2f myPositionOffset;
 

@@ -3,6 +3,7 @@
 #include "tga2d/sprite/sprite.h"
 #include "RenderConverter.h"
 #include <CU/Utility/Math/Isometric.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 
 
@@ -52,19 +53,47 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 {
 	IndexKey tempKey(aFilePath, aRect);
 
+	bool foundValue = false;
+	DX2D::CSprite * workSprite = nullptr;
 	if (ourIndexDictionary.count(tempKey) > 0)
 	{
 		unsigned short tempIndex = ourIndexDictionary[tempKey];
-		return tempIndex;
+		foundValue = true;
+		workSprite = ourSprites[tempIndex];
+	}
+	else
+	{
+		ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
+		workSprite = ourSprites.GetLast();
 	}
 
-	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
-	DX2D::CSprite * tempSprite = ourSprites.GetLast();
+	const float spriteWidth = static_cast<float>(workSprite->GetImageSize().x);
+	const float spriteHeight = static_cast<float>(workSprite->GetImageSize().y);
+
+	const float TempStartPointX = aRect.x / spriteWidth;
+	const float TempStartPointY = aRect.y / spriteHeight;
+
+	const float TempWidth = aRect.Width / spriteWidth;
+	const float TempHeight = aRect.Height / spriteHeight;
+
+	const float TempEndPointX = TempStartPointX + TempWidth;
+	const float TempEndPointY = TempStartPointY + TempHeight;
 	
+	float normalizedWindowSizeX = workSprite->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
+	float normalizedWindowSizeY = workSprite->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
+
+	myRenderData.mySize = (CU::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
+
+	if (foundValue == true)
+	{
+		return ourIndexDictionary[tempKey];
+	}
+
+	workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 
 	if (aRect != CU::Vector4f::Zero)
 	{
-		const float spriteWidth = static_cast<float>(tempSprite->GetImageSize().x);
+		/*const float spriteWidth = static_cast<float>(tempSprite->GetImageSize().x);
 		const float spriteHeight = static_cast<float>(tempSprite->GetImageSize().y);
 
 		const float TempStartPointX = aRect.x / spriteWidth;
@@ -74,21 +103,21 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		const float TempHeight = aRect.Height / spriteHeight;
 
 		const float TempEndPointX = TempStartPointX + TempWidth;
-		const float TempEndPointY = TempStartPointY + TempHeight;
+		const float TempEndPointY = TempStartPointY + TempHeight;*/
 
-		tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
-		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
+		//tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
+		//tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
 
 		mySizeWithoutWhitespace = { aRect.z, aRect.w };
 	}
 
 	if (myIsIsometricFlag == true)
 	{
-		tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
+		workSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
 	}
 	else
 	{
-		tempSprite->SetPivot(DX2D::Vector2f(aPivotPoint.x, aPivotPoint.y));
+		workSprite->SetPivot(DX2D::Vector2f(aPivotPoint.x, aPivotPoint.y));
 	}
 
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);

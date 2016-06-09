@@ -22,6 +22,7 @@ struct RenderData
 	/*RenderData(const RenderData& aData) : myColor(aData.myColor)
 	{}*/
 
+	CU::Vector2f mySize;
 	CU::Vector4f myColor;
 	DX2D::CCustomShader * myShaderPtr;
 };
