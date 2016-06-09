@@ -1,0 +1,20 @@
+{
+	"stages":[
+		[
+			{
+				"type" : "kill",
+				"target" : "enemy1",
+			},
+		],
+		[
+			{
+				"type" : "on_objective",
+				"target" : "endzone1",
+			},
+			{
+				"type" : "on_objective",
+				"target" : "endzone2",
+			},
+		],
+	],
+}

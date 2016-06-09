@@ -28,6 +28,9 @@
     <ClInclude Include="TiledLoader\PathAndName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="JsonHelp\JsonHelp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -35,5 +38,6 @@
     </ClCompile>
     <ClCompile Include="TiledLoader\TiledLoader.cpp" />
     <ClCompile Include="TiledLoader\SpriteSheet\SpriteSheet.cpp" />
+    <ClCompile Include="JsonHelp\JsonHelp.cpp" />
   </ItemGroup>
 </Project>
