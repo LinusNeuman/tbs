@@ -215,6 +215,7 @@
   <ItemGroup>
     <ClInclude Include="Message\ClearLogMessage.h" />
     <ClInclude Include="Message\FlagGoalReachedMessage.h" />
+    <ClInclude Include="Message\LevelChangeMassage.h" />
     <ClInclude Include="Message\LogTextMessage.h" />
     <ClInclude Include="Message\MouseButtonDownMessage.h" />
     <ClInclude Include="Message\MouseButtonPressedMessage.h" />

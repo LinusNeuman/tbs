@@ -174,3 +174,8 @@ bool MessageReciever::RecieveMessage(const ScrollLogUpMessage& aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const LevelChangeMassage& aMessage)
+{
+	return true;
+}

@@ -41,5 +41,6 @@
     <ClInclude Include="Message\ClearLogMessage.h" />
     <ClInclude Include="Message\ScrollLogUpMessage.h" />
     <ClInclude Include="Message\ScrollLogDownMessage.h" />
+    <ClInclude Include="Message\LevelChangeMassage.h" />
   </ItemGroup>
 </Project>

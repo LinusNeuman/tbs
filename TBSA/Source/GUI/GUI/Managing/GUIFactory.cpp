@@ -7,6 +7,7 @@
 #include <GUI/Instances/GUITextBox.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <GUI/Instances/GUIActionPointsBar.h>
+#include <Message\LevelChangeMassage.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -150,6 +151,21 @@ void GUIFactory::Load()
 					if (clickEvent == "Restart")
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "LevelSelect")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eLevelSelect), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel1")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 1), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel2")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 2), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);

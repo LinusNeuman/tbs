@@ -47,5 +47,7 @@ enum class RecieverTypes
 	eClearLog,
 	eScrollLogUp,
 	eScrollLogDown,
+	eLevelSelect,
+	eGoToLevel,
 	enumlength
 };
