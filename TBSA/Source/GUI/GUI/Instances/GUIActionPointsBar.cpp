@@ -14,9 +14,11 @@ GUIActionPointsBar::GUIActionPointsBar()
 
 	myAPSpentIcon = new StaticSprite();
 	myAPSpentIcon->Init("Sprites/GUI/HUD/AP/Spent.dds", false);
+	myAPSpentIcon->SetLayer(enumRenderLayer::eGUI);
 
 	myAPFullIcon = new StaticSprite();
 	myAPFullIcon->Init("Sprites/GUI/HUD/AP/Full.dds", false);
+	myAPFullIcon->SetLayer(enumRenderLayer::eGUI);
 
 	myAPIcons.Init(6);
 	myAPIconsPos.Init(6);
