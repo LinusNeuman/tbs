@@ -4,8 +4,8 @@
 
 GUIActionPointsBar::GUIActionPointsBar()
 {
-	myPlayerMaxAP = 5;
-	myPlayerCurrentAP = 5;
+	myPlayerMaxAP = 6;
+	myPlayerCurrentAP = 6;
 	myShouldRenderLoseAnimation = false;
 
 	myTargetResPositionX = (25.f / 1920.f) * SingletonDataHolder::GetTargetResolution().x;
@@ -18,8 +18,8 @@ GUIActionPointsBar::GUIActionPointsBar()
 	myAPFullIcon = new StaticSprite();
 	myAPFullIcon->Init("Sprites/GUI/HUD/AP/Full.dds", false);
 
-	myAPIcons.Init(5);
-	myAPIconsPos.Init(5);
+	myAPIcons.Init(6);
+	myAPIconsPos.Init(6);
 
 	CalculateAPIcons();
 
