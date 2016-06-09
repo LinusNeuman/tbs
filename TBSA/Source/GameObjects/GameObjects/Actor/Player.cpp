@@ -60,6 +60,7 @@ void Player::CostAP(const int aCost)
 void Player::OnClick()
 {
 	SendPostMessage(PlayerIDMessage(RecieverTypes::eClickedOnPlayer, GetIndex()));
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 }
 
 void Player::Draw() const
