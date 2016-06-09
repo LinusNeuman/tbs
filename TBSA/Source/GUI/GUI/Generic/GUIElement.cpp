@@ -2,6 +2,7 @@
 #include <CU/Macros/Macros.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Rend/StaticSprite.h>
+#include "Message\LogTextMessage.h"
 
 GUIElement::GUIElement()
 {
@@ -20,7 +21,6 @@ GUIElement::~GUIElement()
 
 void GUIElement::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric, bool aIsEnabled)
 {
-	
 }
 
 void GUIElement::Destroy()

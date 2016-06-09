@@ -11,6 +11,15 @@ TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagPlayerDied, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagGoalReached, *this);
 	//ForceTurn(eEndTurn::ENEMY_END_TURN);
+
+	myPlayerTurnImage = new StaticSprite();
+	myPlayerTurnImage->Init("Sprites/trashTestFiles/Turns/GoodyTurn.dds", false);
+	myPlayerTurnImage->SetLayer(enumRenderLayer::eGUI);
+	myEnemyTurnImage = new StaticSprite();
+	myEnemyTurnImage->Init("Sprites/trashTestFiles/Turns/BaddyTurn.dds", false);
+	myEnemyTurnImage->SetLayer(enumRenderLayer::eGUI);
+
+	myTurnImageTimer = 0.f;
 }
 
 TurnManager::~TurnManager()
@@ -86,6 +95,7 @@ void TurnManager::EndTurn()
 
 bool TurnManager::PreparePlayer()
 {
+	myTurnImageTimer = 0.f;
 	myPlayerController.PrePlayer();
 	EndTurn();
 	return true;
@@ -98,6 +108,13 @@ bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 		SendPostMessage(GoalReachedMessage(RecieverTypes::ePlayEvents, "2_Backyard.json"));
 		return false;
 	}
+
+	if (myTurnImageTimer <= 4.5f)
+	{
+		myPlayerTurnImage->Draw(CU::Vector2f(960.f - (128), 40.f));
+		myTurnImageTimer += aDeltaTime.GetSeconds();
+	}
+
 	myPlayerController.Update(aDeltaTime);
 	return true;
 }
@@ -112,6 +129,8 @@ bool TurnManager::PlayerEndTurn()
 
 bool TurnManager::PrepareEnemy()
 {
+	myTurnImageTimer = 0.f;
+
 	if (myPlayerDied == true)
 	{
 		SendPostMessage(PlayerDiedMessage(RecieverTypes::ePlayEvents));
@@ -124,6 +143,12 @@ bool TurnManager::PrepareEnemy()
 
 bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 {
+	if (myTurnImageTimer <= 4.5f)
+	{
+		myEnemyTurnImage->Draw(CU::Vector2f(960.f - (128), 40.f));
+		myTurnImageTimer += aDeltaTime.GetSeconds();
+	}
+
 	myEnemyController.Update(aDeltaTime);
 	return true;
 }

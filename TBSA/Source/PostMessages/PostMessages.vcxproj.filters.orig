@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Message\BaseMessage.h" />
+    <ClInclude Include="Message\ColliderMessage.h" />
+    <ClInclude Include="Message\DijkstraMessage.h" />
+    <ClInclude Include="Message\EndTurnMessage.h" />
+    <ClInclude Include="Message\GetStartLevelMessage.h" />
+    <ClInclude Include="Message\LevelTileMetricsMessage.h" />
+    <ClInclude Include="Message\NavigationClearMessage.h" />
+    <ClInclude Include="Message\PlayerObjectMesssage.h" />
+    <ClInclude Include="Message\RecieverTypes.h" />
+    <ClInclude Include="Message\SetMainCameraMessage.h" />
+    <ClInclude Include="Message\StartUpLevelMessage.h" />
+    <ClInclude Include="Message\TestPosition.h" />
+    <ClInclude Include="Message\WindowRectChangedMessage.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Message\PlayerAddedMessage.h" />
+    <ClInclude Include="Message\PlayerSeenMessage.h" />
+    <ClInclude Include="Message\PlayerDiedMessage.h" />
+    <ClInclude Include="Message\SetHWNDMessage.h" />
+    <ClInclude Include="Message\EnemyObjectMessage.h" />
+    <ClInclude Include="Message\FightWithEnemyMessage.h" />
+    <ClInclude Include="Message\FlagPlayerDiedMessage.h" />
+    <ClInclude Include="Message\GoalReachedMessage.h" />
+    <ClInclude Include="Message\FlagGoalReachedMessage.h" />
+    <ClInclude Include="Message\PlayerPositionChangedMessage.h" />
+    <ClInclude Include="Message\EnemyPositionChangedMessage.h" />
+    <ClInclude Include="Message\PlayerCanPeekMessage.h" />
+    <ClInclude Include="Message\MouseButtonDownMessage.h" />
+    <ClInclude Include="Message\MouseButtonPressedMessage.h" />
+    <ClInclude Include="Message\MouseButtonReleasedMessage.h" />
+    <ClInclude Include="Message\MouseInputClear.h" />
+    <ClInclude Include="Message\PlayerAPChangedMessage.h" />
+    <ClInclude Include="Message\PlayerIDMessage.h" />
+<<<<<<< HEAD
+    <ClInclude Include="Message\LogTextMessage.h" />
+=======
+    <ClInclude Include="Message\SetTargetResolutionMessage.h" />
+>>>>>>> afc7ce7e601832cce8b148d6e18f0548c8fa25d2
+  </ItemGroup>
+</Project>

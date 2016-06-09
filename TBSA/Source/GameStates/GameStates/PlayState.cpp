@@ -12,6 +12,7 @@
 #include <StateStack/ProxyStateStack.h>
 #include "GameOverState.h"
 #include "LoadState.h"
+#include "Message\LogTextMessage.h"
 
 PlayState::PlayState()
 {
@@ -91,6 +92,10 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
 	{
 		ChangeLevel("SecondTest.json");
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
+	{
+		SendPostMessage(LogTextMessage(RecieverTypes::eLogText, "Wee!"));
 	}
 
 	if (myShouldPause == true)
