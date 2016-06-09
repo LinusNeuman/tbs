@@ -106,7 +106,6 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 {
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
-	CU::Vector2f direction = (position - secondPosition).GetNormalized();
 	double x0, x1, y0, y1;
 	x0 = position.x;
 	y0 = position.y;
