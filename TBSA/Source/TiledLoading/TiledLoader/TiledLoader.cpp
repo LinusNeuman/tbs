@@ -398,7 +398,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 		std::string name = GetString(currentObject["name"]);
 		unsigned int firstId = static_cast<unsigned int>(GetNumber(currentObject["firstgid"]));
 		CommonUtilities::Vector2f size = GetVector2f(currentObject["tilewidth"], currentObject["tileheight"]);
-		CommonUtilities::Vector2f sheetSize = GetVector2f(currentObject["imageheight"], currentObject["imagewidth"]);
+		CommonUtilities::Vector2f sheetSize = GetVector2f(currentObject["imagewidth"], currentObject["imageheight"]);
 
 		returnArray.Add(SpriteSheet(name, size, sheetSize, aFileType, firstId));
 	}
