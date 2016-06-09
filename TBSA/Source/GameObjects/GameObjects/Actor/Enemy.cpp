@@ -3,6 +3,7 @@
 #include "../JsonDataStructs.h"
 #include <Controllers/EnemyController.h>
 #include <Message/EnemyObjectMessage.h>
+#include <Message/EnemyDirectionChangedMessage.h>
 
 
 Enemy::Enemy()
@@ -34,6 +35,10 @@ void Enemy::UpdateEnemy()
 {
 	if (GetActiveState() == true && GetActorState() != eActorState::eDead)
 	{
+		if (myPreviousDirection != myDirection)
+		{
+			SendPostMessage(EnemyDirectionChangedMessage(RecieverTypes::eEnemyDirectionChanged));
+		}
 		if (myHasMoved == false && myEnemyPath.Size() > 0)
 		{
 			CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
@@ -50,6 +55,7 @@ void Enemy::UpdateEnemy()
 						myHasTurned = true;
 						--myCurrentPathIndex;
 					}
+					
 				}
 				else
 				{

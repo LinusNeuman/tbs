@@ -56,6 +56,14 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 	ResetTileShaders();
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
+		if (myEnemies[i]->GetActiveState() == true)
+		{
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
+			SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
+		}
+	}
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
 		myEnemies[i]->Update(aDeltaTime);
 		if(myFloor->GetTile(CU::Vector2ui(USHORTCAST(myEnemies[i]->GetPosition().x), USHORTCAST(myEnemies[i]->GetPosition().y))).GetVisible() == true)
 		{
@@ -65,11 +73,9 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		{
 			myEnemies[i]->SetVisibleState(false);
 		}
-		if (myEnemies[i]->GetActiveState() == true)
-		{
-			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
-		}
+		
 	}
+	
 }
 
 void EnemyController::Draw()
@@ -182,7 +188,7 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirect
 	default:
 		break;
 	}
-	SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
+	
 	
 }
 
