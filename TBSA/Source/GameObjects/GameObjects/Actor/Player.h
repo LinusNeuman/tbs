@@ -53,7 +53,6 @@ private:
 	int myPeekCost;
 	int myCurrentAP;
 
-	bool myIsSeen;
 	bool myShouldDie;
 };
 

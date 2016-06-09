@@ -31,3 +31,4 @@
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include <CU/GrowingArray/GrowingArray.h>
 #include <unordered_map>
+#include <CU/Utility/CommonCasts.h>

@@ -106,7 +106,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 				myAtTarget = true;
 				UpdatePosition(CU::Point2f(myTargetPosition));
 
-				if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+				if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead && GetActorState() != eActorState::eAlert)
 				{
 					SetActorState(eActorState::eIdle);
 				}

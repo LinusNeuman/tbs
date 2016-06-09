@@ -114,9 +114,18 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 
 					paths.Add(tempPath);
 				}
+				else if (dataType == "covers" || dataType == "Covers")
+				{
+					for (size_t i = 0; i < data.size(); i++)
+					{
+						if (GetNumberInt(data[i]) != 0)
+						{
+							someTiles.myTiles[i].SetTileType(eTileType::COVER);
+						}
+					}
+				}
 				else
 				{
-					
 					unsigned int roomId;
 					try
 					{
