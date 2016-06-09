@@ -67,29 +67,44 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		workSprite = ourSprites.GetLast();
 	}
 
-	const float spriteWidth = static_cast<float>(workSprite->GetImageSize().x);
-	const float spriteHeight = static_cast<float>(workSprite->GetImageSize().y);
+	if (aRect != CU::Vector4f::Zero)
+	{
+		const float spriteWidth = static_cast<float>(workSprite->GetImageSize().x);
+		const float spriteHeight = static_cast<float>(workSprite->GetImageSize().y);
 
-	const float TempStartPointX = aRect.x / spriteWidth;
-	const float TempStartPointY = aRect.y / spriteHeight;
+		const float TempStartPointX = aRect.x / spriteWidth;
+		const float TempStartPointY = aRect.y / spriteHeight;
 
-	const float TempWidth = aRect.Width / spriteWidth;
-	const float TempHeight = aRect.Height / spriteHeight;
+		const float TempWidth = aRect.Width / spriteWidth;
+		const float TempHeight = aRect.Height / spriteHeight;
 
-	const float TempEndPointX = TempStartPointX + TempWidth;
-	const float TempEndPointY = TempStartPointY + TempHeight;
+		const float TempEndPointX = TempStartPointX + TempWidth;
+		const float TempEndPointY = TempStartPointY + TempHeight;
+
+		float normalizedWindowSizeX = workSprite->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
+		float normalizedWindowSizeY = workSprite->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
+
+		myRenderData.mySize = (CU::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
+
+		if (foundValue == true)
+		{
+			return ourIndexDictionary[tempKey];
+		}
+
+		workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
+	}
+	else
+	{
+		myRenderData.mySize = CU::Vector2f::One;
+	}
 	
-	float normalizedWindowSizeX = workSprite->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
-	float normalizedWindowSizeY = workSprite->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
-
-	myRenderData.mySize = (CU::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
 
 	if (foundValue == true)
 	{
 		return ourIndexDictionary[tempKey];
 	}
 
-	workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
+	
 
 	if (aRect != CU::Vector4f::Zero)
 	{
@@ -107,7 +122,7 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 
 		//tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 		//tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
-
+		
 		mySizeWithoutWhitespace = { aRect.z, aRect.w };
 	}
 
