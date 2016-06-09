@@ -10,7 +10,7 @@ GUIActionPointsBar::GUIActionPointsBar()
 
 	myTargetResPositionX = (25.f / 1920.f) * SingletonDataHolder::GetTargetResolution().x;
 	myTargetResPositionY = (755.f / 1080.f) * SingletonDataHolder::GetTargetResolution().y;
-	myTargetResInterPos = ((55.f + 25.f) / 1920.f) * SingletonDataHolder::GetTargetResolution().x;
+	myTargetResInterPos = (39.f / 1920.f) * SingletonDataHolder::GetTargetResolution().x;
 
 	myAPSpentIcon = new StaticSprite();
 	myAPSpentIcon->Init("Sprites/GUI/HUD/AP/Spent.dds", false, {0.f,0.f, 36.f, 46.f});
