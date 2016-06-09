@@ -24,6 +24,7 @@
 #include <Message/FlagGoalReachedMessage.h>
 #include <Message/PlayerCanPeekMessage.h>
 #include <Message/PlayerIDMessage.h>
+#include <Message/PlayerAPChangedMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -301,6 +302,8 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 void PlayerController::PrePlayer()
 {
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
+	
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, mySelectedPlayer->GetMyAP()));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
 }
@@ -320,8 +323,10 @@ void PlayerController::SetCameraPositionToPlayer(int aIndex)
 
 void PlayerController::AfterPlayerTurn()
 {
+	ResetTileShaders();
 	for (size_t i = 0; i < myPlayers.Size(); i++)
 	{
+		CreatePlayerFoV(myPlayers[i]->GetPosition(), PlayerFoWRadius);
 		myPlayers[i]->AfterTurn();
 	}
 }
@@ -377,7 +382,6 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 
 bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessage)
 {
-	ResetTileShaders();
 	myDebugStart.clear();
 	myDebugEnd.clear();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)

@@ -21,9 +21,9 @@ void AnimationHandler::Init(/*Actor* aHolder,*/ std::map<std::string, Animation*
 	myAnimations = someAnimations;
 }
 
-void AnimationHandler::Update()
+void AnimationHandler::Update(CommonUtilities::Time aDeltaTime)
 {
-	myAnimations[myActiveAnimation]->UpdateAnimation();
+	myAnimations[myActiveAnimation]->UpdateAnimation(aDeltaTime);
 }
 void AnimationHandler::AddAnimation(Animation* anAnimation)
 {
@@ -32,7 +32,7 @@ void AnimationHandler::AddAnimation(Animation* anAnimation)
 
 void AnimationHandler::ChangeAnimation(const std::string& anAnimation)
 {
-	DL_ASSERT(myAnimations.find(anAnimation) != myAnimations.end(), "Animation does not exist");
+	DL_ASSERT(myAnimations.find(anAnimation) != myAnimations.end(), "Animation does not exist: ");
 	if (myActiveAnimation != anAnimation)
 	{
 		if (myActiveAnimation != "")

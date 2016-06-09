@@ -69,7 +69,6 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		{
 			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
 		}
-		
 	}
 }
 
@@ -124,7 +123,7 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 
 	for (; n > 0; --n)
 	{
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
+		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR || myFloor->GetTile(x, y).GetTileType() == eTileType::COVER)
 		{
 			break;
 		}

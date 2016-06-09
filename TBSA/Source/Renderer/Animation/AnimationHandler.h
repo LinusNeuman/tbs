@@ -12,7 +12,7 @@ public:
 	AnimationHandler();
 	~AnimationHandler();
 	void Init(/*Actor* aHolder,*/ std::map<std::string, Animation*> someAnimations);
-	void Update();
+	void Update(CommonUtilities::Time aDeltaTime);
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
 	inline StaticSprite* GetSprite();
