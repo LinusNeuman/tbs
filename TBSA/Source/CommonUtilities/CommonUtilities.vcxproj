@@ -333,6 +333,7 @@
     <ClInclude Include="CU\Vectors\vector2.h" />
     <ClInclude Include="CU\Vectors\vector3.h" />
     <ClInclude Include="CU\Vectors\vector4.h" />
+    <ClInclude Include="CU\Utility\DataHolder\SingletonDataHolder.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +365,7 @@
     <ClCompile Include="CU\Utility\Math\Isometric.cpp" />
     <ClCompile Include="CU\Utility\Randomizer\Randomizer.cpp" />
     <ClCompile Include="CU\Utility\WindowsFunctions.cpp" />
+    <ClCompile Include="CU\Utility\DataHolder\SingletonDataHolder.cpp" />
     <ClCompile Include="stdafx.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">false</MultiProcessorCompilation>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='TestShit|Win32'">Create</PrecompiledHeader>
