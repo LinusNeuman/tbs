@@ -37,6 +37,7 @@ class TextBox
 		void SetLineWrappingMode(const eLinewrappingMode aMode);
 		void SetSize(const Vec2f aDimensions);
 		void SetPosition(const Vec2f aPosition);
+		void Clear();
 		void Update();
 
 	private:

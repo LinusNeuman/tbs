@@ -118,6 +118,7 @@ protected:
 	void UpdateDirection();
 	bool myAtTarget;
 	eDirection myDirection;
+	bool myIsSeen;
 private:
 	void UpdatePath();
 

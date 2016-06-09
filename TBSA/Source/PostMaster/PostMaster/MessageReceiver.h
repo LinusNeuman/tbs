@@ -32,6 +32,9 @@ struct PlayerIDMessage;
 struct PlayerAPChangedMessage;
 struct SetTargetResolutionMessage;
 struct LogTextMessage;
+struct ClearLogMessage;
+struct ScrollLogUpMessage;
+struct ScrollLogDownMessage;
 
 class MessageReciever
 {
@@ -70,6 +73,9 @@ public:
 	virtual bool RecieveMessage(const PlayerAPChangedMessage& aMessage);
 	virtual bool RecieveMessage(const SetTargetResolutionMessage& aMessage);
 	virtual bool RecieveMessage(const LogTextMessage& aMessage);
+	virtual bool RecieveMessage(const ClearLogMessage& aMessage);
+	virtual bool RecieveMessage(const ScrollLogUpMessage& aMessage);
+	virtual bool RecieveMessage(const ScrollLogDownMessage& aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:
