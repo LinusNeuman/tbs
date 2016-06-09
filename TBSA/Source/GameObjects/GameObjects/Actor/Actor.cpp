@@ -237,6 +237,15 @@ void Actor::StopPath()
 	myCurrentWaypoint = myPath.Size();
 }
 
+void Actor::SetPreviousPosition(const TilePositionf& aPosition)
+{
+	myPreviousPosition = aPosition;
+}
+
+TilePositionf Actor::GetPreviousPosition() const
+{
+	return myPreviousPosition;
+}
 
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {
