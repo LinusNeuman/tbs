@@ -128,7 +128,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 		if (myAnimations.GetIsActive() == true)
 		{
-			myAnimations.Update();
+			myAnimations.Update(aDeltaTime);
 			mySprite = myAnimations.GetSprite();
 			mySprite->SetLayer(enumRenderLayer::eGameObjects);
 			mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
@@ -231,16 +231,21 @@ void Actor::ChangeAnimation(const std::string& anAnimation)
 	myAnimations.ChangeAnimation(anAnimation);
 }
 
-void Actor::AddAnimation(Animation* anAnimation)
-{
-	myAnimations.AddAnimation(anAnimation);
-}
 
 void Actor::StopPath()
 {
 	myCurrentWaypoint = myPath.Size();
 }
 
+void Actor::SetPreviousPosition(const TilePositionf& aPosition)
+{
+	myPreviousPosition = aPosition;
+}
+
+TilePositionf Actor::GetPreviousPosition() const
+{
+	return myPreviousPosition;
+}
 
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {
