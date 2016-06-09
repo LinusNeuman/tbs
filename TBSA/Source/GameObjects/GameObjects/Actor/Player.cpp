@@ -236,6 +236,7 @@ void Player::SetNoTarget()
 void Player::AlmostReachTarget()
 {
 	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
+	SetPreviousPosition(myPosition);
 }
 
 void Player::ReachedTarget()

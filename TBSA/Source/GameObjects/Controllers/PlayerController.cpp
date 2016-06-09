@@ -326,7 +326,14 @@ void PlayerController::AfterPlayerTurn()
 	ResetTileShaders();
 	for (size_t i = 0; i < myPlayers.Size(); i++)
 	{
-		CreatePlayerFoV(myPlayers[i]->GetPosition(), PlayerFoWRadius);
+		if (myFloor->GetTile(myPlayers[i]->GetPosition().x, myPlayers[i]->GetPosition().y).GetTileType() == eTileType::DOOR)
+		{
+			CreatePlayerFoV(myPlayers[i]->GetPreviousPosition(), PlayerFoWRadius);
+		}
+		else
+		{
+			CreatePlayerFoV(myPlayers[i]->GetPosition(), PlayerFoWRadius);	
+		}
 		myPlayers[i]->AfterTurn();
 	}
 }
@@ -511,17 +518,8 @@ void PlayerController::BuildPath(PathArray & aPathContainterToBuild)
 void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition)
 {
 	bool hasAlreadyBeenBlocked = false;
-	bool playerStandingInDoor = false;
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
-	if (myFloor->GetTile(CU::Vector2ui(aPosition.x, aPosition.y)).GetTileType() == eTileType::DOOR)
-	{
-		playerStandingInDoor = true;
-	}
-	else
-	{
-		playerStandingInDoor = false;
-	}
 	double x0, x1, y0, y1;
 	x0 = position.x;
 	y0 = position.y;
@@ -545,30 +543,14 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 	for (; n > 0; --n)
 	{
-		std::cout << playerStandingInDoor << std::endl;
-		if (playerStandingInDoor == false)
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-			{
-				myFloor->GetTile(x, y).SetVisible(true);
-				break;
-			}
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-			{
-				break;
-			}
+			myFloor->GetTile(x, y).SetVisible(true);
+			break;
 		}
-		else
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
-			{
-				myFloor->GetTile(x, y).SetVisible(true);
-				break;
-			}
-			if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED)
-			{
-				break;
-			}
+			break;
 		}
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
 		{
