@@ -26,6 +26,7 @@
 
 #include <Message/SetHWNDMessage.h>
 #include <Message/SetTargetResolutionMessage.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 using namespace std::placeholders;
 
@@ -40,14 +41,15 @@ using namespace std::placeholders;
 
 CGame::CGame()
 {
+	SingletonDataHolder::Create();
 	DL_Debug::Debug::Create();
 	StartupReader tempReader;
 
 	myStartupData = new StartupData(tempReader.LoadAndGetStartupData());
 
 	myImRunning = true;
-	myTargetResolutionX = 1920;
-	myTargetResolutionY = 1080;
+	myTargetResolutionX = 0;//19-20;
+	myTargetResolutionY = 0;//10-80;
 	
 	SingletonPostMaster::Create();
 	IsometricInput::Create();
@@ -61,6 +63,7 @@ CGame::CGame()
 CGame::~CGame()
 {
 	RenderConverter::Destroy();
+	SingletonDataHolder::Destroy();
 }
 
 
@@ -79,10 +82,11 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	//From Launcher
 	picojson::value value = JsonWrapper::LoadPicoValue("Settings.json");
 	picojson::object settings = JsonWrapper::GetPicoObject(value);
-	unsigned short windowWidth = JsonWrapper::GetInt("myResolutionX", settings);
-	unsigned short windowHeight = JsonWrapper::GetInt("myResolutionY", settings);
+	unsigned short windowWidth = static_cast<unsigned short>(JsonWrapper::GetInt("myResolutionX", settings));
+	unsigned short windowHeight = static_cast<unsigned short>(JsonWrapper::GetInt("myResolutionY", settings));
 	myTargetResolutionX = JsonWrapper::GetInt("myResolutionX", settings);
 	myTargetResolutionY = JsonWrapper::GetInt("myResolutionY", settings);
+	SingletonDataHolder::SetTargetResolution({myTargetResolutionX, myTargetResolutionY});
 
 	createParameters.myWindowHeight = windowHeight;
 	createParameters.myWindowWidth = windowWidth;
@@ -159,7 +163,7 @@ void CGame::InitCallBack()
 	DX2D::CCustomShader* customHighlightBlackShader;
 	customHighlightBlackShader = new DX2D::CCustomShader();
 	customHighlightBlackShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
-	customHighlightBlackShader->PostInit("shaders/custom_color_vertex_shader.fx", "shaders/custom_highlightRed_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	customHighlightBlackShader->PostInit("shaders/custom_color_vertex_shader.fx", "shaders/custom_highlightBlack_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 
 	DX2D::CCustomShader* customHighlightBlueShader;
 	customHighlightBlueShader = new DX2D::CCustomShader();

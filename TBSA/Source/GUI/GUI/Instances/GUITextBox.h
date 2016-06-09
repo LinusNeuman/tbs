@@ -11,8 +11,14 @@ class GUITextBox : public GUIElement
 
 		void Render() override;
 		void Update(const CU::Time& aTimeDelta) override;
+		void Clear();
 
 	private:
 		TextBox myTextBox;
+
+		bool RecieveMessage(const LogTextMessage& aMessage) override;
+		bool RecieveMessage(const ClearLogMessage& aMessage) override;
+		bool RecieveMessage(const ScrollLogDownMessage& aMessage) override;
+		bool RecieveMessage(const ScrollLogUpMessage& aMessage) override;
 };
 

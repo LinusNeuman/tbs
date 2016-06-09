@@ -43,5 +43,9 @@ enum class RecieverTypes
 	eOpenPauseMenu,
 	eGameOverReset,
 	eClosePauseMenu,
+	eLogText,
+	eClearLog,
+	eScrollLogUp,
+	eScrollLogDown,
 	enumlength
 };

@@ -1,0 +1,66 @@
+{ "height":100,
+ "layers":[],
+ "nextobjectid":1,
+ "orientation":"isometric",
+ "properties":
+    {
+
+    },
+ "renderorder":"right-down",
+ "tileheight":64,
+ "tilesets":[
+        {
+         "columns":16,
+         "firstgid":1,
+         "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetFloors.png",
+         "imageheight":1024,
+         "imagewidth":2048,
+         "margin":0,
+         "name":"tileSheetFloors",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tilecount":128,
+         "tileheight":128,
+         "tilewidth":128
+        }, 
+        {
+         "columns":16,
+         "firstgid":129,
+         "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetProps.png",
+         "imageheight":1024,
+         "imagewidth":2048,
+         "margin":0,
+         "name":"tileSheetProps",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tilecount":128,
+         "tileheight":128,
+         "tilewidth":128
+        }, 
+        {
+         "columns":16,
+         "firstgid":257,
+         "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetWalls.png",
+         "imageheight":1024,
+         "imagewidth":2048,
+         "margin":0,
+         "name":"tileSheetWalls",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tilecount":128,
+         "tileheight":128,
+         "tilewidth":128
+        }],
+ "tilewidth":128,
+ "version":1,
+ "width":100
+}

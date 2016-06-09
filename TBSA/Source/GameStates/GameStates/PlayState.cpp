@@ -12,6 +12,10 @@
 #include <StateStack/ProxyStateStack.h>
 #include "GameOverState.h"
 #include "LoadState.h"
+#include "Message\LogTextMessage.h"
+#include "Message\ClearLogMessage.h"
+#include "Message\ScrollLogDownMessage.h"
+#include "Message\ScrollLogUpMessage.h"
 
 PlayState::PlayState()
 {
@@ -91,6 +95,22 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
 	{
 		ChangeLevel("SecondTest.json");
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
+	{
+		SendPostMessage(LogTextMessage(RecieverTypes::eLogText, "Wee!"));
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_DELETE) == true)
+	{
+		SendPostMessage(ClearLogMessage(RecieverTypes::eClearLog));
+	}
+	else if (IsometricInput::GetKeyReleased(DIK_PGUP) == true)
+	{
+		SendPostMessage(ScrollLogUpMessage(RecieverTypes::eScrollLogUp));
+	}
+	else if (IsometricInput::GetKeyReleased(DIK_PGDN) == true)
+	{
+		SendPostMessage(ScrollLogDownMessage(RecieverTypes::eScrollLogDown));
 	}
 
 	if (myShouldPause == true)

@@ -106,7 +106,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 				myAtTarget = true;
 				UpdatePosition(CU::Point2f(myTargetPosition));
 
-				if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+				if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead && GetActorState() != eActorState::eAlert)
 				{
 					SetActorState(eActorState::eIdle);
 				}
@@ -128,7 +128,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 		if (myAnimations.GetIsActive() == true)
 		{
-			myAnimations.Update();
+			myAnimations.Update(aDeltaTime);
 			mySprite = myAnimations.GetSprite();
 			mySprite->SetLayer(enumRenderLayer::eGameObjects);
 			mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
@@ -231,16 +231,21 @@ void Actor::ChangeAnimation(const std::string& anAnimation)
 	myAnimations.ChangeAnimation(anAnimation);
 }
 
-void Actor::AddAnimation(Animation* anAnimation)
-{
-	myAnimations.AddAnimation(anAnimation);
-}
 
 void Actor::StopPath()
 {
 	myCurrentWaypoint = myPath.Size();
 }
 
+void Actor::SetPreviousPosition(const TilePositionf& aPosition)
+{
+	myPreviousPosition = aPosition;
+}
+
+TilePositionf Actor::GetPreviousPosition() const
+{
+	return myPreviousPosition;
+}
 
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {

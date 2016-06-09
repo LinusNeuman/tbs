@@ -154,3 +154,23 @@ bool MessageReciever::RecieveMessage(const SetTargetResolutionMessage& aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const LogTextMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const ClearLogMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const ScrollLogDownMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const ScrollLogUpMessage& aMessage)
+{
+	return true;
+}

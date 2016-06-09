@@ -3,6 +3,7 @@
 #include <CU/Timer/TimeManager.h>
 #include <map>
 #include <tga2d/sprite/sprite.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite);
 
@@ -54,11 +55,11 @@ void Animation::InitializeAnimation(picojson::object& anAnimationObject)
 	myIsRunning = true;
 }
 
-void Animation::UpdateAnimation()
+void Animation::UpdateAnimation(CommonUtilities::Time aDeltaTime)
 {	
 	if (myIsRunning == true)
 	{
-		myAnimationTimer += CommonUtilities::TimeManager::GetDeltaTime().GetSeconds();
+		myAnimationTimer += aDeltaTime.GetSeconds();
 
 		if (myAnimationTimer >= 1.f / myAnimationSpeed)
 		{
@@ -148,8 +149,8 @@ void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2
 
 	newSprite->GetSprite()->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 
-	float normalizedWindowSizeX = newSprite->GetSprite()->GetImageSize().x / 1920.f * (16.f / 9.f);
-	float normalizedWindowSizeY = newSprite->GetSprite()->GetImageSize().y / 1080.f;
+	float normalizedWindowSizeX = newSprite->GetSprite()->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
+	float normalizedWindowSizeY = newSprite->GetSprite()->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
 	newSprite->GetSprite()->SetSize(DX2D::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
 }
