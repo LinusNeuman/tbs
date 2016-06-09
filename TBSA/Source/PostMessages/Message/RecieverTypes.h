@@ -47,5 +47,6 @@ enum class RecieverTypes
 	eClearLog,
 	eScrollLogUp,
 	eScrollLogDown,
+	eEnemyDirectionChanged,
 	enumlength
 };

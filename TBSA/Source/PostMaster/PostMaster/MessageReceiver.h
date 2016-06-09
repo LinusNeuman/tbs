@@ -1,6 +1,7 @@
 #pragma once
 #include <Message/RecieverTypes.h>
 
+struct EnemyDirectionChangedMessage;
 struct FlagGoalReachedMessage;
 struct FlagPlayerDiedMessage;
 struct PlayerAddedMessage;
@@ -76,6 +77,7 @@ public:
 	virtual bool RecieveMessage(const ClearLogMessage& aMessage);
 	virtual bool RecieveMessage(const ScrollLogUpMessage& aMessage);
 	virtual bool RecieveMessage(const ScrollLogDownMessage& aMessage);
+	virtual bool RecieveMessage(const EnemyDirectionChangedMessage& aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:

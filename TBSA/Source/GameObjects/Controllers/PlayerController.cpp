@@ -48,6 +48,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -64,6 +65,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
@@ -448,6 +450,18 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 		}
 	}
 	return true;
+}
+
+bool PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessage)
+{
+	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
+	{
+		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+		{
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
+		}
+	}
+	return false;
 }
 
 void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)
