@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PauseMenuState.h"
 #include <Message/SetTargetResolutionMessage.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 PauseMenuState::PauseMenuState()
 {
@@ -39,7 +40,7 @@ eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateS
 
 void PauseMenuState::Draw() const
 {
-	myBackgroundSprite->Draw({ myTargetResolution.x * 0.5f, myTargetResolution.y * 0.5f });
+	myBackgroundSprite->Draw({ SingletonDataHolder::GetTargetResolution().x * 0.5f, SingletonDataHolder::GetTargetResolution().y * 0.5f });
 }
 
 bool PauseMenuState::RecieveMessage(const GUIMessage& aMessage)
