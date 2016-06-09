@@ -5,11 +5,12 @@
 #include <CU/Timer/TimeManager.h>
 #include <GUI/Instances/GUIButton.h>
 #include <GUI/Instances/GUITextBox.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
-#define VIRTUALSCREENWIDTH 1920.f
-#define VIRTUALSCREENHEIGHT 1080.f
+//#define VIRTUALSCREENWIDTH 19-20.f
+//#define VIRTUALSCREENHEIGHT 10-80.f
 
 GUIFactory::GUIFactory()
 {
@@ -72,7 +73,13 @@ void GUIFactory::Load()
 
 					const std::string imagePath = myJSON.GetString("myImagesPath", arrayElements[j].get<picojson::object>());
 
-					const CU::Vector2f position = myJSON.GetVector2f("myPositionX", "myPositionY", arrayElements[j].get<picojson::object>());
+					CU::Vector2f position = myJSON.GetVector2f("myPositionX", "myPositionY", arrayElements[j].get<picojson::object>());
+
+					position.x /= 1920;
+					position.y /= 1080;
+
+					position.x *= SingletonDataHolder::GetTargetResolution().x;
+					position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 					const CU::Vector2f size = myJSON.GetVector2f("mySizeX", "mySizeY", arrayElements[j].get<picojson::object>());
 

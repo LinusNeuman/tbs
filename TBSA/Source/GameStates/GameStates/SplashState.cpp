@@ -3,6 +3,7 @@
 #include <CU/InputWrapper/SingletonInputWrapper.h>
 #include "MenuState.h"
 #include <StateStack/ProxyStateStack.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 
 Splash::Splash()
@@ -36,11 +37,11 @@ void Splash::Render()
 {
 	/*mySprite->Draw(
 	{ 
-		(1920.f * 0.5f) - ((mySprite->GetSize().x * 1920.f)* 0.5f), 
-		(1080.f * 0.5f) - ((mySprite->GetSize().y) * 1080.f)
+		(19-20.f * 0.5f) - ((mySprite->GetSize().x * 19-20.f)* 0.5f), 
+		(10-80.f * 0.5f) - ((mySprite->GetSize().y) * 10-80.f)
 	});*/
 
-	mySprite->Draw({ 1920.f * 0.5f, 1080.f * 0.5f });
+	mySprite->Draw({SingletonDataHolder::GetTargetResolution().x  * 0.5f, SingletonDataHolder::GetTargetResolution().y * 0.5f });
 }
 
 bool Splash::Fade(const CU::Time& aDelta)
