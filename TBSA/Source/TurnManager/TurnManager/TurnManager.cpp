@@ -5,6 +5,7 @@
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 #include <Message/PlayerDiedMessage.h>
 #include <Message/GoalReachedMessage.h>
+#include "CU\Utility\DataHolder\SingletonDataHolder.h"
 
 TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(false), myReachedGoal(false)
 {
@@ -111,7 +112,9 @@ bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 
 	if (myTurnImageTimer <= 4.5f)
 	{
-		myPlayerTurnImage->Draw(CU::Vector2f(960.f - (128), 40.f));
+		float midPointX = (float)SingletonDataHolder::GetTargetResolution().x / 2;
+		float resolutionHeight = (float)SingletonDataHolder::GetTargetResolution().x;
+		myPlayerTurnImage->Draw(CU::Vector2f(midPointX - (128), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}
 
@@ -145,7 +148,9 @@ bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 {
 	if (myTurnImageTimer <= 4.5f)
 	{
-		myEnemyTurnImage->Draw(CU::Vector2f(960.f - (128), 40.f));
+		float midPointX = (float)SingletonDataHolder::GetTargetResolution().x / 2;
+		float resolutionHeight = (float)SingletonDataHolder::GetTargetResolution().x;
+		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (128), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}
 
