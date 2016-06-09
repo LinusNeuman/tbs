@@ -26,6 +26,7 @@
 
 #include <Message/SetHWNDMessage.h>
 #include <Message/SetTargetResolutionMessage.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 using namespace std::placeholders;
 
@@ -40,14 +41,15 @@ using namespace std::placeholders;
 
 CGame::CGame()
 {
+	SingletonDataHolder::Create();
 	DL_Debug::Debug::Create();
 	StartupReader tempReader;
 
 	myStartupData = new StartupData(tempReader.LoadAndGetStartupData());
 
 	myImRunning = true;
-	myTargetResolutionX = 1920;
-	myTargetResolutionY = 1080;
+	myTargetResolutionX = 0;//19-20;
+	myTargetResolutionY = 0;//10-80;
 	
 	SingletonPostMaster::Create();
 	IsometricInput::Create();
@@ -61,6 +63,7 @@ CGame::CGame()
 CGame::~CGame()
 {
 	RenderConverter::Destroy();
+	SingletonDataHolder::Destroy();
 }
 
 
@@ -83,6 +86,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	unsigned short windowHeight = static_cast<unsigned short>(JsonWrapper::GetInt("myResolutionY", settings));
 	myTargetResolutionX = JsonWrapper::GetInt("myResolutionX", settings);
 	myTargetResolutionY = JsonWrapper::GetInt("myResolutionY", settings);
+	SingletonDataHolder::SetTargetResolution({myTargetResolutionX, myTargetResolutionY});
 
 	createParameters.myWindowHeight = windowHeight;
 	createParameters.myWindowWidth = windowWidth;
