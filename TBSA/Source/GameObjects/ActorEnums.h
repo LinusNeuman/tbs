@@ -28,5 +28,6 @@ enum class eActorState
 	eIdle,
 	eFighting,
 	eDead,
-	eWalking
+	eWalking,
+	eAlert
 };

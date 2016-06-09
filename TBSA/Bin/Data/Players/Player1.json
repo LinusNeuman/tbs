@@ -52,6 +52,30 @@
 	    },
 	    {
 	        "path": "Data/Animations/Player1/gingerWalk315Animation.json"
-	    }
+	    },
+        {
+            "path": "Data/Animations/Player1/playerAlert000Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/playerAlert045Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/playerAlert090Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/playerAlert135Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/playerAlert180Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/playerAlert225Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/playerAlert270Animation.json"
+        },
+        {
+            "path": "Data/Animations/Player1/playerAlert315Animation.json"
+        }
     ]
 }

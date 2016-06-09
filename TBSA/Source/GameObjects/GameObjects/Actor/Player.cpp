@@ -88,6 +88,7 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 		if (myIsSeen == false)
 		{
 			myIsSeen = true;
+			SetActorState(eActorState::eAlert);
 		}
 		
 		if (myShouldDie == true)
@@ -192,6 +193,40 @@ void Player::DecideAnimation()
 			break;
 		default:
 			ChangeAnimation("playerWalk180");
+			break;
+		}
+	}
+	else if (myState == eActorState::eAlert)
+	{
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("playerAlert045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("playerAlert090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("playerAlert135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("playerAlert180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("playerAlert225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("playerAlert270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("playerAlert315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("playerAlert000");
+			break;
+		default:
+			ChangeAnimation("playerAlert180");
 			break;
 		}
 	}
