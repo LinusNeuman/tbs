@@ -320,8 +320,10 @@ void PlayerController::SetCameraPositionToPlayer(int aIndex)
 
 void PlayerController::AfterPlayerTurn()
 {
+	ResetTileShaders();
 	for (size_t i = 0; i < myPlayers.Size(); i++)
 	{
+		CreatePlayerFoV(myPlayers[i]->GetPosition(), PlayerFoWRadius);
 		myPlayers[i]->AfterTurn();
 	}
 }
@@ -377,7 +379,6 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 
 bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessage)
 {
-	ResetTileShaders();
 	myDebugStart.clear();
 	myDebugEnd.clear();
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
