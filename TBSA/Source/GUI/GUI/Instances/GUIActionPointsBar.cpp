@@ -13,11 +13,11 @@ GUIActionPointsBar::GUIActionPointsBar()
 	myTargetResInterPos = ((55.f + 25.f) / 1920.f) * SingletonDataHolder::GetTargetResolution().x;
 
 	myAPSpentIcon = new StaticSprite();
-	myAPSpentIcon->Init("Sprites/GUI/HUD/AP/Spent.dds", false);
+	myAPSpentIcon->Init("Sprites/GUI/HUD/AP/Spent.dds", false, {0.f,0.f, 36.f, 46.f});
 	myAPSpentIcon->SetLayer(enumRenderLayer::eGUI);
 
 	myAPFullIcon = new StaticSprite();
-	myAPFullIcon->Init("Sprites/GUI/HUD/AP/Full.dds", false);
+	myAPFullIcon->Init("Sprites/GUI/HUD/AP/Full.dds", false, { 0.f, 0.f, 36.f, 46.f });
 	myAPFullIcon->SetLayer(enumRenderLayer::eGUI);
 
 	myAPIcons.Init(6);
