@@ -102,6 +102,7 @@ void Enemy::SetDirection(eDirection aDirection)
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
+	SetActorState(eActorState::eAlert);
 	return true;
 }
 
@@ -133,36 +134,36 @@ void Enemy::DecideAnimation()
 	if (myState == eActorState::eIdle)
 	{
 		//Determine direction animation
-		/*switch (GetDirectionEnum())
+		switch (GetDirectionEnum())
 		{
 		case eDirection::NORTH:
-			ChangeAnimation("playerIdle045");
+			ChangeAnimation("EnemyIdle045");
 			break;
 		case eDirection::NORTH_EAST:
-			ChangeAnimation("playerIdle090");
+			ChangeAnimation("EnemyIdle090");
 			break;
 		case eDirection::EAST:
-			ChangeAnimation("playerIdle135");
+			ChangeAnimation("EnemyIdle135");
 			break;
 		case eDirection::SOUTH_EAST:
-			ChangeAnimation("playerIdle180");
+			ChangeAnimation("EnemyIdle180");
 			break;
 		case eDirection::SOUTH:
-			ChangeAnimation("playerIdle225");
+			ChangeAnimation("EnemyIdle225");
 			break;
 		case eDirection::SOUTH_WEST:
-			ChangeAnimation("playerIdle270");
+			ChangeAnimation("EnemyIdle270");
 			break;
 		case eDirection::WEST:
-			ChangeAnimation("playerIdle315");
+			ChangeAnimation("EnemyIdle315");
 			break;
 		case eDirection::NORTH_WEST:
-			ChangeAnimation("playerIdle000");
+			ChangeAnimation("EnemyIdle000");
 			break;
 		default:
-			ChangeAnimation("playerIdle180");
+			ChangeAnimation("EnemyIdle180");
 			break;
-		}*/
+		}
 	}
 	else if (myState == eActorState::eWalking)
 	{
@@ -198,13 +199,43 @@ void Enemy::DecideAnimation()
 			break;
 		}
 	}
+	else if (myState == eActorState::eAlert)
+	{
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("EnemyAlert045Animation");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("EnemyAlert090Animation");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("EnemyAlert135Animation");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("EnemyAlert180Animation");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("EnemyAlert225Animation");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("EnemyAlert270Animation");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("EnemyAlert315Animation");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("EnemyAlert000Animation");
+			break;
+		default:
+			ChangeAnimation("EnemyAlert180Animation");
+			break;
+		}
+	}
 	else if (GetActorState() == eActorState::eFighting)
 	{
 		ChangeAnimation("CombatAnimation");
-	}
-	else if (GetActorState() == eActorState::eIdle)
-	{
-		ChangeAnimation("EnemyTurn");
 	}
 	else if (GetActorState() == eActorState::eDead)
 	{

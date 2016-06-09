@@ -64,17 +64,6 @@ void Player::OnClick()
 
 void Player::Draw() const
 {
-	if (myIsSeen == true)
-	{
-		if (myPlayerIndex == 0)
-		{
-			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.0f, -1.0f));
-		}
-		else
-		{
-			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.2f, -1.2f));
-		}
-	}
 	Actor::Draw();
 }
 
