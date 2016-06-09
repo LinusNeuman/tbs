@@ -1,4 +1,8 @@
 #include "GUIButton.h"
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
+
+//#define EditorScreenSizeX 19-20.f
+//#define EditorScreenSizeY 10-80.f
 
 GUIButton::GUIButton() : 
 	mySpritePressed(nullptr), 
@@ -66,10 +70,10 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myIsEnabled = aIsEnabled;
 
 	myCollisionBox.SetWithMaxAndMinPos(
-	{ myPosition.x / 1920.f, myPosition.y / 1080.f },
+	{ myPosition.x / SingletonDataHolder::GetTargetResolution().x, myPosition.y / SingletonDataHolder::GetTargetResolution().y},
 	{
-		(myPosition.x / 1920.f) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().x / 1920.f,
-		(myPosition.y / 1080.f) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().y / 1080.f
+		(myPosition.x / SingletonDataHolder::GetTargetResolution().x) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().x / SingletonDataHolder::GetTargetResolution().x,
+		(myPosition.y / SingletonDataHolder::GetTargetResolution().y) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().y / SingletonDataHolder::GetTargetResolution().y
 	});
 
 	mySprite = mySpriteUnpressed;

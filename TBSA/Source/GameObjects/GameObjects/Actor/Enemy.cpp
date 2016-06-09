@@ -102,6 +102,7 @@ void Enemy::SetDirection(eDirection aDirection)
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
+	SetActorState(eActorState::eAlert);
 	return true;
 }
 
@@ -195,6 +196,40 @@ void Enemy::DecideAnimation()
 			break;
 		default:
 			ChangeAnimation("EnemyWalk180");
+			break;
+		}
+	}
+	else if (myState == eActorState::eAlert)
+	{
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("EnemyAlert045Animation");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("EnemyAlert090Animation");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("EnemyAlert135Animation");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("EnemyAlert180Animation");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("EnemyAlert225Animation");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("EnemyAlert270Animation");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("EnemyAlert315Animation");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("EnemyAlert000Animation");
+			break;
+		default:
+			ChangeAnimation("EnemyAlert180Animation");
 			break;
 		}
 	}
