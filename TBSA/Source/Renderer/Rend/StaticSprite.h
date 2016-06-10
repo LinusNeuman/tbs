@@ -78,9 +78,11 @@ namespace DX2D
 class RenderCommand;
 class RenderConverter;
 class Renderer;
+class Animation;
 
 class StaticSprite
 {
+	friend Animation;
 	friend RenderConverter;
 	friend Renderer;
 
@@ -101,7 +103,7 @@ public:
 	unsigned short AddImageAssync(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
 	
 	CU::Vector2f GetSize();
-	CU::Vector2f GetSizeWithoutWhiteSpace();
+	CU::Vector2f GetSizeWithoutWhiteSpace() const;
 
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
@@ -119,8 +121,9 @@ public:
 
 	std::string myShaderName;
 	RenderData myRenderData;
-private:
 	
+private:
+	void SetSizeInPixels(const CU::Vector2f & aSizeInPixels);
 	const RenderData & GetRenderData() const;
 
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
@@ -139,7 +142,6 @@ private:
 	
 
 	CU::Vector2f myPositionOffset;
-
 	CU::Vector2f mySizeWithoutWhitespace;
 };
 

@@ -9,15 +9,25 @@ RenderCommand::RenderCommand()
 	myText = nullptr;
 }
 
-RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer, const RenderData & aRenderData, const bool aOffsetMiddleOfScreen/* = false*/)
+RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer, const RenderData & aRenderData)
 	: mySprite(&aSpriteToRender),
 	myPosition(aPosition),
 	myRenderData(aRenderData)
 {
 	myRenderPriority = aRenderPriority;
 	myLayer = aLayer;
-	myMiddleScreenOffset = aOffsetMiddleOfScreen;
 	myText = nullptr;
+}
+
+RenderCommand::RenderCommand(DX2D::CText & aTextToRender, const float aRenderPriority, const USHORT aLayer, const bool aOffsetMiddleOfScreen/* = false*/)
+	: myText(&aTextToRender),
+	myPosition({ aTextToRender.myPosition.x, aTextToRender.myPosition.y })
+{
+	myRenderPriority = aRenderPriority;
+	myLayer = aLayer;
+	myMiddleScreenOffset = aOffsetMiddleOfScreen;
+	mySprite = nullptr;
+
 }
 
 USHORT RenderCommand::GetLayer()
@@ -30,15 +40,7 @@ float RenderCommand::GetPriority()
 	return myRenderPriority;
 }
 
-RenderCommand::RenderCommand(DX2D::CText & aTextToRender, const float aRenderPriority, const USHORT aLayer, const bool aOffsetMiddleOfScreen/* = false*/)
-	: myText(&aTextToRender),
-	myPosition({ aTextToRender.myPosition.x, aTextToRender.myPosition.y })
-{
-	myRenderPriority = aRenderPriority;
-	myLayer = aLayer;
-	myMiddleScreenOffset = aOffsetMiddleOfScreen;
-	mySprite = nullptr;
-}
+
 
 RenderCommand::~RenderCommand()
 {
@@ -49,24 +51,19 @@ void RenderCommand::Render() const
 	
 	DX2D::CColor tempColor(myRenderData.myColor.r, myRenderData.myColor.g, myRenderData.myColor.b, myRenderData.myColor.a);
 
-	DX2D::Vector2f tempPosition;
+	float normalizedWindowSizeX;
+	float normalizedWindowSizeY;
 
-	float normalizedWindowSizeX = mySprite->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
-	float normalizedWindowSizeY = mySprite->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
+	normalizedWindowSizeX = myRenderData.mySizeInPixels.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / FLOATCAST(SingletonDataHolder::GetTargetResolution().y));
+	normalizedWindowSizeY = myRenderData.mySizeInPixels.y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
-	//DX2D::Vector2f tempSize(normalizedWindowSizeX * myRenderData.mySize.x, normalizedWindowSizeY * myRenderData.mySize.y);
-	DX2D::Vector2f tempSize(myRenderData.mySize.x, myRenderData.mySize.y);
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
 
-	if (myMiddleScreenOffset == true)
-	{
-		tempPosition.x = myPosition.x + 0.5f;
-		tempPosition.y = myPosition.y + 0.5f;
-	}
-	else
-	{
-		tempPosition.x = myPosition.x;
-		tempPosition.y = myPosition.y;
-	}
+	DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale, normalizedWindowSizeY * renderScale);
+
+
+	DX2D::Vector2f tempPosition = {myPosition.x, myPosition.y};
+
 
 	if (mySprite != nullptr)
 	{

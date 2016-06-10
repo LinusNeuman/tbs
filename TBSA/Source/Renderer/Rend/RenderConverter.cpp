@@ -11,6 +11,7 @@
 
 #include <Message/LevelTileMetricsMessage.h>
 #include <Message/SetMainCameraMessage.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 RenderConverter * RenderConverter::ourInstance = nullptr;
 
@@ -54,6 +55,7 @@ void RenderConverter::Init(const CU::Vector2ui & aWindowSize)
 {
 	GetInstance().myRenderer.Init();
 	GetInstance().myRenderer.SetWindowSize(aWindowSize);
+	GetInstance().myWindowSize = aWindowSize;
 
 	GetInstance().myLevelTileLayout = CU::Vector2ui(10, 10);
 
@@ -70,17 +72,26 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 
 	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
+	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
+	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
 
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+	newPos *= renderScale;
 
-	//RenderData tempRenderData(aSpriteToRender.GetColor());
+	newPos.x += 0.5f;
+	newPos.y += 0.5f;
 
-	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), /*tempOffset +*/ newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData(), true));
+	GetInstance().myRenderer.AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), newPos, Priority, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
 }
 
 void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
 	RenderData tempRenderData(aSpriteToRender.GetColor());
-	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), tempRenderData));
+
+	CU::Vector2f newPos(aPosition);
+	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
+	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
+	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), newPos, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData())); //
 }
 
 void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
@@ -99,18 +110,15 @@ void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, con
 
 	CU::Vector2f newEndPos = CU::IsometricToPixel(aEndPosition * (*GetInstance().myCamera).GetInverse());
 
-	GetInstance().myRenderer.DrawLine(newStartPos, newEndPos, aColor, true);
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+
+	GetInstance().myRenderer.DrawLine(newStartPos * renderScale, newEndPos * renderScale, aColor, true);
 }
 
 void RenderConverter::Draw()
 {
 	GetInstance().myRenderer.Draw();
 }
-
-//void RenderConverter::SetCamera(const Camera2D & aCamera)
-//{
-//	GetInstance().myCamera = &aCamera;
-//}
 
 void RenderConverter::SwapBuffers()
 {
