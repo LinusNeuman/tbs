@@ -53,11 +53,11 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(textBox);
 
-			GUIActionPointsBar* APBar = new GUIActionPointsBar();
+			/*GUIActionPointsBar* APBar = new GUIActionPointsBar();
 
 			myGUIElements.Add(APBar);
 
-			++elementsAdded;
+			++elementsAdded;*/
 
 			myGUILookup["InGame"].myEnd = elementsAdded;
 

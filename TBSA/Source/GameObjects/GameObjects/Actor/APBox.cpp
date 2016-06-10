@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "APBox.h"
-
+#include <Rend/RenderConverter.h>
+#include <Rend/RenderCommand.h>
 
 APBox::APBox()
 {
@@ -22,4 +23,5 @@ void APBox::Update()
 
 void APBox::Draw(TilePositionf aPosition)
 {
+	//RenderConverter::AddRenderCommand(RenderCommand(myAPText, aPosition, 1, enumRenderLayer::eGUI, ))
 }
