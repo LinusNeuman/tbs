@@ -20,12 +20,12 @@ void GameState::Init()
 
 void GameState::OnTopStateEnter()
 {
-
+	myGUIManager.StartRecieving();
 }
 
 void GameState::OnTopStateExit()
 {
-
+	myGUIManager.StopRecieving();
 }
 
 void GameState::LoadGUI(const char* aName)
