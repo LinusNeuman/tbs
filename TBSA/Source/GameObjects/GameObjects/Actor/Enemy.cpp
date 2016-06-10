@@ -211,31 +211,31 @@ void Enemy::DecideAnimation()
 		switch (GetDirectionEnum())
 		{
 		case eDirection::NORTH:
-			ChangeAnimation("EnemyAlert045Animation");
+			ChangeAnimation("EnemyAlert045");
 			break;
 		case eDirection::NORTH_EAST:
-			ChangeAnimation("EnemyAlert090Animation");
+			ChangeAnimation("EnemyAlert090");
 			break;
 		case eDirection::EAST:
-			ChangeAnimation("EnemyAlert135Animation");
+			ChangeAnimation("EnemyAlert135");
 			break;
 		case eDirection::SOUTH_EAST:
-			ChangeAnimation("EnemyAlert180Animation");
+			ChangeAnimation("EnemyAlert180");
 			break;
 		case eDirection::SOUTH:
-			ChangeAnimation("EnemyAlert225Animation");
+			ChangeAnimation("EnemyAlert225");
 			break;
 		case eDirection::SOUTH_WEST:
-			ChangeAnimation("EnemyAlert270Animation");
+			ChangeAnimation("EnemyAlert270");
 			break;
 		case eDirection::WEST:
-			ChangeAnimation("EnemyAlert315Animation");
+			ChangeAnimation("EnemyAlert315");
 			break;
 		case eDirection::NORTH_WEST:
-			ChangeAnimation("EnemyAlert000Animation");
+			ChangeAnimation("EnemyAlert000");
 			break;
 		default:
-			ChangeAnimation("EnemyAlert180Animation");
+			ChangeAnimation("EnemyAlert180");
 			break;
 		}
 	}
