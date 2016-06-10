@@ -18,6 +18,16 @@ void GameState::Init()
 
 }
 
+void GameState::OnTopStateEnter()
+{
+
+}
+
+void GameState::OnTopStateExit()
+{
+
+}
+
 void GameState::LoadGUI(const char* aName)
 {
 	myGUIManager.LoadActiveGUI(GUIFactory::GetInstance()->GetLoadedGUI(aName));
