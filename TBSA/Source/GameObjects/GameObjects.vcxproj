@@ -105,7 +105,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;$(SolutionDir)Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;$(SolutionDir)Audio\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
@@ -137,6 +137,9 @@
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\DX2DEngine\DX2DEngine.vcxproj">
+      <Project>{11f98bf6-7bdb-4cfb-96cf-577db4ae312f}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>
     </ProjectReference>
@@ -157,6 +160,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObjects\Actor\APBox.cpp" />
     <ClCompile Include="Controllers\EnemyController.cpp" />
     <ClCompile Include="GameObjects\Room\GameFloor.cpp" />
     <ClCompile Include="GameObjects\Actor\Actor.cpp" />
@@ -174,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorEnums.h" />
+    <ClInclude Include="GameObjects\Actor\APBox.h" />
     <ClInclude Include="Controllers\EnemyController.h" />
     <ClInclude Include="GameObjects\Room\GameFloor.h" />
     <ClInclude Include="GameObjects\Actor\Actor.h" />
