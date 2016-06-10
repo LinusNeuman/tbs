@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObjects/Actor/Actor.h"
-
+#include "APBox.h"
 
 
 struct PlayerData;
@@ -44,6 +44,8 @@ public:
 	int GetPeekCost() const;
 	int GetAttackCost() const;
 
+	void Update(const CU::Time &aDeltaTime) override;
+
 private:
 
 	unsigned short myPlayerIndex;
@@ -56,6 +58,8 @@ private:
 	int myPreviousAP;
 
 	bool myShouldDie;
+
+	APBox myAPBox;
 };
 
 inline void Player::SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition)

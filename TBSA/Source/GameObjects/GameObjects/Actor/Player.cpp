@@ -71,6 +71,7 @@ void Player::OnClick()
 void Player::Draw() const
 {
 	Actor::Draw();
+	myAPBox.Draw(myPosition);
 }
 
 bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
@@ -113,6 +114,14 @@ int Player::GetPeekCost() const
 int Player::GetAttackCost() const
 {
 	return myAttackCost;
+}
+
+void Player::Update(const CU::Time& aDeltaTime)
+{
+	Actor::Update(aDeltaTime);
+
+	myAPBox.SetAP(myAP);
+	myAPBox.SetPos(myPosition);
 }
 
 void Player::PreTurn()
