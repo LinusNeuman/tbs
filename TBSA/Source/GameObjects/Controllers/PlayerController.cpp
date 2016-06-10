@@ -572,6 +572,7 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
+			myFloor->GetTile(x, y).SetDiscovered(true);
 			break;
 		}
 		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
@@ -581,9 +582,11 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
+			myFloor->GetTile(x, y).SetDiscovered(true);
 			hasAlreadyBeenBlocked = true;
 		}
 		myFloor->GetTile(x, y).SetVisible(true);
+		myFloor->GetTile(x, y).SetDiscovered(true);
 		
 		if (error > 0)
 		{
@@ -650,6 +653,7 @@ void PlayerController::ResetTileShaders()
 	for (unsigned int i = 0; i < myFloor->Size(); i++)
 	{
 		myFloor->GetTile(i).SetVisible(false);
+		//myFloor->GetTile(i).SetDiscovered(false);
 	}
 }
 
