@@ -25,6 +25,7 @@ public:
 	//static void SetCamera(const Camera2D & aCamera);
 
 	static void SwapBuffers();
+	static void ClearCommands();
 
 	virtual bool RecieveMessage(const LevelTileMetricsMessage & aMessage) override;
 	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage) override;

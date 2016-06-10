@@ -5,7 +5,7 @@
 #define Vec2f CommonUtilities::Vector2f
 #define MAX_TEXT_ROWS 100
 #define TEXT_HEIGHT 28
-#define DEBUG_TEXTBOX
+//#define DEBUG_TEXTBOX
 
 #include "../CommonUtilities/CU/NameSpaceAliases.h"
 #include <string>
@@ -29,9 +29,9 @@ class TextBox
 {
 	public:
 		TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::string aFontPath, eLinewrappingMode aMode = eLinewrappingMode::Char);
-
+		~TextBox();
 		void AddText(std::string aText);
-		void Render();
+		void Render() const;
 		void ScrollUp();
 		void ScrollDown();
 		void SetLineWrappingMode(const eLinewrappingMode aMode);
