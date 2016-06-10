@@ -85,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;$(SolutionDir)Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectSolution)GameStates\;$(ProjectDir);$(SolutionDir)CollisionHandling;$(SolutionDir)CommonUtilities;$(SolutionDir)PostMaster;$(SolutionDir)PostMessages;$(SolutionDir)Renderer;$(SolutionDir)Factories\;$(SolutionDir)JSONWrapper;$(SolutionDir)Input;$(SolutionDir)StateStack\;$(SolutionDir)PathFinding\;$(SolutionDir)GameObjects\;$(SolutionDir)TiledLoading\;$(SolutionDir)Audio\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
