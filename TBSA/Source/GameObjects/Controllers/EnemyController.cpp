@@ -7,6 +7,7 @@
 #include <Message/EnemyPositionChangedMessage.h>
 #include <Message/FightWithEnemyMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
+#include <Message/EnemyObjectMessage.h>
 
 
 EnemyController::EnemyController()
@@ -56,8 +57,8 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 	ResetTileShaders();
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
-		if (myEnemies[i]->GetActiveState() == true)
-		{
+		if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
+		{	
 			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
 			SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
 		}
@@ -259,6 +260,8 @@ bool EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
 	myEnemies[aMessage.myEnemyIndex]->Fight();
 	return true;
 }
+
+
 
 void EnemyController::PostTurn()
 {

@@ -49,6 +49,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyAttacked, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -66,6 +67,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyAttacked, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
@@ -432,6 +434,16 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 	myClickedOnEnemy = true;
 	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
+	if (aMessage.myType == RecieverTypes::eEnemyAttacked)
+	{
+		for (size_t i = 0; i < myPlayers.Size(); i++)
+		{
+			if (myPlayers[i]->GetActorState() == eActorState::eAlert)
+			{
+				myPlayers[i]->SetActorState(eActorState::eIdle);
+			}
+		}
+	}
 	return true;
 }
 
