@@ -50,6 +50,8 @@
     </ClCompile>
     <ClCompile Include="GameObjects\Actor\APBox.cpp">
       <Filter>Source Files</Filter>
+    <ClCompile Include="Controllers\ScoreCounter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +95,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Actor\APBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\ScoreCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllers\ScoreTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

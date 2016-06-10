@@ -31,6 +31,8 @@ public:
 	inline void SetHasPlayed(bool aHasPlayed);
 	inline void Render();
 private:
+	void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart, const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite);
+
 	std::string myInTransition;
 	std::string myOutTransition;
 	std::string myName;
