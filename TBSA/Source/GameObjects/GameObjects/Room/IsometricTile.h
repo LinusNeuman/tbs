@@ -61,7 +61,9 @@ public:
 
 	void SetVisible(bool aIsVisible);
 	void SetInEnemyFoV(bool aIsInFoV);
+	void SetDiscovered(bool aIsDiscovered);
 	bool GetVisible() const;
+	bool GetDiscovered() const;
 	bool GetInEnemyFov() const;
 	void RemoveAvailableDirection(eDirection aDirection);
 	const CU::GrowingArray<eDirection>& GetAvailableDirections() const
@@ -81,6 +83,7 @@ private:
 	eTileState myState;
 	bool myIsVisible;
 	bool myIsInEnemyFoV;
+	bool myIsDiscovered;
 
 	bool myDebugMode;
 };
