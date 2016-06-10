@@ -31,6 +31,14 @@ void StateStack::AddSubState(GameState * aSubstate)
 	{
 		myStates.GetLast().GetLast()->OnTopStateExit();
 	}
+	else
+	{
+		if (myStates.Size() > 1)
+		{
+			myStates[myStates.Size() - 2].GetLast()->OnTopStateExit();
+		}
+	}
+
 	aSubstate->OnTopStateEnter();
 	myStates.GetLast().Add(aSubstate);
 }

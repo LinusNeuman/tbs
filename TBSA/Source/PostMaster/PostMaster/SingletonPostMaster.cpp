@@ -51,7 +51,15 @@ void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, Messag
 void SingletonPostMaster::RemoveReciever(const RecieverTypes aTypeUnsubscribe, MessageReciever & aRecieverToRemove)
 {
 	Reciever tempReciever(aRecieverToRemove);
-	GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)].RemoveCyclic(tempReciever);
+
+	for (unsigned short iReciever = 0; iReciever < GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)].Size(); ++iReciever)
+	{
+		if (tempReciever == GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)][iReciever])
+		{
+			GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)].RemoveAtIndex(iReciever);
+			//break;
+		}
+	}
 }
 
 void SingletonPostMaster::RemoveReciever(MessageReciever& aReceiver)

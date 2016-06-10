@@ -13,13 +13,13 @@ GUIManager::GUIManager()
 	myHasReleased = false;
 
 	myRecieverOrder = RecieverOrder::eGUI;
-	SingletonPostMaster::AddReciever(RecieverTypes::eMouseInput, *this);// , RecieverOrder::eGUI);
+	//SingletonPostMaster::AddReciever(RecieverTypes::eMouseInput, *this);// , RecieverOrder::eGUI);
 }
 
 
 GUIManager::~GUIManager()
 {
-	SingletonPostMaster::RemoveReciever(*this);
+	//SingletonPostMaster::RemoveReciever(*this);
 }
 
 void GUIManager::Update(const CU::Time& aDelta)
