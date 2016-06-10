@@ -4,20 +4,24 @@
 #include <Rend/StaticSprite.h>
 #include <StateStack/ProxyStateStack.h>
 #include "PlayState.h"
+#include "LevelSelectState.h"
 
 MenuState::MenuState()
 {
 	myShouldAdd = false;
+	myShouldSelect = false;
 }
 
 MenuState::~MenuState()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayGame, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelSelect, *this);
 }
 
 void MenuState::Init()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayGame, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelSelect, *this);
 
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/mainMenu.dds", false);
@@ -37,6 +41,13 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		aStateStack.AddMainState(newState);
 		myShouldAdd = false;
 	}
+	if (myShouldSelect == true)
+	{
+		LevelSelectState *newState = new LevelSelectState();
+		newState->Init();
+		aStateStack.AddMainState(newState);
+		myShouldSelect = false;
+	}
 
 	return eStackReturnValue::eStay;
 }
@@ -53,6 +64,10 @@ bool MenuState::RecieveMessage(const GUIMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::ePlayGame)
 	{
 		myShouldAdd = true;
+	}
+	if (aMessage.myType == RecieverTypes::eLevelSelect)
+	{
+		myShouldSelect = true;
 	}
 	return true;
 }

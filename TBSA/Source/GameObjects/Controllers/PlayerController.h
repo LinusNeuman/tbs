@@ -52,6 +52,7 @@ public:
 	virtual bool RecieveMessage(const PlayerPositionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
 

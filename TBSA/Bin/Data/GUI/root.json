@@ -85,6 +85,47 @@
               "Click": "ExitGame",
               "Hover": ""
             }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 128,
+              "myHeight": 70
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 128,
+              "myHeight": 70
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 128,
+              "myHeight": 70
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 128,
+            "mySizeY": 70,
+            "Name": "Level Select",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 0,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "LevelSelect",
+              "Hover": ""
+            }
           }
         ]
       }
@@ -92,7 +133,90 @@
     {
       "myName": "LevelSelect",
       "myGUIData": {
-        "guiElements": []
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 128,
+              "myHeight": 70
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 128,
+              "myHeight": 70
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 128,
+              "myHeight": 70
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 128,
+            "mySizeY": 70,
+            "Name": "Level1",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 128,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "SelectLevel1",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 256,
+              "myHeight": 256
+            },
+            "myShouldPlayHoverSound": false,
+            "myShouldPlayClickSound": false,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 256,
+            "mySizeY": 256,
+            "Name": "Level2",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 256,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "SelectLevel2",
+              "Hover": ""
+            }
+          }
+        ]
       }
     },
     {
@@ -185,58 +309,58 @@
       }
     },
     {
-        "myName": "GameOver",
-        "myGUIData": {
-            "guiElements": [
-                {
-                    "$type": "GUIEditor.GUIButton, GUIEditor",
-                    "myUnpressed": {
-                        "myPath": "Sprites/GUI/InGame\\GameOver/Unpressed.dds",
-                        "myWidth": 130,
-                        "myHeight": 70
-                    },
-                    "myPressed": {
-                        "myPath": "Sprites/GUI/InGame\\GameOver/Pressed.dds",
-                        "myWidth": 130,
-                        "myHeight": 70
-                    },
-                    "myHover": {
-                        "myPath": "Sprites/GUI/InGame\\GameOver/Hover.dds",
-                        "myWidth": 130,
-                        "myHeight": 70
-                    },
-                    "myShouldPlayHoverSound": true,
-                    "myShouldPlayClickSound": true,
-                    "myAnimated": true,
-                    "myImagesPath": "Sprites/GUI/InGame\\GameOver",
-                    "mySizeX": 130,
-                    "mySizeY": 70,
-                    "Name": "Reset Button",
-                    "Tooltip": "",
-                    "mySprite": {
-                        "myPath": "",
-                        "myWidth": 0,
-                        "myHeight": 0
-                    },
-                    "myIsEnabled": true,
-                    "myIsIsometric": false,
-                    "myPositionX": 830,
-                    "myPositionY": 720,
-                    "myParentPositionX": 0,
-                    "myParentPositionY": 0,
-                    "Events": {
-                        "Click": "Restart",
-                        "Hover": ""
-                    }
-                }
-            ]
-        }
+      "myName": "GameOver",
+      "myGUIData": {
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\GameOver/Unpressed.dds",
+              "myWidth": 130,
+              "myHeight": 70
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\GameOver/Pressed.dds",
+              "myWidth": 130,
+              "myHeight": 70
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\GameOver/Hover.dds",
+              "myWidth": 130,
+              "myHeight": 70
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\GameOver",
+            "mySizeX": 130,
+            "mySizeY": 70,
+            "Name": "Reset Button",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 830,
+            "myPositionY": 720,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "Restart",
+              "Hover": ""
+            }
+          }
+        ]
+      }
     },
     {
-     "myName": "PauseMenu",
-     "myGUIData": {
+      "myName": "PauseMenu",
+      "myGUIData": {
         "guiElements": []
-        }
+      }
     }
   ]
 }
