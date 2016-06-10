@@ -8,13 +8,15 @@
 		],
 		[
 			{
-				"type" : "on_objective",
+				"type" : "hold_objective",
 				"target" : "endzone1",
 			},
 			{
-				"type" : "on_objective",
+				"type" : "hold_objective",
 				"target" : "endzone2",
 			},
 		],
 	],
+	
+	"nextLevel": "2_Backyard.json"
 }

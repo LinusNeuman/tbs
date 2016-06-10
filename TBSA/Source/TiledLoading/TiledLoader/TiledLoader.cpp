@@ -17,12 +17,6 @@ namespace
 	const std::string fileEnding = ".png";
 }
 
-//picojson::object GetObject(picojson::value aValue);
-//double& GetNumber( picojson::value aValue);
-//int GetNumberInt(picojson::value aValue);
-//picojson::array GetArray( picojson::value aValue);
-//std::string GetString( picojson::value aValue);
-//CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const picojson::value& aYValue);
 
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType);
 
@@ -35,14 +29,6 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 	std::map<std::string, unsigned short> enemyIndexes;
 	CommonUtilities::GrowingArray<PathAndName> paths;
 	paths.Init(1);
-
-	//picojson::value root;
-	
-	//std::string JsonData = CommonUtilities::GetFileAsString(aFilePath);
-	//std::string err = picojson::parse(root , JsonData);
-	//
-	//DL_ASSERT(err.empty(), (std::string("ERROR from Json: ") + err).c_str());
-
 
 	picojson::object rootObject = JsonHelp::LoadJson(aFilePath);
 
@@ -357,43 +343,6 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 	someTiles.myIsLoaded = true;
 }
 
-picojson::object GetObject(picojson::value aValue)
-{
-	DL_ASSERT(aValue.is<picojson::object>(), "ERROR: Json value is not an object");
-	return aValue.get<picojson::object>();
-}
-
-double& GetNumber(picojson::value aValue)
-{
-	DL_ASSERT(aValue.is<double>(), "ERROR: Json value is not a number");
-	return aValue.get<double>();
-}
-
-int GetNumberInt(picojson::value aValue)
-{
-	double tempDouble = GetNumber(aValue);
-	return INTCAST(tempDouble);
-};
-
-picojson::array GetArray( picojson::value aValue)
-{
-	DL_ASSERT(aValue.is<picojson::array>(), "ERROR: Json value is not an array");
-	return aValue.get<picojson::array>();
-}
-
-std::string GetString( picojson::value aValue)
-{
-	DL_ASSERT(aValue.is<std::string>(), "ERROR: Json value is not a string");
-	return aValue.get<std::string>();
-}
-
-CommonUtilities::Vector2f GetVector2f(const picojson::value& aXValue, const picojson::value& aYValue)
-{
-	const float x = static_cast<float>(GetNumber(aXValue));
-	const float y = static_cast<float>(GetNumber(aYValue));
-
-	return CommonUtilities::Vector2f(x, y);
-}
 
 CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::array& aSpriteSheetArray, std::string aFileType)
 {
@@ -402,12 +351,12 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 
 	for (size_t i = 0; i < aSpriteSheetArray.size(); ++i)
 	{
-		picojson::object  currentObject = GetObject(aSpriteSheetArray[i]);
+		picojson::object  currentObject = JsonHelp::GetObject(aSpriteSheetArray[i]);
 
-		std::string name = GetString(currentObject["name"]);
-		unsigned int firstId = static_cast<unsigned int>(GetNumber(currentObject["firstgid"]));
-		CommonUtilities::Vector2f size = GetVector2f(currentObject["tilewidth"], currentObject["tileheight"]);
-		CommonUtilities::Vector2f sheetSize = GetVector2f(currentObject["imagewidth"], currentObject["imageheight"]);
+		std::string name = JsonHelp::GetString(currentObject["name"]);
+		unsigned int firstId = static_cast<unsigned int>(JsonHelp::GetNumber(currentObject["firstgid"]));
+		CommonUtilities::Vector2f size = JsonHelp::GetVector2f(currentObject["tilewidth"], currentObject["tileheight"]);
+		CommonUtilities::Vector2f sheetSize = JsonHelp::GetVector2f(currentObject["imagewidth"], currentObject["imageheight"]);
 
 		returnArray.Add(SpriteSheet(name, size, sheetSize, aFileType, firstId));
 	}
@@ -419,28 +368,28 @@ void GetPathNodes(const int aIndex, PathAndName& aPath, const picojson::array& s
 {
 
 	
-	if (aLastTile != 3 && aIndex + 1 < INTCAST(someData.size()) && GetNumberInt(someData[aIndex + 1]) >= 1)
+	if (aLastTile != 3 && aIndex + 1 < INTCAST(someData.size()) && JsonHelp::GetNumberInt(someData[aIndex + 1]) >= 1)
 	{
 		int index = aIndex + 1;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
 		GetPathNodes(index, aPath, someData, aMapWidth, 0);
 		return;
 	}
-	if (aLastTile != 2 && aIndex + aMapWidth < INTCAST(someData.size()) && GetNumberInt(someData[aIndex + aMapWidth]) >= 1)
+	if (aLastTile != 2 && aIndex + aMapWidth < INTCAST(someData.size()) && JsonHelp::GetNumberInt(someData[aIndex + aMapWidth]) >= 1)
 	{
 		int index = aIndex + aMapWidth;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
 		GetPathNodes(index, aPath, someData, aMapWidth, 1);
 		return;
 	}
-	if (aLastTile != 1 && aIndex - aMapWidth >= 0 && GetNumberInt(someData[aIndex - aMapWidth]) >= 1)
+	if (aLastTile != 1 && aIndex - aMapWidth >= 0 && JsonHelp::GetNumberInt(someData[aIndex - aMapWidth]) >= 1)
 	{
 		int index = aIndex - aMapWidth;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));
 		GetPathNodes(index, aPath, someData, aMapWidth, 2);
 		return;
 	}
-	if (aLastTile != 0 && aIndex - 1 >= 0 && GetNumberInt(someData[aIndex - 1]) >= 1)
+	if (aLastTile != 0 && aIndex - 1 >= 0 && JsonHelp::GetNumberInt(someData[aIndex - 1]) >= 1)
 	{
 		int index = aIndex - 1;
 		aPath.myPath.Add(CommonUtilities::Vector2ui(index % aMapWidth, index / aMapWidth));

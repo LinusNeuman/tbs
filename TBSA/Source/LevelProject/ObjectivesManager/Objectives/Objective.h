@@ -3,7 +3,7 @@
 #pragma once
 #include <string>
 
-enum class eObjectiveType
+enum class eLevelObjectiveType
 {
 	KILL,
 	HOLD,
@@ -11,9 +11,9 @@ enum class eObjectiveType
 	Size,
 };
 
-struct Objective
+struct LevelObjective
 {
-	eObjectiveType myType;
+	eLevelObjectiveType myType;
 	bool myIsDone;
-	std::string myName;
+	std::string myTarget;
 };

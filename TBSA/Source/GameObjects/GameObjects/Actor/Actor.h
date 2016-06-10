@@ -91,6 +91,16 @@ public:
 	void ResetObjectiveState();
 	const TilePositionf & GetObjectiveTargetPosition();
 
+	std::string GetName() const
+	{
+		return myName;
+	}
+
+	void SetName(std::string aName)
+	{
+		myName = aName;
+	}
+
 protected:
 	bool GetObjectiveState();
 
@@ -125,6 +135,7 @@ private:
 	eActorType myType;
 	
 	StaticSprite *mySprite;
+	std::string myName;
 };
 
 inline void Actor::SetActiveState(const bool aActiveFlag)

@@ -170,6 +170,11 @@ bool MessageReciever::RecieveMessage(const ScrollLogDownMessage& aMessage)
 	return true;
 }
 
+bool MessageReciever::RecieveMessage(const TextMessage& aMessage)
+{
+	return true;
+}
+
 bool MessageReciever::RecieveMessage(const ScrollLogUpMessage& aMessage)
 {
 	return true;
