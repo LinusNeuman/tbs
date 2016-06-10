@@ -61,7 +61,9 @@ CU::Vector2f SingletonIsometricInputWrapper::ConvertMouseNormalizedPositionCarte
 	mousePosition.x = mousePosition.x * (myTargetResolution.x);
 	mousePosition.y = mousePosition.y * (myTargetResolution.y);
 
-	return mousePosition;
+	float renderScale = 1920.f / FLOATCAST(myTargetResolution.x) ;
+
+	return mousePosition * renderScale;
 }
 
 /*

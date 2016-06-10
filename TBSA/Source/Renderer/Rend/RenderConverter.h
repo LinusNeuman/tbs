@@ -41,6 +41,7 @@ private:
 	const Camera2D * myCamera;
 
 	CU::Vector2ui myLevelTileLayout;
+	CU::Vector2ui myWindowSize;
 	Renderer myRenderer;
 };
 

@@ -171,6 +171,7 @@
     <ClCompile Include="GameObjects\Room\IsometricTile.cpp" />
     <ClCompile Include="Controllers\MouseController.cpp" />
     <ClCompile Include="Objective.cpp" />
+    <ClCompile Include="Controllers\ScoreCounter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -180,6 +181,7 @@
     <ClInclude Include="ActorEnums.h" />
     <ClInclude Include="GameObjects\Actor\APBox.h" />
     <ClInclude Include="Controllers\EnemyController.h" />
+    <ClInclude Include="Controllers\ScoreTypes.h" />
     <ClInclude Include="GameObjects\Room\GameFloor.h" />
     <ClInclude Include="GameObjects\Actor\Actor.h" />
     <ClInclude Include="GameObjects\Actor\Enemy.h" />
@@ -190,6 +192,7 @@
     <ClInclude Include="GameObjects\Room\IsometricTile.h" />
     <ClInclude Include="Controllers\MouseController.h" />
     <ClInclude Include="Objective.h" />
+    <ClInclude Include="Controllers\ScoreCounter.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
