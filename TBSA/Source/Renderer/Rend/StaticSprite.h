@@ -93,6 +93,7 @@ public:
 	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero, const CU::Vector2f & aPivotPoint = CU::Vector2f::Zero,const bool aSync = true);
 	
 	void Draw(const CU::Vector2f & aPositionInPixel) const;
+	void DrawWithNormalized(const CU::Vector2f & aNormalizedPosition) const;
 
 	enumRenderLayer GetLayer() const;
 	void SetLayer(const enumRenderLayer aRenderLayer);
@@ -119,9 +120,10 @@ public:
 	static void Sync();
 
 	std::string myShaderName;
-	RenderData myRenderData;
+	
 	
 private:
+	RenderData myRenderData;
 	void SetSizeInPixels(const CU::Vector2f & aSizeInPixels);
 	const RenderData & GetRenderData() const;
 
@@ -168,12 +170,10 @@ inline void StaticSprite::SetLayer(const enumRenderLayer aRenderLayer)
 inline const CU::Vector4f & StaticSprite::GetColor() const
 {
 	return myRenderData.myColor;
-	//return myColor;
 }
 inline void StaticSprite::SetColor(const CU::Vector4f & aColor)
 {
-	myRenderData = aColor;
-	//myColor = aColor;
+	myRenderData.myColor = aColor;
 }
 
 inline const bool StaticSprite::GetIsIsometric() const
