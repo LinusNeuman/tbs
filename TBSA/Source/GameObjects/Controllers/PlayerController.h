@@ -8,6 +8,7 @@
 #include <CU/Utility/GameSpecificTypeDefs.h>
 #include <Input/LayeredInput/LayerInputReciever.h>
 #include <Audio\Instances\SoundEffect.h>
+#include "Controllers\ScoreCounter.h"
 
 class PlayState;
 class Actor;
@@ -52,12 +53,14 @@ public:
 	virtual bool RecieveMessage(const PlayerPositionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
 
+
 private:
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
-	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;
+	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const CU::Vector2ui &aOldPosition, CU::Vector2ui &aPeakLocation) const;
 
 	void BuildPath(PathArray & aPathContainterToBuild);
 	enumMouseState GetCurrentMouseState();
@@ -87,6 +90,7 @@ private:
 
 	SoundEffect* mySelectPlayerSound;
 
+	ScoreCounter myScoreCounter;
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

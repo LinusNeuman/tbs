@@ -7,7 +7,7 @@ const float TileSizeHalf = 64.f;
 
 namespace CommonUtilities
 {
-	CU::Vector2f CommonUtilities::IsometricToPixel(const CU::Vector2f & aPosition)
+	CU::Vector2f IsometricToPixel(const CU::Vector2f & aPosition)
 	{
 		CU::Vector2f returnPosition;
 

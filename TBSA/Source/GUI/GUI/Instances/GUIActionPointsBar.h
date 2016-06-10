@@ -27,9 +27,9 @@ private:
 	uchar myPlayerPreviusMaxAP;
 	bool myShouldRenderLoseAnimation;
 
-	int myTargetResPositionX;
-	int myTargetResPositionY;
-	int myTargetResInterPos;
+	float myTargetResPositionX;
+	float myTargetResPositionY;
+	float myTargetResInterPos;
 
 	void CalculateAPIcons();
 };

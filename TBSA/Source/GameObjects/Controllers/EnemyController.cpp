@@ -7,6 +7,7 @@
 #include <Message/EnemyPositionChangedMessage.h>
 #include <Message/FightWithEnemyMessage.h>
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
+#include <Message/EnemyObjectMessage.h>
 
 
 EnemyController::EnemyController()
@@ -56,6 +57,14 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 	ResetTileShaders();
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
+		if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
+		{	
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
+			SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
+		}
+	}
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
 		myEnemies[i]->Update(aDeltaTime);
 		if(myFloor->GetTile(CU::Vector2ui(USHORTCAST(myEnemies[i]->GetPosition().x), USHORTCAST(myEnemies[i]->GetPosition().y))).GetVisible() == true)
 		{
@@ -65,12 +74,9 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		{
 			myEnemies[i]->SetVisibleState(false);
 		}
-		if (myEnemies[i]->GetActiveState() == true)
-		{
-			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, 4.f);
-		}
 		
 	}
+	
 }
 
 void EnemyController::Draw()
@@ -124,7 +130,7 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 
 	for (; n > 0; --n)
 	{
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
+		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR || myFloor->GetTile(x, y).GetTileType() == eTileType::COVER)
 		{
 			break;
 		}
@@ -183,7 +189,7 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirect
 	default:
 		break;
 	}
-	SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
+	
 	
 }
 
@@ -254,6 +260,8 @@ bool EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
 	myEnemies[aMessage.myEnemyIndex]->Fight();
 	return true;
 }
+
+
 
 void EnemyController::PostTurn()
 {

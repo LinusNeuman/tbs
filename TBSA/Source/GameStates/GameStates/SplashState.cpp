@@ -41,7 +41,7 @@ void Splash::Render()
 		(10-80.f * 0.5f) - ((mySprite->GetSize().y) * 10-80.f)
 	});*/
 
-	mySprite->Draw({SingletonDataHolder::GetTargetResolution().x  * 0.5f, SingletonDataHolder::GetTargetResolution().y * 0.5f });
+	mySprite->DrawWithNormalized({ 0.5f, 0.5f });
 }
 
 bool Splash::Fade(const CU::Time& aDelta)

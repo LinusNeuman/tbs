@@ -15,6 +15,7 @@ public:
 
 	static void CalculateAndRenderIso(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition);
 	static void CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition);
+	static void RenderSpriteNormalized(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition);
 
 	static void AddRenderCommand(RenderCommand & aRenderCommand);
 	static void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor = CU::Vector4f::One);
@@ -42,6 +43,7 @@ private:
 	const Camera2D * myCamera;
 
 	CU::Vector2ui myLevelTileLayout;
+	CU::Vector2ui myWindowSize;
 	Renderer myRenderer;
 };
 

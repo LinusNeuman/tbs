@@ -2,6 +2,7 @@
 
 enum class RecieverOrder
 {
+	eGUI,
 	eDefault = 100,
 	enumLength
 };
@@ -47,5 +48,8 @@ enum class RecieverTypes
 	eClearLog,
 	eScrollLogUp,
 	eScrollLogDown,
+	eLevelSelect,
+	eGoToLevel,
+	eEnemyDirectionChanged,
 	enumlength
 };

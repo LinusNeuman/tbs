@@ -95,7 +95,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	createParameters.myTargetWidth = myTargetResolutionX;
 	createParameters.myTargetHeight = myTargetResolutionY;
 	createParameters.myStartInFullScreen = JsonWrapper::GetBool("myIsFullscreen", settings);
-
+	
 	createParameters.myAutoUpdateViewportWithWindow = true;
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 

@@ -3,6 +3,7 @@
 #include "../JsonDataStructs.h"
 #include <Controllers/EnemyController.h>
 #include <Message/EnemyObjectMessage.h>
+#include <Message/EnemyDirectionChangedMessage.h>
 
 
 Enemy::Enemy()
@@ -34,6 +35,10 @@ void Enemy::UpdateEnemy()
 {
 	if (GetActiveState() == true && GetActorState() != eActorState::eDead)
 	{
+		if (myPreviousDirection != myDirection)
+		{
+			SendPostMessage(EnemyDirectionChangedMessage(RecieverTypes::eEnemyDirectionChanged));
+		}
 		if (myHasMoved == false && myEnemyPath.Size() > 0)
 		{
 			CommonUtilities::GrowingArray<CommonUtilities::Point2ui> path;
@@ -50,6 +55,7 @@ void Enemy::UpdateEnemy()
 						myHasTurned = true;
 						--myCurrentPathIndex;
 					}
+					
 				}
 				else
 				{
@@ -102,6 +108,7 @@ void Enemy::SetDirection(eDirection aDirection)
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
+	SetActorState(eActorState::eAlert);
 	return true;
 }
 
@@ -133,36 +140,36 @@ void Enemy::DecideAnimation()
 	if (myState == eActorState::eIdle)
 	{
 		//Determine direction animation
-		/*switch (GetDirectionEnum())
+		switch (GetDirectionEnum())
 		{
 		case eDirection::NORTH:
-			ChangeAnimation("playerIdle045");
+			ChangeAnimation("EnemyIdle045");
 			break;
 		case eDirection::NORTH_EAST:
-			ChangeAnimation("playerIdle090");
+			ChangeAnimation("EnemyIdle090");
 			break;
 		case eDirection::EAST:
-			ChangeAnimation("playerIdle135");
+			ChangeAnimation("EnemyIdle135");
 			break;
 		case eDirection::SOUTH_EAST:
-			ChangeAnimation("playerIdle180");
+			ChangeAnimation("EnemyIdle180");
 			break;
 		case eDirection::SOUTH:
-			ChangeAnimation("playerIdle225");
+			ChangeAnimation("EnemyIdle225");
 			break;
 		case eDirection::SOUTH_WEST:
-			ChangeAnimation("playerIdle270");
+			ChangeAnimation("EnemyIdle270");
 			break;
 		case eDirection::WEST:
-			ChangeAnimation("playerIdle315");
+			ChangeAnimation("EnemyIdle315");
 			break;
 		case eDirection::NORTH_WEST:
-			ChangeAnimation("playerIdle000");
+			ChangeAnimation("EnemyIdle000");
 			break;
 		default:
-			ChangeAnimation("playerIdle180");
+			ChangeAnimation("EnemyIdle180");
 			break;
-		}*/
+		}
 	}
 	else if (myState == eActorState::eWalking)
 	{
@@ -198,13 +205,43 @@ void Enemy::DecideAnimation()
 			break;
 		}
 	}
+	else if (myState == eActorState::eAlert)
+	{
+		//Determine direction animation
+		switch (GetDirectionEnum())
+		{
+		case eDirection::NORTH:
+			ChangeAnimation("EnemyAlert045");
+			break;
+		case eDirection::NORTH_EAST:
+			ChangeAnimation("EnemyAlert090");
+			break;
+		case eDirection::EAST:
+			ChangeAnimation("EnemyAlert135");
+			break;
+		case eDirection::SOUTH_EAST:
+			ChangeAnimation("EnemyAlert180");
+			break;
+		case eDirection::SOUTH:
+			ChangeAnimation("EnemyAlert225");
+			break;
+		case eDirection::SOUTH_WEST:
+			ChangeAnimation("EnemyAlert270");
+			break;
+		case eDirection::WEST:
+			ChangeAnimation("EnemyAlert315");
+			break;
+		case eDirection::NORTH_WEST:
+			ChangeAnimation("EnemyAlert000");
+			break;
+		default:
+			ChangeAnimation("EnemyAlert180");
+			break;
+		}
+	}
 	else if (GetActorState() == eActorState::eFighting)
 	{
 		ChangeAnimation("CombatAnimation");
-	}
-	else if (GetActorState() == eActorState::eIdle)
-	{
-		ChangeAnimation("EnemyTurn");
 	}
 	else if (GetActorState() == eActorState::eDead)
 	{

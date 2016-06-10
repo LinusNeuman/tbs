@@ -12,8 +12,15 @@ public:
 	void Render() const;
 
 	void LoadActiveGUI(CU::GrowingArray<GUIElement*, uchar>* anActiveGUI);
+	void StopRecieving();
+	void StartRecieving();
 
-	//void RecieveMessage()
+	bool RecieveMessage(const MouseButtonDownMessage& aMessage) override;
+	bool RecieveMessage(const MouseButtonPressedMessage& aMessage) override;
+	bool RecieveMessage(const MouseButtonReleasedMessage& aMessage) override;
 private:
 	CU::GrowingArray<GUIElement*, uchar>* myActiveGUI;
+
+	bool myHasPressed;
+	bool myHasReleased;
 };

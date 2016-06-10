@@ -33,7 +33,6 @@ public:
 	void SetPath(const PathArray & aPath);
 
 	void ChangeAnimation(const std::string& anAnimation);
-	void AddAnimation(Animation* anAnimation);
 
 	void StopPath();
 
@@ -42,13 +41,13 @@ public:
 		UpdatePosition(aPos);
 		myTargetPosition = CommonUtilities::Vector2ui(aPos);
 	}
-	
+	void SetPreviousPosition(const TilePositionf& aPosition);
 	
 	CU::Vector2f GetPosition() const
 	{
 		return myPosition;
 	}
-
+	TilePositionf GetPreviousPosition() const;
 
 	CU::Vector2f GetDirection() const
 	{
@@ -63,6 +62,7 @@ public:
 	{
 		return myDirection;
 	}
+	eDirection GetPreviousDirectionEnum() const;
 
 	virtual bool RecieveMessage(const ColliderMessage & aMessage) override;
 
@@ -107,6 +107,7 @@ protected:
 
 	TilePosition myTargetPosition;
 	TilePositionf myPosition;
+	TilePositionf myPreviousPosition;
 	CU::Vector2f myVelocity;
 
 	eActorState myState;
@@ -118,6 +119,7 @@ protected:
 	void UpdateDirection();
 	bool myAtTarget;
 	eDirection myDirection;
+	eDirection myPreviousDirection;
 	bool myIsSeen;
 private:
 	void UpdatePath();

@@ -3,6 +3,7 @@
 #include "tga2d/sprite/sprite.h"
 #include "RenderConverter.h"
 #include <CU/Utility/Math/Isometric.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 
 
@@ -39,7 +40,7 @@ void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFile
 	myIsIsometricFlag = aIsIsometric;
 	if (aSync == true)
 	{
-		myImageIndex = AddImage(aFilePath, aRect);
+		myImageIndex = AddImage(aFilePath, aRect, aPivotPoint);
 	}
 	else
 	{
@@ -52,43 +53,59 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 {
 	IndexKey tempKey(aFilePath, aRect);
 
+	bool foundValue = false;
+	DX2D::CSprite * workSprite = nullptr;
 	if (ourIndexDictionary.count(tempKey) > 0)
 	{
 		unsigned short tempIndex = ourIndexDictionary[tempKey];
-		return tempIndex;
+		foundValue = true;
+		workSprite = ourSprites[tempIndex];
 	}
-
-	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
-	DX2D::CSprite * tempSprite = ourSprites.GetLast();
-	
+	else
+	{
+		ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
+		workSprite = ourSprites.GetLast();
+	}
 
 	if (aRect != CU::Vector4f::Zero)
 	{
-		const float spriteWidth = static_cast<float>(tempSprite->GetImageSize().x);
-		const float spriteHeight = static_cast<float>(tempSprite->GetImageSize().y);
+		myRenderData.mySizeInPixels = { aRect.z, aRect.w };
+	}
+	else
+	{
+		myRenderData.mySizeInPixels = { FLOATCAST(workSprite->GetImageSize().x), FLOATCAST( workSprite->GetImageSize().y)};
+	}
+	
 
-		const float TempStartPointX = aRect.x / spriteWidth;
-		const float TempStartPointY = aRect.y / spriteHeight;
+	if (foundValue == true)
+	{
+		return ourIndexDictionary[tempKey];
+	}
 
-		const float TempWidth = aRect.Width / spriteWidth;
-		const float TempHeight = aRect.Height / spriteHeight;
+	const float spriteWidth = static_cast<float>(workSprite->GetImageSize().x);
+	const float spriteHeight = static_cast<float>(workSprite->GetImageSize().y);
 
-		const float TempEndPointX = TempStartPointX + TempWidth;
-		const float TempEndPointY = TempStartPointY + TempHeight;
+	const float TempStartPointX = aRect.x / spriteWidth;
+	const float TempStartPointY = aRect.y / spriteHeight;
 
-		tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
-		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
+	const float TempWidth = aRect.Width / spriteWidth;
+	const float TempHeight = aRect.Height / spriteHeight;
 
-		mySizeWithoutWhitespace = { aRect.z, aRect.w };
+	const float TempEndPointX = TempStartPointX + TempWidth;
+	const float TempEndPointY = TempStartPointY + TempHeight;
+
+	if (aRect != CU::Vector4f::Zero)
+	{
+		workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 	}
 
 	if (myIsIsometricFlag == true)
 	{
-		tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
+		workSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
 	}
 	else
 	{
-		tempSprite->SetPivot(DX2D::Vector2f(aPivotPoint.x, aPivotPoint.y));
+		workSprite->SetPivot(DX2D::Vector2f(aPivotPoint.x, aPivotPoint.y));
 	}
 
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
@@ -118,14 +135,9 @@ unsigned short StaticSprite::AddImageAssync(const std::string& aFilePath, const 
 	return ourPromisedIndexes[tempKey];
 }
 
-CU::Vector2f StaticSprite::GetSize()
+CU::Vector2f StaticSprite::GetSizeInPixels() const
 {
-	return CU::Vector2f(GetSprite()->GetSize().x, GetSprite()->GetSize().y);
-}
-
-CU::Vector2f StaticSprite::GetSizeWithoutWhiteSpace()
-{
-	return mySizeWithoutWhitespace;
+	return myRenderData.mySizeInPixels;
 }
 
 /*
@@ -145,6 +157,10 @@ void StaticSprite::Draw(const CU::Vector2f & aPosition) const
 	}
 }
 
+void StaticSprite::DrawWithNormalized(const CU::Vector2f & aNormalizedPosition) const
+{
+	RenderConverter::RenderSpriteNormalized(*this, aNormalizedPosition);
+}
 
 void StaticSprite::SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel)
 {
@@ -163,6 +179,11 @@ void StaticSprite::Sync()
 		currentSprite->myImageIndex = currentSprite->AddImage(currentKey.GetPath(), currentKey.GetRect());
 	}
 	ourSpritesWaitingForPromise.RemoveAll();
+}
+
+void StaticSprite::SetSizeInPixels(const CU::Vector2f & aSizeInPixels)
+{
+	myRenderData.mySizeInPixels = aSizeInPixels;
 }
 
 const RenderData & StaticSprite::GetRenderData() const

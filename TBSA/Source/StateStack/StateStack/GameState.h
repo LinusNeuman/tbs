@@ -24,6 +24,8 @@ public:
 	virtual ~GameState();
 
 	virtual void Init();
+	virtual void OnTopStateEnter();
+	virtual void OnTopStateExit();
 
 	void LoadGUI(const char* aName);
 

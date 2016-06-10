@@ -50,6 +50,11 @@ int Player::GetMyAP() const
 	return myCurrentAP;
 }
 
+int Player::GetPreviousAP() const
+{
+	return myPreviousAP;
+}
+
 void Player::CostAP(const int aCost)
 {
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
@@ -60,21 +65,11 @@ void Player::CostAP(const int aCost)
 void Player::OnClick()
 {
 	SendPostMessage(PlayerIDMessage(RecieverTypes::eClickedOnPlayer, GetIndex()));
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 }
 
 void Player::Draw() const
 {
-	if (myIsSeen == true)
-	{
-		if (myPlayerIndex == 0)
-		{
-			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.0f, -1.0f));
-		}
-		else
-		{
-			myDetectedSprite->Draw(GetPosition() + CU::Vector2f(-1.2f, -1.2f));
-		}
-	}
 	Actor::Draw();
 }
 
@@ -83,6 +78,7 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
 	{
 		StopPath();
+		myPreviousAP = myCurrentAP;
 		myCurrentAP = 0;
 		
 		if (myIsSeen == false)
@@ -246,6 +242,7 @@ void Player::SetNoTarget()
 void Player::AlmostReachTarget()
 {
 	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, myPath[myCurrentWaypoint - 1], GetMyAP()));
+	SetPreviousPosition(myPosition);
 }
 
 void Player::ReachedTarget()

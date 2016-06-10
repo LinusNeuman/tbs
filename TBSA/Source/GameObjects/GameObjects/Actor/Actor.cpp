@@ -53,40 +53,42 @@ void Actor::SpriteInit()
 
 void Actor::UpdateDirection()
 {
+	myPreviousDirection = myDirection;
 	if (myState == eActorState::eWalking)
 	{
-		if (myVelocity.x < 0.f && myVelocity.y < 0.f)
+		CU::Vector2f direction = CU::Vector2f(myTargetPosition) - myPosition;
+		if (direction.x < 0.f && direction.y < 0.f)
 		{
 			myDirection = eDirection::NORTH_WEST;
 		}
-		else if (myVelocity.x == 0.f && myVelocity.y < 0.f)
+		else if (direction.x == 0.f && direction.y < 0.f)
 		{
 			myDirection = eDirection::NORTH;
 		}
-		else if (myVelocity.x > 0.f && myVelocity.y < 0.f)
+		else if (direction.x > 0.f && direction.y < 0.f)
 		{
 			myDirection = eDirection::NORTH_EAST;
 		}
-		else if (myVelocity.x > 0.f && myVelocity.y == 0.f)
+		else if (direction.x > 0.f && direction.y == 0.f)
 		{
 			myDirection = eDirection::EAST;
 		}
-		else if (myVelocity.x > 0.f && myVelocity.y > 0.f)
+		else if (direction.x > 0.f && direction.y > 0.f)
 		{
 			myDirection = eDirection::SOUTH_EAST;
 		}
-		else if (myVelocity.x == 0.f && myVelocity.y > 0.f)
+		else if (direction.x == 0.f && direction.y > 0.f)
 		{
 			myDirection = eDirection::SOUTH;
 		}
-		else if (myVelocity.x < 0.f && myVelocity.y > 0.f)
+		else if (direction.x < 0.f && direction.y > 0.f)
 		{
 			myDirection = eDirection::SOUTH_WEST;
 		}
-		else if (myVelocity.x < 0.f && myVelocity.y == 0.f)
+		else if (direction.x < 0.f && direction.y == 0.f)
 		{
 			myDirection = eDirection::WEST;
-		}
+		}	
 	}
 }
 
@@ -100,7 +102,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 			UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
 			CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
-			
+
 			if ((CU::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 			{
 				myAtTarget = true;
@@ -115,6 +117,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			{
 				myAtTarget = false;
 			}
+			
 
 			UpdatePath();
 		}
@@ -128,7 +131,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 		if (myAnimations.GetIsActive() == true)
 		{
-			myAnimations.Update();
+			myAnimations.Update(aDeltaTime);
 			mySprite = myAnimations.GetSprite();
 			mySprite->SetLayer(enumRenderLayer::eGameObjects);
 			mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
@@ -136,6 +139,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 		UpdateDirection();
 		DecideAnimation();
+		
 	}
 }
 
@@ -155,6 +159,7 @@ void Actor::Move(CU::Vector2ui aTargetPosition)
 		OnMove(aTargetPosition);
 	}
 	myTargetPosition = aTargetPosition;
+	UpdateDirection();
 }
 
 void Actor::OnMove(CU::Vector2ui aTargetPosition)
@@ -197,7 +202,6 @@ int Actor::GetMyAP() const
 	return myAP;
 }
 
-
 void Actor::UpdatePath()
 {
  	if (myAtTarget == true )
@@ -205,7 +209,8 @@ void Actor::UpdatePath()
 		if (myCurrentWaypoint < myPath.Size())
 		{
 			SetActorState(eActorState::eWalking);
-			Move(myPath[myCurrentWaypoint]);
+			Move(myPath[myCurrentWaypoint]);		
+			
 			++myCurrentWaypoint;
 			if (myCurrentWaypoint == myPath.Size())
 			{
@@ -231,16 +236,20 @@ void Actor::ChangeAnimation(const std::string& anAnimation)
 	myAnimations.ChangeAnimation(anAnimation);
 }
 
-void Actor::AddAnimation(Animation* anAnimation)
-{
-	myAnimations.AddAnimation(anAnimation);
-}
-
 void Actor::StopPath()
 {
 	myCurrentWaypoint = myPath.Size();
 }
 
+void Actor::SetPreviousPosition(const TilePositionf& aPosition)
+{
+	myPreviousPosition = aPosition;
+}
+
+TilePositionf Actor::GetPreviousPosition() const
+{
+	return myPreviousPosition;
+}
 
 void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 {
@@ -251,6 +260,11 @@ void Actor::UpdatePosition(const CU::Vector2f & aPosition)
 void Actor::DecideAnimation()
 {
 
+}
+
+eDirection Actor::GetPreviousDirectionEnum() const
+{
+	return myPreviousDirection;
 }
 
 bool Actor::RecieveMessage(const ColliderMessage & aMessage)
