@@ -8,6 +8,7 @@
 #include <CU/Utility/GameSpecificTypeDefs.h>
 #include <Input/LayeredInput/LayerInputReciever.h>
 #include <Audio\Instances\SoundEffect.h>
+#include "Controllers\ScoreCounter.h"
 
 class PlayState;
 class Actor;
@@ -89,6 +90,7 @@ private:
 
 	SoundEffect* mySelectPlayerSound;
 
+	ScoreCounter myScoreCounter;
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

@@ -72,8 +72,8 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myCollisionBox.SetWithMaxAndMinPos(
 	{ myPosition.x / SingletonDataHolder::GetTargetResolution().x, myPosition.y / SingletonDataHolder::GetTargetResolution().y},
 	{
-		(myPosition.x / SingletonDataHolder::GetTargetResolution().x) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().x / SingletonDataHolder::GetTargetResolution().x,
-		(myPosition.y / SingletonDataHolder::GetTargetResolution().y) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().y / SingletonDataHolder::GetTargetResolution().y
+		(myPosition.x / SingletonDataHolder::GetTargetResolution().x) + mySpriteUnpressed->GetSizeInPixels().x / SingletonDataHolder::GetTargetResolution().x,
+		(myPosition.y / SingletonDataHolder::GetTargetResolution().y) + mySpriteUnpressed->GetSizeInPixels().y / SingletonDataHolder::GetTargetResolution().y
 	});
 
 	mySprite = mySpriteUnpressed;
