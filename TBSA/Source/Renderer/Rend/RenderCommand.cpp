@@ -51,17 +51,12 @@ void RenderCommand::Render() const
 	
 	DX2D::CColor tempColor(myRenderData.myColor.r, myRenderData.myColor.g, myRenderData.myColor.b, myRenderData.myColor.a);
 
-	float normalizedWindowSizeX;
-	float normalizedWindowSizeY;
-
-	normalizedWindowSizeX = myRenderData.mySizeInPixels.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / FLOATCAST(SingletonDataHolder::GetTargetResolution().y));
-	normalizedWindowSizeY = myRenderData.mySizeInPixels.y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
+	float normalizedWindowSizeX = myRenderData.mySizeInPixels.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / FLOATCAST(SingletonDataHolder::GetTargetResolution().y));
+	float normalizedWindowSizeY = myRenderData.mySizeInPixels.y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
 	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
 
 	DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale, normalizedWindowSizeY * renderScale);
-
-
 	DX2D::Vector2f tempPosition = {myPosition.x, myPosition.y};
 
 

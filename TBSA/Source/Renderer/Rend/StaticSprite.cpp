@@ -28,8 +28,6 @@ StaticSprite::StaticSprite()
 	{
 		ourSpritesWaitingForPromise.Init(1);
 	}
-
-	mySizeWithoutWhitespace = CU::Vector2f::Zero;
 }
 
 StaticSprite::~StaticSprite()
@@ -69,7 +67,20 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		workSprite = ourSprites.GetLast();
 	}
 
+	if (aRect != CU::Vector4f::Zero)
+	{
+		myRenderData.mySizeInPixels = { aRect.z, aRect.w };
+	}
+	else
+	{
+		myRenderData.mySizeInPixels = { FLOATCAST(workSprite->GetImageSize().x), FLOATCAST( workSprite->GetImageSize().y)};
+	}
+	
 
+	if (foundValue == true)
+	{
+		return ourIndexDictionary[tempKey];
+	}
 
 	const float spriteWidth = static_cast<float>(workSprite->GetImageSize().x);
 	const float spriteHeight = static_cast<float>(workSprite->GetImageSize().y);
@@ -82,28 +93,6 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 
 	const float TempEndPointX = TempStartPointX + TempWidth;
 	const float TempEndPointY = TempStartPointY + TempHeight;
-
-	//float normalizedWindowSizeX = workSprite->GetImageSize().x / 1920.f * (16.f / 9.f);//FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
-	//float normalizedWindowSizeY = workSprite->GetImageSize().y / 1080.f;//FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
-
-	if (aRect != CU::Vector4f::Zero)
-	{
-		//myRenderData.mySize = (CU::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
-		myRenderData.mySizeInPixels = { aRect.z, aRect.w };
-		mySizeWithoutWhitespace = { aRect.z, aRect.w };
-	}
-	else
-	{
-		myRenderData.mySizeInPixels = { FLOATCAST(workSprite->GetImageSize().x), FLOATCAST( workSprite->GetImageSize().y)};
-		mySizeWithoutWhitespace.x = 0.f;
-		mySizeWithoutWhitespace.y = 0.f;
-	}
-	
-
-	if (foundValue == true)
-	{
-		return ourIndexDictionary[tempKey];
-	}
 	workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 
 	if (myIsIsometricFlag == true)
@@ -142,14 +131,9 @@ unsigned short StaticSprite::AddImageAssync(const std::string& aFilePath, const 
 	return ourPromisedIndexes[tempKey];
 }
 
-CU::Vector2f StaticSprite::GetSize()
+CU::Vector2f StaticSprite::GetSizeInPixels() const
 {
-	return CU::Vector2f(GetSprite()->GetSize().x, GetSprite()->GetSize().y);
-}
-
-CU::Vector2f StaticSprite::GetSizeWithoutWhiteSpace() const
-{
-	return mySizeWithoutWhitespace;
+	return myRenderData.mySizeInPixels;
 }
 
 /*
