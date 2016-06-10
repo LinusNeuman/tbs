@@ -78,9 +78,12 @@ bool GUIManager::RecieveMessage(const MouseButtonPressedMessage& aMessage)
 	bool shouldfuckoff = false;
 	for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
 	{
-		if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+		if ((*myActiveGUI)[ch]->GetEnabled() == true)
 		{
-			shouldfuckoff = true;
+			if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+			{
+				shouldfuckoff = true;
+			}
 		}
 	}
 
@@ -118,9 +121,12 @@ bool GUIManager::RecieveMessage(const MouseButtonReleasedMessage& aMessage)
 	bool shouldfuckoff = false;
 	for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
 	{
-		if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+		if ((*myActiveGUI)[ch]->GetEnabled() == true)
 		{
-			shouldfuckoff = true;
+			if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+			{
+				shouldfuckoff = true;
+			}
 		}
 	}
 
