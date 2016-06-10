@@ -13,13 +13,13 @@ GUIManager::GUIManager()
 	myHasReleased = false;
 
 	myRecieverOrder = RecieverOrder::eGUI;
-	SingletonPostMaster::AddReciever(RecieverTypes::eMouseInput, *this);// , RecieverOrder::eGUI);
+	//SingletonPostMaster::AddReciever(RecieverTypes::eMouseInput, *this);// , RecieverOrder::eGUI);
 }
 
 
 GUIManager::~GUIManager()
 {
-	SingletonPostMaster::RemoveReciever(*this);
+	//SingletonPostMaster::RemoveReciever(*this);
 }
 
 void GUIManager::Update(const CU::Time& aDelta)
@@ -78,9 +78,12 @@ bool GUIManager::RecieveMessage(const MouseButtonPressedMessage& aMessage)
 	bool shouldfuckoff = false;
 	for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
 	{
-		if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+		if ((*myActiveGUI)[ch]->GetEnabled() == true)
 		{
-			shouldfuckoff = true;
+			if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+			{
+				shouldfuckoff = true;
+			}
 		}
 	}
 
@@ -118,9 +121,12 @@ bool GUIManager::RecieveMessage(const MouseButtonReleasedMessage& aMessage)
 	bool shouldfuckoff = false;
 	for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
 	{
-		if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+		if ((*myActiveGUI)[ch]->GetEnabled() == true)
 		{
-			shouldfuckoff = true;
+			if ((*myActiveGUI)[ch]->IsOver(IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+			{
+				shouldfuckoff = true;
+			}
 		}
 	}
 
