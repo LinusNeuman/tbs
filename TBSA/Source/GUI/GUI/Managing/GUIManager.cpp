@@ -11,6 +11,9 @@ GUIManager::GUIManager()
 
 	myHasPressed = false;
 	myHasReleased = false;
+
+	myRecieverOrder = RecieverOrder::eGUI;
+	SingletonPostMaster::AddReciever(RecieverTypes::eMouseInput, *this);// , RecieverOrder::eGUI);
 }
 
 
@@ -47,14 +50,18 @@ void GUIManager::Render() const
 
 void GUIManager::LoadActiveGUI(CU::GrowingArray<GUIElement*, uchar>* anActiveGUI)
 {
-	myRecieverOrder = RecieverOrder::eGUI;
-	SingletonPostMaster::AddReciever(RecieverTypes::eMouseInput, *this);// , RecieverOrder::eGUI);
 	myActiveGUI = anActiveGUI;
 }
 
 void GUIManager::StopRecieving()
 {
 	SingletonPostMaster::RemoveReciever(*this);
+}
+
+void GUIManager::StartRecieving()
+{
+	myRecieverOrder = RecieverOrder::eGUI;
+	SingletonPostMaster::AddReciever(RecieverTypes::eMouseInput, *this);// , RecieverOrder::eGUI);
 }
 
 bool GUIManager::RecieveMessage(const MouseButtonDownMessage& aMessage)

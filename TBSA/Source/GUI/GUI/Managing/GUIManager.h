@@ -13,6 +13,7 @@ public:
 
 	void LoadActiveGUI(CU::GrowingArray<GUIElement*, uchar>* anActiveGUI);
 	void StopRecieving();
+	void StartRecieving();
 
 	bool RecieveMessage(const MouseButtonDownMessage& aMessage) override;
 	bool RecieveMessage(const MouseButtonPressedMessage& aMessage) override;
