@@ -93,7 +93,11 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 
 	const float TempEndPointX = TempStartPointX + TempWidth;
 	const float TempEndPointY = TempStartPointY + TempHeight;
-	workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
+
+	if (aRect != CU::Vector4f::Zero)
+	{
+		workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
+	}
 
 	if (myIsIsometricFlag == true)
 	{

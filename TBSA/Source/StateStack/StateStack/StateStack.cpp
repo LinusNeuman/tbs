@@ -73,7 +73,9 @@ void StateStack::Render() const
 void StateStack::PopAndDeleteSubstate()
 {
 	DL_ASSERT(myStates.GetLast().Size() > 1, "GameStateStack - Trying to pop a substate when there are none!");
+	myStates.GetLast().GetLast()->OnTopStateExit();
 	myStates.GetLast().DeleteCyclicAtIndex(myStates.GetLast().Size() - 1);	
+	myStates.GetLast().GetLast()->OnTopStateEnter();
 }
 
 void StateStack::PopAndDeleteCurrentSubstates()
@@ -88,8 +90,13 @@ void StateStack::PopAndDeleteMainState()
 {
 	DL_ASSERT(myStates.Size() > 0, "GameStateStack - Trying to pop a mainstate when there are none!");
 	PopAndDeleteCurrentSubstates();
+	myStates.GetLast().GetLast()->OnTopStateExit();
 	myStates.GetLast().DeleteCyclicAtIndex(0);
 	myStates.RemoveAtIndex(myStates.Size() - 1);
+	if (myStates.Size() > 0)
+	{
+		myStates.GetLast().GetLast()->OnTopStateEnter();
+	}
 }
 
 void StateStack::PopMainState()
