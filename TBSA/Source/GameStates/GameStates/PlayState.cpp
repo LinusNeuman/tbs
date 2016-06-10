@@ -12,6 +12,7 @@
 #include <StateStack/ProxyStateStack.h>
 #include "GameOverState.h"
 #include "LoadState.h"
+#include "PostLevelState.h"
 #include "Message\LogTextMessage.h"
 #include "Message\ClearLogMessage.h"
 #include "Message\ScrollLogDownMessage.h"
@@ -26,6 +27,7 @@ PlayState::PlayState()
 
 	myShouldPause = false;
 	myGameOver = false;
+	myShowPostLevelScreen = false;
 }
 
 PlayState::~PlayState()
@@ -131,6 +133,12 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (myLevel->GetTiledData()->myIsLoaded == false)
 	{
 		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
+
+		if (myShowPostLevelScreen == true)
+		{
+			myShowPostLevelScreen = false;
+			//aStateStack.AddSubState(new PostLevelState(100000, 23, 4));
+		}
 	}
 
 	return eStackReturnValue::eStay;
@@ -161,6 +169,7 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
+	myShowPostLevelScreen = true;
 	return true;
 }
 

@@ -17,7 +17,6 @@ enum class eStackReturnValue
 	//ePopCurrentSubStates
 };
 
-
 class GameState
 {
 public:
