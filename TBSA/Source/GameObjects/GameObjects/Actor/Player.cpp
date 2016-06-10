@@ -50,6 +50,11 @@ int Player::GetMyAP() const
 	return myCurrentAP;
 }
 
+int Player::GetPreviousAP() const
+{
+	return myPreviousAP;
+}
+
 void Player::CostAP(const int aCost)
 {
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
@@ -73,6 +78,7 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
 	{
 		StopPath();
+		myPreviousAP = myCurrentAP;
 		myCurrentAP = 0;
 		
 		if (myIsSeen == false)
