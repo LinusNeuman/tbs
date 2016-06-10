@@ -200,21 +200,6 @@
                  "y":768
                 }, 
                 {
-                 "height":0,
-                 "id":38,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":320,
-                 "y":1280
-                }, 
-                {
                  "height":64,
                  "id":43,
                  "name":"Enemy6",
