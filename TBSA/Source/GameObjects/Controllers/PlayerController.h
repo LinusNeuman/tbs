@@ -56,6 +56,7 @@ public:
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
 
+
 private:
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
 	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;

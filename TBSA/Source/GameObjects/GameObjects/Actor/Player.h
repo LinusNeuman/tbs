@@ -20,6 +20,7 @@ public:
 	void OnMove(CU::Vector2ui aTargetPosition) override;
 	void FreshTurn();
 	int GetMyAP() const override;
+	int GetPreviousAP() const;
 	void CostAP(const int aCost);
 	
 	void ReachedTarget()override;
@@ -52,6 +53,7 @@ private:
 	int myAttackCost;
 	int myPeekCost;
 	int myCurrentAP;
+	int myPreviousAP;
 
 	bool myShouldDie;
 };
