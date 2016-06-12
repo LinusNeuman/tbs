@@ -122,10 +122,7 @@ void Player::Update(const CU::Time& aDeltaTime)
 
 	myAPBox.SetAP(myAP);
 	myAPBox.SetPos(myPosition);
-	if (myActiveFlag == true)
-	{
-		myAPBox.Animate(aDeltaTime);
-	}
+	myAPBox.Animate(aDeltaTime);
 }
 
 void Player::PreTurn()

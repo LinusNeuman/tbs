@@ -2,6 +2,7 @@
 #include "APBox.h"
 #include <Rend/RenderConverter.h>
 #include <Rend/RenderCommand.h>
+#include <CU/Matriser/matrix.h>
 
 APBox::APBox()
 {
@@ -50,11 +51,11 @@ void APBox::MoveUp(const CommonUtilities::Time aTime)
 {
 	myOriginalPosition = myTilePositionf;
 	myGoalPosition = myTilePositionf;
-	myGoalPosition.y = myTilePositionf.y + 0.1f;
+	myGoalPosition.x = myTilePositionf.x + 0.1f;
 	
 	CU::Vector2f deltaPos = 
 	{
-		0.f,
+		myPosition.x - myGoalPosition.x,
 		myPosition.y - myGoalPosition.y
 	};
 
@@ -69,10 +70,12 @@ void APBox::MoveUp(const CommonUtilities::Time aTime)
 	}
 	else
 	{
-		myPosition = 
+		CU::Vector2f changeFactor = myGoalPosition - myOriginalPosition;
+		changeFactor = changeFactor * CU::Matrix33f::CreateRotateAroundZ(0.785f);
+		myPosition =
 		{
-			myOriginalPosition.x,
-			myOriginalPosition.y + (myGoalPosition.y - myOriginalPosition.y) * myEasing,
+			myOriginalPosition.x + changeFactor.x * myEasing,
+			myOriginalPosition.y + changeFactor.y * myEasing,
 		};
 	}
 }
@@ -81,11 +84,11 @@ void APBox::MoveDown(const CommonUtilities::Time aTime)
 {
 	myGoalPosition = myTilePositionf;
 	myOriginalPosition = myTilePositionf;
-	myOriginalPosition.y = myTilePositionf.y + 0.1f;
+	myOriginalPosition.x = myTilePositionf.x + 0.1f;
 
 	CU::Vector2f deltaPos =
 	{
-		0.f,
+		myPosition.x - myGoalPosition.x,
 		myPosition.y - myGoalPosition.y
 	};
 
@@ -100,10 +103,12 @@ void APBox::MoveDown(const CommonUtilities::Time aTime)
 	}
 	else
 	{
+		CU::Vector2f changeFactor = myGoalPosition - myOriginalPosition;
+		changeFactor = changeFactor * CU::Matrix33f::CreateRotateAroundZ(0.785f);
 		myPosition =
 		{
-			myOriginalPosition.x,
-			myOriginalPosition.y + (myGoalPosition.y - myOriginalPosition.y) * myEasing,
+			myOriginalPosition.x + changeFactor.x * myEasing,
+			myOriginalPosition.y + changeFactor.y * myEasing,
 		};
 	}
 }
