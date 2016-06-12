@@ -71,7 +71,7 @@ void Player::OnClick()
 void Player::Draw() const
 {
 	Actor::Draw();
-	myAPBox.Draw(myPosition);
+	myAPBox.Draw();
 }
 
 bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
@@ -122,6 +122,10 @@ void Player::Update(const CU::Time& aDeltaTime)
 
 	myAPBox.SetAP(myAP);
 	myAPBox.SetPos(myPosition);
+	if (myActiveFlag == true)
+	{
+		myAPBox.Animate(aDeltaTime);
+	}
 }
 
 void Player::PreTurn()

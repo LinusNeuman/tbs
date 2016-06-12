@@ -7,6 +7,12 @@
 
 typedef unsigned char uchar;
 
+enum class eAPBoxState
+{
+	eGoingUp,
+	eGoingDown
+};
+
 class APBox
 {
 public:
@@ -14,6 +20,12 @@ public:
 	~APBox();
 
 	void Update();
+
+	void CalculateProgress(const CommonUtilities::Time aTime);
+	void MoveUp(const CommonUtilities::Time aTime);
+	void MoveDown(const CommonUtilities::Time aTime);
+	void Animate(const CU::Time& aDelta);
+
 	void __forceinline SetAP(uchar aAP)
 	{
 		myAP = aAP;
@@ -28,13 +40,32 @@ public:
 
 		myAPText->myPosition.x = tempPos.x;
 		myAPText->myPosition.y = tempPos.y;
+
+		myTilePositionf = aPos;
 	}
 
-	void Draw(TilePositionf aPosition) const;
+	void Reset();
+
+	void Draw() const;
 private:
 	uchar myAP;
 
 	StaticSprite* mySprite;
 
 	DX2D::CText* myAPText;
+
+	float myEasing;
+
+	eAPBoxState myApBoxState;
+
+	CU::Vector2f myOriginalPosition;
+	CU::Vector2f myGoalPosition;
+
+	TilePositionf myTilePositionf;
+
+	CU::Vector2f myPosition;
+
+	float myMovementTotalUp;
+	float myMovementTotalDown;
+	float myMovementTimer;
 };

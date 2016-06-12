@@ -48,15 +48,6 @@ bool Splash::Fade(const CU::Time& aDelta)
 {
 	myFadeState == eSplashFadeState::eFadingUp ? FadeUp(aDelta) : FadeDown(aDelta);
 
-	if (myFadeState == eSplashFadeState::eFadingUp)
-	{
-		FadeUp(aDelta);
-	}
-	else
-	{
-		FadeDown(aDelta);
-	}
-
 	return myIsDone;
 }
 
