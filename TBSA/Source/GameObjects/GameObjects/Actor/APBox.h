@@ -21,9 +21,9 @@ public:
 
 	void Update();
 
-	void CalculateProgress(const CommonUtilities::Time aTime);
-	void MoveUp(const CommonUtilities::Time aTime);
-	void MoveDown(const CommonUtilities::Time aTime);
+	void CalculateProgress(const CommonUtilities::Time& aTime);
+	void MoveUp(const CommonUtilities::Time& aTime);
+	void MoveDown(const CommonUtilities::Time& aTime);
 	void Animate(const CU::Time& aDelta);
 
 	void __forceinline SetAP(uchar aAP)
@@ -68,4 +68,6 @@ private:
 	float myMovementTotalUp;
 	float myMovementTotalDown;
 	float myMovementTimer;
+
+	CU::Vector2f myOffset;
 };

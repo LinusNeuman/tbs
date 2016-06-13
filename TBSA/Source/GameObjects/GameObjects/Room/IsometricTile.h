@@ -6,6 +6,7 @@
 #include <ActorEnums.h>
 
 class StaticSprite;
+class Enemy;
 
 enum class eTileType
 {
@@ -64,11 +65,12 @@ public:
 	void TakeCandy();
 
 	void SetVisible(bool aIsVisible);
-	void SetInEnemyFoV(bool aIsInFoV);
+	void SetInEnemyFoV(bool aIsInFoV, Enemy* aEnemy);
 	void SetDiscovered(bool aIsDiscovered);
 	bool GetVisible() const;
 	bool GetDiscovered() const;
 	bool GetInEnemyFov() const;
+	Enemy* GetSeenEnemy() const;
 	void RemoveAvailableDirection(eDirection aDirection);
 	const CU::GrowingArray<eDirection>& GetAvailableDirections() const
 	{
@@ -83,7 +85,7 @@ private:
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 	VertexHandle myNavVertex;
-
+	Enemy *myEnemy;
 	eTileState myState;
 
 	bool myHasCandy;
