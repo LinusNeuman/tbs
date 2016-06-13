@@ -26,6 +26,7 @@ public:
 
 	void SetIndex(const unsigned short aIndex);
 	unsigned short GetIndex() const;
+	int GetViewDistance() const;
 
 	virtual void OnClick() override;
 	
@@ -41,6 +42,7 @@ private:
 	bool myHasTurned;
 	bool mySomeoneSeesPlayer;
 	unsigned short myCurrentPathIndex;
+	int myViewDistance;
 	CommonUtilities::GrowingArray<CommonUtilities::Point2ui> myEnemyPath;
 };
 

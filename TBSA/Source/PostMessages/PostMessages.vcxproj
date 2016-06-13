@@ -213,6 +213,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Message\CreditScreenMessage.h" />
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\ClearLogMessage.h" />
     <ClInclude Include="Message\FlagGoalReachedMessage.h" />

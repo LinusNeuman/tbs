@@ -27,6 +27,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myIsDeadeastFlag = false;
 	myCurrentPathIndex = 1;
 	myAP = aEnemyData.myActionPoints;
+	myViewDistance = aEnemyData.myViewDistance;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	myEnemyPath.Init(1);
 }
@@ -121,6 +122,11 @@ void Enemy::Reset()
 {
 	myHasMoved = false;
 	mySomeoneSeesPlayer = false;
+}
+
+int Enemy::GetViewDistance() const
+{
+	return myViewDistance;
 }
 
 void Enemy::OnClick()

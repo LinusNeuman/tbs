@@ -14,6 +14,7 @@ struct PlayerData
 struct EnemyData
 {
 	int myActionPoints;
+	int myViewDistance;
 };
 
 struct ActorData
