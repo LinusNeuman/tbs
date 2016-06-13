@@ -10,6 +10,7 @@
 #include <GUI/Instances/GUIChangePlayerButton.h>
 #include <Message\LevelChangeMassage.h>
 #include <Message\CreditScreenMessage.h>
+#include <GUI/Instances/GUIPortraitActive.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -55,11 +56,34 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(dialogTextBox);
 
+			CU::Vector2f position;
+			position.x = 121;
+			position.y = 708;
+			position.x /= 1920;
+			position.y /= 1080;
+
+			position.x *= SingletonDataHolder::GetTargetResolution().x;
+			position.y *= SingletonDataHolder::GetTargetResolution().y;
+
 			GUIChangePlayerButton* changePlayerButton = new GUIChangePlayerButton();
-			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, { 121, 708 }, { 84, 68 }, true, true, true, false, true);
+			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, false, true);
 
 			myGUIElements.Add(changePlayerButton);
 
+			position.x = 25;
+			position.y = 859;
+			position.x /= 1920;
+			position.y /= 1080;
+
+			position.x *= SingletonDataHolder::GetTargetResolution().x;
+			position.y *= SingletonDataHolder::GetTargetResolution().y;
+
+			GUIPortraitActive* portraitActive = new GUIPortraitActive();
+			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", {0,0}, position, { 192, 192 }, true, true, true, false, true);
+
+			myGUIElements.Add(portraitActive);
+
+			++elementsAdded;
 			++elementsAdded;
 
 			myGUILookup["InGame"].myEnd = elementsAdded;
