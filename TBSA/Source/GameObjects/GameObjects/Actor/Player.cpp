@@ -17,6 +17,7 @@
 Player::Player()
 {
 	myPlayerIndex = 0;
+	myIsSelected = false;
 }
 
 Player::~Player()
@@ -38,6 +39,9 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myDetectedSprite = new StaticSprite();
 	myDetectedSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
 	myDetectedSprite->SetLayer(enumRenderLayer::eGUI);
+
+	myAPBox.SetPos(myPosition);
+	myAPBox.Reset();
 }
 
 void Player::FreshTurn()
@@ -122,7 +126,14 @@ void Player::Update(const CU::Time& aDeltaTime)
 
 	myAPBox.SetAP(myAP);
 	myAPBox.SetPos(myPosition);
-	myAPBox.Animate(aDeltaTime);
+	if (myIsSelected == true)
+	{
+		myAPBox.Animate(aDeltaTime);
+	}
+	else
+	{
+		myAPBox.Reset();
+	}
 }
 
 void Player::PreTurn()
