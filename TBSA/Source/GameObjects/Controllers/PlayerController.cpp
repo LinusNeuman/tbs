@@ -50,6 +50,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyAttacked, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDead, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -68,12 +69,12 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyAttacked, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDead, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
-
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -186,8 +187,6 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 	{
 		enumMouseState currentState = GetCurrentMouseState();
-
-
 		switch (currentState)
 		{
 		case enumMouseState::eClickedOnPlayer:
@@ -445,6 +444,7 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
 	if (aMessage.myType == RecieverTypes::eEnemyAttacked)
 	{
+		mySelectedPlayer->SetActiveState(false);
 		for (size_t i = 0; i < myPlayers.Size(); i++)
 		{
 			if (myPlayers[i]->GetActorState() == eActorState::eAlert)
@@ -452,6 +452,10 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 				myPlayers[i]->SetActorState(eActorState::eIdle);
 			}
 		}
+	}
+	if (aMessage.myType == RecieverTypes::eEnemyDead)
+	{
+		mySelectedPlayer->SetActiveState(true);
 	}
 	return true;
 }
