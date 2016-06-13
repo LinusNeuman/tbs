@@ -19,15 +19,17 @@ IndexMap StaticSprite::ourPromisedIndexes;
 StaticSprite::StaticSprite()
 {
 	myIsInitiedFlag = false;
-	if (ourWaitingSprites.IsInitialized() ==false)
+	if (ourWaitingSprites.IsInitialized() == false)
 	{
 		ourWaitingSprites.Init(1);
-}
+	}
 
 	if (ourSpritesWaitingForPromise.IsInitialized() == false)
 	{
 		ourSpritesWaitingForPromise.Init(1);
 	}
+
+	myRenderData.mySizeInPixels = { 100.f, 100.f };
 }
 
 StaticSprite::~StaticSprite()
@@ -38,13 +40,24 @@ void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFile
 {
 	myIsInitiedFlag = true;
 	myIsIsometricFlag = aIsIsometric;
-	if (aSync == true)
+
+	unsigned short tempIndex;
+	if (CheckIfSpriteExists(tempIndex, aFilePath, aRect) == false)
 	{
-		myImageIndex = AddImage(aFilePath, aRect, aPivotPoint);
+		if (aSync == true)
+		{
+			myImageIndex = AddImage(aFilePath, aRect, aPivotPoint);
+			CalculateSizeOfSprite(aRect);
+		}
+		else
+		{
+			myImageIndex = AddImageAssync(aFilePath, aRect);
+		}
 	}
 	else
 	{
-		myImageIndex = AddImageAssync(aFilePath, aRect);
+		myImageIndex = tempIndex;
+		CalculateSizeOfSprite(aRect);
 	}
 	myLayer = enumRenderLayer::eFloor;
 }
@@ -66,16 +79,6 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 		ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
 		workSprite = ourSprites.GetLast();
 	}
-
-	if (aRect != CU::Vector4f::Zero)
-	{
-		myRenderData.mySizeInPixels = { aRect.z, aRect.w };
-	}
-	else
-	{
-		myRenderData.mySizeInPixels = { FLOATCAST(workSprite->GetImageSize().x), FLOATCAST( workSprite->GetImageSize().y)};
-	}
-	
 
 	if (foundValue == true)
 	{
@@ -116,18 +119,11 @@ unsigned short StaticSprite::AddImageAssync(const std::string& aFilePath, const 
 {
 	IndexKey tempKey(aFilePath, aRect);
 
-	if (ourIndexDictionary.count(tempKey) > 0)
-	{
-		unsigned short tempIndex = ourIndexDictionary[tempKey];
-		return tempIndex;
-	}
-
 	ourSpritesWaitingForPromise.Add(this);
 
 	if (ourPromisedIndexes.count(tempKey) > 0)
 	{
-		unsigned short tempIndex = ourPromisedIndexes[tempKey];
-		return tempIndex;
+		return ourPromisedIndexes[tempKey];
 	}
 
 	ourWaitingSprites.Add(tempKey);
@@ -177,13 +173,43 @@ void StaticSprite::Sync()
 		StaticSprite* currentSprite = ourSpritesWaitingForPromise[i];
 		const IndexKey currentKey = ourWaitingSprites[currentSprite->myImageIndex];
 		currentSprite->myImageIndex = currentSprite->AddImage(currentKey.GetPath(), currentKey.GetRect());
+		currentSprite->CalculateSizeOfSprite(currentKey.GetRect());
 	}
+	ourWaitingSprites.RemoveAll();
 	ourSpritesWaitingForPromise.RemoveAll();
 }
 
 void StaticSprite::SetSizeInPixels(const CU::Vector2f & aSizeInPixels)
 {
 	myRenderData.mySizeInPixels = aSizeInPixels;
+}
+
+void StaticSprite::CalculateSizeOfSprite(const CU::Vector4f & aSpriteCutout /*= CU::Vector4f::Zero*/)
+{
+	if (aSpriteCutout != CU::Vector4f::Zero)
+	{
+		DL_ASSERT(aSpriteCutout.z > 0.f && aSpriteCutout.w > 0.f, "Sprite does not have width or height");
+		myRenderData.mySizeInPixels = { aSpriteCutout.z, aSpriteCutout.w };
+		DL_ASSERT(myRenderData.mySizeInPixels != CU::Vector2f::Zero, "Sprite size set to zero");
+	}
+	else
+	{
+		myRenderData.mySizeInPixels = { FLOATCAST(GetSprite()->GetImageSize().x), FLOATCAST(GetSprite()->GetImageSize().y) };
+		DL_ASSERT(myRenderData.mySizeInPixels != CU::Vector2f::Zero, "Sprite size set to zero");
+	}
+}
+
+bool StaticSprite::CheckIfSpriteExists(unsigned short & aIndexToSet, const std::string & aPath, const CU::Vector4f & aRect /*= CU::Vector4f::Zero*/)
+{
+	IndexKey tempKey(aPath, aRect);
+
+	if (ourIndexDictionary.count(tempKey) > 0)
+	{
+		aIndexToSet = ourIndexDictionary[tempKey];
+		return true;
+	}
+
+	return false;
 }
 
 const RenderData & StaticSprite::GetRenderData() const

@@ -233,11 +233,11 @@ void GameLevel::Draw() const
 {
 	if (myIsInitialized == true)
 	{
-	myFloor.Draw();
-	myPlayer->Draw();
-	myPlayer2->Draw();
-	myEnemyController->Draw();
-}
+		myFloor.Draw();
+		myPlayer->Draw();
+		myPlayer2->Draw();
+		myEnemyController->Draw();
+	}
 }
 
 bool GameLevel::RecieveMessage(const DijkstraMessage& aMessage)

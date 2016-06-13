@@ -125,6 +125,8 @@ public:
 private:
 	RenderData myRenderData;
 	void SetSizeInPixels(const CU::Vector2f & aSizeInPixels);
+	void CalculateSizeOfSprite(const CU::Vector4f & aSpriteCutout = CU::Vector4f::Zero);
+	bool CheckIfSpriteExists(unsigned short & aIndexToSet, const std::string & aPath, const CU::Vector4f & aRect = CU::Vector4f::Zero);
 	const RenderData & GetRenderData() const;
 
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
