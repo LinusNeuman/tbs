@@ -23,7 +23,7 @@ GUIManager::~GUIManager()
 
 	if (myActiveGUI != nullptr)
 	{
-		myActiveGUI->DeleteAll();
+		myActiveGUI->RemoveAll();
 	}
 }
 

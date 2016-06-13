@@ -17,6 +17,7 @@ GUIElement::GUIElement()
 
 GUIElement::~GUIElement()
 {
+	//SAFE_DELETE(mySprite);
 }
 
 void GUIElement::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aIsIsometric, bool aIsEnabled)
