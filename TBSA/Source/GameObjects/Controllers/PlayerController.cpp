@@ -41,6 +41,9 @@ PlayerController::PlayerController()
 
 	mySelectPlayerSound = new SoundEffect();
 	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
+
+	myAlertSound = new SoundEffect();
+	myAlertSound->Init("Sounds/SFX/alert.wav");
 }
 
 PlayerController::~PlayerController()
@@ -418,6 +421,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
+
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition), myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetSeenEnemy());
 	}
 
@@ -459,6 +463,7 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
 	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
+	myAlertSound->Play(0.3f);
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)

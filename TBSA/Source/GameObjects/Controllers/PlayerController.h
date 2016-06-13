@@ -90,6 +90,7 @@ private:
 	std::vector<CU::Vector2f> myDebugEnd;
 
 	SoundEffect* mySelectPlayerSound;
+	SoundEffect* myAlertSound;
 
 	ScoreCounter myScoreCounter;
 };
