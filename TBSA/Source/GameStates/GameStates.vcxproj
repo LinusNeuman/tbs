@@ -119,6 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameStates\CreditsState.cpp" />
     <ClCompile Include="GameStates\GameOverState.cpp" />
     <ClCompile Include="GameStates\LevelSelectState.cpp" />
     <ClCompile Include="GameStates\LoadState.cpp" />
@@ -135,6 +136,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameStates\CreditsState.h" />
     <ClInclude Include="GameStates\GameOverState.h" />
     <ClInclude Include="GameStates\LevelSelectState.h" />
     <ClInclude Include="GameStates\LoadState.h" />

@@ -11,5 +11,7 @@ namespace Launcher
         public bool myIsFullscreen;
         public int myResolutionX;
         public int myResolutionY;
+        public int myWindowSizeX;
+        public int myWindowSizeY;
     }
 }
