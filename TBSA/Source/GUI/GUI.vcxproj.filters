@@ -42,6 +42,9 @@
     <ClCompile Include="GUI\Instances\GUIDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\Instances\GUIChangePlayerButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\Generic\GUIElement.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Instances\GUIDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Instances\GUIChangePlayerButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

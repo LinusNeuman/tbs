@@ -25,6 +25,7 @@
 #include <Message/PlayerCanPeekMessage.h>
 #include <Message/PlayerIDMessage.h>
 #include <Message/PlayerAPChangedMessage.h>
+#include <GUI/Messaging/Generic/GUIMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -349,6 +350,16 @@ bool PlayerController::CheckForCandy(const TilePosition & aPosToCheckForCandyAt)
 	return myFloor->GetTile(aPosToCheckForCandyAt).CheckHasCandy();
 }
 
+bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
+	{
+		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
+		RecieveMessage(*tempmessageerer);
+	}
+	return true;
+}
+
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
@@ -358,6 +369,7 @@ bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 			SelectPlayer();
 		}
 	}
+
 	else if (aMessage.myType == RecieverTypes::eClickedOnPlayer)
 	{
 		if (mySelectedPlayer->GetIndex() != aMessage.myPlayerID)
