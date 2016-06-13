@@ -420,11 +420,6 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		TakeCandy(aMessage.myPosition);
 	}
 
-	/*if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
-	{
-		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition), myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetSeenEnemy());
-	}*/
-
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
 	{
 		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
@@ -467,10 +462,7 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
-	if (CU::Vector2i(mySelectedPlayer->GetPosition()) == aPlayerPosition)
-	{
-		SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
-	}
+	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
