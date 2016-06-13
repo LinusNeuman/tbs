@@ -43,5 +43,8 @@
     <ClInclude Include="Message\TextMessage.h" />
     <ClInclude Include="Message\PlayerSeenMessage.h" />
     <ClInclude Include="Message\PositionMessage.h" />
+    <ClInclude Include="Message\LevelChangeMassage.h" />
+    <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
+    <ClInclude Include="Message\CreditScreenMessage.h" />
   </ItemGroup>
 </Project>

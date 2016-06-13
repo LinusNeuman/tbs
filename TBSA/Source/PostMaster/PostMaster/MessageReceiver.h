@@ -3,6 +3,7 @@
 
 struct BaseMessage;
 struct TextMessage;
+struct EnemyDirectionChangedMessage;
 struct FlagGoalReachedMessage;
 struct FlagPlayerDiedMessage;
 struct PlayerAddedMessage;
@@ -38,6 +39,7 @@ struct ClearLogMessage;
 struct ScrollLogUpMessage;
 struct ScrollLogDownMessage;
 struct PositionMessage;
+struct LevelChangeMassage;
 
 class MessageReciever
 {
@@ -82,6 +84,8 @@ public:
 	virtual bool RecieveMessage(const ScrollLogDownMessage& aMessage);
 	virtual bool RecieveMessage(const TextMessage& aMessage);
 	virtual bool RecieveMessage(const PositionMessage& aMessage);
+	virtual bool RecieveMessage(const LevelChangeMassage& aMessage);
+	virtual bool RecieveMessage(const EnemyDirectionChangedMessage& aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:

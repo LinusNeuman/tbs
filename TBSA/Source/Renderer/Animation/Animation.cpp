@@ -110,12 +110,12 @@ void Animation::StartAnimation()
 
 void Animation::StopAnimation()
 {
-	myCurrentColumn = 0;
-	myCurrentRow = 0;
+	myCurrentColumn = 1;
+	myCurrentRow = 1;
 	myCurrentFrame = 0;
 	myIsRunning = false;
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true);
+		, CommonUtilities::Vector2f(0.f, 0.f), mySpriteSize, true);
 	//HideSprite();
 }
 
@@ -130,9 +130,9 @@ void Animation::SetAnimationFrame()
 }
 
 /*
-	MINA SYSTEM FUCKAR ALRDIG UPP //LEON
+	MINA SYSTEM HAR ALRDIG FUCKAT UPP //LEON
 */
-void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
+void Animation::SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
 	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite)
 {
 	const float spriteWidth = static_cast<float>(newSprite->GetSprite()->GetImageSize().x);
@@ -148,9 +148,5 @@ void SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2
 	const float TempEndPointY = TempStartPointY + TempHeight;
 
 	newSprite->GetSprite()->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
-
-	float normalizedWindowSizeX = newSprite->GetSprite()->GetImageSize().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (16.f / 9.f);
-	float normalizedWindowSizeY = newSprite->GetSprite()->GetImageSize().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
-
-	newSprite->GetSprite()->SetSize(DX2D::Vector2f(normalizedWindowSizeX * TempWidth, normalizedWindowSizeY * TempHeight));
+	newSprite->SetSizeInPixels({ aSpriteSize.x, aSpriteSize.y });
 }

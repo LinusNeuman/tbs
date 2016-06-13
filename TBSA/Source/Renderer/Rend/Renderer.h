@@ -24,6 +24,7 @@ public:
 	void AddRenderCommand(RenderCommand & aRenderCommand);
 	void DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor = CU::Vector4f::One ,bool OffsetToMiddle = false);
 	void SwapBuffer();
+	void ClearCommands();
 
 private:
 	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>> * myBuffer;

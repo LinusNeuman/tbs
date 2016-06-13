@@ -17,6 +17,7 @@
 Player::Player()
 {
 	myPlayerIndex = 0;
+	myIsSelected = false;
 }
 
 Player::~Player()
@@ -38,6 +39,9 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myDetectedSprite = new StaticSprite();
 	myDetectedSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
 	myDetectedSprite->SetLayer(enumRenderLayer::eGUI);
+
+	myAPBox.SetPos(myPosition);
+	myAPBox.Reset();
 }
 
 void Player::FreshTurn()
@@ -48,6 +52,11 @@ void Player::FreshTurn()
 int Player::GetMyAP() const
 {
 	return myCurrentAP;
+}
+
+int Player::GetPreviousAP() const
+{
+	return myPreviousAP;
 }
 
 void Player::CostAP(const int aCost)
@@ -66,6 +75,7 @@ void Player::OnClick()
 void Player::Draw() const
 {
 	Actor::Draw();
+	myAPBox.Draw();
 }
 
 bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
@@ -73,6 +83,7 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	if (CommonUtilities::Point2i(myPosition) == aMessage.myPlayerPosition)
 	{
 		StopPath();
+		myPreviousAP = myCurrentAP;
 		myCurrentAP = 0;
 		
 		if (myIsSeen == false)
@@ -107,6 +118,22 @@ int Player::GetPeekCost() const
 int Player::GetAttackCost() const
 {
 	return myAttackCost;
+}
+
+void Player::Update(const CU::Time& aDeltaTime)
+{
+	Actor::Update(aDeltaTime);
+
+	myAPBox.SetAP(myAP);
+	myAPBox.SetPos(myPosition);
+	if (myIsSelected == true)
+	{
+		myAPBox.Animate(aDeltaTime);
+	}
+	else
+	{
+		myAPBox.Reset();
+	}
 }
 
 void Player::PreTurn()

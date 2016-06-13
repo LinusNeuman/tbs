@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObjects/Actor/Actor.h"
-
+#include "APBox.h"
 
 
 struct PlayerData;
@@ -20,6 +20,7 @@ public:
 	void OnMove(CU::Vector2ui aTargetPosition) override;
 	void FreshTurn();
 	int GetMyAP() const override;
+	int GetPreviousAP() const;
 	void CostAP(const int aCost);
 	
 	void ReachedTarget()override;
@@ -38,10 +39,17 @@ public:
 	void SetIndex(const unsigned short aIndex);
 	unsigned short GetIndex() const;
 
+	void __forceinline SetSelected(bool aIsSelected)
+	{
+		myIsSelected = aIsSelected;
+	};
+
 	virtual void AfterTurn() override;
 	void PreTurn();
 	int GetPeekCost() const;
 	int GetAttackCost() const;
+
+	void Update(const CU::Time &aDeltaTime) override;
 
 private:
 
@@ -52,8 +60,12 @@ private:
 	int myAttackCost;
 	int myPeekCost;
 	int myCurrentAP;
+	int myPreviousAP;
 
 	bool myShouldDie;
+	bool myIsSelected;
+
+	APBox myAPBox;
 };
 
 inline void Player::SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition)

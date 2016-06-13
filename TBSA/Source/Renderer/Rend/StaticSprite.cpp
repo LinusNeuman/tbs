@@ -3,6 +3,7 @@
 #include "tga2d/sprite/sprite.h"
 #include "RenderConverter.h"
 #include <CU/Utility/Math/Isometric.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 
 
@@ -18,15 +19,18 @@ IndexMap StaticSprite::ourPromisedIndexes;
 StaticSprite::StaticSprite()
 {
 	myIsInitiedFlag = false;
-	if (ourWaitingSprites.IsInitialized() ==false)
+	if (ourWaitingSprites.IsInitialized() == false)
 	{
 		ourWaitingSprites.Init(1);
-}
+	}
 
 	if (ourSpritesWaitingForPromise.IsInitialized() == false)
 	{
 		ourSpritesWaitingForPromise.Init(1);
 	}
+
+	myRenderData.mySizeInPixels = { 100.f, 100.f };
+	myPriority = 1000.f;
 }
 
 StaticSprite::~StaticSprite()
@@ -37,13 +41,24 @@ void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFile
 {
 	myIsInitiedFlag = true;
 	myIsIsometricFlag = aIsIsometric;
-	if (aSync == true)
+
+	unsigned short tempIndex;
+	if (CheckIfSpriteExists(tempIndex, aFilePath, aRect) == false)
 	{
-		myImageIndex = AddImage(aFilePath, aRect);
+		if (aSync == true)
+		{
+			myImageIndex = AddImage(aFilePath, aRect, aPivotPoint);
+			CalculateSizeOfSprite(aRect);
+		}
+		else
+		{
+			myImageIndex = AddImageAssync(aFilePath, aRect);
+		}
 	}
 	else
 	{
-		myImageIndex = AddImageAssync(aFilePath, aRect);
+		myImageIndex = tempIndex;
+		CalculateSizeOfSprite(aRect);
 	}
 	myLayer = enumRenderLayer::eFloor;
 }
@@ -52,43 +67,49 @@ unsigned short StaticSprite::AddImage(const std::string & aFilePath, const CU::V
 {
 	IndexKey tempKey(aFilePath, aRect);
 
+	bool foundValue = false;
+	DX2D::CSprite * workSprite = nullptr;
 	if (ourIndexDictionary.count(tempKey) > 0)
 	{
 		unsigned short tempIndex = ourIndexDictionary[tempKey];
-		return tempIndex;
+		foundValue = true;
+		workSprite = ourSprites[tempIndex];
+	}
+	else
+	{
+		ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
+		workSprite = ourSprites.GetLast();
 	}
 
-	ourSprites.Add(new DX2D::CSprite(aFilePath.c_str()));
-	DX2D::CSprite * tempSprite = ourSprites.GetLast();
-	
+	if (foundValue == true)
+	{
+		return ourIndexDictionary[tempKey];
+	}
+
+	const float spriteWidth = static_cast<float>(workSprite->GetImageSize().x);
+	const float spriteHeight = static_cast<float>(workSprite->GetImageSize().y);
+
+	const float TempStartPointX = aRect.x / spriteWidth;
+	const float TempStartPointY = aRect.y / spriteHeight;
+
+	const float TempWidth = aRect.Width / spriteWidth;
+	const float TempHeight = aRect.Height / spriteHeight;
+
+	const float TempEndPointX = TempStartPointX + TempWidth;
+	const float TempEndPointY = TempStartPointY + TempHeight;
 
 	if (aRect != CU::Vector4f::Zero)
 	{
-		const float spriteWidth = static_cast<float>(tempSprite->GetImageSize().x);
-		const float spriteHeight = static_cast<float>(tempSprite->GetImageSize().y);
-
-		const float TempStartPointX = aRect.x / spriteWidth;
-		const float TempStartPointY = aRect.y / spriteHeight;
-
-		const float TempWidth = aRect.Width / spriteWidth;
-		const float TempHeight = aRect.Height / spriteHeight;
-
-		const float TempEndPointX = TempStartPointX + TempWidth;
-		const float TempEndPointY = TempStartPointY + TempHeight;
-
-		tempSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
-		tempSprite->SetSize(DX2D::Vector2f(tempSprite->GetSize().x * TempWidth, tempSprite->GetSize().y * TempHeight));
-
-		mySizeWithoutWhitespace = { aRect.z, aRect.w };
+		workSprite->SetTextureRect(TempStartPointX, TempStartPointY, TempEndPointX, TempEndPointY);
 	}
 
 	if (myIsIsometricFlag == true)
 	{
-		tempSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
+		workSprite->SetPivot(DX2D::Vector2f(0.f, 1.0f));
 	}
 	else
 	{
-		tempSprite->SetPivot(DX2D::Vector2f(aPivotPoint.x, aPivotPoint.y));
+		workSprite->SetPivot(DX2D::Vector2f(aPivotPoint.x, aPivotPoint.y));
 	}
 
 	ourIndexDictionary[tempKey] = (ourSprites.Size() - 1);
@@ -99,18 +120,11 @@ unsigned short StaticSprite::AddImageAssync(const std::string& aFilePath, const 
 {
 	IndexKey tempKey(aFilePath, aRect);
 
-	if (ourIndexDictionary.count(tempKey) > 0)
-	{
-		unsigned short tempIndex = ourIndexDictionary[tempKey];
-		return tempIndex;
-	}
-
 	ourSpritesWaitingForPromise.Add(this);
 
 	if (ourPromisedIndexes.count(tempKey) > 0)
 	{
-		unsigned short tempIndex = ourPromisedIndexes[tempKey];
-		return tempIndex;
+		return ourPromisedIndexes[tempKey];
 	}
 
 	ourWaitingSprites.Add(tempKey);
@@ -118,14 +132,9 @@ unsigned short StaticSprite::AddImageAssync(const std::string& aFilePath, const 
 	return ourPromisedIndexes[tempKey];
 }
 
-CU::Vector2f StaticSprite::GetSize()
+CU::Vector2f StaticSprite::GetSizeInPixels() const
 {
-	return CU::Vector2f(GetSprite()->GetSize().x, GetSprite()->GetSize().y);
-}
-
-CU::Vector2f StaticSprite::GetSizeWithoutWhiteSpace()
-{
-	return mySizeWithoutWhitespace;
+	return myRenderData.mySizeInPixels;
 }
 
 /*
@@ -145,6 +154,10 @@ void StaticSprite::Draw(const CU::Vector2f & aPosition) const
 	}
 }
 
+void StaticSprite::DrawWithNormalized(const CU::Vector2f & aNormalizedPosition) const
+{
+	RenderConverter::RenderSpriteNormalized(*this, aNormalizedPosition);
+}
 
 void StaticSprite::SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel)
 {
@@ -154,6 +167,7 @@ void StaticSprite::SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel)
 	myPositionOffset = CU::PixelToIsometric(tempOffset);
 }
 
+
 void StaticSprite::Sync()
 {
 	for (size_t i = 0; i < ourSpritesWaitingForPromise.Size(); i++)
@@ -161,8 +175,43 @@ void StaticSprite::Sync()
 		StaticSprite* currentSprite = ourSpritesWaitingForPromise[i];
 		const IndexKey currentKey = ourWaitingSprites[currentSprite->myImageIndex];
 		currentSprite->myImageIndex = currentSprite->AddImage(currentKey.GetPath(), currentKey.GetRect());
+		currentSprite->CalculateSizeOfSprite(currentKey.GetRect());
 	}
+	ourWaitingSprites.RemoveAll();
 	ourSpritesWaitingForPromise.RemoveAll();
+}
+
+void StaticSprite::SetSizeInPixels(const CU::Vector2f & aSizeInPixels)
+{
+	myRenderData.mySizeInPixels = aSizeInPixels;
+}
+
+void StaticSprite::CalculateSizeOfSprite(const CU::Vector4f & aSpriteCutout /*= CU::Vector4f::Zero*/)
+{
+	if (aSpriteCutout != CU::Vector4f::Zero)
+	{
+		DL_ASSERT(aSpriteCutout.z > 0.f && aSpriteCutout.w > 0.f, "Sprite does not have width or height");
+		myRenderData.mySizeInPixels = { aSpriteCutout.z, aSpriteCutout.w };
+		DL_ASSERT(myRenderData.mySizeInPixels != CU::Vector2f::Zero, "Sprite size set to zero");
+	}
+	else
+	{
+		myRenderData.mySizeInPixels = { FLOATCAST(GetSprite()->GetImageSize().x), FLOATCAST(GetSprite()->GetImageSize().y) };
+		DL_ASSERT(myRenderData.mySizeInPixels != CU::Vector2f::Zero, "Sprite size set to zero");
+	}
+}
+
+bool StaticSprite::CheckIfSpriteExists(unsigned short & aIndexToSet, const std::string & aPath, const CU::Vector4f & aRect /*= CU::Vector4f::Zero*/)
+{
+	IndexKey tempKey(aPath, aRect);
+
+	if (ourIndexDictionary.count(tempKey) > 0)
+	{
+		aIndexToSet = ourIndexDictionary[tempKey];
+		return true;
+	}
+
+	return false;
 }
 
 const RenderData & StaticSprite::GetRenderData() const

@@ -25,7 +25,7 @@ void SingletonPostMaster::Destroy()
 
 void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd, const RecieverOrder aPriority /*= RecieverOrder::eDefault*/)
 {
-	Reciever tempReciver(aRecieverToAdd, aPriority);
+	Reciever tempReciver(aRecieverToAdd, aRecieverToAdd.myRecieverOrder);
 	if (aRecieverToAdd.myRecieverOrder != RecieverOrder::eDefault)
 	{
 		tempReciver = Reciever(aRecieverToAdd, aRecieverToAdd.myRecieverOrder);
@@ -41,6 +41,7 @@ void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, Messag
 		if (tempReciver.myOrder < GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)][iReciever].myOrder)
 		{
 			GetInstance().myRecievers[USHORTCAST(aTypeToRecieve)].Insert(iReciever, tempReciver);
+			return;
 		}
 	}
 
@@ -50,7 +51,15 @@ void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, Messag
 void SingletonPostMaster::RemoveReciever(const RecieverTypes aTypeUnsubscribe, MessageReciever & aRecieverToRemove)
 {
 	Reciever tempReciever(aRecieverToRemove);
-	GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)].RemoveCyclic(tempReciever);
+
+	for (unsigned short iReciever = 0; iReciever < GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)].Size(); ++iReciever)
+	{
+		if (tempReciever == GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)][iReciever])
+		{
+			GetInstance().myRecievers[USHORTCAST(aTypeUnsubscribe)].RemoveAtIndex(iReciever);
+			//break;
+		}
+	}
 }
 
 void SingletonPostMaster::RemoveReciever(MessageReciever& aReceiver)

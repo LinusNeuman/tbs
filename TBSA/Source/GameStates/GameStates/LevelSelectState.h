@@ -17,5 +17,6 @@ public:
 private:
 	StaticSprite * myBackgroundSprite;
 	std::string mySelectedLevel;
+	unsigned short myLevel;
 };
 

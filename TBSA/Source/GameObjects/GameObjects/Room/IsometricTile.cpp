@@ -14,6 +14,7 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myState = eTileState::NONE;
 	myDebugMode = false;
 	myIsVisible = false;
+	myIsDiscovered = false;
 	myIsInEnemyFoV = false;
 	myAvailableDirections.Init(8);
 	for (size_t i = 1; i < 9; i++)
@@ -135,6 +136,11 @@ void IsometricTile::SetVisible(bool aIsVisible)
 	myIsVisible = aIsVisible;
 }
 
+void IsometricTile::SetDiscovered(bool aIsDiscovered)
+{
+	myIsDiscovered = aIsDiscovered;
+}
+
 void IsometricTile::SetInEnemyFoV(bool aIsInFoV)
 {
 	myIsInEnemyFoV = aIsInFoV;
@@ -143,6 +149,11 @@ void IsometricTile::SetInEnemyFoV(bool aIsInFoV)
 bool IsometricTile::GetVisible() const
 {
 	return myIsVisible;
+}
+
+bool IsometricTile::GetDiscovered() const
+{
+	return myIsDiscovered;
 }
 
 bool IsometricTile::GetInEnemyFov() const

@@ -3,6 +3,20 @@ bool GUIElement::GetIsHovered()
 	return myIsCurrentlyHovered;
 }
 
+bool GUIElement::GetEnabled()
+{
+	return myIsEnabled;
+}
+
+bool GUIElement::IsOver(CU::Vector2f aMousePosition)
+{
+	if (Intersection2D::PointInsideAABB2D(myCollisionBox, IsometricInput::GetMouseWindowPositionNormalizedSpace()) == true)
+	{
+		return true;
+	}
+	return false;
+}
+
 void GUIElement::SetAction(GUIMessage* aGUIMessage, eGUIMessageEvents aMessageEvent)
 {
 	myMessageHandler.SetAction(aGUIMessage, aMessageEvent);

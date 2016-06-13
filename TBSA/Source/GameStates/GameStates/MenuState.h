@@ -17,4 +17,6 @@ public:
 private:
 	StaticSprite * myBackgroundSprite;
 	bool myShouldAdd;
+	bool myShouldSelect;
+	bool myShouldGiveCred;
 };

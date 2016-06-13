@@ -35,4 +35,5 @@ private:
 	bool myShouldExit;
 	bool myGameOver;
 	bool myShouldPause;
+	bool myShowPostLevelScreen;
 };

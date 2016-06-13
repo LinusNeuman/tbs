@@ -62,6 +62,7 @@ public:
 	{
 		return myDirection;
 	}
+	eDirection GetPreviousDirectionEnum() const;
 
 	virtual bool RecieveMessage(const ColliderMessage & aMessage) override;
 
@@ -128,6 +129,7 @@ protected:
 	void UpdateDirection();
 	bool myAtTarget;
 	eDirection myDirection;
+	eDirection myPreviousDirection;
 	bool myIsSeen;
 private:
 	void UpdatePath();

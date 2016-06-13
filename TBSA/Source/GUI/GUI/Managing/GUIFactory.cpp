@@ -7,6 +7,8 @@
 #include <GUI/Instances/GUITextBox.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <GUI/Instances/GUIActionPointsBar.h>
+#include <Message\LevelChangeMassage.h>
+#include <Message\CreditScreenMessage.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -52,11 +54,11 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(textBox);
 
-			GUIActionPointsBar* APBar = new GUIActionPointsBar();
+			/*GUIActionPointsBar* APBar = new GUIActionPointsBar();
 
 			myGUIElements.Add(APBar);
 
-			++elementsAdded;
+			++elementsAdded;*/
 
 			myGUILookup["InGame"].myEnd = elementsAdded;
 
@@ -150,6 +152,46 @@ void GUIFactory::Load()
 					if (clickEvent == "Restart")
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "LevelSelect")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eLevelSelect), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel1")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 1), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel2")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 2), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel3")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 3), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel4")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 4), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel5")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 5), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "SelectLevel6")
+					{
+						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 6), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "GoToCredits")
+					{
+						newButton->SetAction(new CreditScreenMessage(RecieverTypes::eGoToCredits), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);

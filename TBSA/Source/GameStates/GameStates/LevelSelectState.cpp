@@ -4,24 +4,28 @@
 #include <Rend/StaticSprite.h>
 #include <StateStack/ProxyStateStack.h>
 #include "PlayState.h"
+#include <Message\LevelChangeMassage.h>
 
 LevelSelectState::LevelSelectState()
 {
 	mySelectedLevel = "";
+	myLevel = 0;
 }
 
 LevelSelectState::~LevelSelectState()
 {
-	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayGame, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eGoToLevel, *this);
 }
 
 void LevelSelectState::Init()
 {
-	SingletonPostMaster::AddReciever(RecieverTypes::ePlayGame, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eGoToLevel, *this);
+
 
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/mainMenu.dds", false);
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGameObjects);
+	myLevel = 0;
 
 	LoadGUI("LevelSelect");
 }
@@ -30,11 +34,35 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 {
 	myGUIManager.Update(aTimeDelta);
 
-	if (mySelectedLevel != "")
+	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
+	{
+		return eStackReturnValue::eDeleteMainState;
+	}
+
+	if (myLevel != 0)
 	{
 		PlayState *newState = new PlayState();
+		switch(myLevel)
+		{
+		case 1: mySelectedLevel = "1_Treehouse.json";
+			break;
+		case 2: mySelectedLevel = "2_Backyard.json";
+			break;
+		case 3: mySelectedLevel = "2_Backyard.json";
+			break;
+		case 4: mySelectedLevel = "4_Kiosk.json";
+			break;
+		case 5: mySelectedLevel = "5_Playground .json";
+			break;
+		case 6: mySelectedLevel = "2_Backyard.json";
+			break;
+		default: mySelectedLevel = "1_Treehouse.json";
+			break;
+		}
 		newState->Init(mySelectedLevel);
 		aStateStack.AddMainState(newState);
+		myLevel = 0;
+		return eStackReturnValue::eDeleteMainState;
 	}
 
 	return eStackReturnValue::eStay;
@@ -49,9 +77,14 @@ void LevelSelectState::Draw() const
 
 bool LevelSelectState::RecieveMessage(const GUIMessage& aMessage)
 {
-	if (aMessage.myType == RecieverTypes::ePlayGame)
+	if (aMessage.myType == RecieverTypes::eGoToLevel)
 	{
-		//mySelectedLevel = något;
+		const LevelChangeMassage* massage = dynamic_cast<const LevelChangeMassage*>(&aMessage);
+		if (massage == nullptr)
+		{
+			return false;
+		}
+		myLevel = massage->myLevel;
 	}
 	return true;
 }
