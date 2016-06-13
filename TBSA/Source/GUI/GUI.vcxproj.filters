@@ -33,9 +33,6 @@
     <ClCompile Include="GUI\Messaging\Generic\GUIMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Instances\GUITextBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GUI\Instances\GUIActionPointsBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,9 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Messaging\Generic\GUIMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\Instances\GUITextBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Instances\GUIActionPointsBar.h">

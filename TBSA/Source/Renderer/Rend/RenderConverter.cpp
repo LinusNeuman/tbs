@@ -68,7 +68,7 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 {
 	CU::Vector2f tempPosition = aPosition * (*GetInstance().myCamera).GetInverse();
 
-	const float Priority = (tempPosition.x + (tempPosition.y * static_cast<float>(GetInstance().myLevelTileLayout.x)));
+	const float Priority = (tempPosition.x + (tempPosition.y * static_cast<float>(GetInstance().myLevelTileLayout.x))) + aSpriteToRender.GetRenderPriority() / 10000.f;
 
 	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
@@ -110,6 +110,9 @@ void RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand
 
 	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
 	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
+
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+	newPos *= renderScale;
 
 	newPos.x += 0.5f;
 	newPos.y += 0.5f;

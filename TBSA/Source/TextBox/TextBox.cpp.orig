@@ -136,7 +136,7 @@ TextBox::SetSize(const Vec2f aSize)
 
 	myNumberOfLinesDisplayed = 0;
 
-	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT)
+	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT / SingletonDataHolder::GetTargetResolution().y)
 	{
 		++myNumberOfLinesDisplayed;
 	}
@@ -154,6 +154,7 @@ TextBox::Render() const
 
 	for (unsigned int i = 0; i < myRenderList.Size(); ++i)
 	{
+<<<<<<< HEAD
 		TextRenderData data;
 
 		data.myText = myRenderList[static_cast<const unsigned short>(i)]->myText;
@@ -162,6 +163,9 @@ TextBox::Render() const
 
 		RenderConverter::AddRenderCommand(RenderCommand(5000.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 		//myRenderList[static_cast<const unsigned short>(i)]->Render();
+=======
+		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], CU::Vector2f({ myRenderList[static_cast<const unsigned short>(i)]->myPosition.x, myRenderList[static_cast<const unsigned short>(i)]->myPosition.y}), 1.f, 1));
+>>>>>>> 27fcc48e86118253695a545a61bb5761b00f1e35
 	}
 }
 

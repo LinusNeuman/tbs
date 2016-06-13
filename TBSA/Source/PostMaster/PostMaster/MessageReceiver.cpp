@@ -160,7 +160,7 @@ bool MessageReciever::RecieveMessage(const SetTargetResolutionMessage& aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const LogTextMessage& aMessage)
+bool MessageReciever::RecieveMessage(const DialogTextMessage& aMessage)
 {
 	return true;
 }
@@ -197,11 +197,6 @@ bool MessageReciever::RecieveMessage(const ScrollLogUpMessage& aMessage)
 }
 
 bool MessageReciever::RecieveMessage(const LevelChangeMassage& aMessage)
-{
-	return true;
-}
-
-bool MessageReciever::RecieveMessage(const AnimationStateMessage& aMessage)
 {
 	return true;
 }

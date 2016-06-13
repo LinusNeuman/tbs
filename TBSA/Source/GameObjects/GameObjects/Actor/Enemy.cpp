@@ -6,7 +6,6 @@
 #include <Message/TextMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
 #include <Message/PlayerSeenMessage.h>
-#include <Message/AnimationStateMessage.h>
 
 
 Enemy::Enemy()
@@ -266,13 +265,14 @@ void Enemy::DecideAnimation()
 			if (myIsDeadeastFlag == false)
 			{
 				ChangeAnimation("DeathAnimation");
-				SendPostMessage(AnimationStateMessage(RecieverTypes::eAnimationState, false));
+				myAnimations.GetSprite()->SetRenderPriority(10.f);
 				myIsDeadeastFlag = true;
 				SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyDead, *this));
 			}
 			else
 			{
 				ChangeAnimation("DeadestState");
+				myAnimations.GetSprite()->SetRenderPriority(10.f);
 			}
 		}
 	}

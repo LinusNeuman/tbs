@@ -200,11 +200,6 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			PathArray positionPath;
 			BuildPath(positionPath);
 
-			if (currentState == enumMouseState::eClickedOnEnemy)
-			{
-				positionPath.RemoveAtIndex(positionPath.Size() - 1);
-			}
-
 			if (GetPlayerAP() >= (positionPath.Size() - 1))
 			{
 				CostAP(positionPath.Size() - 1);
@@ -351,6 +346,12 @@ bool PlayerController::CheckForCandy(const TilePosition & aPosToCheckForCandyAt)
 	return myFloor->GetTile(aPosToCheckForCandyAt).CheckHasCandy();
 }
 
+void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
+{
+	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
+	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
+}
+
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
@@ -416,6 +417,10 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	CreatePlayerFoV(CU::Vector2f(aMessage.myPosition), PlayerFoWRadius);
 
 
+	if (CheckForCandy(aMessage.myPosition) == true)
+	{
+		TakeCandy(aMessage.myPosition);
+	}
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
