@@ -1,0 +1,22 @@
+{
+	"stages":[
+		[
+			{
+				"type" : "kill",
+				"target" : "Enemy2"
+			}
+		],
+		[
+			{
+				"type" : "hold_objective",
+				"target" : "endzone1"
+			},
+			{
+				"type" : "hold_objective",
+				"target" : "endzone2"
+			}
+		]
+	],
+	
+	"nextLevel": "2_Backyard.json"
+}

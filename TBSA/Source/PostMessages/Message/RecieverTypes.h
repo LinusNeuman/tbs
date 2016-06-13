@@ -53,6 +53,10 @@ enum class RecieverTypes
 	eGoToLevel,
 	eGoToCredits,
 	eEnemyDirectionChanged,
+	eLevelEnd,
+	eObjctive,
+	eLeaveObjective,
+	eEnemyDied,
 	eAnimationState,
 	enumlength
 };

@@ -3,6 +3,7 @@
 #include "../JsonDataStructs.h"
 #include <Controllers/EnemyController.h>
 #include <Message/EnemyObjectMessage.h>
+#include <Message/TextMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
 #include <Message/PlayerSeenMessage.h>
 
@@ -145,6 +146,8 @@ void Enemy::Fight()
 {
 	SetActorState(eActorState::eFighting);
 	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyAttacked, *this));
+	SendPostMessage(TextMessage(RecieverTypes::eEnemyDied, GetName()));
+	SendPostMessage(AnimationStateMessage(RecieverTypes::eAnimationState, true));
 }
 
 void Enemy::DecideAnimation()

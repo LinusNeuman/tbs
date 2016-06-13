@@ -17,10 +17,11 @@
 #include "Message\ClearLogMessage.h"
 #include "Message\ScrollLogDownMessage.h"
 #include "Message\ScrollLogUpMessage.h"
+#include <Message/TextMessage.h>
 
 PlayState::PlayState()
 {
-	myStartPath = "Data/Tiled/";
+	//myStartPath = "Data/Tiled/";
 
 	myEmitter.LoadEmitterSettings("snow");
 
@@ -35,6 +36,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -44,7 +46,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
-
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this);
 	if (aLevelPath == "")
 	{
 		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
@@ -55,7 +57,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	}
 
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
-	myLevel = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
+	myLevel = myLevelFactory->CreateLevel(myLevelKey);
 	myCurrentLevelpath = myLevelKey;
 	LoadGUI("InGame");
 
@@ -170,6 +172,16 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 	return true;
 }
 
+bool PlayState::RecieveMessage(const TextMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eLevelEnd)
+	{
+		ChangeLevel(aMessage.myText);
+		myShowPostLevelScreen = true;
+	}
+	return true;
+}
+
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
@@ -199,6 +211,6 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
-	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
+	myLevel = myLevelFactory->CreateLevel( aFilePath);
 	myCurrentLevelpath = aFilePath;
 }
