@@ -185,8 +185,3 @@ bool MessageReciever::RecieveMessage(const LevelChangeMassage& aMessage)
 {
 	return true;
 }
-
-bool MessageReciever::RecieveMessage(const AnimationStateMessage& aMessage)
-{
-	return true;
-}
