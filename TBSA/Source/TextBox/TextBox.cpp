@@ -150,8 +150,7 @@ TextBox::Render() const
 
 	for (unsigned int i = 0; i < myRenderList.Size(); ++i)
 	{
-		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], 1.f, 1));
-		//myRenderList[static_cast<const unsigned short>(i)]->Render();
+		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], CU::Vector2f({ myRenderList[static_cast<const unsigned short>(i)]->myPosition.x, myRenderList[static_cast<const unsigned short>(i)]->myPosition.y}), 1.f, 1));
 	}
 }
 

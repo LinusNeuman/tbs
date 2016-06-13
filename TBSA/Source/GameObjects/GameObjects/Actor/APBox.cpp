@@ -99,5 +99,5 @@ void APBox::Draw() const
 {
 	mySprite->Draw(myPosition - myOffset);
 
-	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(*myAPText, 1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
+	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(*myAPText, myPosition - myOffset, 1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
 }
