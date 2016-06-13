@@ -1,6 +1,7 @@
 {
 	"actionPoints" : 5,
     "actorType": 2,
+	"viewDistance": 4,
     "animations": 
     [
         {
