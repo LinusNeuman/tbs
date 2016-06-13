@@ -345,6 +345,11 @@ void PlayerController::AfterPlayerTurn()
 	}
 }
 
+bool PlayerController::CheckForCandy(const TilePosition & aPosToCheckForCandyAt)
+{
+	return myFloor->GetTile(aPosToCheckForCandyAt).CheckHasCandy();
+}
+
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
