@@ -68,4 +68,6 @@ private:
 	float myMovementTotalUp;
 	float myMovementTotalDown;
 	float myMovementTimer;
+
+	CU::Vector2f myOffset;
 };

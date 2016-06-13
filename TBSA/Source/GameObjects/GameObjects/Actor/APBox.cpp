@@ -18,6 +18,8 @@ APBox::APBox()
 	myMovementTotalUp = 0.5f;
 
 	myApBoxState = eAPBoxState::eGoingUp;
+
+	myOffset = { 0.f, 0.f };
 }
 
 APBox::~APBox()
@@ -49,18 +51,6 @@ void APBox::CalculateProgress(const CommonUtilities::Time& aTime)
 
 void APBox::MoveUp(const CommonUtilities::Time& aTime)
 {
-	myOriginalPosition = myTilePositionf;
-	myGoalPosition = myTilePositionf;
-	myGoalPosition.x = myTilePositionf.x + 0.1f;
-	
-	CU::Vector2f deltaPos = 
-	{
-		myPosition.x - myGoalPosition.x,
-		myPosition.y - myGoalPosition.y
-	};
-
-	float hypotenusa = sqrt(pow(deltaPos.x, 2) + pow(deltaPos.y, 2));
-	CU::Vector2f ratio = deltaPos / hypotenusa;
 	CalculateProgress(aTime);
 
 	if (myEasing >= 0.99f)
@@ -70,46 +60,22 @@ void APBox::MoveUp(const CommonUtilities::Time& aTime)
 	}
 	else
 	{
-		CU::Vector2f changeFactor = myGoalPosition - myOriginalPosition;
-		changeFactor = changeFactor * CU::Matrix33f::CreateRotateAroundZ(0.785f);
-		myPosition =
-		{
-			myOriginalPosition.x + changeFactor.x * myEasing,
-			myOriginalPosition.y + changeFactor.y * myEasing,
-		};
+		myOffset = CU::Vector2f::One * (0.3f + (0.5f * (1.f - myEasing)));
 	}
 }
 
 void APBox::MoveDown(const CommonUtilities::Time& aTime)
 {
-	myGoalPosition = myTilePositionf;
-	myOriginalPosition = myTilePositionf;
-	myOriginalPosition.x = myTilePositionf.x + 0.1f;
-
-	CU::Vector2f deltaPos =
-	{
-		myPosition.x - myGoalPosition.x,
-		myPosition.y - myGoalPosition.y
-	};
-
-	float hypotenusa = sqrt(pow(deltaPos.x, 2) + pow(deltaPos.y, 2));
-	CU::Vector2f ratio = deltaPos / hypotenusa;
 	CalculateProgress(aTime);
 
-	if (myEasing >= 0.99f)
+	if (1.f - myEasing <= 0.01f)
 	{
 		myApBoxState = eAPBoxState::eGoingUp;
 		myMovementTimer = 0.f;
 	}
 	else
 	{
-		CU::Vector2f changeFactor = myGoalPosition - myOriginalPosition;
-		changeFactor = changeFactor * CU::Matrix33f::CreateRotateAroundZ(0.785f);
-		myPosition =
-		{
-			myOriginalPosition.x + changeFactor.x * myEasing,
-			myOriginalPosition.y + changeFactor.y * myEasing,
-		};
+		myOffset = CU::Vector2f::One * (0.3f + (0.5f * myEasing));
 	}
 }
 
@@ -125,7 +91,7 @@ void APBox::Reset()
 
 void APBox::Draw() const
 {
-	mySprite->Draw(myPosition);
+	mySprite->Draw(myPosition - myOffset);
 
 	RenderConverter::AddRenderCommand(RenderCommand(*myAPText, 1.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
 }

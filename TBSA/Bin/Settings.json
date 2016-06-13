@@ -1,7 +1,7 @@
 {
-  "myIsFullscreen": false,
+  "myIsFullscreen": true,
   "myResolutionX": 1920,
   "myResolutionY": 1080,
-  "myWindowSizeX": 800,
-  "myWindowSizeY": 600
+  "myWindowSizeX": 1920,
+  "myWindowSizeY": 1080
 }
