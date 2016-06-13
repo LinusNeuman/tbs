@@ -94,7 +94,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
