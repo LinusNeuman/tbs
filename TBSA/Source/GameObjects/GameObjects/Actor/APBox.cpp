@@ -59,7 +59,7 @@ void APBox::MoveUp(const CommonUtilities::Time aTime)
 		myPosition.y - myGoalPosition.y
 	};
 
-	float hypotenusa = sqrt(pow(deltaPos.y, 2));
+	float hypotenusa = sqrt(pow(deltaPos.x, 2) + pow(deltaPos.y, 2));
 	CU::Vector2f ratio = deltaPos / hypotenusa;
 	CalculateProgress(aTime);
 
@@ -92,7 +92,7 @@ void APBox::MoveDown(const CommonUtilities::Time aTime)
 		myPosition.y - myGoalPosition.y
 	};
 
-	float hypotenusa = sqrt(pow(deltaPos.y, 2));
+	float hypotenusa = sqrt(pow(deltaPos.x, 2) + pow(deltaPos.y, 2));
 	CU::Vector2f ratio = deltaPos / hypotenusa;
 	CalculateProgress(aTime);
 
