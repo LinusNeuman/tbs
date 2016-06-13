@@ -132,10 +132,10 @@ void GUIButton::FadeDown(const CommonUtilities::Time aTime)
 	CU::Vector4f color = mySpriteHovered->GetColor();
 	if (color.w >= 0.0f)
 	{
-		color.w -= 0.5f * aTime.GetSeconds();
+		color.w -= 1.2f * aTime.GetSeconds();
 		if (color.w < 0)
 		{
-			myAnimateTimer += 1.2f * aTime.GetSeconds();
+			myAnimateTimer += 2.5f * aTime.GetSeconds();
 			if (myAnimateTimer >= 1.0f)
 			{
 				myAnimateState = GUIAnimateState::eFadingUp;
