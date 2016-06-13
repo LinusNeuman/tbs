@@ -21,9 +21,9 @@ public:
 
 	void Update();
 
-	void CalculateProgress(const CommonUtilities::Time aTime);
-	void MoveUp(const CommonUtilities::Time aTime);
-	void MoveDown(const CommonUtilities::Time aTime);
+	void CalculateProgress(const CommonUtilities::Time& aTime);
+	void MoveUp(const CommonUtilities::Time& aTime);
+	void MoveDown(const CommonUtilities::Time& aTime);
 	void Animate(const CU::Time& aDelta);
 
 	void __forceinline SetAP(uchar aAP)
@@ -34,12 +34,8 @@ public:
 
 	void __forceinline SetPos(TilePositionf aPos)
 	{
-		CU::Vector2f tempPos = CU::IsometricToPixel(aPos);
-		tempPos.x /= SingletonDataHolder::GetTargetResolution().x;
-		tempPos.y /= SingletonDataHolder::GetTargetResolution().y;
-
-		myAPText->myPosition.x = tempPos.x;
-		myAPText->myPosition.y = tempPos.y;
+		myAPText->myPosition.x = aPos.x;
+		myAPText->myPosition.y = aPos.y;
 
 		myTilePositionf = aPos;
 	}
@@ -68,4 +64,6 @@ private:
 	float myMovementTotalUp;
 	float myMovementTotalDown;
 	float myMovementTimer;
+
+	CU::Vector2f myOffset;
 };

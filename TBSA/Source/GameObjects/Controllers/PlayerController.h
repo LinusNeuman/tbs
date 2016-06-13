@@ -46,8 +46,9 @@ public:
 	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
 	void AfterPlayerTurn();
+	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);
 
-	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition);
+	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy);
 
 	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerPositionChangedMessage & aMessage) override;

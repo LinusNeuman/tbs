@@ -22,7 +22,7 @@ GUIFactory::GUIFactory()
 
 GUIFactory::~GUIFactory()
 {
-	//myGUIElements.DeleteAll();
+	myGUIElements.DeleteAll();
 }
 
 void GUIFactory::Load()

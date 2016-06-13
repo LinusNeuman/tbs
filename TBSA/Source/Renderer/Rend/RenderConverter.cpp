@@ -102,6 +102,23 @@ void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
 	GetInstance().myRenderer.AddRenderCommand(aRenderCommand);
 }
 
+void RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand & aRenderCommand)
+{
+	CU::Vector2f tempPosition = aRenderCommand.myPosition * (*GetInstance().myCamera).GetInverse();
+
+	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
+
+	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
+	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
+
+	newPos.x += 0.5f;
+	newPos.y += 0.5f;
+
+	aRenderCommand.myPosition = newPos;
+
+	GetInstance().myRenderer.AddRenderCommand(aRenderCommand);
+}
+
 void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/)
 {
 	GetInstance().myRenderer.DrawLine(aStartPosition, aEndPosition, aColor);
