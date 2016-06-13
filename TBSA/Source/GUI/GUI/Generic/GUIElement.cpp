@@ -2,7 +2,7 @@
 #include <CU/Macros/Macros.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <Rend/StaticSprite.h>
-#include "Message\LogTextMessage.h"
+#include "Message\DialogTextMessage.h"
 
 GUIElement::GUIElement()
 {

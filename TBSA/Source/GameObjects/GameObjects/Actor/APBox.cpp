@@ -127,5 +127,10 @@ void APBox::Draw() const
 {
 	mySprite->Draw(myPosition);
 
-	RenderConverter::AddRenderCommand(RenderCommand(*myAPText, 1.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
+	TextRenderData data;
+
+	data.myText = myAPText->myText;
+	data.myPos = { myAPText->myPosition.x, myAPText->myPosition.y };
+
+	RenderConverter::AddRenderCommand(RenderCommand(1.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 }

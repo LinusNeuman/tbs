@@ -19,11 +19,12 @@ RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f
 	myText = nullptr;
 }
 
-RenderCommand::RenderCommand(DX2D::CText & aTextToRender, const float aRenderPriority, const USHORT aLayer, const bool aOffsetMiddleOfScreen/* = false*/)
-	: myText(&aTextToRender),
-	myPosition({ aTextToRender.myPosition.x, aTextToRender.myPosition.y })
+RenderCommand::RenderCommand(const float aRenderPriority, const USHORT aLayer, const TextRenderData& aRenderData, const bool aOffsetMiddleOfScreen/* = false*/)
 {
+	myText = new DX2D::CText("text/calibril.ttf_sdf");
+	myText->myText = aRenderData.myText;
 	myRenderPriority = aRenderPriority;
+	myPosition = aRenderData.myPos;
 	myLayer = aLayer;
 	myMiddleScreenOffset = aOffsetMiddleOfScreen;
 	mySprite = nullptr;

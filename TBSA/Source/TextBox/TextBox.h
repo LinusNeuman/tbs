@@ -5,7 +5,7 @@
 #define Vec2f CommonUtilities::Vector2f
 #define MAX_TEXT_ROWS 100
 #define TEXT_HEIGHT 28
-#define DEBUG_TEXTBOX
+//#define DEBUG_TEXTBOX
 
 #include "../CommonUtilities/CU/NameSpaceAliases.h"
 #include <string>

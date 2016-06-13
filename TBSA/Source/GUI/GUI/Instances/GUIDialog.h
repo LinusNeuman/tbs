@@ -11,11 +11,12 @@ public:
 	void Render() override;
 	void Update(const CU::Time& aTimeDelta) override;
 	void Clear();
+	void Toggle();
 
 private:
 	TextBox myTextBox;
 	StaticSprite* myTextBackground;
 
-	//bool RecieveMessage(const DialogTextMessage& aMessage) override;
+	bool RecieveMessage(const DialogTextMessage& aMessage) override;
 };
 

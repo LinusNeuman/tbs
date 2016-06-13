@@ -154,7 +154,13 @@ TextBox::Render() const
 
 	for (unsigned int i = 0; i < myRenderList.Size(); ++i)
 	{
-		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], 5000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
+		TextRenderData data;
+
+		data.myText = myRenderList[static_cast<const unsigned short>(i)]->myText;
+		data.myPos.x = myRenderList[static_cast<const unsigned short>(i)]->myPosition.x;
+		data.myPos.y = myRenderList[static_cast<const unsigned short>(i)]->myPosition.y;
+
+		RenderConverter::AddRenderCommand(RenderCommand(5000.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 		//myRenderList[static_cast<const unsigned short>(i)]->Render();
 	}
 }

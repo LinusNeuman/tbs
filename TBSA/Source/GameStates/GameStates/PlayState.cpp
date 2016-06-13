@@ -13,7 +13,7 @@
 #include "GameOverState.h"
 #include "LoadState.h"
 #include "PostLevelState.h"
-#include "Message\LogTextMessage.h"
+#include "Message\DialogTextMessage.h"
 #include "Message\ClearLogMessage.h"
 #include "Message\ScrollLogDownMessage.h"
 #include "Message\ScrollLogUpMessage.h"
@@ -112,19 +112,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	}
 	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
 	{
-		SendPostMessage(LogTextMessage(RecieverTypes::eLogText, "Wee!"));
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_DELETE) == true)
-	{
-		SendPostMessage(ClearLogMessage(RecieverTypes::eClearLog));
-	}
-	else if (IsometricInput::GetKeyReleased(DIK_PGUP) == true)
-	{
-		SendPostMessage(ScrollLogUpMessage(RecieverTypes::eScrollLogUp));
-	}
-	else if (IsometricInput::GetKeyReleased(DIK_PGDN) == true)
-	{
-		SendPostMessage(ScrollLogDownMessage(RecieverTypes::eScrollLogDown));
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage ,"Wee 1337!"));
 	}
 
 	if (myShouldPause == true)

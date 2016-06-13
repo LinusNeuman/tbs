@@ -155,7 +155,7 @@ bool MessageReciever::RecieveMessage(const SetTargetResolutionMessage& aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const LogTextMessage& aMessage)
+bool MessageReciever::RecieveMessage(const DialogTextMessage& aMessage)
 {
 	return true;
 }

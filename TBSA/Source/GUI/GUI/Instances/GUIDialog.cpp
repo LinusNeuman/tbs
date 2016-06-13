@@ -1,24 +1,24 @@
 #include "GUIDialog.h"
-#include "Message\LogTextMessage.h"
+#include "Message\DialogTextMessage.h"
 
 GUIDialog::GUIDialog(const CommonUtilities::Vector2f aPosition, const CommonUtilities::Vector2f aDimensions, const std::string aFontPath, const eLinewrappingMode aMode) : myTextBox(aPosition, aDimensions, aFontPath, aMode)
 {
-	myIsEnabled = true;
+	myIsEnabled = false;
 
-	myTextBox.SetSize(aDimensions);
-	myTextBox.SetPosition(aPosition);
-	myTextBox.AddText("Wee!");
+	myTextBox.SetSize({ aDimensions.x - 24.f, aDimensions.y - 24.f });
+	myTextBox.SetPosition({ aPosition.x + 12, aPosition.y + 12 });
 
 	myTextBackground = new StaticSprite();
 	myTextBackground->Init("Sprites/GUI/InGame/DialogBox/bg.dds", false, { 0, 0, 381, 214 }, {0, 0});
 	myTextBackground->SetLayer(enumRenderLayer::eGUI);
 	myPosition = aPosition;
-	//SingletonPostMaster::AddReciever(RecieverTypes::eDialogText, *this);
+
+	SingletonPostMaster::AddReciever(RecieverTypes::eDialogTextMessage, *this);
 }
 
 GUIDialog::~GUIDialog()
 {
-	//SingletonPostMaster::RemoveReciever(RecieverTypes::eDialogText, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eDialogTextMessage, *this);
 }
 
 void
@@ -35,11 +35,6 @@ void
 GUIDialog::Update(const CU::Time& aTimeDelta)
 {
 	myTextBox.Update();
-
-	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft) == true)
-	{
-		myIsEnabled = !myIsEnabled;
-	}
 }
 
 void
@@ -48,10 +43,17 @@ GUIDialog::Clear()
 	myTextBox.Clear();
 }
 
-//bool
-//GUIDialog::RecieveMessage(const DialogTextMessage& aMessage)
-//{
-//	myTextBox.Clear();
-//	myTextBox.AddText(aMessage.myText);
-//	return true;
-//}
+void
+GUIDialog::Toggle()
+{
+	myIsEnabled = !myIsEnabled;
+}
+
+bool
+GUIDialog::RecieveMessage(const DialogTextMessage& aMessage)
+{
+	myTextBox.Clear();
+	myTextBox.AddText(aMessage.myText);
+	Toggle();
+	return true;
+}

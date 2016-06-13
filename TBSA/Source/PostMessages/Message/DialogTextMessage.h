@@ -7,9 +7,9 @@
 #pragma warning (push)
 #pragma warning (disable : 4512)
 
-struct LogTextMessage : public BaseMessage
+struct DialogTextMessage : public BaseMessage
 {
-	LogTextMessage(const RecieverTypes aType, const std::string& aMessage) : BaseMessage(aType)
+	DialogTextMessage(const RecieverTypes aType, const std::string& aMessage) : BaseMessage(aType)
 	{
 		myText = aMessage;
 	}
