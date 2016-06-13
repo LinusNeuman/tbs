@@ -14,10 +14,10 @@ TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(
 	//ForceTurn(eEndTurn::ENEMY_END_TURN);
 
 	myPlayerTurnImage = new StaticSprite();
-	myPlayerTurnImage->Init("Sprites/trashTestFiles/Turns/GoodyTurn.dds", false);
+	myPlayerTurnImage->Init("Sprites/GUI/TurnSigns/GoodyTurn.dds", false);
 	myPlayerTurnImage->SetLayer(enumRenderLayer::eGUI);
 	myEnemyTurnImage = new StaticSprite();
-	myEnemyTurnImage->Init("Sprites/trashTestFiles/Turns/BaddyTurn.dds", false);
+	myEnemyTurnImage->Init("Sprites/GUI/TurnSigns/BaddyTurn.dds", false);
 	myEnemyTurnImage->SetLayer(enumRenderLayer::eGUI);
 
 	myTurnImageTimer = 0.f;
@@ -114,7 +114,7 @@ bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 	{
 		float midPointX = (float)SingletonDataHolder::GetTargetResolution().x / 2;
 		float resolutionHeight = (float)SingletonDataHolder::GetTargetResolution().x;
-		myPlayerTurnImage->Draw(CU::Vector2f(midPointX - (128), resolutionHeight * 0.05f));
+		myPlayerTurnImage->Draw(CU::Vector2f(midPointX - (64), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}
 
@@ -150,7 +150,7 @@ bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 	{
 		float midPointX = (float)SingletonDataHolder::GetTargetResolution().x / 2;
 		float resolutionHeight = (float)SingletonDataHolder::GetTargetResolution().x;
-		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (128), resolutionHeight * 0.05f));
+		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (64), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}
 

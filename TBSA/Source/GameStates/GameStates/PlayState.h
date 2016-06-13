@@ -3,6 +3,8 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/StaticArray/StaticArray.h>
 #include <unordered_map>
+#include <map>
+#include <queue>
 #include "../TextBox/TextBox.h"
 #include "particleEmitter.h"
 
@@ -24,15 +26,16 @@ public:
 	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
 	virtual bool RecieveMessage(const StartUpLevelMessage & aMessage) override;
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
+	virtual bool RecieveMessage(const TextMessage & aMessage) override;
 
 
 private:
 	ParticleEmitter<250> myEmitter;
 	GameLevel * myLevel;
-	std::string myStartPath;
 	std::string myLevelKey;
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
+	std::map<std::string, std::queue<std::string>> myDialogs;
 	bool myShouldExit;
 	bool myGameOver;
 	bool myShouldPause;

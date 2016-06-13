@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Message/BaseMessage.h"
+#include <GUI/Messaging/Generic/GUIMessage.h>
 
 #pragma warning  (push)
 #pragma warning(disable : 4512)
-struct PlayerIDMessage : public BaseMessage
+struct PlayerIDMessage : public GUIMessage
 {
 	PlayerIDMessage(const RecieverTypes aRecieverType, const unsigned short aPlayerID)
-		: BaseMessage(aRecieverType),
+		: GUIMessage(aRecieverType),
 		myPlayerID(aPlayerID)
 	{
 	}

@@ -27,6 +27,7 @@ RenderCommand::RenderCommand(const float aRenderPriority, const USHORT aLayer, c
 	myPosition = aRenderData.myPos;
 	myLayer = aLayer;
 	myMiddleScreenOffset = aOffsetMiddleOfScreen;
+	myTextColor = aRenderData.myColor;
 	mySprite = nullptr;
 
 }
@@ -79,6 +80,8 @@ void RenderCommand::Render() const
 	}
 	else if (myText != nullptr)
 	{
+		tempColor = DX2D::CColor(myTextColor.r, myTextColor.g, myTextColor.b, myTextColor.a);
+
 		myText->myColor = tempColor;
 		myText->myPosition = tempPosition;
 

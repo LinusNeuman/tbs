@@ -15,6 +15,7 @@ public:
 	GameLevel* CreateLevel(const std::string& aLevelPath);
 private:
 	void LoadLevel(const std::string& aLevelPath);
+	static void StaticLoad(const std::string& aFilePath, TiledData* aTilePointer);
 
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;

@@ -8,6 +8,7 @@
 
 #include <CU/StaticArray/StaticArray.h>
 #include <atomic>
+#include "../../LevelProject/ObjectivesManager/ObjectiveManager.h"
 
 struct TiledData
 {
@@ -26,6 +27,7 @@ struct TiledData
 	PlayerFactory * myPlayerFactory;
 	EnemyFactory * myEnemyFactory;
 	ObjectiveFactory* myObjectiveFactory;
+	ObjectiveManager* myObjectiveManager;
 	CommonUtilities::StaticArray<Player*, 2> myPlayers;
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
 	CommonUtilities::GrowingArray<Objective*> myObjectives;
