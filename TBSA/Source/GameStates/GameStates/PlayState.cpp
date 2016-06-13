@@ -111,7 +111,12 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	}
 	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
 	{
-		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage ,"Wee 1337!"));
+		std::queue<std::string> texts;
+
+		texts.push("Wee!1");
+		texts.push("Wee!2");
+
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, texts));
 	}
 
 	if (myShouldPause == true)

@@ -2,6 +2,7 @@
 
 #include "GUI/Generic/GUIElement.h"
 #include <TextBox.h>
+#include <queue>
 
 class GUIDialog : public GUIElement
 {
@@ -16,6 +17,8 @@ public:
 private:
 	TextBox myTextBox;
 	StaticSprite* myTextBackground;
+
+	std::queue<std::string> myTexts;
 
 	bool RecieveMessage(const DialogTextMessage& aMessage) override;
 };

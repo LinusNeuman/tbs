@@ -11,13 +11,16 @@ APBox::APBox()
 	mySprite->Init("Sprites/GUI/HUD/AP/ActorAP.dds", true, CU::Vector4f::Zero, { 0.5f, 0.5f });
 	mySprite->SetLayer(enumRenderLayer::eGUI);
 	mySprite->SetPivotWithPixels({ mySprite->GetSizeInPixels().x / 2.f, -(mySprite->GetSizeInPixels().y / 2.f) });
+	mySprite->SetRenderPriority(100.f);
 
 	myEasing = 0.f;
 	myMovementTimer = 0.f;
-	myMovementTotalDown = 0.5f;
-	myMovementTotalUp = 0.5f;
+	myMovementTotalDown = 1.0f;
+	myMovementTotalUp = 1.0f;
 
 	myApBoxState = eAPBoxState::eGoingUp;
+
+	myOffset = { 0.f, 0.f };
 }
 
 APBox::~APBox()
@@ -31,7 +34,7 @@ void APBox::Update()
 
 }
 
-void APBox::CalculateProgress(const CommonUtilities::Time aTime)
+void APBox::CalculateProgress(const CommonUtilities::Time& aTime)
 {
 	myMovementTimer = myMovementTimer + aTime.GetSeconds();
 	float progress = 0.f;
@@ -47,20 +50,8 @@ void APBox::CalculateProgress(const CommonUtilities::Time aTime)
 	myEasing = progress;
 }
 
-void APBox::MoveUp(const CommonUtilities::Time aTime)
+void APBox::MoveUp(const CommonUtilities::Time& aTime)
 {
-	myOriginalPosition = myTilePositionf;
-	myGoalPosition = myTilePositionf;
-	myGoalPosition.x = myTilePositionf.x + 0.1f;
-	
-	CU::Vector2f deltaPos = 
-	{
-		myPosition.x - myGoalPosition.x,
-		myPosition.y - myGoalPosition.y
-	};
-
-	float hypotenusa = sqrt(pow(deltaPos.x, 2) + pow(deltaPos.y, 2));
-	CU::Vector2f ratio = deltaPos / hypotenusa;
 	CalculateProgress(aTime);
 
 	if (myEasing >= 0.99f)
@@ -70,46 +61,24 @@ void APBox::MoveUp(const CommonUtilities::Time aTime)
 	}
 	else
 	{
-		CU::Vector2f changeFactor = myGoalPosition - myOriginalPosition;
-		changeFactor = changeFactor * CU::Matrix33f::CreateRotateAroundZ(0.785f);
-		myPosition =
-		{
-			myOriginalPosition.x + changeFactor.x * myEasing,
-			myOriginalPosition.y + changeFactor.y * myEasing,
-		};
+		myPosition = myTilePositionf;
+		myOffset = CU::Vector2f::One * ((0.2f * (1.f - myEasing)));
 	}
 }
 
-void APBox::MoveDown(const CommonUtilities::Time aTime)
+void APBox::MoveDown(const CommonUtilities::Time& aTime)
 {
-	myGoalPosition = myTilePositionf;
-	myOriginalPosition = myTilePositionf;
-	myOriginalPosition.x = myTilePositionf.x + 0.1f;
-
-	CU::Vector2f deltaPos =
-	{
-		myPosition.x - myGoalPosition.x,
-		myPosition.y - myGoalPosition.y
-	};
-
-	float hypotenusa = sqrt(pow(deltaPos.x, 2) + pow(deltaPos.y, 2));
-	CU::Vector2f ratio = deltaPos / hypotenusa;
 	CalculateProgress(aTime);
 
-	if (myEasing >= 0.99f)
+	if (1.f - myEasing <= 0.01f)
 	{
 		myApBoxState = eAPBoxState::eGoingUp;
 		myMovementTimer = 0.f;
 	}
 	else
 	{
-		CU::Vector2f changeFactor = myGoalPosition - myOriginalPosition;
-		changeFactor = changeFactor * CU::Matrix33f::CreateRotateAroundZ(0.785f);
-		myPosition =
-		{
-			myOriginalPosition.x + changeFactor.x * myEasing,
-			myOriginalPosition.y + changeFactor.y * myEasing,
-		};
+		myPosition = myTilePositionf;
+		myOffset = CU::Vector2f::One * ((0.2f * myEasing));
 	}
 }
 
@@ -121,16 +90,23 @@ void APBox::Animate(const CU::Time& aDelta)
 void APBox::Reset()
 {
 	myPosition = myTilePositionf;
+	myOffset = {0.f,0.f};
+	myApBoxState = eAPBoxState::eGoingDown;
+	myMovementTimer = 0.f;
 }
 
 void APBox::Draw() const
 {
-	mySprite->Draw(myPosition);
+	mySprite->Draw(myPosition - myOffset);
+
+	CU::Vector2f ja = mySprite->GetSizeInPixels();
+	ja.y -= 16;
+	ja.x = ((myAPText->GetWidth() / 2.f) * SingletonDataHolder::GetTargetResolution().x) - 1;
+	ja = CU::PixelToIsometric(ja);
 
 	TextRenderData data;
-
 	data.myText = myAPText->myText;
-	data.myPos = { myAPText->myPosition.x, myAPText->myPosition.y };
+	data.myPos = (myPosition - myOffset) - ja;
 
-	RenderConverter::AddRenderCommand(RenderCommand(1.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
+	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 }

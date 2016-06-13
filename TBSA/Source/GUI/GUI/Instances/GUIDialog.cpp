@@ -34,6 +34,31 @@ GUIDialog::Render()
 void
 GUIDialog::Update(const CU::Time& aTimeDelta)
 {
+	if (myIsEnabled == false && myTexts.size() > 0)
+	{
+		myIsEnabled = true;
+		myTextBox.Clear();
+		myTextBox.AddText(myTexts.front());
+		myTexts.pop();
+	}
+
+	if (myIsEnabled == true)
+	{
+		if (SingletonIsometricInputWrapper::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft) == true)
+		{
+			if (myTexts.size() == 0)
+			{
+				myIsEnabled = false;
+			}
+			else
+			{
+				myTextBox.Clear();
+				myTextBox.AddText(myTexts.front());
+				myTexts.pop();
+			}
+		}
+	}
+
 	myTextBox.Update();
 }
 
@@ -52,8 +77,7 @@ GUIDialog::Toggle()
 bool
 GUIDialog::RecieveMessage(const DialogTextMessage& aMessage)
 {
-	myTextBox.Clear();
-	myTextBox.AddText(aMessage.myText);
-	Toggle();
+	myTexts = aMessage.myTexts;
+
 	return true;
 }
