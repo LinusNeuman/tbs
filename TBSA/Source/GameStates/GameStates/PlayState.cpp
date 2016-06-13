@@ -20,7 +20,6 @@
 
 PlayState::PlayState()
 {
-	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
 
 	myEmitter.LoadEmitterSettings("snow");
