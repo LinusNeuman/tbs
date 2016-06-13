@@ -1,107 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="GameObjects\Actor\APBox.cpp" />
+    <ClCompile Include="Controllers\EnemyController.cpp" />
+    <ClCompile Include="GameObjects\Room\GameFloor.cpp" />
+    <ClCompile Include="GameObjects\Actor\Actor.cpp" />
+    <ClCompile Include="GameObjects\Actor\Enemy.cpp" />
+    <ClCompile Include="GameObjects\Actor\Player.cpp" />
+    <ClCompile Include="Controllers\PlayerController.cpp" />
+    <ClCompile Include="GameObjects\Room\Door.cpp" />
+    <ClCompile Include="GameObjects\Room\IsometricTile.cpp" />
+    <ClCompile Include="Controllers\MouseController.cpp" />
+    <ClCompile Include="Objective.cpp" />
+    <ClCompile Include="Controllers\ScoreCounter.cpp" />
+    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameObjects\Actor\Actor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Actor\Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Actor\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Room\Door.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Room\IsometricTile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\PlayerController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\EnemyController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Room\GameFloor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Controllers\MouseController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Objective.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Actor\APBox.cpp">
-      <Filter>Source Files</Filter>
-    <ClCompile Include="Controllers\ScoreCounter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameObjects\Actor\Actor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Actor\Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Actor\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\JsonDataStructs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Room\Door.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Room\IsometricTile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\PlayerController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\EnemyController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Room\GameFloor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\MouseController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Objective.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ActorEnums.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Actor\APBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\ScoreCounter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Controllers\ScoreTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="ActorEnums.h" />
+    <ClInclude Include="GameObjects\Actor\APBox.h" />
+    <ClInclude Include="Controllers\EnemyController.h" />
+    <ClInclude Include="Controllers\ScoreTypes.h" />
+    <ClInclude Include="GameObjects\Room\GameFloor.h" />
+    <ClInclude Include="GameObjects\Actor\Actor.h" />
+    <ClInclude Include="GameObjects\Actor\Enemy.h" />
+    <ClInclude Include="GameObjects\Actor\Player.h" />
+    <ClInclude Include="GameObjects\JsonDataStructs.h" />
+    <ClInclude Include="Controllers\PlayerController.h" />
+    <ClInclude Include="GameObjects\Room\Door.h" />
+    <ClInclude Include="GameObjects\Room\IsometricTile.h" />
+    <ClInclude Include="Controllers\MouseController.h" />
+    <ClInclude Include="Objective.h" />
+    <ClInclude Include="Controllers\ScoreCounter.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
 </Project>

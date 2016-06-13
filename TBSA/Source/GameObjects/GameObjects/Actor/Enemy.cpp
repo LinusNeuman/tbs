@@ -147,7 +147,6 @@ void Enemy::Fight()
 	SetActorState(eActorState::eFighting);
 	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyAttacked, *this));
 	SendPostMessage(TextMessage(RecieverTypes::eEnemyDied, GetName()));
-	SendPostMessage(AnimationStateMessage(RecieverTypes::eAnimationState, true));
 }
 
 void Enemy::DecideAnimation()
