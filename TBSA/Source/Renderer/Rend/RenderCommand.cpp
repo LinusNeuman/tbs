@@ -19,13 +19,15 @@ RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f
 	myText = nullptr;
 }
 
-RenderCommand::RenderCommand(DX2D::CText & aTextToRender, const CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer, const bool aOffsetMiddleOfScreen/* = false*/)
-	: myText(&aTextToRender),
-	myPosition(aPosition)
+RenderCommand::RenderCommand(const float aRenderPriority, const USHORT aLayer, const TextRenderData& aRenderData, const bool aOffsetMiddleOfScreen/* = false*/)
 {
+	myText = new DX2D::CText("text/calibril.ttf_sdf");
+	myText->myText = aRenderData.myText;
 	myRenderPriority = aRenderPriority;
+	myPosition = aRenderData.myPos;
 	myLayer = aLayer;
 	myMiddleScreenOffset = aOffsetMiddleOfScreen;
+	myTextColor = aRenderData.myColor;
 	mySprite = nullptr;
 
 }
@@ -78,6 +80,8 @@ void RenderCommand::Render() const
 	}
 	else if (myText != nullptr)
 	{
+		tempColor = DX2D::CColor(myTextColor.r, myTextColor.g, myTextColor.b, myTextColor.a);
+
 		myText->myColor = tempColor;
 		myText->myPosition = tempPosition;
 

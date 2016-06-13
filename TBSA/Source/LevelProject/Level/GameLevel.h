@@ -29,6 +29,7 @@ public:
 	void ConstructNavGraph();
 
 	TiledData* GetTiledData();
+	ObjectiveManager & GetObjectiveManager();
 private:
 	void InternalInit();
 
@@ -44,6 +45,7 @@ private:
 	CommonUtilities::Vector2ui myDimensions;
 
 	TurnManager myTurnManager;
+	ObjectiveManager myObjectiveManager;
 
 	bool myIsInitialized;
 };

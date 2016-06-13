@@ -372,9 +372,6 @@
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JSONParser\JSONParser.vcxproj">
-      <Project>{e94e2940-e22d-495f-9da6-d2895858fa0e}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\JSONWrapper\JSONWrapper.vcxproj">
       <Project>{9eb5704f-4985-4a60-a150-3ba7cc2079e2}</Project>
     </ProjectReference>

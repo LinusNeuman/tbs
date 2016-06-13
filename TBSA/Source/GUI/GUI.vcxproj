@@ -71,7 +71,6 @@
     <ClInclude Include="GUI\Instances\GUIChangePlayerButton.h" />
     <ClInclude Include="GUI\Instances\GUIDialog.h" />
     <ClInclude Include="GUI\Instances\GUIActionPointsBar.h" />
-    <ClInclude Include="GUI\Instances\GUITextBox.h" />
     <ClInclude Include="GUI\Managing\GUIFactory.h" />
     <ClInclude Include="GUI\Managing\GUIManager.h" />
     <ClInclude Include="GUI\Messaging\GUIMessageHandler.h" />
@@ -83,7 +82,6 @@
     <ClCompile Include="GUI\Instances\GUIChangePlayerButton.cpp" />
     <ClCompile Include="GUI\Instances\GUIDialog.cpp" />
     <ClCompile Include="GUI\Instances\GUIActionPointsBar.cpp" />
-    <ClCompile Include="GUI\Instances\GUITextBox.cpp" />
     <ClCompile Include="GUI\Managing\GUIFactory.cpp" />
     <ClCompile Include="GUI\Managing\GUIManager.cpp" />
     <ClCompile Include="GUI\Messaging\GUIMessageHandler.cpp" />

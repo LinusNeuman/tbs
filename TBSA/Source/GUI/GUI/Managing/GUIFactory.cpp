@@ -4,7 +4,7 @@
 #include <CU/Timer/Timer.h>
 #include <CU/Timer/TimeManager.h>
 #include <GUI/Instances/GUIButton.h>
-#include <GUI/Instances/GUITextBox.h>
+#include <GUI/Instances/GUIDialog.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <GUI/Instances/GUIActionPointsBar.h>
 #include <GUI/Instances/GUIChangePlayerButton.h>
@@ -51,9 +51,9 @@ void GUIFactory::Load()
 
 		if (currentStateName == "InGame")
 		{
-			GUITextBox* textBox = new GUITextBox({ 1.f, 1.f }, { 640.f, 320.f }, "Text/calibril.ttf_sdf");
+			GUIDialog* dialogTextBox = new GUIDialog({ 808.f, 832.f }, { 381.f, 214.f }, "Text/calibril.ttf_sdf");
 
-			myGUIElements.Add(textBox);
+			myGUIElements.Add(dialogTextBox);
 
 			GUIChangePlayerButton* changePlayerButton = new GUIChangePlayerButton();
 			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, { 121, 708 }, { 84, 68 }, true, true, true, false, true);

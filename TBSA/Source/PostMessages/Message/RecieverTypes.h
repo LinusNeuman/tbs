@@ -45,7 +45,7 @@ enum class RecieverTypes
 	eOpenPauseMenu,
 	eGameOverReset,
 	eClosePauseMenu,
-	eLogText,
+	eDialogTextMessage,
 	eClearLog,
 	eScrollLogUp,
 	eScrollLogDown,
@@ -53,6 +53,10 @@ enum class RecieverTypes
 	eGoToLevel,
 	eGoToCredits,
 	eEnemyDirectionChanged,
+	eLevelEnd,
+	eObjctive,
+	eLeaveObjective,
+	eEnemyDied,
 	eAnimationState,
 	enumlength
 };
