@@ -17,12 +17,15 @@
 #include "Message\ClearLogMessage.h"
 #include "Message\ScrollLogDownMessage.h"
 #include "Message\ScrollLogUpMessage.h"
+#include <../DialogLoader/DialogManager.h>
 
 PlayState::PlayState()
 {
 	myStartPath = "Data/Tiled/";
 
 	myEmitter.LoadEmitterSettings("snow");
+
+	myDialogs = LoadDialogs();
 
 	myShouldPause = false;
 	myGameOver = false;
