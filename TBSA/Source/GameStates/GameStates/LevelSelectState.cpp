@@ -48,7 +48,7 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 			break;
 		case 2: mySelectedLevel = "2_Backyard.json";
 			break;
-		case 3: mySelectedLevel = "2_Backyard.json";
+		case 3: mySelectedLevel = "3_Lakeside.json";
 			break;
 		case 4: mySelectedLevel = "4_Kiosk.json";
 			break;
@@ -62,7 +62,6 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 		newState->Init(mySelectedLevel);
 		aStateStack.AddMainState(newState);
 		myLevel = 0;
-		return eStackReturnValue::eDeleteMainState;
 	}
 
 	return eStackReturnValue::eStay;

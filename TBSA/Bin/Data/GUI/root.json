@@ -276,7 +276,7 @@
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
-            "myAnimated": false,
+            "myAnimated": true,
             "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
             "mySizeX": 128,
             "mySizeY": 69,
