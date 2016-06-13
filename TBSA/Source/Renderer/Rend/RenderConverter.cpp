@@ -89,12 +89,12 @@ void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRen
 	CU::Vector2f newPos(aPosition);
 	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
 	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
-	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), newPos, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
+	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), newPos, aSpriteToRender.GetRenderPriority(), static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
 }
 
 void RenderConverter::RenderSpriteNormalized(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
-	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
+	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, aSpriteToRender.GetRenderPriority(), static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
 }
 
 void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
