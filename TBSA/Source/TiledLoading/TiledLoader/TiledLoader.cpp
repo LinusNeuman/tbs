@@ -255,6 +255,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					const float posY = static_cast<float>(JsonHelp::GetNumber(enemy["y"])) / 64;
 
 					enemyActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
+					enemyActor->SetName(JsonHelp::GetString(enemy["name"]));
 
 					if (enemy.count("properties") > 0)
 					{
@@ -330,7 +331,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
 					someTiles.myObjectives.Add(objectiveObject);
 
-					someTiles.myObjectiveManager->AddObjective(1000 * posY + posX, JsonHelp::GetString(goal["name"]));
+					someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
 				}
 			}
 		}

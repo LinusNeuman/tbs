@@ -34,6 +34,8 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 	picojson::object root = JsonHelp::LoadJson(aPath);
 	picojson::array stages = JsonHelp::GetArray(root["stages"]);
 
+	myNextLevel = JsonHelp::GetString(root["nextLevel"]);
+
 	for (size_t i = 0; i < stages.size(); i++)
 	{
 		picojson::array objectives = JsonHelp::GetArray(stages[i]);
@@ -105,7 +107,9 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		return true;
 	}
 
-	if (myStages[myCurrentStage].count(aMessage.myText))
+	const Stage explaingStage = myStages[myCurrentStage];
+
+	if (explaingStage.count(aMessage.myText))
 	{
 		if (myStages[myCurrentStage][aMessage.myText].myType == eLevelObjectiveType::HOLD)
 		{
@@ -119,7 +123,8 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 
 bool ObjectiveManager::RecieveMessage(const PositionMessage& aMessage)
 {
-	if (myObjectives.count(1000 * aMessage.myPosition.y + aMessage.myPosition.x) > 0)
+	const int explainInt = 1000 * aMessage.myPosition.y + aMessage.myPosition.x;
+	if (myObjectives.count(explainInt) > 0)
 	{
 		RecieveMessage(TextMessage(aMessage.myType, myObjectives[1000 * aMessage.myPosition.y + aMessage.myPosition.x]));
 	}

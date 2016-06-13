@@ -17,10 +17,10 @@
 #include "Message\ClearLogMessage.h"
 #include "Message\ScrollLogDownMessage.h"
 #include "Message\ScrollLogUpMessage.h"
+#include <Message/TextMessage.h>
 
 PlayState::PlayState()
 {
-	myLevel = new GameLevel();
 	//myStartPath = "Data/Tiled/";
 
 	myEmitter.LoadEmitterSettings("snow");
@@ -36,6 +36,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -45,7 +46,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
-
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this);
 	if (aLevelPath == "")
 	{
 		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
@@ -174,6 +175,16 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::eOpenPauseMenu)
 	{
 		myShouldPause = true;
+	}
+	return true;
+}
+
+bool PlayState::RecieveMessage(const TextMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eLevelEnd)
+	{
+		ChangeLevel(aMessage.myText);
+		myShowPostLevelScreen = true;
 	}
 	return true;
 }

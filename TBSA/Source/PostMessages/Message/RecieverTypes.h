@@ -52,7 +52,6 @@ enum class RecieverTypes
 	eGoToLevel,
 	eGoToCredits,
 	eEnemyDirectionChanged,
-	enumlength
 	eLevelEnd,
 	eObjctive,
 	eLeaveObjective,

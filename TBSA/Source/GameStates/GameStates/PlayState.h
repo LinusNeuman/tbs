@@ -24,6 +24,7 @@ public:
 	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
 	virtual bool RecieveMessage(const StartUpLevelMessage & aMessage) override;
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
+	virtual bool RecieveMessage(const TextMessage & aMessage) override;
 
 
 private:
