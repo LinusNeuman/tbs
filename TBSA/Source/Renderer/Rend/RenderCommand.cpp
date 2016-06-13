@@ -64,8 +64,6 @@ void RenderCommand::Render() const
 
 		float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
 
-		
-
 		DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale, normalizedWindowSizeY * renderScale);
 
 		mySprite->SetColor(tempColor);

@@ -114,6 +114,12 @@ public:
 	void SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel);
 	const CU::Vector2f & GetPivotInPixels() const;
 
+	/*
+		Low value gets rendered first.
+	*/
+	void SetRenderPriority(const float aPriority);
+	float GetRenderPriority() const;
+
 	DX2D::CSprite * GetSprite() const;
 	void SetShader(DX2D::CCustomShader * aCustomShader);
 
@@ -142,6 +148,7 @@ private:
 	unsigned short myImageIndex;
 
 	enumRenderLayer myLayer;
+	float myPriority;
 	
 
 	CU::Vector2f myPositionOffset;
@@ -198,7 +205,15 @@ inline void StaticSprite::SetShader(DX2D::CCustomShader * aCustomShader)
 	myRenderData.myShaderPtr = aCustomShader;
 }
 
+inline void StaticSprite::SetRenderPriority(const float aPriority)
+{
+	myPriority = aPriority;
+}
 
+inline float StaticSprite::GetRenderPriority() const
+{
+	return myPriority;
+}
 
 
 typedef StaticSprite SSprite;

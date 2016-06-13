@@ -377,6 +377,7 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	{
 		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX && mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetAttackCost())
 		{
+			myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, 1);
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
 			mySelectedPlayer->CostAP(mySelectedPlayer->GetAttackCost());
 		}

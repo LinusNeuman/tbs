@@ -30,6 +30,7 @@ StaticSprite::StaticSprite()
 	}
 
 	myRenderData.mySizeInPixels = { 100.f, 100.f };
+	myPriority = 1000.f;
 }
 
 StaticSprite::~StaticSprite()
@@ -165,6 +166,7 @@ void StaticSprite::SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel)
 
 	myPositionOffset = CU::PixelToIsometric(tempOffset);
 }
+
 
 void StaticSprite::Sync()
 {
