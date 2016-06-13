@@ -14,6 +14,7 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myState = eTileState::NONE;
 	myDebugMode = false;
 	myIsVisible = false;
+	myIsDiscovered = false;
 	myIsInEnemyFoV = false;
 	myAvailableDirections.Init(8);
 	for (size_t i = 1; i < 9; i++)
