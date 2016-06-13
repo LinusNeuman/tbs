@@ -5,6 +5,7 @@
 #include <Rend\RenderConverter.h>
 #include <tga2d\text\text.h>
 #include <CU\Utility\DataHolder\SingletonDataHolder.h>
+#include <Rend\RenderLayerEnum.h>
 
 #ifdef DEBUG_TEXTBOX
 #include <tga2d\engine.h>
@@ -123,13 +124,16 @@ TextBox::SetLineWrappingMode(const eLinewrappingMode aMode)
 void
 TextBox::SetPosition(const Vec2f aPosition)
 {
-	myPosition = aPosition;
+	myPosition.x = aPosition.x / SingletonDataHolder::GetTargetResolution().x;
+	myPosition.y = aPosition.y / SingletonDataHolder::GetTargetResolution().y;
 }
 
 void
 TextBox::SetSize(const Vec2f aSize)
 {
-	myDimensions = aSize;
+	myDimensions.x = aSize.x / SingletonDataHolder::GetTargetResolution().x;
+	myDimensions.y = aSize.y / SingletonDataHolder::GetTargetResolution().y;
+
 	myNumberOfLinesDisplayed = 0;
 
 	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT / SingletonDataHolder::GetTargetResolution().y)
@@ -150,7 +154,7 @@ TextBox::Render() const
 
 	for (unsigned int i = 0; i < myRenderList.Size(); ++i)
 	{
-		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], 1.f, 1));
+		RenderConverter::AddRenderCommand(RenderCommand(*myRenderList[static_cast<const unsigned short>(i)], 5000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
 		//myRenderList[static_cast<const unsigned short>(i)]->Render();
 	}
 }
@@ -186,7 +190,7 @@ TextBox::Update()
 	{
 		if (myTextRows[i] != nullptr)
 		{
-			myTextRows[i]->myPosition = { myPosition.x * SingletonDataHolder::GetTargetResolution().x, myPosition.y * SingletonDataHolder::GetTargetResolution().y + myDimensions.y * SingletonDataHolder::GetTargetResolution().y - (0.025f * SingletonDataHolder::GetTargetResolution().y * row) };
+			myTextRows[i]->myPosition = { myPosition.x, myPosition.y + myDimensions.y - (0.025f * row) };
 			myRenderList.Add(myTextRows[i]);
 		}
 

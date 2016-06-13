@@ -4,6 +4,15 @@
 GUIDialog::GUIDialog(const CommonUtilities::Vector2f aPosition, const CommonUtilities::Vector2f aDimensions, const std::string aFontPath, const eLinewrappingMode aMode) : myTextBox(aPosition, aDimensions, aFontPath, aMode)
 {
 	myIsEnabled = true;
+
+	myTextBox.SetSize(aDimensions);
+	myTextBox.SetPosition(aPosition);
+	myTextBox.AddText("Wee!");
+
+	myTextBackground = new StaticSprite();
+	myTextBackground->Init("Sprites/GUI/InGame/DialogBox/bg.dds", false, { 0, 0, 381, 214 }, {0, 0});
+	myTextBackground->SetLayer(enumRenderLayer::eGUI);
+	myPosition = aPosition;
 	//SingletonPostMaster::AddReciever(RecieverTypes::eDialogText, *this);
 }
 
@@ -17,6 +26,7 @@ GUIDialog::Render()
 {
 	if (myIsEnabled == true)
 	{
+		myTextBackground->Draw(myPosition);
 		myTextBox.Render();
 	}
 }
@@ -26,12 +36,9 @@ GUIDialog::Update(const CU::Time& aTimeDelta)
 {
 	myTextBox.Update();
 
-	if (myIsEnabled == true)
+	if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft) == true)
 	{
-		if (IsometricInput::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft) == true)
-		{
-			myIsEnabled = false;
-		}
+		myIsEnabled = !myIsEnabled;
 	}
 }
 

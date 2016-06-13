@@ -14,6 +14,8 @@ public:
 
 private:
 	TextBox myTextBox;
+	StaticSprite* myTextBackground;
+
 	//bool RecieveMessage(const DialogTextMessage& aMessage) override;
 };
 
