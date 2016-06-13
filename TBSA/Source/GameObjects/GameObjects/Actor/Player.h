@@ -64,6 +64,7 @@ private:
 
 	bool myShouldDie;
 	bool myIsSelected;
+	bool myIsInFight;
 
 	APBox myAPBox;
 };

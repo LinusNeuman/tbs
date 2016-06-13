@@ -111,6 +111,9 @@ void RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand
 	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
 	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
 
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+	newPos *= renderScale;
+
 	newPos.x += 0.5f;
 	newPos.y += 0.5f;
 

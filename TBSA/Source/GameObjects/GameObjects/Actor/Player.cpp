@@ -22,7 +22,8 @@ Player::Player()
 
 Player::~Player()
 {
-	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents,*this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eAnimationState, *this);
 }
 
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
@@ -35,10 +36,10 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myEnemyTargetIndex = USHRT_MAX;
 
 	myIsSeen = false;
+	myIsInFight = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
-	myDetectedSprite = new StaticSprite();
-	myDetectedSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
-	myDetectedSprite->SetLayer(enumRenderLayer::eGUI);
+	SingletonPostMaster::AddReciever(RecieverTypes::eAnimationState, *this);
+
 
 	myAPBox.SetPos(myPosition);
 	myAPBox.Reset();
@@ -102,6 +103,7 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	return true;
 }
 
+
 void Player::AfterTurn()
 {
 	Actor::AfterTurn();
@@ -124,7 +126,7 @@ void Player::Update(const CU::Time& aDeltaTime)
 {
 	Actor::Update(aDeltaTime);
 
-	myAPBox.SetAP(myAP);
+	myAPBox.SetAP(myCurrentAP);
 	myAPBox.SetPos(myPosition);
 	if (myIsSelected == true)
 	{
@@ -246,6 +248,10 @@ void Player::DecideAnimation()
 			ChangeAnimation("playerAlert180");
 			break;
 		}
+	}
+	else if (myState == eActorState::eFighting)
+	{
+		ChangeAnimation("");
 	}
 }
 
