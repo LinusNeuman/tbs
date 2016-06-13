@@ -57,6 +57,7 @@ public:
 	virtual bool RecieveMessage(const EnemyDirectionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
+	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
 
 
 private:
@@ -95,6 +96,7 @@ private:
 	std::vector<CU::Vector2f> myDebugEnd;
 
 	SoundEffect* mySelectPlayerSound;
+	SoundEffect* myAlertSound;
 
 	ScoreCounter myScoreCounter;
 };

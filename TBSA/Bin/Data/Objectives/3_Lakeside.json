@@ -1,6 +1,35 @@
 {
 	"stages":[
 		[
+		{
+				"type" : "kill",
+				"target" : "Enemy1"
+			},
+			{
+				"type" : "kill",
+				"target" : "Enemy2"
+			},
+				{
+				"type" : "kill",
+				"target" : "Enemy3"
+			},
+					{
+				"type" : "kill",
+				"target" : "Enemy4"
+			},
+					{
+				"type" : "kill",
+				"target" : "Enemy5"
+			},
+					{
+				"type" : "kill",
+				"target" : "Enemy6"
+			},		{
+				"type" : "kill",
+				"target" : "Enemy7"
+			}
+			],
+			[
 			{
 				"type" : "hold_objective",
 				"target" : "endzone1"

@@ -27,6 +27,7 @@
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/TextMessage.h>
 #include <Message/PositionMessage.h>
+#include <GUI/Messaging/Generic/GUIMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -43,6 +44,9 @@ PlayerController::PlayerController()
 
 	mySelectPlayerSound = new SoundEffect();
 	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
+
+	myAlertSound = new SoundEffect();
+	myAlertSound->Init("Sounds/SFX/alert.wav");
 }
 
 PlayerController::~PlayerController()
@@ -350,6 +354,16 @@ bool PlayerController::CheckForCandy(const TilePosition & aPosToCheckForCandyAt)
 	return myFloor->GetTile(aPosToCheckForCandyAt).CheckHasCandy();
 }
 
+bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
+	{
+		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
+		RecieveMessage(*tempmessageerer);
+	}
+	return true;
+}
+
 void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
@@ -365,6 +379,7 @@ bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 			SelectPlayer();
 		}
 	}
+
 	else if (aMessage.myType == RecieverTypes::eClickedOnPlayer)
 	{
 		if (mySelectedPlayer->GetIndex() != aMessage.myPlayerID)
@@ -477,6 +492,7 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
 	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
+	myAlertSound->Play(0.3f);
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
@@ -498,10 +514,10 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 		case eDirection::EAST:
 		case eDirection::SOUTH:
 		case eDirection::SOUTH_EAST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
-			{
-				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-			}
+		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+		{
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+		}
 			break;
 		default:
 			break;

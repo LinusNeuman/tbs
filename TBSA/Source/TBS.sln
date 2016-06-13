@@ -53,6 +53,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LevelProject", "LevelProjec
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextBox", "TextBox\TextBox.vcxproj", "{B609E812-0662-4864-850F-74B8CF48CEEE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DialogManager", "DialogLoader\DialogLoader.vcxproj", "{13941303-05B2-4B33-B4ED-4DE196A0C0AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -294,6 +296,15 @@ Global
 		{B609E812-0662-4864-850F-74B8CF48CEEE}.Release|Win32.ActiveCfg = Release|Win32
 		{B609E812-0662-4864-850F-74B8CF48CEEE}.Release|Win32.Build.0 = Release|Win32
 		{B609E812-0662-4864-850F-74B8CF48CEEE}.Release|x64.ActiveCfg = Release|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.Debug|Win32.Build.0 = Debug|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.Debug|x64.ActiveCfg = Debug|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.DevMode|Win32.ActiveCfg = Release|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.DevMode|Win32.Build.0 = Release|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.DevMode|x64.ActiveCfg = Debug|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.Release|Win32.ActiveCfg = Release|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.Release|Win32.Build.0 = Release|Win32
+		{13941303-05B2-4B33-B4ED-4DE196A0C0AD}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

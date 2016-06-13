@@ -7,6 +7,7 @@
 #include <GUI/Instances/GUIDialog.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <GUI/Instances/GUIActionPointsBar.h>
+#include <GUI/Instances/GUIChangePlayerButton.h>
 #include <Message\LevelChangeMassage.h>
 #include <Message\CreditScreenMessage.h>
 
@@ -54,11 +55,12 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(dialogTextBox);
 
-			/*GUIActionPointsBar* APBar = new GUIActionPointsBar();
+			GUIChangePlayerButton* changePlayerButton = new GUIChangePlayerButton();
+			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, { 121, 708 }, { 84, 68 }, true, true, true, false, true);
 
-			myGUIElements.Add(APBar);
+			myGUIElements.Add(changePlayerButton);
 
-			++elementsAdded;*/
+			++elementsAdded;
 
 			myGUILookup["InGame"].myEnd = elementsAdded;
 

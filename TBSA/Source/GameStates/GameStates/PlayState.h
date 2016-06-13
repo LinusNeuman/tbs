@@ -3,6 +3,8 @@
 #include <CU/GrowingArray/GrowingArray.h>
 #include <CU/StaticArray/StaticArray.h>
 #include <unordered_map>
+#include <map>
+#include <queue>
 #include "../TextBox/TextBox.h"
 #include "particleEmitter.h"
 
@@ -33,6 +35,7 @@ private:
 	std::string myLevelKey;
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
+	std::map<std::string, std::queue<std::string>> myDialogs;
 	bool myShouldExit;
 	bool myGameOver;
 	bool myShouldPause;
