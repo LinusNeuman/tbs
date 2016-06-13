@@ -81,6 +81,7 @@ void PlayerController::AddPlayer(Player* aPlayer)
 	myPlayers.Add(aPlayer);
 	myPlayers.GetLast()->SetIndex(myPlayers.Size() - 1);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+	myPlayers[mySelectedPlayerIndex]->SetSelected(true);
 	SendPostMessage(PlayerAddedMessage(RecieverTypes::ePlayerAdded));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) , mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
@@ -88,12 +89,14 @@ void PlayerController::AddPlayer(Player* aPlayer)
 
 void PlayerController::SelectPlayer()
 {
+	myPlayers[mySelectedPlayerIndex]->SetSelected(false);
 	++mySelectedPlayerIndex;
 	if (mySelectedPlayerIndex >= myPlayers.Size())
 	{
 		mySelectedPlayerIndex = 0;
 	}
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+	myPlayers[mySelectedPlayerIndex]->SetSelected(true);
 
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
 	
@@ -745,5 +748,3 @@ void PlayerController::ResetTileShaders()
 		//myFloor->GetTile(i).SetDiscovered(false);
 	}
 }
-
-

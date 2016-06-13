@@ -27,8 +27,8 @@ void PlayerFactory::UpdateDataStruct(const std::string& aStringPath, ActorData& 
 	aActorData.myActortype = static_cast<eActorType>(JsonWrapper::GetInt("actorType", object));
 	/*aActorData.myPosition.x = JsonWrapper::GetFloat("startPositionX", object);
 	aActorData.myPosition.y = JsonWrapper::GetFloat("startPositionY", object);*/
-	aPlayerData.myAttackCost = JsonWrapper::GetFloat("attackCost", object);
-	aPlayerData.myPeekCost = JsonWrapper::GetFloat("peekCost", object);
+	aPlayerData.myAttackCost = JsonWrapper::GetInt("attackCost", object);
+	aPlayerData.myPeekCost = JsonWrapper::GetInt("peekCost", object);
 	AddPlayerAnimation(aActorData, aPlayerData, object);
 }
 
