@@ -239,6 +239,7 @@
     <ClInclude Include="Message\PlayerDiedMessage.h" />
     <ClInclude Include="Message\PlayerObjectMesssage.h" />
     <ClInclude Include="Message\PlayerSeenMessage.h" />
+    <ClInclude Include="Message\PositionMessage.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\ScrollLogDownMessage.h" />
     <ClInclude Include="Message\ScrollLogUpMessage.h" />

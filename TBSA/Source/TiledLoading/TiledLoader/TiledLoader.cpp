@@ -64,7 +64,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 	bool isOverFloor = false;
 	for (size_t i = 0; i < layers.size(); ++i)
 	{
-		picojson::object currentLayer = JsonHelp::GetObject(layers[i]);
+		picojson::object currentLayer = JsonHelp::GetPicoJsonObject(layers[i]);
 		std::string name = JsonHelp::GetString(currentLayer["name"]);
 		std::string type = JsonHelp::GetString(currentLayer["type"]);
 
@@ -102,11 +102,11 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 				}
 				else if (dataType == "covers" || dataType == "Covers")
 				{
-					for (size_t i = 0; i < data.size(); i++)
+					for (size_t j = 0; j < data.size(); j++)
 					{
-						if (JsonHelp::GetNumberInt(data[i]) != 0)
+						if (JsonHelp::GetNumberInt(data[j]) != 0)
 						{
-							someTiles.myTiles[i].SetTileType(eTileType::COVER);
+							someTiles.myTiles[j].SetTileType(eTileType::COVER);
 						}
 					}
 				}
@@ -187,7 +187,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 				for (size_t k = 0; k < objects.size(); k++)
 				{
 						
-					picojson::object player = JsonHelp::GetObject(objects[k]);
+					picojson::object player = JsonHelp::GetPicoJsonObject(objects[k]);
 					eActorType playerType = eActorType::ePlayerOne;
 					const std::string typeString = JsonHelp::GetString(player["type"]);
 					int playerIndex;
@@ -221,7 +221,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 				picojson::array objects = JsonHelp::GetArray(currentLayer["objects"]);
 				for (size_t k = 0; k < objects.size(); k++)
 				{
-					picojson::object enemy = JsonHelp::GetObject(objects[k]);
+					picojson::object enemy = JsonHelp::GetPicoJsonObject(objects[k]);
 					eActorType enemyType = eActorType::eEnemyOne;
 					const std::string typeString = JsonHelp::GetString(enemy["type"]);
 					if (typeString == "Enemy1")
@@ -258,7 +258,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 
 					if (enemy.count("properties") > 0)
 					{
-						picojson::object properties = JsonHelp::GetObject(enemy["properties"]);
+						picojson::object properties = JsonHelp::GetPicoJsonObject(enemy["properties"]);
 
 						if (properties.count("direction") > 0)
 						{
@@ -308,7 +308,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 				picojson::array objects = JsonHelp::GetArray(currentLayer["objects"]);
 				for (size_t k = 0; k < objects.size(); k++)
 				{
-					picojson::object goal = JsonHelp::GetObject(objects[k]);
+					picojson::object goal = JsonHelp::GetPicoJsonObject(objects[k]);
 
 					eObjectiveType objectiveType = eObjectiveType::eLevelEnd;
 					const std::string typeString = JsonHelp::GetString(goal["type"]);
@@ -330,6 +330,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
 					someTiles.myObjectives.Add(objectiveObject);
 
+					someTiles.myObjectiveManager->AddObjective(1000 * posY + posX, JsonHelp::GetString(goal["name"]));
 				}
 			}
 		}
@@ -351,7 +352,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 
 	for (size_t i = 0; i < aSpriteSheetArray.size(); ++i)
 	{
-		picojson::object  currentObject = JsonHelp::GetObject(aSpriteSheetArray[i]);
+		picojson::object  currentObject = JsonHelp::GetPicoJsonObject(aSpriteSheetArray[i]);
 
 		std::string name = JsonHelp::GetString(currentObject["name"]);
 		unsigned int firstId = static_cast<unsigned int>(JsonHelp::GetNumber(currentObject["firstgid"]));

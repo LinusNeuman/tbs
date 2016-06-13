@@ -13,10 +13,10 @@ namespace JsonHelp
 
 		DL_ASSERT(err.empty(), (std::string("ERROR from Json: ") + err).c_str());
 
-		return GetObject(root);
+		return GetPicoJsonObject(root);
 	}
 
-	picojson::object GetObject(picojson::value aValue)
+	picojson::object GetPicoJsonObject(picojson::value aValue)
 	{
 		DL_ASSERT(aValue.is<picojson::object>(), "ERROR: Json value is not an object");
 		return aValue.get<picojson::object>();

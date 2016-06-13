@@ -10,7 +10,7 @@
 namespace JsonHelp
 {
 	picojson::object LoadJson(std::string aPath);
-	picojson::object GetObject(picojson::value aValue);
+	picojson::object GetPicoJsonObject(picojson::value aValue);
 	double& GetNumber(picojson::value aValue);
 	int GetNumberInt(picojson::value aValue);
 	picojson::array GetArray(picojson::value aValue);

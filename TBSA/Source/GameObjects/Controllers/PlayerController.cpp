@@ -26,6 +26,7 @@
 #include <Message/PlayerIDMessage.h>
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/TextMessage.h>
+#include <Message/PositionMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -411,7 +412,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
 	{
-		SendPostMessage(BaseMessage(RecieverTypes::eObjctive));
+		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 		DL_PRINT("You have reached the goal, Aren't you special");
 	}
 	return true;

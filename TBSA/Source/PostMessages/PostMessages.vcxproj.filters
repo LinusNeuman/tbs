@@ -19,7 +19,6 @@
     <ClInclude Include="Message\WindowRectChangedMessage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Message\PlayerAddedMessage.h" />
-    <ClInclude Include="Message\PlayerSeenMessage.h" />
     <ClInclude Include="Message\PlayerDiedMessage.h" />
     <ClInclude Include="Message\SetHWNDMessage.h" />
     <ClInclude Include="Message\EnemyObjectMessage.h" />
@@ -42,5 +41,7 @@
     <ClInclude Include="Message\ScrollLogUpMessage.h" />
     <ClInclude Include="Message\ScrollLogDownMessage.h" />
     <ClInclude Include="Message\TextMessage.h" />
+    <ClInclude Include="Message\PlayerSeenMessage.h" />
+    <ClInclude Include="Message\PositionMessage.h" />
   </ItemGroup>
 </Project>

@@ -5,9 +5,13 @@
 #include "Objectives/Objective.h"
 #include <Message/BaseMessage.h>
 #include <Message/TextMessage.h>
+#include <Message/PositionMessage.h>
 
 ObjectiveManager::ObjectiveManager()
 {
+#ifdef _DEBUG
+	isConstructed = true;
+#endif
 	myStages.Init(1);
 	myCurrentStage = 0;
 	SingletonPostMaster::AddReciever(RecieverTypes::eObjctive, *this);
@@ -22,6 +26,10 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
+#ifdef _DEBUG
+	DL_ASSERT(isConstructed, "unconstructed object");
+#endif
+
 	myStages.RemoveAll();
 	picojson::object root = JsonHelp::LoadJson(aPath);
 	picojson::array stages = JsonHelp::GetArray(root["stages"]);
@@ -33,7 +41,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 		for (size_t j = 0; j < objectives.size(); j++)
 		{
-			picojson::object objectiveObject = JsonHelp::GetObject(objectives[j]);
+			picojson::object objectiveObject = JsonHelp::GetPicoJsonObject(objectives[j]);
 			LevelObjective objective;
 
 			objective.myTarget = JsonHelp::GetString(objectiveObject["target"]);
@@ -67,6 +75,9 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 void ObjectiveManager::Update()
 {
+#ifdef _DEBUG
+	DL_ASSERT(isConstructed, "unconstructed object");
+#endif
 	if (myStages[myCurrentStage].size() < 1)
 	{
 		completedObjectives.clear();
@@ -76,6 +87,11 @@ void ObjectiveManager::Update()
 			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel))
 		}
 	}
+}
+
+void ObjectiveManager::AddObjective(const int aIndex, std::string aName)
+{
+	myObjectives[aIndex] = aName;
 }
 
 bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
@@ -97,6 +113,15 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		}
 
 		myStages[myCurrentStage].erase(aMessage.myText);
+	}
+	return true;
+}
+
+bool ObjectiveManager::RecieveMessage(const PositionMessage& aMessage)
+{
+	if (myObjectives.count(1000 * aMessage.myPosition.y + aMessage.myPosition.x) > 0)
+	{
+		RecieveMessage(TextMessage(aMessage.myType, myObjectives[1000 * aMessage.myPosition.y + aMessage.myPosition.x]));
 	}
 	return true;
 }

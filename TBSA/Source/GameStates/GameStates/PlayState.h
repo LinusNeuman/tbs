@@ -29,7 +29,6 @@ public:
 private:
 	ParticleEmitter<250> myEmitter;
 	GameLevel * myLevel;
-	std::string myStartPath;
 	std::string myLevelKey;
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;

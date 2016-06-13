@@ -20,7 +20,7 @@
 PlayState::PlayState()
 {
 	myLevel = new GameLevel();
-	myStartPath = "Data/Tiled/";
+	//myStartPath = "Data/Tiled/";
 
 	myEmitter.LoadEmitterSettings("snow");
 
@@ -54,7 +54,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	}
 
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
-	myLevel = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
+	myLevel = myLevelFactory->CreateLevel(myLevelKey);
 	myCurrentLevelpath = myLevelKey;
 	LoadGUI("InGame");
 
@@ -186,6 +186,6 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
-	myLevel = myLevelFactory->CreateLevel(myStartPath + aFilePath);
+	myLevel = myLevelFactory->CreateLevel( aFilePath);
 	myCurrentLevelpath = aFilePath;
 }

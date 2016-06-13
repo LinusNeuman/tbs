@@ -3,19 +3,19 @@
 		[
 			{
 				"type" : "kill",
-				"target" : "enemy1",
-			},
+				"target" : "enemy1"
+			}
 		],
 		[
 			{
 				"type" : "hold_objective",
-				"target" : "endzone1",
+				"target" : "endzone1"
 			},
 			{
 				"type" : "hold_objective",
-				"target" : "endzone2",
-			},
-		],
+				"target" : "endzone2"
+			}
+		]
 	],
 	
 	"nextLevel": "2_Backyard.json"

@@ -311,3 +311,8 @@ TiledData* GameLevel::GetTiledData()
 {
 	return myTiledData;
 }
+
+ObjectiveManager& GameLevel::GetObjectiveManager()
+{
+	return myObjectiveManager;
+}
