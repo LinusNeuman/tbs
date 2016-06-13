@@ -26,6 +26,8 @@ private:
 	bool myMiddleScreenOffset;
 	unsigned short myLayer;
 	RenderData myRenderData;
+
+	CU::Vector4f myTextColor;
 	float myRenderPriority;
 	DX2D::CText* myText;
 	DX2D::CSprite * mySprite;

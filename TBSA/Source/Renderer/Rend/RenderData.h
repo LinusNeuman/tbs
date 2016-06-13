@@ -10,6 +10,7 @@ namespace DX2D
 
 struct TextRenderData
 {
+	CU::Vector4f myColor = CU::Vector4f::One;
 	CU::Vector2f myPos;
 	std::string myText;
 };
