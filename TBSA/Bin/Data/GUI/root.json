@@ -588,7 +588,7 @@
             "myImagesPath": "Sprites/GUI/PauseMenu\\ResumeBtn",
             "mySizeX": 203,
             "mySizeY": 74,
-            "Name": "ResumeBtn",
+            "Name": "ResumeBTN",
             "Tooltip": "",
             "mySprite": {
               "myPath": "",
@@ -629,7 +629,7 @@
             "myImagesPath": "Sprites/GUI/PauseMenu\\OptionsBtn",
             "mySizeX": 203,
             "mySizeY": 74,
-            "Name": "OptionsBtn",
+            "Name": "OptionsBTN",
             "Tooltip": "",
             "mySprite": {
               "myPath": "",
@@ -670,7 +670,7 @@
             "myImagesPath": "Sprites/GUI/PauseMenu\\RestartBtn",
             "mySizeX": 203,
             "mySizeY": 74,
-            "Name": "RestartBtn",
+            "Name": "RestartBTN",
             "Tooltip": "",
             "mySprite": {
               "myPath": "",
@@ -711,7 +711,7 @@
             "myImagesPath": "Sprites/GUI/PauseMenu\\QuitBtn",
             "mySizeX": 203,
             "mySizeY": 74,
-            "Name": "QuitBtn",
+            "Name": "QuitBTN",
             "Tooltip": "",
             "mySprite": {
               "myPath": "",
