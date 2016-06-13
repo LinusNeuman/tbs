@@ -70,7 +70,7 @@ void Actor::Init(const ActorData &aActorData)
 {
 	myActiveFlag = true;
 	myVisibleFlag = false;
-
+	myType = aActorData.myActortype;
 	myPosition = CommonUtilities::Vector2f::Zero;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
 	mySprite->Init();
