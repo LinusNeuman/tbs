@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Level\GameLevel.cpp" />
+    <ClCompile Include="ObjectivesManager\ObjectiveManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
@@ -138,6 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level\GameLevel.h" />
+    <ClInclude Include="ObjectivesManager\ObjectiveManager.h" />
+    <ClInclude Include="ObjectivesManager\Objectives\Objective.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,11 @@
 #include <Message/LevelTileMetricsMessage.h>
 #include <Message/SetMainCameraMessage.h>
 
+bool MessageReciever::RecieveMessage(const BaseMessage& aMessage)
+{
+	return true;
+}
+
 bool MessageReciever::RecieveMessage(const WindowRectChangedMessage & aMessage)
 {
 	return true;
@@ -155,7 +160,7 @@ bool MessageReciever::RecieveMessage(const SetTargetResolutionMessage& aMessage)
 	return true;
 }
 
-bool MessageReciever::RecieveMessage(const LogTextMessage& aMessage)
+bool MessageReciever::RecieveMessage(const DialogTextMessage& aMessage)
 {
 	return true;
 }
@@ -166,6 +171,16 @@ bool MessageReciever::RecieveMessage(const ClearLogMessage& aMessage)
 }
 
 bool MessageReciever::RecieveMessage(const ScrollLogDownMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const TextMessage& aMessage)
+{
+	return true;
+}
+
+bool MessageReciever::RecieveMessage(const PositionMessage& aMessage)
 {
 	return true;
 }
@@ -182,11 +197,6 @@ bool MessageReciever::RecieveMessage(const ScrollLogUpMessage& aMessage)
 }
 
 bool MessageReciever::RecieveMessage(const LevelChangeMassage& aMessage)
-{
-	return true;
-}
-
-bool MessageReciever::RecieveMessage(const AnimationStateMessage& aMessage)
 {
 	return true;
 }

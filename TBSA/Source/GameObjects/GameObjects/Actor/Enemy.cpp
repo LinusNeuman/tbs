@@ -3,9 +3,9 @@
 #include "../JsonDataStructs.h"
 #include <Controllers/EnemyController.h>
 #include <Message/EnemyObjectMessage.h>
+#include <Message/TextMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
 #include <Message/PlayerSeenMessage.h>
-#include <Message/AnimationStateMessage.h>
 
 
 Enemy::Enemy()
@@ -146,7 +146,7 @@ void Enemy::Fight()
 {
 	SetActorState(eActorState::eFighting);
 	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyAttacked, *this));
-	SendPostMessage(AnimationStateMessage(RecieverTypes::eAnimationState, true));
+	SendPostMessage(TextMessage(RecieverTypes::eEnemyDied, GetName()));
 }
 
 void Enemy::DecideAnimation()
@@ -264,12 +264,14 @@ void Enemy::DecideAnimation()
 			if (myIsDeadeastFlag == false)
 			{
 				ChangeAnimation("DeathAnimation");
-				SendPostMessage(AnimationStateMessage(RecieverTypes::eAnimationState, false));
+				myAnimations.GetSprite()->SetRenderPriority(10.f);
 				myIsDeadeastFlag = true;
+				SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyDead, *this));
 			}
 			else
 			{
 				ChangeAnimation("DeadestState");
+				myAnimations.GetSprite()->SetRenderPriority(10.f);
 			}
 		}
 	}

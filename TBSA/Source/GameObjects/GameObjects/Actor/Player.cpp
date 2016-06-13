@@ -12,7 +12,6 @@
 #include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/PlayerIDMessage.h>
-#include <Message/AnimationStateMessage.h>
 
 
 Player::Player()
@@ -41,9 +40,6 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eAnimationState, *this);
 
-	myHideSprite = new StaticSprite();
-	myHideSprite->Init("Sprites/pixelIsNeeded.dds", true);
-	myHideSprite->SetLayer(enumRenderLayer::eGUI);
 
 	myAPBox.SetPos(myPosition);
 	myAPBox.Reset();
@@ -107,11 +103,6 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	return true;
 }
 
-bool Player::RecieveMessage(const AnimationStateMessage& aMessage)
-{
-	myIsInFight = aMessage.myIsRunning;
-	return true;
-}
 
 void Player::AfterTurn()
 {
@@ -144,10 +135,6 @@ void Player::Update(const CU::Time& aDeltaTime)
 	else
 	{
 		myAPBox.Reset();
-	}
-	if (myIsInFight == true)
-	{
-		mySprite = myHideSprite;
 	}
 }
 

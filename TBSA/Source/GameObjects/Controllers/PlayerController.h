@@ -46,7 +46,7 @@ public:
 	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
 	void AfterPlayerTurn();
-	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);
+	
 
 	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy);
 
@@ -60,6 +60,9 @@ public:
 
 
 private:
+	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);
+	void TakeCandy(const TilePosition & aPosToTakeCandyFrom);
+
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
 	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const CU::Vector2ui &aOldPosition, CU::Vector2ui &aPeakLocation) const;
 

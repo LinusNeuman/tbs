@@ -7,9 +7,9 @@
 #pragma warning (push)
 #pragma warning (disable : 4512)
 
-struct LogTextMessage : public BaseMessage
-{
-	LogTextMessage(const RecieverTypes aType, const std::string& aMessage) : BaseMessage(aType)
+struct TextMessage : public BaseMessage
+{// aka sms here you can send sexy stuff and emojis :smile: :eggplant:
+	TextMessage(const RecieverTypes aType, const std::string& aMessage) : BaseMessage(aType)
 	{
 		myText = aMessage;
 	}

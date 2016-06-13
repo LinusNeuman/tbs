@@ -13,7 +13,7 @@ class RenderCommand
 public:
 	RenderCommand();
 	RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f & aPosition, const float aPriority, const unsigned short aLayer, const RenderData & aRenderData);
-	RenderCommand(DX2D::CText & aTextToRender, const CU::Vector2f & aPosition, const float aPriority, const unsigned short aLayer, const bool aOffsetMiddleOfScreen = false);
+	RenderCommand(const float aPriority, const unsigned short aLayer, const TextRenderData& RenderData, const bool aOffsetMiddleOfScreen = false);
 	~RenderCommand();
 
 	void Render() const;

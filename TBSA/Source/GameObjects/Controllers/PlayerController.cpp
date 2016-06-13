@@ -25,6 +25,8 @@
 #include <Message/PlayerCanPeekMessage.h>
 #include <Message/PlayerIDMessage.h>
 #include <Message/PlayerAPChangedMessage.h>
+#include <Message/TextMessage.h>
+#include <Message/PositionMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -53,6 +55,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyAttacked, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDead, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -71,12 +74,12 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyAttacked, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDead, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
-
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -189,8 +192,6 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 	{
 		enumMouseState currentState = GetCurrentMouseState();
-
-
 		switch (currentState)
 		{
 		case enumMouseState::eClickedOnPlayer:
@@ -353,6 +354,12 @@ bool PlayerController::CheckForCandy(const TilePosition & aPosToCheckForCandyAt)
 	return myFloor->GetTile(aPosToCheckForCandyAt).CheckHasCandy();
 }
 
+void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
+{
+	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
+	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
+}
+
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
@@ -418,18 +425,24 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	CreatePlayerFoV(CU::Vector2f(aMessage.myPosition), PlayerFoWRadius);
 
 
-
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
+	if (CheckForCandy(aMessage.myPosition) == true)
 	{
+		TakeCandy(aMessage.myPosition);
+	}
 
-		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition), myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetSeenEnemy());
+	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
+	{
+		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPosition())));
 	}
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
 	{
-		SendPostMessage(FlagGoalReachedMessage(RecieverTypes::eFlagGoalReached));
-		DL_PRINT("You have reached the goal, Aren't you special.");
+		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
+		DL_PRINT("You have reached the goal, Aren't you special");
 	}
+
+	
+
 	return true;
 }
 
@@ -449,6 +462,7 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
 	if (aMessage.myType == RecieverTypes::eEnemyAttacked)
 	{
+		mySelectedPlayer->SetActiveState(false);
 		for (size_t i = 0; i < myPlayers.Size(); i++)
 		{
 			if (myPlayers[i]->GetActorState() == eActorState::eAlert)
@@ -456,6 +470,10 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 				myPlayers[i]->SetActorState(eActorState::eIdle);
 			}
 		}
+	}
+	if (aMessage.myType == RecieverTypes::eEnemyDead)
+	{
+		mySelectedPlayer->SetActiveState(true);
 	}
 	return true;
 }
@@ -470,10 +488,30 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+		switch (mySelectedPlayer->GetDirectionEnum())
 		{
-			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+		case eDirection::NORTH:
+		case eDirection::NORTH_EAST:
+		case eDirection::WEST:
+		case eDirection::NORTH_WEST:
+			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
+			{
+				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+			}
+			break;
+		case eDirection::SOUTH_WEST:
+		case eDirection::EAST:
+		case eDirection::SOUTH:
+		case eDirection::SOUTH_EAST:
+			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+			{
+				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+			}
+			break;
+		default:
+			break;
 		}
+		
 	}
 	return true;
 }

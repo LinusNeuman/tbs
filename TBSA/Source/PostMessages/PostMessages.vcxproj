@@ -213,13 +213,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Message\AnimationStateMessage.h" />
     <ClInclude Include="Message\CreditScreenMessage.h" />
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\ClearLogMessage.h" />
     <ClInclude Include="Message\FlagGoalReachedMessage.h" />
     <ClInclude Include="Message\LevelChangeMassage.h" />
-    <ClInclude Include="Message\LogTextMessage.h" />
+    <ClInclude Include="Message\DialogTextMessage.h" />
     <ClInclude Include="Message\MouseButtonDownMessage.h" />
     <ClInclude Include="Message\MouseButtonPressedMessage.h" />
     <ClInclude Include="Message\MouseButtonReleasedMessage.h" />
@@ -243,6 +242,7 @@
     <ClInclude Include="Message\PlayerDiedMessage.h" />
     <ClInclude Include="Message\PlayerObjectMesssage.h" />
     <ClInclude Include="Message\PlayerSeenMessage.h" />
+    <ClInclude Include="Message\PositionMessage.h" />
     <ClInclude Include="Message\RecieverTypes.h" />
     <ClInclude Include="Message\ScrollLogDownMessage.h" />
     <ClInclude Include="Message\ScrollLogUpMessage.h" />
@@ -251,6 +251,7 @@
     <ClInclude Include="Message\SetTargetResolutionMessage.h" />
     <ClInclude Include="Message\StartUpLevelMessage.h" />
     <ClInclude Include="Message\TestPosition.h" />
+    <ClInclude Include="Message\TextMessage.h" />
     <ClInclude Include="Message\WindowRectChangedMessage.h" />
     <ClInclude Include="Message\PlayerAPChangedMessage.h" />
     <ClInclude Include="stdafx.h" />
