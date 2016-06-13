@@ -82,20 +82,20 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	//From Launcher
 	picojson::value value = JsonWrapper::LoadPicoValue("Settings.json");
 	picojson::object settings = JsonWrapper::GetPicoObject(value);
-	unsigned short windowWidth = static_cast<unsigned short>(JsonWrapper::GetInt("myResolutionX", settings));
-	unsigned short windowHeight = static_cast<unsigned short>(JsonWrapper::GetInt("myResolutionY", settings));
+	unsigned short windowSizeX = static_cast<unsigned short>(JsonWrapper::GetInt("myWindowSizeX", settings));
+	unsigned short windowSizeY = static_cast<unsigned short>(JsonWrapper::GetInt("myWindowSizeY", settings));
 	myTargetResolutionX = JsonWrapper::GetInt("myResolutionX", settings);
 	myTargetResolutionY = JsonWrapper::GetInt("myResolutionY", settings);
 	SingletonDataHolder::SetTargetResolution({myTargetResolutionX, myTargetResolutionY});
 
-	createParameters.myWindowHeight = windowHeight;
-	createParameters.myWindowWidth = windowWidth;
-	createParameters.myRenderHeight = windowHeight;
-	createParameters.myRenderWidth = windowWidth;
+	createParameters.myWindowWidth = windowSizeX;
+	createParameters.myWindowHeight = windowSizeY;
+	createParameters.myRenderWidth = myTargetResolutionX;
+	createParameters.myRenderHeight = myTargetResolutionY;
 	createParameters.myTargetWidth = myTargetResolutionX;
 	createParameters.myTargetHeight = myTargetResolutionY;
 	createParameters.myStartInFullScreen = JsonWrapper::GetBool("myIsFullscreen", settings);
-
+	
 	createParameters.myAutoUpdateViewportWithWindow = true;
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -104,8 +104,8 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 #ifdef _DEBUG
 	appname = L"TBS DEBUG  [" + aVersion + L"]";
 
-	createParameters.myWindowWidth = windowWidth;// 1280;
-	createParameters.myWindowHeight = windowHeight;// 720;
+	createParameters.myWindowWidth = myTargetResolutionX;// 1280;
+	createParameters.myWindowHeight = myTargetResolutionY;// 720;
 	createParameters.myStartInFullScreen = false;
 #endif
 

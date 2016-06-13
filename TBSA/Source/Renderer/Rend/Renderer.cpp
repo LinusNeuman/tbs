@@ -6,6 +6,7 @@
 #include "Rend/StaticSprite.h"
 #include "Rend/RenderLayerEnum.h"
 #include "Rend/RenderCommand.h"
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 
 Renderer::Renderer()
@@ -43,12 +44,17 @@ void Renderer::Draw() const
 	RenderAllSprites();
 }
 
+void Renderer::ClearCommands()
+{
+	for (USHORT i = 0; i < static_cast<USHORT>(enumRenderLayer::enumLength); ++i)
+	{
+		//myCommandsToRender[i].RemoveAll();
+		myBuffer[i].RemoveAll();
+	}
+}
 
 void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 {
-	aRenderCommand.myPosition.x /= static_cast<float>(myWindowSize.x);
-	aRenderCommand.myPosition.y /= static_cast<float>(myWindowSize.y);
-	
 	for (USHORT iRenderCommand = 0; iRenderCommand < (*myBuffer)[aRenderCommand.GetLayer()].Size(); ++iRenderCommand)
 	{
 		if (aRenderCommand.GetPriority() < 

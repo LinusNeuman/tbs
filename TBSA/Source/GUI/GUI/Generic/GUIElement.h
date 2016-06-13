@@ -42,6 +42,8 @@ public:
 
 	bool __forceinline IsOver(CU::Vector2f aMousePosition);
 
+	bool __forceinline GetEnabled();
+
 	virtual void Update(const CU::Time &aDelta) = 0;
 
 	virtual void Render();

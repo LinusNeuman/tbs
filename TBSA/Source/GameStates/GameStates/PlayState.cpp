@@ -12,6 +12,7 @@
 #include <StateStack/ProxyStateStack.h>
 #include "GameOverState.h"
 #include "LoadState.h"
+#include "PostLevelState.h"
 #include "Message\LogTextMessage.h"
 #include "Message\ClearLogMessage.h"
 #include "Message\ScrollLogDownMessage.h"
@@ -19,13 +20,13 @@
 
 PlayState::PlayState()
 {
-	myLevel = new GameLevel();
 	myStartPath = "Data/Tiled/";
 
 	myEmitter.LoadEmitterSettings("snow");
 
 	myShouldPause = false;
 	myGameOver = false;
+	myShowPostLevelScreen = false;
 }
 
 PlayState::~PlayState()
@@ -92,6 +93,18 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		ChangeLevel("2_Backyard.json");
 	}
+	else if (IsometricInput::GetKeyPressed(DIK_3) == true)
+	{
+		ChangeLevel("3_Lakeside.json");
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_4) == true)
+	{
+		ChangeLevel("4_Kiosk.json");
+	}
+	else if (IsometricInput::GetKeyPressed(DIK_5) == true)
+	{
+		ChangeLevel("5_Playground.json");
+	}
 	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
 	{
 		ChangeLevel("SecondTest.json");
@@ -131,6 +144,12 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (myLevel->GetTiledData()->myIsLoaded == false)
 	{
 		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
+
+		if (myShowPostLevelScreen == true)
+		{
+			myShowPostLevelScreen = false;
+			//aStateStack.AddSubState(new PostLevelState(100000, 23, 4));
+		}
 	}
 
 	return eStackReturnValue::eStay;
@@ -161,6 +180,7 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
+	myShowPostLevelScreen = true;
 	return true;
 }
 

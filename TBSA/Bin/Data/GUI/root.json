@@ -126,14 +126,7 @@
               "Click": "LevelSelect",
               "Hover": ""
             }
-          }
-        ]
-      }
-    },
-    {
-      "myName": "LevelSelect",
-      "myGUIData": {
-        "guiElements": [
+          },
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
@@ -153,10 +146,58 @@
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
-            "myAnimated": false,
+            "myAnimated": true,
             "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
             "mySizeX": 128,
             "mySizeY": 70,
+            "Name": "Credits",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 512,
+            "myPositionY": 0,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "GoToCredits",
+              "Hover": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "myName": "LevelSelect",
+      "myGUIData": {
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 128,
+            "mySizeY": 69,
             "Name": "Level1",
             "Tooltip": "",
             "mySprite": {
@@ -179,25 +220,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 256,
-              "myHeight": 256
+              "myWidth": 128,
+              "myHeight": 70
             },
             "myPressed": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 256,
-              "myHeight": 256
+              "myWidth": 128,
+              "myHeight": 70
             },
             "myHover": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 256,
-              "myHeight": 256
+              "myWidth": 128,
+              "myHeight": 70
             },
-            "myShouldPlayHoverSound": false,
-            "myShouldPlayClickSound": false,
-            "myAnimated": false,
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
             "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 256,
-            "mySizeY": 256,
+            "mySizeX": 128,
+            "mySizeY": 70,
             "Name": "Level2",
             "Tooltip": "",
             "mySprite": {
@@ -213,6 +254,170 @@
             "myParentPositionY": 0,
             "Events": {
               "Click": "SelectLevel2",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 128,
+            "mySizeY": 69,
+            "Name": "Level3",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 384,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "SelectLevel3",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myShouldPlayHoverSound": false,
+            "myShouldPlayClickSound": false,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 128,
+            "mySizeY": 69,
+            "Name": "Level4",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 512,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "SelectLevel4",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myShouldPlayHoverSound": false,
+            "myShouldPlayClickSound": false,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 128,
+            "mySizeY": 69,
+            "Name": "Level5",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 640,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "SelectLevel5",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
+              "myWidth": 128,
+              "myHeight": 69
+            },
+            "myShouldPlayHoverSound": false,
+            "myShouldPlayClickSound": false,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
+            "mySizeX": 128,
+            "mySizeY": 69,
+            "Name": "Level6",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 768,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "SelectLevel6",
               "Hover": ""
             }
           }
@@ -359,7 +564,172 @@
     {
       "myName": "PauseMenu",
       "myGUIData": {
-        "guiElements": []
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\ResumeBtn/Unpressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\ResumeBtn/Pressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/PauseMenu\\ResumeBtn/Hover.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/PauseMenu\\ResumeBtn",
+            "mySizeX": 203,
+            "mySizeY": 74,
+            "Name": "ResumeBTN",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 858,
+            "myPositionY": 436,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "ClosePauseMenu",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\OptionsBtn/Unpressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\OptionsBtn/Pressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/PauseMenu\\OptionsBtn/Hover.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/PauseMenu\\OptionsBtn",
+            "mySizeX": 203,
+            "mySizeY": 74,
+            "Name": "OptionsBTN",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 858,
+            "myPositionY": 523,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "OpenOptionsMenu",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Unpressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Pressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Hover.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/PauseMenu\\RestartBtn",
+            "mySizeX": 203,
+            "mySizeY": 74,
+            "Name": "RestartBTN",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 858,
+            "myPositionY": 610,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "Restart",
+              "Hover": ""
+            }
+          },
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\QuitBtn/Unpressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/PauseMenu\\QuitBtn/Pressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/PauseMenu\\QuitBtn/Hover.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/PauseMenu\\QuitBtn",
+            "mySizeX": 203,
+            "mySizeY": 74,
+            "Name": "QuitBTN",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 858,
+            "myPositionY": 697,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "GoToMainMenu",
+              "Hover": ""
+            }
+          }
+        ]
       }
     }
   ]

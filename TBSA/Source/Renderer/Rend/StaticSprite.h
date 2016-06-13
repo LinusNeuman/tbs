@@ -78,9 +78,11 @@ namespace DX2D
 class RenderCommand;
 class RenderConverter;
 class Renderer;
+class Animation;
 
 class StaticSprite
 {
+	friend Animation;
 	friend RenderConverter;
 	friend Renderer;
 
@@ -91,17 +93,17 @@ public:
 	void Init(const std::string & aFilePath = "Sprites/trashTestFiles/biggerTestTile.png", bool aIsIsometric = true, const CU::Vector4f & aRect = CU::Vector4f::Zero, const CU::Vector2f & aPivotPoint = CU::Vector2f::Zero,const bool aSync = true);
 	
 	void Draw(const CU::Vector2f & aPositionInPixel) const;
+	void DrawWithNormalized(const CU::Vector2f & aNormalizedPosition) const;
 
 	enumRenderLayer GetLayer() const;
 	void SetLayer(const enumRenderLayer aRenderLayer);
 
-	DX2D::CSprite * GetSprite() const;
+	
 	unsigned short GetImageIndex() const;
 	unsigned short AddImage(const std::string& aFilePath, const CU::Vector4f& aRect = CU::Vector4f::One, const CU::Vector2f& aPivotPoint = CU::Vector2f::Zero);
 	unsigned short AddImageAssync(const std::string & aFilePath, const CU::Vector4f & aRect = CU::Vector4f::One);
 	
-	CU::Vector2f GetSize();
-	CU::Vector2f GetSizeWithoutWhiteSpace();
+	CU::Vector2f GetSizeInPixels() const;
 
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
@@ -112,12 +114,25 @@ public:
 	void SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel);
 	const CU::Vector2f & GetPivotInPixels() const;
 
+	/*
+		Low value gets rendered first.
+	*/
+	void SetRenderPriority(const float aPriority);
+	float GetRenderPriority() const;
+
+	DX2D::CSprite * GetSprite() const;
 	void SetShader(DX2D::CCustomShader * aCustomShader);
 
 	static void Sync();
 
 	std::string myShaderName;
+	
+	
 private:
+	RenderData myRenderData;
+	void SetSizeInPixels(const CU::Vector2f & aSizeInPixels);
+	void CalculateSizeOfSprite(const CU::Vector4f & aSpriteCutout = CU::Vector4f::Zero);
+	bool CheckIfSpriteExists(unsigned short & aIndexToSet, const std::string & aPath, const CU::Vector4f & aRect = CU::Vector4f::Zero);
 	const RenderData & GetRenderData() const;
 
 	static CU::GrowingArray<DX2D::CSprite*> ourSprites;
@@ -133,11 +148,10 @@ private:
 	unsigned short myImageIndex;
 
 	enumRenderLayer myLayer;
-	RenderData myRenderData;
+	float myPriority;
+	
 
 	CU::Vector2f myPositionOffset;
-
-	CU::Vector2f mySizeWithoutWhitespace;
 };
 
 
@@ -165,12 +179,10 @@ inline void StaticSprite::SetLayer(const enumRenderLayer aRenderLayer)
 inline const CU::Vector4f & StaticSprite::GetColor() const
 {
 	return myRenderData.myColor;
-	//return myColor;
 }
 inline void StaticSprite::SetColor(const CU::Vector4f & aColor)
 {
-	myRenderData = aColor;
-	//myColor = aColor;
+	myRenderData.myColor = aColor;
 }
 
 inline const bool StaticSprite::GetIsIsometric() const
@@ -193,7 +205,15 @@ inline void StaticSprite::SetShader(DX2D::CCustomShader * aCustomShader)
 	myRenderData.myShaderPtr = aCustomShader;
 }
 
+inline void StaticSprite::SetRenderPriority(const float aPriority)
+{
+	myPriority = aPriority;
+}
 
+inline float StaticSprite::GetRenderPriority() const
+{
+	return myPriority;
+}
 
 
 typedef StaticSprite SSprite;

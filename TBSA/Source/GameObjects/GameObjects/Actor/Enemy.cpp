@@ -4,6 +4,7 @@
 #include <Controllers/EnemyController.h>
 #include <Message/EnemyObjectMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/PlayerSeenMessage.h>
 
 
 Enemy::Enemy()
@@ -27,6 +28,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myIsDeadeastFlag = false;
 	myCurrentPathIndex = 1;
 	myAP = aEnemyData.myActionPoints;
+	myViewDistance = aEnemyData.myViewDistance;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	myEnemyPath.Init(1);
 }
@@ -108,7 +110,10 @@ void Enemy::SetDirection(eDirection aDirection)
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
-	SetActorState(eActorState::eAlert);
+	if (&aMessage.myEnemy == this)
+	{
+		SetActorState(eActorState::eAlert);
+	}
 	return true;
 }
 
@@ -123,10 +128,17 @@ void Enemy::Reset()
 	mySomeoneSeesPlayer = false;
 }
 
+int Enemy::GetViewDistance() const
+{
+	return myViewDistance;
+}
+
 void Enemy::OnClick()
 {
-	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
-	//Fight();
+	if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+	{
+		SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+	}
 }
 
 void Enemy::Fight()
@@ -211,31 +223,31 @@ void Enemy::DecideAnimation()
 		switch (GetDirectionEnum())
 		{
 		case eDirection::NORTH:
-			ChangeAnimation("EnemyAlert045Animation");
+			ChangeAnimation("EnemyAlert045");
 			break;
 		case eDirection::NORTH_EAST:
-			ChangeAnimation("EnemyAlert090Animation");
+			ChangeAnimation("EnemyAlert090");
 			break;
 		case eDirection::EAST:
-			ChangeAnimation("EnemyAlert135Animation");
+			ChangeAnimation("EnemyAlert135");
 			break;
 		case eDirection::SOUTH_EAST:
-			ChangeAnimation("EnemyAlert180Animation");
+			ChangeAnimation("EnemyAlert180");
 			break;
 		case eDirection::SOUTH:
-			ChangeAnimation("EnemyAlert225Animation");
+			ChangeAnimation("EnemyAlert225");
 			break;
 		case eDirection::SOUTH_WEST:
-			ChangeAnimation("EnemyAlert270Animation");
+			ChangeAnimation("EnemyAlert270");
 			break;
 		case eDirection::WEST:
-			ChangeAnimation("EnemyAlert315Animation");
+			ChangeAnimation("EnemyAlert315");
 			break;
 		case eDirection::NORTH_WEST:
-			ChangeAnimation("EnemyAlert000Animation");
+			ChangeAnimation("EnemyAlert000");
 			break;
 		default:
-			ChangeAnimation("EnemyAlert180Animation");
+			ChangeAnimation("EnemyAlert180");
 			break;
 		}
 	}

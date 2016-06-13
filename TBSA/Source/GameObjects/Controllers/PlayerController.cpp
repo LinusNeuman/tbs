@@ -49,6 +49,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyDirectionChanged, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyAttacked, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerChangedTarget, *this);
@@ -66,6 +67,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDirectionChanged, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyAttacked, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerChangedTarget, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
@@ -79,6 +81,7 @@ void PlayerController::AddPlayer(Player* aPlayer)
 	myPlayers.Add(aPlayer);
 	myPlayers.GetLast()->SetIndex(myPlayers.Size() - 1);
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+	myPlayers[mySelectedPlayerIndex]->SetSelected(true);
 	SendPostMessage(PlayerAddedMessage(RecieverTypes::ePlayerAdded));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()) , mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
@@ -86,12 +89,14 @@ void PlayerController::AddPlayer(Player* aPlayer)
 
 void PlayerController::SelectPlayer()
 {
+	myPlayers[mySelectedPlayerIndex]->SetSelected(false);
 	++mySelectedPlayerIndex;
 	if (mySelectedPlayerIndex >= myPlayers.Size())
 	{
 		mySelectedPlayerIndex = 0;
 	}
 	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+	myPlayers[mySelectedPlayerIndex]->SetSelected(true);
 
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
 	
@@ -168,9 +173,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
 		{
 			CU::Vector2ui peekPosition;
-			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), peekPosition) == true)
+			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 			{
-				CreatePlayerFoV(CU::Vector2f(peekPosition), 20);
+				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
@@ -372,6 +377,7 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	{
 		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX && mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetAttackCost())
 		{
+			myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, 1);
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
 			mySelectedPlayer->CostAP(mySelectedPlayer->GetAttackCost());
 		}
@@ -379,7 +385,7 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)
 	{
 		CU::Vector2ui peekPosition;
-		if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), peekPosition) == true)
+		if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 		{
 			SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, *mySelectedPlayer));
 			DL_PRINT("Can Peek");
@@ -407,7 +413,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
-		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
+		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition), myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetSeenEnemy());
 	}
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
@@ -432,12 +438,22 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
 	myClickedOnEnemy = true;
 	mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
+	if (aMessage.myType == RecieverTypes::eEnemyAttacked)
+	{
+		for (size_t i = 0; i < myPlayers.Size(); i++)
+		{
+			if (myPlayers[i]->GetActorState() == eActorState::eAlert)
+			{
+				myPlayers[i]->SetActorState(eActorState::eIdle);
+			}
+		}
+	}
 	return true;
 }
 
-void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
+void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
-	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition));
+	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
@@ -446,7 +462,7 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 	{
 		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
 		{
-			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 		}
 	}
 	return true;
@@ -458,7 +474,8 @@ bool PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 	{
 		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
 		{
-			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
+			
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 		}
 	}
 	return false;
@@ -470,8 +487,78 @@ void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)
 	myPlayers[aPlayerIndex]->ResetObjectiveState();
 }
 
-bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeekLocation) const
+bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const CU::Vector2ui &aOldPosition, CU::Vector2ui &aPeekLocation) const
 {
+#pragma region Check if player is on the door
+	if (myFloor->GetTile(USHORTCAST(aPosition.x ), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR_2)
+	{
+#pragma region Check from which room the player came from(diagonal)
+	if (static_cast<int>(aOldPosition.x - aPosition.x) > 0 && static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(-1, 0);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, -1);
+		}
+	}
+	else if (static_cast<int>(aOldPosition.x - aPosition.x) > 0 && static_cast<int>(aOldPosition.y - aPosition.y) < 0)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(-1, 0);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, 1);
+		}
+	}
+	else if (static_cast<int>(aOldPosition.x - aPosition.x) < 0 && static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(1, 0);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, -1);
+		}
+	}
+	else if (static_cast<int>(aOldPosition.x - aPosition.x) < 0 && static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(1, 0);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, 1);
+		}
+	}
+	else if (static_cast<int>(aOldPosition.x - aPosition.x) < 0 && static_cast<int>(aOldPosition.y - aPosition.y) < 0)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(1, 0);
+		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, 1);
+		}
+	}
+#pragma endregion 
+#pragma region Check from which room the player came from(straight)
+		else if (static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, -1);
+		}
+		else if (static_cast<int>(aOldPosition.y - aPosition.y) < 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, 1);
+		}
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) > 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, 0);
+		}
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) < 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, 0);
+		}
+#pragma endregion 
+
+		return true;
+	}
+#pragma endregion
+
+#pragma region Check if player is standing on tile that is diagonal from the door
 	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
 		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
@@ -512,6 +599,34 @@ bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Ve
 		}
 		return true;
 	}
+#pragma endregion
+
+#pragma region Check if player is standing on tile that is straight from the door
+	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(2, 0);
+		return true;
+	}
+	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(-2, 0);
+		return true;
+	}
+	if (myFloor->GetTile(USHORTCAST(aPosition.x ), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(0, -2);
+		return true;
+	}
+	if (myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(0, 2);
+		return true;
+	}
+#pragma endregion
 	return false;	
 }
 
@@ -560,6 +675,7 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
+			myFloor->GetTile(x, y).SetDiscovered(true);
 			break;
 		}
 		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
@@ -569,9 +685,11 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
+			myFloor->GetTile(x, y).SetDiscovered(true);
 			hasAlreadyBeenBlocked = true;
 		}
 		myFloor->GetTile(x, y).SetVisible(true);
+		myFloor->GetTile(x, y).SetDiscovered(true);
 		
 		if (error > 0)
 		{
@@ -638,7 +756,6 @@ void PlayerController::ResetTileShaders()
 	for (unsigned int i = 0; i < myFloor->Size(); i++)
 	{
 		myFloor->GetTile(i).SetVisible(false);
+		//myFloor->GetTile(i).SetDiscovered(false);
 	}
 }
-
-

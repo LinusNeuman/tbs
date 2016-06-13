@@ -14,14 +14,8 @@ struct RenderData
 	{
 		myShaderPtr = nullptr;
 	}
-	RenderData(const CU::Vector4f & aColor) :
-		myColor(aColor)
-	{
-		myShaderPtr = nullptr;
-	}
-	/*RenderData(const RenderData& aData) : myColor(aData.myColor)
-	{}*/
 
+	CU::Vector2f mySizeInPixels;
 	CU::Vector4f myColor;
 	DX2D::CCustomShader * myShaderPtr;
 };

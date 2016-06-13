@@ -23,6 +23,14 @@ namespace Launcher
             resolutionBox.Items.Add("1280x800");
             resolutionBox.Items.Add("1024x768");
             resolutionBox.Items.Add("800x600");
+
+            windowSizeBox.Items.Add("1920x1080");
+            windowSizeBox.Items.Add("1680x1050");
+            windowSizeBox.Items.Add("1280x800");
+            windowSizeBox.Items.Add("1024x768");
+            windowSizeBox.Items.Add("800x600");
+
+            windowSizeBox.SelectedIndex = 0;
             resolutionBox.SelectedIndex = 0;
         }
 
@@ -32,26 +40,47 @@ namespace Launcher
             settings.myIsFullscreen = checkBox1.Checked;
             int index = 0;
 
-            string x = resolutionBox.SelectedItem.ToString();
-            index = x.LastIndexOf("x");
-            x = x.Substring(0, index);
-            settings.myResolutionX = Convert.ToInt32(x);
+            string resX = resolutionBox.SelectedItem.ToString();
+            index = resX.LastIndexOf("x");
+            resX = resX.Substring(0, index);
+            settings.myResolutionX = Convert.ToInt32(resX);
 
-            string y = resolutionBox.SelectedItem.ToString();
-            index = y.LastIndexOf("x");
+            string resY = resolutionBox.SelectedItem.ToString();
+            index = resY.LastIndexOf("x");
             index += 1;
-            y = y.Substring(index, y.Length - index);
-            settings.myResolutionY = Convert.ToInt32(y);
+            resY = resY.Substring(index, resY.Length - index);
+            settings.myResolutionY = Convert.ToInt32(resY);
+
+            string sizeX = windowSizeBox.SelectedItem.ToString();
+            index = sizeX.LastIndexOf("x");
+            sizeX = sizeX.Substring(0, index);
+            settings.myWindowSizeX = Convert.ToInt32(sizeX);
+
+            string sizeY = windowSizeBox.SelectedItem.ToString();
+            index = sizeY.LastIndexOf("x");
+            index += 1;
+            sizeY = sizeY.Substring(index, sizeY.Length - index);
+            settings.myWindowSizeY = Convert.ToInt32(sizeY);
 
             string jsonString = JsonConvert.SerializeObject(settings, Formatting.Indented);
             System.IO.File.WriteAllText(Directory.GetCurrentDirectory() + "/" + "Settings.json", jsonString);
             string exePath = "";
             exePath = Directory.GetCurrentDirectory();
-            /*index = exePath.IndexOf("Bin");
-            exePath = exePath.Substring(0, index);*/
-            exePath += "\\Launcher_Release.exe";
+            exePath += "\\Launcher_DevMode.exe";
             Process.Start(exePath);
             Application.Exit();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBox1.Checked == false)
+            {
+                windowSizeBox.Enabled = true;
+            }
+            else
+            {
+                windowSizeBox.Enabled = false;
+            }
         }
     }
 }

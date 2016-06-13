@@ -34,6 +34,11 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 {
 	myGUIManager.Update(aTimeDelta);
 
+	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
+	{
+		return eStackReturnValue::eDeleteMainState;
+	}
+
 	if (myLevel != 0)
 	{
 		PlayState *newState = new PlayState();
@@ -43,12 +48,21 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 			break;
 		case 2: mySelectedLevel = "2_Backyard.json";
 			break;
+		case 3: mySelectedLevel = "2_Backyard.json";
+			break;
+		case 4: mySelectedLevel = "4_Kiosk.json";
+			break;
+		case 5: mySelectedLevel = "5_Playground .json";
+			break;
+		case 6: mySelectedLevel = "2_Backyard.json";
+			break;
 		default: mySelectedLevel = "1_Treehouse.json";
 			break;
 		}
 		newState->Init(mySelectedLevel);
 		aStateStack.AddMainState(newState);
 		myLevel = 0;
+		return eStackReturnValue::eDeleteMainState;
 	}
 
 	return eStackReturnValue::eStay;

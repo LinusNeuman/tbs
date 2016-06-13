@@ -72,8 +72,8 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myCollisionBox.SetWithMaxAndMinPos(
 	{ myPosition.x / SingletonDataHolder::GetTargetResolution().x, myPosition.y / SingletonDataHolder::GetTargetResolution().y},
 	{
-		(myPosition.x / SingletonDataHolder::GetTargetResolution().x) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().x / SingletonDataHolder::GetTargetResolution().x,
-		(myPosition.y / SingletonDataHolder::GetTargetResolution().y) + mySpriteUnpressed->GetSizeWithoutWhiteSpace().y / SingletonDataHolder::GetTargetResolution().y
+		(myPosition.x / SingletonDataHolder::GetTargetResolution().x) + mySpriteUnpressed->GetSizeInPixels().x / SingletonDataHolder::GetTargetResolution().x,
+		(myPosition.y / SingletonDataHolder::GetTargetResolution().y) + mySpriteUnpressed->GetSizeInPixels().y / SingletonDataHolder::GetTargetResolution().y
 	});
 
 	mySprite = mySpriteUnpressed;
@@ -132,10 +132,10 @@ void GUIButton::FadeDown(const CommonUtilities::Time aTime)
 	CU::Vector4f color = mySpriteHovered->GetColor();
 	if (color.w >= 0.0f)
 	{
-		color.w -= 0.5f * aTime.GetSeconds();
+		color.w -= 1.2f * aTime.GetSeconds();
 		if (color.w < 0)
 		{
-			myAnimateTimer += 1.2f * aTime.GetSeconds();
+			myAnimateTimer += 2.5f * aTime.GetSeconds();
 			if (myAnimateTimer >= 1.0f)
 			{
 				myAnimateState = GUIAnimateState::eFadingUp;

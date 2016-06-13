@@ -30,3 +30,7 @@
 // Audio
 //#include "../Audio/Source/Instances/SoundEffect.h"
 //#include "../Audio/Source/Instances/Song.h"
+
+
+
+extern float TweenSine(float aZeroToOne);
