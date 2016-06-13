@@ -22,13 +22,15 @@ void PauseMenuState::Init()
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/GUI/PauseMenu/Background.dds", false, CU::Vector4f::Zero, {0.5f, 0.5f});
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
-	myBackgroundSprite->SetRenderPriority(100);
+	myBackgroundSprite->SetRenderPriority(100.f);
 
 	LoadGUI("PauseMenu");
 }
 
 eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateStack& aStateStack)
 {
+	myGUIManager.Update(aTimeDelta);
+
 	if (myShouldPop == true || IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{ 
 		myShouldPop = false;
@@ -41,6 +43,8 @@ eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateS
 
 void PauseMenuState::Draw() const
 {
+	myGUIManager.Render();
+
 	myBackgroundSprite->Draw({ SingletonDataHolder::GetTargetResolution().x * 0.5f, SingletonDataHolder::GetTargetResolution().y * 0.5f });
 }
 
