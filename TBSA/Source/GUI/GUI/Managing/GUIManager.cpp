@@ -19,7 +19,12 @@ GUIManager::GUIManager()
 
 GUIManager::~GUIManager()
 {
-	//SingletonPostMaster::RemoveReciever(*this);
+	SingletonPostMaster::RemoveReciever(*this);
+
+	if (myActiveGUI != nullptr)
+	{
+		myActiveGUI->DeleteAll();
+	}
 }
 
 void GUIManager::Update(const CU::Time& aDelta)
