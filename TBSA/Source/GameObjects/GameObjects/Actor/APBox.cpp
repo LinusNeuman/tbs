@@ -31,7 +31,7 @@ void APBox::Update()
 
 }
 
-void APBox::CalculateProgress(const CommonUtilities::Time aTime)
+void APBox::CalculateProgress(const CommonUtilities::Time& aTime)
 {
 	myMovementTimer = myMovementTimer + aTime.GetSeconds();
 	float progress = 0.f;
@@ -47,7 +47,7 @@ void APBox::CalculateProgress(const CommonUtilities::Time aTime)
 	myEasing = progress;
 }
 
-void APBox::MoveUp(const CommonUtilities::Time aTime)
+void APBox::MoveUp(const CommonUtilities::Time& aTime)
 {
 	myOriginalPosition = myTilePositionf;
 	myGoalPosition = myTilePositionf;
@@ -80,7 +80,7 @@ void APBox::MoveUp(const CommonUtilities::Time aTime)
 	}
 }
 
-void APBox::MoveDown(const CommonUtilities::Time aTime)
+void APBox::MoveDown(const CommonUtilities::Time& aTime)
 {
 	myGoalPosition = myTilePositionf;
 	myOriginalPosition = myTilePositionf;
