@@ -415,10 +415,10 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 
 
 
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
+	/*if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition), myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetSeenEnemy());
-	}
+	}*/
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
 	{
@@ -462,17 +462,40 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
-	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
+	if (CU::Vector2i(mySelectedPlayer->GetPosition()) == aPlayerPosition)
+	{
+		SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
+	}
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+		switch (mySelectedPlayer->GetDirectionEnum())
 		{
-			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+		case eDirection::NORTH:
+		case eDirection::NORTH_EAST:
+		case eDirection::WEST:
+		case eDirection::NORTH_WEST:
+			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
+			{
+				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+			}
+			break;
+		case eDirection::SOUTH_WEST:
+		case eDirection::EAST:
+		case eDirection::SOUTH:
+		case eDirection::SOUTH_EAST:
+			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+			{
+				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+			}
+			break;
+		default:
+			break;
 		}
+		
 	}
 	return true;
 }
