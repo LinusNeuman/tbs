@@ -4,6 +4,7 @@
 #include <Controllers/EnemyController.h>
 #include <Message/EnemyObjectMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/PlayerSeenMessage.h>
 
 
 Enemy::Enemy()
@@ -109,7 +110,10 @@ void Enemy::SetDirection(eDirection aDirection)
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
-	SetActorState(eActorState::eAlert);
+	if (&aMessage.myEnemy == this)
+	{
+		SetActorState(eActorState::eAlert);
+	}
 	return true;
 }
 
