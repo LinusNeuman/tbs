@@ -1,5 +1,6 @@
 #include "GUIButton.h"
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
+#include <CU/Utility/CommonCasts.h>
 
 //#define EditorScreenSizeX 19-20.f
 //#define EditorScreenSizeY 10-80.f
@@ -69,11 +70,13 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myPosition = aParentSpace + anOffset;
 	myIsEnabled = aIsEnabled;
 
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+
 	myCollisionBox.SetWithMaxAndMinPos(
-	{ myPosition.x / SingletonDataHolder::GetTargetResolution().x, myPosition.y / SingletonDataHolder::GetTargetResolution().y},
+	{ myPosition.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x), myPosition.y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y )},
 	{
-		(myPosition.x / SingletonDataHolder::GetTargetResolution().x) + mySpriteUnpressed->GetSizeInPixels().x / SingletonDataHolder::GetTargetResolution().x,
-		(myPosition.y / SingletonDataHolder::GetTargetResolution().y) + mySpriteUnpressed->GetSizeInPixels().y / SingletonDataHolder::GetTargetResolution().y
+		(myPosition.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x)) + mySpriteUnpressed->GetSizeInPixels().x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x),
+		(myPosition.y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y)) + mySpriteUnpressed->GetSizeInPixels().y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y)
 	});
 
 	mySprite = mySpriteUnpressed;
