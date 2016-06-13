@@ -266,6 +266,7 @@ void Enemy::DecideAnimation()
 				ChangeAnimation("DeathAnimation");
 				SendPostMessage(AnimationStateMessage(RecieverTypes::eAnimationState, false));
 				myIsDeadeastFlag = true;
+				SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyDead, *this));
 			}
 			else
 			{
