@@ -39,5 +39,29 @@
 		{
           "path": "Data/Animations/Enemy3/EnemyIdle315Animation.json"
         }
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert000Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert045Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert090Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert135Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert180Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert225Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert270Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy3/EnemyAlert315Animation.json"
+        }
     ]
 }
