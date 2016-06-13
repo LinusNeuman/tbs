@@ -81,5 +81,9 @@ bool MenuState::RecieveMessage(const GUIMessage& aMessage)
 	{
 		myShouldSelect = true;
 	}
+	if (aMessage.myType == RecieverTypes::eGoToCredits)
+	{
+		myShouldGiveCred = true;
+	}
 	return true;
 }

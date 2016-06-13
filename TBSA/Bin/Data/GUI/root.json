@@ -159,12 +159,12 @@
             },
             "myIsEnabled": true,
             "myIsIsometric": false,
-            "myPositionX": 0,
+            "myPositionX": 512,
             "myPositionY": 0,
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
-              "Click": "GoToMainMenu",
+              "Click": "GoToCredits",
               "Hover": ""
             }
           }
