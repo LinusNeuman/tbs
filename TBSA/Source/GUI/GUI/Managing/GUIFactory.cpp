@@ -4,7 +4,7 @@
 #include <CU/Timer/Timer.h>
 #include <CU/Timer/TimeManager.h>
 #include <GUI/Instances/GUIButton.h>
-#include <GUI/Instances/GUITextBox.h>
+#include <GUI/Instances/GUIDialog.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <GUI/Instances/GUIActionPointsBar.h>
 #include <Message\LevelChangeMassage.h>
@@ -50,9 +50,9 @@ void GUIFactory::Load()
 
 		if (currentStateName == "InGame")
 		{
-			GUITextBox* textBox = new GUITextBox({ 1.f, 1.f }, { 640.f, 320.f }, "Text/calibril.ttf_sdf");
+			GUIDialog* dialogTextBox = new GUIDialog({ 808.f, 832.f }, { 381.f, 214.f }, "Text/calibril.ttf_sdf");
 
-			myGUIElements.Add(textBox);
+			myGUIElements.Add(dialogTextBox);
 
 			/*GUIActionPointsBar* APBar = new GUIActionPointsBar();
 

@@ -8,6 +8,12 @@ namespace DX2D
 	class CCustomShader;
 }
 
+struct TextRenderData
+{
+	CU::Vector2f myPos;
+	std::string myText;
+};
+
 struct RenderData
 {
 	RenderData():myColor(CU::Vector4f::One)

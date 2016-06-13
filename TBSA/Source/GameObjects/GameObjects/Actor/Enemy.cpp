@@ -262,12 +262,14 @@ void Enemy::DecideAnimation()
 			if (myIsDeadeastFlag == false)
 			{
 				ChangeAnimation("DeathAnimation");
+				myAnimations.GetSprite()->SetRenderPriority(10.f);
 				myIsDeadeastFlag = true;
 				SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyDead, *this));
 			}
 			else
 			{
 				ChangeAnimation("DeadestState");
+				myAnimations.GetSprite()->SetRenderPriority(10.f);
 			}
 		}
 	}

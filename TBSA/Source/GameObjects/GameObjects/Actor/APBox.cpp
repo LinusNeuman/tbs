@@ -103,7 +103,10 @@ void APBox::Draw() const
 	ja.y -= 16;
 	ja.x = ((myAPText->GetWidth() / 2.f) * SingletonDataHolder::GetTargetResolution().x) - 1;
 	ja = CU::PixelToIsometric(ja);
-	
 
-	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(*myAPText, (myPosition - myOffset) - ja, 1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
+	TextRenderData data;
+	data.myText = myAPText->myText;
+	data.myPos = (myPosition - myOffset) - ja;
+
+	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 }
