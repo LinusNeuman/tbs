@@ -12,6 +12,7 @@
 #include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/PlayerIDMessage.h>
+#include <Message/DijkstraMessage.h>
 
 
 Player::Player()
@@ -65,6 +66,7 @@ void Player::CostAP(const int aCost)
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
 	myCurrentAP -= aCost;
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
+	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(myPosition), GetMyAP()));
 }
 
 void Player::OnClick()
