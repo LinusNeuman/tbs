@@ -79,10 +79,10 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		}
 		
 	}
-	for (size_t i = 0; i < myDebugEnd.size(); i++)
+	/*for (size_t i = 0; i < myDebugEnd.size(); i++)
 	{
 	DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
-	}
+	}*/
 }
 
 void EnemyController::Draw()
