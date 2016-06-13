@@ -423,20 +423,18 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition), myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetSeenEnemy());
 	}
 
+	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
+	{
+		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPosition())));
+	}
+
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
 	{
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
-
-		myPlayers[static_cast<int>(aMessage.myPlayer.GetType())]->isOnObjective = true;
-		
 		DL_PRINT("You have reached the goal, Aren't you special");
 	}
 
-	if (aMessage.myPlayer.isOnObjective == true && myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() != eTileType::IS_OBJECTIVE)
-	{
-		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPosition)));
-		myPlayers[static_cast<int>(aMessage.myPlayer.GetType())]->isOnObjective = false;
-	}
+	
 
 	return true;
 }

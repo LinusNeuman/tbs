@@ -51,7 +51,6 @@ public:
 
 	void Update(const CU::Time &aDeltaTime) override;
 
-	bool isOnObjective;
 private:
 
 	unsigned short myPlayerIndex;
