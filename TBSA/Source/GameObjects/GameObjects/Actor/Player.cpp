@@ -40,12 +40,9 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myIsInFight = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eAnimationState, *this);
-	myDetectedSprite = new StaticSprite();
-	myDetectedSprite->Init("Sprites/pixelIsNeeded.dds", true);
-	myDetectedSprite->SetLayer(enumRenderLayer::eGameObjects);
 
 	myHideSprite = new StaticSprite();
-	myHideSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
+	myHideSprite->Init("Sprites/pixelIsNeeded.dds", true);
 	myHideSprite->SetLayer(enumRenderLayer::eGUI);
 
 	myAPBox.SetPos(myPosition);
