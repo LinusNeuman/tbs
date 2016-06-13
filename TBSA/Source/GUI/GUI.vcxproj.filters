@@ -39,6 +39,9 @@
     <ClCompile Include="GUI\Instances\GUIActionPointsBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\Instances\GUIDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\Generic\GUIElement.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Instances\GUIActionPointsBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Instances\GUIDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

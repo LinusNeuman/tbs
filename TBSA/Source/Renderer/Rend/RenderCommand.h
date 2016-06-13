@@ -27,7 +27,7 @@ private:
 	unsigned short myLayer;
 	RenderData myRenderData;
 	float myRenderPriority;
-	DX2D::CText * myText;
+	DX2D::CText* myText;
 	DX2D::CSprite * mySprite;
 };
 

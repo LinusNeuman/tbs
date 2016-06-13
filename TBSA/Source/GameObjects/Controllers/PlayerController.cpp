@@ -170,9 +170,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
 		{
 			CU::Vector2ui peekPosition;
-			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), peekPosition) == true)
+			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 			{
-				CreatePlayerFoV(CU::Vector2f(peekPosition), 20);
+				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
@@ -381,7 +381,7 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)
 	{
 		CU::Vector2ui peekPosition;
-		if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), peekPosition) == true)
+		if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 		{
 			SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, *mySelectedPlayer));
 			DL_PRINT("Can Peek");
@@ -482,8 +482,69 @@ void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)
 	myPlayers[aPlayerIndex]->ResetObjectiveState();
 }
 
-bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeekLocation) const
+bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const CU::Vector2ui &aOldPosition, CU::Vector2ui &aPeekLocation) const
 {
+#pragma region Check if player is on the door
+	if (myFloor->GetTile(USHORTCAST(aPosition.x ), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR_2)
+	{
+#pragma region Check from which room the player came from(straight)
+		if (static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, -1);
+		}
+		else if (static_cast<int>(aOldPosition.y - aPosition.y) < 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(0, 1);
+		}
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) > 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, 0);
+		}
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) < 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, 0);
+		}
+#pragma endregion 
+#pragma region Check from which room the player came from(diagonal)
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) > 0 && static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, 0);
+			if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+			{
+				aPeekLocation = aPosition + CU::Vector2ui(0, -1);
+			}
+		}
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) > 0 && static_cast<int>(aOldPosition.y - aPosition.y) < 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(-1, 0);
+			if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+			{
+				aPeekLocation = aPosition + CU::Vector2ui(0, 1);
+			}
+		}
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) < 0 && static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, 0);
+			if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+			{
+				aPeekLocation = aPosition + CU::Vector2ui(0, -1);
+			}
+		}
+		else if (static_cast<int>(aOldPosition.x - aPosition.x) < 0 && static_cast<int>(aOldPosition.y - aPosition.y) > 0)
+		{
+			aPeekLocation = aPosition + CU::Vector2ui(1, 0);
+			if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+			{
+				aPeekLocation = aPosition + CU::Vector2ui(0, 1);
+			}
+		}
+#pragma endregion 
+		return true;
+	}
+#pragma endregion
+
+#pragma region Check if player is standing on tile that is diagonal from the door
 	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
 		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
 	{
@@ -524,6 +585,34 @@ bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Ve
 		}
 		return true;
 	}
+#pragma endregion
+
+#pragma region Check if player is standing on tile that is straight from the door
+	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(2, 0);
+		return true;
+	}
+	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(-2, 0);
+		return true;
+	}
+	if (myFloor->GetTile(USHORTCAST(aPosition.x ), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(0, -2);
+		return true;
+	}
+	if (myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
+		myFloor->GetTile(USHORTCAST(aPosition.x), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
+	{
+		aPeekLocation = aPosition + CU::Vector2ui(0, 2);
+		return true;
+	}
+#pragma endregion
 	return false;	
 }
 

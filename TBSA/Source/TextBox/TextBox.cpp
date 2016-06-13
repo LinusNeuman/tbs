@@ -22,6 +22,11 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 	Update();
 }
 
+TextBox::~TextBox()
+{
+	myRenderList.RemoveAll();
+}
+
 void TextBox::AddText_WordWrap(DX2D::CText* aText)
 {
 		if (aText->GetWidth() > myDimensions.x)
@@ -134,7 +139,7 @@ TextBox::SetSize(const Vec2f aSize)
 }
 
 void
-TextBox::Render()
+TextBox::Render() const
 {
 #ifdef DEBUG_TEXTBOX
 	DX2D::CEngine::GetInstance()->GetDebugDrawer().DrawLine({ myPosition.x, myPosition.y }, { myPosition.x + myDimensions.x, myPosition.y }, {1.f, 0.f, 0.f, 1.f});

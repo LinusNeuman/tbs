@@ -40,7 +40,7 @@ void StaticSprite::Init(const std::string & aFilePath/* = "Sprites/trashTestFile
 	myIsIsometricFlag = aIsIsometric;
 	if (aSync == true)
 	{
-		myImageIndex = AddImage(aFilePath, aRect);
+		myImageIndex = AddImage(aFilePath, aRect, aPivotPoint);
 	}
 	else
 	{
@@ -157,6 +157,10 @@ void StaticSprite::Draw(const CU::Vector2f & aPosition) const
 	}
 }
 
+void StaticSprite::DrawWithNormalized(const CU::Vector2f & aNormalizedPosition) const
+{
+	RenderConverter::RenderSpriteNormalized(*this, aNormalizedPosition);
+}
 
 void StaticSprite::SetPivotWithPixels(const CU::Vector2f & aPivotOffsetInPixel)
 {

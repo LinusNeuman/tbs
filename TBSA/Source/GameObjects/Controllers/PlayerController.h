@@ -60,7 +60,7 @@ public:
 
 private:
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
-	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, CU::Vector2ui &aPeakLocation) const;
+	bool CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const CU::Vector2ui &aOldPosition, CU::Vector2ui &aPeakLocation) const;
 
 	void BuildPath(PathArray & aPathContainterToBuild);
 	enumMouseState GetCurrentMouseState();

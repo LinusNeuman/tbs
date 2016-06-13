@@ -86,12 +86,15 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 
 void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
-	RenderData tempRenderData(aSpriteToRender.GetColor());
-
 	CU::Vector2f newPos(aPosition);
 	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
 	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
-	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), newPos, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData())); //
+	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), newPos, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
+}
+
+void RenderConverter::RenderSpriteNormalized(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
+{
+	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), aPosition, 10000.f, static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
 }
 
 void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
@@ -102,6 +105,11 @@ void RenderConverter::AddRenderCommand(RenderCommand & aRenderCommand)
 void RenderConverter::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/)
 {
 	GetInstance().myRenderer.DrawLine(aStartPosition, aEndPosition, aColor);
+}
+
+void RenderConverter::ClearCommands()
+{
+	GetInstance().myRenderer.ClearCommands();
 }
 
 void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/)
