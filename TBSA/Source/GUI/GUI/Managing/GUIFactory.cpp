@@ -8,6 +8,7 @@
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <GUI/Instances/GUIActionPointsBar.h>
 #include <Message\LevelChangeMassage.h>
+#include <Message\CreditScreenMessage.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -186,6 +187,11 @@ void GUIFactory::Load()
 					if (clickEvent == "SelectLevel6")
 					{
 						newButton->SetAction(new LevelChangeMassage(RecieverTypes::eGoToLevel, 6), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "GoToCredits")
+					{
+						newButton->SetAction(new CreditScreenMessage(RecieverTypes::eGoToCredits), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);

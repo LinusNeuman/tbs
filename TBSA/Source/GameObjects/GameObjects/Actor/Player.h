@@ -39,6 +39,11 @@ public:
 	void SetIndex(const unsigned short aIndex);
 	unsigned short GetIndex() const;
 
+	void __forceinline SetSelected(bool aIsSelected)
+	{
+		myIsSelected = aIsSelected;
+	};
+
 	virtual void AfterTurn() override;
 	void PreTurn();
 	int GetPeekCost() const;
@@ -58,6 +63,7 @@ private:
 	int myPreviousAP;
 
 	bool myShouldDie;
+	bool myIsSelected;
 
 	APBox myAPBox;
 };

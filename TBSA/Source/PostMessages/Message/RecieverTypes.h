@@ -50,6 +50,7 @@ enum class RecieverTypes
 	eScrollLogDown,
 	eLevelSelect,
 	eGoToLevel,
+	eGoToCredits,
 	eEnemyDirectionChanged,
 	enumlength
 };
