@@ -34,6 +34,11 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 {
 	myGUIManager.Update(aTimeDelta);
 
+	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
+	{
+		return eStackReturnValue::eDeleteMainState;
+	}
+
 	if (myLevel != 0)
 	{
 		PlayState *newState = new PlayState();
@@ -57,6 +62,7 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 		newState->Init(mySelectedLevel);
 		aStateStack.AddMainState(newState);
 		myLevel = 0;
+		return eStackReturnValue::eDeleteMainState;
 	}
 
 	return eStackReturnValue::eStay;
