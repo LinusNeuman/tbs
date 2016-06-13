@@ -131,13 +131,13 @@ protected:
 	bool myAtTarget;
 	eDirection myDirection;
 	eDirection myPreviousDirection;
+	StaticSprite *mySprite;
 	bool myIsSeen;
 private:
 	void UpdatePath();
 
 	eActorType myType;
 	
-	StaticSprite *mySprite;
 
 	SoundEffect* myStepSounds[6];
 
