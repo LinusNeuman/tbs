@@ -223,6 +223,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 			}
 		}
 	}
+
+	myObjectiveManager.Update();
 }
 
 void GameLevel::Draw() const
