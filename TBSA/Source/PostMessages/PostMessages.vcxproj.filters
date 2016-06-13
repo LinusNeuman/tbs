@@ -44,5 +44,6 @@
     <ClInclude Include="Message\LevelChangeMassage.h" />
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\CreditScreenMessage.h" />
+    <ClInclude Include="Message\AnimationStateMessage.h" />
   </ItemGroup>
 </Project>
