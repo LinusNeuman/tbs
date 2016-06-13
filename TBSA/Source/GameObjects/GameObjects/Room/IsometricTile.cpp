@@ -3,6 +3,8 @@
 #include <Rend/StaticSprite.h>
 #include <NavGraph/Vertex/NavVertex.h>
 
+StaticSprite * IsometricTile::ourCandySprite = nullptr;
+
 IsometricTile::IsometricTile(): IsometricTile(CommonUtilities::Point2f::Zero)
 {
 }
@@ -31,6 +33,12 @@ IsometricTile::~IsometricTile()
 
 void IsometricTile::Init()
 {
+	if (ourCandySprite == nullptr)
+	{
+		ourCandySprite = new StaticSprite();
+		ourCandySprite->Init("Sprites/Candy.dds");
+		ourCandySprite->SetLayer(enumRenderLayer::eGameObjects);
+	}
 }
 
 void IsometricTile::Draw() const
@@ -99,6 +107,11 @@ void IsometricTile::Draw() const
 		}
 
 		myGraphicsLayers[i]->Draw(myPosition + positionModifier);
+	}
+
+	if (CheckHasCandy() == true)
+	{
+		ourCandySprite->Draw(myPosition);
 	}
 }
 
@@ -173,6 +186,8 @@ void IsometricTile::RemoveAvailableDirection(eDirection aDirection)
 {
 	myAvailableDirections.RemoveCyclic(aDirection);
 }
+
+
 
 VertexHandle IsometricTile::GetVertexHandle() const
 {
