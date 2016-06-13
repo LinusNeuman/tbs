@@ -78,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -94,7 +94,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -112,7 +112,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)DX2DEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PostMaster\;$(SolutionDir)CollisionHandling\;$(SolutionDir)PathFinding\;$(ProjectDir);$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)TileMap\;$(SolutionDir)JSONParser\;$(SolutionDir)JSONWrapper\;$(SolutionDir)GameObjects\;$(SolutionDir)PostMessages\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,6 +144,9 @@
     <ClCompile Include="TiledLoader\TiledLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Audio\Audio.vcxproj">
+      <Project>{58b80636-b81a-4fc6-a5d1-1f6a8cc28617}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
     </ProjectReference>

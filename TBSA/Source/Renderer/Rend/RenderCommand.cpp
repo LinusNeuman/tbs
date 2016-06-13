@@ -19,9 +19,9 @@ RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f
 	myText = nullptr;
 }
 
-RenderCommand::RenderCommand(DX2D::CText & aTextToRender, const float aRenderPriority, const USHORT aLayer, const bool aOffsetMiddleOfScreen/* = false*/)
+RenderCommand::RenderCommand(DX2D::CText & aTextToRender, const CU::Vector2f & aPosition, const float aRenderPriority, const USHORT aLayer, const bool aOffsetMiddleOfScreen/* = false*/)
 	: myText(&aTextToRender),
-	myPosition({ aTextToRender.myPosition.x, aTextToRender.myPosition.y })
+	myPosition(aPosition)
 {
 	myRenderPriority = aRenderPriority;
 	myLayer = aLayer;

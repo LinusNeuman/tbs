@@ -6,6 +6,7 @@
 #include <ActorEnums.h>
 
 class StaticSprite;
+class Enemy;
 
 enum class eTileType
 {
@@ -59,12 +60,17 @@ public:
 	bool CheckIfWalkable() const;
 	void ToggleDebugMode();
 
+	bool CheckHasCandy() const;
+	void SetHasCandy();
+	void TakeCandy();
+
 	void SetVisible(bool aIsVisible);
-	void SetInEnemyFoV(bool aIsInFoV);
+	void SetInEnemyFoV(bool aIsInFoV, Enemy* aEnemy);
 	void SetDiscovered(bool aIsDiscovered);
 	bool GetVisible() const;
 	bool GetDiscovered() const;
 	bool GetInEnemyFov() const;
+	Enemy* GetSeenEnemy() const;
 	void RemoveAvailableDirection(eDirection aDirection);
 	const CU::GrowingArray<eDirection>& GetAvailableDirections() const
 	{
@@ -79,8 +85,10 @@ private:
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 	VertexHandle myNavVertex;
-
+	Enemy *myEnemy;
 	eTileState myState;
+
+	bool myHasCandy;
 	bool myIsVisible;
 	bool myIsInEnemyFoV;
 	bool myIsDiscovered;
@@ -134,6 +142,21 @@ inline bool IsometricTile::CheckIfWalkable() const
 inline void IsometricTile::ToggleDebugMode()
 {
 	myDebugMode =  !myDebugMode;
+}
+
+inline bool IsometricTile::CheckHasCandy() const
+{
+	return myHasCandy;
+}
+
+inline void IsometricTile::SetHasCandy()
+{
+	myHasCandy = true;
+}
+
+inline void IsometricTile::TakeCandy()
+{
+	myHasCandy = false;
 }
 
 typedef CU::GrowingArray<IsometricTile> TileArray;

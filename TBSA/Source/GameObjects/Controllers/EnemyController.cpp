@@ -62,7 +62,7 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 	{
 		if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
 		{	
-			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance());
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
 			SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
 		}
 	}
@@ -114,7 +114,7 @@ void EnemyController::SetFloor(GameFloor& aFloor)
 	myFloor = &aFloor;
 }
 
-void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, eDirection aDirection)
+void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, eDirection aDirection, Enemy *aEnemy)
 {
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
@@ -148,7 +148,14 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 		{
 			if (myFloor->GetTile(x, y).GetAvailableDirections()[i] == aDirection)
 			{
-				myFloor->GetTile(x, y).SetInEnemyFoV(true);
+				if (aEnemy->GetType() == eActorType::eEnemyThree)
+				{
+					if (n > 2)
+					{
+						continue;
+					}
+				}
+				myFloor->GetTile(x, y).SetInEnemyFoV(true, aEnemy);
 				break;
 			}
 		}
@@ -168,33 +175,33 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 
 }
 
-void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirection aDirection, float aAngle, float aMagnitude)
+void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirection aDirection, float aAngle, float aMagnitude, Enemy *aEnemy)
 {
 	switch (aDirection)
 	{
 	case eDirection::NORTH:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, -1.0f), aAngle, aMagnitude, aDirection, (aMagnitude/2));
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, -1.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude/2));
 		break;
 	case eDirection::NORTH_EAST:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, -1.0f), aAngle, aMagnitude, aDirection, (aMagnitude / 2) + 1);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, -1.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude / 2) + 1);
 		break;
 	case eDirection::EAST:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 0.0f), aAngle, aMagnitude, aDirection, (aMagnitude / 2) + 1);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 0.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude / 2) + 1);
 		break;
 	case eDirection::SOUTH_EAST:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 1.0f), aAngle, aMagnitude, aDirection, (aMagnitude / 2) + 1);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(1.0f, 1.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude / 2) + 1);
 		break;
 	case eDirection::SOUTH:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, 1.0f), aAngle, aMagnitude, aDirection, (aMagnitude / 2) + 1);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(0.0f, 1.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude / 2) + 1);
 		break;
 	case eDirection::SOUTH_WEST:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 1.0f), aAngle, aMagnitude, aDirection, (aMagnitude / 2) + 1);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 1.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude / 2) + 1);
 		break;
 	case eDirection::WEST:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 0.0f), aAngle, aMagnitude, aDirection, (aMagnitude / 2) + 1);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, 0.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude / 2) + 1);
 		break;
 	case eDirection::NORTH_WEST:
-		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, -1.0f), aAngle, aMagnitude, aDirection, (aMagnitude / 2) + 1);
+		CalculateFoVBasedOnAngle(aPosition, CU::Vector2f(-1.0f, -1.0f), aAngle, aMagnitude, aDirection, aEnemy, (aMagnitude / 2) + 1);
 		break;
 	default:
 		break;
@@ -203,7 +210,7 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirect
 	
 }
 
-void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude, eDirection aDirection, int aNumberOfIterations)
+void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude, eDirection aDirection, Enemy *aEnemy, int aNumberOfIterations)
 {
 	/*if (aNumberOfIterations == 0)
 		return;
@@ -271,13 +278,13 @@ void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, co
 		vector5 = CU::Vector2f(floor(aMagnitude * cos(angle5)), floor(aMagnitude * sin(angle5)));
 	}
 
-	RayTrace(aPosition, aPosition + vector, aDirection);
-	RayTrace(aPosition, aPosition + vector2, aDirection);
-	RayTrace(aPosition, aPosition + vector3, aDirection);
-	RayTrace(aPosition, aPosition + vector4, aDirection);
-	RayTrace(aPosition, aPosition + vector5, aDirection);
-	RayTrace(aPosition, aPosition + vector6, aDirection);
-	RayTrace(aPosition, aPosition + vector7, aDirection);
+	RayTrace(aPosition, aPosition + vector, aDirection, aEnemy);
+	RayTrace(aPosition, aPosition + vector2, aDirection, aEnemy);
+	RayTrace(aPosition, aPosition + vector3, aDirection, aEnemy);
+	RayTrace(aPosition, aPosition + vector4, aDirection, aEnemy);
+	RayTrace(aPosition, aPosition + vector5, aDirection, aEnemy);
+	RayTrace(aPosition, aPosition + vector6, aDirection, aEnemy);
+	RayTrace(aPosition, aPosition + vector7, aDirection, aEnemy);
 }
 
 int EnemyController::CalculatePoint(float aValue) const
@@ -293,7 +300,7 @@ void EnemyController::ResetTileShaders()
 {
 	for (unsigned int i = 0; i < myFloor->Size(); i++)
 	{
-		myFloor->GetTile(i).SetInEnemyFoV(false);
+		myFloor->GetTile(i).SetInEnemyFoV(false, nullptr);
 	}
 }
 

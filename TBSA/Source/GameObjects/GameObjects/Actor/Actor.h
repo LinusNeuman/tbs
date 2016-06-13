@@ -6,6 +6,7 @@
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Utility/GameSpecificTypeDefs.h>
 #include <ActorEnums.h>
+#include <Audio\Instances\SoundEffect.h>
 
 
 struct ActorData;
@@ -137,6 +138,13 @@ private:
 	eActorType myType;
 	
 	StaticSprite *mySprite;
+
+	SoundEffect* myStepSounds[6];
+
+	SoundEffect* myFightSounds[5];
+
+	float myStepTimer;
+	float myFightTimer;
 	std::string myName;
 };
 

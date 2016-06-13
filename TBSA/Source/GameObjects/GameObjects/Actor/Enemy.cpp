@@ -5,6 +5,7 @@
 #include <Message/EnemyObjectMessage.h>
 #include <Message/TextMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/PlayerSeenMessage.h>
 
 
 Enemy::Enemy()
@@ -110,7 +111,10 @@ void Enemy::SetDirection(eDirection aDirection)
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
-	SetActorState(eActorState::eAlert);
+	if (&aMessage.myEnemy == this)
+	{
+		SetActorState(eActorState::eAlert);
+	}
 	return true;
 }
 
@@ -132,8 +136,10 @@ int Enemy::GetViewDistance() const
 
 void Enemy::OnClick()
 {
-	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
-	//Fight();
+	if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+	{
+		SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+	}
 }
 
 void Enemy::Fight()
