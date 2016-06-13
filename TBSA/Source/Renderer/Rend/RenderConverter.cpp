@@ -110,6 +110,10 @@ void RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand
 
 	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
 	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
+
+	newPos.x += 0.5f;
+	newPos.y += 0.5f;
+
 	aRenderCommand.myPosition = newPos;
 
 	GetInstance().myRenderer.AddRenderCommand(aRenderCommand);
