@@ -61,6 +61,7 @@ private:
 
 	CU::Vector2f myPosition;
 
+	CU::Vector4f myColor;
 	float myMovementTotalUp;
 	float myMovementTotalDown;
 	float myMovementTimer;

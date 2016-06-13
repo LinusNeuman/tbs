@@ -72,8 +72,8 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 
 	CU::Vector2f newPos = CU::IsometricToPixel(tempPosition);
 
-	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
-	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
+	newPos.x /= FLOATCAST(SingletonDataHolder::GetTargetResolution().x);
+	newPos.y /= FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
 	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
 	newPos *= renderScale;
@@ -87,8 +87,8 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 void RenderConverter::CalculateAndRenderSprite(const StaticSprite & aSpriteToRender, const CU::Vector2f & aPosition)
 {
 	CU::Vector2f newPos(aPosition);
-	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
-	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
+	newPos.x /= FLOATCAST(SingletonDataHolder::GetTargetResolution().x);
+	newPos.y /= FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 	GetInstance().AddRenderCommand(RenderCommand(*aSpriteToRender.GetSprite(), newPos, aSpriteToRender.GetRenderPriority(), static_cast<USHORT>(aSpriteToRender.GetLayer()), aSpriteToRender.GetRenderData()));
 }
 

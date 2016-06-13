@@ -188,21 +188,25 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma region Mouse Input
 	if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 	{
+		int AdditinoalAPCost = 0;
 		enumMouseState currentState = GetCurrentMouseState();
 		switch (currentState)
 		{
 		case enumMouseState::eClickedOnPlayer:
 			SelectPlayer();
 			break;
-		case enumMouseState::eClickedOnEmptyTile:
 		case enumMouseState::eClickedOnEnemy:
+			AdditinoalAPCost = GetPlayerAttackAPCost() ;
+		case enumMouseState::eClickedOnEmptyTile:
 		{
 			PathArray positionPath;
 			BuildPath(positionPath);
 
-			if (GetPlayerAP() >= (positionPath.Size() - 1))
+			
+
+			if (GetPlayerAP() >= (positionPath.Size() - 1) + AdditinoalAPCost)
 			{
-				CostAP(positionPath.Size() - 1);
+				CostAP(positionPath.Size() - 1 + AdditinoalAPCost);
 				NotifyPlayers(positionPath);
 				SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
 			}
@@ -779,6 +783,11 @@ void PlayerController::CalculateCircleRayTrace(const TilePositionf & aPosition, 
 	RayTrace(aPlayerPosition, CU::Vector2f(aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
 	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, aPosition.x + aPlayerPosition.y));
 	RayTrace(aPlayerPosition, CU::Vector2f(-aPosition.y + aPlayerPosition.x, -aPosition.x + aPlayerPosition.y));
+}
+
+int PlayerController::GetPlayerAttackAPCost() const
+{
+	return mySelectedPlayer->GetAttackCost();
 }
 
 int PlayerController::CalculatePoint(float aValue) const
