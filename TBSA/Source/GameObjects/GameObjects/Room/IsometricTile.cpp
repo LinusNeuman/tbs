@@ -17,6 +17,7 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myIsDiscovered = false;
 	myIsInEnemyFoV = false;
 	myAvailableDirections.Init(8);
+	myHasCandy = false;
 	for (size_t i = 1; i < 9; i++)
 	{
 		myAvailableDirections.Add(static_cast<eDirection>(i * 10));

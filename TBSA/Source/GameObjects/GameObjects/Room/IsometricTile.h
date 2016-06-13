@@ -59,6 +59,10 @@ public:
 	bool CheckIfWalkable() const;
 	void ToggleDebugMode();
 
+	bool CheckHasCandy() const;
+	void SetHasCandy();
+	void TakeCandy();
+
 	void SetVisible(bool aIsVisible);
 	void SetInEnemyFoV(bool aIsInFoV);
 	void SetDiscovered(bool aIsDiscovered);
@@ -81,6 +85,8 @@ private:
 	VertexHandle myNavVertex;
 
 	eTileState myState;
+
+	bool myHasCandy;
 	bool myIsVisible;
 	bool myIsInEnemyFoV;
 	bool myIsDiscovered;
@@ -134,6 +140,21 @@ inline bool IsometricTile::CheckIfWalkable() const
 inline void IsometricTile::ToggleDebugMode()
 {
 	myDebugMode =  !myDebugMode;
+}
+
+inline bool IsometricTile::CheckHasCandy() const
+{
+	return myHasCandy;
+}
+
+inline void IsometricTile::SetHasCandy()
+{
+	myHasCandy = true;
+}
+
+inline void IsometricTile::TakeCandy()
+{
+	myHasCandy = false;
 }
 
 typedef CU::GrowingArray<IsometricTile> TileArray;
