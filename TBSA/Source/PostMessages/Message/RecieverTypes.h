@@ -31,6 +31,7 @@ enum class RecieverTypes
 	eClickedOnEnemy,
 	ePlayerReachedEndOfPath,
 	eEnemyReachedEndOfPath,
+	eEnemyDead,
 	ePlayerNextToObjective,
 	ePlayerTargetEnemy,
 	ePlayerAPChanged,
@@ -52,5 +53,6 @@ enum class RecieverTypes
 	eGoToLevel,
 	eGoToCredits,
 	eEnemyDirectionChanged,
+	eAnimationState,
 	enumlength
 };

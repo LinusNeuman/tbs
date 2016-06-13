@@ -99,5 +99,11 @@ void APBox::Draw() const
 {
 	mySprite->Draw(myPosition - myOffset);
 
-	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(*myAPText, 1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
+	CU::Vector2f ja = mySprite->GetSizeInPixels();
+	ja.y -= 16;
+	ja.x = ((myAPText->GetWidth() / 2.f) * SingletonDataHolder::GetTargetResolution().x) - 1;
+	ja = CU::PixelToIsometric(ja);
+	
+
+	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(*myAPText, (myPosition - myOffset) - ja, 1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
 }

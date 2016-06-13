@@ -29,6 +29,7 @@ public:
 
 	void Draw() const override;
 	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
+	bool RecieveMessage(const AnimationStateMessage & aMessage) override;
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
@@ -56,6 +57,7 @@ private:
 	unsigned short myPlayerIndex;
 	unsigned short myEnemyTargetIndex;
 	StaticSprite* myDetectedSprite;
+	StaticSprite* myHideSprite;
 	int myActionPointMax;
 	int myAttackCost;
 	int myPeekCost;
@@ -64,6 +66,7 @@ private:
 
 	bool myShouldDie;
 	bool myIsSelected;
+	bool myIsInFight;
 
 	APBox myAPBox;
 };
