@@ -110,12 +110,12 @@ void Animation::StartAnimation()
 
 void Animation::StopAnimation()
 {
-	myCurrentColumn = 0;
-	myCurrentRow = 0;
+	myCurrentColumn = 1;
+	myCurrentRow = 1;
 	myCurrentFrame = 0;
 	myIsRunning = false;
 	SetTextureRectangle(&mySpriteSheet
-		, CommonUtilities::Vector2f(0.f, 0.f), CommonUtilities::Vector2f(0.f, 0.f), true);
+		, CommonUtilities::Vector2f(0.f, 0.f), mySpriteSize, true);
 	//HideSprite();
 }
 
@@ -130,7 +130,7 @@ void Animation::SetAnimationFrame()
 }
 
 /*
-	MINA SYSTEM FUCKAR ALRDIG UPP //LEON
+	MINA SYSTEM HAR ALRDIG FUCKAT UPP //LEON
 */
 void Animation::SetTextureRectangle(StaticSprite* newSprite, const CommonUtilities::Vector2f &aSpriteOffsetStart,
 	const CommonUtilities::Vector2f &aSpriteSize, bool aResizeSprite)
