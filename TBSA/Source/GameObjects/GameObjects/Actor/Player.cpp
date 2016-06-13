@@ -135,7 +135,7 @@ void Player::Update(const CU::Time& aDeltaTime)
 {
 	Actor::Update(aDeltaTime);
 
-	myAPBox.SetAP(myAP);
+	myAPBox.SetAP(myCurrentAP);
 	myAPBox.SetPos(myPosition);
 	if (myIsSelected == true)
 	{
