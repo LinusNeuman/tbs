@@ -4,6 +4,7 @@
 #include <Controllers/EnemyController.h>
 #include <Message/EnemyObjectMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
+#include <Message/PlayerSeenMessage.h>
 
 
 Enemy::Enemy()
@@ -27,6 +28,7 @@ void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
 	myIsDeadeastFlag = false;
 	myCurrentPathIndex = 1;
 	myAP = aEnemyData.myActionPoints;
+	myViewDistance = aEnemyData.myViewDistance;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	myEnemyPath.Init(1);
 }
@@ -108,7 +110,10 @@ void Enemy::SetDirection(eDirection aDirection)
 bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 {
 	mySomeoneSeesPlayer = true;
-	SetActorState(eActorState::eAlert);
+	if (&aMessage.myEnemy == this)
+	{
+		SetActorState(eActorState::eAlert);
+	}
 	return true;
 }
 
@@ -121,6 +126,11 @@ void Enemy::Reset()
 {
 	myHasMoved = false;
 	mySomeoneSeesPlayer = false;
+}
+
+int Enemy::GetViewDistance() const
+{
+	return myViewDistance;
 }
 
 void Enemy::OnClick()

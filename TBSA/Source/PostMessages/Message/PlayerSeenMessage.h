@@ -7,11 +7,13 @@
 #pragma warning(disable : 4512)
 struct PlayerSeenMessage : public BaseMessage
 {
-	PlayerSeenMessage(const RecieverTypes aReceiverType, const CU::Vector2i & aPlayerPosition) :
+	PlayerSeenMessage(const RecieverTypes aReceiverType, const CU::Vector2i & aPlayerPosition, const Enemy & aEnemy) :
 		BaseMessage(aReceiverType),
-		myPlayerPosition(aPlayerPosition)
+		myPlayerPosition(aPlayerPosition),
+		myEnemy(aEnemy)
 	{}
 
 	const CU::Point2i myPlayerPosition;
+	const Enemy & myEnemy;
 };
 #pragma warning (pop)
