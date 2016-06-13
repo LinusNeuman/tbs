@@ -11,11 +11,12 @@ APBox::APBox()
 	mySprite->Init("Sprites/GUI/HUD/AP/ActorAP.dds", true, CU::Vector4f::Zero, { 0.5f, 0.5f });
 	mySprite->SetLayer(enumRenderLayer::eGUI);
 	mySprite->SetPivotWithPixels({ mySprite->GetSizeInPixels().x / 2.f, -(mySprite->GetSizeInPixels().y / 2.f) });
+	mySprite->SetRenderPriority(100.f);
 
 	myEasing = 0.f;
 	myMovementTimer = 0.f;
-	myMovementTotalDown = 0.5f;
-	myMovementTotalUp = 0.5f;
+	myMovementTotalDown = 1.0f;
+	myMovementTotalUp = 1.0f;
 
 	myApBoxState = eAPBoxState::eGoingUp;
 
@@ -60,7 +61,8 @@ void APBox::MoveUp(const CommonUtilities::Time& aTime)
 	}
 	else
 	{
-		myOffset = CU::Vector2f::One * (0.3f + (0.5f * (1.f - myEasing)));
+		myPosition = myTilePositionf;
+		myOffset = CU::Vector2f::One * ((0.2f * (1.f - myEasing)));
 	}
 }
 
@@ -75,7 +77,8 @@ void APBox::MoveDown(const CommonUtilities::Time& aTime)
 	}
 	else
 	{
-		myOffset = CU::Vector2f::One * (0.3f + (0.5f * myEasing));
+		myPosition = myTilePositionf;
+		myOffset = CU::Vector2f::One * ((0.2f * myEasing));
 	}
 }
 
@@ -87,11 +90,14 @@ void APBox::Animate(const CU::Time& aDelta)
 void APBox::Reset()
 {
 	myPosition = myTilePositionf;
+	myOffset = {0.f,0.f};
+	myApBoxState = eAPBoxState::eGoingDown;
+	myMovementTimer = 0.f;
 }
 
 void APBox::Draw() const
 {
 	mySprite->Draw(myPosition - myOffset);
 
-	RenderConverter::AddRenderCommand(RenderCommand(*myAPText, 1.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
+	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(*myAPText, myPosition - myOffset, 1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI)));
 }

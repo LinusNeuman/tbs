@@ -148,6 +148,13 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 		{
 			if (myFloor->GetTile(x, y).GetAvailableDirections()[i] == aDirection)
 			{
+				if (aEnemy->GetType() == eActorType::eEnemyThree)
+				{
+					if (n > 2)
+					{
+						continue;
+					}
+				}
 				myFloor->GetTile(x, y).SetInEnemyFoV(true, aEnemy);
 				break;
 			}

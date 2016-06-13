@@ -34,12 +34,8 @@ public:
 
 	void __forceinline SetPos(TilePositionf aPos)
 	{
-		CU::Vector2f tempPos = CU::IsometricToPixel(aPos);
-		tempPos.x /= SingletonDataHolder::GetTargetResolution().x;
-		tempPos.y /= SingletonDataHolder::GetTargetResolution().y;
-
-		myAPText->myPosition.x = tempPos.x;
-		myAPText->myPosition.y = tempPos.y;
+		myAPText->myPosition.x = aPos.x;
+		myAPText->myPosition.y = aPos.y;
 
 		myTilePositionf = aPos;
 	}

@@ -6,6 +6,7 @@
 #include <PostMaster/MessageReceiver.h>
 #include <CU/Utility/GameSpecificTypeDefs.h>
 #include <ActorEnums.h>
+#include <Audio\Instances\SoundEffect.h>
 
 
 struct ActorData;
@@ -127,6 +128,13 @@ private:
 
 	eActorType myType;
 	
+
+	SoundEffect* myStepSounds[6];
+
+	SoundEffect* myFightSounds[5];
+
+	float myStepTimer;
+	float myFightTimer;
 };
 
 inline void Actor::SetActiveState(const bool aActiveFlag)

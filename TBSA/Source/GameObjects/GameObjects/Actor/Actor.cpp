@@ -22,18 +22,55 @@ Actor::Actor()
 	myHasObjectiveFlag = false;
 	myObjectiveTargetPosition = TilePositionf::One;
 	myDirection = eDirection::SOUTH;
+
+	for (int i = 0; i <= 5; ++i)
+	{
+		myStepSounds[i] = new SoundEffect();
+	}
+	myStepSounds[0]->Init("Sounds/SFX/step1.wav");
+	myStepSounds[1]->Init("Sounds/SFX/step2.wav");
+	myStepSounds[2]->Init("Sounds/SFX/step3.wav");
+	myStepSounds[3]->Init("Sounds/SFX/step4.wav");
+	myStepSounds[4]->Init("Sounds/SFX/step5.wav");
+	myStepSounds[5]->Init("Sounds/SFX/step6.wav");
+
+	for (int i = 0; i <= 4; ++i)
+	{
+		myFightSounds[i] = new SoundEffect();
+	}
+
+	myFightSounds[0]->Init("Sounds/SFX/hit1.wav");
+	myFightSounds[1]->Init("Sounds/SFX/hit2.wav");
+	myFightSounds[2]->Init("Sounds/SFX/hit3.wav");
+	myFightSounds[3]->Init("Sounds/SFX/hit4.wav");
+	myFightSounds[4]->Init("Sounds/SFX/hit5.wav");
+
+	myFightTimer = 0.0f;
+	myStepTimer = 0.0f;
 }
 
 Actor::~Actor()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eMouseClicked, *this);
+
+	for (int i = 0; i <= 5; ++i)
+	{
+		myStepSounds[i] = nullptr;
+		delete myStepSounds[i];
+	}
+
+	for (int i = 0; i <= 4; ++i)
+	{
+		myFightSounds[i] = nullptr;
+		delete myFightSounds[i];
+	}
 }
 
 void Actor::Init(const ActorData &aActorData)
 {
 	myActiveFlag = true;
 	myVisibleFlag = false;
-
+	myType = aActorData.myActortype;
 	myPosition = CommonUtilities::Vector2f::Zero;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
 	mySprite->Init();
@@ -99,6 +136,13 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		eActorState tempState = GetActorState();
 		if (tempState == eActorState::eWalking)
 		{
+			myStepTimer += aDeltaTime.GetSeconds();
+			if (myStepTimer >= 0.14f)
+			{
+				myStepSounds[0]->Play(0.4f);
+				myStepTimer = 0.f;
+			}
+
 			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 			UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
 			CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
@@ -123,6 +167,13 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		}
 		else if (tempState == eActorState::eFighting)
 		{
+			myFightTimer += aDeltaTime.GetSeconds();
+
+			if (myFightTimer >= 0.10f)
+			{
+				myFightSounds[0]->Play(0.4f);
+				myFightTimer = 0.f;
+			}
 			if (myAnimations.GetAnimationIsRunning() == false)
 			{
 				SetActorState(eActorState::eDead);
@@ -170,6 +221,8 @@ void Actor::OnMove(CU::Vector2ui aTargetPosition)
 void Actor::AfterTurn()
 {
 	ResetObjectiveState();
+	myStepTimer = 0.0f;
+	myFightTimer = 0.0f;
 }
 
 void Actor::NextToObjective()
