@@ -227,6 +227,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 			}
 		}
 	}
+
+	myObjectiveManager.Update();
 }
 
 void GameLevel::Draw() const
@@ -314,4 +316,9 @@ void GameLevel::ConstructNavGraph()
 TiledData* GameLevel::GetTiledData()
 {
 	return myTiledData;
+}
+
+ObjectiveManager& GameLevel::GetObjectiveManager()
+{
+	return myObjectiveManager;
 }

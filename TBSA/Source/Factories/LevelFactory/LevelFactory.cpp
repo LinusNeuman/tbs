@@ -3,6 +3,9 @@
 #include <TiledLoader\TiledLoader.h>
 #include <TiledData/TiledData.h>
 
+#define OBJECTIVE_LOCATION std::string("Data/Objectives/")
+#define LEVEL_LOCATION std::string("Data/Tiled/")
+
 LevelFactory::LevelFactory()
 {
 	myPlayerFactory.LoadFromJson();
@@ -21,9 +24,12 @@ GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath)
 	{
 		SAFE_DELETE(myTileData);
 	}
-	myTileData = new TiledData;
-	LoadLevel(aLevelPath);
 	GameLevel* level = new GameLevel();
+	myTileData = new TiledData;
+
+	myTileData->myObjectiveManager = &level->GetObjectiveManager();
+
+	LoadLevel(aLevelPath);
 	level->Init(myTileData);
 	return level;
 }
@@ -54,13 +60,14 @@ void LevelFactory::LoadLevel(const std::string& aLevelPath)
 	
 	myTileData->myIsLoaded = false;
 
-	//myThread = new std::thread(TiledLoader::Load, aLevelPath, myTileData);
-
-	std::thread(TiledLoader::Load, aLevelPath, myTileData).detach();
+	std::thread(StaticLoad, aLevelPath, myTileData).detach();
 	//TiledLoader::Load(aLevelPath, myTileData);
 
-	/*for (int i = 0; i < myTileData.myEnemies.Size(); i++)
-	{
-		myTileData.myEnemies[i]->Init()
-	}*/
+	
+}
+
+void LevelFactory::StaticLoad(const std::string& aFilePath, TiledData* aTilePointer)
+{
+	aTilePointer->myObjectiveManager->LoadFromJson(OBJECTIVE_LOCATION + aFilePath);
+	TiledLoader::Load(LEVEL_LOCATION + aFilePath, aTilePointer);
 }

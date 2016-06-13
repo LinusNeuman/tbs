@@ -1,6 +1,8 @@
 #pragma once
 #include <Message/RecieverTypes.h>
 
+struct BaseMessage;
+struct TextMessage;
 struct EnemyDirectionChangedMessage;
 struct FlagGoalReachedMessage;
 struct FlagPlayerDiedMessage;
@@ -36,6 +38,7 @@ struct DialogTextMessage;
 struct ClearLogMessage;
 struct ScrollLogUpMessage;
 struct ScrollLogDownMessage;
+struct PositionMessage;
 struct LevelChangeMassage;
 
 class MessageReciever
@@ -44,6 +47,7 @@ public:
 	virtual ~MessageReciever()
 	{}
 
+	virtual bool RecieveMessage(const BaseMessage & aMessage);
 	virtual bool RecieveMessage(const WindowRectChangedMessage & aMessage);
 	virtual bool RecieveMessage(const LevelTileMetricsMessage & aMessage);
 	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage);
@@ -78,6 +82,8 @@ public:
 	virtual bool RecieveMessage(const ClearLogMessage& aMessage);
 	virtual bool RecieveMessage(const ScrollLogUpMessage& aMessage);
 	virtual bool RecieveMessage(const ScrollLogDownMessage& aMessage);
+	virtual bool RecieveMessage(const TextMessage& aMessage);
+	virtual bool RecieveMessage(const PositionMessage& aMessage);
 	virtual bool RecieveMessage(const LevelChangeMassage& aMessage);
 	virtual bool RecieveMessage(const EnemyDirectionChangedMessage& aMessage);
 
