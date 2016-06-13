@@ -16,6 +16,7 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	myIsVisible = false;
 	myIsDiscovered = false;
 	myIsInEnemyFoV = false;
+	myEnemy = nullptr;
 	myAvailableDirections.Init(8);
 	for (size_t i = 1; i < 9; i++)
 	{
@@ -141,9 +142,10 @@ void IsometricTile::SetDiscovered(bool aIsDiscovered)
 	myIsDiscovered = aIsDiscovered;
 }
 
-void IsometricTile::SetInEnemyFoV(bool aIsInFoV)
+void IsometricTile::SetInEnemyFoV(bool aIsInFoV, Enemy* aEnemy)
 {
 	myIsInEnemyFoV = aIsInFoV;
+	myEnemy = aEnemy;
 }
 
 bool IsometricTile::GetVisible() const
@@ -159,6 +161,11 @@ bool IsometricTile::GetDiscovered() const
 bool IsometricTile::GetInEnemyFov() const
 {
 	return myIsInEnemyFoV;
+}
+
+Enemy* IsometricTile::GetSeenEnemy() const
+{
+	return myEnemy;
 }
 
 void IsometricTile::RemoveAvailableDirection(eDirection aDirection)

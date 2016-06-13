@@ -413,7 +413,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetInEnemyFov() == true)
 	{
-		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition));
+		PlayerSeen(CommonUtilities::Point2i(aMessage.myPosition), myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetSeenEnemy());
 	}
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
@@ -451,9 +451,9 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 	return true;
 }
 
-void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition)
+void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
-	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition));
+	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
@@ -462,7 +462,7 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 	{
 		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
 		{
-			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 		}
 	}
 	return true;
@@ -474,7 +474,8 @@ bool PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 	{
 		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
 		{
-			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()));
+			
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 		}
 	}
 	return false;
