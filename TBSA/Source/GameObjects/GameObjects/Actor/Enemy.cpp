@@ -135,8 +135,10 @@ int Enemy::GetViewDistance() const
 
 void Enemy::OnClick()
 {
-	SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
-	//Fight();
+	if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+	{
+		SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+	}
 }
 
 void Enemy::Fight()
