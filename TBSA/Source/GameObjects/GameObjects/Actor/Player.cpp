@@ -12,6 +12,7 @@
 #include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/PlayerIDMessage.h>
+#include <Message/AnimationStateMessage.h>
 
 
 Player::Player()
@@ -22,7 +23,8 @@ Player::Player()
 
 Player::~Player()
 {
-	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents,*this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eAnimationState, *this);
 }
 
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
@@ -35,10 +37,16 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myEnemyTargetIndex = USHRT_MAX;
 
 	myIsSeen = false;
+	myIsInFight = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eAnimationState, *this);
 	myDetectedSprite = new StaticSprite();
-	myDetectedSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
-	myDetectedSprite->SetLayer(enumRenderLayer::eGUI);
+	myDetectedSprite->Init("Sprites/pixelIsNeeded.dds", true);
+	myDetectedSprite->SetLayer(enumRenderLayer::eGameObjects);
+
+	myHideSprite = new StaticSprite();
+	myHideSprite->Init("Sprites/Players/Detected/PlayerDetectedSprite.dds", true);
+	myHideSprite->SetLayer(enumRenderLayer::eGUI);
 
 	myAPBox.SetPos(myPosition);
 	myAPBox.Reset();
@@ -102,6 +110,12 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	return true;
 }
 
+bool Player::RecieveMessage(const AnimationStateMessage& aMessage)
+{
+	myIsInFight = aMessage.myIsRunning;
+	return true;
+}
+
 void Player::AfterTurn()
 {
 	Actor::AfterTurn();
@@ -133,6 +147,10 @@ void Player::Update(const CU::Time& aDeltaTime)
 	else
 	{
 		myAPBox.Reset();
+	}
+	if (myIsInFight == true)
+	{
+		mySprite = myHideSprite;
 	}
 }
 
@@ -246,6 +264,10 @@ void Player::DecideAnimation()
 			ChangeAnimation("playerAlert180");
 			break;
 		}
+	}
+	else if (myState == eActorState::eFighting)
+	{
+		ChangeAnimation("");
 	}
 }
 
