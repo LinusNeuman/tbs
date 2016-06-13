@@ -12,7 +12,7 @@ PauseMenuState::PauseMenuState()
 
 PauseMenuState::~PauseMenuState()
 {
-	
+	SingletonPostMaster::RemoveReciever(*this);
 }
 
 void PauseMenuState::Init()
