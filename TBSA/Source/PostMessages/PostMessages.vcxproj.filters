@@ -43,5 +43,6 @@
     <ClInclude Include="Message\ScrollLogDownMessage.h" />
     <ClInclude Include="Message\LevelChangeMassage.h" />
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
+    <ClInclude Include="Message\CreditScreenMessage.h" />
   </ItemGroup>
 </Project>
