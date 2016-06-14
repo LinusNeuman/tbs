@@ -76,6 +76,13 @@ void Player::CostAP(const int aCost)
 
 }
 
+void Player::SuggestCostAP(const int aSuggestCost)
+{
+	myAPBox.SetCost(aSuggestCost);
+}
+
+
+
 void Player::OnClick()
 {
 	SendPostMessage(PlayerIDMessage(RecieverTypes::eClickedOnPlayer, GetIndex()));
