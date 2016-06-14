@@ -179,11 +179,6 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		return;
 	}
 
-	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
-	{
-		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
-	}
-
 	if (IsometricInput::GetKeyPressed(DIK_F3))
 	{
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
@@ -195,40 +190,37 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	for (unsigned int i = 0; i < myFloor.Size(); i++)
 	{
-		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
+		if (myFloor.GetTile(i).GetTileType() == eTileType::EMPTY)
 		{
-			if (myFloor.GetTile(i).GetTileType() == eTileType::EMPTY)
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("OutOfMapShader")->myShader);
-			}
-			else if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH && myFloor.GetTile(i).GetDiscovered() == false && myFloor.GetTile(i).GetTileType() != eTileType::EMPTY)
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("UndiscoveredShader")->myShader);
-			}
-			else if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH && myFloor.GetTile(i).GetTileType() != eTileType::EMPTY)
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("FogOfWarShader")->myShader);
-			}
-			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH && myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightPurpleShader")->myShader);
-			}
-			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH)
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightBlueShader")->myShader);
-			}
-			else if (myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightRedShader")->myShader);
-			}
-			else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_RANGE)
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("InRangeShader")->myShader);
-			}
-			else
-			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(nullptr);
-			}
+			myFloor.GetTile(i).SetShader(Shaders::GetInstance()->GetShader("OutOfMapShader")->myShader);
+		}
+		else if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH && myFloor.GetTile(i).GetDiscovered() == false && myFloor.GetTile(i).GetTileType() != eTileType::EMPTY)
+		{
+			myFloor.GetTile(i).SetShader(Shaders::GetInstance()->GetShader("UndiscoveredShader")->myShader);
+		}
+		else if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH && myFloor.GetTile(i).GetTileType() != eTileType::EMPTY)
+		{
+			myFloor.GetTile(i).SetShader(Shaders::GetInstance()->GetShader("FogOfWarShader")->myShader);
+		}
+		else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH && myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
+		{
+			myFloor.GetTile(i).SetShader(Shaders::GetInstance()->GetShader("HighlightPurpleShader")->myShader);
+		}
+		else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_PATH)
+		{
+			myFloor.GetTile(i).SetShader(Shaders::GetInstance()->GetShader("HighlightBlueShader")->myShader);
+		}
+		else if (myFloor.GetTile(i).GetInEnemyFov() == true && myFloor.GetTile(i).GetVisible() == true)
+		{
+			myFloor.GetTile(i).SetShader(Shaders::GetInstance()->GetShader("HighlightRedShader")->myShader);
+		}
+		else if (myFloor.GetTile(i).GetTileState() == eTileState::IN_RANGE)
+		{
+			myFloor.GetTile(i).SetShader(Shaders::GetInstance()->GetShader("InRangeShader")->myShader);
+		}
+		else
+		{
+			myFloor.GetTile(i).SetShader(nullptr);
 		}
 	}
 

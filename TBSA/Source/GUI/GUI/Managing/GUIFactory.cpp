@@ -11,6 +11,7 @@
 #include <Message\LevelChangeMassage.h>
 #include <Message\CreditScreenMessage.h>
 #include <GUI/Instances/GUIPortraitActive.h>
+#include <GUI/Instances/GUIActionPeek.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -52,7 +53,7 @@ void GUIFactory::Load()
 
 		if (currentStateName == "InGame")
 		{
-			GUIDialog* dialogTextBox = new GUIDialog({ 808.f, 832.f }, { 381.f, 214.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Char);
+			GUIDialog* dialogTextBox = new GUIDialog({ 15.f/*808.f*/, 15.f/*832.f*/ }, { 381.f, 214.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Char);
 			dialogTextBox->SetLines(7);
 			myGUIElements.Add(dialogTextBox);
 
@@ -98,6 +99,12 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(newPortraitPassive);
 
+			GUIActionPeek* newPeek = new GUIActionPeek();
+			newPeek->Init();
+
+			myGUIElements.Add(newPeek);
+
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
@@ -194,6 +201,11 @@ void GUIFactory::Load()
 					if (clickEvent == "Restart")
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::eRestartLevel), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "GameOverRestart")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
 					}
 
 					if (clickEvent == "LevelSelect")

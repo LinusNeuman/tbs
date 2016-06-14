@@ -315,6 +315,13 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 
 					const float posX = static_cast<float>(JsonHelp::GetNumber(goal["x"])) / 64;
 					const float posY = static_cast<float>(JsonHelp::GetNumber(goal["y"])) / 64;
+					const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY)+static_cast<int>(posX);
+
+					if (someTiles.myObjectiveManager->CountObjective(JsonHelp::GetString(goal["name"])) > 0)
+					{
+						const LevelObjective & levelObjective = someTiles.myObjectiveManager->GetObjective(JsonHelp::GetString(goal["name"]));
+						someTiles.myTiles[index].SetObjectiveSprites(levelObjective.mySprites);
+					}
 
 					if (typeString == "LevelEnd")
 					{
@@ -323,8 +330,11 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					else if (typeString == "Sweet" || typeString == "Candy")
 					{
 						objectiveType = eObjectiveType::eLevelEnd;
-						const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY) + static_cast<int>(posX);
+						
 						someTiles.myTiles[index].SetHasCandy();
+						someTiles.myTiles[index].GetObjectiveSprite()[0] = new StaticSprite();
+						someTiles.myTiles[index].GetObjectiveSprite()[0]->Init("Sprites/Candy.dds");
+						someTiles.myTiles[index].GetObjectiveSprite()[0]->SetLayer(enumRenderLayer::eGameObjects);
 					}
 					else if (typeString == "DialogMessage")
 					{

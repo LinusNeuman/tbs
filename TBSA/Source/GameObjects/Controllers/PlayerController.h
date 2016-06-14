@@ -9,20 +9,14 @@
 #include <Input/LayeredInput/LayerInputReciever.h>
 #include <Audio\Instances\SoundEffect.h>
 #include "Controllers\ScoreCounter.h"
+#include "Controllers\enumMouseState.h"
+#include "Controllers\MouseController.h"
+
 
 class PlayState;
 class Actor;
 class RenderConverter;
 class Player;
-
-enum class enumMouseState
-{
-	eClickedOnEnemy,
-	eClickedOnPlayer,
-	eClickedOnEmptyTile,
-	eClickedOnVoid,
-	enumLength
-};
 
 class PlayerController : public MessageReciever
 {
@@ -37,6 +31,7 @@ public:
 	void NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const;
 	Player* GetSelectedPlayer();
 	int GetPlayerAP();
+	void SuggestCostAP(const int anAP);
 	void CostAP(const int anAP);
 	void Update(const CommonUtilities::Time& aTime);
 	void ConstantUpdate(const CommonUtilities::Time& aDeltaTime);
@@ -51,6 +46,7 @@ public:
 	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy);
 
 	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const BaseMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerPositionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
@@ -61,6 +57,8 @@ public:
 
 
 private:
+	bool CheckIfPlayerIsAllowedInput();
+
 	int GetPlayerAttackAPCost() const;
 
 	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);
@@ -99,6 +97,8 @@ private:
 	SoundEffect* myAlertSound;
 
 	ScoreCounter myScoreCounter;
+
+	MouseController myMouseController;
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

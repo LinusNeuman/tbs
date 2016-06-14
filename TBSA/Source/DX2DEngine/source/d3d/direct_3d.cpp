@@ -594,10 +594,10 @@ bool CDirectEngine::File_exist( const char *fileName )
 bool CDirectEngine::CreateSampler()
 {
     D3D11_SAMPLER_DESC samplerDesc;
-    samplerDesc.Filter = D3D11_FILTER_COMPARISON_ANISOTROPIC;
-    samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+    samplerDesc.Filter = D3D11_FILTER_MAXIMUM_ANISOTROPIC;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
     samplerDesc.MipLODBias = 0.0f;
     samplerDesc.MaxAnisotropy = 1;
 	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;

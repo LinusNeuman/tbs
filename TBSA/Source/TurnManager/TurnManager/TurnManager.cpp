@@ -123,7 +123,7 @@ bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 			myPlayerTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
 		}
 
-		myPlayerTurnImage->Draw(CU::Vector2f(midPointX - (64), resolutionHeight * 0.05f));
+		myPlayerTurnImage->Draw(CU::Vector2f(midPointX - (128), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}
 
@@ -167,7 +167,7 @@ bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 			myEnemyTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
 		}
 
-		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (64), resolutionHeight * 0.05f));
+		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (128), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}
 

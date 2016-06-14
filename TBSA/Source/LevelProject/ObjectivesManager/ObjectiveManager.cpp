@@ -8,6 +8,7 @@
 #include <Message/PositionMessage.h>
 #include <Message/DialogTextMessage.h>
 #include <../DialogLoader/DialogManager.h>
+#include <Rend/StaticSprite.h>
 
 ObjectiveManager::ObjectiveManager()
 {
@@ -73,6 +74,35 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 				objective.myType = eLevelObjectiveType::Size;
 			}
 
+			objective.mySprites[0] = nullptr;
+			objective.mySprites[1] = nullptr;
+
+			if (objectiveObject.count("image") > 0)
+			{
+				picojson::object spriteObject = JsonHelp::GetPicoJsonObject(objectiveObject["image"]);
+				
+				if (spriteObject.count("active") > 0)
+				{
+					StaticSprite * sprite = new StaticSprite();
+					
+					sprite->Init(std::string("Sprites/") + JsonHelp::GetString(spriteObject["active"]));
+					sprite->SetLayer(enumRenderLayer::eGameObjects);
+
+					objective.mySprites[0] = sprite;
+				}
+
+				if (spriteObject.count("not_active") > 0)
+				{
+					StaticSprite * sprite = new StaticSprite();
+
+					sprite->Init(std::string("Sprites/") + JsonHelp::GetString(spriteObject["not_active"]));
+					sprite->SetLayer(enumRenderLayer::eGameObjects);
+
+					objective.mySprites[1] = sprite;
+				}
+
+			}
+
 			stage[objective.myTarget] = objective;
 		}
 		myStages.Add(stage);
@@ -98,6 +128,31 @@ void ObjectiveManager::Update()
 void ObjectiveManager::AddObjective(const int aIndex, std::string aName)
 {
 	myObjectives[aIndex] = aName;
+}
+
+int ObjectiveManager::CountObjective(const std::string& aObjectiveName)const
+{
+	int count = 0;
+	for (size_t i = 0; i < myStages.Size(); i++)
+	{
+		count += myStages[i].count(aObjectiveName);
+	}
+	return count;
+}
+
+const LevelObjective& ObjectiveManager::GetObjective(const std::string &aObjectiveName) 
+{
+	DL_ASSERT(CountObjective(aObjectiveName) != 0, ("Error: Does not exist a LevelObjective named" + aObjectiveName).c_str());
+	for (size_t i = 0; i < myStages.Size(); i++)
+	{
+		if (myStages[i].count(aObjectiveName) > 0)
+		{
+			return myStages[i][aObjectiveName];
+		}
+	}
+
+	DL_ASSERT(false, "ERROR: WTF !?!");
+	return LevelObjective();
 }
 
 bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)

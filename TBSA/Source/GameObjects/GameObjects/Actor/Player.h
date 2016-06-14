@@ -22,13 +22,16 @@ public:
 	int GetMyAP() const override;
 	int GetPreviousAP() const;
 	void CostAP(const int aCost);
+	void SuggestCostAP(const int aSuggestCost);
 	
 	void ReachedTarget()override;
+	void ReachedWaypoint() override;
 
 	virtual void OnClick() override;
 
 	void Draw() const override;
 	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
+	bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
@@ -65,7 +68,6 @@ private:
 	int myCurrentAP;
 	int myPreviousAP;
 
-	bool myShouldDie;
 	bool myIsSelected;
 	bool myIsInFight;
 
