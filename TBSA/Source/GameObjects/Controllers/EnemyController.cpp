@@ -21,12 +21,14 @@ EnemyController::~EnemyController()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartFight, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyAttacked, *this);
 }
 
 void EnemyController::Init()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartFight, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyAttacked, *this);
 }
 
 void EnemyController::PreTurn()
@@ -198,40 +200,6 @@ void EnemyController::CreateEnemyRayTrace(const CU::Vector2f &aPosition, eDirect
 
 void EnemyController::CalculateFoVBasedOnAngle(const CU::Vector2f& aPosition, const CU::Vector2f &aShouldBeEnemyDirection, float aAngleInDegrees, float aMagnitude, eDirection aDirection, Enemy *aEnemy, int aNumberOfIterations)
 {
-	/*if (aNumberOfIterations == 0)
-		return;
-	float angle;
-	CU::Vector2f vector;
-	if (aAngleInDegrees == 45.f)
-	{
-		angle = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle());
-		if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == 1)
-			vector = CU::Vector2f(ceil(aMagnitude * cos(angle)), ceil(aMagnitude * sin(angle)));
-		else if (aShouldBeEnemyDirection.x == 1 && aShouldBeEnemyDirection.y == 0)
-			vector = CU::Vector2f(ceil(aMagnitude * cos(angle)), floor(aMagnitude * sin(angle)));
-		else if (aShouldBeEnemyDirection.x == 0 && aShouldBeEnemyDirection.y == -1)
-			vector = CU::Vector2f(floor(aMagnitude * cos(angle)), ceil(aMagnitude * sin(angle)));
-		else
-			vector = CU::Vector2f(floor(aMagnitude * cos(angle)), floor(aMagnitude * sin(angle)));
-	}
-	else
-	{
-		if (aAngleInDegrees > 0)
-			angle = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees)));
-		else
-			angle = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees)));
-		vector = CU::Vector2f(static_cast<float>(CalculatePoint(aMagnitude * cos(angle))), static_cast<float>(CalculatePoint(aMagnitude * sin(angle))));
-	}
-	for (size_t i = 0; i < 2; i++)
-	{
-		if (i == 0)
-			CalculateFoVBasedOnAngle(aPosition, aShouldBeEnemyDirection, aAngleInDegrees / 2.f, aMagnitude, aDirection, aNumberOfIterations - 1);
-		else
-			CalculateFoVBasedOnAngle(aPosition, aShouldBeEnemyDirection, -(aAngleInDegrees / 2.f), aMagnitude, aDirection, aNumberOfIterations - 1);
-	}
-	RayTrace(aPosition, aPosition + vector, aDirection);*/
-
-
 	float angle = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
 	float angle2 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() + abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 2.f)));
 	float angle3 = abs((aPosition - aPosition + aShouldBeEnemyDirection).GetAngle() - abs(DEGRESS_TO_RADIANSF(aAngleInDegrees / 4.f)));
@@ -295,6 +263,11 @@ void EnemyController::AddEnemy(Enemy* aEnemy)
 	aEnemy->myController = this;
 	myEnemies.Add(aEnemy);
 	myEnemies.GetLast()->SetIndex(myEnemies.Size() - 1);
+	ResetTileShaders();
+	for (unsigned short i = 0; i < myEnemies.Size(); i++)
+	{
+		CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
+	}
 }
 
 bool EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
@@ -313,6 +286,22 @@ bool EnemyController::RecieveMessage(const EnemyPositionChangedMessage& aMessage
 		if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
 		{
 			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
+		}
+	}
+	return true;
+}
+
+bool EnemyController::RecieveMessage(const EnemyObjectMessage& aMessage)
+{
+	ResetTileShaders();
+	if (aMessage.myType == RecieverTypes::eEnemyAttacked)
+	{
+		for (size_t i = 0; i < myEnemies.Size(); i++)
+		{
+			if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
+			{
+				CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
+			}
 		}
 	}
 	return true;

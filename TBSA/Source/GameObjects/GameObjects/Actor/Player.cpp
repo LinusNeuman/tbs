@@ -13,6 +13,7 @@
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/PlayerIDMessage.h>
 #include <Message/DijkstraMessage.h>
+#include <Message/EnemyObjectMessage.h>
 
 
 Player::Player()
@@ -25,6 +26,7 @@ Player::~Player()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eAnimationState, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyAttacked, *this);
 }
 
 void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
@@ -39,6 +41,7 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myIsInFight = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eAnimationState, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyAttacked, *this);
 
 
 	myAPBox.SetPos(myPosition);
@@ -112,6 +115,15 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	return true;
 }
 
+bool Player::RecieveMessage(const EnemyObjectMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eEnemyAttacked)
+	{
+		myIsSeen = false;
+		myCurrentAP = myPreviousAP;
+	}
+	return true;
+}
 
 void Player::AfterTurn()
 {
@@ -296,7 +308,7 @@ void Player::ReachedTarget()
 
 void Player::ReachedWaypoint()
 {
-	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes:: ePlayerPositionChanged, CU::Vector2ui::Zero, *this));
+	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes:: ePlayerPositionChanged, CU::Vector2ui(myPosition), *this));
 }
 
 void Player::NextToObjective()
