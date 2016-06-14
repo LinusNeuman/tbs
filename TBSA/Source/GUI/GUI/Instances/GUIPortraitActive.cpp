@@ -122,7 +122,7 @@ void GUIPortraitActive::Render()
 		return;
 	}
 
-	if (myPlayerID == 0)
+	if (myPlayerID == 1)
 	{
 		myCharacter1->Draw(myPosition);
 	}
