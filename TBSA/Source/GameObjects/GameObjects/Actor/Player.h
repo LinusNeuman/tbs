@@ -30,6 +30,7 @@ public:
 
 	void Draw() const override;
 	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
+	bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
