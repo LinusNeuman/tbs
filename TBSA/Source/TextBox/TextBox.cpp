@@ -135,11 +135,18 @@ TextBox::SetSize(const Vec2f aSize)
 	myDimensions.y = aSize.y / SingletonDataHolder::GetTargetResolution().y;
 
 	myNumberOfLinesDisplayed = 0;
+	float textHeight = TEXT_HEIGHT / SingletonDataHolder::GetTargetResolutionf().y;
 
-	for (float i = 0.f; i < myDimensions.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += TEXT_HEIGHT)
+	for (float i = 0.f; i < aSize.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += textHeight)
 	{
 		++myNumberOfLinesDisplayed;
 	}
+}
+
+void
+TextBox::SetLines(const unsigned int aLines)
+{
+	myNumberOfLinesDisplayed = aLines;
 }
 
 void

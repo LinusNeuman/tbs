@@ -3,6 +3,7 @@
 #pragma once
 #include <PostMaster/MessageReceiver.h>
 #include <map>
+#include <queue>
 #include "Objectives/Objective.h"
 #include <CU/GrowingArray/GrowingArray.h>
 
@@ -31,6 +32,7 @@ private:
 	unsigned short myCurrentStage;
 	std::string myNextLevel;
 	std::map<int, std::string> myObjectives;
+	std::map<std::string, std::queue<std::string>> myDialogs;
 
 #ifdef _DEBUG
 	bool isConstructed;

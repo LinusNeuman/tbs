@@ -16,4 +16,5 @@ struct LevelObjective
 	eLevelObjectiveType myType;
 	bool myIsDone;
 	std::string myTarget;
+	std::string dialogName;
 };

@@ -1,0 +1,13 @@
+{
+  "myIsFullscreen": false,
+<<<<<<< HEAD
+  "myResolutionX": 1920,
+  "myResolutionY": 1080,
+  "myWindowSizeX": 1024,
+  "myWindowSizeY": 768
+}
+=======
+  "myResolutionX": 1280,
+  "myResolutionY": 720
+}
+>>>>>>> 6ce56181c58495040fe0229acf7c61fce93a3312
