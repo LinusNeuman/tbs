@@ -11,6 +11,78 @@
             "path": "Data/Animations/CombatAnimationAnimation.json"
         },
         {
+            "path": "Data/Animations/Enemy4/EnemyWalk000Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyWalk045Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyWalk090Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyWalk135Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyWalk180Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyWalk225Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyWalk270Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyWalk315Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle000Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle045Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle090Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle135Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle180Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle225Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle270Animation.json"
+        },
+        {
+            "path": "Data/Animations/Enemy4/EnemyIdle315Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert000Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert045Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert090Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert135Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert180Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert225Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert270Animation.json"
+        },
+		{
+          "path": "Data/Animations/Enemy4/EnemyAlert315Animation.json"
+        },
+        {
             "path": "Data/Animations/DeathAnimationAnimation.json"
         },
         {
