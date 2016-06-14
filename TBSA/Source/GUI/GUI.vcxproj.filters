@@ -45,6 +45,9 @@
     <ClCompile Include="GUI\Instances\GUIPortraitActive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\Instances\GUIPortraitPassive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\Generic\GUIElement.h">
@@ -75,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Instances\GUIPortraitActive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Instances\GUIPortraitPassive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

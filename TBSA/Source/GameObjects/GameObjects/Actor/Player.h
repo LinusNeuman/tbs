@@ -32,7 +32,7 @@ public:
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
-	unsigned short GetEnemyTarget();
+	unsigned short GetEnemyTarget() const;
 	virtual void AlmostReachTarget() override;
 	virtual void NextToObjective() override;
 
@@ -50,6 +50,9 @@ public:
 	int GetAttackCost() const;
 
 	void Update(const CU::Time &aDeltaTime) override;
+
+
+	virtual void ResetObjectiveState() override;
 
 private:
 
@@ -75,7 +78,7 @@ inline void Player::SetTargetEnemy(const unsigned short aIndex, const TilePositi
 	SetObjective(aEnemyPosition);
 }
 
-inline unsigned short Player::GetEnemyTarget()
+inline unsigned short Player::GetEnemyTarget() const
 {
 	return myEnemyTargetIndex;
 }
