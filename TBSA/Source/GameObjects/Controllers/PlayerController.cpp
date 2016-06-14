@@ -407,7 +407,6 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 		{
 			myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, 1);
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
-			mySelectedPlayer->CostAP(mySelectedPlayer->GetAttackCost());
 		}
 	}
 	else if (aMessage.myType == RecieverTypes::ePlayerReachedEndOfPath)

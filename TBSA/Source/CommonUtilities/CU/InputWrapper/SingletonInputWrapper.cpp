@@ -47,4 +47,5 @@ namespace CommonUtilities
 	{
 		GetInstance().myInputWrapper.Update();
 	}
+
 }
