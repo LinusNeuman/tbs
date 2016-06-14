@@ -22,7 +22,7 @@ eStackReturnValue LoadState::Update(const CU::Time& aDeltaTime, ProxyStateStack&
 {
 	if (myDataptr->myIsLoaded == true)
 	{
-		if (IsometricInput::GetAnyKeyReleased() == true || IsometricInput::GetAnyMouseButtonReleased() == true)
+		if (IsometricInput::GetAnyKeyPressed() == true || IsometricInput::GetAnyMouseButtonPressed() == true)
 		{
 			return eStackReturnValue::eDeleteMainState;
 		}
