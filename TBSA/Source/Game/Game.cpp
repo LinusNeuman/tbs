@@ -157,7 +157,7 @@ void CGame::InitCallBack()
 	DX2D::CCustomShader* customFoVShader;
 	customFoVShader = new DX2D::CCustomShader();
 	customFoVShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
-	customFoVShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/customLos_sprite_pixel_shader", DX2D::EShaderDataBufferIndex_1);
+	customFoVShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/customLos_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 
 	DX2D::CCustomShader* customHighlightBlackShader;
 	customHighlightBlackShader = new DX2D::CCustomShader();
