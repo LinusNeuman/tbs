@@ -26,10 +26,14 @@ public:
 	void MoveDown(const CommonUtilities::Time& aTime);
 	void Animate(const CU::Time& aDelta);
 
+	void __forceinline SetCost(uchar aAPCost)
+	{
+		myCurrentCost = aAPCost;
+	}
+
 	void __forceinline SetAP(uchar aAP)
 	{
 		myAP = aAP;
-		myAPText->myText = std::to_string(myAP);
 	};
 
 	void __forceinline SetPos(TilePositionf aPos)
@@ -45,6 +49,7 @@ public:
 	void Draw() const;
 private:
 	uchar myAP;
+	uchar myCurrentCost;
 
 	StaticSprite* mySprite;
 

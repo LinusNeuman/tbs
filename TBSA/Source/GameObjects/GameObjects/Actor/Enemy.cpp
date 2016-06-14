@@ -132,7 +132,7 @@ void Enemy::SetEnemyPath(PathArray aEnemyPath)
 void Enemy::Reset()
 {
 	myHasMoved = false;
-	//mySomeoneSeesPlayer = false;
+	mySomeoneSeesPlayer = false;
 }
 
 int Enemy::GetViewDistance() const

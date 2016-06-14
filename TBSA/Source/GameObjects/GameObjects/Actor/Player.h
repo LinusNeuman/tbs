@@ -22,6 +22,7 @@ public:
 	int GetMyAP() const override;
 	int GetPreviousAP() const;
 	void CostAP(const int aCost);
+	void SuggestCostAP(const int aSuggestCost);
 	
 	void ReachedTarget()override;
 	void ReachedWaypoint() override;
@@ -30,6 +31,7 @@ public:
 
 	void Draw() const override;
 	bool RecieveMessage(const PlayerSeenMessage & aMessage) override;
+	bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 
 	void SetTargetEnemy(const unsigned short aIndex, const TilePositionf & aEnemyPosition);
 	void SetNoTarget();
