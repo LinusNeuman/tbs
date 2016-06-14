@@ -13,6 +13,7 @@ public:
 
 	virtual bool RecieveMessage(const SetTargetResolutionMessage& aMessage) override;
 
+
 private:
 	StaticSprite* myBackgroundSprite;
 
@@ -20,5 +21,6 @@ private:
 
 	bool myShouldAdd;
 	bool myShouldPop;
+	bool myShouldPopMain;
 };
 

@@ -193,7 +193,7 @@ void GUIFactory::Load()
 
 					if (clickEvent == "Restart")
 					{
-						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
+						newButton->SetAction(new GUIMessage(RecieverTypes::eRestartLevel), eGUIMessageEvents::eOnClick);
 					}
 
 					if (clickEvent == "LevelSelect")
@@ -234,6 +234,11 @@ void GUIFactory::Load()
 					if (clickEvent == "GoToCredits")
 					{
 						newButton->SetAction(new CreditScreenMessage(RecieverTypes::eGoToCredits), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "GoToMainMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eGoToMainMenu), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);
