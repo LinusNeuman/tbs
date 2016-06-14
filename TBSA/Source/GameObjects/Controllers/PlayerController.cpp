@@ -96,7 +96,7 @@ void PlayerController::AddPlayer(Player* aPlayer)
 
 void PlayerController::SelectPlayer()
 {
-	if (mySelectedPlayer->GetActorState() == eActorState::eIdle || mySelectedPlayer->GetActorState() == eActorState::eAlert)
+	if (CheckIfPlayerIsAllowedInput() == true)
 	{
 		myPlayers[mySelectedPlayerIndex]->SetSelected(false);
 		++mySelectedPlayerIndex;
@@ -177,6 +177,10 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
+	}
+	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true && CheckIfPlayerIsAllowedInput() == true)
+	{
+		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
@@ -838,4 +842,9 @@ void PlayerController::ResetTileShaders()
 		myFloor->GetTile(i).SetVisible(false);
 		//myFloor->GetTile(i).SetDiscovered(false);
 	}
+}
+
+bool PlayerController::CheckIfPlayerIsAllowedInput()
+{
+	return (mySelectedPlayer->GetActorState() == eActorState::eIdle || mySelectedPlayer->GetActorState() == eActorState::eAlert);
 }
