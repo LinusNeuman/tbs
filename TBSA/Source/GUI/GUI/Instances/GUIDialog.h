@@ -11,6 +11,7 @@ class GUIDialog : public GUIElement
 		~GUIDialog();
 		void Render() override;
 		void Update(const CU::Time& aTimeDelta) override;
+		void SetLines(const unsigned int aLines);
 		void Clear();
 		void Toggle();
 

@@ -243,6 +243,21 @@
                  "width":64,
                  "x":2432,
                  "y":1920
+                }, 
+                {
+                 "height":64,
+                 "id":13,
+                 "name":"test",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"DialogMessage",
+                 "visible":true,
+                 "width":64,
+                 "x":1856,
+                 "y":1728
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -251,7 +266,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":12,
+ "nextobjectid":18,
  "orientation":"isometric",
  "properties":
     {

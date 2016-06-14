@@ -318,6 +318,10 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					{
 						objectiveType = eObjectiveType::eLevelEnd;
 					}
+					else if (typeString == "DialogMessage")
+					{
+						objectiveType = eObjectiveType::eDialogMessage;
+					}
 					else
 					{
 						DL_ASSERT(false, "ERROR:  Objective type does not exist");

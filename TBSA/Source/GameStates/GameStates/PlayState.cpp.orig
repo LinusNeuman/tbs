@@ -17,8 +17,11 @@
 #include "Message\ClearLogMessage.h"
 #include "Message\ScrollLogDownMessage.h"
 #include "Message\ScrollLogUpMessage.h"
+<<<<<<< HEAD
 #include <../DialogLoader/DialogManager.h>
+=======
 #include <Message/TextMessage.h>
+>>>>>>> 766786009718e5aa3c7455909c72dd261ababfdc
 
 PlayState::PlayState()
 {
@@ -116,7 +119,12 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	}
 	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
 	{
-		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs["test"]));
+		std::queue<std::string> texts;
+
+		texts.push("Wee!1");
+		texts.push("Wee!2");
+
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, texts));
 	}
 
 	if (myShouldPause == true)
