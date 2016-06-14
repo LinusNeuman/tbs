@@ -48,6 +48,12 @@
     <ClCompile Include="GUI\Instances\GUIPortraitPassive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\Instances\GUIAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Instances\GUIActionPeek.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\Generic\GUIElement.h">
@@ -81,6 +87,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Instances\GUIPortraitPassive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Instances\GUIAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Instances\GUIActionPeek.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,6 +28,7 @@
 #include <Message/TextMessage.h>
 #include <Message/PositionMessage.h>
 #include <GUI/Messaging/Generic/GUIMessage.h>
+#include <Message/CurrentPlayerAP.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -63,6 +64,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnPlayer, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::RemoveReciever(*this);
 }
 
@@ -81,6 +83,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
 
 	myMouseController.Init();
 }
@@ -310,8 +313,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
-
-	
+	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
 
 }
 
@@ -423,6 +425,23 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	return true;
 }
 
+bool PlayerController::RecieveMessage(const BaseMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::ePlayerIsPeeking)
+	{
+		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
+		{
+			CU::Vector2ui peekPosition;
+			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
+			{
+				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
+				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
+			}
+		}
+	}
+	return true;
+}
+
 bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessage)
 {
 	myDebugStart.clear();
@@ -453,10 +472,12 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPosition())));
+		//myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(0);
 	}
 
 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
 	return true;

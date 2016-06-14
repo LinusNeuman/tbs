@@ -46,5 +46,6 @@
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\CreditScreenMessage.h" />
     <ClInclude Include="Message\DialogTextMessage.h" />
+    <ClInclude Include="Message\CurrentPlayerAP.h" />
   </ItemGroup>
 </Project>

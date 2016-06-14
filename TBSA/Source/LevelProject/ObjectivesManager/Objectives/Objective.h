@@ -2,6 +2,9 @@
 // CreationDate: 09/06/2016
 #pragma once
 #include <string>
+#include "CU/StaticArray/StaticArray.h"
+
+class StaticSprite;
 
 enum class eLevelObjectiveType
 {
@@ -13,6 +16,7 @@ enum class eLevelObjectiveType
 
 struct LevelObjective
 {
+	CommonUtilities::StaticArray<StaticSprite *, 2> mySprites;
 	eLevelObjectiveType myType;
 	bool myIsDone;
 	std::string myTarget;

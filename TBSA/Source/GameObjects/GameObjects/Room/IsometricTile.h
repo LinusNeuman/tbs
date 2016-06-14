@@ -4,9 +4,15 @@
 //#include "../PathFinding/NavGraph/Graph/NavGraph.h"
 #include "../PathFinding/NavGraph/NavHandle.h"
 #include <ActorEnums.h>
+#include <CU/StaticArray/StaticArray.h>
 
 class StaticSprite;
 class Enemy;
+
+namespace DX2D
+{
+	class CCustomShader;
+}
 
 enum class eTileType
 {
@@ -42,6 +48,8 @@ public:
 	void Draw() const;
 	void Update();
 
+	void SetShader(DX2D::CCustomShader * aCustomShader);
+
 	void AddSpriteLayer(StaticSprite* aSprite);
 	inline eTileType GetTileType()const;
 	inline void SetTileType(eTileType);
@@ -51,7 +59,7 @@ public:
 	inline CU::Vector2f GetPosition() const;
 
 	void SetDoor(const Door& aDoor);
-
+	void SetObjectiveSprites(const CommonUtilities::StaticArray<StaticSprite*, 2> someSprites);
 	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
 	void SetVertexHandle(VertexHandle aHandle);
 	VertexHandle GetVertexHandle() const;
@@ -77,12 +85,25 @@ public:
 		return myAvailableDirections;
 	}
 
+	void SetCurrentObjectiveSprite(const unsigned short aUS)
+	{
+		myCurrentObjectiveSprite = aUS;
+	}
+
+	CommonUtilities::StaticArray<StaticSprite *, 2> & GetObjectiveSprite()
+	{
+		return myObjectiveSprites;
+	}
 private:
+	CommonUtilities::StaticArray<StaticSprite *, 2> myObjectiveSprites;
+	unsigned short myCurrentObjectiveSprite;
+	unsigned int myRoomId;
+
 	static StaticSprite * ourCandySprite;
 	CommonUtilities::Vector2f myPosition;
 	CU::GrowingArray<eDirection> myAvailableDirections;
 	eTileType myType;
-	unsigned int myRoomId;
+	
 	CommonUtilities::Vector2ui myIndex;
 	Door myDoor;
 	VertexHandle myNavVertex;

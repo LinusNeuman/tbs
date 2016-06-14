@@ -60,5 +60,7 @@ enum class RecieverTypes
 	eAnimationState,
 	eGoToMainMenu,
 	eRestartLevel,
+	eCurrentPlayerAP,
+	ePlayerIsPeeking,
 	enumlength
 };

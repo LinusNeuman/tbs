@@ -25,10 +25,16 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 	{
 		myAvailableDirections.Add(static_cast<eDirection>(i * 10));
 	}
+
+	myObjectiveSprites[0] = nullptr;
+	myObjectiveSprites[1] = nullptr;
+	myCurrentObjectiveSprite = 0;
 }
 
 IsometricTile::~IsometricTile()
 {
+	/*myGraphicsLayers.DeleteAll();
+	myObjectiveSprites.DeleteAll();*/
 }
 
 void IsometricTile::Init()
@@ -115,10 +121,15 @@ void IsometricTile::Draw() const
 		myGraphicsLayers[i]->Draw(myPosition + positionModifier);
 	}
 
-	if (CheckHasCandy() == true)
+	if (myObjectiveSprites[myCurrentObjectiveSprite] != nullptr)
+	{
+		myObjectiveSprites[myCurrentObjectiveSprite]->Draw(myPosition);
+	}
+
+	/*if (CheckHasCandy() == true)
 	{
 		ourCandySprite->Draw(myPosition);
-	}
+	}*/
 }
 
 void IsometricTile::Update()
@@ -136,6 +147,24 @@ void IsometricTile::Update()
 	}
 }
 
+void IsometricTile::SetShader(DX2D::CCustomShader* aCustomShader)
+{
+	for (size_t i = 0; i < myGraphicsLayers.Size(); i++)
+	{
+		myGraphicsLayers[i]->SetShader(aCustomShader);
+	}
+
+	if (myObjectiveSprites[0] != nullptr)
+	{
+		myObjectiveSprites[0]->SetShader(aCustomShader);
+	}
+
+	if (myObjectiveSprites[1] != nullptr)
+	{
+		myObjectiveSprites[1]->SetShader(aCustomShader);
+	}
+}
+
 void IsometricTile::AddSpriteLayer(StaticSprite * aSprite)
 {
 	aSprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
@@ -145,6 +174,11 @@ void IsometricTile::AddSpriteLayer(StaticSprite * aSprite)
 void IsometricTile::SetDoor(const Door& aDoor)
 {
 	myDoor = aDoor;
+}
+
+void IsometricTile::SetObjectiveSprites(const CommonUtilities::StaticArray<StaticSprite*, 2> someSprites)
+{
+	myObjectiveSprites = someSprites;
 }
 
 void IsometricTile::SetVertexHandle(VertexHandle aHandle)

@@ -46,6 +46,7 @@ public:
 	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy);
 
 	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const BaseMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerPositionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerAddedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
