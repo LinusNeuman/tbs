@@ -91,6 +91,7 @@ public:
 	
 	void SetObjective(const TilePositionf & aPosition);
 	virtual void ResetObjectiveState();
+	virtual void ReachedWaypoint();
 	const TilePositionf & GetObjectiveTargetPosition();
 
 	std::string GetName() const
