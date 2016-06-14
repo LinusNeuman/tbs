@@ -21,6 +21,7 @@ namespace Launcher
             resolutionBox.Items.Add("1920x1080");
             resolutionBox.Items.Add("1680x1050");
             resolutionBox.Items.Add("1440x900");
+            resolutionBox.Items.Add("1440x990");
             resolutionBox.Items.Add("1366x768");
             resolutionBox.Items.Add("1280x720");
             resolutionBox.Items.Add("1024x768");
