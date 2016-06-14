@@ -12,17 +12,18 @@ ObjectiveFactory::~ObjectiveFactory()
 
 }
 
-Objective* ObjectiveFactory::CreateObjective(eObjectiveType aType)
+Objective* ObjectiveFactory::CreateObjective(eObjectiveType aType, std::string aDialogName)
 { 
 	//This does nothing so far
-	Objective* objective = new Objective();
 	switch (aType)
 	{
 	case eObjectiveType::eLevelEnd:
-		objective;
-		return objective;
+		//objective;
+		return new Objective;
+	case eObjectiveType::eDialogMessage:
+		return new Objective(aDialogName);
 	default:
 		DL_ASSERT(false, "Wrong ObjectiveType when creating objective");
-		return objective;
+		return new Objective;
 	}
 }

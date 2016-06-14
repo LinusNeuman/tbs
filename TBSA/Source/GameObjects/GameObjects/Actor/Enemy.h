@@ -11,7 +11,7 @@ class Enemy : public Actor
 public:
 	Enemy();
 	~Enemy();
-	void Init(const ActorData &aActorData, const EnemyData &aEnemyData);
+	void Init(const ActorData aActorData, const EnemyData &aEnemyData);
 	void UpdateEnemy();
 	virtual void ReachedTarget()override;
 	virtual void AlmostReachTarget() override;

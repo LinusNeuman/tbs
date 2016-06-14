@@ -11,7 +11,7 @@ class AnimationHandler
 public:
 	AnimationHandler();
 	~AnimationHandler();
-	void Init(/*Actor* aHolder,*/ std::map<std::string, Animation*> someAnimations);
+	void Init(/*Actor* aHolder,*/ std::map<std::string, Animation> someAnimations);
 	void Update(CommonUtilities::Time aDeltaTime);
 	void ChangeAnimation(const std::string& anAnimation);
 	void AddAnimation(Animation* anAnimation);
@@ -21,12 +21,12 @@ public:
 private:
 	//Actor* myHolder;
 	std::string myActiveAnimation;
-	std::map<std::string, Animation*> myAnimations;
+	std::map<std::string, Animation> myAnimations;
 };
 
 inline StaticSprite* AnimationHandler::GetSprite()
 {
-	return myAnimations[myActiveAnimation]->GetSprite();
+	return myAnimations[myActiveAnimation].GetSprite();
 }
 
 inline bool AnimationHandler::GetIsActive()
@@ -40,5 +40,5 @@ inline bool AnimationHandler::GetIsActive()
 
 bool AnimationHandler::GetAnimationIsRunning()
 {
-	return myAnimations[myActiveAnimation]->GetIsRunning();
+	return myAnimations[myActiveAnimation].GetIsRunning();
 }
