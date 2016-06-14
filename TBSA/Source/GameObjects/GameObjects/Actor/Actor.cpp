@@ -240,6 +240,12 @@ void Actor::AfterTurn()
 	myFightTimer = 0.0f;
 }
 
+void Actor::ResetObjectiveState()
+{
+	myHasObjectiveFlag = false;
+	myObjectiveTargetPosition = TilePositionf::Zero;
+}
+
 void Actor::NextToObjective()
 {
 

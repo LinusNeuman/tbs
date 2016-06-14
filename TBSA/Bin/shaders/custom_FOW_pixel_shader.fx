@@ -21,9 +21,9 @@ float4 PShader(PixelInputType input) : SV_TARGET
 
 	//Sets color to greyscale
 	float averageColor = (Diffuse.x + Diffuse.y + Diffuse.z) / 3.0f;
-	averageColor *= 0.2f;
+	averageColor *= 1.5f;
 
-	Diffuse = float4(averageColor, averageColor, averageColor, Diffuse.w);
+	Diffuse = float4(averageColor * 0.078, averageColor * 0.078, averageColor * 0.176, Diffuse.w);
 
 	return Diffuse;
 }

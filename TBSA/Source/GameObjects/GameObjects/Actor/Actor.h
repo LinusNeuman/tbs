@@ -90,7 +90,7 @@ public:
 	}
 	
 	void SetObjective(const TilePositionf & aPosition);
-	void ResetObjectiveState();
+	virtual void ResetObjectiveState();
 	const TilePositionf & GetObjectiveTargetPosition();
 
 	std::string GetName() const
@@ -178,12 +178,6 @@ inline void Actor::SetObjective(const TilePositionf & aPosition)
 {
 	myHasObjectiveFlag = true;
 	myObjectiveTargetPosition = aPosition;
-}
-
-inline void Actor::ResetObjectiveState()
-{
-	myHasObjectiveFlag = false;
-	myObjectiveTargetPosition = TilePositionf::Zero;
 }
 
 inline bool Actor::GetObjectiveState()
