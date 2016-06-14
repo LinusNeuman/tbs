@@ -1,4 +1,4 @@
-#include "GUIFactory.h"
+ #include "GUIFactory.h"
 #include <iostream>
 
 #include <CU/Timer/Timer.h>

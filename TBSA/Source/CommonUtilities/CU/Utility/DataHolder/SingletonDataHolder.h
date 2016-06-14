@@ -8,10 +8,16 @@ public:
 	static void Destroy();
 
 	static void SetTargetResolution(const CU::Vector2ui & aTargetResolution);
+	
 	static const CU::Vector2ui & GetTargetResolution();
+	static CU::Vector2f  GetTargetResolutionf();
+
+
+	static float GetTargetResolutionRatio();
 
 private:
 	CU::Vector2ui myTargetResolution;
+	float myTargetResolutionRatio;
 
 	static SingletonDataHolder * ourInstance;
 

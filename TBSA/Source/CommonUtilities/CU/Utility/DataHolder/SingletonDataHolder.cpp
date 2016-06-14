@@ -32,9 +32,21 @@ void SingletonDataHolder::Destroy()
 void SingletonDataHolder::SetTargetResolution(const CU::Vector2ui & aTargetResolution)
 {
 	GetInstance().myTargetResolution = aTargetResolution;
+	GetInstance().myTargetResolutionRatio = FLOATCAST(aTargetResolution.x) / FLOATCAST( aTargetResolution.y);
 }
 
 const CU::Vector2ui & SingletonDataHolder::GetTargetResolution()
 {
 	return GetInstance().myTargetResolution;
 }
+
+CU::Vector2f SingletonDataHolder::GetTargetResolutionf()
+{
+	return{ FLOATCAST(GetInstance().myTargetResolution.x), FLOATCAST(GetInstance().myTargetResolution.y) };
+}
+
+float SingletonDataHolder::GetTargetResolutionRatio()
+{
+	return GetInstance().myTargetResolutionRatio;
+}
+
