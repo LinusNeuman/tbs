@@ -312,7 +312,7 @@ bool EnemyController::RecieveMessage(const EnemyPositionChangedMessage& aMessage
 	{
 		if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
 		{
-			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
 		}
 	}
 	return true;
