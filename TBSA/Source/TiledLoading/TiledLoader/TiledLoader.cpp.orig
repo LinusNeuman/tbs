@@ -320,17 +320,21 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					{
 						objectiveType = eObjectiveType::eLevelEnd;
 					}
+<<<<<<< HEAD
+					else if (typeString == "DialogMessage")
+					{
+						objectiveType = eObjectiveType::eDialogMessage;
+					}
+					else
+=======
 					else if (typeString == "Sweet" || typeString == "Candy")
 					{
 						objectiveType = eObjectiveType::eLevelEnd;
 						const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY) + static_cast<int>(posX);
 						someTiles.myTiles[index].SetHasCandy();
 					}
-					else if (typeString == "DialogMessage")
-					{
-						objectiveType = eObjectiveType::eDialogMessage;
-					}
 					else 
+>>>>>>> 6ce56181c58495040fe0229acf7c61fce93a3312
 					{
 						DL_ASSERT(false, "ERROR:  Objective type does not exist");
 					}
