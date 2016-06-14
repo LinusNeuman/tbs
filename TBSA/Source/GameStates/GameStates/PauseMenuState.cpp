@@ -20,6 +20,7 @@ void PauseMenuState::Init()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eClosePauseMenu, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoToMainMenu, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eRestartLevel, *this);
 
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/GUI/PauseMenu/Background.dds", false, CU::Vector4f::Zero, {0.5f, 0.5f});
@@ -59,7 +60,7 @@ void PauseMenuState::Draw() const
 
 bool PauseMenuState::RecieveMessage(const GUIMessage& aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eClosePauseMenu)
+	if (aMessage.myType == RecieverTypes::eClosePauseMenu || aMessage.myType == RecieverTypes::eRestartLevel)
 	{
 		myShouldPop = true;
 	}

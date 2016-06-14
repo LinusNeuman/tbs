@@ -40,6 +40,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eRestartLevel, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -50,6 +51,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eRestartLevel, *this);
 	if (aLevelPath == "")
 	{
 		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
@@ -171,6 +173,10 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::eOpenPauseMenu)
 	{
 		myShouldPause = true;
+	}
+	if (aMessage.myType == RecieverTypes::eRestartLevel)
+	{
+		ChangeLevel(myCurrentLevelpath);
 	}
 	return true;
 }
