@@ -200,7 +200,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			SelectPlayer();
 			break;
 		case enumMouseState::eClickedOnEnemy:
-			AdditinoalAPCost = GetPlayerAttackAPCost() ;
+			AdditinoalAPCost = GetPlayerAttackAPCost();
 		case enumMouseState::eClickedOnEmptyTile:
 		{
 			PathArray positionPath;
@@ -403,7 +403,7 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	}*/
 	if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
 	{
-		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX && mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetAttackCost())
+		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX)
 		{
 			myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, 1);
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
@@ -630,48 +630,48 @@ bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const 
 	}
 #pragma endregion
 
-#pragma region Check if player is standing on tile that is diagonal from the door
-	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
-		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
-	{
-		aPeekLocation = aPosition + CU::Vector2ui(2, -1);
-		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-		{
-			aPeekLocation = aPosition + CU::Vector2ui(1, -2);
-		}
-		return true;
-	}
-	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
-		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
-	{
-		aPeekLocation = aPosition + CU::Vector2ui(2, 1);
-		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-		{
-			aPeekLocation = aPosition + CU::Vector2ui(1, 2);
-		}
-		return true;
-	}
-	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR || 
-		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
-	{
-		aPeekLocation = aPosition + CU::Vector2ui(-2, -1);
-		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-		{
-			aPeekLocation = aPosition + CU::Vector2ui(-1, -2);
-		}
-		return true;
-	}
-	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR || 
-		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
-	{
-		aPeekLocation = aPosition + CU::Vector2ui(-2, 1);
-		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-		{
-			aPeekLocation = aPosition + CU::Vector2ui(-1, 2);
-		}
-		return true;
-	}
-#pragma endregion
+//#pragma region Check if player is standing on tile that is diagonal from the door
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
+//		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(2, -1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(1, -2);
+//		}
+//		return true;
+//	}
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
+//		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(2, 1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(1, 2);
+//		}
+//		return true;
+//	}
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR || 
+//		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(-2, -1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(-1, -2);
+//		}
+//		return true;
+//	}
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR || 
+//		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(-2, 1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(-1, 2);
+//		}
+//		return true;
+//	}
+//#pragma endregion
 
 #pragma region Check if player is standing on tile that is straight from the door
 	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||

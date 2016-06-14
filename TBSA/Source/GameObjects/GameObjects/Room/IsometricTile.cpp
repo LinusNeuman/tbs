@@ -90,6 +90,12 @@ void IsometricTile::Draw() const
 	break;
 	}
 
+	if (CheckHasCandy() == true)
+	{
+		currentColour = CommonUtilities::Vector4f(1.f, 0.73f, 0.85f, 1);
+	}
+
+
 	for (USHORT i = 0; i < myGraphicsLayers.Size(); i++)
 	{
 		if (myDebugMode == true)
