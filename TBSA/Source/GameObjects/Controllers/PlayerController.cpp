@@ -451,9 +451,6 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 		DL_PRINT("You have reached the goal, Aren't you special");
 	}
-
-	
-
 	return true;
 }
 
@@ -502,8 +499,8 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 		switch (mySelectedPlayer->GetDirectionEnum())
 		{
 		case eDirection::NORTH:
-		case eDirection::NORTH_EAST:
 		case eDirection::WEST:
+		case eDirection::NORTH_EAST:
 		case eDirection::NORTH_WEST:
 			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
 			{

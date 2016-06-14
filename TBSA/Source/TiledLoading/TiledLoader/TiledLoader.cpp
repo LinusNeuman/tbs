@@ -14,7 +14,7 @@
 
 namespace
 {
-	const std::string fileEnding = ".png";
+	const std::string fileEnding = ".dds";
 }
 
 
