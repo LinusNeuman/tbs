@@ -26,8 +26,6 @@ PlayState::PlayState()
 
 	myEmitter.LoadEmitterSettings("snow");
 
-	myDialogs = LoadDialogs();
-
 	myShouldPause = false;
 	myGameOver = false;
 	myShowPostLevelScreen = false;
@@ -115,10 +113,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
 	{
 		ChangeLevel("SecondTest.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
-	{
-		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs["test"]));
 	}
 
 	if (myShouldPause == true)
