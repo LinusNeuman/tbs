@@ -19,12 +19,9 @@ float4 PShader(PixelInputType input) : SV_TARGET
 {
 	float4 Diffuse = shaderTextures[DIFFUSE_MAP].Sample(SampleType, input.tex);
 
-	Diffuse.x *= 0.0;
-	Diffuse.y *= 0.682;
-	Diffuse.z *= 0.941;
-
-	Diffuse.y *= 0.5;
-	Diffuse.z *= 0.5;
+	Diffuse.x *= 0.7;
+	Diffuse.y *= 0.8;
+	Diffuse.z *= 0.95;
 
 	return Diffuse;
 }
