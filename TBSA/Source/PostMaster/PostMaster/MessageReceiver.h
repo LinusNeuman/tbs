@@ -41,6 +41,7 @@ struct ScrollLogDownMessage;
 struct PositionMessage;
 struct LevelChangeMassage;
 struct CurrentPlayerAP;
+struct PlayerIsPeeking;
 
 class MessageReciever
 {

@@ -61,5 +61,6 @@ enum class RecieverTypes
 	eGoToMainMenu,
 	eRestartLevel,
 	eCurrentPlayerAP,
+	ePlayerIsPeeking,
 	enumlength
 };

@@ -63,6 +63,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnPlayer, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::RemoveReciever(*this);
 }
 
@@ -81,6 +82,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -413,6 +415,23 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 		}
 	}
 
+	return true;
+}
+
+bool PlayerController::RecieveMessage(const BaseMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::ePlayerIsPeeking)
+	{
+		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
+		{
+			CU::Vector2ui peekPosition;
+			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
+			{
+				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
+				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
+			}
+		}
+	}
 	return true;
 }
 
