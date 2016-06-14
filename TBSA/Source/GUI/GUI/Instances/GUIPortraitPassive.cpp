@@ -1,10 +1,10 @@
-#include "GUIPortraitActive.h"
+#include "GUIPortraitPassive.h"
 #include <Message/PlayerIDMessage.h>
 #include <PostMaster/SingletonPostMaster.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <CU/Utility/CommonCasts.h>
 
-GUIPortraitActive::GUIPortraitActive() :
+GUIPortraitPassive::GUIPortraitPassive() :
 	myCharacter0(nullptr),
 	myCharacter1(nullptr)
 {
@@ -12,7 +12,7 @@ GUIPortraitActive::GUIPortraitActive() :
 	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 }
 
-GUIPortraitActive::~GUIPortraitActive()
+GUIPortraitPassive::~GUIPortraitPassive()
 {
 	SingletonPostMaster::RemoveReciever(*this);
 
@@ -20,7 +20,7 @@ GUIPortraitActive::~GUIPortraitActive()
 	SAFE_DELETE(myCharacter1);
 }
 
-void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled)
+void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled)
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
@@ -100,22 +100,22 @@ void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath
 	ResetAnimate();
 }
 
-void GUIPortraitActive::Update(const CU::Time& aDelta)
+void GUIPortraitPassive::Update(const CU::Time& aDelta)
 {
 	GUIButton::Update(aDelta);
 }
 
-void GUIPortraitActive::WhenClicked()
+void GUIPortraitPassive::WhenClicked()
 {
 
 }
 
-void GUIPortraitActive::WhenHovered()
+void GUIPortraitPassive::WhenHovered()
 {
 	GUIButton::WhenHovered();
 }
 
-void GUIPortraitActive::Render()
+void GUIPortraitPassive::Render()
 {
 	if (myCharacter0 == nullptr || myCharacter1 == nullptr)
 	{
@@ -124,11 +124,11 @@ void GUIPortraitActive::Render()
 
 	if (myPlayerID == 0)
 	{
-		myCharacter1->Draw(myPosition);
+		myCharacter0->Draw(myPosition);
 	}
 	else
 	{
-		myCharacter0->Draw(myPosition);
+		myCharacter1->Draw(myPosition);
 	}
 
 	if (myIsAnimated == true)
@@ -140,13 +140,13 @@ void GUIPortraitActive::Render()
 	}
 }
 
-bool GUIPortraitActive::RecieveMessage(const PlayerIDMessage& aMessage)
+bool GUIPortraitPassive::RecieveMessage(const PlayerIDMessage& aMessage)
 {
 	myPlayerID = aMessage.myPlayerID;
 	return true;
 }
 
-bool GUIPortraitActive::RecieveMessage(const GUIMessage & aMessage)
+bool GUIPortraitPassive::RecieveMessage(const GUIMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer || aMessage.myType == RecieverTypes::eClickedOnPlayer)
 	{

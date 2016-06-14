@@ -1,13 +1,12 @@
 #pragma once
 #include <Audio/Instances/SoundEffect.h>
 #include "GUIButton.h"
-#include "GUIPortraitPassive.h"
 
-class GUIPortraitActive : public GUIButton
+class GUIPortraitPassive : public GUIButton
 {
 public:
-	GUIPortraitActive();
-	virtual ~GUIPortraitActive();
+	GUIPortraitPassive();
+	virtual ~GUIPortraitPassive();
 
 	void Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric = false, bool aIsEnabled = true) override;
 
