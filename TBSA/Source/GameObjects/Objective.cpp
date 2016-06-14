@@ -7,6 +7,11 @@ Objective::Objective()
 }
 
 
+Objective::Objective(std::string aDialogName)
+{
+	myDialogMessageName = aDialogName;
+}
+
 Objective::~Objective()
 {
 }

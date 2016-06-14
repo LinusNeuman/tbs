@@ -6,6 +6,8 @@
 #include <Message/BaseMessage.h>
 #include <Message/TextMessage.h>
 #include <Message/PositionMessage.h>
+#include <Message/DialogTextMessage.h>
+#include <../DialogLoader/DialogManager.h>
 
 ObjectiveManager::ObjectiveManager()
 {
@@ -35,6 +37,8 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 	picojson::array stages = JsonHelp::GetArray(root["stages"]);
 
 	myNextLevel = JsonHelp::GetString(root["nextLevel"]);
+
+	myDialogs = LoadDialogs();
 
 	for (size_t i = 0; i < stages.size(); i++)
 	{
@@ -118,6 +122,12 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 
 		myStages[myCurrentStage].erase(aMessage.myText);
 	}
+
+	if (myDialogs.count(aMessage.myText))
+	{
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
+	}
+
 	return true;
 }
 

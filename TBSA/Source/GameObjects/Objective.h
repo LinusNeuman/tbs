@@ -2,13 +2,15 @@
 
 enum class eObjectiveType
 {
-	eLevelEnd
+	eLevelEnd,
+	eDialogMessage
 };
 
 class Objective
 {
 public:
 	Objective();
+	Objective(std::string aDialogName);
 	~Objective();
 
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
@@ -23,6 +25,7 @@ public:
 
 private:
 
+	std::string myDialogMessageName;
 	CU::Vector2f myPosition;
 };
 

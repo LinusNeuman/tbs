@@ -22,6 +22,12 @@ GUIDialog::~GUIDialog()
 }
 
 void
+GUIDialog::SetLines(const unsigned int aLines)
+{
+	myTextBox.SetLines(aLines);
+}
+
+void
 GUIDialog::Render()
 {
 	if (myIsEnabled == true)
