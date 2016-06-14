@@ -81,14 +81,12 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	//From Launcher
 	picojson::value value = JsonWrapper::LoadPicoValue("Settings.json");
 	picojson::object settings = JsonWrapper::GetPicoObject(value);
-	unsigned short windowSizeX = static_cast<unsigned short>(JsonWrapper::GetInt("myWindowSizeX", settings));
-	unsigned short windowSizeY = static_cast<unsigned short>(JsonWrapper::GetInt("myWindowSizeY", settings));
 	myTargetResolutionX = JsonWrapper::GetInt("myResolutionX", settings);
 	myTargetResolutionY = JsonWrapper::GetInt("myResolutionY", settings);
 	SingletonDataHolder::SetTargetResolution({myTargetResolutionX, myTargetResolutionY});
 
-	createParameters.myWindowWidth = windowSizeX;
-	createParameters.myWindowHeight = windowSizeY;
+	createParameters.myWindowWidth = myTargetResolutionX;
+	createParameters.myWindowHeight = myTargetResolutionY;
 	createParameters.myRenderWidth = myTargetResolutionX;
 	createParameters.myRenderHeight = myTargetResolutionY;
 	createParameters.myTargetWidth = myTargetResolutionX;

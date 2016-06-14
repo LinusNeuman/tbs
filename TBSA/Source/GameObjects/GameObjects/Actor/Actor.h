@@ -142,6 +142,7 @@ private:
 	SoundEffect* myStepSounds[6];
 
 	SoundEffect* myFightSounds[5];
+	SoundEffect* myBonus;
 
 	float myStepTimer;
 	float myFightTimer;
