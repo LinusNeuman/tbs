@@ -19,6 +19,14 @@ void GUIActionPeek::WhenClicked()
 	//if (myPlayerAP <= myCo)
 
 	GUIAction::WhenClicked();
+
+	if (myCanDo == true)
+	{
+		if (myIsLocked == false)
+		{
+			SendPostMessage(BaseMessage(RecieverTypes::ePlayerIsPeeking));
+		}
+	}
 }
 
 void GUIActionPeek::WhenHovered()
