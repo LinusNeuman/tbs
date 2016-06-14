@@ -32,8 +32,6 @@
             this.resolutionBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.windowSizeBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // button1
@@ -75,34 +73,12 @@
             this.checkBox1.TabIndex = 3;
             this.checkBox1.Text = "Fullscreen";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(206, 286);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Window Size";
-            // 
-            // windowSizeBox
-            // 
-            this.windowSizeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.windowSizeBox.Enabled = false;
-            this.windowSizeBox.FormattingEnabled = true;
-            this.windowSizeBox.Location = new System.Drawing.Point(282, 283);
-            this.windowSizeBox.Name = "windowSizeBox";
-            this.windowSizeBox.Size = new System.Drawing.Size(121, 21);
-            this.windowSizeBox.TabIndex = 5;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(547, 380);
-            this.Controls.Add(this.windowSizeBox);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.resolutionBox);
@@ -120,8 +96,6 @@
         private System.Windows.Forms.ComboBox resolutionBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox windowSizeBox;
     }
 }
 

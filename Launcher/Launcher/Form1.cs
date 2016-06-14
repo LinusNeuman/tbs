@@ -20,17 +20,11 @@ namespace Launcher
             InitializeComponent();
             resolutionBox.Items.Add("1920x1080");
             resolutionBox.Items.Add("1680x1050");
-            resolutionBox.Items.Add("1280x800");
+            resolutionBox.Items.Add("1440x900");
+            resolutionBox.Items.Add("1366x768");
+            resolutionBox.Items.Add("1280x720");
             resolutionBox.Items.Add("1024x768");
-            resolutionBox.Items.Add("800x600");
 
-            windowSizeBox.Items.Add("1920x1080");
-            windowSizeBox.Items.Add("1680x1050");
-            windowSizeBox.Items.Add("1280x800");
-            windowSizeBox.Items.Add("1024x768");
-            windowSizeBox.Items.Add("800x600");
-
-            windowSizeBox.SelectedIndex = 0;
             resolutionBox.SelectedIndex = 0;
         }
 
@@ -51,7 +45,7 @@ namespace Launcher
             resY = resY.Substring(index, resY.Length - index);
             settings.myResolutionY = Convert.ToInt32(resY);
 
-            string sizeX = windowSizeBox.SelectedItem.ToString();
+           /* string sizeX = windowSizeBox.SelectedItem.ToString();
             index = sizeX.LastIndexOf("x");
             sizeX = sizeX.Substring(0, index);
             settings.myWindowSizeX = Convert.ToInt32(sizeX);
@@ -60,7 +54,7 @@ namespace Launcher
             index = sizeY.LastIndexOf("x");
             index += 1;
             sizeY = sizeY.Substring(index, sizeY.Length - index);
-            settings.myWindowSizeY = Convert.ToInt32(sizeY);
+            settings.myWindowSizeY = Convert.ToInt32(sizeY);*/
 
             string jsonString = JsonConvert.SerializeObject(settings, Formatting.Indented);
             System.IO.File.WriteAllText(Directory.GetCurrentDirectory() + "/" + "Settings.json", jsonString);
@@ -71,7 +65,7 @@ namespace Launcher
             Application.Exit();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+       /* private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if(checkBox1.Checked == false)
             {
@@ -81,6 +75,6 @@ namespace Launcher
             {
                 windowSizeBox.Enabled = false;
             }
-        }
+        }*/
     }
 }
