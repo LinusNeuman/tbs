@@ -57,8 +57,8 @@ void GUIFactory::Load()
 			myGUIElements.Add(dialogTextBox);
 
 			CU::Vector2f position;
-			position.x = 121;
-			position.y = 708;
+			position.x = 25;
+			position.y = 785;
 			position.x /= 1920;
 			position.y /= 1080;
 
