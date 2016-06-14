@@ -55,16 +55,20 @@ void Renderer::ClearCommands()
 
 void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 {
-	for (USHORT iRenderCommand = 0; iRenderCommand < (*myBuffer)[aRenderCommand.GetLayer()].Size(); ++iRenderCommand)
+	if (aRenderCommand.myPosition.x > -0.1f && aRenderCommand.myPosition.x < 1.1f &&
+		aRenderCommand.myPosition.y > -0.1f && aRenderCommand.myPosition.y < 1.15f)
 	{
-		if (aRenderCommand.GetPriority() < 
-			(*myBuffer)[aRenderCommand.GetLayer()][iRenderCommand].GetPriority())
+		for (USHORT iRenderCommand = 0; iRenderCommand < (*myBuffer)[aRenderCommand.GetLayer()].Size(); ++iRenderCommand)
 		{
-			(*myBuffer)[aRenderCommand.GetLayer()].Insert(iRenderCommand, aRenderCommand);
-			return;
+			if (aRenderCommand.GetPriority() <
+				(*myBuffer)[aRenderCommand.GetLayer()][iRenderCommand].GetPriority())
+			{
+				(*myBuffer)[aRenderCommand.GetLayer()].Insert(iRenderCommand, aRenderCommand);
+				return;
+			}
 		}
+		(*myBuffer)[aRenderCommand.GetLayer()].Add(aRenderCommand);
 	}
-	(*myBuffer)[aRenderCommand.GetLayer()].Add(aRenderCommand);
 }
 
 void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/, bool OffsetToMiddle/* = false*/)

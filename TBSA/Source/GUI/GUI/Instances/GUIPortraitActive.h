@@ -1,6 +1,7 @@
 #pragma once
 #include <Audio/Instances/SoundEffect.h>
 #include "GUIButton.h"
+#include "GUIPortraitPassive.h"
 
 class GUIPortraitActive : public GUIButton
 {

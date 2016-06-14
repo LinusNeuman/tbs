@@ -83,6 +83,22 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(portraitActive);
 
+			position.x = 25;
+			position.y = 695;
+
+			position.x /= 1920;
+			position.y /= 1080;
+
+			position.x *= SingletonDataHolder::GetTargetResolution().x;
+			position.y *= SingletonDataHolder::GetTargetResolution().y;
+
+			GUIPortraitPassive* newPortraitPassive = new GUIPortraitPassive();
+
+			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, false, true);
+
+			myGUIElements.Add(newPortraitPassive);
+
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 
