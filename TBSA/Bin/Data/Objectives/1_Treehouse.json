@@ -2,8 +2,12 @@
 	"stages":[
 		[
 			{
-				"type" : "kill",
-				"target" : "Enemy2"
+				"type" : "take_objective",
+				"target" : "Pram",
+				"image" : {
+					"active" : "Objectives/Pram.png",
+					"not_active" : "Objectives/Gamzee.png"
+				}
 			}
 		],
 		[

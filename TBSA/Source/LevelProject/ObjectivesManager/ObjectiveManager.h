@@ -14,7 +14,6 @@ class ObjectiveManager : public MessageReciever
 {
 public:
 
-
 	ObjectiveManager();
 	~ObjectiveManager();
 
@@ -22,6 +21,8 @@ public:
 	void Update();
 	
 	void AddObjective(int, std::string);
+	int CountObjective(const std::string & aObjectiveName) const;
+	const LevelObjective& GetObjective(const std::string& aObjectiveName);
 
 	bool RecieveMessage(const TextMessage& aMessage) override;
 	bool RecieveMessage(const PositionMessage& aMessage) override;
