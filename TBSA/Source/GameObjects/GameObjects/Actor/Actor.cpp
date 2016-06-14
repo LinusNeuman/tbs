@@ -246,6 +246,12 @@ void Actor::ResetObjectiveState()
 	myObjectiveTargetPosition = TilePositionf::Zero;
 }
 
+void Actor::ReachedWaypoint()
+{
+ 	int apa = 10;
+	std::cout << "ReachedWaypoint" << std::endl;
+}
+
 void Actor::NextToObjective()
 {
 
@@ -286,6 +292,9 @@ void Actor::UpdatePath()
 			Move(myPath[myCurrentWaypoint]);		
 			
 			++myCurrentWaypoint;
+
+			ReachedWaypoint();
+
 			if (myCurrentWaypoint == myPath.Size())
 			{
 				AlmostReachTarget();
