@@ -200,7 +200,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			SelectPlayer();
 			break;
 		case enumMouseState::eClickedOnEnemy:
-			AdditinoalAPCost = GetPlayerAttackAPCost() ;
+			AdditinoalAPCost = GetPlayerAttackAPCost();
 		case enumMouseState::eClickedOnEmptyTile:
 		{
 			PathArray positionPath;
@@ -403,7 +403,7 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 	}*/
 	if (aMessage.myType == RecieverTypes::ePlayerNextToObjective)
 	{
-		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX && mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetAttackCost())
+		if (mySelectedPlayer->GetEnemyTarget() != USHRT_MAX)
 		{
 			myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, 1);
 			ActivePlayerFight(aMessage.myPlayer.GetIndex());
