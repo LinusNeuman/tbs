@@ -228,14 +228,14 @@ void CGame::UpdateWork()
 {
 	//ThreadHelper::SetThreadName(static_cast<DWORD>(-1), "ThreadPool: Update");
 
-	if (GetActiveWindow() == myWindowHandle)
+	//if (GetActiveWindow() == myWindowHandle)
 	{
 		IsometricInput::Update();
 	}
-	else
+	/*else
 	{
 		IsometricInput::ResetInput();
-	}
+	}*/
 
 	CU::TimeManager::Update();
 

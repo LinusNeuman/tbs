@@ -102,7 +102,7 @@ void SingletonIsometricInputWrapper::Initialize(HINSTANCE aApplicationInstance, 
 void SingletonIsometricInputWrapper::Update()
 {
 	GetInstance().myInputWrapper.Update();
-	GetInstance().SendMouseInputMessages();
+   	GetInstance().SendMouseInputMessages();
 }
 
 bool SingletonIsometricInputWrapper::RecieveMessage(const WindowRectChangedMessage & aMessage)

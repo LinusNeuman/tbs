@@ -17,10 +17,17 @@ eStackReturnValue LoadState::Update(const CU::Time& aDeltaTime, ProxyStateStack&
 {
 	if (myDataptr->myIsLoaded == true)
 	{
-		return eStackReturnValue::eDeleteMainState;
+		if (IsometricInput::GetKeyReleased(DIK_SPACE) == true)
+		{
+			return eStackReturnValue::eDeleteMainState;
+		}
+	}
+	else
+	{
+		myPosition += CommonUtilities::Vector2f(100, 100) * aDeltaTime.GetSeconds();
 	}
 
-	myPosition += CommonUtilities::Vector2f(100, 100) * aDeltaTime.GetSeconds();
+	
 	return  eStackReturnValue::eStay;
 }
 
