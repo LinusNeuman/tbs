@@ -206,6 +206,21 @@
                  "width":54,
                  "x":2181.66666666667,
                  "y":1229.66666666666
+                }, 
+                {
+                 "height":28.5,
+                 "id":24,
+                 "name":"sweet1",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"Sweet",
+                 "visible":true,
+                 "width":39.5,
+                 "x":2129.5,
+                 "y":1370.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -225,7 +240,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":24,
+ "nextobjectid":25,
  "orientation":"isometric",
  "properties":
     {
