@@ -32,5 +32,6 @@
     <ClInclude Include="Objective.h" />
     <ClInclude Include="Controllers\ScoreCounter.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Controllers\enumMouseState.h" />
   </ItemGroup>
 </Project>

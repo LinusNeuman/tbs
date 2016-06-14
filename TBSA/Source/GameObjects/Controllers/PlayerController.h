@@ -9,22 +9,13 @@
 #include <Input/LayeredInput/LayerInputReciever.h>
 #include <Audio\Instances\SoundEffect.h>
 #include "Controllers\ScoreCounter.h"
+#include "Controllers\enumMouseState.h"
+
 
 class PlayState;
 class Actor;
 class RenderConverter;
 class Player;
-
-enum class enumMouseState
-{
-	eClickedOnEnemy,
-	eClickedOnPlayer,
-	eClickedOnEmptyTile,
-	eHeldOnEmptyTile,
-	eHeldOnEnemy,
-	eHeldOnVoid,
-	enumLength
-};
 
 class PlayerController : public MessageReciever
 {

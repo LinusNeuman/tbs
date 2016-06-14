@@ -202,6 +202,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (CheckIfPlayerIsAllowedInput() == true)
 	{
 		int AdditinoalAPCost = 0;
+
+		SuggestCostAP(0);
+
 		enumMouseState currentState = GetCurrentMouseState();
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
