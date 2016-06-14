@@ -271,47 +271,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
 
-	/*for (size_t i = 0; i < myDebugEnd.size(); i++)
-	{
-		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
-	}*/
-	/*DL_PRINT("----------");
-	for (size_t i = 0; i < myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections().Size(); i++)
-	{
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH)
-		{
-			DL_PRINT("NORTH");
-		}
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::EAST)
-		{
-			DL_PRINT("EAST");
-		}
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH)
-		{
-			DL_PRINT("SOUTH");
-		}
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::WEST)
-		{
-			DL_PRINT("WEST");
-		}
-
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH_EAST)
-		{
-			DL_PRINT("NORTH_EAST");
-		}
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH_WEST)
-		{
-			DL_PRINT("NORTH_WEST");
-		}
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH_EAST)
-		{
-			DL_PRINT("SOUTH_EAST");
-		}
-		if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH_WEST)
-		{
-			DL_PRINT("SOUTH_WEST");
-		}
-	}*/
+	
 
 }
 
@@ -514,41 +474,7 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-	/*	switch (mySelectedPlayer->GetDirectionEnum())
-		{
-		case eDirection::NORTH:
-		case eDirection::WEST:
-		case eDirection::NORTH_WEST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
-			{
-				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-			}
-			break;
-		case eDirection::NORTH_EAST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
-			{
-				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-			}
-			break;
-			
-			
-		case eDirection::EAST:
-		case eDirection::SOUTH:
-		case eDirection::SOUTH_EAST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
-			{
-				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-			}
-			break;
-		case eDirection::SOUTH_WEST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
-			{
-				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-			}
-			break;
-		default:
-			break;
-		}*/
+
 		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
 		{
 			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
@@ -646,48 +572,7 @@ bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const 
 	}
 #pragma endregion
 
-//#pragma region Check if player is standing on tile that is diagonal from the door
-//	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
-//		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
-//	{
-//		aPeekLocation = aPosition + CU::Vector2ui(2, -1);
-//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-//		{
-//			aPeekLocation = aPosition + CU::Vector2ui(1, -2);
-//		}
-//		return true;
-//	}
-//	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
-//		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
-//	{
-//		aPeekLocation = aPosition + CU::Vector2ui(2, 1);
-//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-//		{
-//			aPeekLocation = aPosition + CU::Vector2ui(1, 2);
-//		}
-//		return true;
-//	}
-//	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR || 
-//		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
-//	{
-//		aPeekLocation = aPosition + CU::Vector2ui(-2, -1);
-//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-//		{
-//			aPeekLocation = aPosition + CU::Vector2ui(-1, -2);
-//		}
-//		return true;
-//	}
-//	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR || 
-//		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
-//	{
-//		aPeekLocation = aPosition + CU::Vector2ui(-2, 1);
-//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
-//		{
-//			aPeekLocation = aPosition + CU::Vector2ui(-1, 2);
-//		}
-//		return true;
-//	}
-//#pragma endregion
+
 
 #pragma region Check if player is standing on tile that is straight from the door
 	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y)).GetTileType() == eTileType::DOOR ||
@@ -857,3 +742,127 @@ bool PlayerController::CheckIfPlayerIsAllowedInput()
 {
 	return (mySelectedPlayer->GetActorState() == eActorState::eIdle || mySelectedPlayer->GetActorState() == eActorState::eAlert);
 }
+
+/*for (size_t i = 0; i < myDebugEnd.size(); i++)
+{
+DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
+}*/
+/*DL_PRINT("----------");
+for (size_t i = 0; i < myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections().Size(); i++)
+{
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH)
+{
+DL_PRINT("NORTH");
+}
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::EAST)
+{
+DL_PRINT("EAST");
+}
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH)
+{
+DL_PRINT("SOUTH");
+}
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::WEST)
+{
+DL_PRINT("WEST");
+}
+
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH_EAST)
+{
+DL_PRINT("NORTH_EAST");
+}
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::NORTH_WEST)
+{
+DL_PRINT("NORTH_WEST");
+}
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH_EAST)
+{
+DL_PRINT("SOUTH_EAST");
+}
+if (myFloor->GetTile(myPlayers[0]->GetPosition().x, myPlayers[0]->GetPosition().y).GetAvailableDirections()[i] == eDirection::SOUTH_WEST)
+{
+DL_PRINT("SOUTH_WEST");
+}
+}*/
+
+
+
+//#pragma region Check if player is standing on tile that is diagonal from the door
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
+//		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(2, -1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(1, -2);
+//		}
+//		return true;
+//	}
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR ||
+//		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(2, 1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(1, 2);
+//		}
+//		return true;
+//	}
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR || 
+//		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(-2, -1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(-1, -2);
+//		}
+//		return true;
+//	}
+//	if (myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR || 
+//		myFloor->GetTile(USHORTCAST(aPosition.x - 1.f), USHORTCAST(aPosition.y + 1.f)).GetTileType() == eTileType::DOOR_2)
+//	{
+//		aPeekLocation = aPosition + CU::Vector2ui(-2, 1);
+//		if (myFloor->GetTile(aPeekLocation.x, aPeekLocation.y).GetTileType() == eTileType::BLOCKED)
+//		{
+//			aPeekLocation = aPosition + CU::Vector2ui(-1, 2);
+//		}
+//		return true;
+//	}
+//#pragma endregion
+
+
+/*	switch (mySelectedPlayer->GetDirectionEnum())
+{
+case eDirection::NORTH:
+case eDirection::WEST:
+case eDirection::NORTH_WEST:
+if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
+{
+PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+}
+break;
+case eDirection::NORTH_EAST:
+if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
+{
+PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+}
+break;
+
+
+case eDirection::EAST:
+case eDirection::SOUTH:
+case eDirection::SOUTH_EAST:
+if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+{
+PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+}
+break;
+case eDirection::SOUTH_WEST:
+if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+{
+PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
+}
+break;
+default:
+break;
+}*/
