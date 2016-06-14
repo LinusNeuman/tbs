@@ -24,7 +24,7 @@ void PauseMenuState::Init()
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/GUI/PauseMenu/Background.dds", false, CU::Vector4f::Zero, {0.5f, 0.5f});
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
-	myBackgroundSprite->SetRenderPriority(100.f);
+	myBackgroundSprite->SetRenderPriority(600.f);
 
 	LoadGUI("PauseMenu");
 }

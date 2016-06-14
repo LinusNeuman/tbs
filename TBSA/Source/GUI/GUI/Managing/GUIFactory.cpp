@@ -193,7 +193,7 @@ void GUIFactory::Load()
 
 					if (clickEvent == "Restart")
 					{
-						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
+						newButton->SetAction(new GUIMessage(RecieverTypes::eRestartLevel), eGUIMessageEvents::eOnClick);
 					}
 
 					if (clickEvent == "LevelSelect")
