@@ -75,7 +75,7 @@ void RenderConverter::CalculateAndRenderIso(const StaticSprite & aSpriteToRender
 	newPos.x /= FLOATCAST(SingletonDataHolder::GetTargetResolution().x);
 	newPos.y /= FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
-	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 	newPos *= renderScale;
 
 	newPos.x += 0.5f;
@@ -111,7 +111,7 @@ void RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand
 	newPos.x /= FLOATCAST(GetInstance().myWindowSize.x);
 	newPos.y /= FLOATCAST(GetInstance().myWindowSize.y);
 
-	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 	newPos *= renderScale;
 
 	newPos.x += 0.5f;
@@ -138,7 +138,7 @@ void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, con
 
 	CU::Vector2f newEndPos = CU::IsometricToPixel(aEndPosition * (*GetInstance().myCamera).GetInverse());
 
-	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 
 	GetInstance().myRenderer.DrawLine(newStartPos * renderScale, newEndPos * renderScale, aColor, true);
 }

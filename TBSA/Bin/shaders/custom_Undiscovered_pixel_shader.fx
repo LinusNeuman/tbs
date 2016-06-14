@@ -23,8 +23,5 @@ float4 PShader(PixelInputType input) : SV_TARGET
 	Diffuse.y = 0.1;
 	Diffuse.z = 0.2;
 
-	/*Diffuse.y *= 0.5;
-	Diffuse.z *= 0.5;*/
-
 	return Diffuse;
 }
