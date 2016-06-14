@@ -35,7 +35,7 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myPeekCost = aPlayerData.myPeekCost;
 	myCurrentAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
-
+	myShouldDie = false;
 	myIsSeen = false;
 	myIsInFight = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
@@ -48,7 +48,14 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 
 void Player::FreshTurn()
 {
-	myCurrentAP = myActionPointMax;
+	if (myIsSeen == true)
+	{
+		myCurrentAP = 0;
+	}
+	else
+	{
+		myCurrentAP = myActionPointMax;
+	}
 }
 
 int Player::GetMyAP() const
@@ -95,12 +102,12 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 			SetActorState(eActorState::eAlert);
 		}
 		
-		if (myShouldDie == true)
+		/*if (myShouldDie == true)
 		{
 			myIsSeen = false;
 			myShouldDie = false;
 			SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
-		}
+		}*/
 	}
 	return true;
 }
@@ -109,7 +116,10 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 void Player::AfterTurn()
 {
 	Actor::AfterTurn();
-	myShouldDie = myIsSeen;
+	if (myIsSeen == true)
+	{
+		SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
+	}
 	myIsSeen = false;
 }
 
@@ -150,7 +160,7 @@ void Player::ResetObjectiveState()
 void Player::PreTurn()
 {
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
-	myShouldDie = myIsSeen;
+	//myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
 

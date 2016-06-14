@@ -248,8 +248,7 @@ void Actor::ResetObjectiveState()
 
 void Actor::ReachedWaypoint()
 {
- 	int apa = 10;
-	std::cout << "ReachedWaypoint" << std::endl;
+	
 }
 
 void Actor::NextToObjective()

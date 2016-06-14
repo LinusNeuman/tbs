@@ -18,6 +18,7 @@ public:
 	void SetDirection(eDirection aDirection);
 	EnemyController* myController;
 	bool RecieveMessage(const PlayerSeenMessage& aMessage) override;
+	void ReachedWaypoint() override;
 
 	virtual void DecideAnimation() override;
 

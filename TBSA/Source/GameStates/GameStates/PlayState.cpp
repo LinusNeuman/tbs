@@ -40,6 +40,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eGameOverReset, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -47,6 +48,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	myLevelFactory = new LevelFactory();
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartUpLevel, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eGameOverReset, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this);
