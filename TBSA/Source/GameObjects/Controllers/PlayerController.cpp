@@ -27,6 +27,7 @@
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/TextMessage.h>
 #include <Message/PositionMessage.h>
+#include <Message/CurrentPlayerAP.h>
 #include <GUI/Messaging/Generic/GUIMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
@@ -263,6 +264,8 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
+	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
+
 	/*for (size_t i = 0; i < myDebugEnd.size(); i++)
 	{
 		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);

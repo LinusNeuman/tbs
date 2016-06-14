@@ -67,4 +67,6 @@ private:
 	float myMovementTimer;
 
 	CU::Vector2f myOffset;
+
+	bool myIsInitedFully;
 };
