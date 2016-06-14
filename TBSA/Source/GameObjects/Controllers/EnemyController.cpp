@@ -34,11 +34,6 @@ void EnemyController::PreTurn()
 	{
 		myEnemies[i]->Reset();
 	}
-
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		myFloor->SetDiagonals(myEnemies[i]->GetPosition(), 1.1f);
-	}
 }
 
 void EnemyController::Update(CommonUtilities::Time aDeltaTime)
@@ -321,7 +316,6 @@ void EnemyController::PostTurn()
 {
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
-		myFloor->SetDiagonals(myEnemies[i]->GetPosition(), 10000 * 10000);
 		myEnemies[i]->AfterTurn();
 	}
 }
