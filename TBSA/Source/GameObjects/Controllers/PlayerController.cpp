@@ -263,6 +263,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
+
 	/*for (size_t i = 0; i < myDebugEnd.size(); i++)
 	{
 		DRAWISOMETRICLINE(myDebugStart[i], myDebugEnd[i]);
@@ -433,13 +434,20 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 			CreatePlayerFoV(CU::Vector2f(myPlayers[iPlayer]->GetPosition()), PlayerFoWRadius);
 			break;
 		}
+		
 	}
-	CreatePlayerFoV(CU::Vector2f(aMessage.myPosition), PlayerFoWRadius);
+	CreatePlayerFoV(CU::Vector2f(aMessage.myPlayer.GetPosition()), PlayerFoWRadius);
 
 
 	if (CheckForCandy(aMessage.myPosition) == true)
 	{
 		TakeCandy(aMessage.myPosition);
+	}
+
+	
+	if (myFloor->GetTile(aMessage.myPlayer.GetPosition().x, aMessage.myPlayer.GetPosition().y).GetInEnemyFov() == true)
+	{
+		PlayerSeen(CommonUtilities::Point2i(aMessage.myPlayer.GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(aMessage.myPlayer.GetPosition().x), USHORTCAST(aMessage.myPlayer.GetPosition().y))).GetSeenEnemy());
 	}
 
 	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
@@ -500,7 +508,7 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		switch (mySelectedPlayer->GetDirectionEnum())
+	/*	switch (mySelectedPlayer->GetDirectionEnum())
 		{
 		case eDirection::NORTH:
 		case eDirection::WEST:
@@ -534,8 +542,11 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 			break;
 		default:
 			break;
+		}*/
+		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+		{
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 		}
-		
 	}
 	return true;
 }
