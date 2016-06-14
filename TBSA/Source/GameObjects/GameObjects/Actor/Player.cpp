@@ -141,6 +141,12 @@ void Player::Update(const CU::Time& aDeltaTime)
 	}
 }
 
+void Player::ResetObjectiveState()
+{
+	Actor::ResetObjectiveState();
+	myEnemyTargetIndex = USHRT_MAX;
+}
+
 void Player::PreTurn()
 {
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
@@ -266,7 +272,6 @@ void Player::OnMove(CU::Vector2ui aTargetPosition)
 void Player::SetNoTarget()
 {
 	ResetObjectiveState();
-	myEnemyTargetIndex = USHRT_MAX;
 }
 
 void Player::AlmostReachTarget()

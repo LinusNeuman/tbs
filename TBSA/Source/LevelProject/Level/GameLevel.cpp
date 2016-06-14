@@ -189,8 +189,8 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
 
-	myPlayer->Update(aTimeDelta);
-	myPlayer2->Update(aTimeDelta);
+	//myPlayer->Update(aTimeDelta);
+	//myPlayer2->Update(aTimeDelta);
 
 
 	for (unsigned int i = 0; i < myFloor.Size(); i++)
