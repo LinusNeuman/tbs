@@ -242,6 +242,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 					CostAP(positionPath.Size() - 1 + AdditinoalAPCost);
 					NotifyPlayers(positionPath);
 					SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+					SuggestCostAP(0);
 				}
 			}
 		}
