@@ -147,10 +147,10 @@ bool CGame::RecieveMessage(const SetHWNDMessage & aMessage)
 void CGame::InitCallBack()
 {
 	Shaders::Create();
-	DX2D::CCustomShader* customShader;
-	customShader = new DX2D::CCustomShader();
-	customShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
-	customShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_sprite_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+	DX2D::CCustomShader* customFOWShader;
+	customFOWShader = new DX2D::CCustomShader();
+	customFOWShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customFOWShader->PostInit("shaders/custom_sprite_vertex_shader.fx", "shaders/custom_FOW_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 
 	DX2D::CCustomShader* customFoVShader;
 	customFoVShader = new DX2D::CCustomShader();
@@ -182,12 +182,18 @@ void CGame::InitCallBack()
 	customInRangeShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
 	customInRangeShader->PostInit("shaders/custom_inRange_vertex_shader.fx", "shaders/custom_inRange_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
 
-	Shaders::GetInstance()->AddShader(customShader, "FogOfWarShader");
+	DX2D::CCustomShader* customOutOfMapShader;
+	customOutOfMapShader = new DX2D::CCustomShader();
+	customOutOfMapShader->SetShaderdataFloat4(DX2D::Vector4f(0, 0, 1.f, 1.f), DX2D::EShaderDataID_1);
+	customOutOfMapShader->PostInit("shaders/custom_color_vertex_shader.fx", "shaders/custom_outOfMap_pixel_shader.fx", DX2D::EShaderDataBufferIndex_1);
+
+	Shaders::GetInstance()->AddShader(customFOWShader, "FogOfWarShader");
 	Shaders::GetInstance()->AddShader(customFoVShader, "FieldOfViewShader");
 	Shaders::GetInstance()->AddShader(customHighlightBlackShader, "HighlightBlackShader");
 	Shaders::GetInstance()->AddShader(customHighlightBlueShader, "HighlightBlueShader");
 	Shaders::GetInstance()->AddShader(customHighlightRedShader, "HighlightRedShader");
 	Shaders::GetInstance()->AddShader(customHighlightPurpleShader, "HighlightPurpleShader");
+	Shaders::GetInstance()->AddShader(customOutOfMapShader, "OutOfMapShader");
 	Shaders::GetInstance()->AddShader(customInRangeShader, "InRangeShader");
 
 
