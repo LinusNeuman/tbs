@@ -10,6 +10,7 @@
 #include <Audio\Instances\SoundEffect.h>
 #include "Controllers\ScoreCounter.h"
 #include "Controllers\enumMouseState.h"
+#include "Controllers\MouseController.h"
 
 
 class PlayState;
@@ -95,6 +96,8 @@ private:
 	SoundEffect* myAlertSound;
 
 	ScoreCounter myScoreCounter;
+
+	MouseController myMouseController;
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

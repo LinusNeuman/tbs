@@ -81,6 +81,8 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerReachedEndOfPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
+
+	myMouseController.Init();
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -206,6 +208,8 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		SuggestCostAP(0);
 
 		enumMouseState currentState = GetCurrentMouseState();
+
+		myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
 		{
