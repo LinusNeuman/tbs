@@ -32,20 +32,20 @@ void BoxCollider::DrawCollider(const CU::Vector4f & aRenderColor /*= Vector4f::O
 
 	aLinePos2.x = myMaxPos.x;
 
-	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
+	//RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
 
 	aLinePos1 = myMaxPos;
 
-	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
+	//RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
 
 	aLinePos2 = myMaxPos;
 	aLinePos2.y = myMinPos.y;
 
-	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
+	//RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
 
 	aLinePos1 = myMinPos;
 
-	RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
+	//RenderConverter::DrawIsometricLine(aLinePos1, aLinePos2, lineColor);
 }
 
 bool BoxCollider::CheckCollisionAgainstCircle(const CircleCollider & aColliderToCheckAgainst) const
