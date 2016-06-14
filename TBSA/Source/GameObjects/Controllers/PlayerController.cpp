@@ -96,21 +96,24 @@ void PlayerController::AddPlayer(Player* aPlayer)
 
 void PlayerController::SelectPlayer()
 {
-	myPlayers[mySelectedPlayerIndex]->SetSelected(false);
-	++mySelectedPlayerIndex;
-	if (mySelectedPlayerIndex >= myPlayers.Size())
+	if (mySelectedPlayer->GetActorState() == eActorState::eIdle)
 	{
-		mySelectedPlayerIndex = 0;
+		myPlayers[mySelectedPlayerIndex]->SetSelected(false);
+		++mySelectedPlayerIndex;
+		if (mySelectedPlayerIndex >= myPlayers.Size())
+		{
+			mySelectedPlayerIndex = 0;
+		}
+		mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+		myPlayers[mySelectedPlayerIndex]->SetSelected(true);
+
+		SetCameraPositionToPlayer(mySelectedPlayerIndex);
+
+		mySelectPlayerSound->Play(0.2f);
+
+		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+		SendPostMessage(dijkstraMessage);
 	}
-	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
-	myPlayers[mySelectedPlayerIndex]->SetSelected(true);
-
-	SetCameraPositionToPlayer(mySelectedPlayerIndex);
-	
-	mySelectPlayerSound->Play(0.2f);
-
-	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
-	SendPostMessage(dijkstraMessage);
 }
 
 void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const
@@ -500,18 +503,18 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 {
 	for (unsigned short iPlayer = 0; iPlayer < myPlayers.Size(); iPlayer++)
 	{
-		switch (mySelectedPlayer->GetDirectionEnum())
+		/*switch (mySelectedPlayer->GetDirectionEnum())
 		{
 		case eDirection::NORTH:
 		case eDirection::WEST:
 		case eDirection::NORTH_WEST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
+			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.50f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.50f)))).GetInEnemyFov() == true)
 			{
 				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 			}
 			break;
 		case eDirection::NORTH_EAST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
+			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.50f)))).GetInEnemyFov() == true)
 			{
 				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 			}
@@ -527,15 +530,18 @@ bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessag
 			}
 			break;
 		case eDirection::SOUTH_WEST:
-			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+			if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.50f)), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
 			{
 				PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 			}
 			break;
 		default:
 			break;
+		}*/
+		if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
+		{
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
 		}
-		
 	}
 	return true;
 }

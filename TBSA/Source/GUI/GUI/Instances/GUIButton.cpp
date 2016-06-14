@@ -71,7 +71,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myPosition = aParentSpace + anOffset;
 	myIsEnabled = aIsEnabled;
 
-	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 
 	CU::Vector2f boxPosition = { myPosition.x / SingletonDataHolder::GetTargetResolutionf().x, myPosition.y / SingletonDataHolder::GetTargetResolutionf().y };
 	CU::Vector2f spriteSizeNorm = { FLOATCAST(mySpriteUnpressed->GetSizeInPixels().x) / (1920.f), FLOATCAST( mySpriteUnpressed->GetSizeInPixels().y ) / (1080.f) };

@@ -64,7 +64,7 @@ void RenderCommand::Render() const
 		float normalizedWindowSizeX = myRenderData.mySizeInPixels.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) *SingletonDataHolder::GetTargetResolutionRatio();
 		float normalizedWindowSizeY = myRenderData.mySizeInPixels.y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
-		float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+		float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 
 		DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale, normalizedWindowSizeY * renderScale);
 
