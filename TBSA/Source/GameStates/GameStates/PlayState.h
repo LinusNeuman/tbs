@@ -35,7 +35,6 @@ private:
 	std::string myLevelKey;
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
-	std::map<std::string, std::queue<std::string>> myDialogs;
 	bool myShouldExit;
 	bool myGameOver;
 	bool myShouldPause;
