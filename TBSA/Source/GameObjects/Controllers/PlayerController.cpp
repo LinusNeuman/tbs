@@ -438,7 +438,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	}
 
 	
-	if (myFloor->GetTile(aMessage.myPlayer.GetPosition().x, aMessage.myPlayer.GetPosition().y).GetInEnemyFov() == true)
+	if (myFloor->GetTile(aMessage.myPlayer.GetPosition().x, aMessage.myPlayer.GetPosition().y).GetInEnemyFov() == true )
 	{
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPlayer.GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(aMessage.myPlayer.GetPosition().x), USHORTCAST(aMessage.myPlayer.GetPosition().y))).GetSeenEnemy());
 	}

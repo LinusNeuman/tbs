@@ -101,7 +101,7 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	{
 		StopPath();
 		myPreviousAP = myCurrentAP;
-		myCurrentAP = 0;
+		CostAP(myCurrentAP);
 		
 		if (myIsSeen == false)
 		{
@@ -126,7 +126,6 @@ int Player::GetPeekCost() const
 {
 	return myPeekCost;
 }
-
 
 int Player::GetAttackCost() const
 {

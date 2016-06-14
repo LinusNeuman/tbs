@@ -81,12 +81,12 @@ void Enemy::UpdateEnemy()
 			myController->EnemyDone();
 		}
 
-		/*if (mySomeoneSeesPlayer == true)
+		if (mySomeoneSeesPlayer == true)
 		{
 			myController->EnemyDone();
 
 			StopPath();
-		}*/
+		}
 	}
 	else
 	{
