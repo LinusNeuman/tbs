@@ -96,24 +96,21 @@ void PlayerController::AddPlayer(Player* aPlayer)
 
 void PlayerController::SelectPlayer()
 {
-	if (mySelectedPlayer->GetActorState() == eActorState::eIdle)
+	myPlayers[mySelectedPlayerIndex]->SetSelected(false);
+	++mySelectedPlayerIndex;
+	if (mySelectedPlayerIndex >= myPlayers.Size())
 	{
-		myPlayers[mySelectedPlayerIndex]->SetSelected(false);
-		++mySelectedPlayerIndex;
-		if (mySelectedPlayerIndex >= myPlayers.Size())
-		{
-			mySelectedPlayerIndex = 0;
-		}
-		mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
-		myPlayers[mySelectedPlayerIndex]->SetSelected(true);
-
-		SetCameraPositionToPlayer(mySelectedPlayerIndex);
-
-		mySelectPlayerSound->Play(0.2f);
-
-		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
-		SendPostMessage(dijkstraMessage);
+		mySelectedPlayerIndex = 0;
 	}
+	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+	myPlayers[mySelectedPlayerIndex]->SetSelected(true);
+
+	SetCameraPositionToPlayer(mySelectedPlayerIndex);
+	
+	mySelectPlayerSound->Play(0.2f);
+
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+	SendPostMessage(dijkstraMessage);
 }
 
 void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const

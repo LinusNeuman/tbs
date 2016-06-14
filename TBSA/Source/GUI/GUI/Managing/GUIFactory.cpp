@@ -52,8 +52,8 @@ void GUIFactory::Load()
 
 		if (currentStateName == "InGame")
 		{
-			GUIDialog* dialogTextBox = new GUIDialog({ 808.f, 832.f }, { 381.f, 214.f }, "Text/calibril.ttf_sdf");
-
+			GUIDialog* dialogTextBox = new GUIDialog({ 808.f, 832.f }, { 381.f, 214.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Char);
+			dialogTextBox->SetLines(7);
 			myGUIElements.Add(dialogTextBox);
 
 			CU::Vector2f position;
@@ -193,7 +193,7 @@ void GUIFactory::Load()
 
 					if (clickEvent == "Restart")
 					{
-						newButton->SetAction(new GUIMessage(RecieverTypes::eGameOverReset), eGUIMessageEvents::eOnClick);
+						newButton->SetAction(new GUIMessage(RecieverTypes::eRestartLevel), eGUIMessageEvents::eOnClick);
 					}
 
 					if (clickEvent == "LevelSelect")
@@ -234,6 +234,11 @@ void GUIFactory::Load()
 					if (clickEvent == "GoToCredits")
 					{
 						newButton->SetAction(new CreditScreenMessage(RecieverTypes::eGoToCredits), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "GoToMainMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eGoToMainMenu), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);

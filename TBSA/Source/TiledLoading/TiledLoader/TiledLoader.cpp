@@ -326,6 +326,10 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 						const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY) + static_cast<int>(posX);
 						someTiles.myTiles[index].SetHasCandy();
 					}
+					else if (typeString == "DialogMessage")
+					{
+						objectiveType = eObjectiveType::eDialogMessage;
+					}
 					else 
 					{
 						DL_ASSERT(false, "ERROR:  Objective type does not exist");

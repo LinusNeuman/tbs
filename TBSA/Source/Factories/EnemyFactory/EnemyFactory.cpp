@@ -43,7 +43,7 @@ void EnemyFactory::AddEnemyAnimation(ActorData &aActorData, EnemyData &aEnemyDat
 		picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
 		std::string name = JsonWrapper::GetString("Name", animationObject);
 		animation->InitializeAnimation(animationObject);
-		aActorData.myAnimations[name] = animation;
+		aActorData.myAnimations[name] = *animation;
 	}
 }
 

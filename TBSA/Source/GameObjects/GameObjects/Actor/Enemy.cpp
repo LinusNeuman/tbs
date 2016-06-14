@@ -19,7 +19,7 @@ Enemy::~Enemy()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 }
 
-void Enemy::Init(const ActorData &aActorData, const EnemyData &aEnemyData)
+void Enemy::Init(const ActorData aActorData, const EnemyData &aEnemyData)
 {
 	Actor::Init(aActorData);
 	//Do stuff with enemydata

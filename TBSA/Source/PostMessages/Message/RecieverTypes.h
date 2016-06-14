@@ -58,5 +58,7 @@ enum class RecieverTypes
 	eLeaveObjective,
 	eEnemyDied,
 	eAnimationState,
+	eGoToMainMenu,
+	eRestartLevel,
 	enumlength
 };

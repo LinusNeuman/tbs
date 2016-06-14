@@ -40,6 +40,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eRestartLevel, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -50,6 +51,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoalReached, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eRestartLevel, *this);
 	if (aLevelPath == "")
 	{
 		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
@@ -116,12 +118,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	}
 	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
 	{
-		std::queue<std::string> texts;
-
-		texts.push("Wee!1");
-		texts.push("Wee!2");
-
-		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, texts));
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs["test"]));
 	}
 
 	if (myShouldPause == true)
@@ -171,6 +168,10 @@ bool PlayState::RecieveMessage(const GUIMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::eOpenPauseMenu)
 	{
 		myShouldPause = true;
+	}
+	if (aMessage.myType == RecieverTypes::eRestartLevel)
+	{
+		ChangeLevel(myCurrentLevelpath);
 	}
 	return true;
 }

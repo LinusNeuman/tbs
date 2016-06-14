@@ -7,7 +7,7 @@ class ObjectiveFactory
 public:
 	ObjectiveFactory();
 	~ObjectiveFactory();
-	Objective* CreateObjective(eObjectiveType aType);
+	Objective* CreateObjective(eObjectiveType aType, std::string aDialogName = "");
 private:
 
 };
