@@ -43,6 +43,7 @@ namespace Intersection2D
 		{
 			myMinPos = aMinPosition;
 			myMaxPos = aMaxPosition;
+			CalculateCenterAndExtents();
 		}
 
 		virtual void ChangePosition(const CU::Vector2f aPosition) override;
@@ -60,7 +61,9 @@ namespace Intersection2D
 		{
 			myMainPoint = myMinPos + (myMaxPos / 2);
 
-			myExtents = myExtents - myMinPos;
+			myExtents = myMainPoint - myMinPos;
+			abs(myExtents.x);
+			abs(myExtents.y);
 		}
 
 	};

@@ -121,13 +121,14 @@ int Player::GetPeekCost() const
 
 int Player::GetAttackCost() const
 {
-	return myAttackCost;
+	return myAttackCost - 1; // remove 1 for the movement cost of going to the same tile as the enemy.
 }
 
 void Player::Update(const CU::Time& aDeltaTime)
 {
 	Actor::Update(aDeltaTime);
 
+	myAPBox.Update();
 	myAPBox.SetAP(myCurrentAP);
 	myAPBox.SetPos(myPosition);
 	if (myIsSelected == true)

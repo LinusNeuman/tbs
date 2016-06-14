@@ -61,7 +61,7 @@ void RenderCommand::Render() const
 	{
 		DL_ASSERT(myRenderData.mySizeInPixels != CU::Vector2f::Zero, "Sprite size is zero during rendering");
 
-		float normalizedWindowSizeX = myRenderData.mySizeInPixels.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) * (FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / FLOATCAST(SingletonDataHolder::GetTargetResolution().y));
+		float normalizedWindowSizeX = myRenderData.mySizeInPixels.x / FLOATCAST(SingletonDataHolder::GetTargetResolution().x) *SingletonDataHolder::GetTargetResolutionRatio();
 		float normalizedWindowSizeY = myRenderData.mySizeInPixels.y / FLOATCAST(SingletonDataHolder::GetTargetResolution().y);
 
 		float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;

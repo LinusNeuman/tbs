@@ -61,6 +61,8 @@ public:
 
 
 private:
+	int GetPlayerAttackAPCost() const;
+
 	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);
 	void TakeCandy(const TilePosition & aPosToTakeCandyFrom);
 
