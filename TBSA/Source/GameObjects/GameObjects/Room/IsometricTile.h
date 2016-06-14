@@ -158,6 +158,7 @@ inline void IsometricTile::SetHasCandy()
 inline void IsometricTile::TakeCandy()
 {
 	myHasCandy = false;
+	myType = eTileType::OPEN;
 }
 
 typedef CU::GrowingArray<IsometricTile> TileArray;
