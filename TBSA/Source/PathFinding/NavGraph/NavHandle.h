@@ -187,7 +187,7 @@ struct VertexHandle
 	NavVertex* operator->() const
 	{
 		DL_ASSERT(!Null() , "ERROR: Handle is not initialized!!")
-		return myGraph->GetVertex(myHandle);
+ 		return myGraph->GetVertex(myHandle);
 	}
 
 	bool Null() const

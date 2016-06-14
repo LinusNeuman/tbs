@@ -4,6 +4,10 @@
 #include <Rend/RenderCommand.h>
 #include <CU/Matriser/matrix.h>
 
+const CU::Vector4f CantAffordColor = {1.f, 0.f, 0.f, 1.f};
+const CU::Vector4f PathColor = { 1.f, 0.5f, 0.5f, 1.f };
+const CU::Vector4f AttackColor = { 0.f, 1.f, 0.f, 1.f };
+
 APBox::APBox()
 {
 	myAPText = new DX2D::CText("Text/calibril.ttf_sdf");
@@ -31,7 +35,7 @@ APBox::~APBox()
 
 void APBox::Update()
 {
-
+	myColor = PathColor;
 }
 
 void APBox::CalculateProgress(const CommonUtilities::Time& aTime)
@@ -107,6 +111,7 @@ void APBox::Draw() const
 	TextRenderData data;
 	data.myText = myAPText->myText;
 	data.myPos = (myPosition - myOffset) - ja;
+	data.myColor = myColor;
 
 	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 }

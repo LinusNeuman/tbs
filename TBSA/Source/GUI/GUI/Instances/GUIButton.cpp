@@ -1,5 +1,7 @@
 #include "GUIButton.h"
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
+#include <CU/Utility/CommonCasts.h>
+#include "CU/Utility/GameSpecificTypeDefs.h"
 
 //#define EditorScreenSizeX 19-20.f
 //#define EditorScreenSizeY 10-80.f
@@ -53,7 +55,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	);
 	mySpriteUnpressed->SetLayer(enumRenderLayer::eGUI);
 
-	mySpriteHovered = new StaticSprite();
+	mySpriteHovered = new StaticSprite(); 
 	mySpriteHovered->Init(
 		aSpritePath + "/Hover.dds",
 		myIsIsometric,
@@ -69,12 +71,17 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	myPosition = aParentSpace + anOffset;
 	myIsEnabled = aIsEnabled;
 
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().x) / 1920.f;
+
+	CU::Vector2f boxPosition = { myPosition.x / SingletonDataHolder::GetTargetResolutionf().x, myPosition.y / SingletonDataHolder::GetTargetResolutionf().y };
+	CU::Vector2f spriteSizeNorm = { FLOATCAST(mySpriteUnpressed->GetSizeInPixels().x) / (1920.f), FLOATCAST( mySpriteUnpressed->GetSizeInPixels().y ) / (1080.f) };
+
 	myCollisionBox.SetWithMaxAndMinPos(
-	{ myPosition.x / SingletonDataHolder::GetTargetResolution().x, myPosition.y / SingletonDataHolder::GetTargetResolution().y},
-	{
-		(myPosition.x / SingletonDataHolder::GetTargetResolution().x) + mySpriteUnpressed->GetSizeInPixels().x / SingletonDataHolder::GetTargetResolution().x,
-		(myPosition.y / SingletonDataHolder::GetTargetResolution().y) + mySpriteUnpressed->GetSizeInPixels().y / SingletonDataHolder::GetTargetResolution().y
-	});
+		boxPosition,
+		{
+			boxPosition.x + spriteSizeNorm.x,
+			boxPosition.y + spriteSizeNorm.y
+		});
 
 	mySprite = mySpriteUnpressed;
 

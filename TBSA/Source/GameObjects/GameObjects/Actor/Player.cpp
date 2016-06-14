@@ -12,6 +12,7 @@
 #include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAPChangedMessage.h>
 #include <Message/PlayerIDMessage.h>
+#include <Message/DijkstraMessage.h>
 
 
 Player::Player()
@@ -65,6 +66,7 @@ void Player::CostAP(const int aCost)
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
 	myCurrentAP -= aCost;
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
+	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(myPosition), GetMyAP()));
 }
 
 void Player::OnClick()
@@ -119,13 +121,14 @@ int Player::GetPeekCost() const
 
 int Player::GetAttackCost() const
 {
-	return myAttackCost;
+	return myAttackCost - 1; // remove 1 for the movement cost of going to the same tile as the enemy.
 }
 
 void Player::Update(const CU::Time& aDeltaTime)
 {
 	Actor::Update(aDeltaTime);
 
+	myAPBox.Update();
 	myAPBox.SetAP(myCurrentAP);
 	myAPBox.SetPos(myPosition);
 	if (myIsSelected == true)
