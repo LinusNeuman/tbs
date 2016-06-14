@@ -4,6 +4,7 @@
 #include <Rend/StaticSprite.h>
 #include <StateStack/ProxyStateStack.h>
 #include "PlayState.h"
+#include "PreGameState.h"
 #include "LevelSelectState.h"
 #include "CreditsState.h"
 
@@ -43,6 +44,7 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		PlayState *newState = new PlayState();
 		newState->Init();
 		aStateStack.AddMainState(newState);
+		aStateStack.AddSubState(new PreGameState);
 		myShouldAdd = false;
 	}
 	if (myShouldSelect == true)

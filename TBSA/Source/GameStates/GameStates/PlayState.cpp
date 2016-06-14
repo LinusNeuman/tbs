@@ -137,7 +137,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		if (myShowPostLevelScreen == true)
 		{
 			myShowPostLevelScreen = false;
-			//aStateStack.AddSubState(new PostLevelState(100000, 23, 4));
+			aStateStack.AddSubState(new PostLevelState(100000, 23, 4));
 		}
 	}
 
