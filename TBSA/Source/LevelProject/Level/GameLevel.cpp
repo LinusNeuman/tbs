@@ -179,11 +179,6 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		return;
 	}
 
-	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true)
-	{
-		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
-	}
-
 	if (IsometricInput::GetKeyPressed(DIK_F3))
 	{
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));

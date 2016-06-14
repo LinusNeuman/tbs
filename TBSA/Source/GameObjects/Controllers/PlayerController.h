@@ -61,6 +61,8 @@ public:
 
 
 private:
+	bool CheckIfPlayerIsAllowedInput();
+
 	int GetPlayerAttackAPCost() const;
 
 	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);
