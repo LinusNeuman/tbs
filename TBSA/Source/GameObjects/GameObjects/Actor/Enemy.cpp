@@ -6,6 +6,7 @@
 #include <Message/TextMessage.h>
 #include <Message/EnemyDirectionChangedMessage.h>
 #include <Message/PlayerSeenMessage.h>
+#include <Message/EnemyPositionChangedMessage.h>
 
 
 Enemy::Enemy()
@@ -118,6 +119,11 @@ bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 	return true;
 }
 
+void Enemy::ReachedWaypoint()
+{
+	SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
+}
+
 void Enemy::SetEnemyPath(PathArray aEnemyPath)
 {
 	myEnemyPath = aEnemyPath;
@@ -126,7 +132,7 @@ void Enemy::SetEnemyPath(PathArray aEnemyPath)
 void Enemy::Reset()
 {
 	myHasMoved = false;
-	mySomeoneSeesPlayer = false;
+	//mySomeoneSeesPlayer = false;
 }
 
 int Enemy::GetViewDistance() const

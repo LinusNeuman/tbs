@@ -34,7 +34,6 @@ private:
 	std::string myNextLevel;
 	std::map<int, std::string> myObjectives;
 	std::map<std::string, std::queue<std::string>> myDialogs;
-
 #ifdef _DEBUG
 	bool isConstructed;
 #endif

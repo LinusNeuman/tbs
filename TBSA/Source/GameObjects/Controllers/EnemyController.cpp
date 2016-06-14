@@ -20,11 +20,13 @@ EnemyController::EnemyController()
 EnemyController::~EnemyController()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartFight, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
 }
 
 void EnemyController::Init()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartFight, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
 }
 
 void EnemyController::PreTurn()
@@ -50,17 +52,6 @@ void EnemyController::Update(CommonUtilities::Time aDeltaTime)
 
 void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 {
-	ResetTileShaders();
-	myDebugStart.clear();
-	myDebugEnd.clear();
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
-		{	
-			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetTargetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
-			SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
-		}
-	}
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
 		myEnemies[i]->Update(aDeltaTime);
@@ -309,6 +300,21 @@ void EnemyController::AddEnemy(Enemy* aEnemy)
 bool EnemyController::RecieveMessage(const FightWithEnemyMessage & aMessage)
 {
 	myEnemies[aMessage.myEnemyIndex]->Fight();
+	return true;
+}
+
+bool EnemyController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
+{
+	ResetTileShaders();
+	myDebugStart.clear();
+	myDebugEnd.clear();
+	for (size_t i = 0; i < myEnemies.Size(); i++)
+	{
+		if (myEnemies[i]->GetActorState() != eActorState::eDead && myEnemies[i]->GetActorState() != eActorState::eFighting)
+		{
+			CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
+		}
+	}
 	return true;
 }
 

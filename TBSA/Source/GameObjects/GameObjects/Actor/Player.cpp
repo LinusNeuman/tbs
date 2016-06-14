@@ -35,7 +35,6 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myPeekCost = aPlayerData.myPeekCost;
 	myCurrentAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
-
 	myIsSeen = false;
 	myIsInFight = false;
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
@@ -48,7 +47,14 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 
 void Player::FreshTurn()
 {
-	myCurrentAP = myActionPointMax;
+	if (myIsSeen == true)
+	{
+		myCurrentAP = 0;
+	}
+	else
+	{
+		myCurrentAP = myActionPointMax;
+	}
 }
 
 int Player::GetMyAP() const
@@ -67,6 +73,7 @@ void Player::CostAP(const int aCost)
 	myCurrentAP -= aCost;
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(myPosition), GetMyAP()));
+
 }
 
 void Player::OnClick()
@@ -87,19 +94,12 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 	{
 		StopPath();
 		myPreviousAP = myCurrentAP;
-		myCurrentAP = 0;
+		CostAP(myCurrentAP);
 		
 		if (myIsSeen == false)
 		{
 			myIsSeen = true;
 			SetActorState(eActorState::eAlert);
-		}
-		
-		if (myShouldDie == true)
-		{
-			myIsSeen = false;
-			myShouldDie = false;
-			SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
 		}
 	}
 	return true;
@@ -109,15 +109,16 @@ bool Player::RecieveMessage(const PlayerSeenMessage& aMessage)
 void Player::AfterTurn()
 {
 	Actor::AfterTurn();
-	myShouldDie = myIsSeen;
-	myIsSeen = false;
+	if (myIsSeen == true)
+	{
+		SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
+	}
 }
 
 int Player::GetPeekCost() const
 {
 	return myPeekCost;
 }
-
 
 int Player::GetAttackCost() const
 {
@@ -139,6 +140,8 @@ void Player::Update(const CU::Time& aDeltaTime)
 	{
 		myAPBox.Reset();
 	}
+
+	
 }
 
 void Player::ResetObjectiveState()
@@ -150,7 +153,6 @@ void Player::ResetObjectiveState()
 void Player::PreTurn()
 {
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
-	myShouldDie = myIsSeen;
 	myIsSeen = false;
 }
 
@@ -266,7 +268,7 @@ void Player::DecideAnimation()
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
 {
-	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes::ePlayerPositionChanged, aTargetPosition,*this));
+	//SendPostMessage(PlayerPositionChangedMessage(RecieverTypes::ePlayerPositionChanged, aTargetPosition,*this));
 }
 
 void Player::SetNoTarget()
@@ -283,6 +285,11 @@ void Player::AlmostReachTarget()
 void Player::ReachedTarget()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerReachedEndOfPath, *this));
+}
+
+void Player::ReachedWaypoint()
+{
+	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes:: ePlayerPositionChanged, CU::Vector2ui::Zero, *this));
 }
 
 void Player::NextToObjective()

@@ -24,6 +24,7 @@ public:
 	void CostAP(const int aCost);
 	
 	void ReachedTarget()override;
+	void ReachedWaypoint() override;
 
 	virtual void OnClick() override;
 
@@ -65,7 +66,6 @@ private:
 	int myCurrentAP;
 	int myPreviousAP;
 
-	bool myShouldDie;
 	bool myIsSelected;
 	bool myIsInFight;
 
