@@ -7,9 +7,12 @@
 const CU::Vector4f CantAffordColor = {1.f, 0.f, 0.f, 1.f};
 const CU::Vector4f PathColor = { 1.f, 0.5f, 0.5f, 1.f };
 const CU::Vector4f AttackColor = { 0.f, 1.f, 0.f, 1.f };
+const CU::Vector4f NeutralColor = { 1.f, 1.f, 1.f, 1.f };
 
 APBox::APBox()
 {
+	myIsInitedFully = false;
+
 	myAPText = new DX2D::CText("Text/calibril.ttf_sdf");
 	mySprite = new StaticSprite();
 	mySprite->Init("Sprites/GUI/HUD/AP/ActorAP.dds", true, CU::Vector4f::Zero, { 0.5f, 0.5f });
@@ -18,6 +21,8 @@ APBox::APBox()
 	mySprite->SetRenderPriority(100.f);
 
 	myEasing = 0.f;
+	myAP = 0;
+	myCurrentCost = 0;
 	myMovementTimer = 0.f;
 	myMovementTotalDown = 1.0f;
 	myMovementTotalUp = 1.0f;
@@ -25,6 +30,8 @@ APBox::APBox()
 	myApBoxState = eAPBoxState::eGoingUp;
 
 	myOffset = { 0.f, 0.f };
+
+	myIsInitedFully = true;
 }
 
 APBox::~APBox()
@@ -36,6 +43,23 @@ APBox::~APBox()
 void APBox::Update()
 {
 	myColor = PathColor;
+
+	int tempValue = INTCAST(myAP) - INTCAST(myCurrentCost);
+	myAPText->myText = std::to_string(tempValue);
+
+	if (myCurrentCost > 0)
+	{
+		if (myCurrentCost > myAP)
+		{
+			myColor = CantAffordColor;
+		}
+		
+		myColor = PathColor;
+	}
+	else
+	{
+		myColor = NeutralColor;
+	}
 }
 
 void APBox::CalculateProgress(const CommonUtilities::Time& aTime)
@@ -101,16 +125,21 @@ void APBox::Reset()
 
 void APBox::Draw() const
 {
+	if (myIsInitedFully == false)
+	{
+		return;
+	}
+
 	mySprite->Draw(myPosition - myOffset);
 
-	CU::Vector2f ja = mySprite->GetSizeInPixels();
-	ja.y -= 16;
-	ja.x = ((myAPText->GetWidth() / 2.f) * SingletonDataHolder::GetTargetResolution().x) - 1;
-	ja = CU::PixelToIsometric(ja);
+	CU::Vector2f OffsetForText = mySprite->GetSizeInPixels();
+	OffsetForText.y -= 16;
+	OffsetForText.x = ((myAPText->GetWidth() / 2.f) * SingletonDataHolder::GetTargetResolution().x) - 1;
+	OffsetForText = CU::PixelToIsometric(OffsetForText);
 
 	TextRenderData data;
 	data.myText = myAPText->myText;
-	data.myPos = (myPosition - myOffset) - ja;
+	data.myPos = (myPosition - myOffset) - OffsetForText;
 	data.myColor = myColor;
 
 	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(500.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));

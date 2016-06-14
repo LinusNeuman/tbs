@@ -20,7 +20,9 @@ enum class enumMouseState
 	eClickedOnEnemy,
 	eClickedOnPlayer,
 	eClickedOnEmptyTile,
-	eClickedOnVoid,
+	eHeldOnEmptyTile,
+	eHeldOnEnemy,
+	eHeldOnVoid,
 	enumLength
 };
 
@@ -37,6 +39,7 @@ public:
 	void NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const;
 	Player* GetSelectedPlayer();
 	int GetPlayerAP();
+	void SuggestCostAP(const int anAP);
 	void CostAP(const int anAP);
 	void Update(const CommonUtilities::Time& aTime);
 	void ConstantUpdate(const CommonUtilities::Time& aDeltaTime);
@@ -61,6 +64,8 @@ public:
 
 
 private:
+	bool CheckIfPlayerIsAllowedInput();
+
 	int GetPlayerAttackAPCost() const;
 
 	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);

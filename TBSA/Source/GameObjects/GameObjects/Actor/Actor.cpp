@@ -150,11 +150,11 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
 			UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
 			CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
-
 			if ((CU::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
 			{
 				myAtTarget = true;
 				UpdatePosition(CU::Point2f(myTargetPosition));
+				
 
 				if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead && GetActorState() != eActorState::eAlert)
 				{
@@ -248,8 +248,7 @@ void Actor::ResetObjectiveState()
 
 void Actor::ReachedWaypoint()
 {
- 	int apa = 10;
-	std::cout << "ReachedWaypoint" << std::endl;
+	
 }
 
 void Actor::NextToObjective()
@@ -284,6 +283,7 @@ int Actor::GetMyAP() const
 
 void Actor::UpdatePath()
 {
+
  	if (myAtTarget == true )
 	{
 		if (myCurrentWaypoint < myPath.Size())
@@ -292,7 +292,6 @@ void Actor::UpdatePath()
 			Move(myPath[myCurrentWaypoint]);		
 			
 			++myCurrentWaypoint;
-
 			ReachedWaypoint();
 
 			if (myCurrentWaypoint == myPath.Size())
@@ -302,6 +301,7 @@ void Actor::UpdatePath()
 		}
 		else if (myCurrentWaypoint == myPath.Size())
 		{
+			ReachedWaypoint();
 			if (GetObjectiveState() == true && (myPosition - myObjectiveTargetPosition).Length() <= 1.f)
 			{
 				NextToObjective();
