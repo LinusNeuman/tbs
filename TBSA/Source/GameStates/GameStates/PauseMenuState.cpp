@@ -7,6 +7,7 @@ PauseMenuState::PauseMenuState()
 {
 	myLetThroughRender = true;
 	myShouldPop = false;
+	myShouldPopMain = false;
 }
 
 
@@ -18,6 +19,7 @@ PauseMenuState::~PauseMenuState()
 void PauseMenuState::Init()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eClosePauseMenu, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eGoToMainMenu, *this);
 
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/GUI/PauseMenu/Background.dds", false, CU::Vector4f::Zero, {0.5f, 0.5f});
@@ -38,6 +40,13 @@ eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateS
 		return eStackReturnValue::eDeleteSubstate;
 	}
 
+	if (myShouldPopMain == true)
+	{
+		myShouldPopMain = false;
+
+		return eStackReturnValue::eDeleteMainState;
+	}
+
 	return eStackReturnValue::eStay;
 }
 
@@ -53,6 +62,10 @@ bool PauseMenuState::RecieveMessage(const GUIMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::eClosePauseMenu)
 	{
 		myShouldPop = true;
+	}
+	if (aMessage.myType == RecieverTypes::eGoToMainMenu)
+	{
+		myShouldPopMain = true;
 	}
 	return true;
 }

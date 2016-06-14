@@ -19,11 +19,9 @@ float4 PShader(PixelInputType input) : SV_TARGET
 {
 	float4 Diffuse = shaderTextures[DIFFUSE_MAP].Sample(SampleType, input.tex);
 
-	//Sets color to greyscale
-	float averageColor = (Diffuse.x + Diffuse.y + Diffuse.z) / 3.0f;
-	averageColor *= 0.2f;
-
-	Diffuse = float4(averageColor, averageColor, averageColor, Diffuse.w);
+	Diffuse.x *= 1.0;
+	Diffuse.y *= 0.7;
+	Diffuse.z *= 0.7;
 
 	return Diffuse;
 }

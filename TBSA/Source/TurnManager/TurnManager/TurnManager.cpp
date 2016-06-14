@@ -97,6 +97,7 @@ void TurnManager::EndTurn()
 bool TurnManager::PreparePlayer()
 {
 	myTurnImageTimer = 0.f;
+	myPlayerTurnImage->SetColor(CU::Vector4f::One);
 	myPlayerController.PrePlayer();
 	EndTurn();
 	return true;
@@ -114,6 +115,14 @@ bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 	{
 		float midPointX = (float)SingletonDataHolder::GetTargetResolution().x / 2;
 		float resolutionHeight = (float)SingletonDataHolder::GetTargetResolution().x;
+
+		if (myTurnImageTimer > 3.0f)
+		{
+			float alpha = 1.0f - ((myTurnImageTimer - 3.0f) / 1.5f);
+		
+			myPlayerTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
+		}
+
 		myPlayerTurnImage->Draw(CU::Vector2f(midPointX - (64), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}
@@ -133,6 +142,7 @@ bool TurnManager::PlayerEndTurn()
 bool TurnManager::PrepareEnemy()
 {
 	myTurnImageTimer = 0.f;
+	myEnemyTurnImage->SetColor(CU::Vector4f::One);
 
 	if (myPlayerDied == true)
 	{
@@ -150,6 +160,13 @@ bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 	{
 		float midPointX = (float)SingletonDataHolder::GetTargetResolution().x / 2;
 		float resolutionHeight = (float)SingletonDataHolder::GetTargetResolution().x;
+
+		if (myTurnImageTimer > 3.0f)
+		{
+			float alpha = 1.0f - ((myTurnImageTimer - 3.0f) / 1.5f);
+			myEnemyTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
+		}
+
 		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (64), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
 	}

@@ -45,6 +45,9 @@ Actor::Actor()
 	myFightSounds[3]->Init("Sounds/SFX/hit4.wav");
 	myFightSounds[4]->Init("Sounds/SFX/hit5.wav");
 
+	myBonus = new SoundEffect();
+	myBonus->Init("Sounds/SFX/clownhorn.wav");
+
 	myFightTimer = 0.0f;
 	myStepTimer = 0.0f;
 }
@@ -137,9 +140,10 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		if (tempState == eActorState::eWalking)
 		{
 			myStepTimer += aDeltaTime.GetSeconds();
-			if (myStepTimer >= 0.14f)
+			if (myStepTimer >= 0.4f)
 			{
-				myStepSounds[0]->Play(0.4f);
+				int step = (rand() % 6);
+				myStepSounds[step]->Play(0.4f);
 				myStepTimer = 0.f;
 			}
 
@@ -169,9 +173,20 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		{
 			myFightTimer += aDeltaTime.GetSeconds();
 
-			if (myFightTimer >= 0.10f)
+			if (myFightTimer >= 0.07f)
 			{
-				myFightSounds[0]->Play(0.4f);
+				int fight = (rand() % 150);
+				if (fight == 0)
+				{
+					myBonus->Play(0.4f);
+				}
+				else
+				{
+					fight /= 30;
+					myFightSounds[fight]->Play(0.4f);
+
+				}
+
 				myFightTimer = 0.f;
 			}
 			if (myAnimations.GetAnimationIsRunning() == false)
@@ -225,6 +240,18 @@ void Actor::AfterTurn()
 	myFightTimer = 0.0f;
 }
 
+void Actor::ResetObjectiveState()
+{
+	myHasObjectiveFlag = false;
+	myObjectiveTargetPosition = TilePositionf::Zero;
+}
+
+void Actor::ReachedWaypoint()
+{
+ 	int apa = 10;
+	std::cout << "ReachedWaypoint" << std::endl;
+}
+
 void Actor::NextToObjective()
 {
 
@@ -265,6 +292,9 @@ void Actor::UpdatePath()
 			Move(myPath[myCurrentWaypoint]);		
 			
 			++myCurrentWaypoint;
+
+			ReachedWaypoint();
+
 			if (myCurrentWaypoint == myPath.Size())
 			{
 				AlmostReachTarget();

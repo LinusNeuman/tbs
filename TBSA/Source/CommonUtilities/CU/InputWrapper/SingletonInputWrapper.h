@@ -35,6 +35,10 @@ namespace CommonUtilities
 		inline static bool GetKeyPressed(int aButton);
 		inline static bool GetKeyReleased(int aButton);
 
+		inline static bool GetAnyKeyDown();
+		inline static bool GetAnyKeyPressed();
+		inline static bool GetAnyKeyReleased();
+
 		inline static void SetCursorPosition(int aXPosition, int aYPosition);
 
 		inline static LONG GetMouseAbsolutePositionX();
@@ -131,6 +135,21 @@ namespace CommonUtilities
 	inline Vector2f SingletonInputWrapper::GetMouseWindowPositionNormalizedSpace()
 	{
 		return GetInstance().myInputWrapper.GetMouseWindowPositionNormalizedSpace();
+	}
+
+	inline bool SingletonInputWrapper::GetAnyKeyDown()
+	{
+		return GetInstance().myInputWrapper.GetAnyKeyDown();
+	}
+
+	inline bool SingletonInputWrapper::GetAnyKeyPressed()
+	{
+		return GetInstance().myInputWrapper.GetAnyKeyPressed();
+	}
+
+	inline bool SingletonInputWrapper::GetAnyKeyReleased()
+	{
+		return GetInstance().myInputWrapper.GetAnyKeyReleased();
 	}
 }
 

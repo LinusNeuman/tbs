@@ -14,7 +14,7 @@
 
 namespace
 {
-	const std::string fileEnding = ".png";
+	const std::string fileEnding = ".dds";
 }
 
 
@@ -310,27 +310,35 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 				for (size_t k = 0; k < objects.size(); k++)
 				{
 					picojson::object goal = JsonHelp::GetPicoJsonObject(objects[k]);
-
 					eObjectiveType objectiveType = eObjectiveType::eLevelEnd;
 					const std::string typeString = JsonHelp::GetString(goal["type"]);
+
+					const float posX = static_cast<float>(JsonHelp::GetNumber(goal["x"])) / 64;
+					const float posY = static_cast<float>(JsonHelp::GetNumber(goal["y"])) / 64;
 
 					if (typeString == "LevelEnd")
 					{
 						objectiveType = eObjectiveType::eLevelEnd;
 					}
+					else if (typeString == "Sweet" || typeString == "Candy")
 					else if (typeString == "DialogMessage")
 					{
 						objectiveType = eObjectiveType::eDialogMessage;
 					}
 					else
 					{
+						objectiveType = eObjectiveType::eLevelEnd;
+						const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY) + static_cast<int>(posX);
+						someTiles.myTiles[index].SetHasCandy();
+					}
+					else 
+					{
 						DL_ASSERT(false, "ERROR:  Objective type does not exist");
 					}
 
 					Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
 
-					const float posX = static_cast<float>(JsonHelp::GetNumber(goal["x"])) / 64;
-					const float posY = static_cast<float>(JsonHelp::GetNumber(goal["y"])) / 64;
+
 
 					objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
 					someTiles.myObjectives.Add(objectiveObject);

@@ -57,8 +57,8 @@ void GUIFactory::Load()
 			myGUIElements.Add(dialogTextBox);
 
 			CU::Vector2f position;
-			position.x = 121;
-			position.y = 708;
+			position.x = 25;
+			position.y = 785;
 			position.x /= 1920;
 			position.y /= 1080;
 
@@ -83,6 +83,22 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(portraitActive);
 
+			position.x = 25;
+			position.y = 695;
+
+			position.x /= 1920;
+			position.y /= 1080;
+
+			position.x *= SingletonDataHolder::GetTargetResolution().x;
+			position.y *= SingletonDataHolder::GetTargetResolution().y;
+
+			GUIPortraitPassive* newPortraitPassive = new GUIPortraitPassive();
+
+			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, false, true);
+
+			myGUIElements.Add(newPortraitPassive);
+
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 
@@ -218,6 +234,11 @@ void GUIFactory::Load()
 					if (clickEvent == "GoToCredits")
 					{
 						newButton->SetAction(new CreditScreenMessage(RecieverTypes::eGoToCredits), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "GoToMainMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eGoToMainMenu), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);

@@ -57,7 +57,8 @@ inline IsometricTile& GameFloor::GetTile(unsigned int aX, unsigned int aY)
 	{
 		index = myTiles.Size() - 1;
 	}
-	return myTiles[index];
+	IsometricTile& explainginReference = myTiles[index];
+	return explainginReference;
 }
 
 inline IsometricTile& GameFloor::GetTile(CommonUtilities::Vector2ui aVector2Ui)

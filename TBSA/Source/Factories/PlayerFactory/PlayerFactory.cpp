@@ -43,7 +43,7 @@ void PlayerFactory::AddPlayerAnimation(ActorData &aActorData, PlayerData &aPlaye
 		picojson::object& animationObject = JsonWrapper::GetPicoObject(animationFile);
 		std::string name = JsonWrapper::GetString("Name", animationObject);
 		animation->InitializeAnimation(animationObject);
-		aActorData.myAnimations[name] = animation;
+		aActorData.myAnimations[name] = *animation;
 	}
 }
 

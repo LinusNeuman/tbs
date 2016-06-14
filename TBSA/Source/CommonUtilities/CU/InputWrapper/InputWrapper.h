@@ -9,6 +9,7 @@
 #include "CU/NameSpaceAliases.h"
 #include "CU/Vectors/vector2.h"
 #include "CU/InputWrapper/MouseButtonsEnum.h"
+#include "CU/Utility/CommonCasts.h"
 
 
 
@@ -32,9 +33,18 @@ namespace CommonUtilities
 		inline bool GetMouseButtonReleased(enumMouseButtons aButton) const;
 		inline bool GetMouseButtonPressed(enumMouseButtons aButton) const;
 
+		inline bool GetAnyMouseButtonDown() const;
+		inline bool GetAnyMouseButtonReleased() const;
+		inline bool GetAnyMouseButtonPressed() const;
+
 		inline bool GetKeyDown(int aButton) const;
 		inline bool GetKeyPressed(int aButton) const;
 		inline bool GetKeyReleased(int aButton) const;
+
+		inline bool GetAnyKeyDown() const;
+		inline bool GetAnyKeyPressed() const;
+		inline bool GetAnyKeyReleased() const;
+
 
 		inline void SetCursorPosition(int aXPosition, int aYPosition) const;
 
@@ -167,5 +177,77 @@ namespace CommonUtilities
 		/*
 			CLEAR MOUSE BUFFERS
 		*/
+	}
+
+	inline bool InputWrapper::GetAnyKeyDown() const
+	{
+		for (unsigned short iKey = 0; iKey < myKeyboardData.size(); ++iKey)
+		{
+			if (GetKeyDown(iKey) == true)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	inline bool InputWrapper::GetAnyKeyPressed() const
+	{
+		for (unsigned short iKey = 0; iKey < myKeyboardData.size(); ++iKey)
+		{
+			if (GetKeyPressed(iKey) == true)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	inline bool InputWrapper::GetAnyKeyReleased() const
+	{
+		for (unsigned short iKey = 0; iKey < myKeyboardData.size(); ++iKey)
+		{
+			if (GetKeyReleased(iKey) == true)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool InputWrapper::GetAnyMouseButtonDown() const
+	{
+		for (unsigned short iMouseButton = 0; iMouseButton < USHORTCAST(enumMouseButtons::enumLength); ++iMouseButton)
+		{
+			if (GetMouseButtonDown(static_cast<enumMouseButtons>(iMouseButton)) == true)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool InputWrapper::GetAnyMouseButtonReleased() const
+	{
+		for (unsigned short iMouseButton = 0; iMouseButton < USHORTCAST(enumMouseButtons::enumLength); ++iMouseButton)
+		{
+			if (GetMouseButtonReleased(static_cast<enumMouseButtons>(iMouseButton)) == true)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool InputWrapper::GetAnyMouseButtonPressed() const
+	{
+		for (unsigned short iMouseButton = 0; iMouseButton < USHORTCAST(enumMouseButtons::enumLength); ++iMouseButton)
+		{
+			if (GetMouseButtonPressed(static_cast<enumMouseButtons>(iMouseButton)) == true)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -2,6 +2,7 @@
 // CreationDate: 07/06/2016
 #pragma once
 #include <StateStack/GameState.h>
+#include <CU/Timer/Alarm.h>
 
 struct TiledData;
 
@@ -15,7 +16,12 @@ public:
 	void Draw()const override;
 
 private:
+	CU::Alarm myTimer;
+	unsigned short myDotCounter;
+
 	TiledData* myDataptr;
-	StaticSprite mySprite;
-	CommonUtilities::Vector2f myPosition;
+	StaticSprite myBackGround;
+	StaticSprite mySpriteLoading;
+	StaticSprite myDoneSprite;
+	StaticSprite myDotSprite;
 };

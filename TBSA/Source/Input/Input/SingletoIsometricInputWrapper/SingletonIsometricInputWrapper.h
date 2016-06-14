@@ -25,9 +25,18 @@ public:
 	inline static bool GetMouseButtonReleased(CommonUtilities::enumMouseButtons aButton);
 	inline static bool GetMouseButtonPressed(CommonUtilities::enumMouseButtons aButton);
 
+	inline static bool GetAnyMouseButtonDown();
+	inline static bool GetAnyMouseButtonReleased();
+	inline static bool GetAnyMouseButtonPressed();
+
 	inline static bool GetKeyDown(int aButton);
 	inline static bool GetKeyPressed(int aButton);
 	inline static bool GetKeyReleased(int aButton);
+
+	inline static bool GetAnyKeyDown();
+	inline static bool GetAnyKeyPressed();
+	inline static bool GetAnyKeyReleased();
+
 
 	inline static void SetCursorPosition(int aXPosition, int aYPosition);
 
@@ -178,5 +187,34 @@ void SingletonIsometricInputWrapper::ResetInput()
 	GetInstance().myInputWrapper.ResetInput();
 }
 
+inline bool SingletonIsometricInputWrapper::GetAnyKeyDown()
+{
+	return GetInstance().myInputWrapper.GetAnyKeyDown();
+}
+
+inline bool SingletonIsometricInputWrapper::GetAnyKeyPressed()
+{
+	return GetInstance().myInputWrapper.GetAnyKeyPressed();
+}
+
+inline bool SingletonIsometricInputWrapper::GetAnyKeyReleased()
+{
+	return GetInstance().myInputWrapper.GetAnyKeyReleased();
+}
+
+inline bool SingletonIsometricInputWrapper::GetAnyMouseButtonDown()
+{
+	return GetInstance().myInputWrapper.GetAnyMouseButtonDown();
+}
+
+inline bool SingletonIsometricInputWrapper::GetAnyMouseButtonReleased()
+{
+	return GetInstance().myInputWrapper.GetAnyMouseButtonReleased();
+}
+
+inline bool SingletonIsometricInputWrapper::GetAnyMouseButtonPressed()
+{
+	return GetInstance().myInputWrapper.GetAnyMouseButtonPressed();
+}
 
 typedef SingletonIsometricInputWrapper IsometricInput;

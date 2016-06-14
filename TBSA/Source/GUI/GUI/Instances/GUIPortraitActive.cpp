@@ -15,6 +15,9 @@ GUIPortraitActive::GUIPortraitActive() :
 GUIPortraitActive::~GUIPortraitActive()
 {
 	SingletonPostMaster::RemoveReciever(*this);
+
+	SAFE_DELETE(myCharacter0);
+	SAFE_DELETE(myCharacter1);
 }
 
 void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled)
@@ -99,7 +102,11 @@ void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath
 
 void GUIPortraitActive::Update(const CU::Time& aDelta)
 {
-	GUIButton::Update(aDelta);
+	if (myIsCurrentlyHovered == true)
+	{
+		Animate(aDelta);
+	}
+	mySprite = mySpriteUnpressed;
 }
 
 void GUIPortraitActive::WhenClicked()
@@ -119,18 +126,18 @@ void GUIPortraitActive::Render()
 		return;
 	}
 
-	if (myPlayerID == 0)
+	if (myPlayerID == 1)
 	{
-		myCharacter0->Draw(myPosition);
+		myCharacter1->Draw(myPosition);
 	}
 	else
 	{
-		myCharacter1->Draw(myPosition);
+		myCharacter0->Draw(myPosition);
 	}
 
 	if (myIsAnimated == true)
 	{
-		if (myIsCurrentlyHovered == true && myIsCurrentlyPressed == false)
+		if (myIsCurrentlyHovered == true)
 		{
 			mySpriteHovered->Draw(myPosition);
 		}

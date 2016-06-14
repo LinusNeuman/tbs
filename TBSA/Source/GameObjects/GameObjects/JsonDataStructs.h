@@ -20,6 +20,6 @@ struct EnemyData
 struct ActorData
 {
 	eActorType myActortype;
-	std::map<std::string, Animation*> myAnimations;
+	std::map<std::string, Animation> myAnimations;
 };
 

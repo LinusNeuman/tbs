@@ -189,17 +189,21 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
 	}
 
-	myPlayer->Update(aTimeDelta);
-	myPlayer2->Update(aTimeDelta);
+	//myPlayer->Update(aTimeDelta);
+	//myPlayer2->Update(aTimeDelta);
 
 
 	for (unsigned int i = 0; i < myFloor.Size(); i++)
 	{
 		for (unsigned int j = 0; j < myFloor.GetTile(i).myGraphicsLayers.Size(); j++)
 		{
-			if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH && myFloor.GetTile(i).GetDiscovered() == false && myFloor.GetTile(i).GetTileType() != eTileType::EMPTY)
+			if (myFloor.GetTile(i).GetTileType() == eTileType::EMPTY)
 			{
-				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("HighlightBlackShader")->myShader);
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("OutOfMapShader")->myShader);
+			}
+			else if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH && myFloor.GetTile(i).GetDiscovered() == false && myFloor.GetTile(i).GetTileType() != eTileType::EMPTY)
+			{
+				myFloor.GetTile(i).myGraphicsLayers[j]->SetShader(Shaders::GetInstance()->GetShader("UndiscoveredShader")->myShader);
 			}
 			else if (myFloor.GetTile(i).GetVisible() == false && myFloor.GetTile(i).GetTileState() != eTileState::IN_PATH && myFloor.GetTile(i).GetTileType() != eTileType::EMPTY)
 			{
