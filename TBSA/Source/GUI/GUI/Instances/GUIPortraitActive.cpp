@@ -15,6 +15,9 @@ GUIPortraitActive::GUIPortraitActive() :
 GUIPortraitActive::~GUIPortraitActive()
 {
 	SingletonPostMaster::RemoveReciever(*this);
+
+	SAFE_DELETE(myCharacter0);
+	SAFE_DELETE(myCharacter1);
 }
 
 void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled)
@@ -121,11 +124,11 @@ void GUIPortraitActive::Render()
 
 	if (myPlayerID == 0)
 	{
-		myCharacter0->Draw(myPosition);
+		myCharacter1->Draw(myPosition);
 	}
 	else
 	{
-		myCharacter1->Draw(myPosition);
+		myCharacter0->Draw(myPosition);
 	}
 
 	if (myIsAnimated == true)
