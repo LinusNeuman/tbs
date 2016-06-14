@@ -102,7 +102,11 @@ void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePat
 
 void GUIPortraitPassive::Update(const CU::Time& aDelta)
 {
-	GUIButton::Update(aDelta);
+	if (myIsCurrentlyHovered == true)
+	{
+		Animate(aDelta);
+	}
+	mySprite = mySpriteUnpressed;
 }
 
 void GUIPortraitPassive::WhenClicked()
@@ -133,7 +137,7 @@ void GUIPortraitPassive::Render()
 
 	if (myIsAnimated == true)
 	{
-		if (myIsCurrentlyHovered == true && myIsCurrentlyPressed == false)
+		if (myIsCurrentlyHovered == true)
 		{
 			mySpriteHovered->Draw(myPosition);
 		}

@@ -236,6 +236,11 @@ void GUIFactory::Load()
 						newButton->SetAction(new CreditScreenMessage(RecieverTypes::eGoToCredits), eGUIMessageEvents::eOnClick);
 					}
 
+					if (clickEvent == "GoToMainMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eGoToMainMenu), eGUIMessageEvents::eOnClick);
+					}
+
 					myGUIElements.Add(newButton);
 					myGUILookup[currentStateName].myEnd = elementsAdded;
 
