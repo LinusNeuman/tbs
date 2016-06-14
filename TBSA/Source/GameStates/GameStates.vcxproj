@@ -128,6 +128,7 @@
     <ClCompile Include="GameStates\PauseMenuState.cpp" />
     <ClCompile Include="GameStates\SplashState.cpp" />
     <ClCompile Include="GameStates\PostLevelState.cpp" />
+    <ClCompile Include="GameStates\PreGameState.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -146,6 +147,7 @@
     <ClInclude Include="GameStates\SplashState.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="GameStates\PostLevelState.h" />
+    <ClInclude Include="GameStates\PreGameState.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
