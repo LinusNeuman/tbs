@@ -11,6 +11,8 @@ const CU::Vector4f NeutralColor = { 1.f, 1.f, 1.f, 1.f };
 
 APBox::APBox()
 {
+	myIsInitedFully = false;
+
 	myAPText = new DX2D::CText("Text/calibril.ttf_sdf");
 	mySprite = new StaticSprite();
 	mySprite->Init("Sprites/GUI/HUD/AP/ActorAP.dds", true, CU::Vector4f::Zero, { 0.5f, 0.5f });
@@ -28,6 +30,8 @@ APBox::APBox()
 	myApBoxState = eAPBoxState::eGoingUp;
 
 	myOffset = { 0.f, 0.f };
+
+	myIsInitedFully = true;
 }
 
 APBox::~APBox()
@@ -121,6 +125,11 @@ void APBox::Reset()
 
 void APBox::Draw() const
 {
+	if (myIsInitedFully == false)
+	{
+		return;
+	}
+
 	mySprite->Draw(myPosition - myOffset);
 
 	CU::Vector2f OffsetForText = mySprite->GetSizeInPixels();
