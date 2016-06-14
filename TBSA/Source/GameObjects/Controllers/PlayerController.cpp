@@ -96,21 +96,24 @@ void PlayerController::AddPlayer(Player* aPlayer)
 
 void PlayerController::SelectPlayer()
 {
-	myPlayers[mySelectedPlayerIndex]->SetSelected(false);
-	++mySelectedPlayerIndex;
-	if (mySelectedPlayerIndex >= myPlayers.Size())
+	if (mySelectedPlayer->GetActorState() == eActorState::eIdle || mySelectedPlayer->GetActorState() == eActorState::eAlert)
 	{
-		mySelectedPlayerIndex = 0;
+		myPlayers[mySelectedPlayerIndex]->SetSelected(false);
+		++mySelectedPlayerIndex;
+		if (mySelectedPlayerIndex >= myPlayers.Size())
+		{
+			mySelectedPlayerIndex = 0;
+		}
+		mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
+		myPlayers[mySelectedPlayerIndex]->SetSelected(true);
+
+		SetCameraPositionToPlayer(mySelectedPlayerIndex);
+
+		mySelectPlayerSound->Play(0.2f);
+
+		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+		SendPostMessage(dijkstraMessage);
 	}
-	mySelectedPlayer = myPlayers[mySelectedPlayerIndex];
-	myPlayers[mySelectedPlayerIndex]->SetSelected(true);
-
-	SetCameraPositionToPlayer(mySelectedPlayerIndex);
-	
-	mySelectPlayerSound->Play(0.2f);
-
-	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
-	SendPostMessage(dijkstraMessage);
 }
 
 void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtilities::Vector2ui> aPath) const
@@ -447,10 +450,9 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPosition())));
 	}
 
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE == true)
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
-		DL_PRINT("You have reached the goal, Aren't you special");
 	}
 	return true;
 }
