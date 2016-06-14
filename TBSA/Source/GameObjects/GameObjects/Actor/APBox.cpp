@@ -113,5 +113,5 @@ void APBox::Draw() const
 	data.myPos = (myPosition - myOffset) - ja;
 	data.myColor = myColor;
 
-	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(1000.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
+	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(500.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 }
