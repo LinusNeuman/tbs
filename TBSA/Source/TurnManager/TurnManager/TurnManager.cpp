@@ -119,6 +119,7 @@ bool TurnManager::UpdatePlayer(CommonUtilities::Time aDeltaTime)
 		if (myTurnImageTimer > 3.0f)
 		{
 			float alpha = 1.0f - ((myTurnImageTimer - 3.0f) / 1.5f);
+		
 			myPlayerTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
 		}
 
@@ -163,7 +164,7 @@ bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 		if (myTurnImageTimer > 3.0f)
 		{
 			float alpha = 1.0f - ((myTurnImageTimer - 3.0f) / 1.5f);
-			myPlayerTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
+			myEnemyTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
 		}
 
 		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (64), resolutionHeight * 0.05f));
