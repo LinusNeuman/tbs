@@ -134,7 +134,7 @@ void RenderConverter::ClearCommands()
 
 void RenderConverter::SetShouldCull(const bool aCullingFlag)
 {
-	myRenderer.SetCull(aCullingFlag);
+	GetInstance().myRenderer.SetCull(aCullingFlag);
 }
 
 void RenderConverter::DrawIsometricLine(const CU::Vector2f & aStartPosition, const CU::Vector2f & aEndPosition, const CU::Vector4f & aColor /*= CU::Vector4f::One*/)
