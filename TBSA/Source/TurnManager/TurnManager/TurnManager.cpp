@@ -159,20 +159,20 @@ bool TurnManager::PrepareEnemy()
 
 bool TurnManager::UpdateEnemy(CommonUtilities::Time aDeltaTime)
 {
-	if (myTurnImageTimer <= 4.5f)
-	{
+	/*if (myTurnImageTimer <= 4.5f)
+	{*/
 		float midPointX = (float)SingletonDataHolder::GetTargetResolution().x / 2;
 		float resolutionHeight = (float)SingletonDataHolder::GetTargetResolution().x;
 
-		if (myTurnImageTimer > 3.0f)
+		/*if (myTurnImageTimer > 3.0f)
 		{
 			float alpha = 1.0f - ((myTurnImageTimer - 3.0f) / 1.5f);
 			myEnemyTurnImage->SetColor(CU::Vector4f(1.0f, 1.0f, 1.0f, alpha));
-		}
+		}*/
 
 		myEnemyTurnImage->Draw(CU::Vector2f(midPointX - (128), resolutionHeight * 0.05f));
 		myTurnImageTimer += aDeltaTime.GetSeconds();
-	}
+	//}
 
 	myEnemyController.Update(aDeltaTime);
 	return true;
