@@ -57,6 +57,10 @@ PlayerController::PlayerController()
 
 PlayerController::~PlayerController()
 {
+	SAFE_DELETE(mySelectPlayerSound);
+	SAFE_DELETE(myAlertSound);
+	SAFE_DELETE(myCandySound);
+
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
