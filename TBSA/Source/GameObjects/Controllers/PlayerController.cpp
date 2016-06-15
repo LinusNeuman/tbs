@@ -48,13 +48,16 @@ PlayerController::PlayerController()
 	myFakeClickedOnEnemy = false;
 
 	mySelectPlayerSound = new SoundEffect();
-	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
+	mySelectPlayerSound->Init("Sounds/SFX/switch.ogg");
 
 	myAlertSound = new SoundEffect();
 	myAlertSound->Init("Sounds/SFX/alert.ogg");
 
 	myCandySound = new SoundEffect();
 	myCandySound->Init("Sounds/SFX/crunch.ogg");
+
+	myPeekSound = new SoundEffect();
+	myPeekSound->Init("Sounds/SFX/peek.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -62,6 +65,7 @@ PlayerController::~PlayerController()
 	SAFE_DELETE(mySelectPlayerSound);
 	SAFE_DELETE(myAlertSound);
 	SAFE_DELETE(myCandySound);
+	SAFE_DELETE(myPeekSound);
 
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
