@@ -36,6 +36,7 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myAttackCost = aPlayerData.myAttackCost;
 	myPeekCost = aPlayerData.myPeekCost;
 	myCurrentAP = myActionPointMax;
+	myPreviousAP = myActionPointMax;
 	myEnemyTargetIndex = USHRT_MAX;
 	myIsSeen = false;
 	myIsInFight = false;
@@ -73,10 +74,14 @@ int Player::GetPreviousAP() const
 void Player::CostAP(const int aCost)
 {
 	assert(aCost <= myCurrentAP && "AP cost exceeded player's available AP");
-	myCurrentAP -= aCost;
+	SetAP(myCurrentAP - aCost);
+}
+
+void Player::SetAP(const int aValue)
+{
+	myCurrentAP = aValue;
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(myPosition), GetMyAP()));
-
 }
 
 void Player::SuggestCostAP(const int aSuggestCost)
@@ -119,8 +124,11 @@ bool Player::RecieveMessage(const EnemyObjectMessage& aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eEnemyAttacked)
 	{
-		myIsSeen = false;
-		myCurrentAP = myPreviousAP;
+		if (myIsSeen == true)
+		{
+			myIsSeen = false;
+			SetAP(myPreviousAP);
+		}	
 	}
 	return true;
 }
@@ -304,6 +312,7 @@ void Player::AlmostReachTarget()
 void Player::ReachedTarget()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerReachedEndOfPath, *this));
+	myPreviousAP = myCurrentAP;
 }
 
 void Player::ReachedWaypoint()

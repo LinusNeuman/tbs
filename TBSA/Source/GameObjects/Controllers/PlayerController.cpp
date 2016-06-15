@@ -47,7 +47,7 @@ PlayerController::PlayerController()
 	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
 
 	myAlertSound = new SoundEffect();
-	myAlertSound->Init("Sounds/SFX/alert.wav");
+	myAlertSound->Init("Sounds/SFX/alert.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -530,8 +530,11 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
-	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
-	myAlertSound->Play(0.3f);
+	if (CU::Vector2i(aEnemy->GetPosition()) != aPlayerPosition)
+	{
+		SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
+		myAlertSound->Play(0.3f);
+	}
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
@@ -709,17 +712,17 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 	for (; n > 0; --n)
 	{
-		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
+		//if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
+		//{
+		//	myFloor->GetTile(x, y).SetVisible(true);
+		//	myFloor->GetTile(x, y).SetDiscovered(true);
+		//	break;
+		//}
+		if (hasAlreadyBeenBlocked == true)
 		{
-			myFloor->GetTile(x, y).SetVisible(true);
-			myFloor->GetTile(x, y).SetDiscovered(true);
 			break;
 		}
-		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-		{
-			break;
-		}
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
+		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
 			myFloor->GetTile(x, y).SetDiscovered(true);

@@ -27,26 +27,26 @@ Actor::Actor()
 	{
 		myStepSounds[i] = new SoundEffect();
 	}
-	myStepSounds[0]->Init("Sounds/SFX/step1.wav");
-	myStepSounds[1]->Init("Sounds/SFX/step2.wav");
-	myStepSounds[2]->Init("Sounds/SFX/step3.wav");
-	myStepSounds[3]->Init("Sounds/SFX/step4.wav");
-	myStepSounds[4]->Init("Sounds/SFX/step5.wav");
-	myStepSounds[5]->Init("Sounds/SFX/step6.wav");
+	myStepSounds[0]->Init("Sounds/SFX/step1.ogg");
+	myStepSounds[1]->Init("Sounds/SFX/step2.ogg");
+	myStepSounds[2]->Init("Sounds/SFX/step3.ogg");
+	myStepSounds[3]->Init("Sounds/SFX/step4.ogg");
+	myStepSounds[4]->Init("Sounds/SFX/step5.ogg");
+	myStepSounds[5]->Init("Sounds/SFX/step6.ogg");
 
 	for (int i = 0; i <= 4; ++i)
 	{
 		myFightSounds[i] = new SoundEffect();
 	}
 
-	myFightSounds[0]->Init("Sounds/SFX/hit1.wav");
-	myFightSounds[1]->Init("Sounds/SFX/hit2.wav");
-	myFightSounds[2]->Init("Sounds/SFX/hit3.wav");
-	myFightSounds[3]->Init("Sounds/SFX/hit4.wav");
-	myFightSounds[4]->Init("Sounds/SFX/hit5.wav");
+	myFightSounds[0]->Init("Sounds/SFX/hit1.ogg");
+	myFightSounds[1]->Init("Sounds/SFX/hit2.ogg");
+	myFightSounds[2]->Init("Sounds/SFX/hit3.ogg");
+	myFightSounds[3]->Init("Sounds/SFX/hit4.ogg");
+	myFightSounds[4]->Init("Sounds/SFX/hit5.ogg");
 
 	myBonus = new SoundEffect();
-	myBonus->Init("Sounds/SFX/clownhorn.wav");
+	myBonus->Init("Sounds/SFX/clownhorn.ogg");
 
 	myFightTimer = 0.0f;
 	myStepTimer = 0.0f;
