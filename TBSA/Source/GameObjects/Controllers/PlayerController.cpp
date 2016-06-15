@@ -521,8 +521,11 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
-	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
-	myAlertSound->Play(0.3f);
+	if (CU::Vector2i(aEnemy->GetPosition()) != aPlayerPosition)
+	{
+		SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
+		myAlertSound->Play(0.3f);
+	}
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
