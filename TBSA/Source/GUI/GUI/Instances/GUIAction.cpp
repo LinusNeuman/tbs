@@ -110,7 +110,7 @@ void GUIAction::Update(const CU::Time& aDelta)
 			}
 		}
 	}
-	else if (mySelectedPlayer == 1)
+	else
 	{
 		if (myCanDoP2 == true)
 		{
@@ -135,7 +135,7 @@ void GUIAction::WhenClicked()
 			GUIButton::WhenClicked();
 		}
 	}
-	else if (mySelectedPlayer == 1)
+	else
 	{
 		if (myCanDoP2 == true)
 		{
@@ -153,7 +153,7 @@ void GUIAction::WhenHovered()
 			GUIButton::WhenHovered();
 		}
 	}
-	else if (mySelectedPlayer == 1)
+	else
 	{
 		if (myCanDoP2 == true)
 		{
@@ -184,7 +184,7 @@ void GUIAction::Render()
 			myLocked->Draw(myPosition);
 		}
 	}
-	else if (mySelectedPlayer == 1)
+	else
 	{
 		if (myCanDoP2 == true)
 		{
