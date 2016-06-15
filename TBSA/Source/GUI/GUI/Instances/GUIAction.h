@@ -18,13 +18,9 @@ public:
 	virtual void Render() override;
 
 	bool RecieveMessage(const CurrentPlayerAP & aMessage) override;
-
-	void SetCanDo(bool aCan)
-	{
-		myCanDo = aCan;
-	}
 protected:
 	int myPlayerAP;
+	int mySelectedPlayer;
 
 	int myCostP1;
 	int myCostP2;
@@ -44,5 +40,6 @@ protected:
 
 	void ResetAnimateGlow();
 
-	bool myCanDo;
+	bool myCanDoP1;
+	bool myCanDoP2;
 };
