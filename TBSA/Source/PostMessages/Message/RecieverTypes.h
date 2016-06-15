@@ -2,6 +2,7 @@
 
 enum class RecieverOrder
 {
+	VIP,
 	eGUI,
 	eDefault = 100,
 	enumLength
@@ -67,4 +68,7 @@ enum class RecieverTypes
 	eSelectedPlayerHasChanged,
 	eLevelEndScoreMessage,
 	enumlength,
+	eOpenOptionsMenu,
+	eCloseOptionsMenu,
+	enumlength
 };

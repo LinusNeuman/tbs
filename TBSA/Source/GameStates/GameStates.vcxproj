@@ -124,6 +124,11 @@
     <ClCompile Include="GameStates\LevelSelectState.cpp" />
     <ClCompile Include="GameStates\LoadState.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
+    <ClCompile Include="GameStates\OptionsMenuElements\MusicSlider.cpp" />
+    <ClCompile Include="GameStates\OptionsMenuElements\Options.cpp" />
+    <ClCompile Include="GameStates\OptionsMenuElements\SFXSlider.cpp" />
+    <ClCompile Include="GameStates\OptionsMenuElements\Slider.cpp" />
+    <ClCompile Include="GameStates\OptionsMenuState.cpp" />
     <ClCompile Include="GameStates\PlayState.cpp" />
     <ClCompile Include="GameStates\PauseMenuState.cpp" />
     <ClCompile Include="GameStates\SplashState.cpp" />
@@ -142,6 +147,11 @@
     <ClInclude Include="GameStates\LevelSelectState.h" />
     <ClInclude Include="GameStates\LoadState.h" />
     <ClInclude Include="GameStates\MenuState.h" />
+    <ClInclude Include="GameStates\OptionsMenuElements\MusicSlider.h" />
+    <ClInclude Include="GameStates\OptionsMenuElements\Options.h" />
+    <ClInclude Include="GameStates\OptionsMenuElements\SFXSlider.h" />
+    <ClInclude Include="GameStates\OptionsMenuElements\Slider.h" />
+    <ClInclude Include="GameStates\OptionsMenuState.h" />
     <ClInclude Include="GameStates\PlayState.h" />
     <ClInclude Include="GameStates\PauseMenuState.h" />
     <ClInclude Include="GameStates\SplashState.h" />
