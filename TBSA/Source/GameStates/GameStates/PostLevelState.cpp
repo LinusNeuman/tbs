@@ -32,6 +32,8 @@ PostLevelState::PostLevelState(int aPoints, int aTurns, int aEnemies):
 	str = "Press any key to continue.";
 	myText.AddText(str);
 
+
+	myMouseController.Init();
 	myLetThroughRender = true;
 }
 
@@ -42,6 +44,8 @@ PostLevelState::~PostLevelState()
 eStackReturnValue
 PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
+	myMouseController.SetMouseState(enumMouseState::eClickedOnEmptyTile);
+
 	myText.Update();
 
 	if (IsometricInput::GetAnyMouseButtonPressed() == true || IsometricInput::GetAnyKeyPressed() == true)
@@ -55,6 +59,7 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 void
 PostLevelState::Draw() const
 {
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 	myBg->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
 	myText.Render();
 }
