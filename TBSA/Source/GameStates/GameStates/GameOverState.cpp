@@ -21,6 +21,8 @@ void GameOverState::Init()
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/GUI/EndScreens/EndFail_Background.dds", false, CU::Vector4f(0.f,0.f,680.f,563.f), { 0.5f, 0.5f });
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
+	myBackgroundSprite->SetRenderPriority(600.f);
+
 	LoadGUI("GameOver");
 }
 
