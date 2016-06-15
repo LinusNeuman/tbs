@@ -224,6 +224,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			CU::Vector2ui peekPosition;
 			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 			{
+				myPeekSound->Play(0.8f);
 				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
@@ -503,6 +504,7 @@ bool PlayerController::RecieveMessage(const BaseMessage& aMessage)
 			CU::Vector2ui peekPosition;
 			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 			{
+				myPeekSound->Play(0.8f);
 				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
