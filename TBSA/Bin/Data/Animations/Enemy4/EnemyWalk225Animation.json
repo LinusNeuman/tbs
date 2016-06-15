@@ -1,0 +1,16 @@
+{
+  "Name": "EnemyWalk225",
+  "FilePath": "Sprites\\Enemies\\lastEnemy\\EnemyWalk225.dds",
+  "SizeX": 128,
+  "SizeY": 128,
+  "AmountOfColumns": 8,
+  "AmountOfRows": 3,
+  "AmountOfFrames": 24,
+  "AnimationSpeed": 48,
+  "LoopStart": 1,
+  "LoopEnd": 24,
+  "ShouldLoop": true,
+  "IsInterruptible": true,
+  "InTransition": "",
+  "OutTransition": ""
+}

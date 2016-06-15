@@ -22,6 +22,7 @@ public:
 	int GetMyAP() const override;
 	int GetPreviousAP() const;
 	void CostAP(const int aCost);
+	void SetAP(const int aValue);
 	void SuggestCostAP(const int aSuggestCost);
 	
 	void ReachedTarget()override;
@@ -45,6 +46,7 @@ public:
 	void __forceinline SetSelected(bool aIsSelected)
 	{
 		myIsSelected = aIsSelected;
+		SuggestCostAP(0);
 	};
 
 	virtual void AfterTurn() override;

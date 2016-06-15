@@ -47,7 +47,10 @@ PlayerController::PlayerController()
 	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
 
 	myAlertSound = new SoundEffect();
-	myAlertSound->Init("Sounds/SFX/alert.wav");
+	myAlertSound->Init("Sounds/SFX/alert.ogg");
+
+	myCandySound = new SoundEffect();
+	myCandySound->Init("Sounds/SFX/crunch.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -84,6 +87,14 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
+
+	myMouseController.Init();
+}
+
+void PlayerController::Draw() const
+{
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -205,7 +216,12 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (CheckIfPlayerIsAllowedInput() == true)
 	{
 		int AdditinoalAPCost = 0;
+
+		SuggestCostAP(0);
+
 		enumMouseState currentState = GetCurrentMouseState();
+
+		myMouseController.SetMouseState(currentState);
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
 		{
@@ -235,6 +251,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 					CostAP(positionPath.Size() - 1 + AdditinoalAPCost);
 					NotifyPlayers(positionPath);
 					SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+					SuggestCostAP(0);
 				}
 			}
 		}
@@ -242,6 +259,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		case enumMouseState::enumLength:
 			DL_ASSERT(false, "Error in handling playercontroller mouse input");
 		case enumMouseState::eHeldOnVoid:
+		case enumMouseState::eHeldOnPlayer:
 			break;
 		}
 	}
@@ -259,6 +277,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
+	myClickedOnBB = false;
 
 	PointCollider tempCollider;
 
@@ -272,6 +291,14 @@ enumMouseState PlayerController::GetCurrentMouseState()
 		{
 			return enumMouseState::eClickedOnPlayer;
 		}
+		else
+		{
+			return enumMouseState::eHeldOnPlayer;
+		}
+	}
+	else if (myClickedOnBB == true)
+	{
+		return enumMouseState::eHeldOnVoid;
 	}
 	else if (myClickedOnEnemy == true)
 	{
@@ -307,7 +334,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
 	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
-
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -373,6 +400,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
+	myCandySound->Play(0.3f);
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
@@ -488,7 +516,11 @@ bool PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 
 bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
+	if (aMessage.myType == RecieverTypes::eClickedOnBB)
+	{
+		myClickedOnBB = true;
+	}
+	else if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
 	{
 		myClickedOnEnemy = true;
 		mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
@@ -513,8 +545,11 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 
 void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
 {
-	SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
-	myAlertSound->Play(0.3f);
+	if (CU::Vector2i(aEnemy->GetPosition()) != aPlayerPosition)
+	{
+		SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
+		myAlertSound->Play(0.3f);
+	}
 }
 
 bool PlayerController::RecieveMessage(const EnemyPositionChangedMessage& aMessage)
@@ -692,17 +727,11 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 	for (; n > 0; --n)
 	{
-		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-		{
-			myFloor->GetTile(x, y).SetVisible(true);
-			myFloor->GetTile(x, y).SetDiscovered(true);
-			break;
-		}
-		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			break;
 		}
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
+		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
 			myFloor->GetTile(x, y).SetDiscovered(true);

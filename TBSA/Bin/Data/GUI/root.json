@@ -554,7 +554,7 @@
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
-              "Click": "Restart",
+              "Click": "GameOverRestart",
               "Hover": ""
             }
           }
