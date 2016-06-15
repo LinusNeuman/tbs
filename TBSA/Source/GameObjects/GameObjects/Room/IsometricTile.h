@@ -99,7 +99,6 @@ private:
 	unsigned short myCurrentObjectiveSprite;
 	unsigned int myRoomId;
 
-	static StaticSprite * ourCandySprite;
 	CommonUtilities::Vector2f myPosition;
 	CU::GrowingArray<eDirection> myAvailableDirections;
 	eTileType myType;
