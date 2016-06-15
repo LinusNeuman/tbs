@@ -72,5 +72,7 @@ enum class RecieverTypes
 	eDialogDisabled,
 	eOpenOptionsMenu,
 	eCloseOptionsMenu,
-	enumlength
+	eAddTextToObjectiveBox,
+	eClearObjectiveBox,
+	enumlength,
 };
