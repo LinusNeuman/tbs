@@ -228,7 +228,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma endregion
 
 #pragma region Keyboard Input
-	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	/*if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
@@ -248,7 +248,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
-	}
+	}*/
 #pragma endregion
 
 #pragma region Mouse Input
