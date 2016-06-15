@@ -19,7 +19,7 @@ GUIPortraitActive::~GUIPortraitActive()
 	SAFE_DELETE(myCharacter1);
 }
 
-void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled)
+void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled, float aPriority)
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
