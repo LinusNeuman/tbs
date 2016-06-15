@@ -24,8 +24,8 @@ void Options::Initialize()
 	mySFXSlider.InitSprites(SliderArgsSFX.mySpriteArguments);
 	myMusicSlider.InitSprites(SliderArgsMusic.mySpriteArguments);
 
-	SliderArgsSFX.myPositionArguments.mySliderPosition = { 0.5f - (0.171875f / 2), myPosition.y + 0.15f };
-	SliderArgsMusic.myPositionArguments.mySliderPosition = { 0.5f - (0.171875f / 2), myPosition.y - 0.004f };
+	SliderArgsSFX.myPositionArguments.mySliderPosition = { 0.5f - (0.171875f / 2), myPosition.y + 0.13f };
+	SliderArgsMusic.myPositionArguments.mySliderPosition = { 0.5f - (0.171875f / 2), myPosition.y - 0.002f };
 
 	SliderArgsSFX.myPositionArguments.myKnobPivot = {0.5f, 0.5f};
 	SliderArgsMusic.myPositionArguments.myKnobPivot = { 0.5f, 0.5f };
