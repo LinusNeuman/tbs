@@ -42,6 +42,9 @@ PlayState::~PlayState()
 {
 	SAFE_DELETE(myLevel);
 
+	myAmbiance->Stop();
+	myMusic->Stop();
+
 	SAFE_DELETE(myAmbiance);
 	SAFE_DELETE(myMusic);
 
