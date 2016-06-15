@@ -37,7 +37,7 @@ GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath)
 void LevelFactory::LoadLevel(const std::string& aLevelPath)
 {
 	
-	StaticSprite().Init();
+	//StaticSprite().Init();
 	myTileData->myPlayerFactory = &myPlayerFactory;
 	myTileData->myEnemyFactory = &myEnemyFactory;
 

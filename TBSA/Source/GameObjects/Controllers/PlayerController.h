@@ -12,7 +12,6 @@
 #include "Controllers\enumMouseState.h"
 #include "Controllers\MouseController.h"
 
-
 class PlayState;
 class Actor;
 class RenderConverter;
@@ -56,7 +55,7 @@ public:
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
 	virtual bool RecieveMessage(const TextMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyNextPathMessage & aMessage) override;
-
+	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
 
 private:
 	bool CheckIfPlayerIsAllowedInput();
@@ -100,6 +99,7 @@ private:
 	SoundEffect* mySelectPlayerSound;
 	SoundEffect* myAlertSound;
 	SoundEffect* myCandySound;
+	SoundEffect* myPeekSound;
 
 	ScoreCounter myScoreCounter;
 
