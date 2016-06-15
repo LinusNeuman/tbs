@@ -45,6 +45,7 @@ PlayerController::PlayerController()
 	mySelectedPlayer = nullptr;
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
+	myFakeClickedOnEnemy = false;
 
 	mySelectPlayerSound = new SoundEffect();
 	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
@@ -100,6 +101,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyNextPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this, RecieverOrder::VIP);
+	SingletonPostMaster::AddReciever(RecieverTypes::eFakeClickedEnemy, *this);
 
 	myMouseController.Init();
 }
@@ -229,6 +231,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (CheckIfPlayerIsAllowedInput() == true)
 	{
 		int AdditinoalAPCost = 0;
+		int hiddenCost = 0;
 
 		SuggestCostAP(0);
 
@@ -246,6 +249,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		case enumMouseState::eClickedOnPlayer:
 			SelectPlayer();
 			break;
+		case enumMouseState::eHideHoverOnEnemy:
+		case enumMouseState::eHideClickedOnEnemy:
+			hiddenCost = GetPlayerAttackAPCost();
 		case enumMouseState::eClickedOnEnemy:
 		case enumMouseState::eHeldOnEnemy:
 			AdditinoalAPCost = GetPlayerAttackAPCost();
@@ -255,9 +261,9 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			PathArray positionPath;
 			BuildPath(positionPath);
 
-			SuggestCostAP(positionPath.Size() - 1 + AdditinoalAPCost);
+			SuggestCostAP(positionPath.Size() - 1 + (AdditinoalAPCost - hiddenCost));
 
-			if (currentState == enumMouseState::eClickedOnEnemy || currentState == enumMouseState::eClickedOnEmptyTile)
+			if (currentState == enumMouseState::eClickedOnEnemy || currentState == enumMouseState::eClickedOnEmptyTile || currentState == enumMouseState::eHideClickedOnEnemy)
 			{
 				if (GetPlayerAP() >= (positionPath.Size() - 1) + AdditinoalAPCost)
 				{
@@ -291,6 +297,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
 	myClickedOnBB = false;
+	myFakeClickedOnEnemy = false;
 
 	PointCollider tempCollider;
 
@@ -317,11 +324,25 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	{
 		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 		{
-			return enumMouseState::eClickedOnEnemy;
+			//if (myFakeClickedOnEnemy == false)
+			//{
+				return enumMouseState::eClickedOnEnemy;
+			//}
+			//else
+			//{
+				//return enumMouseState::eHideClickedOnEnemy;
+			//}
 		}
 		else
 		{
-			return enumMouseState::eHeldOnEnemy;
+			if (myFakeClickedOnEnemy == false)
+			{
+				return enumMouseState::eHeldOnEnemy;
+			}
+			else
+			{
+				return enumMouseState::eHideHoverOnEnemy;
+			}
 		}
 	}
 	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false)
@@ -561,6 +582,10 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 	{
 		mySelectedPlayer->SetActorState(eActorState::eIdle);
 		mySelectedPlayer->SetActiveState(true);
+	}
+	else if (aMessage.myType == RecieverTypes::eFakeClickedEnemy)
+	{
+		myFakeClickedOnEnemy = true;
 	}
 	return true;
 }

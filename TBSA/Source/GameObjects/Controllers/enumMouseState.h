@@ -5,6 +5,8 @@ enum class enumMouseState
 	eClickedOnEnemy,
 	eClickedOnPlayer,
 	eClickedOnEmptyTile,
+	eHideClickedOnEnemy,
+	eHideHoverOnEnemy,
 	eHeldOnPlayer,
 	eHeldOnEmptyTile,
 	eHeldOnEnemy,

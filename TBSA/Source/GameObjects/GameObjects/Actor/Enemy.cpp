@@ -160,6 +160,11 @@ void Enemy::OnClick()
 			SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
 		}
 	}
+	else
+	{
+		SendPostMessage(EnemyObjectMessage(RecieverTypes::eFakeClickedEnemy, *this));
+		SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+	}
 }
 
 void Enemy::Fight()
