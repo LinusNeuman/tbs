@@ -13,12 +13,12 @@ GUIObjectiveDialog::GUIObjectiveDialog(const CommonUtilities::Vector2f aPosition
 	myTextBackground->SetLayer(enumRenderLayer::eGUI);
 	myPosition = aPosition;
 
-	SingletonPostMaster::AddReciever(RecieverTypes::eDialogTextMessage, *this);
+	//SingletonPostMaster::AddReciever(RecieverTypes::eDialogTextMessage, *this);
 }
 
 GUIObjectiveDialog::~GUIObjectiveDialog()
 {
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eDialogTextMessage, *this);
+	//SingletonPostMaster::RemoveReciever(RecieverTypes::eDialogTextMessage, *this);
 }
 
 void
