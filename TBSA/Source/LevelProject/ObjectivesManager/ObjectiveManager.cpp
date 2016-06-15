@@ -127,6 +127,47 @@ void ObjectiveManager::Update()
 	}
 }
 
+void ObjectiveManager::UpdateObjectiveBox()
+{
+	SendPostMessage(BaseMessage(RecieverTypes::eClearObjectiveBox))
+	CommonUtilities::GrowingArray<std::string> objectiveTexts;
+	objectiveTexts.Init(1);
+	std::map<std::string, CommonUtilities::Point2c> myDescriptions;
+
+	for (auto stageIterator = myStages[myCurrentStage].begin(); stageIterator != myStages[myCurrentStage].end(); ++stageIterator)
+	{
+		std::string currentDescription = GetObjectiveDescription(stageIterator->second);
+		if (myDescriptions.count(currentDescription) < 1)
+		{
+			myDescriptions[currentDescription] = CommonUtilities::Point2c(objectiveTexts.Size(), 1);
+			objectiveTexts.Add("");
+		}
+		else
+		{
+			myDescriptions[currentDescription].y += 1;
+		}
+
+		objectiveTexts[myDescriptions[currentDescription].x] = currentDescription + "( " + std::to_string(myDescriptions[currentDescription].y) + " left)";
+	}
+
+	for (size_t i = 0; i < objectiveTexts.Size(); i++)
+	{
+		SendPostMessage(TextMessage(RecieverTypes::eAddTextToObjectiveBox, objectiveTexts[i]));
+	}
+}
+
+std::string ObjectiveManager::GetObjectiveDescription(const LevelObjective& aLevelObjective)
+{
+	if (aLevelObjective.description != "")
+	{
+		return aLevelObjective.description;
+	}
+	else
+	{
+		return std::string("Add description in objectives file for objective ") + aLevelObjective.myTarget;
+	}
+}
+
 void ObjectiveManager::AddObjective(const int aIndex, std::string aName)
 {
 	myObjectives[aIndex] = aName;

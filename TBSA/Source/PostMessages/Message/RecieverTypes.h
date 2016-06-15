@@ -67,8 +67,9 @@ enum class RecieverTypes
 	eClickedOnBB,
 	eSelectedPlayerHasChanged,
 	eLevelEndScoreMessage,
-	enumlength,
 	eOpenOptionsMenu,
 	eCloseOptionsMenu,
-	enumlength
+	eAddTextToObjectiveBox,
+	eClearObjectiveBox,
+	enumlength,
 };

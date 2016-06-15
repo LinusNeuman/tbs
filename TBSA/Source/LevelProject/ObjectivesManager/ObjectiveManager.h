@@ -20,6 +20,9 @@ public:
 	void LoadFromJson(std::string aPath);
 	void Update();
 	
+	void UpdateObjectiveBox();
+	static std::string GetObjectiveDescription(const LevelObjective & aLevelObjective);
+
 	void AddObjective(int, std::string);
 	int CountObjective(const std::string & aObjectiveName) const;
 	const LevelObjective& GetObjective(const std::string& aObjectiveName);
