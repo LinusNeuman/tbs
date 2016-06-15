@@ -12,7 +12,6 @@
 #include "Controllers\enumMouseState.h"
 #include "Controllers\MouseController.h"
 
-
 class PlayState;
 class Actor;
 class RenderConverter;
@@ -100,6 +99,7 @@ private:
 	SoundEffect* mySelectPlayerSound;
 	SoundEffect* myAlertSound;
 	SoundEffect* myCandySound;
+	SoundEffect* myPeekSound;
 
 	ScoreCounter myScoreCounter;
 
