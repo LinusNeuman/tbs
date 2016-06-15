@@ -12,14 +12,12 @@
 
 ObjectiveManager::ObjectiveManager()
 {
-#ifdef _DEBUG
-	isConstructed = true;
-#endif
 	myStages.Init(1);
 	myCurrentStage = 0;
 	SingletonPostMaster::AddReciever(RecieverTypes::eObjctive, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLeaveObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDied, *this);
+	myStageEndDialogs.Init(1);
 }
 
 ObjectiveManager::~ObjectiveManager()
@@ -29,10 +27,6 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
-#ifdef _DEBUG
-	DL_ASSERT(isConstructed, "unconstructed object");
-#endif
-
 	myStages.RemoveAll();
 	picojson::object root = JsonHelp::LoadJson(aPath);
 	picojson::array stages = JsonHelp::GetArray(root["stages"]);
@@ -46,6 +40,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 		picojson::array objectives = JsonHelp::GetArray(stages[i]);
 		Stage stage;
 
+		myStageEndDialogs.Add("_empty_");
 		for (size_t j = 0; j < objectives.size(); j++)
 		{
 			picojson::object objectiveObject = JsonHelp::GetPicoJsonObject(objectives[j]);
@@ -53,6 +48,11 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 			objective.myTarget = JsonHelp::GetString(objectiveObject["target"]);
 			objective.myIsDone = false;
+
+			if (objectiveObject.count("stageEndDialog") > 0)
+			{
+				myStageEndDialogs[myStageEndDialogs.Size() - 1] = JsonHelp::GetString(objectiveObject["stageEndDialog"]);
+			}
 
 			const std::string typeString = JsonHelp::GetString(objectiveObject["type"]);
 
@@ -111,11 +111,12 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 void ObjectiveManager::Update()
 {
-#ifdef _DEBUG
-	DL_ASSERT(isConstructed, "unconstructed object");
-#endif
 	if (myStages[myCurrentStage].size() < 1)
 	{
+		if (myStageEndDialogs[myCurrentStage] != "_empty_")
+		{
+			SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[myStageEndDialogs[myCurrentStage]]));
+		}
 		completedObjectives.clear();
 		++myCurrentStage;
 		if (myCurrentStage >= myStages.Size())
@@ -155,9 +156,19 @@ const LevelObjective& ObjectiveManager::GetObjective(const std::string &aObjecti
 	return LevelObjective();
 }
 
+Stage ObjectiveManager::GetCurrentStage()
+{
+	return myStages[myCurrentStage];
+}
+
 bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 {
 	if (aMessage.myText == "CandyMessage")
+	{
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
+	}
+
+	if (myDialogs.count(aMessage.myText))
 	{
 		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
 	}
@@ -183,10 +194,7 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		myStages[myCurrentStage].erase(aMessage.myText);
 	}
 
-	if (myDialogs.count(aMessage.myText))
-	{
-		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
-	}
+	
 
 	return true;
 }
