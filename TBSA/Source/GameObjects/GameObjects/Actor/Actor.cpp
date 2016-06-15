@@ -68,6 +68,12 @@ Actor::~Actor()
 		myFightSounds[i] = nullptr;
 		delete myFightSounds[i];
 	}
+
+	myBonus = nullptr;
+	delete myBonus;
+
+	mySprite = nullptr;
+	delete mySprite;
 }
 
 void Actor::Init(const ActorData &aActorData)
@@ -144,7 +150,10 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			if (myStepTimer >= 0.4f)
 			{
 				int step = (rand() % 6);
-				myStepSounds[step]->Play(0.4f);
+				if (myStepSounds[step]->GetIsPlaying() == false)
+				{
+					myStepSounds[step]->Play(0.4f);
+				}
 				myStepTimer = 0.f;
 			}
 
@@ -180,12 +189,19 @@ void Actor::Update(const CU::Time& aDeltaTime)
 				int fight = (rand() % 150);
 				if (fight == 0)
 				{
-					myBonus->Play(0.4f);
+					if (myBonus->GetIsPlaying() == false)
+					{
+						myBonus->Play(0.4f);
+					}
 				}
 				else
 				{
 					fight /= 30;
-					myFightSounds[fight]->Play(0.4f);
+
+					if (myFightSounds[fight]->GetIsPlaying() == false)
+					{
+						myFightSounds[fight]->Play(0.4f);
+					}
 
 				}
 

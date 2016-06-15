@@ -49,18 +49,6 @@ void Player::Init(const ActorData &aActorData, const PlayerData &aPlayerData)
 	myAPBox.Reset();
 }
 
-void Player::FreshTurn()
-{
-	if (myIsSeen == true)
-	{
-		myCurrentAP = 0;
-	}
-	else
-	{
-		myCurrentAP = myActionPointMax;
-	}
-}
-
 int Player::GetMyAP() const
 {
 	return myCurrentAP;
@@ -178,6 +166,14 @@ void Player::ResetObjectiveState()
 
 void Player::PreTurn()
 {
+	if (myIsSeen == true)
+	{
+		myCurrentAP = 0;
+	}
+	else
+	{
+		myCurrentAP = myActionPointMax;
+	}
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
 }
 
@@ -285,10 +281,10 @@ void Player::DecideAnimation()
 			break;
 		}
 	}
-	else if (myState == eActorState::eFighting)
+	/*else if (myState == eActorState::eFighting)
 	{
 		ChangeAnimation("");
-	}
+	}*/
 }
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)

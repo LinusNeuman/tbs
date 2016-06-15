@@ -25,6 +25,9 @@ TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(
 
 TurnManager::~TurnManager()
 {
+	SAFE_DELETE(myPlayerTurnImage);
+	SAFE_DELETE(myEnemyTurnImage);
+
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagPlayerDied, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
 }
@@ -99,7 +102,6 @@ bool TurnManager::PreparePlayer()
 	myTurnImageTimer = 0.f;
 	myPlayerTurnImage->SetColor(CU::Vector4f::One);
 	myPlayerController.PrePlayer();
-	myPlayerController.RefillAllAP();
 	EndTurn();
 	return true;
 }

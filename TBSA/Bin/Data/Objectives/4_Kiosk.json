@@ -1,5 +1,15 @@
 {
 	"stages":[
+	[
+			{
+				"type" : "take_objective",
+				"target" : "EnemyFlag",
+				"image" : {
+					"active" : "Objectives/EnemyFlag.dds",
+					"not_active" : "Objectives/FriendlyFlag.dds"
+				}
+			}
+		],
 		[
 			{
 				"type" : "hold_objective",

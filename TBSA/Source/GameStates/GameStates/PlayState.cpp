@@ -31,7 +31,7 @@ PlayState::PlayState()
 	myGameOver = false;
 	myShowPostLevelScreen = false;
 
-	myAmbiance = new Song();
+	myAmbiance = new SoundEffect();
 	myAmbiance->Init("Sounds/AMB/windy.ogg", true);
 
 	myMusic = new Song();
@@ -41,11 +41,17 @@ PlayState::PlayState()
 PlayState::~PlayState()
 {
 	SAFE_DELETE(myLevel);
+
+	SAFE_DELETE(myAmbiance);
+	SAFE_DELETE(myMusic);
+
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eOpenPauseMenu, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRestartLevel, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEndScoreMessage, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -57,6 +63,8 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eOpenPauseMenu, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eRestartLevel, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEndScoreMessage, *this);
+
 	if (aLevelPath == "")
 	{
 		SendPostMessage(GetStartLevelMessage(RecieverTypes::eStartUpLevel));
@@ -75,8 +83,15 @@ void PlayState::Init(const std::string& aLevelPath)
 
 	myEmitter.Activate({0.5f, 0.5f});
 
-	myAmbiance->Play(1.0f);
-	myMusic->Play(0.58f);
+	if (myAmbiance->GetIsPlaying() == false)
+	{
+		myAmbiance->Play(1.0f);
+	}
+	
+	if (myMusic->GetIsPlaying() == false)
+	{
+		myMusic->Play(0.58f);
+	}
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -99,6 +114,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
+		myAmbiance->Stop();
+		myMusic->Stop();
 		myShouldExit = false;
 		//return eStackReturnValue::ePopMain;
 		return eStackReturnValue::eDeleteMainState;
@@ -153,7 +170,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		if (myShowPostLevelScreen == true)
 		{
 			myShowPostLevelScreen = false;
-			aStateStack.AddSubState(new PostLevelState(10000 , 23, 4));
+			aStateStack.AddSubState(new PostLevelState(myScoreCounter.GetScore(enumScoreTypes::eCandy) , myScoreCounter.GetScore(enumScoreTypes::eTurnCount), myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled)));
 		}
 
 		scoreScreenDone = true;
@@ -217,6 +234,15 @@ bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 	{
 		myGameOver = true;
 	}
+	return true;
+}
+
+bool PlayState::RecieveMessage(const ScoreCounterMessage& aMessage)
+{
+	//myScoreCounter.AddScore(enumScoreTypes::eCandy, aMessage.myScoreCounter.GetScore(enumScoreTypes::eCandy));
+	//myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, aMessage.myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled));
+	//myScoreCounter.AddScore(enumScoreTypes::eTurnCount, aMessage.myScoreCounter.GetScore(enumScoreTypes::eTurnCount));
+	myScoreCounter = aMessage.myScoreCounter;
 	return true;
 }
 

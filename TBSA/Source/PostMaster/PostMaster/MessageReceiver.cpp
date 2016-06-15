@@ -210,3 +210,8 @@ bool MessageReciever::RecieveMessage(const EnemyNextPathMessage& aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const ScoreCounterMessage & aMessage)
+{
+	return true;
+}

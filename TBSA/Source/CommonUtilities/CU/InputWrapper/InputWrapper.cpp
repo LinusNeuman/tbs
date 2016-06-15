@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "InputWrapper.h"
+#include <amp.h>
 
 
 namespace CommonUtilities
@@ -55,6 +56,44 @@ namespace CommonUtilities
 		{
 			return;
 		}
+
+		CU::Vector2f tempPosition = GetMouseWindowPositionNormalizedSpace();
+
+		if (tempPosition.x > 1.f || tempPosition.x < 0.f ||
+			tempPosition.y > 1.f || tempPosition.y < 0.f)
+		{
+			if ((CU::WindowsFunctions::CheckIfWindowFullscreen(myWindowID)) == true)
+			{
+				CU::Point2ui newPosition(tempPosition.x, tempPosition.y);
+
+				tempPosition.x = min(1.f, max(tempPosition.x, 0.f));
+				tempPosition.y = min(1.f, max(tempPosition.y, 0.f));
+
+				RECT tempWindow;
+				GetClientRect(myWindowID, &tempWindow);
+
+				//newPosition.x = newPosition.x * tempWindow.right;
+				//newPosition.y = newPosition.y * tempWindow.bottom;
+				newPosition.x = tempPosition.x * tempWindow.right -4;
+				newPosition.y = tempPosition.y * tempWindow.bottom;
+
+				POINT tempPoint;
+				tempPoint.x = newPosition.x;
+				tempPoint.y = newPosition.y;
+				
+				ClientToScreen(myWindowID, &tempPoint);
+
+				SetCursorPosition(tempPoint.x, tempPoint.y);
+			}
+			else
+			{
+				if (GetActiveWindow() == myWindowID)
+				{
+					return;
+				}
+			}
+		}
+
 
 		myPreviousMouseData = myMouseData;
 		myMouse->GetDeviceState(sizeof(DIMOUSESTATE), static_cast<LPVOID>(&myMouseData));
