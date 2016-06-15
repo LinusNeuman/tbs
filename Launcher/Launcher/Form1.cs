@@ -167,10 +167,17 @@ namespace Launcher
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            Pen whiteBroadPen = new Pen(Color.White, 2.0f);
-            //e.Graphics.DrawLines(whiteBroadPen, )
-            e.Graphics.DrawLine(whiteBroadPen, new Point(0, 0), new Point(30, 30));
-            e.Graphics.DrawLine(whiteBroadPen, new Point(28, 0), new Point(0, 28));
+            Pen BroadPen;
+            if (button2.BackColor == Color.Black || button2.BackColor == Color.DarkRed)
+            { 
+                BroadPen = new Pen(Color.White, 2.0f);
+            }
+            else
+            {
+                BroadPen = new Pen(Color.White, 4.0f);
+            }
+            e.Graphics.DrawLine(BroadPen, new Point(2, 2), new Point(26, 26));
+            e.Graphics.DrawLine(BroadPen, new Point(26, 2), new Point(2, 26));
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -182,11 +189,6 @@ namespace Launcher
             }
         }
 
-        private void button2_MouseHover(object sender, EventArgs e)
-        {
-
-        }
-
         private void button2_MouseLeave(object sender, EventArgs e)
         {
             button2.BackColor = Color.Black;
@@ -194,7 +196,12 @@ namespace Launcher
 
         private void button2_MouseEnter(object sender, EventArgs e)
         {
-            button2.BackColor = Color.DarkGray;
+            button2.BackColor = Color.Red;
+        }
+
+        private void button2_MouseDown(object sender, MouseEventArgs e)
+        {
+            button2.BackColor = Color.DarkRed;
         }
     }
 }
