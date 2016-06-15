@@ -154,7 +154,6 @@ void Player::Update(const CU::Time& aDeltaTime)
 	{
 		myAPBox.Reset();
 	}
-	std::cout << myCurrentAP << std::endl;
 	
 }
 
