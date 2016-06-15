@@ -75,5 +75,6 @@ enum class RecieverTypes
 	eAddTextToObjectiveBox,
 	eClearObjectiveBox,
 	eGameOverScore,
+	eEnemiesEndTurn,
 	enumlength,
 };

@@ -86,6 +86,8 @@ private:
 	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
 
+	bool myPlayerTurnFlag;
+
 	bool myFakeClickedOnEnemy;
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
