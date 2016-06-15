@@ -31,8 +31,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "install_dxweb"; Description: "Install directX"; GroupDescription: "Extra installs"
-Name: "install_vcRedist"; Description: "Install vcRedist"; GroupDescription: "Extra installs"
+Name: "install_dxweb"; Description: "Install directX"; GroupDescription: "Required installs"
+Name: "install_vcRedist"; Description: "Install vcRedist"; GroupDescription: "Required installs"
 
 [Files]
 Source: "C:\Users\sthahu2\Source\Repos\tbs\TBSA\Bin\Launcher.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -49,3 +49,9 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 Filename: "{app}\externalInstallers\dxwebsetup.exe"; Tasks: install_dxweb
 Filename: "{app}\externalInstallers\vcredist_x86.exe"; Tasks: install_vcRedist
 Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}"
+
+[Messages]
+WizardInfoAfter=Find more cool games at http://games.thegameassembly.com/

@@ -51,7 +51,7 @@ void EnemyController::Update(CommonUtilities::Time aDeltaTime)
 	}
 	else
 	{
-		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
+		EnemiesEndTurn();
 	}
 }
 
@@ -92,7 +92,7 @@ void EnemyController::EnemyDone()
 	++myCurrentEnemy;
 	if (myCurrentEnemy >= myEnemies.Size())
 	{
-		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
+		EnemiesEndTurn();
 	}
 	else
 	{
@@ -103,6 +103,11 @@ void EnemyController::EnemyDone()
 void EnemyController::SetFloor(GameFloor& aFloor)
 {
 	myFloor = &aFloor;
+}
+
+void EnemyController::EnemiesEndTurn()
+{
+	SendPostMessage(GUIMessage(RecieverTypes::eEnemiesEndTurn));
 }
 
 void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, eDirection aDirection, Enemy *aEnemy)
