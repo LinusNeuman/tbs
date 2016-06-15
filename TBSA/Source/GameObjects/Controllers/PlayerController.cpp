@@ -258,6 +258,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		case enumMouseState::enumLength:
 			DL_ASSERT(false, "Error in handling playercontroller mouse input");
 		case enumMouseState::eHeldOnVoid:
+		case enumMouseState::eHeldOnPlayer:
 			break;
 		}
 	}
@@ -287,6 +288,10 @@ enumMouseState PlayerController::GetCurrentMouseState()
 		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 		{
 			return enumMouseState::eClickedOnPlayer;
+		}
+		else
+		{
+			return enumMouseState::eHeldOnPlayer;
 		}
 	}
 	else if (myClickedOnEnemy == true)
