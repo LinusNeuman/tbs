@@ -26,6 +26,8 @@ public:
 	void SwapBuffer();
 	void ClearCommands();
 
+	void SetCull(const bool aCullingFlag);
+
 private:
 	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>> * myBuffer;
 	CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>> * myCommandsToRender;
@@ -33,6 +35,7 @@ private:
 	CU::Vector2ui myWindowSize;
 
 	void RenderAllSprites() const;
+	bool myIShouldCull;
 };
 
 inline void Renderer::SetWindowSize(const CU::Vector2ui & aWindowSize)
