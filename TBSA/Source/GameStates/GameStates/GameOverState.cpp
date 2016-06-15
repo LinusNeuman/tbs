@@ -19,7 +19,7 @@ void GameOverState::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eGameOverReset, *this);
 
 	myBackgroundSprite = new StaticSprite();
-	myBackgroundSprite->Init("Sprites/GUI/InGame/GameOver/Background.dds", false);
+	myBackgroundSprite->Init("Sprites/GUI/EndScreens/EndFail_Background.dds", false);
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
 	LoadGUI("GameOver");
 }
