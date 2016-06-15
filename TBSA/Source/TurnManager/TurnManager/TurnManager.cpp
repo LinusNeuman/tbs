@@ -102,7 +102,6 @@ bool TurnManager::PreparePlayer()
 	myTurnImageTimer = 0.f;
 	myPlayerTurnImage->SetColor(CU::Vector4f::One);
 	myPlayerController.PrePlayer();
-	myPlayerController.RefillAllAP();
 	EndTurn();
 	return true;
 }

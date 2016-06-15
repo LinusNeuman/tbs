@@ -25,7 +25,7 @@ void SingletonPostMaster::Destroy()
 
 void SingletonPostMaster::AddReciever(const RecieverTypes aTypeToRecieve, MessageReciever & aRecieverToAdd, const RecieverOrder aPriority /*= RecieverOrder::eDefault*/)
 {
-	Reciever tempReciver(aRecieverToAdd, aRecieverToAdd.myRecieverOrder);
+	Reciever tempReciver(aRecieverToAdd, aPriority);
 	if (aRecieverToAdd.myRecieverOrder != RecieverOrder::eDefault)
 	{
 		tempReciver = Reciever(aRecieverToAdd, aRecieverToAdd.myRecieverOrder);

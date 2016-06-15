@@ -2,6 +2,7 @@
 
 enum class RecieverOrder
 {
+	VIP,
 	eGUI,
 	eDefault = 100,
 	enumLength

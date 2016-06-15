@@ -99,6 +99,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyNextPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this, RecieverOrder::VIP);
 
 	myMouseController.Init();
 }
@@ -357,22 +358,14 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 void PlayerController::PrePlayer()
 {
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
-	
-	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, mySelectedPlayer->GetMyAP()));
-	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
-	SendPostMessage(dijkstraMessage);
 	for (unsigned int i = 0; i < myPlayers.Size(); ++i)
 	{
 		myPlayers[i]->PreTurn();
 	}
-}
-
-void PlayerController::RefillAllAP()
-{
-	for (unsigned int i = 0; i < myPlayers.Size(); ++i)
-	{
-		myPlayers[i]->FreshTurn();
-	}
+	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, mySelectedPlayer->GetMyAP()));
+	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
+	SendPostMessage(dijkstraMessage);
+	
 	myScoreCounter.AddScore(enumScoreTypes::eTurnCount, 1);
 }
 

@@ -121,7 +121,8 @@ void ObjectiveManager::Update()
 		++myCurrentStage;
 		if (myCurrentStage >= myStages.Size())
 		{
-			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel))
+			//SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, ""));
+			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel));
 		}
 	}
 }
