@@ -139,7 +139,7 @@ void ObjectiveManager::Update()
 		}
 		else
 		{
-			UpdateObjectiveBox();
+			//UpdateObjectiveBox();
 		}
 	}
 
@@ -250,7 +250,7 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		if (completedObjectives.count(aMessage.myText) && completedObjectives[aMessage.myText].myType == eLevelObjectiveType::HOLD)
 		{
 			myStages[myCurrentStage][aMessage.myText] = completedObjectives[aMessage.myText];
-			UpdateObjectiveBox();
+			//UpdateObjectiveBox();
 		}
 		return true;
 	}
@@ -265,7 +265,7 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		}
 
 		myStages[myCurrentStage].erase(aMessage.myText);
-		UpdateObjectiveBox();
+		//UpdateObjectiveBox();
 	}
 
 	
