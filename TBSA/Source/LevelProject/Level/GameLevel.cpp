@@ -101,7 +101,7 @@ void GameLevel::InternalInit()
 
 	for (size_t i = 0; i < myEnemies.Size(); i++)
 	{
-		myEnemies[i]->ChangeAnimation("EnemyTurn");
+		myEnemies[i]->ChangeAnimation("EnemyIdle180");
 	}
 
 	myPlayerController->SetCameraPositionToPlayer(1);

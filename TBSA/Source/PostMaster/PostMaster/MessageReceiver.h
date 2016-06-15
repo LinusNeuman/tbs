@@ -42,6 +42,7 @@ struct PositionMessage;
 struct LevelChangeMassage;
 struct CurrentPlayerAP;
 struct PlayerIsPeeking;
+struct EnemyNextPathMessage;
 
 class MessageReciever
 {
@@ -89,6 +90,7 @@ public:
 	virtual bool RecieveMessage(const LevelChangeMassage& aMessage);
 	virtual bool RecieveMessage(const EnemyDirectionChangedMessage& aMessage);
 	virtual bool RecieveMessage(const CurrentPlayerAP& aMessage);
+	virtual bool RecieveMessage(const EnemyNextPathMessage& aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:

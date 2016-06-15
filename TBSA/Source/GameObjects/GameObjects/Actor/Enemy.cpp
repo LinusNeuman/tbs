@@ -7,6 +7,7 @@
 #include <Message/EnemyDirectionChangedMessage.h>
 #include <Message/PlayerSeenMessage.h>
 #include <Message/EnemyPositionChangedMessage.h>
+#include <Message/EnemyNextPathMessage.h>
 
 
 Enemy::Enemy()
@@ -122,6 +123,10 @@ bool Enemy::RecieveMessage(const PlayerSeenMessage& aMessage)
 void Enemy::ReachedWaypoint()
 {
 	SendPostMessage(EnemyPositionChangedMessage(RecieverTypes::eEnemyPositionChanged));
+	if (GetType() >= eActorType::eEnemyOne && myCurrentWaypoint < myPath.Size() && myCurrentWaypoint > 0)
+	{
+		SendPostMessage(EnemyNextPathMessage(RecieverTypes::eEnemyNextPath, myPath[myCurrentWaypoint - 1], *this));
+	}
 }
 
 void Enemy::SetEnemyPath(PathArray aEnemyPath)

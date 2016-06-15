@@ -9,6 +9,7 @@
 #include "../../GUI/GUI/Messaging/Generic/GUIMessage.h"
 #include <Message/EnemyObjectMessage.h>
 #include <Rend/RenderConverter.h>
+#include <Message/EnemyNextPathMessage.h>
 
 
 EnemyController::EnemyController()
@@ -22,6 +23,7 @@ EnemyController::~EnemyController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartFight, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyAttacked, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyNextPath, *this);
 }
 
 void EnemyController::Init()
@@ -29,6 +31,7 @@ void EnemyController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eStartFight, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyPositionChanged, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyAttacked, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyNextPath, *this);
 }
 
 void EnemyController::PreTurn()
@@ -104,6 +107,11 @@ void EnemyController::SetFloor(GameFloor& aFloor)
 
 void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f& anotherPosition, eDirection aDirection, Enemy *aEnemy)
 {
+	bool isStandingOnDoor = false;
+	if (myFloor->GetTile(aPosition.x, aPosition.y).GetTileType() == eTileType::DOOR)
+	{
+		isStandingOnDoor = true;
+	}
 	CU::Vector2f position = aPosition;
 	CU::Vector2f secondPosition = anotherPosition;
 	double x0, x1, y0, y1;
@@ -128,10 +136,21 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 
 	for (; n > 0; --n)
 	{
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR || myFloor->GetTile(x, y).GetTileType() == eTileType::COVER)
+		if (isStandingOnDoor == true)
 		{
-			break;
+			if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::COVER)
+			{
+				break;
+			}
 		}
+		else
+		{
+			if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR || myFloor->GetTile(x, y).GetTileType() == eTileType::COVER)
+			{
+				break;
+			}
+		}
+		
 		for (unsigned int i = 0; i < myFloor->GetTile(x, y).GetAvailableDirections().Size(); i++)
 		{
 			if (myFloor->GetTile(x, y).GetAvailableDirections()[i] == aDirection)
@@ -303,6 +322,15 @@ bool EnemyController::RecieveMessage(const EnemyObjectMessage& aMessage)
 				CreateEnemyRayTrace(CU::Vector2f(myEnemies[i]->GetPosition()), myEnemies[i]->GetDirectionEnum(), 45.f, myEnemies[i]->GetViewDistance(), myEnemies[i]);
 			}
 		}
+	}
+	return true;
+}
+
+bool EnemyController::RecieveMessage(const EnemyNextPathMessage& aMessage)
+{
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::DOOR)
+	{
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetInEnemyFoV(true, &aMessage.myEnemy);
 	}
 	return true;
 }
