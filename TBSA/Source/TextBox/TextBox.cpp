@@ -25,7 +25,6 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 
 TextBox::~TextBox()
 {
-	//myRenderList.RemoveAll();
 }
 
 void TextBox::AddText_WordWrap(DX2D::CText* aText)
@@ -117,7 +116,6 @@ TextBox::AddText(std::string aText)
 			break;
 
 		default:
-			//AddText_CharWrap(tmp);
 			AddText_WordWrap(tmp);
 			break;
 	}
