@@ -16,6 +16,7 @@
 
 TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::string aFontPath, const eLinewrappingMode aMode)
 {
+	textHeight = SingletonDataHolder::GetTargetResolution().x / 38.5;
 	myRenderList.Init(1);
 	myCurrentLine = 0;
 	myFontPath = aFontPath;
@@ -146,9 +147,9 @@ TextBox::SetSize(const Vec2f aSize)
 	myDimensions.y = aSize.y / SingletonDataHolder::GetTargetResolution().y * renderScale;
 
 	myNumberOfLinesDisplayed = 0;
-	float textHeight = TEXT_HEIGHT / SingletonDataHolder::GetTargetResolutionf().y * renderScale;
+	float height = textHeight / SingletonDataHolder::GetTargetResolutionf().y;
 
-	for (float i = 0.f; i < aSize.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += textHeight)
+	for (float i = 0.f; i < aSize.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += height)
 	{
 		++myNumberOfLinesDisplayed;
 	}
