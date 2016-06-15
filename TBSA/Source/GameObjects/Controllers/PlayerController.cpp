@@ -323,15 +323,8 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	else if (myClickedOnEnemy == true)
 	{
 		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
-		{
-			//if (myFakeClickedOnEnemy == false)
-			//{
-				return enumMouseState::eClickedOnEnemy;
-			//}
-			//else
-			//{
-				//return enumMouseState::eHideClickedOnEnemy;
-			//}
+		{			
+			return enumMouseState::eClickedOnEnemy;	
 		}
 		else
 		{
