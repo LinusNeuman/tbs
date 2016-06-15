@@ -20,6 +20,9 @@ TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(
 	myEnemyTurnImage->Init("Sprites/GUI/TurnSigns/BaddyTurn.dds", false);
 	myEnemyTurnImage->SetLayer(enumRenderLayer::eGUI);
 
+	myTurnSound = new SoundEffect();
+	myTurnSound->Init("Sounds/SFX/turnchange.ogg");
+
 	myTurnImageTimer = 0.f;
 }
 
@@ -27,6 +30,9 @@ TurnManager::~TurnManager()
 {
 	SAFE_DELETE(myPlayerTurnImage);
 	SAFE_DELETE(myEnemyTurnImage);
+
+	myTurnSound = nullptr;
+	delete myTurnSound;
 
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagPlayerDied, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
@@ -99,6 +105,7 @@ void TurnManager::EndTurn()
 
 bool TurnManager::PreparePlayer()
 {
+	myTurnSound->Play(0.5f);
 	myTurnImageTimer = 0.f;
 	myPlayerTurnImage->SetColor(CU::Vector4f::One);
 	myPlayerController.PrePlayer();
@@ -144,6 +151,7 @@ bool TurnManager::PlayerEndTurn()
 
 bool TurnManager::PrepareEnemy()
 {
+	myTurnSound->Play(0.5f);
 	myTurnImageTimer = 0.f;
 	myEnemyTurnImage->SetColor(CU::Vector4f::One);
 
