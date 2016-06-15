@@ -4,7 +4,6 @@
 //#define CU CommonUtilities
 #define Vec2f CommonUtilities::Vector2f
 #define MAX_TEXT_ROWS 100
-#define TEXT_HEIGHT 28
 //#define DEBUG_TEXTBOX
 
 #include "../CommonUtilities/CU/NameSpaceAliases.h"
@@ -55,6 +54,8 @@ class TextBox
 		FalloffStack<DX2D::CText*, MAX_TEXT_ROWS> myTextRows;
 
 		CU::GrowingArray<DX2D::CText*> myRenderList;
+
+		float textHeight;
 
 		Vec2f myPosition;
 		Vec2f myDimensions;
