@@ -2,7 +2,7 @@
 #include "PostLevelState.h"
 #include <Rend\RenderConverter.h>
 
-PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsigned int aEnemies):
+PostLevelState::PostLevelState(float aPoints, float aTurns, float aEnemies):
 	myText({ 0.f, 0.f }, {1000.f, 500.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Char)
 {
 	myBg = new StaticSprite();
@@ -10,8 +10,8 @@ PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsign
 	myBg->SetLayer(enumRenderLayer::eGUI);
 
 	myText.SetSize({ 1000.f, 500.f });
-	myText.SetPosition({ 1920.f / 2.f - 679.f / 2.f, 0.f });
-	myText.SetLines(7);
+	myText.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.f });
+	myText.SetLines(9);
 
 	std::string str = "Candy collected: ";
 	str.append(std::to_string(aPoints));
