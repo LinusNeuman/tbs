@@ -639,7 +639,7 @@
             "myIsEnabled": true,
             "myIsIsometric": false,
             "myPositionX": 1756,
-            "myPositionY": 174,
+            "myPositionY": 250,
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
@@ -686,7 +686,7 @@
             },
             "myIsEnabled": true,
             "myIsIsometric": false,
-            "myPositionX": 855,
+            "myPositionX": 860,
             "myPositionY": 720,
             "myParentPositionX": 0,
             "myParentPositionY": 0,

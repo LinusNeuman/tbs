@@ -142,8 +142,9 @@ void GameLevel::InternalInit()
 		}
 	}
 
-	myIsInitialized = true;
+	myObjectiveManager.UpdateObjectiveBox();
 
+	myIsInitialized = true;
 }
 
 void GameLevel::Update(const CU::Time & aTimeDelta)

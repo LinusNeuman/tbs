@@ -32,6 +32,7 @@
 #include <Message/CurrentPlayerAP.h>
 #include "Message/ScoreCounterMessage.h"
 #include <Message/EnemyNextPathMessage.h>
+#include "Message/PlayerDiedMessage.h"
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -48,13 +49,16 @@ PlayerController::PlayerController()
 	myFakeClickedOnEnemy = false;
 
 	mySelectPlayerSound = new SoundEffect();
-	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
+	mySelectPlayerSound->Init("Sounds/SFX/switch.ogg");
 
 	myAlertSound = new SoundEffect();
 	myAlertSound->Init("Sounds/SFX/alert.ogg");
 
 	myCandySound = new SoundEffect();
 	myCandySound->Init("Sounds/SFX/crunch.ogg");
+
+	myPeekSound = new SoundEffect();
+	myPeekSound->Init("Sounds/SFX/peek.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -62,6 +66,7 @@ PlayerController::~PlayerController()
 	SAFE_DELETE(mySelectPlayerSound);
 	SAFE_DELETE(myAlertSound);
 	SAFE_DELETE(myCandySound);
+	SAFE_DELETE(myPeekSound);
 
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
@@ -77,6 +82,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyNextPath, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 
 	SingletonPostMaster::RemoveReciever(*this);
 
@@ -102,6 +108,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this, RecieverOrder::VIP);
 	SingletonPostMaster::AddReciever(RecieverTypes::eFakeClickedEnemy, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 
 	myMouseController.Init();
 }
@@ -219,6 +226,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			CU::Vector2ui peekPosition;
 			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 			{
+				myPeekSound->Play(0.8f);
 				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
@@ -429,6 +437,15 @@ bool PlayerController::RecieveMessage(const TextMessage & aMessage)
 	return true;
 }
 
+bool PlayerController::RecieveMessage(const PlayerDiedMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::ePlayEvents)
+	{
+		SendPostMessage(ScoreCounterMessage(RecieverTypes::eGameOverScore, myScoreCounter));
+	}
+	return true;
+}
+
 void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
@@ -489,6 +506,7 @@ bool PlayerController::RecieveMessage(const BaseMessage& aMessage)
 			CU::Vector2ui peekPosition;
 			if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 			{
+				myPeekSound->Play(0.8f);
 				CreatePlayerFoV(CU::Vector2f(peekPosition), 50);
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}

@@ -12,7 +12,11 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 	myStatsBox.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.f });
 	myStatsBox.SetLines(9);
 
-	std::string str = std::to_string(aPoints) + " X CANDYBAGS";
+	std::string str = std::to_string(aPoints) + " X CANDYBAG";
+	if (aPoints > 1)
+	{
+		str.append("S");
+	}
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
 
