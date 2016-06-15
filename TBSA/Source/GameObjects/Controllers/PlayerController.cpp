@@ -703,13 +703,7 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 	for (; n > 0; --n)
 	{
-		//if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-		//{
-		//	myFloor->GetTile(x, y).SetVisible(true);
-		//	myFloor->GetTile(x, y).SetDiscovered(true);
-		//	break;
-		//}
-		if (hasAlreadyBeenBlocked == true)
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			break;
 		}
