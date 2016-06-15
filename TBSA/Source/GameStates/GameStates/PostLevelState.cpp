@@ -13,20 +13,16 @@ PostLevelState::PostLevelState(float aPoints, float aTurns, float aEnemies):
 	myText.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.f });
 	myText.SetLines(9);
 
-	std::string str = "Candy collected: ";
-	str.append(std::to_string(aPoints));
+	std::string str = std::to_string(aPoints) + " X CANDYBAGS";
 	myText.AddText(str);
 	myText.AddText("");
 
-	str = "Enemies disabled: ";
-	str.append(std::to_string(aEnemies));
+	str = std::to_string(aEnemies) + " X ENEMIES";
 	myText.AddText(str);
 	myText.AddText("");
 
-	str = "Turned used: ";
-	str.append(std::to_string(aTurns));
+	str = std::to_string(aTurns) + " X TURNS";
 	myText.AddText(str);
-	myText.AddText("");
 	myText.AddText("");
 
 	str = "Press any key to continue.";

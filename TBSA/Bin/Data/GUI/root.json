@@ -615,26 +615,26 @@
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
-              "myPath": "Sprites/GUI/InGame\\GameOver/Unpressed.dds",
-              "myWidth": 130,
-              "myHeight": 70
+              "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Unpressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myPressed": {
-              "myPath": "Sprites/GUI/InGame\\GameOver/Pressed.dds",
-              "myWidth": 130,
-              "myHeight": 70
+              "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Pressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myHover": {
-              "myPath": "Sprites/GUI/InGame\\GameOver/Hover.dds",
-              "myWidth": 130,
-              "myHeight": 70
+              "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Hover.dds",
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
-            "myImagesPath": "Sprites/GUI/InGame\\GameOver",
-            "mySizeX": 130,
-            "mySizeY": 70,
+            "myImagesPath": "Sprites/GUI/PauseMenu\\RestartBtn",
+            "mySizeX": 203,
+            "mySizeY": 74,
             "Name": "Reset Button",
             "Tooltip": "",
             "mySprite": {
@@ -644,7 +644,7 @@
             },
             "myIsEnabled": true,
             "myIsIsometric": false,
-            "myPositionX": 830,
+            "myPositionX": 855,
             "myPositionY": 720,
             "myParentPositionX": 0,
             "myParentPositionY": 0,

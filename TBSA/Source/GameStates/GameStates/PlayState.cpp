@@ -160,7 +160,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (myGameOver == true)
 	{
-		GameOverState *newState = new GameOverState();
+		GameOverState *newState = new GameOverState(myScoreCounter.GetScore(enumScoreTypes::eCandy), myScoreCounter.GetScore(enumScoreTypes::eTurnCount), myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled));
 		newState->Init();
 		aStateStack.AddSubState(newState);
 	}
@@ -239,9 +239,6 @@ bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 
 bool PlayState::RecieveMessage(const ScoreCounterMessage& aMessage)
 {
-	//myScoreCounter.AddScore(enumScoreTypes::eCandy, aMessage.myScoreCounter.GetScore(enumScoreTypes::eCandy));
-	//myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, aMessage.myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled));
-	//myScoreCounter.AddScore(enumScoreTypes::eTurnCount, aMessage.myScoreCounter.GetScore(enumScoreTypes::eTurnCount));
 	myScoreCounter = aMessage.myScoreCounter;
 	return true;
 }
