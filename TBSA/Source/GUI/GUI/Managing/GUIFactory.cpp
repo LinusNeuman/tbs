@@ -258,6 +258,11 @@ void GUIFactory::Load()
 						newButton->SetAction(new GUIMessage(RecieverTypes::eOpenOptionsMenu), eGUIMessageEvents::eOnClick);
 					}
 
+					if (clickEvent == "CloseOptionsMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eCloseOptionsMenu), eGUIMessageEvents::eOnClick);
+					}
+
 					myGUIElements.Add(newButton);
 					myGUILookup[currentStateName].myEnd = elementsAdded;
 

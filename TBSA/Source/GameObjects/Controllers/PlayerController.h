@@ -87,6 +87,7 @@ private:
 	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
 
+	bool myFakeClickedOnEnemy;
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
 	bool myClickedOnBB;

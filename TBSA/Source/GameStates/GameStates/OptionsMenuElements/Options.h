@@ -1,7 +1,7 @@
 #pragma once
-#include "tga2d\sprite\sprite.h"
 #include "SFXSlider.h"
 #include "MusicSlider.h"
+#include <Rend/StaticSprite.h>
 
 class Options
 {
@@ -14,7 +14,8 @@ public:
 
 	~Options();
 private:
-	DX2D::CSprite* myBackground;
+	StaticSprite* myBackground;
+	CU::Vector2f myPosition;
 
 	MusicSlider myMusicSlider;
 	SFXSlider mySFXSlider;

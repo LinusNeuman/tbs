@@ -6,7 +6,7 @@
 class PostLevelState : public GameState, public MessageReciever
 {
 public:
-	PostLevelState(float aPoints, float aTurns, float aEnemies);
+	PostLevelState(int aPoints, int aTurns, int aEnemies);
 	~PostLevelState();
 	void Draw() const override;
 	eStackReturnValue Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack) override;
