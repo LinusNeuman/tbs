@@ -320,6 +320,10 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	{
 		return enumMouseState::eHeldOnVoid;
 	}
+	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false)
+	{
+		return enumMouseState::eHeldOnVoid;
+	}
 	else if (myClickedOnEnemy == true)
 	{
 		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
@@ -337,10 +341,6 @@ enumMouseState PlayerController::GetCurrentMouseState()
 				return enumMouseState::eHideHoverOnEnemy;
 			}
 		}
-	}
-	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false)
-	{
-		return enumMouseState::eHeldOnVoid;
 	}
 	else if (myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 	{
