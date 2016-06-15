@@ -12,6 +12,7 @@
 #include <Message\CreditScreenMessage.h>
 #include <GUI/Instances/GUIPortraitActive.h>
 #include <GUI/Instances/GUIActionPeek.h>
+#include <GUI/Instances/GUIObjectiveDialog.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -56,6 +57,8 @@ void GUIFactory::Load()
 			GUIDialog* dialogTextBox = new GUIDialog({ 15.f/*808.f*/, 15.f/*832.f*/ }, { 381.f, 214.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
 			dialogTextBox->SetLines(7);
 			myGUIElements.Add(dialogTextBox);
+
+			GUIObjectiveDialog* objectiveTextBox = new GUIObjectiveDialog({0, 0}, {0, 0}, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
 
 			CU::Vector2f position;
 			position.x = 25;
@@ -256,6 +259,11 @@ void GUIFactory::Load()
 					if (clickEvent == "OpenOptionsMenu")
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::eOpenOptionsMenu), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "CloseOptionsMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eCloseOptionsMenu), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);

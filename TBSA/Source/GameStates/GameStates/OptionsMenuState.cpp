@@ -4,7 +4,7 @@
 
 OptionsMenuState::OptionsMenuState()
 {
-	myLetThroughRender = false;
+	myLetThroughRender = true;
 }
 
 
@@ -49,4 +49,13 @@ void OptionsMenuState::Draw() const
 //	myBackgroundSprite->Draw({ SingletonDataHolder::GetTargetResolution().x * 0.5f, SingletonDataHolder::GetTargetResolution().y * 0.5f });
 
 	myOptionsWrapped.Render();
+}
+
+bool OptionsMenuState::RecieveMessage(const GUIMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eCloseOptionsMenu)
+	{
+		myShouldPop = true;
+	}
+	return true;
 }
