@@ -1,5 +1,11 @@
 {
 	"dialogs":[{"name":"test", "file":"test.json"},
 	{"name":"treehouseDialog1", "file":"treehouseDialog1.json"},
+	{"name":"1_Treehouse", "file":"treehouseDialog3.json"},
 	{"name":"CandyMessage", "file":"candy.json"}]
+	{"name":"Mittens", "file":"treehouseDialog2.json"},
+	{"name":"EnemyFlag", "file":"kioskDialog2.json"},
+	{"name":"Child", "file":"playgroundDialog2.json"},
+	{"name":"4_Kiosk", "file":"kioskDialog3.json"},
+	{"name":"5_Playground", "file":"playgroundDialog3.json"}]
 }

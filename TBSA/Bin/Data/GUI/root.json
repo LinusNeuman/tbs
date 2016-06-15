@@ -1,8 +1,8 @@
 {
   "GameStates": [
     {
-      "myName": "OptionsMenu",
-      "myGUIData": {
+            "myName": "OptionsMenu",
+            "myGUIData": {
         "guiElements": [
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
@@ -46,15 +46,57 @@
             }
           }
         ]
-      }
-    },
-    {
-      "myName": "Credits",
-      "myGUIData": {
-        "guiElements": []
-      }
-    },
-    {
+            }
+        },
+        {
+            "myName": "Credits",
+            "myGUIData": {
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/BackButton/Pressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/BackButton/Hover.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/BackButton",
+            "mySizeX": 203,
+            "mySizeY": 74,
+            "Name": "BackButton",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 1650,
+            "myPositionY": 100,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "GoToMainMenu",
+              "Hover": ""
+            }
+          }
+        ]
+            }
+        },
+        {
       "myName": "MainMenu",
       "myGUIData": {
         "guiElements": [
@@ -62,25 +104,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN/Unpressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN/Pressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN/Hover.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN",
-            "mySizeX": 200,
-            "mySizeY": 70,
+            "mySizeX": 203,
+            "mySizeY": 74,
             "Name": "PlayButton",
             "Tooltip": "",
             "mySprite": {
@@ -103,25 +145,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN/Unpressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN/Pressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN/Hover.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN",
-            "mySizeX": 200,
-            "mySizeY": 70,
+            "mySizeX": 203,
+            "mySizeY": 74,
             "Name": "QuitButton",
             "Tooltip": "",
             "mySprite": {
@@ -144,25 +186,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN/Unpressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN/Pressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN/Hover.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN",
-            "mySizeX": 200,
-            "mySizeY": 70,
+            "mySizeX": 203,
+            "mySizeY": 74,
             "Name": "Level Select",
             "Tooltip": "",
             "mySprite": {
@@ -185,25 +227,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN/Unpressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN/Pressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN/Hover.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN",
-            "mySizeX": 200,
-            "mySizeY": 70,
+            "mySizeX": 203,
+            "mySizeY": 74,
             "Name": "Credits",
             "Tooltip": "",
             "mySprite": {
@@ -479,25 +521,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myPressed": {
               "myPath": "Sprites/GUI/BackButton/Pressed.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
             "myHover": {
               "myPath": "Sprites/GUI/BackButton/Hover.dds",
-              "myWidth": 200,
-              "myHeight": 70
+              "myWidth": 203,
+              "myHeight": 74
             },
-            "myShouldPlayHoverSound": false,
-            "myShouldPlayClickSound": false,
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/BackButton",
-            "mySizeX": 200,
-            "mySizeY": 70,
+            "mySizeX": 203,
+            "mySizeY": 74,
             "Name": "BackButton",
             "Tooltip": "",
             "mySprite": {

@@ -50,6 +50,7 @@ GUIDialog::Update(const CU::Time& aTimeDelta)
 
 	if (myIsEnabled == true)
 	{
+		SendPostMessage(GUIMessage(RecieverTypes::eDialogEnabled));
 		if (SingletonIsometricInputWrapper::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft) == true)
 		{
 			if (myTexts.size() == 0)
@@ -63,6 +64,10 @@ GUIDialog::Update(const CU::Time& aTimeDelta)
 				myTexts.pop();
 			}
 		}
+	}
+	else
+	{
+		SendPostMessage(GUIMessage(RecieverTypes::eDialogDisabled));
 	}
 
 	myTextBox.Update();

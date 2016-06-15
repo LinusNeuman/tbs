@@ -3,9 +3,9 @@
 		[
 			{
 				"type" : "take_objective",
-				"target" : "Pram",
+				"target" : "Mittens",
 				"image" : {
-					"active" : "Objectives/Pram.dds"
+					"active" : "Objectives/Gloves.dds"
 				},
 				"description" : "Get the pram"
 			}
