@@ -28,10 +28,10 @@ public:
 	static void SwapBuffers();
 	static void ClearCommands();
 
+	void SetShouldCull(const bool aCullingFlag);
+
 	virtual bool RecieveMessage(const LevelTileMetricsMessage & aMessage) override;
 	virtual bool RecieveMessage(const SetMainCameraMessage & aMessage) override;
-
-	
 
 private:
 	RenderConverter();
