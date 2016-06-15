@@ -368,6 +368,7 @@ void PlayerController::RefillAllAP()
 	{
 		myPlayers[i]->FreshTurn();
 	}
+	myScoreCounter.AddScore(enumScoreTypes::eTurnCount, 1);
 }
 
 void PlayerController::SetCameraPositionToPlayer(int aIndex)
