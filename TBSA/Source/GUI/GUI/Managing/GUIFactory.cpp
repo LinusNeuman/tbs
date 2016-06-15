@@ -253,6 +253,11 @@ void GUIFactory::Load()
 						newButton->SetAction(new GUIMessage(RecieverTypes::eGoToMainMenu), eGUIMessageEvents::eOnClick);
 					}
 
+					if (clickEvent == "OpenOptionsMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eOpenOptionsMenu), eGUIMessageEvents::eOnClick);
+					}
+
 					myGUIElements.Add(newButton);
 					myGUILookup[currentStateName].myEnd = elementsAdded;
 
@@ -264,6 +269,7 @@ void GUIFactory::Load()
 
 	std::cout << "Loading all GUI took " << loadTimer.GetTime().GetMilliSeconds() << " ms" << std::endl;
 }
+
 
 CU::GrowingArray<GUIElement*, uchar>* GUIFactory::GetLoadedGUI(const char* aStateName)
 {

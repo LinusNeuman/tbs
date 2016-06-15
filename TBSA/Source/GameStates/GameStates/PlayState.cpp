@@ -31,7 +31,7 @@ PlayState::PlayState()
 	myGameOver = false;
 	myShowPostLevelScreen = false;
 
-	myAmbiance = new Song();
+	myAmbiance = new SoundEffect();
 	myAmbiance->Init("Sounds/AMB/windy.ogg", true);
 
 	myMusic = new Song();
@@ -48,6 +48,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eOpenPauseMenu, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRestartLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEndScoreMessage, *this);
