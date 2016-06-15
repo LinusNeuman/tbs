@@ -17,6 +17,7 @@ private:
 	MouseController myMouseController;
 
 	StaticSprite* myBackgroundSprite;
+	StaticSprite* myIcons;
 	bool myShouldExit;
 	TextBox myStatsBox;
 };

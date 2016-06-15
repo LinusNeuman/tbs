@@ -12,8 +12,12 @@ public:
 	void Draw() const override;
 	eStackReturnValue Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack) override;
 
+	bool RecieveMessage(const GUIMessage& aMessage) override;
+
 private:
 	MouseController myMouseController;
 	TextBox myText;
 	StaticSprite* myBg;
+	StaticSprite* myIcons;
+	bool myIsExit;
 };

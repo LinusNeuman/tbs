@@ -1,6 +1,54 @@
 {
   "GameStates": [
     {
+      "myName": "PostGame",
+      "myGUIData": {
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/EndScreens\\ContinueBTN/Unpressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/EndScreens\\ContinueBTN/Pressed.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/EndScreens\\ContinueBTN/Hover.dds",
+              "myWidth": 203,
+              "myHeight": 74
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/EndScreens\\ContinueBTN",
+            "mySizeX": 203,
+            "mySizeY": 74,
+            "Name": "Continue",
+            "Tooltip": "",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 860,
+            "myPositionY": 720,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "EndScreenContinue",
+              "Hover": ""
+            }
+          }
+        ]
+      }
+    },
+    {
       "myName": "OptionsMenu",
       "myGUIData": {
         "guiElements": [
