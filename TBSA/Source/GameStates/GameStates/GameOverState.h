@@ -14,6 +14,7 @@ public:
 
 private:
 	StaticSprite* myBackgroundSprite;
+	StaticSprite* myIcons;
 	bool myShouldExit;
 	TextBox myStatsBox;
 };

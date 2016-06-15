@@ -14,4 +14,5 @@ public:
 private:
 	TextBox myText;
 	StaticSprite* myBg;
+	StaticSprite* myIcons;
 };

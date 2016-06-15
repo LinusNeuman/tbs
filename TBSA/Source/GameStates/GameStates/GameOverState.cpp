@@ -46,6 +46,11 @@ void GameOverState::Init()
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
 	myBackgroundSprite->SetRenderPriority(600.f);
 
+	myIcons = new StaticSprite();
+	myIcons->Init("Sprites/GUI/EndScreens/Icons.dds", false, CU::Vector4f::Zero, { 0.5f, 0.5f });
+	myIcons->SetLayer(enumRenderLayer::eGUI);
+	myIcons->SetRenderPriority(700.f);
+
 	LoadGUI("GameOver");
 }
 
@@ -68,6 +73,7 @@ void GameOverState::Draw() const
 {
 	myGUIManager.Render();
 	myBackgroundSprite->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
+	myIcons->DrawWithNormalized(CU::Vector2f(0.48f, 0.54f));
 	myStatsBox.Render();
 }
 
