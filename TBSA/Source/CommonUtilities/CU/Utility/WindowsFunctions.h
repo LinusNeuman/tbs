@@ -13,6 +13,8 @@ namespace CommonUtilities
 {
 	namespace WindowsFunctions
 	{
+		bool CheckIfWindowFullscreen(HWND aWindowID);
+
 		Vector4f GetWindowSize(HWND aWindowID);
 
 		windowsString CreateFolder(const windowsString & aFilePathAndFolderName);

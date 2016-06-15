@@ -89,8 +89,6 @@ void Player::SuggestCostAP(const int aSuggestCost)
 	myAPBox.SetCost(aSuggestCost);
 }
 
-
-
 void Player::OnClick()
 {
 	SendPostMessage(PlayerIDMessage(RecieverTypes::eClickedOnPlayer, GetIndex()));
@@ -136,6 +134,7 @@ bool Player::RecieveMessage(const EnemyObjectMessage& aMessage)
 void Player::AfterTurn()
 {
 	Actor::AfterTurn();
+	myPreviousAP = myCurrentAP;
 	if (myIsSeen == true)
 	{
 		SendPostMessage(FlagPlayerDiedMessage(RecieverTypes::eFlagPlayerDied));
@@ -167,7 +166,7 @@ void Player::Update(const CU::Time& aDeltaTime)
 	{
 		myAPBox.Reset();
 	}
-
+	std::cout << myCurrentAP << std::endl;
 	
 }
 
@@ -180,7 +179,6 @@ void Player::ResetObjectiveState()
 void Player::PreTurn()
 {
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
-	myIsSeen = false;
 }
 
 void Player::DecideAnimation()
@@ -287,10 +285,10 @@ void Player::DecideAnimation()
 			break;
 		}
 	}
-	else if (myState == eActorState::eFighting)
+	/*else if (myState == eActorState::eFighting)
 	{
 		ChangeAnimation("");
-	}
+	}*/
 }
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
@@ -312,7 +310,6 @@ void Player::AlmostReachTarget()
 void Player::ReachedTarget()
 {
 	SendPostMessage(PlayerObjectMessage(RecieverTypes::ePlayerReachedEndOfPath, *this));
-	myPreviousAP = myCurrentAP;
 }
 
 void Player::ReachedWaypoint()
