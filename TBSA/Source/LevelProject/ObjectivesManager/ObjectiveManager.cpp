@@ -30,9 +30,6 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
-#ifdef _DEBUG
-	DL_ASSERT(isConstructed, "unconstructed object");
-#endif
 	dialogSent = false;
 	dialogDone = false;
 	levelDone = false;
