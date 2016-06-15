@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "ObjectiveManager.h"
 #include <PostMaster/SingletonPostMaster.h>
+#include <GUI/Messaging/Generic/GUIMessage.h>
 #include <JsonHelp/JsonHelp.h>
 #include "Objectives/Objective.h"
 #include <Message/BaseMessage.h>
@@ -17,6 +18,8 @@ ObjectiveManager::ObjectiveManager()
 	SingletonPostMaster::AddReciever(RecieverTypes::eObjctive, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLeaveObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDied, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eDialogEnabled, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eDialogDisabled, *this);
 	myStageEndDialogs.Init(1);
 }
 
@@ -27,6 +30,15 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
+//#ifdef _DEBUG
+//	DL_ASSERT(isConstructed, "unconstructed object");
+//#endif
+	dialogSent = false;
+	dialogDone = false;
+	levelDone = false;
+	myLevel = aPath;	myLevel = myLevel.substr(16);
+	myLevel = myLevel.substr(0, myLevel.length() - 5);
+
 	myStages.RemoveAll();
 	picojson::object root = JsonHelp::LoadJson(aPath);
 	picojson::array stages = JsonHelp::GetArray(root["stages"]);
@@ -111,7 +123,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 void ObjectiveManager::Update()
 {
-	if (myStages[myCurrentStage].size() < 1)
+	if (myStages[myCurrentStage].size() < 1 && levelDone == false)
 	{
 		if (myStageEndDialogs[myCurrentStage] != "_empty_")
 		{
@@ -121,7 +133,20 @@ void ObjectiveManager::Update()
 		++myCurrentStage;
 		if (myCurrentStage >= myStages.Size())
 		{
-			//SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, ""));
+			myCurrentStage = 0;
+			levelDone = true;
+		}
+	}
+
+	if (levelDone == true)
+	{
+		if (dialogSent == false)
+		{
+			dialogSent = true;
+			SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[myLevel]));
+		}
+		else if (dialogDone == true)
+		{
 			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel));
 		}
 	}
@@ -207,5 +232,19 @@ bool ObjectiveManager::RecieveMessage(const PositionMessage& aMessage)
 	{
 		RecieveMessage(TextMessage(aMessage.myType, myObjectives[1000 * aMessage.myPosition.y + aMessage.myPosition.x]));
 	}
+	return true;
+}
+
+bool ObjectiveManager::RecieveMessage(const GUIMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eDialogEnabled)
+	{
+		dialogDone = false;
+	}
+	else if (aMessage.myType == RecieverTypes::eDialogDisabled)
+	{
+		dialogDone = true;
+	}
+
 	return true;
 }
