@@ -40,11 +40,13 @@ PostLevelState::PostLevelState(int aPoints, int aTurns, int aEnemies):
 	myText.AddText("");
 	myText.AddText("");
 
-	myLetThroughRender = true;
+	
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eContinueEndScreen, *this);
 
 	LoadGUI("PostGame");
+	myMouseController.Init();
+	myLetThroughRender = true;
 }
 
 PostLevelState::~PostLevelState()
@@ -55,6 +57,8 @@ PostLevelState::~PostLevelState()
 eStackReturnValue
 PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
+	myMouseController.SetMouseState(enumMouseState::eClickedOnEmptyTile);
+
 	myGUIManager.Update(aDeltaTime);
 	myText.Update();
 
@@ -70,6 +74,7 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 void
 PostLevelState::Draw() const
 {
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 	myGUIManager.Render();
 	myBg->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
 	myIcons->DrawWithNormalized(CU::Vector2f(0.48f, 0.54f));
