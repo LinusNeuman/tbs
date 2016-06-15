@@ -128,7 +128,7 @@ void PlayerController::SelectPlayer()
 
 		SetCameraPositionToPlayer(mySelectedPlayerIndex);
 
-		mySelectPlayerSound->Play(0.2f);
+		mySelectPlayerSound->Play(0.3f);
 
 		SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
 		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
@@ -406,7 +406,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
-	myCandySound->Play(0.3f);
+	myCandySound->Play(0.5f);
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
@@ -554,7 +554,7 @@ void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, cons
 	if (CU::Vector2i(aEnemy->GetPosition()) != aPlayerPosition)
 	{
 		SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
-		myAlertSound->Play(0.3f);
+		myAlertSound->Play(0.5f);
 	}
 }
 
