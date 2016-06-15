@@ -36,6 +36,7 @@ private:
 	bool dialogDone;
 	bool dialogSent;
 	bool levelDone;
+	bool startDialogSent;
 	CommonUtilities::GrowingArray<Stage> myStages;
 	Stage completedObjectives;
 	unsigned short myCurrentStage;

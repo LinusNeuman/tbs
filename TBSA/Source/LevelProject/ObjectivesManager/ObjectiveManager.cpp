@@ -119,6 +119,8 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 		}
 		myStages.Add(stage);
 	}
+
+	startDialogSent = false;
 }
 
 void ObjectiveManager::Update()
@@ -153,6 +155,16 @@ void ObjectiveManager::Update()
 		{
 			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel));
 		}
+	}
+
+	if (startDialogSent == false)
+	{
+		startDialogSent = true;
+
+		std::string str = myLevel;
+		str.append("Start");
+
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[str]));
 	}
 }
 
