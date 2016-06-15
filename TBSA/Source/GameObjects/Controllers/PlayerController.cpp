@@ -48,6 +48,9 @@ PlayerController::PlayerController()
 
 	myAlertSound = new SoundEffect();
 	myAlertSound->Init("Sounds/SFX/alert.ogg");
+
+	myCandySound = new SoundEffect();
+	myCandySound->Init("Sounds/SFX/crunch.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -381,6 +384,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
+	myCandySound->Play(0.3f);
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
