@@ -235,7 +235,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true && CheckIfPlayerIsAllowedInput() == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
-	}
+	}*/
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
@@ -248,7 +248,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
-	}*/
+	}
 #pragma endregion
 
 #pragma region Mouse Input
