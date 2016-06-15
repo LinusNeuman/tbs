@@ -3,24 +3,23 @@
 #include <Rend\RenderConverter.h>
 
 PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsigned int aEnemies):
-	myEnemiesText({ 0.f, 0.f }, {500.f, 100.f}, "Text/calibril.ttf_sdf"),
-	myPointsText({ 0.f, 100.f }, { 500.f, 100.f }, "Text/calibril.ttf_sdf"),
-	myTurnsText({ 0.f, 200.f }, { 500.f, 100.f }, "Text/calibril.ttf_sdf"),
-	myInfoText({ 0.f, 300.f }, { 500.f, 100.f }, "Text/calibril.ttf_sdf")
+	myText({ 0.f, 0.f }, {1000.f, 500.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Char)
 {
-	std::string str("Points: ");
-	str.append(std::to_string(aPoints));
-	myPointsText.AddText(str);
+	myText.SetSize({ 1000.f, 500.f });
+	myText.SetPosition({0.f, 0.f});
+	myText.SetLines(5);
 
-	str = "Enemies: ";
-	str.append(std::to_string(aEnemies));
-	myEnemiesText.AddText(str);
+	std::string str = (std::to_string(aPoints));
+	myText.AddText(str);
 
-	str = "Turns: ";
-	str.append(std::to_string(aTurns));
-	myTurnsText.AddText(str);
+	str = (std::to_string(aEnemies));
+	myText.AddText(str);
 
-	myInfoText.AddText("Press 'Enter' to continue!");
+	str = (std::to_string(aTurns));
+	myText.AddText(str);
+
+	myText.AddText("");
+	myText.AddText("Click to continue!");
 
 	myLetThroughRender = false;
 	myRender = true;
@@ -33,12 +32,9 @@ PostLevelState::~PostLevelState()
 eStackReturnValue
 PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
-	myEnemiesText.Update();
-	myPointsText.Update();
-	myTurnsText.Update();
-	myInfoText.Update();
+	myText.Update();
 
-	if (IsometricInput::GetKeyDown(DIK_RETURN) == true)
+	if (IsometricInput::GetAnyMouseButtonPressed() == true)
 	{
 		myRender = false;
 		RenderConverter::ClearCommands();
@@ -53,9 +49,6 @@ PostLevelState::Draw() const
 {
 	if (myRender == true)
 	{
-		myEnemiesText.Render();
-		myTurnsText.Render();
-		myPointsText.Render();
-		myInfoText.Render();
+		myText.Render();
 	}
 }

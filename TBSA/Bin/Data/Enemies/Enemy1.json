@@ -4,9 +4,6 @@
 	"viewDistance": 4,
     "animations": 
     [
-        {
-          "path": "Data/Animations/Enemy1/EnemyTurnAnimation.json"
-        },
 		{
           "path": "Data/Animations/Enemy1/EnemyWalk000Animation.json"
         },

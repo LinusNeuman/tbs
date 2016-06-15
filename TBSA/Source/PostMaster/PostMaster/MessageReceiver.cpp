@@ -205,3 +205,8 @@ bool MessageReciever::RecieveMessage(const CurrentPlayerAP& aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const EnemyNextPathMessage& aMessage)
+{
+	return true;
+}

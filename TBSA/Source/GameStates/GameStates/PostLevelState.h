@@ -13,9 +13,6 @@ public:
 
 private:
 	bool myRender;
-	TextBox myPointsText;
-	TextBox myTurnsText;
-	TextBox myEnemiesText;
-	TextBox myInfoText;
+	TextBox myText;
 };
 
