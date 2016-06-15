@@ -174,6 +174,10 @@
                  "height":64,
                  "id":1,
                  "name":"John",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Player2",
                  "visible":true,
@@ -185,6 +189,10 @@
                  "height":64,
                  "id":2,
                  "name":"Ginger",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Player1",
                  "visible":true,
@@ -212,10 +220,6 @@
                     {
                      "direction":"E"
                     },
-                 "propertytypes":
-                    {
-                     "direction":"string"
-                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -227,6 +231,10 @@
                  "height":64,
                  "id":7,
                  "name":"Enemy2",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -238,6 +246,10 @@
                  "height":64,
                  "id":8,
                  "name":"Enemy3",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -253,10 +265,6 @@
                     {
                      "direction":"N"
                     },
-                 "propertytypes":
-                    {
-                     "direction":"string"
-                    },
                  "rotation":0,
                  "type":"Enemy3",
                  "visible":true,
@@ -268,6 +276,10 @@
                  "height":64,
                  "id":19,
                  "name":"Enemy5",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -283,10 +295,6 @@
                     {
                      "direction":"N"
                     },
-                 "propertytypes":
-                    {
-                     "direction":"string"
-                    },
                  "rotation":0,
                  "type":"Enemy3",
                  "visible":true,
@@ -298,6 +306,10 @@
                  "height":64,
                  "id":21,
                  "name":"Enemy7",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -309,6 +321,10 @@
                  "height":64,
                  "id":22,
                  "name":"Enemy8",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -320,6 +336,10 @@
                  "height":64,
                  "id":23,
                  "name":"Enemy9",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -343,6 +363,10 @@
                  "height":64,
                  "id":4,
                  "name":"endzone1",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"LevelEnd",
                  "visible":true,
@@ -354,6 +378,10 @@
                  "height":64,
                  "id":5,
                  "name":"endzone2",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"LevelEnd",
                  "visible":true,
@@ -363,19 +391,12 @@
                 }, 
                 {
                  "height":64,
-                 "id":13,
-                 "name":"test",
-                 "rotation":0,
-                 "type":"DialogMessage",
-                 "visible":true,
-                 "width":64,
-                 "x":1536,
-                 "y":1024
-                }, 
-                {
-                 "height":64,
                  "id":24,
                  "name":"Candy1",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -387,6 +408,10 @@
                  "height":64,
                  "id":25,
                  "name":"Candy2",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -398,6 +423,10 @@
                  "height":64,
                  "id":26,
                  "name":"Candy3",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -409,6 +438,10 @@
                  "height":64,
                  "id":27,
                  "name":"Candy4",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -420,6 +453,10 @@
                  "height":64,
                  "id":28,
                  "name":"EnemyFlag",
+                 "properties":
+                    {
+
+                    },
                  "rotation":0,
                  "type":"LevelEnd",
                  "visible":true,
@@ -436,6 +473,10 @@
         }],
  "nextobjectid":29,
  "orientation":"isometric",
+ "properties":
+    {
+
+    },
  "renderorder":"right-down",
  "tileheight":64,
  "tilesets":[
@@ -447,6 +488,10 @@
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetFloors",
+         "properties":
+            {
+
+            },
          "spacing":0,
          "tilecount":129,
          "tileheight":128,
@@ -460,6 +505,10 @@
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetWalls",
+         "properties":
+            {
+
+            },
          "spacing":0,
          "tilecount":128,
          "tileheight":128,
@@ -473,6 +522,10 @@
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetProps",
+         "properties":
+            {
+
+            },
          "spacing":0,
          "tilecount":128,
          "tileheight":128,
@@ -486,6 +539,10 @@
          "imagewidth":1024,
          "margin":0,
          "name":"_dataTileSheet",
+         "properties":
+            {
+
+            },
          "spacing":0,
          "tilecount":64,
          "tileheight":128,
@@ -499,6 +556,10 @@
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetBigProps",
+         "properties":
+            {
+
+            },
          "spacing":0,
          "tilecount":128,
          "tileheight":128,
