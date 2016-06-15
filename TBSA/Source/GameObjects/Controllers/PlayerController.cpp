@@ -84,6 +84,8 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
+
+	myMouseController.Init();
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -205,7 +207,12 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	if (CheckIfPlayerIsAllowedInput() == true)
 	{
 		int AdditinoalAPCost = 0;
+
+		SuggestCostAP(0);
+
 		enumMouseState currentState = GetCurrentMouseState();
+
+		myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
 		{
@@ -235,6 +242,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 					CostAP(positionPath.Size() - 1 + AdditinoalAPCost);
 					NotifyPlayers(positionPath);
 					SendPostMessage(NavigationClearMessage(RecieverTypes::eRoom));
+					SuggestCostAP(0);
 				}
 			}
 		}
