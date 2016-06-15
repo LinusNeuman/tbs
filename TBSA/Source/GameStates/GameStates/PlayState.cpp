@@ -31,7 +31,7 @@ PlayState::PlayState()
 	myGameOver = false;
 	myShowPostLevelScreen = false;
 
-	myAmbiance = new Song();
+	myAmbiance = new SoundEffect();
 	myAmbiance->Init("Sounds/AMB/windy.ogg", true);
 
 	myMusic = new Song();
