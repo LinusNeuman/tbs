@@ -11,6 +11,7 @@ TurnManager::TurnManager() : myCurrentTurn(static_cast<eTurn>(0)), myPlayerDied(
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagPlayerDied, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eFlagGoalReached, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemiesEndTurn, *this);
 	//ForceTurn(eEndTurn::ENEMY_END_TURN);
 
 	myPlayerTurnImage = new StaticSprite();
@@ -36,6 +37,7 @@ TurnManager::~TurnManager()
 
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagPlayerDied, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemiesEndTurn, *this);
 }
 
 bool TurnManager::Update(CommonUtilities::Time aDeltaTime)
@@ -69,7 +71,7 @@ void TurnManager::ForceTurn(eTurn aTurn)
 
 bool TurnManager::RecieveMessage(const GUIMessage& aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eEndTurn)
+	if (aMessage.myType == RecieverTypes::eEndTurn || aMessage.myType == RecieverTypes::eEnemiesEndTurn)
 	{
 		EndTurn();
 	}
