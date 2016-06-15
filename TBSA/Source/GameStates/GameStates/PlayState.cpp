@@ -41,6 +41,10 @@ PlayState::PlayState()
 PlayState::~PlayState()
 {
 	SAFE_DELETE(myLevel);
+
+	SAFE_DELETE(myAmbiance);
+	SAFE_DELETE(myMusic);
+
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);

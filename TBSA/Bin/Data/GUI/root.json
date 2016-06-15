@@ -178,26 +178,26 @@
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Unpressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myPressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Pressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myHover": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Hover.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
-            "myAnimated": true,
-            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 128,
-            "mySizeY": 69,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
+            "mySizeX": 256,
+            "mySizeY": 256,
             "Name": "Level1",
             "Tooltip": "",
             "mySprite": {
@@ -207,8 +207,8 @@
             },
             "myIsEnabled": true,
             "myIsIsometric": false,
-            "myPositionX": 0,
-            "myPositionY": 128,
+            "myPositionX": 500,
+            "myPositionY": 650,
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
@@ -219,26 +219,26 @@
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 128,
-              "myHeight": 70
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Unpressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myPressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 128,
-              "myHeight": 70
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Pressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myHover": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 128,
-              "myHeight": 70
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Hover.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
-            "myAnimated": true,
-            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 128,
-            "mySizeY": 70,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
+            "mySizeX": 256,
+            "mySizeY": 256,
             "Name": "Level2",
             "Tooltip": "",
             "mySprite": {
@@ -248,8 +248,8 @@
             },
             "myIsEnabled": true,
             "myIsIsometric": false,
-            "myPositionX": 0,
-            "myPositionY": 256,
+            "myPositionX": 750,
+            "myPositionY": 620,
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
@@ -260,26 +260,26 @@
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Unpressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myPressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Pressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myHover": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Hover.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
-            "myAnimated": true,
-            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 128,
-            "mySizeY": 69,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
+            "mySizeX": 256,
+            "mySizeY": 256,
             "Name": "Level3",
             "Tooltip": "",
             "mySprite": {
@@ -301,26 +301,26 @@
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Unpressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myPressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Pressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myHover": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Hover.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myShouldPlayHoverSound": false,
             "myShouldPlayClickSound": false,
-            "myAnimated": true,
-            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 128,
-            "mySizeY": 69,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
+            "mySizeX": 256,
+            "mySizeY": 256,
             "Name": "Level4",
             "Tooltip": "",
             "mySprite": {
@@ -342,26 +342,26 @@
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Unpressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myPressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Pressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myHover": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Hover.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myShouldPlayHoverSound": false,
             "myShouldPlayClickSound": false,
-            "myAnimated": true,
-            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 128,
-            "mySizeY": 69,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
+            "mySizeX": 256,
+            "mySizeY": 256,
             "Name": "Level5",
             "Tooltip": "",
             "mySprite": {
@@ -383,26 +383,26 @@
           {
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Unpressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myPressed": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Pressed.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myHover": {
-              "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 128,
-              "myHeight": 69
+              "myPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn/Hover.dds",
+              "myWidth": 256,
+              "myHeight": 256
             },
             "myShouldPlayHoverSound": false,
             "myShouldPlayClickSound": false,
-            "myAnimated": true,
-            "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 128,
-            "mySizeY": 69,
+            "myAnimated": false,
+            "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
+            "mySizeX": 256,
+            "mySizeY": 256,
             "Name": "Level6",
             "Tooltip": "",
             "mySprite": {
