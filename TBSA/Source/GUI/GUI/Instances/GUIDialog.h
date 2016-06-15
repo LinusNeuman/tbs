@@ -18,6 +18,7 @@ class GUIDialog : public GUIElement
 	private:
 		TextBox myTextBox;
 		StaticSprite* myTextBackground;
+		StaticSprite* myPortrait;
 
 		std::queue<std::string> myTexts;
 

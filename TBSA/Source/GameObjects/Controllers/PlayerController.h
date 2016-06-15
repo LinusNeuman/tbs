@@ -103,6 +103,8 @@ private:
 	SoundEffect* myCandySound;
 	SoundEffect* myPeekSound;
 
+	SoundEffect* myWalkAcceptSound[4];
+
 	ScoreCounter myScoreCounter;
 
 	MouseController myMouseController;

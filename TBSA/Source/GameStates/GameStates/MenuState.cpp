@@ -62,7 +62,7 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (myShouldGiveCred == true)
 	{
 		CreditsState *newState = new CreditsState();
-		newState->Init();
+		newState->Init(false);
 		aStateStack.AddMainState(newState);
 		myShouldGiveCred = false;
 	}

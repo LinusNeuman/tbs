@@ -48,4 +48,5 @@ private:
 	bool myGameOver;
 	bool myShouldPause;
 	bool myShowPostLevelScreen;
+	bool myFinishedGame;
 };
