@@ -60,6 +60,17 @@ PlayerController::PlayerController()
 
 	myPeekSound = new SoundEffect();
 	myPeekSound->Init("Sounds/SFX/peek.ogg");
+
+	for (int i = 0; i < 4; ++i)
+	{
+		myWalkAcceptSound[i] = new SoundEffect();
+	}
+
+	myWalkAcceptSound[0]->Init("Sounds/SFX/go1.ogg");
+	myWalkAcceptSound[1]->Init("Sounds/SFX/go2.ogg");
+	myWalkAcceptSound[2]->Init("Sounds/SFX/go3.ogg");
+	myWalkAcceptSound[3]->Init("Sounds/SFX/go4.ogg");
+
 }
 
 PlayerController::~PlayerController()
@@ -158,6 +169,10 @@ void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtiliti
 {
 	if (mySelectedPlayer != nullptr)
 	{
+		int go = (rand() % 4);
+
+		myWalkAcceptSound[go]->Play(0.3f);
+
 		mySelectedPlayer->SetPath(aPath);
 	}
 }
@@ -213,7 +228,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma endregion
 
 #pragma region Keyboard Input
-	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	/*if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
@@ -233,7 +248,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
-	}
+	}*/
 #pragma endregion
 
 #pragma region Mouse Input

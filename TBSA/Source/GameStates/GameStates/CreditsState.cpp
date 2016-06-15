@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CreditsState.h"
+#include "Rend\RenderConverter.h"
 
 CreditsState::CreditsState()
 {
@@ -9,9 +10,10 @@ CreditsState::CreditsState()
 CreditsState::~CreditsState()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eGoToMainMenu, *this);
+	RenderConverter::SetShouldCull(true);
 }
 
-void CreditsState::Init()
+void CreditsState::Init(bool aShouldQuit)
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoToMainMenu, *this);
 
@@ -20,6 +22,11 @@ void CreditsState::Init()
 	myCreditSprite = new StaticSprite();
 	myCreditSprite->Init("Sprites/credits.dds", false, CU::Vector4f::Zero, { 0.0f, 0.0f });
 	myCreditSprite->SetLayer(enumRenderLayer::eGameObjects);
+	myShouldQuit = aShouldQuit;
+
+	RenderConverter::SetShouldCull(false);
+
+	RenderConverter::SetShouldCull(false);
 
 	LoadGUI("Credits");
 }
@@ -29,7 +36,15 @@ eStackReturnValue CreditsState::Update(const CU::Time & aTimeDelta, ProxyStateSt
 	myGUIManager.Update(aTimeDelta);
 	if (myPosition.y <= -2.0f || IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldGoBack == true)
 	{
-		myShouldGoBack = false;
+		if (myShouldQuit == true)
+		{
+			SendPostMessage(GUIMessage(RecieverTypes::eExitGame));
+		}
+		else
+		{
+			myShouldGoBack = false;
+		}
+		
 		return eStackReturnValue::eDeleteMainState;
 	}
 	myPosition.y -= 0.1 * aTimeDelta.GetSeconds();

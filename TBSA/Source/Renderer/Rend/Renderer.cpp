@@ -11,6 +11,8 @@
 
 Renderer::Renderer()
 {
+	myIShouldCull = true;
+
 	myCommandsToRender = new CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>>();
 	myBuffer = new CommonUtilities::GrowingArray<CommonUtilities::GrowingArray<RenderCommand>>();
 
@@ -52,10 +54,15 @@ void Renderer::ClearCommands()
 	}
 }
 
+void Renderer::SetCull(const bool aCullingFlag)
+{
+	myIShouldCull = aCullingFlag;
+}
+
 void Renderer::AddRenderCommand(RenderCommand & aRenderCommand)
 {
-	if (aRenderCommand.myPosition.x > -0.1f && aRenderCommand.myPosition.x < 1.1f &&
-		aRenderCommand.myPosition.y > -0.1f && aRenderCommand.myPosition.y < 1.15f)
+	if (myIShouldCull == false || (aRenderCommand.myPosition.x > -0.1f && aRenderCommand.myPosition.x < 1.1f &&
+		aRenderCommand.myPosition.y > -0.1f && aRenderCommand.myPosition.y < 1.15f))
 	{
 		for (USHORT iRenderCommand = 0; iRenderCommand < (*myBuffer)[aRenderCommand.GetLayer()].Size(); ++iRenderCommand)
 		{

@@ -19,6 +19,7 @@
 #include "Message\ScrollLogUpMessage.h"
 #include <../DialogLoader/DialogManager.h>
 #include <Message/TextMessage.h>
+#include "VictoryState.h"
 
 PlayState::PlayState()
 {
@@ -117,42 +118,13 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myLevel->Update(aTimeDelta);
 	myEmitter.Update(aTimeDelta);
 
-	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
+	if (myShouldExit == true)
 	{
 		myAmbiance->Stop();
 		myMusic->Stop();
 		myShouldExit = false;
 		//return eStackReturnValue::ePopMain;
 		return eStackReturnValue::eDeleteMainState;
-	}
-
-	if (IsometricInput::GetKeyPressed(DIK_1) == true)
-	{
-		ChangeLevel("1_Treehouse.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_2) == true)
-	{
-		ChangeLevel("2_Backyard.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_3) == true)
-	{
-		ChangeLevel("3_Lakeside.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_4) == true)
-	{
-		ChangeLevel("4_Kiosk.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_5) == true)
-	{
-		ChangeLevel("5_Playground.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_6) == true)
-	{
-		ChangeLevel("6_IcyFortress.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
-	{
-		SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, "2_Backyard.json"));
 	}
 
 	if (myShouldPause == true)
@@ -179,6 +151,13 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		}
 
 		scoreScreenDone = true;
+	}
+
+	if (myFinishedGame == true)
+	{
+		VictoryState *newState = new VictoryState();
+		newState->Init();
+		aStateStack.AddMainState(newState);
 	}
 
 	return eStackReturnValue::eStay;
@@ -248,9 +227,12 @@ bool PlayState::RecieveMessage(const ScoreCounterMessage& aMessage)
 	return true;
 }
 
-
 void PlayState::ChangeLevel(const std::string& aFilePath)
 {
+	if (aFilePath == "_end_")
+	{
+		myFinishedGame = true;
+	}
 	if (myLevel != nullptr)
 	{
 		delete(myLevel);
