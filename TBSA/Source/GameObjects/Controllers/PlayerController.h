@@ -25,6 +25,7 @@ public:
 	~PlayerController();
 
 	void Init();
+	void Draw() const;
 
 	void AddPlayer(Player * aPlayer);
 	void SelectPlayer();

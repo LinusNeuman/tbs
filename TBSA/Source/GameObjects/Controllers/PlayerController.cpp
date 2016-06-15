@@ -88,6 +88,11 @@ void PlayerController::Init()
 	myMouseController.Init();
 }
 
+void PlayerController::Draw() const
+{
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+}
+
 void PlayerController::AddPlayer(Player* aPlayer)
 {
 	myPlayers.Add(aPlayer);
@@ -212,7 +217,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 		enumMouseState currentState = GetCurrentMouseState();
 
-		myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+		myMouseController.SetMouseState(currentState);
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
 		{
@@ -315,7 +320,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
 	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
-
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
