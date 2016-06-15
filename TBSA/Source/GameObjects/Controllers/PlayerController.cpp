@@ -47,7 +47,7 @@ PlayerController::PlayerController()
 	mySelectPlayerSound->Init("Sounds/GUI/HoverMenuItem.ogg");
 
 	myAlertSound = new SoundEffect();
-	myAlertSound->Init("Sounds/SFX/alert.wav");
+	myAlertSound->Init("Sounds/SFX/alert.ogg");
 }
 
 PlayerController::~PlayerController()
