@@ -17,12 +17,12 @@ void CreditsState::Init()
 	myCreditSprite->Init("Sprites/credits.dds", false, CU::Vector4f::Zero, { 0.0f, 0.0f });
 	myCreditSprite->SetLayer(enumRenderLayer::eGameObjects);
 
-	//LoadGUI("MainMenu");
+	LoadGUI("Credits");
 }
 
 eStackReturnValue CreditsState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
-	//myGUIManager.Update(aTimeDelta);
+	myGUIManager.Update(aTimeDelta);
 	if (myPosition.y <= -2.0f || IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{
 		return eStackReturnValue::eDeleteMainState;
@@ -35,5 +35,5 @@ void CreditsState::Draw() const
 {
 	myCreditSprite->DrawWithNormalized({ myPosition.x, myPosition.y });
 
-	//myGUIManager.Render();
+	myGUIManager.Render();
 }
