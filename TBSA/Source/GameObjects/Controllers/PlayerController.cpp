@@ -84,6 +84,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
 
 	myMouseController.Init();
 }
