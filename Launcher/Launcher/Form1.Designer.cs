@@ -91,7 +91,7 @@
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
-            this.Text = "Launcher";
+            this.Text = "FIMBULVINTER";
             this.ResumeLayout(false);
             this.PerformLayout();
 
