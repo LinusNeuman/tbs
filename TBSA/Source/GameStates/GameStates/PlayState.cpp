@@ -74,7 +74,7 @@ void PlayState::Init(const std::string& aLevelPath)
 
 	myEmitter.Activate({0.5f, 0.5f});
 
-	myAmbiance->Play(0.8f);
+	myAmbiance->Play(1.0f);
 	myMusic->Play(0.58f);
 }
 
