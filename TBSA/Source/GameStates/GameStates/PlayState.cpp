@@ -118,6 +118,11 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myLevel->Update(aTimeDelta);
 	myEmitter.Update(aTimeDelta);
 
+	/*if (IsometricInput::GetKeyPressed(DIK_1) == true)
+	{
+		ChangeLevel("_end_");
+	}*/
+
 	if (myShouldExit == true)
 	{
 		myAmbiance->Stop();
@@ -232,6 +237,7 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	if (aFilePath == "_end_")
 	{
 		myFinishedGame = true;
+		return;
 	}
 	if (myLevel != nullptr)
 	{
