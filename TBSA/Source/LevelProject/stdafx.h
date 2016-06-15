@@ -25,6 +25,7 @@
 #include <PostMaster/SingletonPostMaster.h>
 #include <CU/Utility/CommonCasts.h>
 
+#include <memory>
 // Audio
 //#include "Source/Instances/SoundEffect.h"
 //#include "Source/Instances/Song.h"

@@ -16,6 +16,7 @@
 #include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAddedMessage.h>
 #include <Message/PlayerSeenMessage.h>
+#include <Message\DialogTextMessage.h>
 #include <Rend/RenderConverter.h>
 #include <Message/EnemyObjectMessage.h>
 #include <GameObjects/Actor/Enemy.h>
@@ -372,6 +373,7 @@ void PlayerController::RefillAllAP()
 	{
 		myPlayers[i]->FreshTurn();
 	}
+	myScoreCounter.AddScore(enumScoreTypes::eTurnCount, 1);
 }
 
 void PlayerController::SetCameraPositionToPlayer(int aIndex)
@@ -425,6 +427,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
 	myCandySound->Play(0.5f);
+	SendPostMessage(TextMessage(RecieverTypes::eObjctive , "CandyMessage"));
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)

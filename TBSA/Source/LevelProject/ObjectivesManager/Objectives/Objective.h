@@ -16,7 +16,7 @@ enum class eLevelObjectiveType
 
 struct LevelObjective
 {
-	CommonUtilities::StaticArray<StaticSprite *, 2> mySprites;
+	CommonUtilities::StaticArray<std::shared_ptr<StaticSprite>, 2> mySprites;
 	eLevelObjectiveType myType;
 	bool myIsDone;
 	std::string myTarget;

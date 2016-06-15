@@ -162,7 +162,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 						if (tileId >= SpriteSheets[l].GetFirstIndex() && (l == SpriteSheets.Size()- 1 || tileId < SpriteSheets[l + 1].GetFirstIndex()))
 						{
 							SpriteSheet explainingSpriteSheet = SpriteSheets[l];
-							StaticSprite* explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
+							std::shared_ptr<StaticSprite> explaingSprite = explainingSpriteSheet.CreateSprite(tileId);
 
 							if (isOverFloor == true)
 							{
@@ -332,7 +332,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 						objectiveType = eObjectiveType::eLevelEnd;
 						
 						someTiles.myTiles[index].SetHasCandy();
-						someTiles.myTiles[index].GetObjectiveSprite()[0] = new StaticSprite();
+						someTiles.myTiles[index].GetObjectiveSprite()[0] = std::make_shared<StaticSprite>();
 						someTiles.myTiles[index].GetObjectiveSprite()[0]->Init("Sprites/Candy.dds");
 						someTiles.myTiles[index].GetObjectiveSprite()[0]->SetLayer(enumRenderLayer::eGameObjects);
 					}

@@ -31,8 +31,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "install_dxweb"; Description: "install dxweb"
-Name: "install_vcRedist"; Description: "install vcRedist"
+Name: "install_dxweb"; Description: "Install directX"; GroupDescription: "Extra installs"
+Name: "install_vcRedist"; Description: "Install vcRedist"; GroupDescription: "Extra installs"
 
 [Files]
 Source: "C:\Users\sthahu2\Source\Repos\tbs\TBSA\Bin\Launcher.exe"; DestDir: "{app}"; Flags: ignoreversion

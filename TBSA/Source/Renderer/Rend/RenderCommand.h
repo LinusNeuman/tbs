@@ -17,6 +17,8 @@ public:
 	~RenderCommand();
 
 	void Render() const;
+	void Delete();
+
 	float GetPriority();
 	unsigned short GetLayer();
 	CU::Vector2f myPosition;
