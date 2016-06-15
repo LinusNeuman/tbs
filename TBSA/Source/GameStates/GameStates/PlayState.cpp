@@ -163,7 +163,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (myGameOver == true)
 	{
-		GameOverState *newState = new GameOverState();
+		GameOverState *newState = new GameOverState(myScoreCounter.GetScore(enumScoreTypes::eCandy), myScoreCounter.GetScore(enumScoreTypes::eTurnCount), myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled));
 		newState->Init();
 		aStateStack.AddSubState(newState);
 	}
