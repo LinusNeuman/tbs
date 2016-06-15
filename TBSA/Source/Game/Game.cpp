@@ -83,7 +83,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	picojson::object settings = JsonWrapper::GetPicoObject(value);
 	myTargetResolutionX = JsonWrapper::GetInt("myResolutionX", settings);
 	myTargetResolutionY = JsonWrapper::GetInt("myResolutionY", settings);
-	SingletonDataHolder::SetTargetResolution({myTargetResolutionX, myTargetResolutionY});
+	
 
 	createParameters.myWindowWidth = myTargetResolutionX;
 	createParameters.myWindowHeight = myTargetResolutionY;
@@ -91,7 +91,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	createParameters.myRenderHeight = myTargetResolutionY;
 
 	//Här är koden för dig Simon <3
-	/*if (myTargetResolutionX * 4 == myTargetResolutionY * 5)
+	if (myTargetResolutionX * 4 == myTargetResolutionY * 5)
 	{
 		double newRes = (myTargetResolutionY / 4.0) * 5;
 		newRes /= 16.0;
@@ -103,7 +103,8 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 		double newRes = myTargetResolutionY / 12.0;
 		newRes *= 9;
 		myTargetResolutionY = newRes;
-	}*/
+	}
+	SingletonDataHolder::SetTargetResolution({ myTargetResolutionX, myTargetResolutionY });
 
 	createParameters.myTargetWidth = myTargetResolutionX;
 	createParameters.myTargetHeight = myTargetResolutionY;
