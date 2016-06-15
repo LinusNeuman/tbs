@@ -30,9 +30,6 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
-//#ifdef _DEBUG
-//	DL_ASSERT(isConstructed, "unconstructed object");
-//#endif
 	dialogSent = false;
 	dialogDone = false;
 	levelDone = false;
@@ -112,13 +109,19 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 					objective.mySprites[1] = sprite;
 				}
+			}
 
+			if (objectiveObject.count("description") > 0)
+			{
+				objective.description = JsonHelp::GetString(objectiveObject["description"]);
 			}
 
 			stage[objective.myTarget] = objective;
 		}
 		myStages.Add(stage);
 	}
+
+	startDialogSent = false;
 }
 
 void ObjectiveManager::Update()
@@ -136,6 +139,10 @@ void ObjectiveManager::Update()
 			myCurrentStage = 0;
 			levelDone = true;
 		}
+		else
+		{
+			UpdateObjectiveBox();
+		}
 	}
 
 	if (levelDone == true)
@@ -149,6 +156,16 @@ void ObjectiveManager::Update()
 		{
 			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel));
 		}
+	}
+
+	if (startDialogSent == false)
+	{
+		startDialogSent = true;
+
+		std::string str = myLevel;
+		str.append("Start");
+
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[str]));
 	}
 }
 
@@ -245,6 +262,7 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		if (completedObjectives.count(aMessage.myText) && completedObjectives[aMessage.myText].myType == eLevelObjectiveType::HOLD)
 		{
 			myStages[myCurrentStage][aMessage.myText] = completedObjectives[aMessage.myText];
+			UpdateObjectiveBox();
 		}
 		return true;
 	}
@@ -259,6 +277,7 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		}
 
 		myStages[myCurrentStage].erase(aMessage.myText);
+		UpdateObjectiveBox();
 	}
 
 	

@@ -134,6 +134,7 @@ protected:
 	eDirection myPreviousDirection;
 	StaticSprite *mySprite;
 	bool myIsSeen;
+	bool mySpriteIsInit;
 private:
 	void UpdatePath();
 

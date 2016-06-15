@@ -1,10 +1,11 @@
 #pragma once
 #include <StateStack/GameState.h>
+#include <TextBox.h>
 
 class GameOverState : public GameState, public MessageReciever
 {
 public:
-	GameOverState();
+	GameOverState(float aPoints, float aTurns, float aEnemies);
 	~GameOverState();
 	void Init() override;
 	eStackReturnValue Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack) override;
@@ -14,6 +15,6 @@ public:
 private:
 	StaticSprite* myBackgroundSprite;
 	bool myShouldExit;
-
+	TextBox myStatsBox;
 };
 
