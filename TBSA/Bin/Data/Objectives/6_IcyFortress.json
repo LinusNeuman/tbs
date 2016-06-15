@@ -1,0 +1,16 @@
+{
+	"stages":[
+		[
+			{
+				"type" : "hold_objective",
+				"target" : "endzone1"
+			},
+			{
+				"type" : "hold_objective",
+				"target" : "endzone2"
+			}
+		]
+	],
+	
+	"nextLevel": "3_Lakeside.json"
+}
