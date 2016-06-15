@@ -56,7 +56,7 @@ public:
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
 	virtual bool RecieveMessage(const TextMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyNextPathMessage & aMessage) override;
-
+	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
 
 private:
 	bool CheckIfPlayerIsAllowedInput();
