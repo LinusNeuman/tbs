@@ -1,6 +1,7 @@
 #pragma once
 #include <StateStack/GameState.h>
 #include <TextBox.h>
+#include "Controllers/MouseController.h"
 
 class GameOverState : public GameState, public MessageReciever
 {
@@ -13,6 +14,8 @@ public:
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
 
 private:
+	MouseController myMouseController;
+
 	StaticSprite* myBackgroundSprite;
 	bool myShouldExit;
 	TextBox myStatsBox;

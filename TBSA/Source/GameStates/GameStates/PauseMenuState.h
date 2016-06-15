@@ -1,5 +1,6 @@
 #pragma once
 #include <StateStack/GameState.h>
+#include "Controllers/MouseController.h"
 class PauseMenuState : public GameState, public MessageReciever
 {
 public:
@@ -15,6 +16,8 @@ public:
 
 
 private:
+	MouseController myMouseController;
+
 	StaticSprite* myBackgroundSprite;
 
 	CU::Vector2ui myTargetResolution;
