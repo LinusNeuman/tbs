@@ -496,9 +496,9 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPlayer.GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(aMessage.myPlayer.GetPosition().x), USHORTCAST(aMessage.myPlayer.GetPosition().y))).GetSeenEnemy());
 	}
 
-	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
+	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPreviousPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
-		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPosition())));
+		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPreviousPosition())));
 		//myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(0);
 	}
 

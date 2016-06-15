@@ -116,7 +116,7 @@ void IsometricTile::Draw() const
 
 	if (myObjectiveSprites[myCurrentObjectiveSprite] != nullptr)
 	{
-		myObjectiveSprites[myCurrentObjectiveSprite]->Draw(myPosition);
+		myObjectiveSprites[myCurrentObjectiveSprite]->Draw(myPosition+ CommonUtilities::Point2f(0,1));
 	}
 
 	/*if (CheckHasCandy() == true)

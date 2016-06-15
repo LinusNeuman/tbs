@@ -20,6 +20,14 @@ namespace Launcher
         public SettingsData mySettings = new SettingsData();
         KUtility.DDSImage ddsImage;
 
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
         public Form1()
         {
             InitializeComponent();
@@ -148,6 +156,52 @@ namespace Launcher
             Size size = new Size(256, 256);
             ddsImage = new KUtility.DDSImage(File.ReadAllBytes("Sprites/Launcher/Images/PlayGameBTN/Unpressed.dds"));
             this.button1.BackgroundImage = new Bitmap(ddsImage.images[0], size);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void DrawExitBtn(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            Pen BroadPen;
+            if (button2.BackColor == Color.Black || button2.BackColor == Color.DarkRed)
+            { 
+                BroadPen = new Pen(Color.White, 2.0f);
+            }
+            else
+            {
+                BroadPen = new Pen(Color.White, 4.0f);
+            }
+            e.Graphics.DrawLine(BroadPen, new Point(2, 2), new Point(26, 26));
+            e.Graphics.DrawLine(BroadPen, new Point(26, 2), new Point(2, 26));
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.BackColor = Color.Black;
+        }
+
+        private void button2_MouseEnter(object sender, EventArgs e)
+        {
+            button2.BackColor = Color.Red;
+        }
+
+        private void button2_MouseDown(object sender, MouseEventArgs e)
+        {
+            button2.BackColor = Color.DarkRed;
         }
     }
 }
