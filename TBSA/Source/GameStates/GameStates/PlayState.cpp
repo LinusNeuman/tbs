@@ -44,6 +44,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eOpenPauseMenu, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRestartLevel, *this);
 }
