@@ -65,5 +65,7 @@ enum class RecieverTypes
 	eEnemyNextPath,
 	eClickedOnBB,
 	eSelectedPlayerHasChanged,
+	eOpenOptionsMenu,
+	eCloseOptionsMenu,
 	enumlength
 };
