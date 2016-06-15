@@ -5,6 +5,10 @@
 PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsigned int aEnemies):
 	myText({ 0.f, 0.f }, {1000.f, 500.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Char)
 {
+	myBg = new StaticSprite();
+	myBg->Init("Sprites/GUI/PostLevel/bg.dds", false, { 0, 0, 679, 564 }, { 0, 0 });
+	myBg->SetLayer(enumRenderLayer::eGUI);
+
 	myText.SetSize({ 1000.f, 500.f });
 	myText.SetPosition({0.f, 0.f});
 	myText.SetLines(5);
@@ -21,8 +25,7 @@ PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsign
 	myText.AddText("");
 	myText.AddText("Click to continue!");
 
-	myLetThroughRender = false;
-	myRender = true;
+	myLetThroughRender = true;
 }
 
 PostLevelState::~PostLevelState()
@@ -36,8 +39,6 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 
 	if (IsometricInput::GetAnyMouseButtonPressed() == true)
 	{
-		myRender = false;
-		RenderConverter::ClearCommands();
 		return eStackReturnValue::eDeleteSubstate;
 	}
 
@@ -47,8 +48,6 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 void
 PostLevelState::Draw() const
 {
-	if (myRender == true)
-	{
-		myText.Render();
-	}
+	myBg->Draw({0, 0});
+	myText.Render();
 }
