@@ -10,6 +10,9 @@ GUIDialog::GUIDialog(const CommonUtilities::Vector2f aPosition, const CommonUtil
 
 	myTextBackground = new StaticSprite();
 	myTextBackground->Init("Sprites/GUI/InGame/DialogBox/bg.dds", false, { 0, 0, 381, 214 }, {0, 0});
+	myPortrait = new StaticSprite;
+	myPortrait->Init("Sprites/GUI/InGame/DialogBox/port.dds", false, { 0, 0, 130, 130 }, {0, 0});
+	myPortrait->SetLayer(enumRenderLayer::eGUI);
 	myTextBackground->SetLayer(enumRenderLayer::eGUI);
 	myPosition = aPosition;
 
@@ -33,6 +36,7 @@ GUIDialog::Render()
 	if (myIsEnabled == true)
 	{
 		myTextBackground->Draw(myPosition);
+		myPortrait->Draw({myPosition.x + 381 + 15, myPosition.y});
 		myTextBox.Render();
 	}
 }
