@@ -142,6 +142,12 @@ int Enemy::GetViewDistance() const
 
 void Enemy::OnClick()
 {
+	if (GetType() == eActorType::eEnemyOne)
+	{
+		SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnBB, *this));
+		return;
+	}
+
 	if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
 	{
 		SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
