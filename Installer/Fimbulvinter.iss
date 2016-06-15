@@ -51,4 +51,7 @@ Filename: "{app}\externalInstallers\vcredist_x86.exe"; Tasks: install_vcRedist
 Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"
 
 [UninstallDelete]
-Type: files; Name: "{app}"
+Type: filesandordirs; Name: "{app}"
+
+[Messages]
+WizardInfoAfter=Find more cool games at http://games.thegameassembly.com/

@@ -1,5 +1,6 @@
 #pragma once
 #include <StateStack/GameState.h>
+#include <Controllers/MouseController.h>
 
 class StaticSprite;
 class RenderConverter;
@@ -15,6 +16,8 @@ public:
 
 	bool RecieveMessage(const GUIMessage & aMessage) override;
 private:
+	MouseController myMouseController;
+
 	StaticSprite * myBackgroundSprite;
 	bool myShouldAdd;
 	bool myShouldSelect;

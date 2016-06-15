@@ -47,6 +47,7 @@ PlayerController::PlayerController()
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
 	myFakeClickedOnEnemy = false;
+	myPlayerTurnFlag = false;
 
 	mySelectPlayerSound = new SoundEffect();
 	mySelectPlayerSound->Init("Sounds/SFX/switch.ogg");
@@ -59,6 +60,17 @@ PlayerController::PlayerController()
 
 	myPeekSound = new SoundEffect();
 	myPeekSound->Init("Sounds/SFX/peek.ogg");
+
+	for (int i = 0; i < 4; ++i)
+	{
+		myWalkAcceptSound[i] = new SoundEffect();
+	}
+
+	myWalkAcceptSound[0]->Init("Sounds/SFX/go1.ogg");
+	myWalkAcceptSound[1]->Init("Sounds/SFX/go2.ogg");
+	myWalkAcceptSound[2]->Init("Sounds/SFX/go3.ogg");
+	myWalkAcceptSound[3]->Init("Sounds/SFX/go4.ogg");
+
 }
 
 PlayerController::~PlayerController()
@@ -109,6 +121,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this, RecieverOrder::VIP);
 	SingletonPostMaster::AddReciever(RecieverTypes::eFakeClickedEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, *this, RecieverOrder::VIP);
 
 	myMouseController.Init();
 }
@@ -156,6 +169,10 @@ void PlayerController::NotifyPlayers(CommonUtilities::GrowingArray<CommonUtiliti
 {
 	if (mySelectedPlayer != nullptr)
 	{
+		int go = (rand() % 4);
+
+		myWalkAcceptSound[go]->Play(0.3f);
+
 		mySelectedPlayer->SetPath(aPath);
 	}
 }
@@ -379,6 +396,8 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 
 void PlayerController::PrePlayer()
 {
+	myPlayerTurnFlag = true;
+
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
 	for (unsigned int i = 0; i < myPlayers.Size(); ++i)
 	{
@@ -398,6 +417,7 @@ void PlayerController::SetCameraPositionToPlayer(int aIndex)
 
 void PlayerController::AfterPlayerTurn()
 {
+	myPlayerTurnFlag = false;
 	ResetTileShaders();
 	for (size_t i = 0; i < myPlayers.Size(); i++)
 	{
@@ -424,6 +444,13 @@ bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 	{
 		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
 		RecieveMessage(*tempmessageerer);
+	}
+	else if (aMessage.myType == RecieverTypes::eEndTurn)
+	{
+		if (CheckIfPlayerIsAllowedInput() == false)
+		{
+			return false;
+		}
 	}
 	return true;
 }
@@ -887,7 +914,7 @@ void PlayerController::ResetTileShaders()
 
 bool PlayerController::CheckIfPlayerIsAllowedInput()
 {
-	return (mySelectedPlayer->GetActorState() == eActorState::eIdle || mySelectedPlayer->GetActorState() == eActorState::eAlert);
+	return ((mySelectedPlayer->GetActorState() == eActorState::eIdle || mySelectedPlayer->GetActorState() == eActorState::eAlert) && myPlayerTurnFlag == true);
 }
 
 /*for (size_t i = 0; i < myDebugEnd.size(); i++)

@@ -289,6 +289,13 @@ void GUIFactory::Load()
 						newButton->SetAction(new GUIMessage(RecieverTypes::eCloseOptionsMenu), eGUIMessageEvents::eOnClick);
 					}
 
+					if (clickEvent == "EndScreenContinue")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eContinueEndScreen), eGUIMessageEvents::eOnClick);
+					}
+
+					
+
 					myGUIElements.Add(newButton);
 					myGUILookup[currentStateName].myEnd = elementsAdded;
 

@@ -86,6 +86,8 @@ private:
 	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
 
+	bool myPlayerTurnFlag;
+
 	bool myFakeClickedOnEnemy;
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
@@ -100,6 +102,8 @@ private:
 	SoundEffect* myAlertSound;
 	SoundEffect* myCandySound;
 	SoundEffect* myPeekSound;
+
+	SoundEffect* myWalkAcceptSound[4];
 
 	ScoreCounter myScoreCounter;
 

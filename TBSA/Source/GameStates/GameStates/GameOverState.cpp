@@ -9,7 +9,7 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 	myShouldExit = false;
 
 	myStatsBox.SetSize({ 1000.f, 500.f });
-	myStatsBox.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.5f });
+	myStatsBox.SetPosition({ 1920.f / 2.f - 80, 1080.f / 2.f - 340});
 	myStatsBox.SetLines(9);
 
 	std::string str = std::to_string(static_cast<int>(aPoints)) + " X CANDYBAG";
@@ -19,13 +19,16 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 	}
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
+	myStatsBox.AddText("");
 
 	str = std::to_string(static_cast<int>(aEnemies)) + " X ENEMIES";
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
+	myStatsBox.AddText("");
 
 	str = std::to_string(static_cast<int>(aTurns)) + " X TURNS";
 	myStatsBox.AddText(str);
+	myStatsBox.AddText("");
 	myStatsBox.AddText("");
 
 	myLetThroughRender = true;
@@ -46,12 +49,21 @@ void GameOverState::Init()
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
 	myBackgroundSprite->SetRenderPriority(600.f);
 
+	myIcons = new StaticSprite();
+	myIcons->Init("Sprites/GUI/EndScreens/Icons.dds", false, CU::Vector4f::Zero, { 0.5f, 0.5f });
+	myIcons->SetLayer(enumRenderLayer::eGUI);
+	myIcons->SetRenderPriority(700.f);
+
 	LoadGUI("GameOver");
+
+	myMouseController.Init();
 }
 
 eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
 	myGUIManager.Update(aDeltaTime);
+
+	myMouseController.SetMouseState(enumMouseState::eClickedOnEmptyTile);
 
 	myStatsBox.Update();
 
@@ -66,8 +78,11 @@ eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateSt
 
 void GameOverState::Draw() const
 {
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+
 	myGUIManager.Render();
 	myBackgroundSprite->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
+	myIcons->DrawWithNormalized(CU::Vector2f(0.48f, 0.54f));
 	myStatsBox.Render();
 }
 
