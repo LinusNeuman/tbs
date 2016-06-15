@@ -8,6 +8,7 @@
 #include "../TextBox/TextBox.h"
 #include "particleEmitter.h"
 #include "Audio\Instances\Song.h"
+#include "Audio\Instances\SoundEffect.h"
 
 class LevelFactory;
 class GameLevel;
@@ -36,7 +37,7 @@ private:
 	std::string myLevelKey;
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
-	Song* myAmbiance;
+	SoundEffect* myAmbiance;
 	Song* myMusic;
 	bool scoreScreenDone;
 	bool myShouldExit;
