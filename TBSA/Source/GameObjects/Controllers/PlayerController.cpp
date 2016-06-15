@@ -29,6 +29,7 @@
 #include <Message/PositionMessage.h>
 #include <GUI/Messaging/Generic/GUIMessage.h>
 #include <Message/CurrentPlayerAP.h>
+#include "Message/ScoreCounterMessage.h"
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -393,6 +394,15 @@ bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 	{
 		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
 		RecieveMessage(*tempmessageerer);
+	}
+	return true;
+}
+
+bool PlayerController::RecieveMessage(const TextMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eLevelEnd)
+	{
+		SendPostMessage(ScoreCounterMessage(RecieverTypes::eLevelEndScoreMessage, myScoreCounter));
 	}
 	return true;
 }

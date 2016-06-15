@@ -64,5 +64,6 @@ enum class RecieverTypes
 	ePlayerIsPeeking,
 	eClickedOnBB,
 	eSelectedPlayerHasChanged,
+	eLevelEndScoreMessage,
 	enumlength,
 };

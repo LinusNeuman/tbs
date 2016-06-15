@@ -47,5 +47,6 @@
     <ClInclude Include="Message\CreditScreenMessage.h" />
     <ClInclude Include="Message\DialogTextMessage.h" />
     <ClInclude Include="Message\CurrentPlayerAP.h" />
+    <ClInclude Include="Message\ScoreCounterMessage.h" />
   </ItemGroup>
 </Project>
