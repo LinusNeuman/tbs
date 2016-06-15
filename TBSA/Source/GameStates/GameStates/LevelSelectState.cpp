@@ -54,7 +54,7 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 			break;
 		case 5: mySelectedLevel = "5_Playground .json";
 			break;
-		case 6: mySelectedLevel = "2_Backyard.json";
+		case 6: mySelectedLevel = "6_IcyFortress.json";
 			break;
 		default: mySelectedLevel = "1_Treehouse.json";
 			break;

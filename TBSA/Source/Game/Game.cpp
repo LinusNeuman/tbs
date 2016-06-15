@@ -89,6 +89,22 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 	createParameters.myWindowHeight = myTargetResolutionY;
 	createParameters.myRenderWidth = myTargetResolutionX;
 	createParameters.myRenderHeight = myTargetResolutionY;
+
+	//Här är koden för dig Simon <3
+	/*if (myTargetResolutionX * 4 == myTargetResolutionY * 5)
+	{
+		double newRes = (myTargetResolutionY / 4.0) * 5;
+		newRes /= 16.0;
+		newRes *= 9;
+		myTargetResolutionY = newRes;
+	}
+	else if (myTargetResolutionX * 3 == myTargetResolutionY * 4)
+	{
+		double newRes = myTargetResolutionY / 12.0;
+		newRes *= 9;
+		myTargetResolutionY = newRes;
+	}*/
+
 	createParameters.myTargetWidth = myTargetResolutionX;
 	createParameters.myTargetHeight = myTargetResolutionY;
 	createParameters.myStartInFullScreen = JsonWrapper::GetBool("myIsFullscreen", settings);
@@ -97,7 +113,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 
 	
-	std::wstring appname = L"TBS RELEASE [" + aVersion + L"]";
+	std::wstring appname = L"FIMBULVINTER [" + aVersion + L"]";
 #ifdef _DEBUG
 	appname = L"TBS DEBUG  [" + aVersion + L"]";
 
