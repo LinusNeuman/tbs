@@ -32,6 +32,7 @@
 #include <Message/CurrentPlayerAP.h>
 #include "Message/ScoreCounterMessage.h"
 #include <Message/EnemyNextPathMessage.h>
+#include "Message/PlayerDiedMessage.h"
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -430,6 +431,15 @@ bool PlayerController::RecieveMessage(const TextMessage & aMessage)
 	if (aMessage.myType == RecieverTypes::eLevelEnd)
 	{
 		SendPostMessage(ScoreCounterMessage(RecieverTypes::eLevelEndScoreMessage, myScoreCounter));
+	}
+	return true;
+}
+
+bool PlayerController::RecieveMessage(const PlayerDiedMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::ePlayEvents)
+	{
+		SendPostMessage(ScoreCounterMessage(RecieverTypes::eGameOverScore, myScoreCounter));
 	}
 	return true;
 }
