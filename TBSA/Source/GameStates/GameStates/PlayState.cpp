@@ -110,9 +110,9 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		ChangeLevel("5_Playground.json");
 	}
-	else if (IsometricInput::GetKeyPressed(DIK_0) == true)
+	else if (IsometricInput::GetKeyPressed(DIK_6) == true)
 	{
-		ChangeLevel("SecondTest.json");
+		ChangeLevel("6_IcyFortress.json");
 	}
 
 	if (myShouldPause == true)
