@@ -6,14 +6,18 @@ PostLevelState::PostLevelState(int aPoints, int aTurns, int aEnemies):
 	myText({ 0.f, 0.f }, {1000.f, 500.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Char)
 {
 	myBg = new StaticSprite();
-	myBg->Init("Sprites/GUI/PostLevel/bg.dds", false, { 0, 0, 679, 564 }, { 0, 0 });
+	myBg->Init("Sprites/GUI/PostLevel/bg.dds", false, CU::Vector4f(0.f, 0.f, 680.f, 563.f), { 0.5f, 0.5f });
 	myBg->SetLayer(enumRenderLayer::eGUI);
 
 	myText.SetSize({ 1000.f, 500.f });
 	myText.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.f });
 	myText.SetLines(9);
 
-	std::string str = std::to_string(aPoints) + " X CANDYBAGS";
+	std::string str = std::to_string(aPoints) + " X CANDYBAG";
+	if (aPoints > 1)
+	{
+		str.append("S");
+	}
 	myText.AddText(str);
 	myText.AddText("");
 

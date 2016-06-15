@@ -80,10 +80,10 @@ void Actor::Init(const ActorData &aActorData)
 {
 	myActiveFlag = true;
 	myVisibleFlag = false;
+	mySpriteIsInit = false;
 	myType = aActorData.myActortype;
 	myPosition = CommonUtilities::Vector2f::Zero;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
-	mySprite->Init();
 	mySprite->SetLayer(enumRenderLayer::eGameObjects);
 	mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	myAnimations.Init(aActorData.myAnimations);
@@ -217,6 +217,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 		{
 			myAnimations.Update(aDeltaTime);
 			mySprite = myAnimations.GetSprite();
+			mySpriteIsInit = true;
 			mySprite->SetLayer(enumRenderLayer::eGameObjects);
 			mySprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 		}
@@ -229,7 +230,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 
 void Actor::Draw() const
 {
-	if (myActiveFlag == true)
+	if (myActiveFlag == true && mySpriteIsInit == true)
 	{
 		mySprite->Draw(myPosition);
 		myBoxCollider.DrawCollider();
