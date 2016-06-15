@@ -11,5 +11,5 @@
   "CreateDebugLogs": true,
   "DebugFolderLocation": "Debug_Logs",
   "StartingGameState": 2,
-  "StartLevel":  "1_Treehouse.json"
+  "StartLevel":  "6_IcyFortress.json"
 }

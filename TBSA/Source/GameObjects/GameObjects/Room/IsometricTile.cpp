@@ -31,8 +31,6 @@ IsometricTile::IsometricTile(const CommonUtilities::Vector2f & aPosition)
 
 IsometricTile::~IsometricTile()
 {
-	/*myGraphicsLayers.DeleteAll();
-	myObjectiveSprites.DeleteAll();*/
 }
 
 void IsometricTile::Init()
@@ -158,7 +156,7 @@ void IsometricTile::SetShader(DX2D::CCustomShader* aCustomShader)
 	}
 }
 
-void IsometricTile::AddSpriteLayer(StaticSprite * aSprite)
+void IsometricTile::AddSpriteLayer(std::shared_ptr<StaticSprite> aSprite)
 {
 	aSprite->SetPivotWithPixels(CU::Vector2f(64.f, 32.f));
 	myGraphicsLayers.Add(aSprite);
@@ -169,7 +167,7 @@ void IsometricTile::SetDoor(const Door& aDoor)
 	myDoor = aDoor;
 }
 
-void IsometricTile::SetObjectiveSprites(const CommonUtilities::StaticArray<StaticSprite*, 2> someSprites)
+void IsometricTile::SetObjectiveSprites(const CommonUtilities::StaticArray<std::shared_ptr<StaticSprite>, 2> someSprites)
 {
 	myObjectiveSprites = someSprites;
 }

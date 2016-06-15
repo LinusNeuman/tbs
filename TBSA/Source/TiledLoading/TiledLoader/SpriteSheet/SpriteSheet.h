@@ -3,6 +3,7 @@
 #pragma once
 #include <CU/Vectors/vector2.h>
 #include <string>
+#include <memory>
 
 class StaticSprite;
 
@@ -17,7 +18,7 @@ public:
 
 	std::string GetPath() const;
 	
-	StaticSprite* CreateSprite(unsigned int aImageId, bool aUniqueId = true);
+	std::shared_ptr<StaticSprite> CreateSprite(unsigned int aImageId, bool aUniqueId = true);
 	unsigned int GetFirstIndex();
 	std::string GetName();
 

@@ -1,7 +1,5 @@
 {
 	"dialogs":[{"name":"test", "file":"test.json"},
 	{"name":"treehouseDialog1", "file":"treehouseDialog1.json"},
-	{"name":"CandyText", "file":"CandyText.json"},
-	{"name":"bakyardLevelStartText", "file":"backyardEnterLevelDialog.json"}
-	]
+	{"name":"CandyMessage", "file":"candy.json"}]
 }

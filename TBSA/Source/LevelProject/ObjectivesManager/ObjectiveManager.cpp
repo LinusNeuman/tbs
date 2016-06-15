@@ -83,7 +83,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 				
 				if (spriteObject.count("active") > 0)
 				{
-					StaticSprite * sprite = new StaticSprite();
+					std::shared_ptr<StaticSprite> sprite = std::make_shared<StaticSprite>();
 					
 					sprite->Init(std::string("Sprites/") + JsonHelp::GetString(spriteObject["active"]));
 					sprite->SetLayer(enumRenderLayer::eGameObjects);
@@ -93,7 +93,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 				if (spriteObject.count("not_active") > 0)
 				{
-					StaticSprite * sprite = new StaticSprite();
+					std::shared_ptr<StaticSprite> sprite = std::make_shared<StaticSprite>();
 
 					sprite->Init(std::string("Sprites/") + JsonHelp::GetString(spriteObject["not_active"]));
 					sprite->SetLayer(enumRenderLayer::eGameObjects);
@@ -120,7 +120,8 @@ void ObjectiveManager::Update()
 		++myCurrentStage;
 		if (myCurrentStage >= myStages.Size())
 		{
-			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel))
+			//SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, ""));
+			SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, myNextLevel));
 		}
 	}
 }
@@ -157,6 +158,11 @@ const LevelObjective& ObjectiveManager::GetObjective(const std::string &aObjecti
 
 bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 {
+	if (aMessage.myText == "CandyMessage")
+	{
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
+	}
+
 	if (aMessage.myType == RecieverTypes::eLeaveObjective)
 	{
 		if (completedObjectives.count(aMessage.myText) && completedObjectives[aMessage.myText].myType == eLevelObjectiveType::HOLD)

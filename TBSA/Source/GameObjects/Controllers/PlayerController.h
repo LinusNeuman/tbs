@@ -39,7 +39,6 @@ public:
 
 	void SetFloor(GameFloor & aFloor);
 	void PrePlayer();
-	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
 	void AfterPlayerTurn();
 	
@@ -55,6 +54,7 @@ public:
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
+	virtual bool RecieveMessage(const TextMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyNextPathMessage & aMessage) override;
 
 

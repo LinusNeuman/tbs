@@ -16,6 +16,7 @@
 #include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAddedMessage.h>
 #include <Message/PlayerSeenMessage.h>
+#include <Message\DialogTextMessage.h>
 #include <Rend/RenderConverter.h>
 #include <Message/EnemyObjectMessage.h>
 #include <GameObjects/Actor/Enemy.h>
@@ -29,6 +30,7 @@
 #include <Message/PositionMessage.h>
 #include <GUI/Messaging/Generic/GUIMessage.h>
 #include <Message/CurrentPlayerAP.h>
+#include "Message/ScoreCounterMessage.h"
 #include <Message/EnemyNextPathMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
@@ -56,6 +58,10 @@ PlayerController::PlayerController()
 
 PlayerController::~PlayerController()
 {
+	SAFE_DELETE(mySelectPlayerSound);
+	SAFE_DELETE(myAlertSound);
+	SAFE_DELETE(myCandySound);
+
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
@@ -351,18 +357,15 @@ void PlayerController::SetFloor(GameFloor & aFloor)
 void PlayerController::PrePlayer()
 {
 	SetCameraPositionToPlayer(mySelectedPlayerIndex);
-	
+	for (unsigned int i = 0; i < myPlayers.Size(); ++i)
+	{
+		myPlayers[i]->PreTurn();
+	}
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, mySelectedPlayer->GetMyAP()));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
-}
-
-void PlayerController::RefillAllAP()
-{
-	for (unsigned int i = 0; i < myPlayers.Size(); ++i)
-	{
-		myPlayers[i]->FreshTurn();
-	}
+	
+	myScoreCounter.AddScore(enumScoreTypes::eTurnCount, 1);
 }
 
 void PlayerController::SetCameraPositionToPlayer(int aIndex)
@@ -402,11 +405,21 @@ bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 	return true;
 }
 
+bool PlayerController::RecieveMessage(const TextMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eLevelEnd)
+	{
+		SendPostMessage(ScoreCounterMessage(RecieverTypes::eLevelEndScoreMessage, myScoreCounter));
+	}
+	return true;
+}
+
 void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
 	myCandySound->Play(0.5f);
+	SendPostMessage(TextMessage(RecieverTypes::eObjctive , "CandyMessage"));
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
@@ -536,14 +549,16 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 		mySelectedPlayer->SetActiveState(false);
 		for (size_t i = 0; i < myPlayers.Size(); i++)
 		{
-			if (myPlayers[i]->GetActorState() == eActorState::eAlert)
+			/*if (myPlayers[i]->GetActorState() == eActorState::eAlert)
 			{
 				myPlayers[i]->SetActorState(eActorState::eIdle);
-			}
+			}*/
+			mySelectedPlayer->SetActorState(eActorState::eFighting);
 		}
 	}
 	else if (aMessage.myType == RecieverTypes::eEnemyDead)
 	{
+		mySelectedPlayer->SetActorState(eActorState::eIdle);
 		mySelectedPlayer->SetActiveState(true);
 	}
 	return true;
