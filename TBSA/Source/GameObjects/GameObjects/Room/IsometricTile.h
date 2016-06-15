@@ -5,6 +5,7 @@
 #include "../PathFinding/NavGraph/NavHandle.h"
 #include <ActorEnums.h>
 #include <CU/StaticArray/StaticArray.h>
+#include <memory>
 
 class StaticSprite;
 class Enemy;
@@ -49,8 +50,7 @@ public:
 	void Update();
 
 	void SetShader(DX2D::CCustomShader * aCustomShader);
-
-	void AddSpriteLayer(StaticSprite* aSprite);
+	void AddSpriteLayer(std::shared_ptr<StaticSprite> aSprite);
 	inline eTileType GetTileType()const;
 	inline void SetTileType(eTileType);
 
@@ -59,8 +59,8 @@ public:
 	inline CU::Vector2f GetPosition() const;
 
 	void SetDoor(const Door& aDoor);
-	void SetObjectiveSprites(const CommonUtilities::StaticArray<StaticSprite*, 2> someSprites);
-	CommonUtilities::GrowingArray<StaticSprite *> myGraphicsLayers;
+	void SetObjectiveSprites(const CommonUtilities::StaticArray<std::shared_ptr<StaticSprite>, 2> someSprites);
+	CommonUtilities::GrowingArray<std::shared_ptr<StaticSprite>> myGraphicsLayers;
 	void SetVertexHandle(VertexHandle aHandle);
 	VertexHandle GetVertexHandle() const;
 	void SetTileState(eTileState aState);
@@ -90,12 +90,12 @@ public:
 		myCurrentObjectiveSprite = aUS;
 	}
 
-	CommonUtilities::StaticArray<StaticSprite *, 2> & GetObjectiveSprite()
+	CommonUtilities::StaticArray<std::shared_ptr<StaticSprite>, 2> & GetObjectiveSprite()
 	{
 		return myObjectiveSprites;
 	}
 private:
-	CommonUtilities::StaticArray<StaticSprite *, 2> myObjectiveSprites;
+	CommonUtilities::StaticArray<std::shared_ptr<StaticSprite>, 2> myObjectiveSprites;
 	unsigned short myCurrentObjectiveSprite;
 	unsigned int myRoomId;
 

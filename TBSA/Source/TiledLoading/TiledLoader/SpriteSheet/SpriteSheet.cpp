@@ -33,7 +33,7 @@ std::string SpriteSheet::GetPath() const
 	return ourFolder + myName + myFileFormat;
 }
 
-StaticSprite* SpriteSheet::CreateSprite(unsigned aImageId, bool aGlobalId)
+std::shared_ptr<StaticSprite> SpriteSheet::CreateSprite(unsigned aImageId, bool aGlobalId)
 {
 	int id = aImageId;
 	if (aGlobalId == true)
@@ -47,7 +47,7 @@ StaticSprite* SpriteSheet::CreateSprite(unsigned aImageId, bool aGlobalId)
 	CommonUtilities::Vector2f originPoint(mySize.x * column, mySize.y * row);
 	CommonUtilities::Point4f rect(originPoint.x, originPoint.y, mySize.x, mySize.y);
 
-	StaticSprite* sprite = new StaticSprite();
+	std::shared_ptr<StaticSprite> sprite = std::make_shared<StaticSprite>();
 	sprite->Init(GetPath(), true, rect, CommonUtilities::Point2f::Zero, false);
 	sprite->SetLayer(enumRenderLayer::eFloor);
 
