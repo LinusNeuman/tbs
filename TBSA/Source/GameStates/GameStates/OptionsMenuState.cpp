@@ -4,7 +4,7 @@
 
 OptionsMenuState::OptionsMenuState()
 {
-	myLetThroughRender = false;
+	myLetThroughRender = true;
 }
 
 
