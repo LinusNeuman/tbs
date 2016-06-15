@@ -1,6 +1,7 @@
 #include "GUIActionPeek.h"
 #include <Message/PlayerCanPeekMessage.h>
 #include <Message/PlayerPositionChangedMessage.h>
+#include <CU/Utility/DataHolder/SingletonDataHolder.h>
 
 GUIActionPeek::GUIActionPeek()
 {
@@ -73,5 +74,16 @@ bool GUIActionPeek::RecieveMessage(const PlayerCanPeekMessage& aMessage)
 
 void GUIActionPeek::Init()
 {
-	Create("Sprites/GUI/Actions/Peek", { 220, 854 }, 2, 1);
+	CU::Vector2f position;
+	position.x = 220;
+	position.y = 854;
+	
+
+	position.x /= 1920;
+	position.y /= 1080;
+
+	position.x *= SingletonDataHolder::GetTargetResolution().x;
+	position.y *= SingletonDataHolder::GetTargetResolution().y;
+
+	Create("Sprites/GUI/Actions/Peek", position, 2, 1);
 }
