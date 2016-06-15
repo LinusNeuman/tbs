@@ -9,10 +9,10 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 	myShouldExit = false;
 
 	myStatsBox.SetSize({ 1000.f, 500.f });
-	myStatsBox.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.f });
+	myStatsBox.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.5f });
 	myStatsBox.SetLines(9);
 
-	std::string str = std::to_string(aPoints) + " X CANDYBAG";
+	std::string str = std::to_string(static_cast<int>(aPoints)) + " X CANDYBAG";
 	if (aPoints > 1)
 	{
 		str.append("S");
@@ -20,13 +20,15 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
 
-	str = std::to_string(aEnemies) + " X ENEMIES";
+	str = std::to_string(static_cast<int>(aEnemies)) + " X ENEMIES";
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
 
-	str = std::to_string(aTurns) + " X TURNS";
+	str = std::to_string(static_cast<int>(aTurns)) + " X TURNS";
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
+
+	myLetThroughRender = true;
 }
 
 
@@ -50,6 +52,9 @@ void GameOverState::Init()
 eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
 	myGUIManager.Update(aDeltaTime);
+
+	myStatsBox.Update();
+
 	if (myShouldExit == true)
 	{
 		myShouldExit = false;
