@@ -18,5 +18,6 @@ private:
 	StaticSprite * myBackgroundSprite;
 	std::string mySelectedLevel;
 	unsigned short myLevel;
+	bool myShouldGoBack;
 };
 
