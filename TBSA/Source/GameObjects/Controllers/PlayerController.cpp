@@ -29,6 +29,7 @@
 #include <Message/PositionMessage.h>
 #include <GUI/Messaging/Generic/GUIMessage.h>
 #include <Message/CurrentPlayerAP.h>
+#include <Message/EnemyNextPathMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -48,6 +49,9 @@ PlayerController::PlayerController()
 
 	myAlertSound = new SoundEffect();
 	myAlertSound->Init("Sounds/SFX/alert.ogg");
+
+	myCandySound = new SoundEffect();
+	myCandySound->Init("Sounds/SFX/crunch.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -65,7 +69,10 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerIsPeeking, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyNextPath, *this);
+
 	SingletonPostMaster::RemoveReciever(*this);
+
 }
 
 void PlayerController::Init()
@@ -84,8 +91,15 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerNextToObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyNextPath, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
 
 	myMouseController.Init();
+}
+
+void PlayerController::Draw() const
+{
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -116,6 +130,7 @@ void PlayerController::SelectPlayer()
 
 		mySelectPlayerSound->Play(0.2f);
 
+		SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
 		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 		SendPostMessage(dijkstraMessage);
 	}
@@ -212,7 +227,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 		enumMouseState currentState = GetCurrentMouseState();
 
-		myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+		myMouseController.SetMouseState(currentState);
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
 		{
@@ -250,6 +265,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		case enumMouseState::enumLength:
 			DL_ASSERT(false, "Error in handling playercontroller mouse input");
 		case enumMouseState::eHeldOnVoid:
+		case enumMouseState::eHeldOnPlayer:
 			break;
 		}
 	}
@@ -267,6 +283,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
+	myClickedOnBB = false;
 
 	PointCollider tempCollider;
 
@@ -280,6 +297,14 @@ enumMouseState PlayerController::GetCurrentMouseState()
 		{
 			return enumMouseState::eClickedOnPlayer;
 		}
+		else
+		{
+			return enumMouseState::eHeldOnPlayer;
+		}
+	}
+	else if (myClickedOnBB == true)
+	{
+		return enumMouseState::eHeldOnVoid;
 	}
 	else if (myClickedOnEnemy == true)
 	{
@@ -315,7 +340,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
 	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
-
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -381,6 +406,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
+	myCandySound->Play(0.3f);
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
@@ -496,7 +522,11 @@ bool PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 
 bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
+	if (aMessage.myType == RecieverTypes::eClickedOnBB)
+	{
+		myClickedOnBB = true;
+	}
+	else if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
 	{
 		myClickedOnEnemy = true;
 		mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
@@ -519,7 +549,7 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 	return true;
 }
 
-void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy)
+void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, const Enemy* aEnemy)
 {
 	if (CU::Vector2i(aEnemy->GetPosition()) != aPlayerPosition)
 	{
@@ -551,6 +581,19 @@ bool PlayerController::RecieveMessage(const EnemyDirectionChangedMessage& aMessa
 		}
 	}
 	return false;
+}
+
+bool PlayerController::RecieveMessage(const EnemyNextPathMessage& aMessage)
+{
+	for (size_t i = 0; i < myPlayers.Size(); i++)
+	{
+		if (CU::Vector2ui(myPlayers[i]->GetPosition()) == aMessage.myPosition && myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::DOOR)
+		{
+			PlayerSeen(CommonUtilities::Point2i(myPlayers[i]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[i]->GetPosition().x), USHORTCAST(myPlayers[i]->GetPosition().y))).GetSeenEnemy());
+		}
+	}
+	
+	return true;
 }
 
 void PlayerController::ActivePlayerFight(const unsigned short aPlayerIndex)
@@ -703,17 +746,11 @@ void PlayerController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2
 
 	for (; n > 0; --n)
 	{
-		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
-		{
-			myFloor->GetTile(x, y).SetVisible(true);
-			myFloor->GetTile(x, y).SetDiscovered(true);
-			break;
-		}
-		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
+		if (hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() != eTileType::BLOCKED || hasAlreadyBeenBlocked == true && myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			break;
 		}
-		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED)
+		if (myFloor->GetTile(x, y).GetTileType() == eTileType::BLOCKED || myFloor->GetTile(x, y).GetTileType() == eTileType::DOOR)
 		{
 			myFloor->GetTile(x, y).SetVisible(true);
 			myFloor->GetTile(x, y).SetDiscovered(true);
@@ -843,8 +880,6 @@ DL_PRINT("SOUTH_WEST");
 }
 }*/
 
-
-
 //#pragma region Check if player is standing on tile that is diagonal from the door
 //	if (myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR ||
 //		myFloor->GetTile(USHORTCAST(aPosition.x + 1.f), USHORTCAST(aPosition.y - 1.f)).GetTileType() == eTileType::DOOR_2)
@@ -888,39 +923,3 @@ DL_PRINT("SOUTH_WEST");
 //	}
 //#pragma endregion
 
-
-/*	switch (mySelectedPlayer->GetDirectionEnum())
-{
-case eDirection::NORTH:
-case eDirection::WEST:
-case eDirection::NORTH_WEST:
-if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
-{
-PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-}
-break;
-case eDirection::NORTH_EAST:
-if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(round(myPlayers[iPlayer]->GetPosition().y + 0.49f)))).GetInEnemyFov() == true)
-{
-PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-}
-break;
-
-
-case eDirection::EAST:
-case eDirection::SOUTH:
-case eDirection::SOUTH_EAST:
-if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
-{
-PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-}
-break;
-case eDirection::SOUTH_WEST:
-if (myFloor->GetTile(CU::Vector2ui(USHORTCAST(round(myPlayers[iPlayer]->GetPosition().x + 0.49f)), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetInEnemyFov() == true)
-{
-PlayerSeen(CommonUtilities::Point2i(myPlayers[iPlayer]->GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(myPlayers[iPlayer]->GetPosition().x), USHORTCAST(myPlayers[iPlayer]->GetPosition().y))).GetSeenEnemy());
-}
-break;
-default:
-break;
-}*/

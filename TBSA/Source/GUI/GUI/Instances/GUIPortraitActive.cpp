@@ -8,8 +8,9 @@ GUIPortraitActive::GUIPortraitActive() :
 	myCharacter0(nullptr),
 	myCharacter1(nullptr)
 {
-	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eSelectedPlayerHasChanged, *this);
+	/*SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);*/
 }
 
 GUIPortraitActive::~GUIPortraitActive()
@@ -146,16 +147,19 @@ void GUIPortraitActive::Render()
 
 bool GUIPortraitActive::RecieveMessage(const PlayerIDMessage& aMessage)
 {
-	myPlayerID = aMessage.myPlayerID;
-	return true;
-}
-
-bool GUIPortraitActive::RecieveMessage(const GUIMessage & aMessage)
-{
-	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer || aMessage.myType == RecieverTypes::eClickedOnPlayer)
+	if (aMessage.myType == RecieverTypes::eSelectedPlayerHasChanged)
 	{
-		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
-		RecieveMessage(*tempmessageerer);
+		myPlayerID = aMessage.myPlayerID;
 	}
 	return true;
 }
+
+//bool GUIPortraitActive::RecieveMessage(const GUIMessage & aMessage)
+//{
+//	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer || aMessage.myType == RecieverTypes::eClickedOnPlayer)
+//	{
+//		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
+//		RecieveMessage(*tempmessageerer);
+//	}
+//	return true;
+//}

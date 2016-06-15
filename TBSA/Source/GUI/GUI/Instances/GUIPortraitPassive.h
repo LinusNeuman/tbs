@@ -18,7 +18,7 @@ public:
 	void Render() override;
 
 	bool RecieveMessage(const PlayerIDMessage & aMessage) override;
-	bool RecieveMessage(const GUIMessage& aMessage) override;
+	//bool RecieveMessage(const GUIMessage& aMessage) override;
 protected:
 	int myPlayerID;
 
