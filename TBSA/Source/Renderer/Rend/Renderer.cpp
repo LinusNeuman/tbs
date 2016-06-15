@@ -48,7 +48,6 @@ void Renderer::ClearCommands()
 {
 	for (USHORT i = 0; i < static_cast<USHORT>(enumRenderLayer::enumLength); ++i)
 	{
-		//myCommandsToRender[i].RemoveAll();
 		myBuffer[i].RemoveAll();
 	}
 }
