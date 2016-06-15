@@ -67,9 +67,13 @@ enum class RecieverTypes
 	eClickedOnBB,
 	eSelectedPlayerHasChanged,
 	eLevelEndScoreMessage,
+<<<<<<< HEAD
 	eDialogEnabled,
 	eDialogDisabled,
+	enumlength,
+=======
 	eOpenOptionsMenu,
 	eCloseOptionsMenu,
 	enumlength
+>>>>>>> 9b00a985e94639705b4a9e07e86a13e9b1c61991
 };

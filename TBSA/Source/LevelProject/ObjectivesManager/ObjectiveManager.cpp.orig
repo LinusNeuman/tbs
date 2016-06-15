@@ -18,9 +18,12 @@ ObjectiveManager::ObjectiveManager()
 	SingletonPostMaster::AddReciever(RecieverTypes::eObjctive, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLeaveObjective, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDied, *this);
+<<<<<<< HEAD
 	SingletonPostMaster::AddReciever(RecieverTypes::eDialogEnabled, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eDialogDisabled, *this);
+=======
 	myStageEndDialogs.Init(1);
+>>>>>>> 9b00a985e94639705b4a9e07e86a13e9b1c61991
 }
 
 ObjectiveManager::~ObjectiveManager()
@@ -30,15 +33,20 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
-//#ifdef _DEBUG
-//	DL_ASSERT(isConstructed, "unconstructed object");
-//#endif
+<<<<<<< HEAD
+#ifdef _DEBUG
+	DL_ASSERT(isConstructed, "unconstructed object");
+#endif
 	dialogSent = false;
 	dialogDone = false;
 	levelDone = false;
-	myLevel = aPath;	myLevel = myLevel.substr(16);
+	myLevel = aPath;
+
+	myLevel = myLevel.substr(16);
 	myLevel = myLevel.substr(0, myLevel.length() - 5);
 
+=======
+>>>>>>> 9b00a985e94639705b4a9e07e86a13e9b1c61991
 	myStages.RemoveAll();
 	picojson::object root = JsonHelp::LoadJson(aPath);
 	picojson::array stages = JsonHelp::GetArray(root["stages"]);
@@ -123,7 +131,14 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 void ObjectiveManager::Update()
 {
+<<<<<<< HEAD
+#ifdef _DEBUG
+	DL_ASSERT(isConstructed, "unconstructed object");
+#endif
 	if (myStages[myCurrentStage].size() < 1 && levelDone == false)
+=======
+	if (myStages[myCurrentStage].size() < 1)
+>>>>>>> 9b00a985e94639705b4a9e07e86a13e9b1c61991
 	{
 		if (myStageEndDialogs[myCurrentStage] != "_empty_")
 		{
