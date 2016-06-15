@@ -12,8 +12,11 @@ public:
 	void Init();
 	eStackReturnValue Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack) override;
 	void Draw() const override;
+
+	bool RecieveMessage(const GUIMessage & aMessage) override;
 private:
 	StaticSprite * myCreditSprite;
 	CU::Vector2f myPosition;
+	bool myShouldGoBack;
 };
 
