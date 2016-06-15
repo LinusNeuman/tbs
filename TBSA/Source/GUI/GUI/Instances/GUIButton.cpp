@@ -25,7 +25,7 @@ GUIButton::~GUIButton()
 	SAFE_DELETE(mySpriteHovered);
 }
 
-void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled)
+void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled, float aPriority)
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
@@ -43,6 +43,8 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	);
 	mySpritePressed->SetLayer(enumRenderLayer::eGUI);
 
+	mySpritePressed->SetRenderPriority(aPriority);
+
 	mySpriteUnpressed = new StaticSprite();
 	mySpriteUnpressed->Init(
 		aSpritePath + "/Unpressed.dds",
@@ -54,6 +56,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 		}
 	);
 	mySpriteUnpressed->SetLayer(enumRenderLayer::eGUI);
+	mySpriteUnpressed->SetRenderPriority(aPriority);
 
 	mySpriteHovered = new StaticSprite(); 
 	mySpriteHovered->Init(
@@ -66,6 +69,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 		}
 	);
 	mySpriteHovered->SetLayer(enumRenderLayer::eGUI);
+	mySpriteHovered->SetRenderPriority(aPriority);
 
 	myParentSpace = aParentSpace;
 	myPosition = aParentSpace + anOffset;

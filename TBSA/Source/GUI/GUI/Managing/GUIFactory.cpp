@@ -161,18 +161,38 @@ void GUIFactory::Load()
 					const std::string hoverEvent = myJSON.GetString("Hover", events);
 
 					GUIButton* newButton = new GUIButton();
-					newButton->Create(
-						name.c_str(),
-						imagePath,
-						{ 0.f, 0.f },
-						position,
-						size,
-						animated,
-						shouldplayclick,
-						shouldplayhover,
-						isometric,
-						enabled
-					);
+					if (name == "BackButton")
+					{
+						newButton->Create(
+							name.c_str(),
+							imagePath,
+							{ 0.f, 0.f },
+							position,
+							size,
+							animated,
+							shouldplayclick,
+							shouldplayhover,
+							isometric,
+							enabled,
+							2100.f
+							);
+					}
+					else
+					{
+						newButton->Create(
+							name.c_str(),
+							imagePath,
+							{ 0.f, 0.f },
+							position,
+							size,
+							animated,
+							shouldplayclick,
+							shouldplayhover,
+							isometric,
+							enabled
+							);
+					}
+					
 
 					// also add tooltip 
 
