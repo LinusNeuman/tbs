@@ -25,7 +25,7 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 
 TextBox::~TextBox()
 {
-	myRenderList.RemoveAll();
+	//myRenderList.RemoveAll();
 }
 
 void TextBox::AddText_WordWrap(DX2D::CText* aText)
@@ -36,13 +36,19 @@ void TextBox::AddText_WordWrap(DX2D::CText* aText)
 			bool foundSpace = false;
 			std::string oldLine = aText->myText;
 
-			for (i = 0; i < aText->myText.length(); ++i)
+			for (i = aText->myText.length(); i > 0; --i)
 			{
-				if (aText->myText[i] == ' ')
+				if (aText->myText[i - 1] == ' ')
 				{
-					foundSpace = true;
 					aText->myText = aText->myText.substr(0, i);
-					break;
+					i = aText->myText.length();
+
+					if (aText->GetWidth() <= myDimensions.x)
+					{
+						foundSpace = true;
+						myTextRows.Push(aText);
+						break;
+					}
 				}
 			}
 
@@ -52,12 +58,14 @@ void TextBox::AddText_WordWrap(DX2D::CText* aText)
 			}
 			else
 			{
-				std::string newLine(oldLine.substr(i + 1));
+				std::string newLine(oldLine.substr(i));
 				AddText(newLine);
 			}
 		}
-
-		myTextRows.Push(aText);
+		else
+		{
+			myTextRows.Push(aText);
+		}
 }
 
 void TextBox::AddText_CharWrap(DX2D::CText* aText)
@@ -109,8 +117,8 @@ TextBox::AddText(std::string aText)
 			break;
 
 		default:
-			AddText_CharWrap(tmp);
-			//AddText_WordWrap(tmp);
+			//AddText_CharWrap(tmp);
+			AddText_WordWrap(tmp);
 			break;
 	}
 }

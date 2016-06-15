@@ -95,6 +95,7 @@ private:
 
 	SoundEffect* mySelectPlayerSound;
 	SoundEffect* myAlertSound;
+	SoundEffect* myCandySound;
 
 	ScoreCounter myScoreCounter;
 
