@@ -1,6 +1,7 @@
 #pragma once
 #include "tga2d\sprite\sprite.h"
 #include <Audio/Instances/SoundEffect.h>
+#include <Rend/StaticSprite.h>
 
 // Simplifies argument sending and initializing. They only need different positions. // Linus
 struct SliderSpriteArguments
@@ -12,9 +13,9 @@ struct SliderSpriteArguments
 };
 struct SliderPositionArguments
 {
-	DX2D::Vector2f mySliderPosition;
-	DX2D::Vector2f myKnobPosition;
-	DX2D::Vector2f myKnobPivot;
+	CU::Vector2f mySliderPosition;
+	CU::Vector2f myKnobPosition;
+	CU::Vector2f myKnobPivot;
 };
 struct SliderSetOfArguments
 {
@@ -35,18 +36,23 @@ public:
 	void Update(float aDeltaTime);
 	void Render() const;
 
-	DX2D::Vector2f GetSliderPosition(){ return mySlider->GetPosition(); };
-	DX2D::Vector2f GetKnobPosition(){ return myKnob->GetPosition(); };
+	CU::Vector2f GetSliderPosition(){ return mySliderPos; };
+	CU::Vector2f GetKnobPosition(){ return myKnobPos; };
 
-	DX2D::Vector2f GetSliderSize(){ return mySlider->GetSize(); };	
-	DX2D::Vector2f GetKnobSize(){ return myKnob->GetSize(); };
+	CU::Vector2f GetSliderSize(){ return mySlider->GetSize(); };	
+	CU::Vector2f GetKnobSize(){ return myKnob->GetSize(); };
 	virtual ~Slider();
 protected:
-	DX2D::CSprite* mySlider;
-	DX2D::CSprite* myKnob;
-	DX2D::CSprite* myKnobRegular;
-	DX2D::CSprite* myKnobPressed;
-	DX2D::CSprite* myKnobHovered;
+	StaticSprite* mySlider;
+	CU::Vector2f mySliderPos;
+	StaticSprite* myKnob;
+	CU::Vector2f myKnobPos;
+	StaticSprite* myKnobRegular;
+	CU::Vector2f myKnobRegularPos;
+	StaticSprite* myKnobPressed;
+	CU::Vector2f myKnobPressedPos;
+	StaticSprite* myKnobHovered;
+	CU::Vector2f myKnobHoveredPos;
 
 	DX2D::Vector2f myValueConvertedToPosition;
 	float myValue;

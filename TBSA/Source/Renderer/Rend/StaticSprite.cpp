@@ -137,6 +137,11 @@ CU::Vector2f StaticSprite::GetSizeInPixels() const
 	return myRenderData.mySizeInPixels;
 }
 
+CU::Vector2f StaticSprite::GetSize() const
+{
+	return{ GetSprite()->GetSize().x, GetSprite()->GetSize().y };
+}
+
 /*
 	Sprite will be added to buffer and rendered next frame. Changes after this point will not affect the sprite on the buffer.
 */

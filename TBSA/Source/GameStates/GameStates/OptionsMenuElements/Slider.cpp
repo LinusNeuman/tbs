@@ -21,32 +21,41 @@ void Slider::InitValue()
 
 void Slider::InitSprites(SliderSpriteArguments &aSpriteArguments)
 {
-	mySlider = new DX2D::CSprite(aSpriteArguments.mySliderPath);
-	myKnobRegular = new DX2D::CSprite(aSpriteArguments.myKnobPath);
-	myKnobHovered = new DX2D::CSprite(aSpriteArguments.myKnobHoveredPath);
-	myKnobPressed = new DX2D::CSprite(aSpriteArguments.myKnobPressedPath);
+	mySlider = new StaticSprite();
+	mySlider->Init(aSpriteArguments.mySliderPath, false);
+	mySlider->SetLayer(enumRenderLayer::eGUI);
+	mySlider->SetRenderPriority(2500);
+	myKnobRegular = new StaticSprite();
+	myKnobRegular->Init(aSpriteArguments.myKnobPath, false, CU::Vector4f::Zero, { 0.5f, 0.5f });
+	myKnobRegular->SetLayer(enumRenderLayer::eGUI);
+	myKnobRegular->SetRenderPriority(2600);
+	myKnobHovered = new StaticSprite();
+	myKnobHovered->Init(aSpriteArguments.myKnobHoveredPath, false, CU::Vector4f::Zero, { 0.5f, 0.5f });
+	myKnobHovered->SetLayer(enumRenderLayer::eGUI);
+	myKnobHovered->SetRenderPriority(2600);
+	myKnobPressed = new StaticSprite();
+	myKnobPressed->Init(aSpriteArguments.myKnobPressedPath, false, CU::Vector4f::Zero, { 0.5f, 0.5f });
+	myKnobPressed->SetLayer(enumRenderLayer::eGUI);
+	myKnobPressed->SetRenderPriority(2600);
 
 	myKnob = myKnobRegular;
 }
 
 void Slider::InitPositions(SliderPositionArguments &aPositionsArguments)
 {
-	myKnobRegular->SetPivot(aPositionsArguments.myKnobPivot);
-	myKnobHovered->SetPivot(aPositionsArguments.myKnobPivot);
-	myKnobPressed->SetPivot(aPositionsArguments.myKnobPivot);
-
-	mySlider->SetPosition(aPositionsArguments.mySliderPosition);
-	myKnobRegular->SetPosition(aPositionsArguments.myKnobPosition);
-	myKnobHovered->SetPosition(aPositionsArguments.myKnobPosition);
-	myKnobPressed->SetPosition(aPositionsArguments.myKnobPosition);
+	mySliderPos = (aPositionsArguments.mySliderPosition);
+	myKnobRegularPos = (aPositionsArguments.myKnobPosition);
+	myKnobHoveredPos = (aPositionsArguments.myKnobPosition);
+	myKnobPressedPos = (aPositionsArguments.myKnobPosition);
+	myKnobPos = myKnobRegularPos;
 }
 
 float Slider::ConvertValueToPosition()
 {
 	float finalPosition;
 
-	float beginPos = mySlider->GetPosition().x;
-	float endPos = mySlider->GetPosition().x + 0.171875f;
+	float beginPos = mySliderPos.x;
+	float endPos = mySliderPos.x + 0.171875f;
 
 	finalPosition = beginPos + (myValue * (endPos - beginPos));
 
@@ -57,8 +66,8 @@ float Slider::ConvertPositionToValue(float aPos)
 {
 	float finalValue;
 
-	float beginPos = mySlider->GetPosition().x;
-	float endPos = mySlider->GetPosition().x + 0.171875f;
+	float beginPos = mySliderPos.x;
+	float endPos = mySliderPos.x + 0.171875f;
 
 	
 	finalValue = (aPos - beginPos) / (endPos - beginPos);
@@ -68,14 +77,14 @@ float Slider::ConvertPositionToValue(float aPos)
 
 void Slider::SetAllKnobs(float aPos)
 {
-	if (aPos < mySlider->GetPosition().x)
+	if (aPos < mySliderPos.x)
 	{
-		aPos = mySlider->GetPosition().x;
+		aPos = mySliderPos.x;
 	}
-	myKnob->SetPosition({aPos, myKnob->GetPosition().y });
-	myKnobRegular->SetPosition({ aPos, myKnob->GetPosition().y });
-	myKnobHovered->SetPosition({ aPos, myKnob->GetPosition().y });
-	myKnobPressed->SetPosition({ aPos, myKnob->GetPosition().y });
+	myKnobPos = {aPos, myKnobPos.y};
+	myKnobRegularPos = { aPos, myKnobPos.y };
+	myKnobHoveredPos = { aPos, myKnobPos.y };
+	myKnobPressedPos = { aPos, myKnobPos.y };
 }
 
 void Slider::Update(float)
@@ -88,19 +97,19 @@ void Slider::Update(float)
 
 		myKnob = myKnobPressed;
 
-		if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x > mySlider->GetPosition().x + 0.171875f)
+		if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x > mySliderPos.x + 0.171875f)
 		{
 			myValue = 1.0f;
 			SetAllKnobs(ConvertValueToPosition());
 		}
-		else if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x < mySlider->GetPosition().x)
+		else if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x < mySliderPos.x)
 		{
 			myValue = 0.0f;
 			SetAllKnobs(ConvertValueToPosition());
 		}
 		else
 		{
-			myKnob->SetPosition({ SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x, myKnob->GetPosition().y });
+			myKnobPos = { SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x, myKnobPos.y };
 			myValue = ConvertPositionToValue(SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x);
 			SetAllKnobs(ConvertValueToPosition());
 		}
@@ -154,11 +163,11 @@ void Slider::ProgressSet()
 
 bool Slider::OnMouseHover()
 {
-	if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x >= myKnob->GetPosition().x - myKnob->GetSize().x / 2 &&
-		SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x <= myKnob->GetPosition().x + myKnob->GetSize().x / 2)
+	if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x >= myKnobPos.x - myKnob->GetSize().x / 2 &&
+		SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().x <= myKnobPos.x + myKnob->GetSize().x / 2)
 	{
-		if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().y + 0.010f >= myKnob->GetPosition().y - myKnob->GetSize().y / 2 &&
-			SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().y - 0.010f <= myKnob->GetPosition().y + myKnob->GetSize().y / 2)
+		if (SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().y + 0.010f >= myKnobPos.y - myKnob->GetSize().y / 2 &&
+			SingletonIsometricInputWrapper::GetMouseWindowPositionNormalizedSpace().y - 0.010f <= myKnobPos.y + myKnob->GetSize().y / 2)
 		{
 			if (myIsHoveringKnob == false)
 			{
@@ -203,9 +212,9 @@ void Slider::SliderSpecificUpdate()
 
 void Slider::Render() const
 {
-	mySlider->Render();
+	mySlider->DrawWithNormalized(mySliderPos);
 
-	myKnob->Render();
+	myKnob->DrawWithNormalized(myKnobPos);
 }
 
 

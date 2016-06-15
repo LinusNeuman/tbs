@@ -2,7 +2,7 @@
 #include "PostLevelState.h"
 #include <Rend\RenderConverter.h>
 
-PostLevelState::PostLevelState(float aPoints, float aTurns, float aEnemies):
+PostLevelState::PostLevelState(int aPoints, int aTurns, int aEnemies):
 	myText({ 0.f, 0.f }, {1000.f, 500.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Char)
 {
 	myBg = new StaticSprite();

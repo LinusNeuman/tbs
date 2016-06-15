@@ -26,8 +26,11 @@
 				"target" : "Enemy6"
 			},		{
 				"type" : "kill",
-				"target" : "Enemy7"
+				"target" : "Enemy7",
+				
+				"stageEndDialog" : "lakesideDialog2"
 			}
+			
 			
 			],
 			[

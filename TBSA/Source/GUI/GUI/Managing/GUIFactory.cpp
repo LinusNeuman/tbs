@@ -12,6 +12,7 @@
 #include <Message\CreditScreenMessage.h>
 #include <GUI/Instances/GUIPortraitActive.h>
 #include <GUI/Instances/GUIActionPeek.h>
+#include <GUI/Instances/GUIObjectiveDialog.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -56,6 +57,10 @@ void GUIFactory::Load()
 			GUIDialog* dialogTextBox = new GUIDialog({ 15.f/*808.f*/, 15.f/*832.f*/ }, { 381.f, 214.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
 			dialogTextBox->SetLines(7);
 			myGUIElements.Add(dialogTextBox);
+
+			GUIObjectiveDialog* objectiveTextBox = new GUIObjectiveDialog({1080.f - (381.f + 15.f), 15.f}, {381.f, 214.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
+			objectiveTextBox->SetLines(7);
+			myGUIElements.Add(objectiveTextBox);
 
 			CU::Vector2f position;
 			position.x = 25;
@@ -104,6 +109,7 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(newPeek);
 
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
@@ -158,18 +164,38 @@ void GUIFactory::Load()
 					const std::string hoverEvent = myJSON.GetString("Hover", events);
 
 					GUIButton* newButton = new GUIButton();
-					newButton->Create(
-						name.c_str(),
-						imagePath,
-						{ 0.f, 0.f },
-						position,
-						size,
-						animated,
-						shouldplayclick,
-						shouldplayhover,
-						isometric,
-						enabled
-					);
+					if (name == "BackButton")
+					{
+						newButton->Create(
+							name.c_str(),
+							imagePath,
+							{ 0.f, 0.f },
+							position,
+							size,
+							animated,
+							shouldplayclick,
+							shouldplayhover,
+							isometric,
+							enabled,
+							2100.f
+							);
+					}
+					else
+					{
+						newButton->Create(
+							name.c_str(),
+							imagePath,
+							{ 0.f, 0.f },
+							position,
+							size,
+							animated,
+							shouldplayclick,
+							shouldplayhover,
+							isometric,
+							enabled
+							);
+					}
+					
 
 					// also add tooltip 
 
@@ -256,6 +282,11 @@ void GUIFactory::Load()
 					if (clickEvent == "OpenOptionsMenu")
 					{
 						newButton->SetAction(new GUIMessage(RecieverTypes::eOpenOptionsMenu), eGUIMessageEvents::eOnClick);
+					}
+
+					if (clickEvent == "CloseOptionsMenu")
+					{
+						newButton->SetAction(new GUIMessage(RecieverTypes::eCloseOptionsMenu), eGUIMessageEvents::eOnClick);
 					}
 
 					myGUIElements.Add(newButton);
