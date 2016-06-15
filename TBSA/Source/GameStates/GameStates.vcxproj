@@ -79,7 +79,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(SolutionDir)DialogLoader/;$(SolutionDir)ParticleEmitter\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DialogLoader/;$(SolutionDir)ParticleEmitter\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\;$(SolutionDir)TextBox\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(SolutionDir)DialogLoader/;$(SolutionDir)ParticleEmitter\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DialogLoader/;$(SolutionDir)ParticleEmitter\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)Factories\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)TiledLoading\;$(SolutionDir)DX2DEngine\;$(SolutionDir)LevelProject\;$(SolutionDir)GUI\;$(SolutionDir)TextBox\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
