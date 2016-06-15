@@ -46,6 +46,7 @@ public:
 	void __forceinline SetSelected(bool aIsSelected)
 	{
 		myIsSelected = aIsSelected;
+		SuggestCostAP(0);
 	};
 
 	virtual void AfterTurn() override;

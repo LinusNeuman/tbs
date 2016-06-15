@@ -25,6 +25,7 @@ public:
 	~PlayerController();
 
 	void Init();
+	void Draw() const;
 
 	void AddPlayer(Player * aPlayer);
 	void SelectPlayer();
@@ -88,6 +89,7 @@ private:
 
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
+	bool myClickedOnBB;
 
 	LayerInputReciever myMouseInput;
 
@@ -96,10 +98,12 @@ private:
 
 	SoundEffect* mySelectPlayerSound;
 	SoundEffect* myAlertSound;
+	SoundEffect* myCandySound;
 
 	ScoreCounter myScoreCounter;
 
 	MouseController myMouseController;
+
 };
 
 inline Player* PlayerController::GetSelectedPlayer()

@@ -49,6 +49,9 @@ PlayerController::PlayerController()
 
 	myAlertSound = new SoundEffect();
 	myAlertSound->Init("Sounds/SFX/alert.ogg");
+
+	myCandySound = new SoundEffect();
+	myCandySound->Init("Sounds/SFX/crunch.ogg");
 }
 
 PlayerController::~PlayerController()
@@ -89,8 +92,14 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyNextPath, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
 
 	myMouseController.Init();
+}
+
+void PlayerController::Draw() const
+{
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::AddPlayer(Player* aPlayer)
@@ -121,6 +130,7 @@ void PlayerController::SelectPlayer()
 
 		mySelectPlayerSound->Play(0.2f);
 
+		SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
 		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 		SendPostMessage(dijkstraMessage);
 	}
@@ -217,7 +227,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 		enumMouseState currentState = GetCurrentMouseState();
 
-		myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+		myMouseController.SetMouseState(currentState);
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
 		{
@@ -255,6 +265,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		case enumMouseState::enumLength:
 			DL_ASSERT(false, "Error in handling playercontroller mouse input");
 		case enumMouseState::eHeldOnVoid:
+		case enumMouseState::eHeldOnPlayer:
 			break;
 		}
 	}
@@ -272,6 +283,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
+	myClickedOnBB = false;
 
 	PointCollider tempCollider;
 
@@ -285,6 +297,14 @@ enumMouseState PlayerController::GetCurrentMouseState()
 		{
 			return enumMouseState::eClickedOnPlayer;
 		}
+		else
+		{
+			return enumMouseState::eHeldOnPlayer;
+		}
+	}
+	else if (myClickedOnBB == true)
+	{
+		return enumMouseState::eHeldOnVoid;
 	}
 	else if (myClickedOnEnemy == true)
 	{
@@ -320,7 +340,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
 	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
-
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -386,6 +406,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
+	myCandySound->Play(0.3f);
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
@@ -501,7 +522,11 @@ bool PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 
 bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
+	if (aMessage.myType == RecieverTypes::eClickedOnBB)
+	{
+		myClickedOnBB = true;
+	}
+	else if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
 	{
 		myClickedOnEnemy = true;
 		mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());
