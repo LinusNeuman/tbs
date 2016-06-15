@@ -88,3 +88,11 @@ void RenderCommand::Render() const
 		myText->Render();
 	}
 }
+
+void RenderCommand::Delete()
+{
+	if (myText != nullptr)
+	{
+		SAFE_DELETE(myText);
+	}
+}
