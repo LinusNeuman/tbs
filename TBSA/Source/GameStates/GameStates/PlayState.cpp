@@ -26,6 +26,7 @@ PlayState::PlayState()
 
 	myEmitter.LoadEmitterSettings("snow");
 
+	scoreScreenDone = true;
 	myShouldPause = false;
 	myGameOver = false;
 	myShowPostLevelScreen = false;
@@ -81,6 +82,12 @@ void PlayState::Init(const std::string& aLevelPath)
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
 	//(aStateStack);
+
+	if (scoreScreenDone == true)
+	{
+		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
+		scoreScreenDone = false;
+	}
 
 	myGUIManager.Update(aTimeDelta);
 
@@ -143,13 +150,13 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	
 	if (myLevel->GetTiledData()->myIsLoaded == false)
 	{
-		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
-
 		if (myShowPostLevelScreen == true)
 		{
 			myShowPostLevelScreen = false;
 			aStateStack.AddSubState(new PostLevelState(10000 , 23, 4));
 		}
+
+		scoreScreenDone = true;
 	}
 
 	return eStackReturnValue::eStay;
