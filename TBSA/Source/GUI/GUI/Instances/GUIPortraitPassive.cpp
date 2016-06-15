@@ -9,8 +9,6 @@ GUIPortraitPassive::GUIPortraitPassive() :
 	myCharacter1(nullptr)
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eSelectedPlayerHasChanged, *this);
-	//SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
-	//SingletonPostMaster::AddReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 }
 
 GUIPortraitPassive::~GUIPortraitPassive()
@@ -153,13 +151,3 @@ bool GUIPortraitPassive::RecieveMessage(const PlayerIDMessage& aMessage)
 	}
 	return true;
 }
-
-//bool GUIPortraitPassive::RecieveMessage(const GUIMessage & aMessage)
-//{
-//	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer || aMessage.myType == RecieverTypes::eClickedOnPlayer)
-//	{
-//		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
-//		RecieveMessage(*tempmessageerer);
-//	}
-//	return true;
-//}
