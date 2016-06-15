@@ -83,7 +83,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 				
 				if (spriteObject.count("active") > 0)
 				{
-					StaticSprite * sprite = new StaticSprite();
+					std::shared_ptr<StaticSprite> sprite = std::make_shared<StaticSprite>();
 					
 					sprite->Init(std::string("Sprites/") + JsonHelp::GetString(spriteObject["active"]));
 					sprite->SetLayer(enumRenderLayer::eGameObjects);
@@ -93,7 +93,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 				if (spriteObject.count("not_active") > 0)
 				{
-					StaticSprite * sprite = new StaticSprite();
+					std::shared_ptr<StaticSprite> sprite = std::make_shared<StaticSprite>();
 
 					sprite->Init(std::string("Sprites/") + JsonHelp::GetString(spriteObject["not_active"]));
 					sprite->SetLayer(enumRenderLayer::eGameObjects);
