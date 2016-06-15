@@ -20,11 +20,24 @@ void GUIActionPeek::WhenClicked()
 
 	GUIAction::WhenClicked();
 
-	if (myCanDo == true)
+	if (mySelectedPlayer == 0)
 	{
-		if (myIsLocked == false)
+		if (myCanDoP1 == true)
 		{
-			SendPostMessage(BaseMessage(RecieverTypes::ePlayerIsPeeking));
+			if (myIsLocked == false)
+			{
+				SendPostMessage(BaseMessage(RecieverTypes::ePlayerIsPeeking));
+			}
+		}
+	}
+	if (mySelectedPlayer == 1)
+	{
+		if (myCanDoP2 == true)
+		{
+			if (myIsLocked == false)
+			{
+				SendPostMessage(BaseMessage(RecieverTypes::ePlayerIsPeeking));
+			}
 		}
 	}
 }
@@ -36,13 +49,25 @@ void GUIActionPeek::WhenHovered()
 
 bool GUIActionPeek::RecieveMessage(const PlayerPositionChangedMessage& aMessage)
 {
-	myCanDo = false;
+	if (aMessage.myPlayerID == 0)
+	{
+		myCanDoP1 = false;
+		return true;
+	}
+	
+	myCanDoP2 = false;
 	return true;
 }
 
 bool GUIActionPeek::RecieveMessage(const PlayerCanPeekMessage& aMessage)
 {
-	myCanDo = true;
+	if (aMessage.myPlayerID == 0)
+	{
+		myCanDoP1 = true;
+		return true;
+	}
+
+	myCanDoP2 = true;
 	return true;
 }
 

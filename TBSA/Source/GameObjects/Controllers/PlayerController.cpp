@@ -128,7 +128,7 @@ void PlayerController::SelectPlayer()
 
 		SetCameraPositionToPlayer(mySelectedPlayerIndex);
 
-		mySelectPlayerSound->Play(0.2f);
+		mySelectPlayerSound->Play(0.3f);
 
 		SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
 		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
@@ -410,7 +410,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
-	myCandySound->Play(0.3f);
+	myCandySound->Play(0.5f);
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
@@ -500,9 +500,9 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		PlayerSeen(CommonUtilities::Point2i(aMessage.myPlayer.GetPosition()), myFloor->GetTile(CU::Vector2ui(USHORTCAST(aMessage.myPlayer.GetPosition().x), USHORTCAST(aMessage.myPlayer.GetPosition().y))).GetSeenEnemy());
 	}
 
-	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
+	if (myFloor->GetTile(CommonUtilities::Vector2ui(aMessage.myPlayer.GetPreviousPosition())).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
-		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPosition())));
+		SendPostMessage(PositionMessage(RecieverTypes::eLeaveObjective, CommonUtilities::Vector2i(aMessage.myPlayer.GetPreviousPosition())));
 		//myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(0);
 	}
 
@@ -558,7 +558,7 @@ void PlayerController::PlayerSeen(CommonUtilities::Point2i aPlayerPosition, cons
 	if (CU::Vector2i(aEnemy->GetPosition()) != aPlayerPosition)
 	{
 		SendPostMessage(PlayerSeenMessage(RecieverTypes::ePlayEvents, aPlayerPosition, *aEnemy));
-		myAlertSound->Play(0.3f);
+		myAlertSound->Play(0.5f);
 	}
 }
 

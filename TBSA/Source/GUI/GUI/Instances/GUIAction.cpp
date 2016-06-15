@@ -9,7 +9,9 @@ GUIAction::GUIAction() :
 	myLocked(nullptr),
 	myUnlockedGlow(nullptr),
 	myIsLocked(false),
-	myCanDo(false)
+	myCanDoP1(false),
+	myCanDoP2(false),
+	mySelectedPlayer(0)
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eCurrentPlayerAP, *this);
 }
@@ -96,13 +98,28 @@ void GUIAction::FadeDownGlow(const CommonUtilities::Time aTime)
 
 void GUIAction::Update(const CU::Time& aDelta)
 {
-	if (myCanDo == true)
+	if (mySelectedPlayer == 0)
 	{
-		GUIButton::Update(aDelta);
-
-		if (myIsLocked == false)
+		if (myCanDoP1 == true)
 		{
-			AnimateGlow(aDelta);
+			GUIButton::Update(aDelta);
+
+			if (myIsLocked == false)
+			{
+				AnimateGlow(aDelta);
+			}
+		}
+	}
+	else if (mySelectedPlayer == 1)
+	{
+		if (myCanDoP2 == true)
+		{
+			GUIButton::Update(aDelta);
+
+			if (myIsLocked == false)
+			{
+				AnimateGlow(aDelta);
+			}
 		}
 	}
 }
@@ -111,38 +128,81 @@ void GUIAction::WhenClicked()
 {
 	// do stuff
 
-	if (myCanDo == true)
+	if (mySelectedPlayer == 0)
 	{
-		GUIButton::WhenClicked();
+		if (myCanDoP1 == true)
+		{
+			GUIButton::WhenClicked();
+		}
+	}
+	else if (mySelectedPlayer == 1)
+	{
+		if (myCanDoP2 == true)
+		{
+			GUIButton::WhenClicked();
+		}
 	}
 }
 
 void GUIAction::WhenHovered()
 {
-	if (myCanDo == true)
+	if (mySelectedPlayer == 0)
 	{
-		GUIButton::WhenHovered();
+		if (myCanDoP1 == true)
+		{
+			GUIButton::WhenHovered();
+		}
+	}
+	else if (mySelectedPlayer == 1)
+	{
+		if (myCanDoP2 == true)
+		{
+			GUIButton::WhenHovered();
+		}
 	}
 }
 
 void GUIAction::Render()
 {
-	if (myCanDo == true)
+	if (mySelectedPlayer == 0)
 	{
-		if (myIsLocked == false)
+		if (myCanDoP1 == true)
 		{
-			GUIButton::Render();
+			if (myIsLocked == false)
+			{
+				GUIButton::Render();
 
-			myUnlockedGlow->Draw(myPosition);
+				myUnlockedGlow->Draw(myPosition);
+			}
+			else
+			{
+				myLocked->Draw(myPosition);
+			}
 		}
 		else
 		{
 			myLocked->Draw(myPosition);
 		}
 	}
-	else
+	else if (mySelectedPlayer == 1)
 	{
-		myLocked->Draw(myPosition);
+		if (myCanDoP2 == true)
+		{
+			if (myIsLocked == false)
+			{
+				GUIButton::Render();
+
+				myUnlockedGlow->Draw(myPosition);
+			}
+			else
+			{
+				myLocked->Draw(myPosition);
+			}
+		}
+		else
+		{
+			myLocked->Draw(myPosition);
+		}
 	}
 }
 
@@ -151,6 +211,7 @@ bool GUIAction::RecieveMessage(const CurrentPlayerAP& aMessage)
 	if (aMessage.myType == RecieverTypes::eCurrentPlayerAP)
 	{
 		myPlayerAP = aMessage.myCurrentPlayerAP;
+		mySelectedPlayer = aMessage.myCurrentPlayerID;
 		if (aMessage.myCurrentPlayerID == 0)
 		{
 			if (myPlayerAP < myCostP1)
