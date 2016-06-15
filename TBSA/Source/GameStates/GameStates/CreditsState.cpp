@@ -26,6 +26,8 @@ void CreditsState::Init(bool aShouldQuit)
 
 	RenderConverter::SetShouldCull(false);
 
+	RenderConverter::SetShouldCull(false);
+
 	LoadGUI("Credits");
 }
 

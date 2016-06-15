@@ -180,10 +180,12 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 		return;
 	}
 
-	if (IsometricInput::GetKeyPressed(DIK_F3))
+
+	//Debug Tiles
+	/*if (IsometricInput::GetKeyPressed(DIK_F3))
 	{
 		myFloor.CallFunctionOnAllTiles(std::mem_fn(&IsometricTile::ToggleDebugMode));
-	}
+	}*/
 
 	//myPlayer->Update(aTimeDelta);
 	//myPlayer2->Update(aTimeDelta);

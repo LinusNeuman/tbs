@@ -31,10 +31,15 @@ void LevelSelectState::Init()
 	myLevel = 0;
 
 	LoadGUI("LevelSelect");
+
+	myMouseController.Init();
 }
 
 eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
+	
+	myMouseController.SetMouseState(enumMouseState::eClickedOnEmptyTile);
+
 	myGUIManager.Update(aTimeDelta);
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldGoBack == true)
@@ -73,6 +78,8 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 
 void LevelSelectState::Draw() const
 {
+
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 	myBackgroundSprite->Draw(CU::Vector2f(0, 0));
 
 	myGUIManager.Render();
