@@ -13,12 +13,12 @@ GUIObjectiveDialog::GUIObjectiveDialog(const CommonUtilities::Vector2f aPosition
 	myTextBackground->SetLayer(enumRenderLayer::eGUI);
 	myPosition = aPosition;
 
-	SingletonPostMaster::AddReciever(RecieverTypes::eDialogTextMessage, *this);
+	//SingletonPostMaster::AddReciever(RecieverTypes::eDialogTextMessage, *this);
 }
 
 GUIObjectiveDialog::~GUIObjectiveDialog()
 {
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eDialogTextMessage, *this);
+	//SingletonPostMaster::RemoveReciever(RecieverTypes::eDialogTextMessage, *this);
 }
 
 void
@@ -30,11 +30,8 @@ GUIObjectiveDialog::SetLines(const unsigned int aLines)
 void
 GUIObjectiveDialog::Render()
 {
-	if (myIsEnabled == true)
-	{
-		myTextBackground->Draw(myPosition);
-		myTextBox.Render();
-	}
+	myTextBackground->Draw(myPosition);
+	myTextBox.Render();
 }
 
 void
@@ -50,7 +47,6 @@ GUIObjectiveDialog::Update(const CU::Time& aTimeDelta)
 
 	if (myIsEnabled == true)
 	{
-		SendPostMessage(GUIMessage(RecieverTypes::eDialogEnabled));
 		if (SingletonIsometricInputWrapper::GetMouseButtonPressed(CommonUtilities::enumMouseButtons::eLeft) == true)
 		{
 			if (myTexts.size() == 0)
@@ -64,10 +60,6 @@ GUIObjectiveDialog::Update(const CU::Time& aTimeDelta)
 				myTexts.pop();
 			}
 		}
-	}
-	else
-	{
-		SendPostMessage(GUIMessage(RecieverTypes::eDialogDisabled));
 	}
 
 	myTextBox.Update();
