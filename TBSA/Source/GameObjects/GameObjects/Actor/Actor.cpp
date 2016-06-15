@@ -68,6 +68,12 @@ Actor::~Actor()
 		myFightSounds[i] = nullptr;
 		delete myFightSounds[i];
 	}
+
+	myBonus = nullptr;
+	delete myBonus;
+
+	mySprite = nullptr;
+	delete mySprite;
 }
 
 void Actor::Init(const ActorData &aActorData)

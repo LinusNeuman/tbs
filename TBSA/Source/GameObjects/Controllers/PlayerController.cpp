@@ -16,6 +16,7 @@
 #include <Message/PlayerPositionChangedMessage.h>
 #include <Message/PlayerAddedMessage.h>
 #include <Message/PlayerSeenMessage.h>
+#include <Message\DialogTextMessage.h>
 #include <Rend/RenderConverter.h>
 #include <Message/EnemyObjectMessage.h>
 #include <GameObjects/Actor/Enemy.h>
@@ -57,6 +58,10 @@ PlayerController::PlayerController()
 
 PlayerController::~PlayerController()
 {
+	SAFE_DELETE(mySelectPlayerSound);
+	SAFE_DELETE(myAlertSound);
+	SAFE_DELETE(myCandySound);
+
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eChangeSelectedPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerAdded, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyPositionChanged, *this);
@@ -422,6 +427,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
 	myCandySound->Play(0.5f);
+	SendPostMessage(TextMessage(RecieverTypes::eObjctive , "CandyMessage"));
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
