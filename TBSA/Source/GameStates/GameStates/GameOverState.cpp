@@ -9,7 +9,7 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 	myShouldExit = false;
 
 	myStatsBox.SetSize({ 1000.f, 500.f });
-	myStatsBox.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.5f });
+	myStatsBox.SetPosition({ 1920.f / 2.f - 80, 1080.f / 2.f - 340});
 	myStatsBox.SetLines(9);
 
 	std::string str = std::to_string(static_cast<int>(aPoints)) + " X CANDYBAG";
@@ -19,13 +19,16 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 	}
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
+	myStatsBox.AddText("");
 
 	str = std::to_string(static_cast<int>(aEnemies)) + " X ENEMIES";
 	myStatsBox.AddText(str);
 	myStatsBox.AddText("");
+	myStatsBox.AddText("");
 
 	str = std::to_string(static_cast<int>(aTurns)) + " X TURNS";
 	myStatsBox.AddText(str);
+	myStatsBox.AddText("");
 	myStatsBox.AddText("");
 
 	myLetThroughRender = true;
