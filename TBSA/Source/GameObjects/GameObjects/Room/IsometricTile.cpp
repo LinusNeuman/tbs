@@ -116,7 +116,7 @@ void IsometricTile::Draw() const
 
 	if (myObjectiveSprites[myCurrentObjectiveSprite] != nullptr)
 	{
-		myObjectiveSprites[myCurrentObjectiveSprite]->Draw(myPosition);
+		myObjectiveSprites[myCurrentObjectiveSprite]->Draw(myPosition+ CommonUtilities::Point2f(0,1));
 	}
 
 	/*if (CheckHasCandy() == true)
@@ -189,7 +189,7 @@ void IsometricTile::SetDiscovered(bool aIsDiscovered)
 	myIsDiscovered = aIsDiscovered;
 }
 
-void IsometricTile::SetInEnemyFoV(bool aIsInFoV, Enemy* aEnemy)
+void IsometricTile::SetInEnemyFoV(bool aIsInFoV, const Enemy* aEnemy)
 {
 	myIsInEnemyFoV = aIsInFoV;
 	myEnemy = aEnemy;
@@ -210,7 +210,7 @@ bool IsometricTile::GetInEnemyFov() const
 	return myIsInEnemyFoV;
 }
 
-Enemy* IsometricTile::GetSeenEnemy() const
+const Enemy* IsometricTile::GetSeenEnemy() const
 {
 	return myEnemy;
 }

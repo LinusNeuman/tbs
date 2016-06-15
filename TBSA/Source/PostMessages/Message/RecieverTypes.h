@@ -62,6 +62,7 @@ enum class RecieverTypes
 	eRestartLevel,
 	eCurrentPlayerAP,
 	ePlayerIsPeeking,
+	eEnemyNextPath,
 	eClickedOnBB,
 	eSelectedPlayerHasChanged,
 	eLevelEndScoreMessage,

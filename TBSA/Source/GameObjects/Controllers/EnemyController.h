@@ -25,6 +25,7 @@ public:
 	virtual bool RecieveMessage(const FightWithEnemyMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyPositionChangedMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyNextPathMessage & aMessage) override;
 	void PostTurn();
 private:
 	void RayTrace(const CU::Vector2f &aPosition, const CU::Vector2f &anotherPosition, const eDirection aDirection, Enemy *aEnemy);

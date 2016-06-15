@@ -53,7 +53,7 @@ void GUIFactory::Load()
 
 		if (currentStateName == "InGame")
 		{
-			GUIDialog* dialogTextBox = new GUIDialog({ 15.f/*808.f*/, 15.f/*832.f*/ }, { 381.f, 214.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Char);
+			GUIDialog* dialogTextBox = new GUIDialog({ 15.f/*808.f*/, 15.f/*832.f*/ }, { 381.f, 214.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
 			dialogTextBox->SetLines(7);
 			myGUIElements.Add(dialogTextBox);
 

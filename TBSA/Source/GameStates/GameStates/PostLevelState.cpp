@@ -3,27 +3,31 @@
 #include <Rend\RenderConverter.h>
 
 PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsigned int aEnemies):
-	myEnemiesText({ 0.f, 0.f }, {500.f, 100.f}, "Text/calibril.ttf_sdf"),
-	myPointsText({ 0.f, 100.f }, { 500.f, 100.f }, "Text/calibril.ttf_sdf"),
-	myTurnsText({ 0.f, 200.f }, { 500.f, 100.f }, "Text/calibril.ttf_sdf"),
-	myInfoText({ 0.f, 300.f }, { 500.f, 100.f }, "Text/calibril.ttf_sdf")
+	myText({ 0.f, 0.f }, {1000.f, 500.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Char)
 {
-	std::string str("Points: ");
+	myBg = new StaticSprite();
+	myBg->Init("Sprites/GUI/PostLevel/bg.dds", false, { 0, 0, 679, 564 }, { 0, 0 });
+	myBg->SetLayer(enumRenderLayer::eGUI);
+
+	myText.SetSize({ 1000.f, 500.f });
+	myText.SetPosition({ 1920.f / 2.f - 679.f / 2.f, 0.f });
+	myText.SetLines(5);
+
+	std::string str = "Candy collected: ";
 	str.append(std::to_string(aPoints));
-	myPointsText.AddText(str);
+	myText.AddText(str);
+	myText.AddText("");
 
-	str = "Enemies: ";
+	str = "Enemies disabled: ";
 	str.append(std::to_string(aEnemies));
-	myEnemiesText.AddText(str);
+	myText.AddText(str);
+	myText.AddText("");
 
-	str = "Turns: ";
+	str = "Turned used: ";
 	str.append(std::to_string(aTurns));
-	myTurnsText.AddText(str);
+	myText.AddText(str);
 
-	myInfoText.AddText("Press 'Enter' to continue!");
-
-	myLetThroughRender = false;
-	myRender = true;
+	myLetThroughRender = true;
 }
 
 PostLevelState::~PostLevelState()
@@ -33,15 +37,10 @@ PostLevelState::~PostLevelState()
 eStackReturnValue
 PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
-	myEnemiesText.Update();
-	myPointsText.Update();
-	myTurnsText.Update();
-	myInfoText.Update();
+	myText.Update();
 
-	if (IsometricInput::GetKeyDown(DIK_RETURN) == true)
+	if (IsometricInput::GetAnyMouseButtonPressed() == true || IsometricInput::GetAnyKeyPressed() == true)
 	{
-		myRender = false;
-		RenderConverter::ClearCommands();
 		return eStackReturnValue::eDeleteSubstate;
 	}
 
@@ -51,11 +50,6 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 void
 PostLevelState::Draw() const
 {
-	if (myRender == true)
-	{
-		myEnemiesText.Render();
-		myTurnsText.Render();
-		myPointsText.Render();
-		myInfoText.Render();
-	}
+	myBg->Draw({ 1920.f / 2.f - 679.f / 2.f, 0 });
+	myText.Render();
 }

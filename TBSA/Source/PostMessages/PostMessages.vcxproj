@@ -217,6 +217,7 @@
     <ClInclude Include="Message\CurrentPlayerAP.h" />
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />
     <ClInclude Include="Message\ClearLogMessage.h" />
+    <ClInclude Include="Message\EnemyNextPathMessage.h" />
     <ClInclude Include="Message\FlagGoalReachedMessage.h" />
     <ClInclude Include="Message\LevelChangeMassage.h" />
     <ClInclude Include="Message\DialogTextMessage.h" />

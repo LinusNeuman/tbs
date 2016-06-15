@@ -37,6 +37,8 @@ private:
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
 	Song* myAmbiance;
+	Song* myMusic;
+	bool scoreScreenDone;
 	bool myShouldExit;
 	bool myGameOver;
 	bool myShouldPause;

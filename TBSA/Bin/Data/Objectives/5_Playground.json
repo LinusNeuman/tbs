@@ -1,5 +1,14 @@
 {
 	"stages":[
+			[
+			{
+				"type" : "take_objective",
+				"target" : "Child",
+				"image" : {
+					"active" : "Objectives/Pram.dds"
+				}
+			}
+		],
 		[
 			{
 				"type" : "hold_objective",
@@ -12,5 +21,5 @@
 		]
 	],
 	
-	"nextLevel": "1_Treehouse.json"
+	"nextLevel": "6_IcyFortress.json"
 }

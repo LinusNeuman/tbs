@@ -10,6 +10,7 @@
 #include <Message/DijkstraMessage.h>
 #include <Message/ColliderMessage.h>
 #include <Message/EnemyPositionChangedMessage.h>
+#include <Message/EnemyNextPathMessage.h>
 
 Actor::Actor()
 {
@@ -168,6 +169,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 			
 
 			UpdatePath();
+			
 		}
 		else if (tempState == eActorState::eFighting)
 		{
@@ -293,7 +295,8 @@ void Actor::UpdatePath()
 			
 			++myCurrentWaypoint;
 			ReachedWaypoint();
-
+			
+			
 			if (myCurrentWaypoint == myPath.Size())
 			{
 				AlmostReachTarget();

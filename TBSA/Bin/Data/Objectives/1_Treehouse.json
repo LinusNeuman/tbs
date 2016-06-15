@@ -5,7 +5,7 @@
 				"type" : "take_objective",
 				"target" : "Pram",
 				"image" : {
-					"active" : "Objectives/Pram.png"
+					"active" : "Objectives/Pram.dds"
 				}
 			}
 		],

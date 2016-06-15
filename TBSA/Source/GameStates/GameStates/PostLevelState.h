@@ -12,10 +12,6 @@ public:
 	eStackReturnValue Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack) override;
 
 private:
-	bool myRender;
-	TextBox myPointsText;
-	TextBox myTurnsText;
-	TextBox myEnemiesText;
-	TextBox myInfoText;
+	TextBox myText;
+	StaticSprite* myBg;
 };
-

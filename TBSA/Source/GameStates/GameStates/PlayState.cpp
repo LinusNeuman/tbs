@@ -26,12 +26,16 @@ PlayState::PlayState()
 
 	myEmitter.LoadEmitterSettings("snow");
 
+	scoreScreenDone = true;
 	myShouldPause = false;
 	myGameOver = false;
 	myShowPostLevelScreen = false;
 
 	myAmbiance = new Song();
 	myAmbiance->Init("Sounds/AMB/windy.ogg", true);
+
+	myMusic = new Song();
+	myMusic->Init("Sounds/MUSIC/sneakymusic.ogg", true);
 }
 
 PlayState::~PlayState()
@@ -72,21 +76,26 @@ void PlayState::Init(const std::string& aLevelPath)
 	myEmitter.Activate({0.5f, 0.5f});
 
 	myAmbiance->Play(1.0f);
+	myMusic->Play(0.58f);
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
 	//(aStateStack);
 
+	if (scoreScreenDone == true)
+	{
+		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
+		scoreScreenDone = false;
+	}
+
 	myGUIManager.Update(aTimeDelta);
 
 	static int index = 0;
-	
+
 	//myLevels[myLevelKey]->Update(aTimeDelta);
 	myLevel->Update(aTimeDelta);
 	myEmitter.Update(aTimeDelta);
-
-
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
@@ -119,6 +128,10 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		ChangeLevel("6_IcyFortress.json");
 	}
+	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
+	{
+		SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, "2_Backyard.json"));
+	}
 
 	if (myShouldPause == true)
 	{
@@ -134,16 +147,16 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		newState->Init();
 		aStateStack.AddSubState(newState);
 	}
-
+	
 	if (myLevel->GetTiledData()->myIsLoaded == false)
 	{
-		aStateStack.AddMainState(new LoadState(myLevel->GetTiledData()));
-
 		if (myShowPostLevelScreen == true)
 		{
 			myShowPostLevelScreen = false;
-			aStateStack.AddSubState(new PostLevelState(100000, 23, 4));
+			aStateStack.AddSubState(new PostLevelState(10000 , 23, 4));
 		}
+
+		scoreScreenDone = true;
 	}
 
 	return eStackReturnValue::eStay;
