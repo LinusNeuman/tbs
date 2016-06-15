@@ -2,6 +2,15 @@
 	"stages":[
 		[
 			{
+				"type" : "take_objective",
+				"target" : "Chocolate",
+				"image" : {
+					"active" : "Objectives/Thermos.dds"
+				}
+			}
+		],
+		[
+			{
 				"type" : "hold_objective",
 				"target" : "endzone1"
 			},
@@ -12,5 +21,6 @@
 		]
 	],
 	
+
 	"nextLevel": "3_Lakeside.json"
 }

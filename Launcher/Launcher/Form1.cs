@@ -57,7 +57,7 @@ namespace Launcher
             }
 
             checkBox1.Checked = mySettings.myIsFullscreen;
-            resolutionBox.SelectedIndex = resolutionBox.Items.IndexOf(mySettings.myResolutionX.ToString() + "x" + mySettings.myResolutionY.ToString());
+            resolutionBox.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
