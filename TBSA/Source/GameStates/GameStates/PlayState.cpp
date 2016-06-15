@@ -32,6 +32,9 @@ PlayState::PlayState()
 
 	myAmbiance = new Song();
 	myAmbiance->Init("Sounds/AMB/windy.ogg", true);
+
+	myMusic = new Song();
+	myMusic->Init("Sounds/MUSIC/sneakymusic.ogg", true);
 }
 
 PlayState::~PlayState()
@@ -71,7 +74,8 @@ void PlayState::Init(const std::string& aLevelPath)
 
 	myEmitter.Activate({0.5f, 0.5f});
 
-	myAmbiance->Play(1.0f);
+	myAmbiance->Play(0.8f);
+	myMusic->Play(0.58f);
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
