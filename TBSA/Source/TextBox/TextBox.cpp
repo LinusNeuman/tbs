@@ -6,11 +6,13 @@
 #include <tga2d\text\text.h>
 #include <CU\Utility\DataHolder\SingletonDataHolder.h>
 #include <Rend\RenderLayerEnum.h>
+#include "CU\Utility\CommonCasts.h"
 
 #ifdef DEBUG_TEXTBOX
 #include <tga2d\engine.h>
 #include <tga2d\drawers\debug_drawer.h>
 #endif
+
 
 TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::string aFontPath, const eLinewrappingMode aMode)
 {
@@ -18,8 +20,9 @@ TextBox::TextBox(const Vec2f aPosition, const Vec2f aDimensions, const std::stri
 	myCurrentLine = 0;
 	myFontPath = aFontPath;
 	myMode = aMode;
-	SetSize({ aDimensions.x / SingletonDataHolder::GetTargetResolution().x, aDimensions.y / SingletonDataHolder::GetTargetResolution().y});
-	SetPosition({aPosition.x / SingletonDataHolder::GetTargetResolution().x, aPosition.y / SingletonDataHolder::GetTargetResolution().y});
+
+	SetSize({ aDimensions.x , aDimensions.y });
+	SetPosition({aPosition.x , aPosition.y });
 	Update();
 }
 
@@ -137,11 +140,13 @@ TextBox::SetPosition(const Vec2f aPosition)
 void
 TextBox::SetSize(const Vec2f aSize)
 {
-	myDimensions.x = aSize.x / SingletonDataHolder::GetTargetResolution().x;
-	myDimensions.y = aSize.y / SingletonDataHolder::GetTargetResolution().y;
+	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
+
+	myDimensions.x = aSize.x / SingletonDataHolder::GetTargetResolution().x * renderScale;
+	myDimensions.y = aSize.y / SingletonDataHolder::GetTargetResolution().y * renderScale;
 
 	myNumberOfLinesDisplayed = 0;
-	float textHeight = TEXT_HEIGHT / SingletonDataHolder::GetTargetResolutionf().y;
+	float textHeight = TEXT_HEIGHT / SingletonDataHolder::GetTargetResolutionf().y * renderScale;
 
 	for (float i = 0.f; i < aSize.y && myNumberOfLinesDisplayed < MAX_TEXT_ROWS; i += textHeight)
 	{
@@ -169,9 +174,11 @@ TextBox::Render() const
 	{
 		TextRenderData data;
 
+		float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
+
 		data.myText = myRenderList[static_cast<const unsigned short>(i)]->myText;
-		data.myPos.x = myRenderList[static_cast<const unsigned short>(i)]->myPosition.x;
-		data.myPos.y = myRenderList[static_cast<const unsigned short>(i)]->myPosition.y;
+		data.myPos.x = myRenderList[static_cast<const unsigned short>(i)]->myPosition.x * renderScale;
+		data.myPos.y = myRenderList[static_cast<const unsigned short>(i)]->myPosition.y * renderScale;
 
 		RenderConverter::AddRenderCommand(RenderCommand(5000.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 		//myRenderList[static_cast<const unsigned short>(i)]->Render();
