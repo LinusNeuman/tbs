@@ -10,7 +10,7 @@ PostLevelState::PostLevelState(int aPoints, int aTurns, int aEnemies):
 	myBg->SetLayer(enumRenderLayer::eGUI);
 
 	myText.SetSize({ 1000.f, 500.f });
-	myText.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.f });
+	myText.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.5f });
 	myText.SetLines(9);
 
 	std::string str = std::to_string(aPoints) + " X CANDYBAG";
@@ -55,6 +55,6 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 void
 PostLevelState::Draw() const
 {
-	myBg->Draw({ 1920.f / 2.f - 679.f / 2.f, 0 });
+	myBg->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
 	myText.Render();
 }
