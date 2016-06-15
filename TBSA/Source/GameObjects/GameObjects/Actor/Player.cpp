@@ -317,7 +317,7 @@ void Player::ReachedTarget()
 
 void Player::ReachedWaypoint()
 {
-	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes:: ePlayerPositionChanged, CU::Vector2ui(myPosition), *this));
+	SendPostMessage(PlayerPositionChangedMessage(RecieverTypes:: ePlayerPositionChanged, CU::Vector2ui(myPosition), GetIndex(), *this));
 }
 
 void Player::NextToObjective()

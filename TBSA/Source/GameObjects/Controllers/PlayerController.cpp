@@ -444,7 +444,7 @@ bool PlayerController::RecieveMessage(const PlayerObjectMessage & aMessage)
 		CU::Vector2ui peekPosition;
 		if (CheckIfCloseToDoor(CU::Vector2ui(mySelectedPlayer->GetTargetPosition()), CU::Vector2ui(mySelectedPlayer->GetPreviousPosition()), peekPosition) == true)
 		{
-			SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, *mySelectedPlayer));
+			SendPostMessage(PlayerCanPeekMessage(RecieverTypes::ePlayerCanPeek, peekPosition, mySelectedPlayer->GetIndex(), *mySelectedPlayer));
 			DL_PRINT("Can Peek");
 		}
 	}
