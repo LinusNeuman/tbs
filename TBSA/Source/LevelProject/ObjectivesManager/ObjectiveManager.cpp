@@ -13,9 +13,6 @@
 
 ObjectiveManager::ObjectiveManager()
 {
-#ifdef _DEBUG
-	isConstructed = true;
-#endif
 	myStages.Init(1);
 	myCurrentStage = 0;
 	SingletonPostMaster::AddReciever(RecieverTypes::eObjctive, *this);
@@ -23,6 +20,7 @@ ObjectiveManager::ObjectiveManager()
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDied, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eDialogEnabled, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eDialogDisabled, *this);
+	myStageEndDialogs.Init(1);
 }
 
 ObjectiveManager::~ObjectiveManager()
@@ -38,9 +36,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 	dialogSent = false;
 	dialogDone = false;
 	levelDone = false;
-	myLevel = aPath;
-
-	myLevel = myLevel.substr(16);
+	myLevel = aPath;	myLevel = myLevel.substr(16);
 	myLevel = myLevel.substr(0, myLevel.length() - 5);
 
 	myStages.RemoveAll();
@@ -56,6 +52,7 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 		picojson::array objectives = JsonHelp::GetArray(stages[i]);
 		Stage stage;
 
+		myStageEndDialogs.Add("_empty_");
 		for (size_t j = 0; j < objectives.size(); j++)
 		{
 			picojson::object objectiveObject = JsonHelp::GetPicoJsonObject(objectives[j]);
@@ -63,6 +60,11 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 			objective.myTarget = JsonHelp::GetString(objectiveObject["target"]);
 			objective.myIsDone = false;
+
+			if (objectiveObject.count("stageEndDialog") > 0)
+			{
+				myStageEndDialogs[myStageEndDialogs.Size() - 1] = JsonHelp::GetString(objectiveObject["stageEndDialog"]);
+			}
 
 			const std::string typeString = JsonHelp::GetString(objectiveObject["type"]);
 
@@ -121,11 +123,12 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 void ObjectiveManager::Update()
 {
-#ifdef _DEBUG
-	DL_ASSERT(isConstructed, "unconstructed object");
-#endif
 	if (myStages[myCurrentStage].size() < 1 && levelDone == false)
 	{
+		if (myStageEndDialogs[myCurrentStage] != "_empty_")
+		{
+			SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[myStageEndDialogs[myCurrentStage]]));
+		}
 		completedObjectives.clear();
 		++myCurrentStage;
 		if (myCurrentStage >= myStages.Size())
@@ -179,9 +182,19 @@ const LevelObjective& ObjectiveManager::GetObjective(const std::string &aObjecti
 	return LevelObjective();
 }
 
+Stage ObjectiveManager::GetCurrentStage()
+{
+	return myStages[myCurrentStage];
+}
+
 bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 {
 	if (aMessage.myText == "CandyMessage")
+	{
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
+	}
+
+	if (myDialogs.count(aMessage.myText))
 	{
 		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
 	}
@@ -207,10 +220,7 @@ bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 		myStages[myCurrentStage].erase(aMessage.myText);
 	}
 
-	if (myDialogs.count(aMessage.myText))
-	{
-		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
-	}
+	
 
 	return true;
 }

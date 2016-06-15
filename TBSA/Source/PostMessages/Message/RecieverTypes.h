@@ -2,6 +2,7 @@
 
 enum class RecieverOrder
 {
+	VIP,
 	eGUI,
 	eDefault = 100,
 	enumLength
@@ -69,4 +70,7 @@ enum class RecieverTypes
 	eDialogEnabled,
 	eDialogDisabled,
 	enumlength,
+	eOpenOptionsMenu,
+	eCloseOptionsMenu,
+	enumlength
 };

@@ -5,7 +5,6 @@ class ScoreCounter;
 
 #pragma warning  (push)
 #pragma warning(disable : 4512)
-
 struct ScoreCounterMessage :public BaseMessage
 {
 	ScoreCounterMessage(const RecieverTypes aType, const ScoreCounter & aScoreCounter) : BaseMessage(aType), myScoreCounter(aScoreCounter)
@@ -14,5 +13,4 @@ struct ScoreCounterMessage :public BaseMessage
 
 	const ScoreCounter & myScoreCounter;
 };
-
 #pragma warning (pop)

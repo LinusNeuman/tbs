@@ -23,6 +23,7 @@ public:
 	void AddObjective(int, std::string);
 	int CountObjective(const std::string & aObjectiveName) const;
 	const LevelObjective& GetObjective(const std::string& aObjectiveName);
+	Stage GetCurrentStage();
 
 	bool RecieveMessage(const TextMessage& aMessage) override;
 	bool RecieveMessage(const PositionMessage& aMessage) override;
@@ -39,7 +40,6 @@ private:
 	std::string myLevel;
 	std::map<int, std::string> myObjectives;
 	std::map<std::string, std::queue<std::string>> myDialogs;
-#ifdef _DEBUG
-	bool isConstructed;
-#endif
+
+	CommonUtilities::GrowingArray<std::string> myStageEndDialogs;
 };
