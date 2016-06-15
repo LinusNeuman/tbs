@@ -92,6 +92,11 @@ void PlayerController::Init()
 	myMouseController.Init();
 }
 
+void PlayerController::Draw() const
+{
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+}
+
 void PlayerController::AddPlayer(Player* aPlayer)
 {
 	myPlayers.Add(aPlayer);
@@ -216,7 +221,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 
 		enumMouseState currentState = GetCurrentMouseState();
 
-		myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+		myMouseController.SetMouseState(currentState);
 
 		if (currentState != enumMouseState::eHeldOnEnemy && currentState != enumMouseState::eClickedOnEnemy)
 		{
@@ -254,6 +259,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 		case enumMouseState::enumLength:
 			DL_ASSERT(false, "Error in handling playercontroller mouse input");
 		case enumMouseState::eHeldOnVoid:
+		case enumMouseState::eHeldOnPlayer:
 			break;
 		}
 	}
@@ -284,6 +290,10 @@ enumMouseState PlayerController::GetCurrentMouseState()
 		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 		{
 			return enumMouseState::eClickedOnPlayer;
+		}
+		else
+		{
+			return enumMouseState::eHeldOnPlayer;
 		}
 	}
 	else if (myClickedOnBB == true)
@@ -324,7 +334,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
 	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
-
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
