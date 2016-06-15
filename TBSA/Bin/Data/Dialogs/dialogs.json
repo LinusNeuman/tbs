@@ -2,5 +2,7 @@
 	"dialogs":[{"name":"test", "file":"test.json"},
 	{"name":"treehouseDialog1", "file":"treehouseDialog1.json"},
 	{"name":"CandyMessage", "file":"candy.json"},
-	{"name":"Mittens", "file":"treehouseDialog2.json"}]
+	{"name":"Mittens", "file":"treehouseDialog2.json"},
+	{"name":"EnemyFlag", "file":"kioskDialog2.json"},
+	{"name":"Child", "file":"playgroundDialog2.json"}]
 }
