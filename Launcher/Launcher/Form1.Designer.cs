@@ -95,9 +95,9 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             this.button2.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawExitBtn);
+            this.button2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button2_MouseDown);
             this.button2.MouseEnter += new System.EventHandler(this.button2_MouseEnter);
             this.button2.MouseLeave += new System.EventHandler(this.button2_MouseLeave);
-            this.button2.MouseHover += new System.EventHandler(this.button2_MouseHover);
             // 
             // Form1
             // 
@@ -111,9 +111,8 @@
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
-            this.Text = "FIMBULVINTER";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-          
+            this.Text = "FIMBULVINTER";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();
