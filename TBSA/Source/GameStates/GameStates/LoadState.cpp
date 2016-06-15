@@ -47,7 +47,7 @@ eStackReturnValue LoadState::Update(const CU::Time& aDeltaTime, ProxyStateStack&
 
 void LoadState::Draw() const 
 {
-	myBackGround.DrawWithNormalized({ 0.5f, 0.5f });
+	//myBackGround.DrawWithNormalized({ 0.5f, 0.5f });
 
 	if (myDataptr->myIsLoaded == true)
 	{
