@@ -23,7 +23,7 @@ void LevelSelectState::Init()
 
 
 	myBackgroundSprite = new StaticSprite();
-	myBackgroundSprite->Init("Sprites/GUI/LevelSelect/levelSelectBackground.png", false);
+	myBackgroundSprite->Init("Sprites/GUI/LevelSelect/levelSelectBackground.dds", false);
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGameObjects);
 	myLevel = 0;
 
