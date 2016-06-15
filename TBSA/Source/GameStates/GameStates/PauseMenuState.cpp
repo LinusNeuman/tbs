@@ -31,12 +31,16 @@ void PauseMenuState::Init()
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
 	myBackgroundSprite->SetRenderPriority(600.f);
 
+	myMouseController.Init();
+
 	LoadGUI("PauseMenu");
 }
 
 eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateStack& aStateStack)
 {
 	myGUIManager.Update(aTimeDelta);
+
+	myMouseController.SetMouseState(enumMouseState::eHeldOnEmptyTile);
 
 	if (myShouldPop == true || IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
 	{ 
@@ -66,6 +70,8 @@ eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateS
 
 void PauseMenuState::Draw() const
 {
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+
 	myGUIManager.Render();
 
 	myBackgroundSprite->Draw({ SingletonDataHolder::GetTargetResolution().x * 0.5f, SingletonDataHolder::GetTargetResolution().y * 0.5f });

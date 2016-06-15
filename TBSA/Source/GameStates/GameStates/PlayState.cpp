@@ -19,6 +19,7 @@
 #include "Message\ScrollLogUpMessage.h"
 #include <../DialogLoader/DialogManager.h>
 #include <Message/TextMessage.h>
+#include "VictoryState.h"
 
 PlayState::PlayState()
 {
@@ -181,6 +182,13 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		scoreScreenDone = true;
 	}
 
+	if (myFinishedGame == true)
+	{
+		VictoryState *newState = new VictoryState();
+		newState->Init();
+		aStateStack.AddMainState(newState);
+	}
+
 	return eStackReturnValue::eStay;
 }
 
@@ -248,9 +256,12 @@ bool PlayState::RecieveMessage(const ScoreCounterMessage& aMessage)
 	return true;
 }
 
-
 void PlayState::ChangeLevel(const std::string& aFilePath)
 {
+	if (aFilePath == "_end_")
+	{
+		myFinishedGame = true;
+	}
 	if (myLevel != nullptr)
 	{
 		delete(myLevel);

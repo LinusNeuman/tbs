@@ -55,11 +55,15 @@ void GameOverState::Init()
 	myIcons->SetRenderPriority(700.f);
 
 	LoadGUI("GameOver");
+
+	myMouseController.Init();
 }
 
 eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
 	myGUIManager.Update(aDeltaTime);
+
+	myMouseController.SetMouseState(enumMouseState::eClickedOnEmptyTile);
 
 	myStatsBox.Update();
 
@@ -74,6 +78,8 @@ eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateSt
 
 void GameOverState::Draw() const
 {
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+
 	myGUIManager.Render();
 	myBackgroundSprite->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
 	myIcons->DrawWithNormalized(CU::Vector2f(0.48f, 0.54f));

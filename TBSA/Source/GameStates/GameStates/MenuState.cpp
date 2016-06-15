@@ -32,11 +32,16 @@ void MenuState::Init()
 	myBackgroundSprite->Init("Sprites/mainMenu.dds", false, {0.f, 0.f, 1920.f, 1080.f}, { 0.5f, 0.5f });
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGameObjects);
 
+	myMouseController.Init();
+
 	LoadGUI("MainMenu");
 }
 
 eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
+
+	myMouseController.SetMouseState(enumMouseState::eHeldOnVoid);
+
 	myGUIManager.Update(aTimeDelta);
 
 	if (myShouldAdd == true)
@@ -57,7 +62,7 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	if (myShouldGiveCred == true)
 	{
 		CreditsState *newState = new CreditsState();
-		newState->Init();
+		newState->Init(false);
 		aStateStack.AddMainState(newState);
 		myShouldGiveCred = false;
 	}
@@ -67,6 +72,8 @@ eStackReturnValue MenuState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 void MenuState::Draw() const
 {
+	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+	
 	myBackgroundSprite->DrawWithNormalized({0.5f, 0.5f});
 
 	myGUIManager.Render();
