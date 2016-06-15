@@ -22,5 +22,6 @@ private:
 	bool myShouldAdd;
 	bool myShouldPop;
 	bool myShouldPopMain;
+	bool myShouldOptionsMenu;
 };
 

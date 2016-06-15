@@ -1,6 +1,22 @@
 {
   "GameStates": [
     {
+            "myName": "OptionsMenu",
+            "myGUIData": {
+                "guiElements": [
+
+                ]
+            }
+        },
+        {
+            "myName": "Credits",
+            "myGUIData": {
+                "guiElements": [ 
+
+                ]
+            }
+        },
+        {
       "myName": "MainMenu",
       "myGUIData": {
         "guiElements": [
