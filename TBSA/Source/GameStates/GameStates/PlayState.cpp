@@ -121,6 +121,10 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	{
 		ChangeLevel("6_IcyFortress.json");
 	}
+	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
+	{
+		SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, "2_Backyard.json"));
+	}
 
 	if (myShouldPause == true)
 	{
@@ -144,7 +148,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		if (myShowPostLevelScreen == true)
 		{
 			myShowPostLevelScreen = false;
-			aStateStack.AddSubState(new PostLevelState(100000, 23, 4));
+			aStateStack.AddSubState(new PostLevelState(10000 , 23, 4));
 		}
 	}
 

@@ -10,20 +10,22 @@ PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsign
 	myBg->SetLayer(enumRenderLayer::eGUI);
 
 	myText.SetSize({ 1000.f, 500.f });
-	myText.SetPosition({0.f, 0.f});
+	myText.SetPosition({ 1920.f / 2.f - 679.f / 2.f, 0.f });
 	myText.SetLines(5);
 
-	std::string str = (std::to_string(aPoints));
+	std::string str = "Candy collected: ";
+	str.append(std::to_string(aPoints));
 	myText.AddText(str);
-
-	str = (std::to_string(aEnemies));
-	myText.AddText(str);
-
-	str = (std::to_string(aTurns));
-	myText.AddText(str);
-
 	myText.AddText("");
-	myText.AddText("Click to continue!");
+
+	str = "Enemies disabled: ";
+	str.append(std::to_string(aEnemies));
+	myText.AddText(str);
+	myText.AddText("");
+
+	str = "Turned used: ";
+	str.append(std::to_string(aTurns));
+	myText.AddText(str);
 
 	myLetThroughRender = true;
 }
@@ -37,7 +39,7 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
 	myText.Update();
 
-	if (IsometricInput::GetAnyMouseButtonPressed() == true)
+	if (IsometricInput::GetAnyMouseButtonPressed() == true || IsometricInput::GetAnyKeyPressed() == true)
 	{
 		return eStackReturnValue::eDeleteSubstate;
 	}
@@ -48,6 +50,6 @@ PostLevelState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 void
 PostLevelState::Draw() const
 {
-	myBg->Draw({0, 0});
+	myBg->Draw({ 1920.f / 2.f - 679.f / 2.f, 0 });
 	myText.Render();
 }
