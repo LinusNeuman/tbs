@@ -8,5 +8,7 @@
 	{"name":"Child", "file":"playgroundDialog2.json"},
 	{"name":"4_Kiosk", "file":"kioskDialog3.json"},
 	{"name":"5_Playground", "file":"playgroundDialog3.json"},
-	{"name":"Snowballs", "file":"fortressDialog3.json"}]
+	{"name":"Snowballs", "file":"fortressDialog3.json"},
+	{"name":"6_IcyFortress", "file":"fortressDialog4.json"},
+	{"name":"3_Lakeside", "file":"lakesideDialog3.json"}]
 }
