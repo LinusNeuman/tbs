@@ -1,7 +1,8 @@
 #pragma once
 
 #include <StateStack/GameState.h>
-#include "../TextBox/TextBox.h"
+#include "Controllers/MouseController.h"
+#include "TextBox.h"
 
 class PostLevelState : public GameState, public MessageReciever
 {
@@ -14,6 +15,7 @@ public:
 	bool RecieveMessage(const GUIMessage& aMessage) override;
 
 private:
+	MouseController myMouseController;
 	TextBox myText;
 	StaticSprite* myBg;
 	StaticSprite* myIcons;
