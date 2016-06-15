@@ -18,8 +18,13 @@ void MouseController::Init()
 	mySprites.Resize(USHORTCAST(enumMouseState::enumLength));
 
 	mySprites[USHORTCAST(enumMouseState::eHeldOnEmptyTile)].Init("Sprites/GUI/MousePointers/EmptyTileHover.dds", false);
-	mySprites[USHORTCAST(enumMouseState::eHeldOnEmptyTile)].SetLayer(enumRenderLayer::eGUI);
-	mySprites[USHORTCAST(enumMouseState::eHeldOnEmptyTile)].SetRenderPriority(9999.f);
+	//mySprites[USHORTCAST(enumMouseState::e)].Init("Sprites/GUI/MousePointers/EmptyTileHover.dds", false);
+
+	for (unsigned short iSprite = 0; iSprite < mySprites.Size(); ++iSprite)
+	{
+		mySprites[iSprite].SetLayer(enumRenderLayer::eGUI);
+		mySprites[iSprite].SetRenderPriority(9999.f);;
+	}
 }
 
 void MouseController::Draw(const CU::Vector2f & aNormalizedPosition) const

@@ -15,6 +15,7 @@ public:
 	void Draw(const CU::Vector2f & aNormalizedPosition) const;
 
 
+
 private:
 	enumMouseState myCurrentState;
 	CU::GrowingArray<StaticSprite> mySprites;
