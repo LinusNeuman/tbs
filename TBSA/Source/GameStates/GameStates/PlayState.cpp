@@ -55,6 +55,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEnd, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRestartLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEndScoreMessage, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eGameOverScore, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -67,6 +68,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eRestartLevel, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEndScoreMessage, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eGameOverScore, *this);
 
 	if (aLevelPath == "")
 	{
@@ -163,7 +165,7 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (myGameOver == true)
 	{
-		GameOverState *newState = new GameOverState();
+		GameOverState *newState = new GameOverState(myScoreCounter.GetScore(enumScoreTypes::eCandy), myScoreCounter.GetScore(enumScoreTypes::eTurnCount), myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled));
 		newState->Init();
 		aStateStack.AddSubState(newState);
 	}

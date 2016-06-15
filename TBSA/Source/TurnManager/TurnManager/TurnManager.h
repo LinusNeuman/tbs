@@ -5,6 +5,7 @@
 #include <Controllers/PlayerController.h>
 #include <CU/Timer/Time.h>
 #include <Controllers/EnemyController.h>
+#include "Audio\Instances\SoundEffect.h"
 
 enum class eTurn
 {
@@ -54,6 +55,8 @@ private:
 
 	StaticSprite* myPlayerTurnImage;
 	StaticSprite* myEnemyTurnImage;
+
+	SoundEffect* myTurnSound;
 
 	float myTurnImageTimer;
 

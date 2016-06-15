@@ -1,11 +1,32 @@
 #include "stdafx.h"
 #include "GameOverState.h"
+#include <string>
 
-
-GameOverState::GameOverState()
+GameOverState::GameOverState(float aPoints, float aTurns, float aEnemies) :
+myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappingMode::Char)
 {
 	myLetThroughRender = true;
 	myShouldExit = false;
+
+	myStatsBox.SetSize({ 1000.f, 500.f });
+	myStatsBox.SetPosition({ 1920.f / 2.f - 579.f / 2.f, 0.f });
+	myStatsBox.SetLines(9);
+
+	std::string str = std::to_string(aPoints) + " X CANDYBAG";
+	if (aPoints > 1)
+	{
+		str.append("S");
+	}
+	myStatsBox.AddText(str);
+	myStatsBox.AddText("");
+
+	str = std::to_string(aEnemies) + " X ENEMIES";
+	myStatsBox.AddText(str);
+	myStatsBox.AddText("");
+
+	str = std::to_string(aTurns) + " X TURNS";
+	myStatsBox.AddText(str);
+	myStatsBox.AddText("");
 }
 
 
@@ -42,6 +63,7 @@ void GameOverState::Draw() const
 {
 	myGUIManager.Render();
 	myBackgroundSprite->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
+	myStatsBox.Render();
 }
 
 bool GameOverState::RecieveMessage(const GUIMessage& aMessage)
