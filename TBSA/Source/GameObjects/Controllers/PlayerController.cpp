@@ -355,6 +355,10 @@ void PlayerController::PrePlayer()
 	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, mySelectedPlayer->GetMyAP()));
 	DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 	SendPostMessage(dijkstraMessage);
+	for (unsigned int i = 0; i < myPlayers.Size(); ++i)
+	{
+		myPlayers[i]->PreTurn();
+	}
 }
 
 void PlayerController::RefillAllAP()
