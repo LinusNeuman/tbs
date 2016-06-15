@@ -15,7 +15,7 @@ void CreditsState::Init(bool aShouldQuit)
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoToMainMenu, *this);
 
-	myPosition.x = 0.f;
+	myPosition.x = 0.25f;
 	myPosition.y = 1.f;
 	myCreditSprite = new StaticSprite();
 	myCreditSprite->Init("Sprites/credits.dds", false, CU::Vector4f::Zero, { 0.0f, 0.0f });

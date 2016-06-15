@@ -142,7 +142,7 @@ void GameLevel::InternalInit()
 		}
 	}
 
-	myObjectiveManager.UpdateObjectiveBox();
+	//myObjectiveManager.UpdateObjectiveBox();
 
 	myIsInitialized = true;
 }
