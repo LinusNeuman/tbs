@@ -63,5 +63,6 @@ enum class RecieverTypes
 	eCurrentPlayerAP,
 	ePlayerIsPeeking,
 	eClickedOnBB,
+	eSelectedPlayerHasChanged,
 	enumlength,
 };

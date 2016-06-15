@@ -125,6 +125,7 @@ void PlayerController::SelectPlayer()
 
 		mySelectPlayerSound->Play(0.2f);
 
+		SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
 		DijkstraMessage dijkstraMessage = DijkstraMessage(RecieverTypes::eRoom, TilePosition(mySelectedPlayer->GetPosition()), mySelectedPlayer->GetMyAP());
 		SendPostMessage(dijkstraMessage);
 	}
