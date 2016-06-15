@@ -12,7 +12,6 @@ public:
 	eStackReturnValue Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack) override;
 
 private:
-	bool myRender;
 	TextBox myText;
+	StaticSprite* myBg;
 };
-
