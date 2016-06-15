@@ -30,9 +30,6 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
-//#ifdef _DEBUG
-//	DL_ASSERT(isConstructed, "unconstructed object");
-//#endif
 	dialogSent = false;
 	dialogDone = false;
 	levelDone = false;
@@ -112,7 +109,11 @@ void ObjectiveManager::LoadFromJson(std::string aPath)
 
 					objective.mySprites[1] = sprite;
 				}
+			}
 
+			if (objectiveObject.count("description") > 0)
+			{
+				objective.description = JsonHelp::GetString(objectiveObject["description"]);
 			}
 
 			stage[objective.myTarget] = objective;

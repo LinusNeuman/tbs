@@ -12,12 +12,11 @@ public:
 	void SetLines(const unsigned int aLines);
 	void Clear();
 	void Toggle();
-
+	bool RecieveMessage(const TextMessage& aMessage) override;
+	bool RecieveMessage(const BaseMessage& aMessage) override;
 private:
 	TextBox myTextBox;
 	StaticSprite* myTextBackground;
-
-	std::queue<std::string> myTexts;
 
 	//bool RecieveMessage(const ObjectiveTextMessage& aMessage) override;
 };
