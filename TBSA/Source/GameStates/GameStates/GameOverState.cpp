@@ -19,7 +19,7 @@ void GameOverState::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eGameOverReset, *this);
 
 	myBackgroundSprite = new StaticSprite();
-	myBackgroundSprite->Init("Sprites/GUI/EndScreens/EndFail_Background.dds", false);
+	myBackgroundSprite->Init("Sprites/GUI/EndScreens/EndFail_Background.dds", false, CU::Vector4f(0.f,0.f,680.f,563.f), { 0.5f, 0.5f });
 	myBackgroundSprite->SetLayer(enumRenderLayer::eGUI);
 	LoadGUI("GameOver");
 }
@@ -39,7 +39,7 @@ eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateSt
 void GameOverState::Draw() const
 {
 	myGUIManager.Render();
-	myBackgroundSprite->Draw(CU::Vector2f(0, 0.f));
+	myBackgroundSprite->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
 }
 
 bool GameOverState::RecieveMessage(const GUIMessage& aMessage)
