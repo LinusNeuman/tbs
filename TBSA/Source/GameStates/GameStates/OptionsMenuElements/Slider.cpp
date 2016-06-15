@@ -47,6 +47,7 @@ void Slider::InitPositions(SliderPositionArguments &aPositionsArguments)
 	myKnobRegularPos = (aPositionsArguments.myKnobPosition);
 	myKnobHoveredPos = (aPositionsArguments.myKnobPosition);
 	myKnobPressedPos = (aPositionsArguments.myKnobPosition);
+	myKnobPos = myKnobRegularPos;
 }
 
 float Slider::ConvertValueToPosition()

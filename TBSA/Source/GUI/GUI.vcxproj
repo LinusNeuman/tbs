@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GUI\Instances\GUIObjectiveDialog.h" />
     <ClInclude Include="GUI\Instances\GUIActionPeek.h" />
     <ClInclude Include="GUI\Instances\GUIAction.h" />
     <ClInclude Include="GUI\Instances\GUIChangePlayerButton.h" />
@@ -83,6 +84,7 @@
     <ClInclude Include="GUI\Generic\GUIElement.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GUI\Instances\GUIObjectiveDialog.cpp" />
     <ClCompile Include="GUI\Instances\GUIActionPeek.cpp" />
     <ClCompile Include="GUI\Instances\GUIAction.cpp" />
     <ClCompile Include="GUI\Instances\GUIChangePlayerButton.cpp" />

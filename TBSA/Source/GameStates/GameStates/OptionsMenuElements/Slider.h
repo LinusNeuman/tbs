@@ -39,8 +39,8 @@ public:
 	CU::Vector2f GetSliderPosition(){ return mySliderPos; };
 	CU::Vector2f GetKnobPosition(){ return myKnobPos; };
 
-	CU::Vector2f GetSliderSize(){ return mySliderPos; };	
-	CU::Vector2f GetKnobSize(){ return myKnobPos; };
+	CU::Vector2f GetSliderSize(){ return mySlider->GetSize(); };	
+	CU::Vector2f GetKnobSize(){ return myKnob->GetSize(); };
 	virtual ~Slider();
 protected:
 	StaticSprite* mySlider;
