@@ -267,6 +267,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 	myClickedOnPlayer = false;
 	myClickedOnEnemy = false;
+	myClickedOnBB = false;
 
 	PointCollider tempCollider;
 
@@ -280,6 +281,10 @@ enumMouseState PlayerController::GetCurrentMouseState()
 		{
 			return enumMouseState::eClickedOnPlayer;
 		}
+	}
+	else if (myClickedOnBB == true)
+	{
+		return enumMouseState::eHeldOnVoid;
 	}
 	else if (myClickedOnEnemy == true)
 	{
@@ -496,7 +501,11 @@ bool PlayerController::RecieveMessage(const PlayerAddedMessage& aMessage)
 
 bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 {
-	if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
+	if (aMessage.myType == RecieverTypes::eClickedOnBB)
+	{
+		myClickedOnBB = true;
+	}
+	else if (aMessage.myType == RecieverTypes::eClickedOnEnemy)
 	{
 		myClickedOnEnemy = true;
 		mySelectedPlayer->SetTargetEnemy(aMessage.myEnemy.GetIndex(), aMessage.myEnemy.GetPosition());

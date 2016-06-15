@@ -62,5 +62,6 @@ enum class RecieverTypes
 	eRestartLevel,
 	eCurrentPlayerAP,
 	ePlayerIsPeeking,
-	enumlength
+	eClickedOnBB,
+	enumlength,
 };

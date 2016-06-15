@@ -87,6 +87,7 @@ private:
 
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
+	bool myClickedOnBB;
 
 	LayerInputReciever myMouseInput;
 
@@ -99,6 +100,7 @@ private:
 	ScoreCounter myScoreCounter;
 
 	MouseController myMouseController;
+
 };
 
 inline Player* PlayerController::GetSelectedPlayer()
