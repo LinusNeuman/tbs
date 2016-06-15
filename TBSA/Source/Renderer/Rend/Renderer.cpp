@@ -92,6 +92,10 @@ void Renderer::DrawLine(const CU::Vector2f & aStartPosition, const CU::Vector2f 
 
 void Renderer::SwapBuffer()
 {
+	for (unsigned short iRenderCommand = 0; iRenderCommand < myCommandsToRender->Size(); ++iRenderCommand)
+	{
+		(*myCommandsToRender)[iRenderCommand].CallFunctionOnAllMembers(std::mem_fn(&RenderCommand::Delete));
+	}
 	myCommandsToRender->CallFunctionOnAllMembers(std::mem_fn(&CU::GrowingArray<RenderCommand>::RemoveAll));
 	std::swap(myCommandsToRender, myBuffer);
 }
