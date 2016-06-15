@@ -58,7 +58,7 @@ void GUIFactory::Load()
 			dialogTextBox->SetLines(7);
 			myGUIElements.Add(dialogTextBox);
 
-			GUIObjectiveDialog* objectiveTextBox = new GUIObjectiveDialog({500.f, 500.f}, {381.f, 214.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
+			GUIObjectiveDialog* objectiveTextBox = new GUIObjectiveDialog({1080.f - (381.f + 15.f), 15.f}, {381.f, 214.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
 			objectiveTextBox->SetLines(7);
 			myGUIElements.Add(objectiveTextBox);
 
