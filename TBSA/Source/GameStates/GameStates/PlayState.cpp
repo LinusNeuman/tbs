@@ -41,6 +41,10 @@ PlayState::PlayState()
 PlayState::~PlayState()
 {
 	SAFE_DELETE(myLevel);
+
+	SAFE_DELETE(myAmbiance);
+	SAFE_DELETE(myMusic);
+
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eStartUpLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eFlagGoalReached, *this);
@@ -78,8 +82,15 @@ void PlayState::Init(const std::string& aLevelPath)
 
 	myEmitter.Activate({0.5f, 0.5f});
 
-	myAmbiance->Play(1.0f);
-	myMusic->Play(0.58f);
+	if (myAmbiance->GetIsPlaying() == false)
+	{
+		myAmbiance->Play(1.0f);
+	}
+	
+	if (myMusic->GetIsPlaying() == false)
+	{
+		myMusic->Play(0.58f);
+	}
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -102,6 +113,8 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 
 	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
 	{
+		myAmbiance->Stop();
+		myMusic->Stop();
 		myShouldExit = false;
 		//return eStackReturnValue::ePopMain;
 		return eStackReturnValue::eDeleteMainState;
