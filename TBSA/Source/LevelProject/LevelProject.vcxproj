@@ -85,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)DialogManager\;$(SolutionDir)TiledLoading\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)DialogManager\;$(SolutionDir)TiledLoading\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -105,7 +105,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)DialogManager\;$(SolutionDir)TiledLoading\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)DialogManager\;$(SolutionDir)TiledLoading\;$(SolutionDir)CollisionHandling\;$(ProjectDir);$(SolutionDir)TurnManager\;$(SolutionDir)PathFinding\;$(SolutionDir)CommonUtilities\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Input\;$(SolutionDir)StateStack\;$(SolutionDir)Renderer\;$(SolutionDir)GameObjects\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\;$(SolutionDir)Audio\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
@@ -155,6 +155,9 @@
     </ProjectReference>
     <ProjectReference Include="..\GameObjects\GameObjects.vcxproj">
       <Project>{07fec30e-ad37-4adc-ae37-b066481f6b52}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.vcxproj">
+      <Project>{0a8e37f3-e093-4a13-9336-de37a5b0af85}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{5038637e-68ca-47e2-b955-f78e8726ca35}</Project>

@@ -66,5 +66,7 @@ enum class RecieverTypes
 	eClickedOnBB,
 	eSelectedPlayerHasChanged,
 	eLevelEndScoreMessage,
+	eDialogEnabled,
+	eDialogDisabled,
 	enumlength,
 };

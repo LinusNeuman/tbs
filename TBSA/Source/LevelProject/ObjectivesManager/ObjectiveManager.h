@@ -26,12 +26,17 @@ public:
 
 	bool RecieveMessage(const TextMessage& aMessage) override;
 	bool RecieveMessage(const PositionMessage& aMessage) override;
+	bool RecieveMessage(const GUIMessage& aMessage) override;
 
 private:
+	bool dialogDone;
+	bool dialogSent;
+	bool levelDone;
 	CommonUtilities::GrowingArray<Stage> myStages;
 	Stage completedObjectives;
 	unsigned short myCurrentStage;
 	std::string myNextLevel;
+	std::string myLevel;
 	std::map<int, std::string> myObjectives;
 	std::map<std::string, std::queue<std::string>> myDialogs;
 #ifdef _DEBUG
