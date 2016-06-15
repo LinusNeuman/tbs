@@ -36,6 +36,8 @@ namespace Launcher
             ddsImage = new KUtility.DDSImage(File.ReadAllBytes("Sprites/Launcher/Images/launcherBakgrund.dds"));
             this.BackgroundImage = new Bitmap(ddsImage.images[0], size);
 
+            
+
             size = new Size(256, 256);
             ddsImage = new KUtility.DDSImage(File.ReadAllBytes("Sprites/Launcher/Images/PlayGameBTN/Unpressed.dds"));
             this.button1.BackgroundImage = new Bitmap(ddsImage.images[0], size);
@@ -80,7 +82,7 @@ namespace Launcher
             System.IO.File.WriteAllText(Directory.GetCurrentDirectory() + "/" + "Settings.json", jsonString);
             string exePath = "";
             exePath = Directory.GetCurrentDirectory();
-            exePath += "\\Launcher_DevMode.exe";
+            exePath += "\\Fimbulvinter.exe";
             Process.Start(exePath);
             Application.Exit();
         }
