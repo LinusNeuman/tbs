@@ -27,7 +27,7 @@ PreGameState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
 	myTextBox.Update();
 
-	if (IsometricInput::GetAnyMouseButtonPressed() == true)
+	if (IsometricInput::GetAnyKeyPressed() == true || IsometricInput::GetAnyMouseButtonPressed() == true)
 	{
 		return eStackReturnValue::eDeleteSubstate;
 	}
