@@ -43,7 +43,7 @@ public:
 	void AfterPlayerTurn();
 	
 
-	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition, Enemy* aEnemy);
+	void PlayerSeen(CommonUtilities::Point2i aPlayerPosition, const Enemy* aEnemy);
 
 	virtual bool RecieveMessage(const PlayerObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const BaseMessage & aMessage) override;
@@ -54,6 +54,7 @@ public:
 	virtual bool RecieveMessage(const EnemyObjectMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerIDMessage & aMessage) override;
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
+	virtual bool RecieveMessage(const EnemyNextPathMessage & aMessage) override;
 
 
 private:
