@@ -7,6 +7,7 @@
 #include <queue>
 #include "../TextBox/TextBox.h"
 #include "particleEmitter.h"
+#include "Audio\Instances\Song.h"
 
 class LevelFactory;
 class GameLevel;
@@ -35,6 +36,7 @@ private:
 	std::string myLevelKey;
 	std::string myCurrentLevelpath;
 	LevelFactory* myLevelFactory;
+	Song* myAmbiance;
 	bool myShouldExit;
 	bool myGameOver;
 	bool myShouldPause;
