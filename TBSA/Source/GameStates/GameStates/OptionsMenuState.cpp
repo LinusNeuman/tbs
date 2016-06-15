@@ -50,3 +50,12 @@ void OptionsMenuState::Draw() const
 
 	myOptionsWrapped.Render();
 }
+
+bool OptionsMenuState::RecieveMessage(const GUIMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eCloseOptionsMenu)
+	{
+		myShouldPop = true;
+	}
+	return true;
+}

@@ -1,22 +1,60 @@
 {
   "GameStates": [
     {
-            "myName": "OptionsMenu",
-            "myGUIData": {
-                "guiElements": [
-
-                ]
+      "myName": "OptionsMenu",
+      "myGUIData": {
+        "guiElements": [
+          {
+            "$type": "GUIEditor.GUIButton, GUIEditor",
+            "myUnpressed": {
+              "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
+              "myWidth": 200,
+              "myHeight": 70
+            },
+            "myPressed": {
+              "myPath": "Sprites/GUI/BackButton/Pressed.dds",
+              "myWidth": 200,
+              "myHeight": 70
+            },
+            "myHover": {
+              "myPath": "Sprites/GUI/BackButton/Hover.dds",
+              "myWidth": 200,
+              "myHeight": 70
+            },
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
+            "myAnimated": true,
+            "myImagesPath": "Sprites/GUI/BackButton",
+            "mySizeX": 200,
+            "mySizeY": 70,
+            "Name": "BackButton",
+            "Tooltip": "kel",
+            "mySprite": {
+              "myPath": "",
+              "myWidth": 0,
+              "myHeight": 0
+            },
+            "myIsEnabled": true,
+            "myIsIsometric": false,
+            "myPositionX": 0,
+            "myPositionY": 0,
+            "myParentPositionX": 0,
+            "myParentPositionY": 0,
+            "Events": {
+              "Click": "CloseOptionsMenu",
+              "Hover": ""
             }
-        },
-        {
-            "myName": "Credits",
-            "myGUIData": {
-                "guiElements": [ 
-
-                ]
-            }
-        },
-        {
+          }
+        ]
+      }
+    },
+    {
+      "myName": "Credits",
+      "myGUIData": {
+        "guiElements": []
+      }
+    },
+    {
       "myName": "MainMenu",
       "myGUIData": {
         "guiElements": [
