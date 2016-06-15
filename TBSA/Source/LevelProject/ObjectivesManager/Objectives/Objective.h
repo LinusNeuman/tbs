@@ -21,4 +21,5 @@ struct LevelObjective
 	bool myIsDone;
 	std::string myTarget;
 	std::string dialogName;
+	std::string description;
 };

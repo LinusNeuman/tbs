@@ -10,16 +10,19 @@ LevelSelectState::LevelSelectState()
 {
 	mySelectedLevel = "";
 	myLevel = 0;
+	myShouldGoBack = false;
 }
 
 LevelSelectState::~LevelSelectState()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eGoToLevel, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eGoToMainMenu, *this);
 }
 
 void LevelSelectState::Init()
 {
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoToLevel, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eGoToMainMenu, *this);
 
 
 	myBackgroundSprite = new StaticSprite();
@@ -34,8 +37,9 @@ eStackReturnValue LevelSelectState::Update(const CU::Time & aTimeDelta, ProxySta
 {
 	myGUIManager.Update(aTimeDelta);
 
-	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true)
+	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldGoBack == true)
 	{
+		myShouldGoBack = false;
 		return eStackReturnValue::eDeleteMainState;
 	}
 
@@ -84,6 +88,10 @@ bool LevelSelectState::RecieveMessage(const GUIMessage& aMessage)
 			return false;
 		}
 		myLevel = massage->myLevel;
+	}
+	if (aMessage.myType == RecieverTypes::eGoToMainMenu)
+	{
+		myShouldGoBack = true;
 	}
 	return true;
 }

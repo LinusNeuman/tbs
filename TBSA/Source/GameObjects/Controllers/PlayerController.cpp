@@ -99,6 +99,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyNextPath, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this, RecieverOrder::VIP);
 
 	myMouseController.Init();
 }

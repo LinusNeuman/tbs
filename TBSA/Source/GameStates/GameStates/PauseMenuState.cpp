@@ -2,12 +2,15 @@
 #include "PauseMenuState.h"
 #include <Message/SetTargetResolutionMessage.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
+#include "OptionsMenuState.h"
+#include <StateStack/StateStack.h>
 
 PauseMenuState::PauseMenuState()
 {
 	myLetThroughRender = true;
 	myShouldPop = false;
 	myShouldPopMain = false;
+	myShouldOptionsMenu = false;
 }
 
 
@@ -21,6 +24,7 @@ void PauseMenuState::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eClosePauseMenu, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGoToMainMenu, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eRestartLevel, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eOpenOptionsMenu, *this);
 
 	myBackgroundSprite = new StaticSprite();
 	myBackgroundSprite->Init("Sprites/GUI/PauseMenu/Background.dds", false, CU::Vector4f::Zero, {0.5f, 0.5f});
@@ -48,6 +52,15 @@ eStackReturnValue PauseMenuState::Update(const CU::Time& aTimeDelta, ProxyStateS
 		return eStackReturnValue::eDeleteMainState;
 	}
 
+	if (myShouldOptionsMenu == true)
+	{
+		myShouldOptionsMenu = false;
+
+		OptionsMenuState* newState = new OptionsMenuState();
+		newState->Init();
+		aStateStack.AddSubState(newState);
+	}
+
 	return eStackReturnValue::eStay;
 }
 
@@ -67,6 +80,10 @@ bool PauseMenuState::RecieveMessage(const GUIMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::eGoToMainMenu)
 	{
 		myShouldPopMain = true;
+	}
+	if (aMessage.myType == RecieverTypes::eOpenOptionsMenu)
+	{
+		myShouldOptionsMenu = true;
 	}
 	return true;
 }

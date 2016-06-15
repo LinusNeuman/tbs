@@ -3,20 +3,23 @@
 		[
 			{
 				"type" : "take_objective",
-				"target" : "Pram",
+				"target" : "Mittens",
 				"image" : {
-					"active" : "Objectives/Pram.dds"
-				}
+					"active" : "Objectives/Gloves.dds"
+				},
+				"description" : "Get the pram"
 			}
 		],
 		[
 			{
 				"type" : "hold_objective",
-				"target" : "endzone1"
+				"target" : "endzone1",
+				"description" : "Get to the end"
 			},
 			{
 				"type" : "hold_objective",
-				"target" : "endzone2"
+				"target" : "endzone2",
+				"description" : "Get to the end"
 			}
 		]
 	],
