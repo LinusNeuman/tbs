@@ -563,6 +563,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	if (CheckForCandy(aMessage.myPosition) == true)
 	{
 		TakeCandy(aMessage.myPosition);
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 	}
 
 	
@@ -577,7 +578,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		//myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(0);
 	}
 
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
+ 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
