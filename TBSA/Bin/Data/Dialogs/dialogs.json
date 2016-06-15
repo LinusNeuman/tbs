@@ -7,5 +7,6 @@
 	{"name":"EnemyFlag", "file":"kioskDialog2.json"},
 	{"name":"Child", "file":"playgroundDialog2.json"},
 	{"name":"4_Kiosk", "file":"kioskDialog3.json"},
-	{"name":"5_Playground", "file":"playgroundDialog3.json"}]
+	{"name":"5_Playground", "file":"playgroundDialog3.json"},
+	{"name":"Snowballs", "file":"fortressDialog3.json"}]
 }
