@@ -39,7 +39,6 @@ public:
 
 	void SetFloor(GameFloor & aFloor);
 	void PrePlayer();
-	void RefillAllAP();
 	void SetCameraPositionToPlayer(int aIndex);
 	void AfterPlayerTurn();
 	
