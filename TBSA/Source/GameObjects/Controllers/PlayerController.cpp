@@ -82,6 +82,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eClickedOnPlayer, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyNextPath, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
 
 	SingletonPostMaster::RemoveReciever(*this);
 
@@ -107,6 +108,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnBB, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEnd, *this, RecieverOrder::VIP);
 	SingletonPostMaster::AddReciever(RecieverTypes::eFakeClickedEnemy, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 
 	myMouseController.Init();
 }

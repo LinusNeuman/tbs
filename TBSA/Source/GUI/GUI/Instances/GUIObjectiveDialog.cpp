@@ -1,4 +1,6 @@
 #include "GUIObjectiveDialog.h"
+#include <Message/TextMessage.h>
+
 //#include "Message\ObjectiveTextMessage.h"
 
 GUIObjectiveDialog::GUIObjectiveDialog(const CommonUtilities::Vector2f aPosition, const CommonUtilities::Vector2f aDimensions, const std::string aFontPath, const eLinewrappingMode aMode) : myTextBox(aPosition, aDimensions, aFontPath, aMode)
@@ -13,12 +15,14 @@ GUIObjectiveDialog::GUIObjectiveDialog(const CommonUtilities::Vector2f aPosition
 	myTextBackground->SetLayer(enumRenderLayer::eGUI);
 	myPosition = aPosition;
 
-	//SingletonPostMaster::AddReciever(RecieverTypes::eDialogTextMessage, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eAddTextToObjectiveBox, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eClearObjectiveBox, *this);
 }
 
 GUIObjectiveDialog::~GUIObjectiveDialog()
 {
-	//SingletonPostMaster::RemoveReciever(RecieverTypes::eDialogTextMessage, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eAddTextToObjectiveBox, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eClearObjectiveBox, *this);
 }
 
 void
@@ -37,7 +41,7 @@ GUIObjectiveDialog::Render()
 void
 GUIObjectiveDialog::Update(const CU::Time& aTimeDelta)
 {
-	if (myIsEnabled == false && myTexts.size() > 0)
+	/*if (myIsEnabled == false && myTexts.size() > 0)
 	{
 		myIsEnabled = true;
 		myTextBox.Clear();
@@ -60,7 +64,7 @@ GUIObjectiveDialog::Update(const CU::Time& aTimeDelta)
 				myTexts.pop();
 			}
 		}
-	}
+	}*/
 
 	myTextBox.Update();
 }
@@ -77,10 +81,22 @@ GUIObjectiveDialog::Toggle()
 	myIsEnabled = !myIsEnabled;
 }
 
-//bool
-//GUIObjectiveDialog::RecieveMessage(const ObjectiveTextMessage& aMessage)
-//{
-//	myTexts = aMessage.myTexts;
-//
-//	return true;
-//}
+bool
+GUIObjectiveDialog::RecieveMessage(const TextMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eAddTextToObjectiveBox)
+	{
+		myTextBox.AddText(aMessage.myText);
+	}
+
+	return true;
+}
+
+bool GUIObjectiveDialog::RecieveMessage(const BaseMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eClearObjectiveBox)
+	{
+		myTextBox.Clear();
+	}
+	return true;
+}
