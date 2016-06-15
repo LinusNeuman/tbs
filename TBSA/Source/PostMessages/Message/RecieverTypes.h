@@ -68,5 +68,7 @@ enum class RecieverTypes
 	eSelectedPlayerHasChanged,
 	eLevelEndScoreMessage,
 	eFakeClickedEnemy,
+	eOpenOptionsMenu,
+	eCloseOptionsMenu,
 	enumlength
 };
