@@ -157,6 +157,11 @@ const LevelObjective& ObjectiveManager::GetObjective(const std::string &aObjecti
 
 bool ObjectiveManager::RecieveMessage(const TextMessage& aMessage)
 {
+	if (aMessage.myText == "CandyMessage")
+	{
+		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[aMessage.myText]));
+	}
+
 	if (aMessage.myType == RecieverTypes::eLeaveObjective)
 	{
 		if (completedObjectives.count(aMessage.myText) && completedObjectives[aMessage.myText].myType == eLevelObjectiveType::HOLD)
