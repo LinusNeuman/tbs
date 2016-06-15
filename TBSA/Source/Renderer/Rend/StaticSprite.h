@@ -108,6 +108,8 @@ public:
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
 
+	CU::Vector2f GetSize() const;
+
 	const bool GetIsIsometric() const;
 	void SetIsIsometric(const bool aFlag);
 	

@@ -2,6 +2,16 @@
 	"stages":[
 		[
 			{
+				"type" : "take_objective",
+				"target" : "Snowballs",
+				"image" : {
+					"active" : "Objectives/SnowballStash.dds"
+				},
+				"stageEndDialog" : "Snowballs"
+			}
+		],
+		[
+			{
 				"type" : "hold_objective",
 				"target" : "endzone1"
 			},
@@ -12,5 +22,5 @@
 		]
 	],
 	
-	"nextLevel": "3_Lakeside.json"
+	"nextLevel": "2_Backyard.json"
 }

@@ -239,9 +239,6 @@ bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 
 bool PlayState::RecieveMessage(const ScoreCounterMessage& aMessage)
 {
-	//myScoreCounter.AddScore(enumScoreTypes::eCandy, aMessage.myScoreCounter.GetScore(enumScoreTypes::eCandy));
-	//myScoreCounter.AddScore(enumScoreTypes::eEnemiesKilled, aMessage.myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled));
-	//myScoreCounter.AddScore(enumScoreTypes::eTurnCount, aMessage.myScoreCounter.GetScore(enumScoreTypes::eTurnCount));
 	myScoreCounter = aMessage.myScoreCounter;
 	return true;
 }
