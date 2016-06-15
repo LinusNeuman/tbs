@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CreditsState.h"
+#include "Rend\RenderConverter.h"
 
 CreditsState::CreditsState()
 {
@@ -9,6 +10,7 @@ CreditsState::CreditsState()
 CreditsState::~CreditsState()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eGoToMainMenu, *this);
+	RenderConverter::SetShouldCull(true);
 }
 
 void CreditsState::Init()
@@ -20,6 +22,8 @@ void CreditsState::Init()
 	myCreditSprite = new StaticSprite();
 	myCreditSprite->Init("Sprites/credits.dds", false, CU::Vector4f::Zero, { 0.0f, 0.0f });
 	myCreditSprite->SetLayer(enumRenderLayer::eGameObjects);
+
+	RenderConverter::SetShouldCull(false);
 
 	LoadGUI("Credits");
 }
