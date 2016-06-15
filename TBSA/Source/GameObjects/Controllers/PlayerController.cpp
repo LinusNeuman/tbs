@@ -29,6 +29,7 @@
 #include <Message/PositionMessage.h>
 #include <GUI/Messaging/Generic/GUIMessage.h>
 #include <Message/CurrentPlayerAP.h>
+#include "Message/ScoreCounterMessage.h"
 #include <Message/EnemyNextPathMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
@@ -406,6 +407,15 @@ bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 	return true;
 }
 
+bool PlayerController::RecieveMessage(const TextMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eLevelEnd)
+	{
+		SendPostMessage(ScoreCounterMessage(RecieverTypes::eLevelEndScoreMessage, myScoreCounter));
+	}
+	return true;
+}
+
 void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
@@ -540,14 +550,16 @@ bool PlayerController::RecieveMessage(const EnemyObjectMessage & aMessage)
 		mySelectedPlayer->SetActiveState(false);
 		for (size_t i = 0; i < myPlayers.Size(); i++)
 		{
-			if (myPlayers[i]->GetActorState() == eActorState::eAlert)
+			/*if (myPlayers[i]->GetActorState() == eActorState::eAlert)
 			{
 				myPlayers[i]->SetActorState(eActorState::eIdle);
-			}
+			}*/
+			mySelectedPlayer->SetActorState(eActorState::eFighting);
 		}
 	}
 	else if (aMessage.myType == RecieverTypes::eEnemyDead)
 	{
+		mySelectedPlayer->SetActorState(eActorState::eIdle);
 		mySelectedPlayer->SetActiveState(true);
 	}
 	return true;

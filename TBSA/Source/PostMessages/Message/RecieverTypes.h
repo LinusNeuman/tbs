@@ -65,5 +65,6 @@ enum class RecieverTypes
 	eEnemyNextPath,
 	eClickedOnBB,
 	eSelectedPlayerHasChanged,
-	enumlength
+	eLevelEndScoreMessage,
+	enumlength,
 };

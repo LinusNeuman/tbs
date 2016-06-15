@@ -11,7 +11,7 @@ PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsign
 
 	myText.SetSize({ 1000.f, 500.f });
 	myText.SetPosition({ 1920.f / 2.f - 679.f / 2.f, 0.f });
-	myText.SetLines(5);
+	myText.SetLines(7);
 
 	std::string str = "Candy collected: ";
 	str.append(std::to_string(aPoints));
@@ -25,6 +25,11 @@ PostLevelState::PostLevelState(unsigned int aPoints, unsigned int aTurns, unsign
 
 	str = "Turned used: ";
 	str.append(std::to_string(aTurns));
+	myText.AddText(str);
+	myText.AddText("");
+	myText.AddText("");
+
+	str = "Press any key to continue.";
 	myText.AddText(str);
 
 	myLetThroughRender = true;

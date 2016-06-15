@@ -8,6 +8,29 @@ namespace CommonUtilities
 {
 	namespace WindowsFunctions
 	{
+
+		bool CheckIfWindowFullscreen(HWND aWindowID)
+		{
+			HWND hWnd = GetForegroundWindow();
+			RECT appBounds;
+			RECT rc;
+			GetWindowRect(GetDesktopWindow(), &rc);
+
+			if (hWnd != GetDesktopWindow() && hWnd != GetShellWindow() && aWindowID == hWnd)
+			{
+				GetWindowRect(hWnd, &appBounds);
+				if (rc.bottom == appBounds.bottom &&
+					rc.top == appBounds.top &&
+					rc.left == appBounds.left &&
+					rc.right == appBounds.right)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		Vector4f GetWindowSize(HWND aWindowID)
 		{
 			RECT windowRect;

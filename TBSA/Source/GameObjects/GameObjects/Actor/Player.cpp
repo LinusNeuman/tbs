@@ -285,10 +285,10 @@ void Player::DecideAnimation()
 			break;
 		}
 	}
-	else if (myState == eActorState::eFighting)
+	/*else if (myState == eActorState::eFighting)
 	{
 		ChangeAnimation("");
-	}
+	}*/
 }
 
 void Player::OnMove(CU::Vector2ui aTargetPosition)
