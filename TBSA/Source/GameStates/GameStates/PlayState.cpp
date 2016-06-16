@@ -118,42 +118,18 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 	myLevel->Update(aTimeDelta);
 	myEmitter.Update(aTimeDelta);
 
-	if (IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldExit == true)
+	/*if (IsometricInput::GetKeyPressed(DIK_1) == true)
+	{
+		ChangeLevel("_end_");
+	}*/
+
+	if (myShouldExit == true)
 	{
 		myAmbiance->Stop();
 		myMusic->Stop();
 		myShouldExit = false;
 		//return eStackReturnValue::ePopMain;
 		return eStackReturnValue::eDeleteMainState;
-	}
-
-	if (IsometricInput::GetKeyPressed(DIK_1) == true)
-	{
-		ChangeLevel("1_Treehouse.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_2) == true)
-	{
-		ChangeLevel("2_Backyard.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_3) == true)
-	{
-		ChangeLevel("3_Lakeside.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_4) == true)
-	{
-		ChangeLevel("4_Kiosk.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_5) == true)
-	{
-		ChangeLevel("5_Playground.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_6) == true)
-	{
-		ChangeLevel("6_IcyFortress.json");
-	}
-	else if (IsometricInput::GetKeyPressed(DIK_END) == true)
-	{
-		SendPostMessage(TextMessage(RecieverTypes::eLevelEnd, "2_Backyard.json"));
 	}
 
 	if (myShouldPause == true)
@@ -261,6 +237,7 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	if (aFilePath == "_end_")
 	{
 		myFinishedGame = true;
+		return;
 	}
 	if (myLevel != nullptr)
 	{

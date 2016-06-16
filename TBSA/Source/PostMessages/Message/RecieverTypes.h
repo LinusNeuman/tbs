@@ -76,5 +76,6 @@ enum class RecieverTypes
 	eClearObjectiveBox,
 	eGameOverScore,
 	eEnemiesEndTurn,
+	eContinueEndScreen,
 	enumlength,
 };

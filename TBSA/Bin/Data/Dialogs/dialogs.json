@@ -18,5 +18,7 @@
 	{"name":"2_Backyard", "file":"backyardDialog3.json"},
 	{"name":"2_BackyardStart", "file":"backyardDialog1.json"},
 	{"name":"6_IcyFortressStart", "file":"fortressDialog1.json"},
-	{"name":"Oliver", "file":"fortressDialog2.json"}]
+	{"name":"Oliver", "file":"fortressDialog2.json"},
+	{"name":"4_KioskStart", "file":"kioskDialog1.json"},
+	{"name":"5_PlaygroundStart", "file":"playgroundDialog1.json"}]
 }

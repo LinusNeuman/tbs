@@ -228,14 +228,14 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma endregion
 
 #pragma region Keyboard Input
-	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	/*if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true && CheckIfPlayerIsAllowedInput() == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
-	}
+	}*/
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
@@ -310,8 +310,6 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma  endregion
 
 #pragma region UpdatePlayer
-	myPlayers[0]->Update(aTime);
-	myPlayers[1]->Update(aTime);
 #pragma endregion
 }
 
@@ -387,6 +385,9 @@ void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 {
 	SendPostMessage(CurrentPlayerAP(RecieverTypes::eCurrentPlayerAP, mySelectedPlayer->GetMyAP(), mySelectedPlayerIndex));
 	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
+
+	myPlayers[0]->Update(aDeltaTime);
+	myPlayers[1]->Update(aDeltaTime);
 }
 
 void PlayerController::SetFloor(GameFloor & aFloor)
@@ -445,7 +446,8 @@ bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 		const PlayerIDMessage * tempmessageerer = dynamic_cast<const PlayerIDMessage*>(&aMessage);
 		RecieveMessage(*tempmessageerer);
 	}
-	else if (aMessage.myType == RecieverTypes::eEndTurn)
+	else if (aMessage.myType == 
+		RecieverTypes::eEndTurn)
 	{
 		if (CheckIfPlayerIsAllowedInput() == false)
 		{
@@ -561,6 +563,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	if (CheckForCandy(aMessage.myPosition) == true)
 	{
 		TakeCandy(aMessage.myPosition);
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 	}
 
 	
@@ -575,7 +578,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		//myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(0);
 	}
 
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
+ 	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));

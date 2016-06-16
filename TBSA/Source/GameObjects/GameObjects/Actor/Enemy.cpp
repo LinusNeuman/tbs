@@ -162,8 +162,11 @@ void Enemy::OnClick()
 	}
 	else
 	{
-		SendPostMessage(EnemyObjectMessage(RecieverTypes::eFakeClickedEnemy, *this));
-		SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+		if (GetActorState() != eActorState::eFighting && GetActorState() != eActorState::eDead)
+		{
+			SendPostMessage(EnemyObjectMessage(RecieverTypes::eFakeClickedEnemy, *this));
+			SendPostMessage(EnemyObjectMessage(RecieverTypes::eClickedOnEnemy, *this));
+		}
 	}
 }
 
