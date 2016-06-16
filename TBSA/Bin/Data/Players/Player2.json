@@ -1,8 +1,8 @@
 {
-    "maxActionPoints" : 6,
+    "maxActionPoints" : 8,
     "actorType": 2,
-    "attackCost" : 2,
-    "peekCost" : 1,
+    "attackCost" : 3,
+    "peekCost" : 2,
     "animations": 
     [
 	    {
