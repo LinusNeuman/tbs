@@ -321,6 +321,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	myClickedOnEnemy = false;
 	myClickedOnBB = false;
 	myFakeClickedOnEnemy = false;
+	myClickedOnSelectedPlayer = false;
 
 	PointCollider tempCollider;
 
@@ -339,11 +340,11 @@ enumMouseState PlayerController::GetCurrentMouseState()
 			return enumMouseState::eHeldOnPlayer;
 		}
 	}
-	else if (myClickedOnBB == true)
+	else if (myClickedOnBB == true )
 	{
 		return enumMouseState::eHeldOnVoid;
 	}
-	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false)
+	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false || myClickedOnSelectedPlayer == true)
 	{
 		return enumMouseState::eHeldOnVoid;
 	}
@@ -498,6 +499,10 @@ bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 		if (mySelectedPlayer->GetIndex() != aMessage.myPlayerID)
 		{
 			myClickedOnPlayer = true;
+		}
+		else
+		{
+			myClickedOnSelectedPlayer = true;
 		}
 	}
 	return true;

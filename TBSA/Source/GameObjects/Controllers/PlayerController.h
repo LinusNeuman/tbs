@@ -92,6 +92,7 @@ private:
 	bool myClickedOnPlayer;
 	bool myClickedOnEnemy;
 	bool myClickedOnBB;
+	bool myClickedOnSelectedPlayer;
 
 	LayerInputReciever myMouseInput;
 
