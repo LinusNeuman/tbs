@@ -304,6 +304,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			DL_ASSERT(false, "Error in handling playercontroller mouse input");
 		case enumMouseState::eHeldOnVoid:
 		case enumMouseState::eHeldOnPlayer:
+		case enumMouseState::eHeldOnNoCombat:
 			break;
 		}
 	}
@@ -342,7 +343,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	}
 	else if (myClickedOnBB == true )
 	{
-		return enumMouseState::eHeldOnVoid;
+		return enumMouseState::eHeldOnNoCombat;
 	}
 	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false || myClickedOnSelectedPlayer == true)
 	{

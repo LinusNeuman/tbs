@@ -26,6 +26,7 @@ void MouseController::Init()
 	mySprites[USHORTCAST(enumMouseState::eHeldOnPlayer)].Init("Sprites/GUI/MousePointers/HeldOnPlayer.dds", false);
 	mySprites[USHORTCAST(enumMouseState::eHideClickedOnEnemy)].Init("Sprites/GUI/MousePointers/HeldOnVoid.dds", false);
 	mySprites[USHORTCAST(enumMouseState::eHideHoverOnEnemy)].Init("Sprites/GUI/MousePointers/HeldOnVoid.dds", false);
+	mySprites[USHORTCAST(enumMouseState::eHeldOnNoCombat)].Init("Sprites/GUI/MousePointers/HeldOnNoCombat.dds", false);
 
 	for (unsigned short iSprite = 0; iSprite < mySprites.Size(); ++iSprite)
 	{
