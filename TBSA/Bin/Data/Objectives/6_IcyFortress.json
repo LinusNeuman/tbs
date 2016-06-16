@@ -2,6 +2,10 @@
 	"stages":[
 		[
 			{
+				"type" : "kill",
+				"target" : "Oliver"
+			},
+			{
 				"type" : "take_objective",
 				"target" : "Snowballs",
 				"image" : {
@@ -22,5 +26,5 @@
 		]
 	],
 	
-	"nextLevel": "2_Backyard.json"
+	"nextLevel": "_end_"
 }
