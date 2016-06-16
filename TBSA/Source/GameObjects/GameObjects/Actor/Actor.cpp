@@ -81,6 +81,7 @@ void Actor::Init(const ActorData &aActorData)
 	myActiveFlag = true;
 	myVisibleFlag = false;
 	mySpriteIsInit = false;
+	mySpeedConstant = 3.f;
 	myType = aActorData.myActortype;
 	myPosition = CommonUtilities::Vector2f::Zero;
 	myTargetPosition = CommonUtilities::Point2ui(myPosition);
@@ -157,7 +158,7 @@ void Actor::Update(const CU::Time& aDeltaTime)
 				myStepTimer = 0.f;
 			}
 
-			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * 3.f;
+			myVelocity = (CommonUtilities::Point2f(myTargetPosition) - myPosition).GetNormalized() * mySpeedConstant;
 			UpdatePosition(myPosition + (myVelocity * aDeltaTime.GetSeconds()));
 			CU::Vector2f distance = myVelocity * aDeltaTime.GetSeconds();
 			if ((CU::Point2f(myTargetPosition) - myPosition).Length() <= distance.Length())
@@ -347,6 +348,16 @@ void Actor::StopPath()
 void Actor::SetPreviousPosition(const TilePositionf& aPosition)
 {
 	myPreviousPosition = aPosition;
+}
+
+void Actor::SetSpeedConstant(const float aSpeed)
+{
+	mySpeedConstant = aSpeed;
+}
+
+float Actor::GetSpeedConstant() const
+{
+	return mySpeedConstant;
 }
 
 TilePositionf Actor::GetPreviousPosition() const

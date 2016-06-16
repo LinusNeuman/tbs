@@ -63,10 +63,12 @@ void EnemyController::ConstantUpdate(CommonUtilities::Time aDeltaTime)
 		if(myFloor->GetTile(CU::Vector2ui(USHORTCAST(myEnemies[i]->GetPosition().x), USHORTCAST(myEnemies[i]->GetPosition().y))).GetVisible() == true)
 		{
 			myEnemies[i]->SetVisibleState(true);
+			myEnemies[i]->SetSpeedConstant(3.f);
 		}
 		else
 		{
 			myEnemies[i]->SetVisibleState(false);
+			myEnemies[i]->SetSpeedConstant(9.f);
 		}
 		
 	}
