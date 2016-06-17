@@ -58,9 +58,9 @@ void GUIFactory::Load()
 			dialogTextBox->SetLines(7);
 			myGUIElements.Add(dialogTextBox);
 
-			//GUIObjectiveDialog* objectiveTextBox = new GUIObjectiveDialog({1000.f, 15.f}, {381.f, 214.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
-			//objectiveTextBox->SetLines(7);
-			//myGUIElements.Add(objectiveTextBox);
+			GUIObjectiveDialog* objectiveTextBox = new GUIObjectiveDialog({1920 - 381 - 15.f, 15.f}, {381.f, 214.f}, "Text/calibril.ttf_sdf", eLinewrappingMode::Word);
+			objectiveTextBox->SetLines(7);
+			myGUIElements.Add(objectiveTextBox);
 
 			CU::Vector2f position;
 			position.x = 25;
@@ -109,7 +109,7 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(newPeek);
 
-			//++elementsAdded;
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
