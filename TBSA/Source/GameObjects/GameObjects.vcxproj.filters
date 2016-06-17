@@ -33,5 +33,6 @@
     <ClInclude Include="Controllers\ScoreCounter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Controllers\enumMouseState.h" />
+    <ClInclude Include="Checkpoint.h" />
   </ItemGroup>
 </Project>

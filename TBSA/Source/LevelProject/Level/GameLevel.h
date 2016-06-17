@@ -37,6 +37,8 @@ private:
 	Player * myPlayer, *myPlayer2;
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
 	CommonUtilities::GrowingArray<Objective*> myObjectives;
+	CommonUtilities::GrowingArray<Checkpoint*> myCheckpoints;
+
 	PlayerController *myPlayerController;
 	EnemyController *myEnemyController;
 

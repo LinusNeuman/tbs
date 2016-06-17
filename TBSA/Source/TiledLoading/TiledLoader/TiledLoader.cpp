@@ -355,6 +355,23 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
 				}
 			}
+			else if (name == "Checkpoint" || name == "Checkpoints")
+			{
+				picojson::array objects = JsonHelp::GetArray(currentLayer["objects"]);
+				for (size_t k = 0; k < objects.size(); k++)
+				{
+					picojson::object checkpoint = JsonHelp::GetPicoJsonObject(objects[k]);
+
+					const float posX = static_cast<float>(JsonHelp::GetNumber(checkpoint["x"])) / 64;
+					const float posY = static_cast<float>(JsonHelp::GetNumber(checkpoint["y"])) / 64;
+					const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY)+static_cast<int>(posX);
+
+					Checkpoint* const checkopointObject = new Checkpoint();
+					checkopointObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
+
+					someTiles.myCheckpoints.Add(checkopointObject);
+				}
+			}
 		}
 	}
 

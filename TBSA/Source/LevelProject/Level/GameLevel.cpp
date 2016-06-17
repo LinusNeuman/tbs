@@ -112,6 +112,10 @@ void GameLevel::InternalInit()
 			myFloor.GetTile(CU::Vector2ui(USHORTCAST(myObjectives[i]->GetPosition().x), USHORTCAST(myObjectives[i]->GetPosition().y))).SetTileType(eTileType::IS_OBJECTIVE);
 		}
 	}	
+
+	myCheckpoints = myTiledData->myCheckpoints;
+
+
 	for (size_t y = 0; y < myFloor.GetDimensions().y; y++)
 	{
 		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
