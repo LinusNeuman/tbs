@@ -18,6 +18,8 @@ private:
 
 	StaticSprite* myBackgroundSprite;
 	StaticSprite* myIcons;
+	StaticSprite* myGameOverSprite;
+	bool myShouldDisplayStats;
 	bool myShouldExit;
 	TextBox myStatsBox;
 };

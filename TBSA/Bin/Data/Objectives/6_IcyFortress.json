@@ -3,7 +3,8 @@
 		[
 			{
 				"type" : "kill",
-				"target" : "Oliver"
+				"target" : "Oliver",
+				"description":"Take out Oliver"
 			},
 			{
 				"type" : "take_objective",
@@ -11,17 +12,20 @@
 				"image" : {
 					"active" : "Objectives/SnowballStash.dds"
 				},
-				"stageEndDialog" : "Snowballs"
+				"stageEndDialog" : "Snowballs",
+				"description":"Find the snowball stash"
 			}
 		],
 		[
 			{
 				"type" : "hold_objective",
-				"target" : "endzone1"
+				"target" : "endzone1",
+				"description":"Get to the end"
 			},
 			{
 				"type" : "hold_objective",
-				"target" : "endzone2"
+				"target" : "endzone2",
+				"description":"get to the end"
 			}
 		]
 	],
