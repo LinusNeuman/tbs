@@ -24,6 +24,7 @@ enum class eTileType
 	DOOR_2,
 	IS_OBJECTIVE,
 	COVER,
+	CHECKPOINT,
 	Size
 };
 

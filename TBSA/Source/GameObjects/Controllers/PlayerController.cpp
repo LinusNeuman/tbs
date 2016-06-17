@@ -33,6 +33,7 @@
 #include "Message/ScoreCounterMessage.h"
 #include <Message/EnemyNextPathMessage.h>
 #include "Message/PlayerDiedMessage.h"
+#include <Message/CheckpointMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -589,6 +590,14 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::CHECKPOINT)
+	{
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
+		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, aMessage.myPosition));
+	}
+
+
+
 	return true;
 }
 
