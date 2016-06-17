@@ -43,6 +43,8 @@ public:
 		myTargetPosition = CommonUtilities::Vector2ui(aPos);
 	}
 	void SetPreviousPosition(const TilePositionf& aPosition);
+	void SetSpeedConstant(const float aSpeed);
+	float GetSpeedConstant() const;
 	
 	CU::Vector2f GetPosition() const
 	{
@@ -148,6 +150,7 @@ private:
 
 	float myStepTimer;
 	float myFightTimer;
+	float mySpeedConstant;
 	std::string myName;
 };
 

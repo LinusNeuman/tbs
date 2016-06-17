@@ -48,8 +48,8 @@ namespace DL_Debug
 
 		std::string GetCurrentTimeAsString();
 		static Debug* ourInstance;
-		std::ofstream myOutput;
-		std::ofstream myCrashOutput;
+		/*std::ofstream myOutput;
+		std::ofstream myCrashOutput;*/
 		std::string myCrashOutputLocation;
 	};
 }

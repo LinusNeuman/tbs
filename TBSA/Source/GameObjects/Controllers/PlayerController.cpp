@@ -304,6 +304,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			DL_ASSERT(false, "Error in handling playercontroller mouse input");
 		case enumMouseState::eHeldOnVoid:
 		case enumMouseState::eHeldOnPlayer:
+		case enumMouseState::eHeldOnNoCombat:
 			break;
 		}
 	}
@@ -321,6 +322,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	myClickedOnEnemy = false;
 	myClickedOnBB = false;
 	myFakeClickedOnEnemy = false;
+	myClickedOnSelectedPlayer = false;
 
 	PointCollider tempCollider;
 
@@ -339,11 +341,11 @@ enumMouseState PlayerController::GetCurrentMouseState()
 			return enumMouseState::eHeldOnPlayer;
 		}
 	}
-	else if (myClickedOnBB == true)
+	else if (myClickedOnBB == true )
 	{
-		return enumMouseState::eHeldOnVoid;
+		return enumMouseState::eHeldOnNoCombat;
 	}
-	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false)
+	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false || myClickedOnSelectedPlayer == true)
 	{
 		return enumMouseState::eHeldOnVoid;
 	}
@@ -498,6 +500,10 @@ bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
 		if (mySelectedPlayer->GetIndex() != aMessage.myPlayerID)
 		{
 			myClickedOnPlayer = true;
+		}
+		else
+		{
+			myClickedOnSelectedPlayer = true;
 		}
 	}
 	return true;

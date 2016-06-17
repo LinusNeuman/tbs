@@ -11,5 +11,6 @@ enum class enumMouseState
 	eHeldOnEmptyTile,
 	eHeldOnEnemy,
 	eHeldOnVoid,
+	eHeldOnNoCombat,
 	enumLength
 };

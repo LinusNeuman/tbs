@@ -36,15 +36,15 @@ bool Debug::Create(const std::string& aFile)
 		return false;
 	}	
 
-	CU::WindowsFunctions::CreateFolder(aFile);
-	windowsString CrashLogsFolder = CU::WindowsFunctions::CreateFolder(aFile, "CrashLogs");
+	//CU::WindowsFunctions::CreateFolder(aFile);
+	//windowsString CrashLogsFolder = CU::WindowsFunctions::CreateFolder(aFile, "CrashLogs");
 
 	std::string tempTimeStampString = "/" + ourInstance->GetCurrentTimeAsString() + ".txt";
 
 	windowsString tempTimeCorrectFormat(tempTimeStampString.begin(), tempTimeStampString.end());
 
-	ourInstance->myOutput = std::ofstream(aFile + tempTimeCorrectFormat, std::ofstream::out);
-	ourInstance->myCrashOutputLocation = CrashLogsFolder + tempTimeCorrectFormat;
+	//ourInstance->myOutput = std::ofstream(aFile + tempTimeCorrectFormat, std::ofstream::out);
+	//ourInstance->myCrashOutputLocation = CrashLogsFolder + tempTimeCorrectFormat;
 
 	return true;
 }
@@ -53,7 +53,7 @@ void Debug::Destroy()
 {
 	if (ourInstance != nullptr)
 	{
-		ourInstance->myOutput.close();
+		//ourInstance->myOutput.close();
 	}
 	delete ourInstance;
 	ourInstance = nullptr;
@@ -100,8 +100,8 @@ void Debug::AssertMessage(const char* aFileName, int aLine, const char* aFunctio
 void Debug::PrintMessage(const char * aString)
 {
 	std::cout << aString << std::endl;
-	ourInstance->myOutput << aString << std::endl;
-	ourInstance->myOutput << "---------------" << std::endl;
+	//ourInstance->myOutput << aString << std::endl;
+	//ourInstance->myOutput << "---------------" << std::endl;
 }
 
 void Debug::DebugMessage(const int aLine, const char * aFileName, const char * aFormattedString, ...)
@@ -166,16 +166,16 @@ std::string Debug::GetCurrentTimeAsString()
 
 void DL_Debug::Debug::StartCrashMessage()
 {
-	ourInstance->myCrashOutput = std::ofstream(myCrashOutputLocation, std::ofstream::out);
+	//ourInstance->myCrashOutput = std::ofstream(myCrashOutputLocation, std::ofstream::out);
 }
 
 void DL_Debug::Debug::CrashMessage(const char * aString)
 {
-	ourInstance->myCrashOutput << aString << std::endl;
-	ourInstance->myCrashOutput << "---------------" << std::endl;
+	//ourInstance->myCrashOutput << aString << std::endl;
+	//ourInstance->myCrashOutput << "---------------" << std::endl;
 }
 
 void DL_Debug::Debug::EndCrashMessage()
 {
-	ourInstance->myCrashOutput.close();
+	//ourInstance->myCrashOutput.close();
 }
