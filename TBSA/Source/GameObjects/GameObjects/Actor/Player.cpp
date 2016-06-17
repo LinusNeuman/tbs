@@ -114,6 +114,7 @@ bool Player::RecieveMessage(const EnemyObjectMessage& aMessage)
 		{
 			myIsSeen = false;
 			SetAP(myPreviousAP);
+			SetActorState(eActorState::eIdle);
 		}	
 	}
 	return true;
