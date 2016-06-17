@@ -23,7 +23,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void GetPathNodes(const int aINdex, PathAndName & aPath, const picojson::array & someData, const int aMapWidth, const int aLastTile);
 
 
-void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const SavedDeadEnemy *aDeadEnemyData)
+void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData)
 {
 	TiledData& someTiles = *aTilePointer;
 	std::map<std::string, unsigned short> enemyIndexes;
@@ -315,8 +315,18 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 							}
 						}
 					}
-
+					
 					someTiles.myEnemies.Add(enemyActor);
+					for (size_t iEnemy = 0; iEnemy < aDeadEnemyData.Size(); iEnemy++)
+					{
+						if (aDeadEnemyData[iEnemy].myEnemyIndex == k)
+						{
+							enemyActor->SetActorState(eActorState::eDead);
+							enemyActor->SetPosition(CommonUtilities::Vector2f(aDeadEnemyData[iEnemy].myTilePosition.x, aDeadEnemyData[iEnemy].myTilePosition.y));
+							enemyActor->SetDeadestFlag(true);
+							enemyActor->ChangeAnimation("DeadestState");
+						}
+					}
 
 					enemyIndexes[JsonHelp::GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;
 				}

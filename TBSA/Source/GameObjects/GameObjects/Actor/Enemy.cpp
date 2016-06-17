@@ -147,6 +147,11 @@ int Enemy::GetViewDistance() const
 	return myViewDistance;
 }
 
+void Enemy::SetDeadestFlag(bool aFlag)
+{
+	myIsDeadeastFlag = aFlag;
+}
+
 void Enemy::OnClick()
 {
 	if (GetVisibleState() == true)

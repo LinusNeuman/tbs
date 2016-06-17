@@ -46,9 +46,8 @@ private:
 	LevelFactory* myLevelFactory;
 	SoundEffect* myAmbiance;
 	Song* myMusic;
+	CommonUtilities::GrowingArray<SavedDeadEnemy> myDeadEnemies;
 	TilePosition myRespawnPosition;
-	CommonUtilities::GrowingArray<Enemy*> myDeadEnemies;
-	const SavedDeadEnemy *myDeadEnemyData;
 	bool scoreScreenDone;
 	bool myShouldExit;
 	bool myGameOver;

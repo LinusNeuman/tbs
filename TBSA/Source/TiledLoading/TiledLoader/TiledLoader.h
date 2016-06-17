@@ -12,5 +12,5 @@ struct TiledData;
 
 namespace TiledLoader
 {
-	void Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const SavedDeadEnemy *aDeadEnemyData);
+	void Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData);
 }

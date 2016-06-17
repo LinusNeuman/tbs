@@ -86,9 +86,9 @@ void PlayState::Init(const std::string& aLevelPath)
 		myLevelKey = aLevelPath;
 	}
 	myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
-	myDeadEnemyData = nullptr;
+	myDeadEnemies.Init(10);
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
-	myLevel = myLevelFactory->CreateLevel(myLevelKey, myRespawnPosition, myDeadEnemyData);
+	myLevel = myLevelFactory->CreateLevel(myLevelKey, myRespawnPosition, myDeadEnemies);
 	myCurrentLevelpath = myLevelKey;
 	LoadGUI("InGame");
 
@@ -106,7 +106,6 @@ void PlayState::Init(const std::string& aLevelPath)
 		myMusic->Play(0.58f);
 	}
 	myHasTriggeredCheckpoint = false;
-	myDeadEnemies.Init(5);
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -254,8 +253,7 @@ bool PlayState::RecieveMessage(const DeadEnemyMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eDeadEnemyData)
 	{
-
-		myDeadEnemyData = &aMessage.myEnemyData;
+		myDeadEnemies.Add(SavedDeadEnemy({ USHORTCAST(aMessage.myEnemyData.myTilePosition.x), USHORTCAST(aMessage.myEnemyData.myTilePosition.y) }, aMessage.myEnemyData.myEnemyIndex));
 	}
 	return true;
 }
@@ -271,6 +269,6 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
-	myLevel = myLevelFactory->CreateLevel(aFilePath, myRespawnPosition, myDeadEnemyData);
+	myLevel = myLevelFactory->CreateLevel(aFilePath, myRespawnPosition, myDeadEnemies);
 	myCurrentLevelpath = aFilePath;
 }
