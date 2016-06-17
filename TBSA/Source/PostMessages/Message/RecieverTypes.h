@@ -77,5 +77,6 @@ enum class RecieverTypes
 	eGameOverScore,
 	eEnemiesEndTurn,
 	eContinueEndScreen,
+	eTriggeredCheckpoint,
 	enumlength,
 };

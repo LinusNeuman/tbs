@@ -49,5 +49,6 @@
     <ClInclude Include="Message\CurrentPlayerAP.h" />
     <ClInclude Include="Message\ScoreCounterMessage.h" />
     <ClInclude Include="Message\EnemyNextPathMessage.h" />
+    <ClInclude Include="Message\CheckpointMessage.h" />
   </ItemGroup>
 </Project>
