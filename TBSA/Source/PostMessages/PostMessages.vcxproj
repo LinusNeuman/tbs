@@ -213,6 +213,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Message\CandyAmountMessage.h" />
     <ClInclude Include="Message\CheckpointMessage.h" />
     <ClInclude Include="Message\CreditScreenMessage.h" />
     <ClInclude Include="Message\CurrentPlayerAP.h" />
