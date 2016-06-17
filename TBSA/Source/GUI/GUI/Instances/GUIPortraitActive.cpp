@@ -84,17 +84,7 @@ void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath
 
 	mySprite = mySpriteUnpressed;
 
-	if (aPlayHoverSound == true)
-	{
-		myHoverSound = new SoundEffect();
-		myHoverSound->Init("Sounds/GUI/HoverMenuItem.ogg");
-	}
 
-	if (aPlayClickSound == true)
-	{
-		myClickSound = new SoundEffect();
-		myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
-	}
 
 	ResetAnimate();
 }
@@ -115,7 +105,7 @@ void GUIPortraitActive::WhenClicked()
 
 void GUIPortraitActive::WhenHovered()
 {
-	GUIButton::WhenHovered();
+	//GUIButton::WhenHovered();
 }
 
 void GUIPortraitActive::Render()
@@ -138,7 +128,7 @@ void GUIPortraitActive::Render()
 	{
 		if (myIsCurrentlyHovered == true)
 		{
-			mySpriteHovered->Draw(myPosition);
+			//mySpriteHovered->Draw(myPosition);
 		}
 	}
 }
