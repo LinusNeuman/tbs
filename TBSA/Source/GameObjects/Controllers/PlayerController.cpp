@@ -208,6 +208,8 @@ void PlayerController::CostAP(const int anAP)
 
 void PlayerController::Update(const CommonUtilities::Time& aTime)
 {
+	SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
+
 	const TilePosition mousePosition = TilePosition(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
 
 #pragma region CameraControls
