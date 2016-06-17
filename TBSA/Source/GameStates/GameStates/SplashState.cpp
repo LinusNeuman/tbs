@@ -21,6 +21,8 @@ Splash::Splash(const char* aPath)
 
 	myIsDone = false;
 	myStayTimer = 0.f;
+
+	while (ShowCursor(false) > 0);
 }
 
 Splash::~Splash()
