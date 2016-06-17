@@ -72,6 +72,12 @@ void Player::SetAP(const int aValue)
 	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(myPosition), GetMyAP()));
 }
 
+void Player::AddAP(const int aValue)
+{
+	DL_ASSERT(aValue >= 0, "Trying to use addap function with negative value");
+	SetAP(myCurrentAP + aValue);
+}
+
 void Player::SuggestCostAP(const int aSuggestCost)
 {
 	myAPBox.SetCost(aSuggestCost);

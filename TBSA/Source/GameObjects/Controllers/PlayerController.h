@@ -58,6 +58,8 @@ public:
 	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
 
 private:
+	void AddCandy(const unsigned short aCandyAmount = 0);
+	void EatCandy();
 	bool CheckIfPlayerIsAllowedInput();
 
 	int GetPlayerAttackAPCost() const;
@@ -85,6 +87,8 @@ private:
 	CommonUtilities::Vector2f myMousePosition;
 	Player *mySelectedPlayer;
 	unsigned short mySelectedPlayerIndex;
+
+	unsigned short myCandy;
 
 	bool myPlayerTurnFlag;
 

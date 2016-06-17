@@ -74,6 +74,7 @@ enum class RecieverTypes
 	eCloseOptionsMenu,
 	eAddTextToObjectiveBox,
 	eClearObjectiveBox,
+	eEatCandy,
 	eGameOverScore,
 	eEnemiesEndTurn,
 	eContinueEndScreen,

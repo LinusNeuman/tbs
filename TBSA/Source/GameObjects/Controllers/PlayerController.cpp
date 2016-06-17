@@ -48,6 +48,7 @@ PlayerController::PlayerController()
 	myClickedOnEnemy = false;
 	myFakeClickedOnEnemy = false;
 	myPlayerTurnFlag = false;
+	myCandy = 2;
 
 	mySelectPlayerSound = new SoundEffect();
 	mySelectPlayerSound->Init("Sounds/SFX/switch.ogg");
@@ -122,6 +123,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eFakeClickedEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, *this, RecieverOrder::VIP);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEatCandy, *this);
 
 	myMouseController.Init();
 }
@@ -248,6 +250,10 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
+	}
+	if (IsometricInput::GetKeyPressed(DIK_U) == true)
+	{
+		SendPostMessage(GUIMessage(RecieverTypes::eEatCandy));
 	}
 #pragma endregion
 
@@ -456,6 +462,10 @@ bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 			return false;
 		}
 	}
+	else if (aMessage.myType == RecieverTypes::eEatCandy)
+	{
+		EatCandy();
+	}
 	return true;
 }
 
@@ -480,6 +490,7 @@ bool PlayerController::RecieveMessage(const PlayerDiedMessage & aMessage)
 void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
+	AddCandy(1);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
 	myCandySound->Play(0.5f);
 	SendPostMessage(TextMessage(RecieverTypes::eObjctive , "CandyMessage"));
@@ -914,6 +925,20 @@ void PlayerController::ResetTileShaders()
 	{
 		myFloor->GetTile(i).SetVisible(false);
 		//myFloor->GetTile(i).SetDiscovered(false);
+	}
+}
+
+void PlayerController::AddCandy(const unsigned short aCandyAmount /*= 0*/)
+{
+	myCandy += aCandyAmount;
+}
+
+void PlayerController::EatCandy()
+{
+	if (myCandy > 0)
+	{
+		myCandy -= 1;
+		mySelectedPlayer->AddAP(2);
 	}
 }
 
