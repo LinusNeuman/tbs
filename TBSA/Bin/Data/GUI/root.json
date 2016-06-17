@@ -8,25 +8,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/EndScreens\\ContinueBTN/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/EndScreens\\ContinueBTN/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/EndScreens\\ContinueBTN/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/EndScreens\\ContinueBTN",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "Continue",
             "Tooltip": "",
             "mySprite": {
@@ -41,7 +41,7 @@
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
-              "Click": "EndScreenContinue",
+              "Click": "",
               "Hover": ""
             }
           }
@@ -56,25 +56,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/BackButton/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/BackButton/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/BackButton",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "BackButton",
             "Tooltip": "kel",
             "mySprite": {
@@ -104,25 +104,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/BackButton/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/BackButton/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/BackButton",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "BackButton",
             "Tooltip": "",
             "mySprite": {
@@ -152,25 +152,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\PlayBTN",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "PlayButton",
             "Tooltip": "",
             "mySprite": {
@@ -193,25 +193,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\QuitBTN",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "QuitButton",
             "Tooltip": "",
             "mySprite": {
@@ -234,25 +234,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\LevelSelectBTN",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "Level Select",
             "Tooltip": "",
             "mySprite": {
@@ -275,25 +275,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/MainMenu\\MainMenuButtons\\CreditsBTN",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "Credits",
             "Tooltip": "",
             "mySprite": {
@@ -569,25 +569,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/BackButton/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/BackButton/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/BackButton",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "BackButton",
             "Tooltip": "",
             "mySprite": {
@@ -617,25 +617,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Unpressed.dds",
-              "myWidth": 223,
-              "myHeight": 117
+              "myWidth": 240,
+              "myHeight": 126
             },
             "myPressed": {
               "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Pressed.dds",
-              "myWidth": 223,
-              "myHeight": 117
+              "myWidth": 240,
+              "myHeight": 126
             },
             "myHover": {
               "myPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn/Hover.dds",
-              "myWidth": 223,
-              "myHeight": 117
+              "myWidth": 240,
+              "myHeight": 126
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/InGame\\EndTurnButton\\endTurn_btn",
-            "mySizeX": 223,
-            "mySizeY": 117,
+            "mySizeX": 240,
+            "mySizeY": 126,
             "Name": "endTurn_btn",
             "Tooltip": "",
             "mySprite": {
@@ -658,25 +658,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Unpressed.dds",
-              "myWidth": 267,
-              "myHeight": 69
+              "myWidth": 135,
+              "myHeight": 75
             },
             "myPressed": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Pressed.dds",
-              "myWidth": 267,
-              "myHeight": 69
+              "myWidth": 135,
+              "myHeight": 75
             },
             "myHover": {
               "myPath": "Sprites/GUI/InGame\\MenuButton/Hover.dds",
-              "myWidth": 267,
-              "myHeight": 69
+              "myWidth": 135,
+              "myHeight": 75
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/InGame\\MenuButton",
-            "mySizeX": 267,
-            "mySizeY": 69,
+            "mySizeX": 135,
+            "mySizeY": 75,
             "Name": "menu_btn",
             "Tooltip": "",
             "mySprite": {
@@ -706,25 +706,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/PauseMenu\\RestartBtn",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "Reset Button",
             "Tooltip": "",
             "mySprite": {
@@ -754,25 +754,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/PauseMenu\\ResumeBtn/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/PauseMenu\\ResumeBtn/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/PauseMenu\\ResumeBtn/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": false,
             "myImagesPath": "Sprites/GUI/PauseMenu\\ResumeBtn",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "ResumeBTN",
             "Tooltip": "",
             "mySprite": {
@@ -795,25 +795,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/PauseMenu\\OptionsBtn/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/PauseMenu\\OptionsBtn/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/PauseMenu\\OptionsBtn/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": false,
             "myImagesPath": "Sprites/GUI/PauseMenu\\OptionsBtn",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "OptionsBTN",
             "Tooltip": "",
             "mySprite": {
@@ -836,25 +836,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/PauseMenu\\RestartBtn/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": false,
             "myImagesPath": "Sprites/GUI/PauseMenu\\RestartBtn",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "RestartBTN",
             "Tooltip": "",
             "mySprite": {
@@ -877,25 +877,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/PauseMenu\\QuitBtn/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/PauseMenu\\QuitBtn/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/PauseMenu\\QuitBtn/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": false,
             "myImagesPath": "Sprites/GUI/PauseMenu\\QuitBtn",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "QuitBTN",
             "Tooltip": "",
             "mySprite": {

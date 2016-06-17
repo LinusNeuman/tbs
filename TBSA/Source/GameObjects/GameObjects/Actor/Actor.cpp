@@ -11,6 +11,7 @@
 #include <Message/ColliderMessage.h>
 #include <Message/EnemyPositionChangedMessage.h>
 #include <Message/EnemyNextPathMessage.h>
+#include <Message/CheckpointMessage.h>
 
 Actor::Actor()
 {
@@ -51,11 +52,13 @@ Actor::Actor()
 
 	myFightTimer = 0.0f;
 	myStepTimer = 0.0f;
+	myRespawnPoint = CU::Vector2ui(UINT_MAX, UINT_MAX);
 }
 
 Actor::~Actor()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eMouseClicked, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 
 	for (int i = 0; i <= 5; ++i)
 	{
@@ -92,6 +95,7 @@ void Actor::Init(const ActorData &aActorData)
 	myBoxCollider.SetPositionAndSize(myPosition, CU::Vector2f::Half);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eMouseClicked, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 }
 
 void Actor::SpriteInit()
@@ -387,5 +391,11 @@ bool Actor::RecieveMessage(const ColliderMessage & aMessage)
 	{
 		OnClick();
 	}
+	return true;
+}
+
+bool Actor::RecieveMessage(const CheckpointMessage& aMessage)
+{
+	myRespawnPoint = aMessage.myPosition;
 	return true;
 }

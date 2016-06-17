@@ -262,6 +262,8 @@ void CGame::UpdateWork()
 
 	CU::TimeManager::Update();
 
+	AudioManager::GetInstance()->Update();
+
 
 	if (myImRunning == true)
 	{

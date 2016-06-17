@@ -39,8 +39,26 @@ public:
 
 	void SetPosition(const CommonUtilities::Vector2f & aPos)
 	{
-		UpdatePosition(aPos);
-		myTargetPosition = CommonUtilities::Vector2ui(aPos);
+		if (myRespawnPoint == CU::Vector2ui(UINT_MAX, UINT_MAX))
+		{
+			UpdatePosition(aPos);
+			myTargetPosition = CommonUtilities::Vector2ui(aPos);
+		}
+		else
+		{
+			if (myType == eActorType::ePlayerOne)
+			{
+				UpdatePosition(CU::Vector2f(myRespawnPoint));
+				myTargetPosition = myRespawnPoint;
+			}
+			else
+			{
+				UpdatePosition(CU::Vector2f(myRespawnPoint) + CU::Vector2f(1.f, 0.f)) ;
+				myTargetPosition = myRespawnPoint + CU::Vector2ui(1, 0);
+			}
+		
+		}
+	
 	}
 	void SetPreviousPosition(const TilePositionf& aPosition);
 	void SetSpeedConstant(const float aSpeed);
@@ -68,6 +86,7 @@ public:
 	eDirection GetPreviousDirectionEnum() const;
 
 	virtual bool RecieveMessage(const ColliderMessage & aMessage) override;
+	virtual bool RecieveMessage(const CheckpointMessage & aMessage) override;
 
 	virtual void OnClick() = 0;
 
@@ -137,6 +156,7 @@ protected:
 	StaticSprite *mySprite;
 	bool myIsSeen;
 	bool mySpriteIsInit;
+	CU::Vector2ui myRespawnPoint;
 private:
 	void UpdatePath();
 

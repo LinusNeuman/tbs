@@ -23,7 +23,7 @@ AudioManager::AudioManager()
 		return;
 	}
 
-	mySystem->init(36, FMOD_INIT_NORMAL, nullptr);
+	mySystem->init(128, FMOD_INIT_NORMAL, nullptr);
 
 	system("color B");
 
