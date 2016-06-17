@@ -242,7 +242,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
-	if (IsometricInput::GetKeyPressed(DIK_P) == true)
+	if (IsometricInput::GetKeyPressed(DIK_E) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
 		{
@@ -255,7 +255,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			}
 		}
 	}
-	if (IsometricInput::GetKeyPressed(DIK_U) == true)
+	if (IsometricInput::GetKeyPressed(DIK_Q) == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEatCandy));
 	}
@@ -605,10 +605,10 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::CHECKPOINT)
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
-		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, aMessage.myPosition));
+		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, CommonUtilities::Vector2ui(aMessage.myPosition.x, aMessage.myPosition.y)));
 	}
 
 

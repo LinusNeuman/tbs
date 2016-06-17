@@ -23,7 +23,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void GetPathNodes(const int aINdex, PathAndName & aPath, const picojson::array & someData, const int aMapWidth, const int aLastTile);
 
 
-void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
+void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const SavedDeadEnemy *aDeadEnemyData)
 {
 	TiledData& someTiles = *aTilePointer;
 	std::map<std::string, unsigned short> enemyIndexes;
@@ -208,10 +208,27 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					}
 
 					Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
+					float posX;
+					float posY;
+					if (aRespawnPosition == CU::Vector2ui(UINT_MAX, UINT_MAX))
+					{
+						posX = static_cast<float>(JsonHelp::GetNumber(player["x"])) / 64;
+						posY = static_cast<float>(JsonHelp::GetNumber(player["y"])) / 64;
+					}
+					else
+					{
+						if (playerType == eActorType::ePlayerOne)
+						{
+							posX = aRespawnPosition.x;
+							posY = aRespawnPosition.y;
+						}
+						else
+						{
+							posX = aRespawnPosition.x + 1;
+							posY = aRespawnPosition.y;
+						}
 
-					const float posX = static_cast<float>(JsonHelp::GetNumber(player["x"])) / 64;
-					const float posY = static_cast<float>(JsonHelp::GetNumber(player["y"])) / 64;
-
+					}
 					playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
 					someTiles.myPlayers[playerIndex] = playerActor;
 				}
