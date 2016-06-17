@@ -242,7 +242,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
-	if (IsometricInput::GetKeyPressed(DIK_P) == true)
+	if (IsometricInput::GetKeyPressed(DIK_E) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
 		{
@@ -255,7 +255,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			}
 		}
 	}
-	if (IsometricInput::GetKeyPressed(DIK_U) == true)
+	if (IsometricInput::GetKeyPressed(DIK_Q) == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEatCandy));
 	}
