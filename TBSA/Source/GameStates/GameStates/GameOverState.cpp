@@ -7,6 +7,7 @@ myStatsBox({ 0.f, 0.f }, { 1000.f, 500.f }, "Text/calibril.ttf_sdf", eLinewrappi
 {
 	myLetThroughRender = true;
 	myShouldExit = false;
+	myShouldDisplayStats = false;
 
 	myStatsBox.SetSize({ 1000.f, 500.f });
 	myStatsBox.SetPosition({ 1920.f / 2.f - 80, 1080.f / 2.f - 340});
@@ -54,6 +55,11 @@ void GameOverState::Init()
 	myIcons->SetLayer(enumRenderLayer::eGUI);
 	myIcons->SetRenderPriority(700.f);
 
+	myGameOverSprite = new StaticSprite();
+	myGameOverSprite->Init("Sprites/GUI/EndScreens/gameOver.dds", false, CU::Vector4f::Zero, { 0.f, 0.f });
+	myGameOverSprite->SetLayer(enumRenderLayer::eGUI);
+	myGameOverSprite->SetRenderPriority(6000.f);
+
 	LoadGUI("GameOver");
 
 	myMouseController.Init();
@@ -61,16 +67,22 @@ void GameOverState::Init()
 
 eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
-	myGUIManager.Update(aDeltaTime);
+	if (IsometricInput::GetAnyKeyPressed() == true || IsometricInput::GetAnyMouseButtonPressed() == true)
+	{
+		myShouldDisplayStats = true;
+	}
+	if (myShouldDisplayStats == true)
+	{
+		myGUIManager.Update(aDeltaTime);
+	}
 
 	myMouseController.SetMouseState(enumMouseState::eClickedOnEmptyTile);
 
 	myStatsBox.Update();
-
+	
 	if (myShouldExit == true)
 	{
 		myShouldExit = false;
-		//return eStackReturnValue::ePopSubState;
 		return eStackReturnValue::eDeleteSubstate;
 	}
 	return eStackReturnValue::eStay;
@@ -79,11 +91,17 @@ eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateSt
 void GameOverState::Draw() const
 {
 	myMouseController.Draw(IsometricInput::GetMouseWindowPositionNormalizedSpace());
-
-	myGUIManager.Render();
-	myBackgroundSprite->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
-	myIcons->DrawWithNormalized(CU::Vector2f(0.48f, 0.54f));
-	myStatsBox.Render();
+	if (myShouldDisplayStats == true)
+	{
+		myGUIManager.Render();
+		myBackgroundSprite->DrawWithNormalized(CU::Vector2f(0.5f, 0.5f));
+		myIcons->DrawWithNormalized(CU::Vector2f(0.48f, 0.54f));
+		myStatsBox.Render();
+	}
+	if (myShouldDisplayStats == false)
+	{
+		myGameOverSprite->DrawWithNormalized(CU::Vector2f(0.f, 0.f));
+	}
 }
 
 bool GameOverState::RecieveMessage(const GUIMessage& aMessage)

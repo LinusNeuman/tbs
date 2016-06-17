@@ -22,6 +22,7 @@ public:
 	int GetPreviousAP() const;
 	void CostAP(const int aCost);
 	void SetAP(const int aValue);
+	void AddAP(const int aValue);
 	void SuggestCostAP(const int aSuggestCost);
 	
 	void ReachedTarget()override;

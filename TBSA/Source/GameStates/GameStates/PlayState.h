@@ -31,6 +31,7 @@ public:
 	virtual bool RecieveMessage(const StartUpLevelMessage & aMessage) override;
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
 	virtual bool RecieveMessage(const TextMessage & aMessage) override;
+	virtual bool RecieveMessage(const CheckpointMessage & aMessage) override;
 	bool RecieveMessage(const ScoreCounterMessage& aMessage);
 
 
@@ -49,4 +50,5 @@ private:
 	bool myShouldPause;
 	bool myShowPostLevelScreen;
 	bool myFinishedGame;
+	bool myHasTriggeredCheckpoint;
 };

@@ -57,6 +57,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eRestartLevel, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEndScoreMessage, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eGameOverScore, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -70,6 +71,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eRestartLevel, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEndScoreMessage, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGameOverScore, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 
 	if (aLevelPath == "")
 	{
@@ -98,6 +100,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	{
 		myMusic->Play(0.58f);
 	}
+	myHasTriggeredCheckpoint = false;
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -204,6 +207,12 @@ bool PlayState::RecieveMessage(const TextMessage& aMessage)
 	return true;
 }
 
+bool PlayState::RecieveMessage(const CheckpointMessage& aMessage)
+{
+	myHasTriggeredCheckpoint = true;
+	return true;
+}
+
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
@@ -211,13 +220,21 @@ bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 	return true;
 }
 
+
+
 bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
 	if (myGameOver == true)
 	{
-		ChangeLevel(myCurrentLevelpath);
-		myGameOver = false;
-
+		if (myHasTriggeredCheckpoint == false)
+		{
+			ChangeLevel(myCurrentLevelpath);
+			myGameOver = false;
+		}
+		else
+		{
+			
+		}
 	}
 	else
 	{

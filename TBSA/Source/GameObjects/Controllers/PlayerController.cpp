@@ -33,6 +33,7 @@
 #include "Message/ScoreCounterMessage.h"
 #include <Message/EnemyNextPathMessage.h>
 #include "Message/PlayerDiedMessage.h"
+#include <Message/CheckpointMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -48,6 +49,7 @@ PlayerController::PlayerController()
 	myClickedOnEnemy = false;
 	myFakeClickedOnEnemy = false;
 	myPlayerTurnFlag = false;
+	myCandy = 2;
 
 	mySelectPlayerSound = new SoundEffect();
 	mySelectPlayerSound->Init("Sounds/SFX/switch.ogg");
@@ -122,6 +124,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eFakeClickedEnemy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, *this, RecieverOrder::VIP);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEatCandy, *this);
 
 	myMouseController.Init();
 }
@@ -228,14 +231,14 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma endregion
 
 #pragma region Keyboard Input
-	/*if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true && CheckIfPlayerIsAllowedInput() == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
-	}*/
+	}
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
@@ -248,6 +251,10 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 				mySelectedPlayer->CostAP(mySelectedPlayer->GetPeekCost());
 			}
 		}
+	}
+	if (IsometricInput::GetKeyPressed(DIK_U) == true)
+	{
+		SendPostMessage(GUIMessage(RecieverTypes::eEatCandy));
 	}
 #pragma endregion
 
@@ -456,6 +463,10 @@ bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 			return false;
 		}
 	}
+	else if (aMessage.myType == RecieverTypes::eEatCandy)
+	{
+		EatCandy();
+	}
 	return true;
 }
 
@@ -480,6 +491,7 @@ bool PlayerController::RecieveMessage(const PlayerDiedMessage & aMessage)
 void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
+	AddCandy(1);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
 	myCandySound->Play(0.5f);
 	SendPostMessage(TextMessage(RecieverTypes::eObjctive , "CandyMessage"));
@@ -589,6 +601,14 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::CHECKPOINT)
+	{
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
+		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, aMessage.myPosition));
+	}
+
+
+
 	return true;
 }
 
@@ -914,6 +934,20 @@ void PlayerController::ResetTileShaders()
 	{
 		myFloor->GetTile(i).SetVisible(false);
 		//myFloor->GetTile(i).SetDiscovered(false);
+	}
+}
+
+void PlayerController::AddCandy(const unsigned short aCandyAmount /*= 0*/)
+{
+	myCandy += aCandyAmount;
+}
+
+void PlayerController::EatCandy()
+{
+	if (myCandy > 0)
+	{
+		myCandy -= 1;
+		mySelectedPlayer->AddAP(2);
 	}
 }
 

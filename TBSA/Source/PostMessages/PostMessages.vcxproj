@@ -213,6 +213,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Message\CheckpointMessage.h" />
     <ClInclude Include="Message\CreditScreenMessage.h" />
     <ClInclude Include="Message\CurrentPlayerAP.h" />
     <ClInclude Include="Message\EnemyDirectionChangedMessage.h" />

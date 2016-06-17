@@ -3,31 +3,37 @@
 		[
 		{
 				"type" : "kill",
-				"target" : "Enemy1"
+				"target" : "Enemy1",
+				"description":"Take out enemies"
 			},
 			{
 				"type" : "kill",
-				"target" : "Enemy2"
+				"target" : "Enemy2",
+				"description":"Take out enemies"
 			},
 				{
 				"type" : "kill",
-				"target" : "Enemy3"
+				"target" : "Enemy3",
+				"description":"Take out enemies"
 			},
 					{
 				"type" : "kill",
-				"target" : "Enemy4"
+				"target" : "Enemy4",
+				"description":"Take out enemies"
 			},
 					{
 				"type" : "kill",
-				"target" : "Enemy5"
+				"target" : "Enemy5",
+				"description":"Take out enemies"
 			},
 					{
 				"type" : "kill",
-				"target" : "Enemy6"
+				"target" : "Enemy6",
+				"description":"Take out enemies"
 			},		{
 				"type" : "kill",
 				"target" : "Enemy7",
-				
+				"description":"Take out enemies",
 				"stageEndDialog" : "lakesideDialog2"
 			}
 			
@@ -36,11 +42,13 @@
 			[
 			{
 				"type" : "hold_objective",
-				"target" : "endzone1"
+				"target" : "endzone1",
+				"description":"Get to the end"
 			},
 			{
 				"type" : "hold_objective",
-				"target" : "endzone2"
+				"target" : "endzone2",
+				"description":"Get to the end"
 			}
 		]
 	],
