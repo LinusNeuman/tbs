@@ -32,6 +32,7 @@
 #include <Message/CurrentPlayerAP.h>
 #include "Message/ScoreCounterMessage.h"
 #include <Message/EnemyNextPathMessage.h>
+#include <message/CandyAmountMessage.h>
 #include "Message/PlayerDiedMessage.h"
 
 #define EDGE_SCROLL_LIMIT -50.05f
@@ -493,6 +494,7 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 	AddCandy(1);
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
 	myCandySound->Play(0.5f);
+	SendPostMessage(CandyAmountMessage(RecieverTypes::eCandyAmount, myCandy));
 	SendPostMessage(TextMessage(RecieverTypes::eObjctive , "CandyMessage"));
 }
 
