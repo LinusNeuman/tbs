@@ -231,14 +231,14 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma endregion
 
 #pragma region Keyboard Input
-	/*if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true && CheckIfPlayerIsAllowedInput() == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
-	}*/
+	}
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
