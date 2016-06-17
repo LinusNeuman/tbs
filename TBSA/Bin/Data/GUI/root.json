@@ -56,25 +56,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/BackButton/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/BackButton/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/BackButton",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "BackButton",
             "Tooltip": "kel",
             "mySprite": {
@@ -104,25 +104,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/BackButton/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/BackButton/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/BackButton",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "BackButton",
             "Tooltip": "",
             "mySprite": {
@@ -569,25 +569,25 @@
             "$type": "GUIEditor.GUIButton, GUIEditor",
             "myUnpressed": {
               "myPath": "Sprites/GUI/BackButton/Unpressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myPressed": {
               "myPath": "Sprites/GUI/BackButton/Pressed.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myHover": {
               "myPath": "Sprites/GUI/BackButton/Hover.dds",
-              "myWidth": 203,
-              "myHeight": 74
+              "myWidth": 213,
+              "myHeight": 82
             },
             "myShouldPlayHoverSound": true,
             "myShouldPlayClickSound": true,
             "myAnimated": true,
             "myImagesPath": "Sprites/GUI/BackButton",
-            "mySizeX": 203,
-            "mySizeY": 74,
+            "mySizeX": 213,
+            "mySizeY": 82,
             "Name": "BackButton",
             "Tooltip": "",
             "mySprite": {
