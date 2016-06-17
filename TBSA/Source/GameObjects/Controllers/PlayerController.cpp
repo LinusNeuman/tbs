@@ -340,7 +340,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 
 	if (myClickedOnPlayer == true)
 	{
-		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
+		if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 		{
 			return enumMouseState::eClickedOnPlayer;
 		}
@@ -359,7 +359,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	}
 	else if (myClickedOnEnemy == true)
 	{
-		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
+		if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 		{			
 			return enumMouseState::eClickedOnEnemy;	
 		}
@@ -377,7 +377,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	}
 	else if (myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 	{
-		if (IsometricInput::GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
+		if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 		{
 			return enumMouseState::eClickedOnEmptyTile;
 		}

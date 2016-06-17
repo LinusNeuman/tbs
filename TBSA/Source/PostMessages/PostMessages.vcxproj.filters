@@ -51,5 +51,6 @@
     <ClInclude Include="Message\EnemyNextPathMessage.h" />
     <ClInclude Include="Message\CandyAmountMessage.h" />
     <ClInclude Include="Message\CheckpointMessage.h" />
+    <ClInclude Include="Message\DeadEnemyDataMessage.h" />
   </ItemGroup>
 </Project>

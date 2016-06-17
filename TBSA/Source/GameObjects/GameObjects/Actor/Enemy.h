@@ -6,6 +6,14 @@ struct EnemyData;
 struct ActorData;
 class EnemyController;
 
+struct SavedDeadEnemy
+{
+	SavedDeadEnemy(const TilePosition & aTilePosition, const unsigned short aIndex) : myTilePosition(aTilePosition), myEnemyIndex(aIndex)
+	{}
+	const TilePosition myTilePosition;
+	const unsigned short myEnemyIndex;
+};
+
 class Enemy : public Actor
 {
 public:

@@ -80,5 +80,6 @@ enum class RecieverTypes
 	eEnemiesEndTurn,
 	eContinueEndScreen,
 	eTriggeredCheckpoint,
-	enumlength,
+	eDeadEnemyData,
+	enumlength
 };
