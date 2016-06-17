@@ -8,6 +8,8 @@
 #include <Message/PlayerSeenMessage.h>
 #include <Message/EnemyPositionChangedMessage.h>
 #include <Message/EnemyNextPathMessage.h>
+#include "Message/DeadEnemyDataMessage.h"
+
 
 
 Enemy::Enemy()
@@ -174,6 +176,7 @@ void Enemy::Fight()
 {
 	SetActorState(eActorState::eFighting);
 	SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyAttacked, *this));
+	SendPostMessage(DeadEnemyMessage(RecieverTypes::eDeadEnemyData, SavedDeadEnemy({ USHORTCAST( myPosition.x),USHORTCAST(myPosition.y )}, myIndex)));
 }
 
 void Enemy::DecideAnimation()

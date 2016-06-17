@@ -20,6 +20,7 @@
 #include <../DialogLoader/DialogManager.h>
 #include <Message/TextMessage.h>
 #include "VictoryState.h"
+#include "Message/DeadEnemyDataMessage.h"
 
 PlayState::PlayState()
 {
@@ -58,6 +59,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eLevelEndScoreMessage, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eGameOverScore, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eTriggeredCheckpoint, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eDeadEnemyData, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -72,6 +74,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eLevelEndScoreMessage, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eGameOverScore, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTriggeredCheckpoint, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eDeadEnemyData, *this);
 
 	if (aLevelPath == "")
 	{
@@ -246,6 +249,15 @@ bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 bool PlayState::RecieveMessage(const ScoreCounterMessage& aMessage)
 {
 	myScoreCounter = aMessage.myScoreCounter;
+	return true;
+}
+
+bool PlayState::RecieveMessage(const DeadEnemyMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eDeadEnemyData)
+	{
+ 		int apa = 10;
+	}
 	return true;
 }
 

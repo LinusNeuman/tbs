@@ -32,8 +32,8 @@ public:
 	virtual bool RecieveMessage(const GUIMessage & aMessage) override;
 	virtual bool RecieveMessage(const TextMessage & aMessage) override;
 	virtual bool RecieveMessage(const CheckpointMessage & aMessage) override;
-	bool RecieveMessage(const ScoreCounterMessage& aMessage);
-
+	virtual bool RecieveMessage(const ScoreCounterMessage& aMessage);
+	virtual bool RecieveMessage(const DeadEnemyMessage & aMessage) override;
 
 private:
 	ScoreCounter myScoreCounter;
@@ -51,4 +51,6 @@ private:
 	bool myShowPostLevelScreen;
 	bool myFinishedGame;
 	bool myHasTriggeredCheckpoint;
+	
+
 };

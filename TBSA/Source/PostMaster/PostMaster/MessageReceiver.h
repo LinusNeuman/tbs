@@ -45,6 +45,7 @@ struct PlayerIsPeeking;
 struct EnemyNextPathMessage;
 struct ScoreCounterMessage;
 struct CheckpointMessage;
+struct DeadEnemyMessage;
 struct CandyAmountMessage;
 
 class MessageReciever
@@ -96,6 +97,7 @@ public:
 	virtual bool RecieveMessage(const EnemyNextPathMessage& aMessage);
 	virtual bool RecieveMessage(const ScoreCounterMessage & aMessage);
 	virtual bool RecieveMessage(const CheckpointMessage & aMessage);
+	virtual bool RecieveMessage(const DeadEnemyMessage & aMessage);
 	virtual bool RecieveMessage(const CandyAmountMessage & aMessage);
 
 	RecieverOrder myRecieverOrder;

@@ -225,3 +225,8 @@ bool MessageReciever::RecieveMessage(const CandyAmountMessage& aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const DeadEnemyMessage & aMessage)
+{
+	return true;
+}
