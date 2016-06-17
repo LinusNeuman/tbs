@@ -13,6 +13,7 @@
 #include <GUI/Instances/GUIPortraitActive.h>
 #include <GUI/Instances/GUIActionPeek.h>
 #include <GUI/Instances/GUIObjectiveDialog.h>
+#include <GUI/Instances/GUIActionCandy.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -109,6 +110,12 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(newPeek);
 
+			GUIActionCandy* newCandy = new GUIActionCandy();
+			newCandy->Init();
+
+			myGUIElements.Add(newCandy);
+
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;

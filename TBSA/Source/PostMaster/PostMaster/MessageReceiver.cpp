@@ -220,3 +220,8 @@ bool MessageReciever::RecieveMessage(const CheckpointMessage& aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const CandyAmountMessage& aMessage)
+{
+	return true;
+}
