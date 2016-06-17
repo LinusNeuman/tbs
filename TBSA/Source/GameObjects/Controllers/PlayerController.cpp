@@ -605,10 +605,10 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::CHECKPOINT)
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
-		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, aMessage.myPosition));
+		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, CommonUtilities::Vector2ui(aMessage.myPosition.x, aMessage.myPosition.y)));
 	}
 
 

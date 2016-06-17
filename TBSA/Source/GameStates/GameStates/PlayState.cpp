@@ -21,6 +21,7 @@
 #include <Message/TextMessage.h>
 #include "VictoryState.h"
 #include "Message/DeadEnemyDataMessage.h"
+#include <Message/CheckpointMessage.h>
 
 PlayState::PlayState()
 {
@@ -84,9 +85,10 @@ void PlayState::Init(const std::string& aLevelPath)
 	{
 		myLevelKey = aLevelPath;
 	}
-
+	myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
+	myDeadEnemyData = nullptr;
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
-	myLevel = myLevelFactory->CreateLevel(myLevelKey);
+	myLevel = myLevelFactory->CreateLevel(myLevelKey, myRespawnPosition, myDeadEnemyData);
 	myCurrentLevelpath = myLevelKey;
 	LoadGUI("InGame");
 
@@ -104,6 +106,7 @@ void PlayState::Init(const std::string& aLevelPath)
 		myMusic->Play(0.58f);
 	}
 	myHasTriggeredCheckpoint = false;
+	myDeadEnemies.Init(5);
 }
 
 eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
@@ -170,7 +173,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		newState->Init();
 		aStateStack.AddMainState(newState);
 	}
-
 	return eStackReturnValue::eStay;
 }
 
@@ -212,7 +214,12 @@ bool PlayState::RecieveMessage(const TextMessage& aMessage)
 
 bool PlayState::RecieveMessage(const CheckpointMessage& aMessage)
 {
-	myHasTriggeredCheckpoint = true;
+	if (aMessage.myType == RecieverTypes::eTriggeredCheckpoint)
+	{
+		myRespawnPosition = aMessage.myRespawnPosition;
+		myHasTriggeredCheckpoint = true;
+	}
+	
 	return true;
 }
 
@@ -223,21 +230,12 @@ bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 	return true;
 }
 
-
-
 bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
 	if (myGameOver == true)
 	{
-		if (myHasTriggeredCheckpoint == false)
-		{
-			ChangeLevel(myCurrentLevelpath);
-			myGameOver = false;
-		}
-		else
-		{
-			
-		}
+		ChangeLevel(myCurrentLevelpath);
+		myGameOver = false;
 	}
 	else
 	{
@@ -256,7 +254,8 @@ bool PlayState::RecieveMessage(const DeadEnemyMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eDeadEnemyData)
 	{
- 		int apa = 10;
+
+		myDeadEnemyData = &aMessage.myEnemyData;
 	}
 	return true;
 }
@@ -272,6 +271,6 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
-	myLevel = myLevelFactory->CreateLevel( aFilePath);
+	myLevel = myLevelFactory->CreateLevel(aFilePath, myRespawnPosition, myDeadEnemyData);
 	myCurrentLevelpath = aFilePath;
 }

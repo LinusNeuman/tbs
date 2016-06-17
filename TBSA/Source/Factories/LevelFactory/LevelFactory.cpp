@@ -18,7 +18,7 @@ LevelFactory::~LevelFactory()
 {
 }
 
-GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath)
+GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath, const CU::Vector2ui aRespawnPosition, const SavedDeadEnemy *aDeadEnemyData)
 {
 	if (myTileData != nullptr)
 	{
@@ -29,12 +29,12 @@ GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath)
 
 	myTileData->myObjectiveManager = &level->GetObjectiveManager();
 
-	LoadLevel(aLevelPath);
+	LoadLevel(aLevelPath, aRespawnPosition, aDeadEnemyData);
 	level->Init(myTileData);
 	return level;
 }
 
-void LevelFactory::LoadLevel(const std::string& aLevelPath)
+void LevelFactory::LoadLevel(const std::string& aLevelPath, const CU::Vector2ui aRespawnPosition, const SavedDeadEnemy *aDeadEnemyData)
 {
 	
 	//StaticSprite().Init();
@@ -60,14 +60,14 @@ void LevelFactory::LoadLevel(const std::string& aLevelPath)
 	
 	myTileData->myIsLoaded = false;
 
-	std::thread(StaticLoad, aLevelPath, myTileData).detach();
+	std::thread(StaticLoad, aLevelPath, myTileData, aRespawnPosition, aDeadEnemyData).detach();
 	//TiledLoader::Load(aLevelPath, myTileData);
 
 	
 }
 
-void LevelFactory::StaticLoad(const std::string& aFilePath, TiledData* aTilePointer)
+void LevelFactory::StaticLoad(const std::string& aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const SavedDeadEnemy *aDeadEnemyData)
 {
 	aTilePointer->myObjectiveManager->LoadFromJson(OBJECTIVE_LOCATION + aFilePath);
-	TiledLoader::Load(LEVEL_LOCATION + aFilePath, aTilePointer);
+	TiledLoader::Load(LEVEL_LOCATION + aFilePath, aTilePointer, aRespawnPosition, aDeadEnemyData);
 }
