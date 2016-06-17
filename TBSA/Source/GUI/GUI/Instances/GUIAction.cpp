@@ -41,12 +41,22 @@ void GUIAction::Create(const std::string& aSpritePath, CU::Vector2f aPosition, i
 	myCostP2 = aCost2;
 
 	myLocked = new StaticSprite();
-	myLocked->Init(aSpritePath + "/Locked.dds", false, { 0, 0, 109, 93 });
+	myLocked->Init(aSpritePath + "/Locked.dds", false, { 0, 0, 91, 73 });
 	myLocked->SetLayer(enumRenderLayer::eGUI);
 
 	myUnlockedGlow = new StaticSprite();
 	myUnlockedGlow->Init(aSpritePath + "/Unlocked.dds", false, { 0, 0, 109, 93 });
 	myUnlockedGlow->SetLayer(enumRenderLayer::eGUI);
+
+	CU::Vector2f boxPosition = { myPosition.x / SingletonDataHolder::GetTargetResolutionf().x, myPosition.y / SingletonDataHolder::GetTargetResolutionf().y };
+	CU::Vector2f spriteSizeNorm = { FLOATCAST(myLocked->GetSizeInPixels().x) / (1920.f), FLOATCAST(myLocked->GetSizeInPixels().y) / (1080.f) };
+
+	myCollisionBox.SetWithMaxAndMinPos(
+		boxPosition,
+		{
+			boxPosition.x + spriteSizeNorm.x,
+			boxPosition.y + spriteSizeNorm.y
+		});
 
 	ResetAnimateGlow();
 }

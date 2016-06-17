@@ -55,8 +55,8 @@ bool GUIActionCandy::RecieveMessage(const CandyAmountMessage& aMessage)
 void GUIActionCandy::Init()
 {
 	CU::Vector2f position;
-	position.x = 211;
-	position.y = 905;
+	position.x = 220;
+	position.y = 901;
 	
 	position.x /= 1920;
 	position.y /= 1080;
@@ -64,5 +64,5 @@ void GUIActionCandy::Init()
 	position.x *= SingletonDataHolder::GetTargetResolution().x;
 	position.y *= SingletonDataHolder::GetTargetResolution().y;
 
-	Create("Sprites/GUI/Actions/Candy", position, 1, 1);
+	Create("Sprites/GUI/Actions/Candy", position, 0, 0);
 }

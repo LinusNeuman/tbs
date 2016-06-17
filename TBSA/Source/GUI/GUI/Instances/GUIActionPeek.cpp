@@ -76,7 +76,7 @@ void GUIActionPeek::Init()
 {
 	CU::Vector2f position;
 	position.x = 220;
-	position.y = 854;
+	position.y = 841;
 	
 
 	position.x /= 1920;
