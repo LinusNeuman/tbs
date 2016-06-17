@@ -52,6 +52,8 @@ private:
 	uchar myCurrentCost;
 
 	StaticSprite* mySprite;
+	StaticSprite* mySpriteSelected;
+	StaticSprite* mySpriteUnSelected;
 
 	DX2D::CText* myAPText;
 
@@ -74,4 +76,6 @@ private:
 	CU::Vector2f myOffset;
 
 	bool myIsInitedFully;
+
+	bool myIsSelected;
 };

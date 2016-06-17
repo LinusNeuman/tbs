@@ -34,6 +34,7 @@
 #include <Message/EnemyNextPathMessage.h>
 #include <message/CandyAmountMessage.h>
 #include "Message/PlayerDiedMessage.h"
+#include <Message/CheckpointMessage.h>
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -231,14 +232,14 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 #pragma endregion
 
 #pragma region Keyboard Input
-	/*if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
+	if (IsometricInput::GetKeyPressed(DIK_TAB) == true)
 	{
 		SelectPlayer();
 	}
 	if (IsometricInput::GetKeyPressed(DIK_RETURN) == true && CheckIfPlayerIsAllowedInput() == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
-	}*/
+	}
 	if (IsometricInput::GetKeyPressed(DIK_P) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
@@ -602,6 +603,14 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::CHECKPOINT)
+	{
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
+		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, aMessage.myPosition));
+	}
+
+
+
 	return true;
 }
 

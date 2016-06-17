@@ -215,3 +215,8 @@ bool MessageReciever::RecieveMessage(const ScoreCounterMessage & aMessage)
 {
 	return true;
 }
+
+bool MessageReciever::RecieveMessage(const CheckpointMessage& aMessage)
+{
+	return true;
+}

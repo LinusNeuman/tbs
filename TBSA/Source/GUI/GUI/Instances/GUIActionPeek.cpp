@@ -85,5 +85,5 @@ void GUIActionPeek::Init()
 	position.x *= SingletonDataHolder::GetTargetResolution().x;
 	position.y *= SingletonDataHolder::GetTargetResolution().y;
 
-	Create("Sprites/GUI/Actions/Peek", position, 2, 1);
+	Create("Sprites/GUI/Actions/Peek", position, 3, 2);
 }

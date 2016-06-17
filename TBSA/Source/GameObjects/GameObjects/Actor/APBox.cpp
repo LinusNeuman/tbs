@@ -14,11 +14,20 @@ APBox::APBox()
 	myIsInitedFully = false;
 
 	myAPText = new DX2D::CText("Text/calibril.ttf_sdf");
-	mySprite = new StaticSprite();
-	mySprite->Init("Sprites/GUI/HUD/AP/ActorAP.dds", true, CU::Vector4f::Zero, { 0.5f, 0.5f });
-	mySprite->SetLayer(enumRenderLayer::eGUI);
-	mySprite->SetPivotWithPixels({ mySprite->GetSizeInPixels().x / 2.f, -(mySprite->GetSizeInPixels().y / 2.f) });
-	mySprite->SetRenderPriority(100.f);
+
+	mySpriteSelected = new StaticSprite();
+	mySpriteSelected->Init("Sprites/GUI/HUD/AP/ActorAPSelected.dds", true, CU::Vector4f::Zero, { 0.5f, 0.5f });
+	mySpriteSelected->SetLayer(enumRenderLayer::eGUI);
+	mySpriteSelected->SetPivotWithPixels({ mySpriteSelected->GetSizeInPixels().x / 2.f, -(mySpriteSelected->GetSizeInPixels().y / 2.f) });
+	mySpriteSelected->SetRenderPriority(100.f);
+
+	mySpriteUnSelected = new StaticSprite();
+	mySpriteUnSelected->Init("Sprites/GUI/HUD/AP/ActorAP.dds", true, CU::Vector4f::Zero, { 0.5f, 0.5f });
+	mySpriteUnSelected->SetLayer(enumRenderLayer::eGUI);
+	mySpriteUnSelected->SetPivotWithPixels({ mySpriteUnSelected->GetSizeInPixels().x / 2.f, -(mySpriteUnSelected->GetSizeInPixels().y / 2.f) });
+	mySpriteUnSelected->SetRenderPriority(100.f);
+
+	mySprite = mySpriteUnSelected;
 
 	myEasing = 0.f;
 	myAP = 0;
@@ -32,6 +41,8 @@ APBox::APBox()
 	myOffset = { 0.f, 0.f };
 
 	myIsInitedFully = true;
+
+	myIsSelected = false;
 }
 
 APBox::~APBox()
@@ -112,6 +123,7 @@ void APBox::MoveDown(const CommonUtilities::Time& aTime)
 
 void APBox::Animate(const CU::Time& aDelta)
 {
+	mySprite = mySpriteSelected;
 	myApBoxState == eAPBoxState::eGoingUp ? MoveUp(aDelta) : MoveDown(aDelta);
 }
 
@@ -121,6 +133,7 @@ void APBox::Reset()
 	myOffset = {0.f,0.f};
 	myApBoxState = eAPBoxState::eGoingDown;
 	myMovementTimer = 0.f;
+	mySprite = mySpriteUnSelected;
 }
 
 void APBox::Draw() const
@@ -130,7 +143,9 @@ void APBox::Draw() const
 		return;
 	}
 
+
 	mySprite->Draw(myPosition - myOffset);
+
 
 	CU::Vector2f OffsetForText = mySprite->GetSizeInPixels();
 	OffsetForText.y -= 16;
