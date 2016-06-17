@@ -28,13 +28,13 @@ void CreditsState::Init(bool aShouldQuit)
 
 	RenderConverter::SetShouldCull(false);
 
-	LoadGUI("Credits");
+	//LoadGUI("Credits");
 }
 
 eStackReturnValue CreditsState::Update(const CU::Time & aTimeDelta, ProxyStateStack & aStateStack)
 {
-	myGUIManager.Update(aTimeDelta);
-	if (myPosition.y <= -2.0f || IsometricInput::GetKeyPressed(DIK_ESCAPE) == true || myShouldGoBack == true)
+	//myGUIManager.Update(aTimeDelta);
+	if (myPosition.y <= -2.0f || IsometricInput::GetAnyKeyPressed() == true || IsometricInput::GetAnyMouseButtonPressed() == true)
 	{
 		if (myShouldQuit == true)
 		{
@@ -55,7 +55,7 @@ void CreditsState::Draw() const
 {
 	myCreditSprite->DrawWithNormalized({ myPosition.x, myPosition.y });
 
-	myGUIManager.Render();
+	//myGUIManager.Render();
 }
 
 bool CreditsState::RecieveMessage(const GUIMessage& aMessage)
