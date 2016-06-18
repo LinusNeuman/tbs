@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GUI\Instances\GUICandyCounter.h" />
     <ClInclude Include="GUI\Instances\GUIActionCandy.h" />
     <ClInclude Include="GUI\Instances\GUIObjectiveDialog.h" />
     <ClInclude Include="GUI\Instances\GUIActionPeek.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="GUI\Generic\Tooltip.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GUI\Instances\GUICandyCounter.cpp" />
     <ClCompile Include="GUI\Instances\GUIActionCandy.cpp" />
     <ClCompile Include="GUI\Instances\GUIObjectiveDialog.cpp" />
     <ClCompile Include="GUI\Instances\GUIActionPeek.cpp" />

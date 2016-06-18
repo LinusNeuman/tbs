@@ -13,6 +13,7 @@
 #include <GUI/Instances/GUIActionPeek.h>
 #include <GUI/Instances/GUIObjectiveDialog.h>
 #include <GUI/Instances/GUIActionCandy.h>
+#include <GUI/Instances/GUICandyCounter.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -69,7 +70,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIChangePlayerButton* changePlayerButton = new GUIChangePlayerButton();
-			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, "Changes the selected player.", {220, 20}, 0.005f, false, true);
+			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, "Changes the selected player. Shortcut: Tab", {300, 20}, 0.005f, false, true);
 
 			myGUIElements.Add(changePlayerButton);
 
@@ -82,7 +83,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIPortraitActive* portraitActive = new GUIPortraitActive();
-			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", { 0, 0 }, position, { 192, 192 }, true, true, true, "This is your selected character.", { 128, 32 }, 0.01f, false, true);
+			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", { 0, 0 }, position, { 192, 192 }, true, true, true, "This is your selected character.", { 220, 20 }, 0.005f, false, true);
 
 			myGUIElements.Add(portraitActive);
 
@@ -97,7 +98,7 @@ void GUIFactory::Load()
 
 			GUIPortraitPassive* newPortraitPassive = new GUIPortraitPassive();
 
-			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, "This is your unselected character.", {128,32}, 0.01f, false, true);
+			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, "This is your unselected character.", {250,20}, 0.005f, false, true);
 
 			myGUIElements.Add(newPortraitPassive);
 
@@ -111,6 +112,11 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(newCandy);
 
+			GUICandyCounter* newCandyCounter = new GUICandyCounter();
+
+			myGUIElements.Add(newCandyCounter);
+
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
@@ -191,6 +197,13 @@ void GUIFactory::Load()
 						tooltipsize = {110, 20};
 						offsetText = 0.005f;
 					}
+					
+					/*if (name == "menu_btn")
+					{
+						tooltip = "For pausing and options.";
+						tooltipsize = { 110, 20 };
+						offsetText = 0.005f;
+					}*/
 
 					GUIButton* newButton = new GUIButton();
 					if (name == "BackButton")

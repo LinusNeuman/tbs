@@ -12,8 +12,8 @@ public:
 
 	void Update(const CU::Time &aDelta) override;
 
-	void WhenClicked() override;
 	void WhenHovered() override;
+	void WhenLeaved() override;
 
 	void Render() override;
 

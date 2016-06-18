@@ -17,9 +17,5 @@ public:
 
 	void Init();
 private:
-	StaticSprite* myCandyBag;
-	CU::Vector2f myCandyBagPosition;
 
-	DX2D::CText* myCandyCountText;
-	CU::Vector2f myCandyCountTextPosition;
 };

@@ -87,6 +87,8 @@ void GUIPortraitActive::Create(const char* aName, const std::string& aSpritePath
 
 
 	ResetAnimate();
+
+	myTooltip.Init(aTooltip, aTooltipsize, 1.f, aTextOffset);
 }
 
 
@@ -97,6 +99,8 @@ void GUIPortraitActive::Update(const CU::Time& aDelta)
 		Animate(aDelta);
 	}
 	mySprite = mySpriteUnpressed;
+	
+	myTooltip.Update(aDelta);
 }
 
 void GUIPortraitActive::WhenClicked()
@@ -107,7 +111,14 @@ void GUIPortraitActive::WhenClicked()
 void GUIPortraitActive::WhenHovered()
 {
 	//GUIButton::WhenHovered();
+	myTooltip.Show();
 }
+
+void GUIPortraitActive::WhenLeaved()
+{
+	myTooltip.Close();
+}
+
 
 void GUIPortraitActive::Render()
 {
@@ -132,6 +143,8 @@ void GUIPortraitActive::Render()
 			//mySpriteHovered->Draw(myPosition);
 		}
 	}
+
+	myTooltip.Render();
 }
 
 bool GUIPortraitActive::RecieveMessage(const PlayerIDMessage& aMessage)

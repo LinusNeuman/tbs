@@ -21,8 +21,8 @@ public:
 	virtual void Render() override;
 
 	void WhenHovered() override;
-	void WhenClicked() override;
 	void WhenLeaved() override;
+	void WhenClicked() override;
 protected:
 	StaticSprite* mySpritePressed;
 	StaticSprite* mySpriteHovered;
