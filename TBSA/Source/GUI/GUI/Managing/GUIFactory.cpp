@@ -1,5 +1,4 @@
  #include "GUIFactory.h"
-#include <iostream>
 
 #include <CU/Timer/Timer.h>
 #include <CU/Timer/TimeManager.h>
@@ -33,9 +32,6 @@ GUIFactory::~GUIFactory()
 void GUIFactory::Load()
 {
 	myGUIElements.Init(1);
-
-	std::cout << "Started loading all GUI.." << std::endl;
-	CU::Timer loadTimer;
 
 	picojson::value rootValue = myJSON.LoadPicoValue("Data/GUI/root.json");
 	picojson::array arrayJson = rootValue.get("GameStates").get<picojson::array>();//myJSON.GetPicoArray("GameStates", rootValue.get<picojson::object>());
@@ -341,10 +337,6 @@ void GUIFactory::Load()
 					++elementsAdded;
 		}
 	}
-
-	CU::TimeManager::Update();
-
-	std::cout << "Loading all GUI took " << loadTimer.GetTime().GetMilliSeconds() << " ms" << std::endl;
 }
 
 
