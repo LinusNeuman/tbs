@@ -952,6 +952,7 @@ void PlayerController::EatCandy()
 	{
 		myCandy -= 1;
 		mySelectedPlayer->AddAP(2);
+		SendPostMessage(CandyAmountMessage(RecieverTypes::eCandyAmount, myCandy));
 	}
 }
 
