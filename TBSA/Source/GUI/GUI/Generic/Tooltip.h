@@ -21,7 +21,7 @@ public:
 	Tooltip();
 	virtual ~Tooltip();
 
-	void Init(const char* aText, CU::Vector2i aSizeInPixels, float aShowDelay);
+	void Init(const char* aText, CU::Vector2i aSizeInPixels, float aShowDelay, float aTextOffset);
 
 	void Show();
 	void Close();
@@ -46,4 +46,6 @@ protected:
 
 	bool myIsTriggered;
 	bool myShouldShow;
+
+	float myTextOffset;
 };

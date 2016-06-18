@@ -19,7 +19,7 @@ GUIPortraitPassive::~GUIPortraitPassive()
 	SAFE_DELETE(myCharacter1);
 }
 
-void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled, float aPriority)
+void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, const char* aTooltip, CU::Vector2i aTooltipsize, float aTextOffset, bool aIsIsometric, bool aIsEnabled, float aPriority)
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
@@ -61,7 +61,7 @@ void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePat
 	);
 	mySpriteHovered->SetLayer(enumRenderLayer::eGUI);
 
-	
+
 
 	myParentSpace = aParentSpace;
 	myPosition = aParentSpace + anOffset;
@@ -76,11 +76,11 @@ void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePat
 	CU::Vector2f penisapa = myCharacter0->GetSizeInPixels();
 
 	myCollisionBox.SetWithMaxAndMinPos(
-	boxPosition,
-	{
-		boxPosition.x + myCharacter0->GetSizeInPixels().x / 1920.f/*SingletonDataHolder::GetTargetResolution().x*/,
-		boxPosition.y + myCharacter0->GetSizeInPixels().y / 1080/*SingletonDataHolder::GetTargetResolution().y*/
-	});
+		boxPosition,
+		{
+			boxPosition.x + myCharacter0->GetSizeInPixels().x / 1920.f/*SingletonDataHolder::GetTargetResolution().x*/,
+			boxPosition.y + myCharacter0->GetSizeInPixels().y / 1080/*SingletonDataHolder::GetTargetResolution().y*/
+		});
 
 	mySprite = mySpriteUnpressed;
 

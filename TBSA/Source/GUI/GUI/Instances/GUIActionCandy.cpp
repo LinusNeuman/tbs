@@ -88,7 +88,7 @@ void GUIActionCandy::Init()
 	position.x *= SingletonDataHolder::GetTargetResolution().x;
 	position.y *= SingletonDataHolder::GetTargetResolution().y;
 
-	Create("Sprites/GUI/Actions/Candy", position, 0, 0);
+	Create("Sprites/GUI/Actions/Candy", position, 0, 0, "Eat candy to gain extra AP for the selected character.\nCost: 1 Candy", {365, 64});
 
 	myCandyBag = new StaticSprite();
 	myCandyBag->Init("Sprites/GUI/CandyCounter/CandyBag.dds", false, { 0, 0, 90, 74 });

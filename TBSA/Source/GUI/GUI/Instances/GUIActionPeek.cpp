@@ -85,5 +85,5 @@ void GUIActionPeek::Init()
 	position.x *= SingletonDataHolder::GetTargetResolution().x;
 	position.y *= SingletonDataHolder::GetTargetResolution().y;
 
-	Create("Sprites/GUI/Actions/Peek", position, 3, 2);
+	Create("Sprites/GUI/Actions/Peek", position, 3, 2, "Peeking into the adjacent area is a strategic move.\nCost: 3 AP for Ginger, 2 AP for Long John.", { 345, 64 });
 }

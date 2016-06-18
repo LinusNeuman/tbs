@@ -25,7 +25,7 @@ GUIButton::~GUIButton()
 	SAFE_DELETE(mySpriteHovered);
 }
 
-void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled, float aPriority)
+void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, const char* aTooltip, CU::Vector2i aTooltipsize, float aTextOffset, bool aIsIsometric, bool aIsEnabled, float aPriority)
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
@@ -58,7 +58,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	mySpriteUnpressed->SetLayer(enumRenderLayer::eGUI);
 	mySpriteUnpressed->SetRenderPriority(aPriority);
 
-	mySpriteHovered = new StaticSprite(); 
+	mySpriteHovered = new StaticSprite();
 	mySpriteHovered->Init(
 		aSpritePath + "/Hover.dds",
 		myIsIsometric,
@@ -78,7 +78,7 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 
 	CU::Vector2f boxPosition = { myPosition.x / SingletonDataHolder::GetTargetResolutionf().x, myPosition.y / SingletonDataHolder::GetTargetResolutionf().y };
-	CU::Vector2f spriteSizeNorm = { FLOATCAST(mySpriteUnpressed->GetSizeInPixels().x) / (1920.f), FLOATCAST( mySpriteUnpressed->GetSizeInPixels().y ) / (1080.f) };
+	CU::Vector2f spriteSizeNorm = { FLOATCAST(mySpriteUnpressed->GetSizeInPixels().x) / (1920.f), FLOATCAST(mySpriteUnpressed->GetSizeInPixels().y) / (1080.f) };
 
 	myCollisionBox.SetWithMaxAndMinPos(
 		boxPosition,
@@ -100,10 +100,10 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 		myClickSound = new SoundEffect();
 		myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
 	}
-	
+
 	ResetAnimate();
 
-	myTooltip.Init("This is a button.", { 128, 64 }, 1.f);
+	myTooltip.Init(aTooltip, aTooltipsize, 1.f, aTextOffset);
 }
 
 void GUIButton::ResetAnimate()

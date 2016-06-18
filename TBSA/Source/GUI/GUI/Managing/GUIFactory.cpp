@@ -73,7 +73,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIChangePlayerButton* changePlayerButton = new GUIChangePlayerButton();
-			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, false, true);
+			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, "Changes the selected player.", {220, 20}, 0.005f, false, true);
 
 			myGUIElements.Add(changePlayerButton);
 
@@ -86,7 +86,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIPortraitActive* portraitActive = new GUIPortraitActive();
-			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", {0,0}, position, { 192, 192 }, true, true, true, false, true);
+			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", { 0, 0 }, position, { 192, 192 }, true, true, true, "This is your selected character.", { 128, 32 }, 0.01f, false, true);
 
 			myGUIElements.Add(portraitActive);
 
@@ -101,7 +101,7 @@ void GUIFactory::Load()
 
 			GUIPortraitPassive* newPortraitPassive = new GUIPortraitPassive();
 
-			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, false, true);
+			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, "This is your unselected character.", {128,32}, 0.01f, false, true);
 
 			myGUIElements.Add(newPortraitPassive);
 
@@ -170,6 +170,32 @@ void GUIFactory::Load()
 					const std::string clickEvent = myJSON.GetString("Click", events);
 					const std::string hoverEvent = myJSON.GetString("Hover", events);
 
+					std::string tooltip = "";
+
+					CU::Vector2i tooltipsize = { 0, 0 };
+
+					if (arrayElements[j].contains("myTooltip") == true)
+					{
+						tooltip = myJSON.GetString("myTooltip", arrayElements[j].get<picojson::object>());
+					}
+					if (arrayElements[j].contains("myTooltipSizeX") == true)
+					{
+						tooltipsize.x = myJSON.GetInt("myTooltipSizeX", arrayElements[j].get<picojson::object>());
+						if (arrayElements[j].contains("myTooltipSizeY") == true)
+						{
+							tooltipsize.y = myJSON.GetInt("myTooltipSizeY", arrayElements[j].get<picojson::object>());
+						}
+					}
+
+					float offsetText = 0.f;
+
+					if (name == "endTurn_btn")
+					{
+						tooltip = "Ends your turn.";
+						tooltipsize = {110, 20};
+						offsetText = 0.005f;
+					}
+
 					GUIButton* newButton = new GUIButton();
 					if (name == "BackButton")
 					{
@@ -182,6 +208,9 @@ void GUIFactory::Load()
 							animated,
 							shouldplayclick,
 							shouldplayhover,
+							tooltip.c_str(),
+							tooltipsize,
+							offsetText,
 							isometric,
 							enabled,
 							2100.f
@@ -198,6 +227,9 @@ void GUIFactory::Load()
 							animated,
 							shouldplayclick,
 							shouldplayhover,
+							tooltip.c_str(),
+							tooltipsize,
+							offsetText,
 							isometric,
 							enabled
 							);
