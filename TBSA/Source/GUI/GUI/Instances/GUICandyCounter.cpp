@@ -28,7 +28,7 @@ GUICandyCounter::GUICandyCounter()
 	myCandyCountText = new DX2D::CText("Text/calibril.ttf_sdf");
 	myCandyCountText->myText = "0";
 
-	myTooltip.Init("Your candy bag. Search for candy around the map.", { 350, 20 }, 1.f, 0.005f);
+	myTooltip.Init("Your candy bag. Search for candy around the map.", { 350, 20 }, 0.5f, 0.005f);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eCandyAmount, *this);
 
