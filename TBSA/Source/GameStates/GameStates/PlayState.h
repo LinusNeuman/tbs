@@ -38,6 +38,7 @@ public:
 	virtual bool RecieveMessage(const DeadEnemyMessage & aMessage) override;
 
 private:
+	void ResetSavedData();
 	ScoreCounter myScoreCounter;
 	ParticleEmitter<250> myEmitter;
 	GameLevel * myLevel;
@@ -47,6 +48,7 @@ private:
 	SoundEffect* myAmbiance;
 	Song* myMusic;
 	CommonUtilities::GrowingArray<SavedDeadEnemy> myDeadEnemies;
+	CommonUtilities::GrowingArray<SavedDeadEnemy> mySavedDeadEnemies;
 	TilePosition myRespawnPosition;
 	bool scoreScreenDone;
 	bool myShouldExit;
