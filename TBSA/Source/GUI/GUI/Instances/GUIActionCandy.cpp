@@ -3,6 +3,7 @@
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
 #include <Rend/RenderConverter.h>
 #include <Rend/RenderCommand.h>
+#include "Message/SendApSuggestion.h"
 
 GUIActionCandy::GUIActionCandy()
 {
@@ -34,6 +35,10 @@ void GUIActionCandy::WhenClicked()
 void GUIActionCandy::WhenHovered()
 {
 	GUIAction::WhenHovered();
+	if (myCanDoP1 == true)
+	{
+		SendPostMessage(SendAPSuggestionMessage(RecieverTypes::eSuggestAPChange, 2))
+	}
 }
 
 void GUIActionCandy::Render()

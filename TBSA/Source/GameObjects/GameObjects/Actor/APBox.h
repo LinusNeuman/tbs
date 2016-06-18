@@ -26,12 +26,12 @@ public:
 	void MoveDown(const CommonUtilities::Time& aTime);
 	void Animate(const CU::Time& aDelta);
 
-	void __forceinline SetCost(uchar aAPCost)
+	void __forceinline SetCost(char aAPCost)
 	{
 		myCurrentCost = aAPCost;
 	}
 
-	void __forceinline SetAP(uchar aAP)
+	void __forceinline SetAP(char aAP)
 	{
 		myAP = aAP;
 	};
@@ -48,8 +48,8 @@ public:
 
 	void Draw() const;
 private:
-	uchar myAP;
-	uchar myCurrentCost;
+	char myAP;
+	char myCurrentCost;
 
 	StaticSprite* mySprite;
 	StaticSprite* mySpriteSelected;

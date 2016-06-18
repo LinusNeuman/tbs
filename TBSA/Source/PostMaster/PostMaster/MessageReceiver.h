@@ -47,6 +47,7 @@ struct ScoreCounterMessage;
 struct CheckpointMessage;
 struct DeadEnemyMessage;
 struct CandyAmountMessage;
+struct SendAPSuggestionMessage;
 
 class MessageReciever
 {
@@ -99,6 +100,7 @@ public:
 	virtual bool RecieveMessage(const CheckpointMessage & aMessage);
 	virtual bool RecieveMessage(const DeadEnemyMessage & aMessage);
 	virtual bool RecieveMessage(const CandyAmountMessage & aMessage);
+	virtual bool RecieveMessage(const SendAPSuggestionMessage & aMessage);
 
 	RecieverOrder myRecieverOrder;
 protected:

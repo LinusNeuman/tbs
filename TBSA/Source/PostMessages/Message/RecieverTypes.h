@@ -81,5 +81,6 @@ enum class RecieverTypes
 	eContinueEndScreen,
 	eTriggeredCheckpoint,
 	eDeadEnemyData,
+	eSuggestAPChange,
 	enumlength
 };
