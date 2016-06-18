@@ -15,6 +15,7 @@
 #include <CU/Intersection/Shapes2D/AABB2D.h>
 #include <CU/Intersection/Intersection2D.h>
 #include <Input/SingletoIsometricInputWrapper/SingletonIsometricInputWrapper.h>
+#include "Tooltip.h"
 
 typedef unsigned char uchar;
 
@@ -66,6 +67,8 @@ protected:
 	bool myIsCurrentlyPressed;
 
 	//CU::GrowingArray<GUIElement*, unsigned char> myGUIChilds;
+
+	Tooltip myTooltip;
 };
 
 #include "GUIElement.inl"

@@ -102,6 +102,8 @@ void GUIButton::Create(const char* aName, const std::string& aSpritePath, CU::Ve
 	}
 	
 	ResetAnimate();
+
+	myTooltip.Init("This is a button.", { 128, 64 }, 1.f);
 }
 
 void GUIButton::ResetAnimate()
@@ -187,6 +189,8 @@ void GUIButton::Update(const CU::Time& aDelta)
 	{
 		mySprite = mySpriteUnpressed;
 	}
+
+	myTooltip.Update(aDelta);
 }
 
 void GUIButton::Render()
@@ -202,6 +206,8 @@ void GUIButton::Render()
 			}
 		}
 	}
+
+	myTooltip.Render();
 }
 
 void GUIButton::WhenHovered()
@@ -215,6 +221,8 @@ void GUIButton::WhenHovered()
 		{
 			myHoverSound->Play(1.0f);
 		}
+
+		myTooltip.Show();
 	}
 }
 
@@ -229,4 +237,6 @@ void GUIButton::WhenClicked()
 void GUIButton::WhenLeaved()
 {
 	ResetAnimate();
+
+	myTooltip.Close();
 }

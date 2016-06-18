@@ -72,6 +72,6 @@ PixelInputType VShader(VertexInputType input)
 
 float4 PShader(PixelInputType input) : SV_TARGET
 {
-	float dist = shaderTexture.Sample( SampleType, input.tex).r;
+	float dist = shaderTexture.Sample( SampleType, input.tex).r * input.color.a;
 	return float4(input.color.rgb, dist); 
 }

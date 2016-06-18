@@ -19,9 +19,17 @@ RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f
 	myText = nullptr;
 }
 
-RenderCommand::RenderCommand(const float aRenderPriority, const USHORT aLayer, const TextRenderData& aRenderData, const bool aOffsetMiddleOfScreen/* = false*/)
+RenderCommand::RenderCommand(const float aRenderPriority, const USHORT aLayer, const TextRenderData& aRenderData, const bool aOffsetMiddleOfScreen/* = false*/, bool aUseSmallFont)
 {
-	myText = new DX2D::CText("text/calibril.ttf_sdf");
+	if (aUseSmallFont == true)
+	{
+		myText = new DX2D::CText("text/erasdust.ttf_sdf");
+	}
+	else
+	{
+		myText = new DX2D::CText("text/calibril.ttf_sdf");
+	}
+	
 	myText->myText = aRenderData.myText;
 	myRenderPriority = aRenderPriority;
 	myPosition = aRenderData.myPos;
