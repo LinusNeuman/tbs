@@ -37,6 +37,8 @@ void GUIAction::Create(const std::string& aSpritePath, CU::Vector2f aPosition, i
 {
 	GUIButton::Create("ActionElement", aSpritePath, { 0, 0 }, aPosition, { 109, 93 }, true, true, true, aTooltip, aTooltipsize, 0.044f, false, true);
 
+	myFulHax = true;
+
 	myCostP1 = aCost1;
 	myCostP2 = aCost2;
 
@@ -108,6 +110,8 @@ void GUIAction::FadeDownGlow(const CommonUtilities::Time aTime)
 
 void GUIAction::Update(const CU::Time& aDelta)
 {
+	myTooltip.Update(aDelta);
+
 	if (mySelectedPlayer == 0)
 	{
 		if (myCanDoP1 == true)
@@ -170,10 +174,14 @@ void GUIAction::WhenHovered()
 			GUIButton::WhenHovered();
 		}
 	}
+
+	myTooltip.Show();
 }
 
 void GUIAction::Render()
 {
+	myTooltip.Render();
+
 	if (mySelectedPlayer == 0)
 	{
 		if (myCanDoP1 == true)

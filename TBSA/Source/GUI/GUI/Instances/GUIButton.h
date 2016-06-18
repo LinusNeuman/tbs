@@ -39,4 +39,6 @@ protected:
 	void Animate(const CommonUtilities::Time aTime);
 	void FadeUp(const CommonUtilities::Time aTime);
 	void FadeDown(const CommonUtilities::Time aTime);
+
+	bool myFulHax;
 };

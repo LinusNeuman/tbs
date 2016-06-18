@@ -11,7 +11,8 @@ GUIButton::GUIButton() :
 	mySpriteHovered(nullptr),
 	mySpriteUnpressed(nullptr),
 	myHoverSound(nullptr),
-	myClickSound(nullptr)
+	myClickSound(nullptr),
+	myFulHax(false)
 {
 }
 
@@ -190,7 +191,10 @@ void GUIButton::Update(const CU::Time& aDelta)
 		mySprite = mySpriteUnpressed;
 	}
 
-	myTooltip.Update(aDelta);
+	if (myFulHax == false)
+	{
+		myTooltip.Update(aDelta);
+	}
 }
 
 void GUIButton::Render()
@@ -207,7 +211,10 @@ void GUIButton::Render()
 		}
 	}
 
-	myTooltip.Render();
+	if (myFulHax == false)
+	{
+		myTooltip.Render();
+	}
 }
 
 void GUIButton::WhenHovered()
