@@ -79,5 +79,5 @@ void GUIActionCandy::Init()
 	position.x *= SingletonDataHolder::GetTargetResolution().x;
 	position.y *= SingletonDataHolder::GetTargetResolution().y;
 
-	Create("Sprites/GUI/Actions/Candy", position, 0, 0, "Eat candy to gain extra AP for the selected character.\nCost: 1 Candy. Shortcut: Q", {365, 64});
+	Create("Sprites/GUI/Actions/Candy", position, 0, 0, "Eat candy to gain extra AP for the selected character.\nCost: 1 Candy. Shortcut: Q", {400, 64});
 }

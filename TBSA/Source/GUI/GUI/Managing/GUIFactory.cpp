@@ -70,7 +70,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIChangePlayerButton* changePlayerButton = new GUIChangePlayerButton();
-			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, "Changes the selected player. Shortcut: Tab", {300, 20}, 0.005f, false, true);
+			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, "Changes the selected player. Shortcut: Tab", {320, 20}, 0.005f, false, true);
 
 			myGUIElements.Add(changePlayerButton);
 
@@ -83,7 +83,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIPortraitActive* portraitActive = new GUIPortraitActive();
-			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", { 0, 0 }, position, { 192, 192 }, true, true, true, "This is your selected character.", { 220, 20 }, 0.005f, false, true);
+			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", { 0, 0 }, position, { 192, 192 }, true, true, true, "This is your selected character.", { 230, 20 }, 0.005f, false, true);
 
 			myGUIElements.Add(portraitActive);
 

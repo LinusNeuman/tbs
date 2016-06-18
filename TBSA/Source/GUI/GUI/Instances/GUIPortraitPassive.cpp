@@ -86,7 +86,7 @@ void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePat
 
 	ResetAnimate();
 
-	myTooltip.Init(aTooltip, aTooltipsize, 1.f, aTextOffset);
+	myTooltip.Init(aTooltip, aTooltipsize, 0.5f, aTextOffset);
 }
 
 void GUIPortraitPassive::Update(const CU::Time& aDelta)
