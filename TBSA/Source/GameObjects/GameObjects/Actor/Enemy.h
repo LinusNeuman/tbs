@@ -8,10 +8,15 @@ class EnemyController;
 
 struct SavedDeadEnemy
 {
+	SavedDeadEnemy()
+	{
+		myTilePosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
+		myEnemyIndex = USHRT_MAX;
+	}
 	SavedDeadEnemy(const TilePosition & aTilePosition, const unsigned short aIndex) : myTilePosition(aTilePosition), myEnemyIndex(aIndex)
 	{}
-	const TilePosition myTilePosition;
-	const unsigned short myEnemyIndex;
+	TilePosition myTilePosition;
+	unsigned short myEnemyIndex;
 };
 
 class Enemy : public Actor
@@ -36,6 +41,7 @@ public:
 	void SetIndex(const unsigned short aIndex);
 	unsigned short GetIndex() const;
 	int GetViewDistance() const;
+	void SetDeadestFlag(bool aFlag);
 
 	virtual void OnClick() override;
 	

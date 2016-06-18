@@ -58,7 +58,6 @@ Actor::Actor()
 Actor::~Actor()
 {
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eMouseClicked, *this);
-	SingletonPostMaster::RemoveReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 
 	for (int i = 0; i <= 5; ++i)
 	{
@@ -95,7 +94,6 @@ void Actor::Init(const ActorData &aActorData)
 	myBoxCollider.SetPositionAndSize(myPosition, CU::Vector2f::Half);
 
 	SingletonPostMaster::AddReciever(RecieverTypes::eMouseClicked, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 }
 
 void Actor::SpriteInit()
@@ -394,8 +392,3 @@ bool Actor::RecieveMessage(const ColliderMessage & aMessage)
 	return true;
 }
 
-bool Actor::RecieveMessage(const CheckpointMessage& aMessage)
-{
-	myRespawnPoint = aMessage.myPosition;
-	return true;
-}
