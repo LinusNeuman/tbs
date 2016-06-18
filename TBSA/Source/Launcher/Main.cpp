@@ -17,6 +17,7 @@ void Init();
 
 
 // Comment out below define to disable command line
+#define USE_CONSOLE_COMMAND
 
 #pragma region WindowsInit
 #ifdef USE_CONSOLE_COMMAND

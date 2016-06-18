@@ -243,6 +243,13 @@ void GameLevel::Draw() const
 bool GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 {
 	const CommonUtilities::Vector2ui position = aMessage.myPosition;
+
+	if (aMessage.myPosition.x == 0 && aMessage.myPosition.y == 0)
+	{
+		DL_PRINT(("x Position is" + std::to_string(aMessage.myPosition.x)).c_str());
+		DL_PRINT(("y Position is" + std::to_string(aMessage.myPosition.y)).c_str());
+	}
+
 	const int distance = aMessage.myDistance;
 
 	const CommonUtilities::Vector2ui mapSize = myTiledData->myMapSize;
