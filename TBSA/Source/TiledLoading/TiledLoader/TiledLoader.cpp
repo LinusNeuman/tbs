@@ -325,6 +325,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 							enemyActor->SetPosition(CommonUtilities::Vector2f(aDeadEnemyData[iEnemy].myTilePosition.x, aDeadEnemyData[iEnemy].myTilePosition.y));
 							enemyActor->SetDeadestFlag(true);
 							enemyActor->ChangeAnimation("DeadestState");
+							
 						}
 					}
 
