@@ -20,9 +20,11 @@ struct RenderData
 	RenderData():myColor(CU::Vector4f::One)
 	{
 		myShaderPtr = nullptr;
+		mySize = 1.f;
 	}
 
 	CU::Vector2f mySizeInPixels;
 	CU::Vector4f myColor;
 	DX2D::CCustomShader * myShaderPtr;
+	float mySize;
 };

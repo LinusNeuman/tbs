@@ -82,7 +82,7 @@ void RenderCommand::Render() const
 
 		mySprite->SetColor(tempColor);
 		mySprite->SetPosition(tempPosition);
-		mySprite->SetSize(tempSize);
+		mySprite->SetSize(tempSize * myRenderData.mySize);
 
 		mySprite->SetCustomShader(myRenderData.myShaderPtr);
 
