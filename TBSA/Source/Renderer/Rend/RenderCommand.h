@@ -33,5 +33,7 @@ private:
 	float myRenderPriority;
 	DX2D::CText* myText;
 	DX2D::CSprite * mySprite;
+
+	float myTextScalar;
 };
 

@@ -116,7 +116,7 @@ void Tooltip::Render()
 
 		TextRenderData data;
 		data.myText = myText->myText;
-		data.myPos = { IsometricInput::GetMouseWindowPositionNormalizedSpace().x + 0.0025f, IsometricInput::GetMouseWindowPositionNormalizedSpace().y - 0.0333f };
+		data.myPos = { IsometricInput::GetMouseWindowPositionNormalizedSpace().x + 0.0025f, IsometricInput::GetMouseWindowPositionNormalizedSpace().y - ((0.0333f) * 1.25f) };
 		data.myColor = myTextColor;
 
 		RenderConverter::AddRenderCommand(RenderCommand(3600.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data, false, true));
