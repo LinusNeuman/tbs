@@ -99,11 +99,6 @@ void GameLevel::InternalInit()
 	}
 	myEnemies[0]->SetEnemyPath(path);*/
 
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		//myEnemies[i]->ChangeAnimation("EnemyIdle180");
-	}
-
 	myPlayerController->SetCameraPositionToPlayer(1);
 	if (myObjectives.IsInitialized() == true)
 	{
