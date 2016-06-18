@@ -108,8 +108,9 @@ public:
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
 
-	float GetSizeMultiplier() const;
+	CU::Vector2f GetSizeMultiplier() const;
 	void SetSizeMultiplier(const float aMultiplierValue);
+	void SetSizeMultiplier(const CU::Vector2f & aMultiplierValue);
 
 	CU::Vector2f GetSize() const;
 
@@ -224,10 +225,15 @@ inline float StaticSprite::GetRenderPriority() const
 
 inline void StaticSprite::SetSizeMultiplier(const float aMultiplierValue)
 {
+	myRenderData.mySize = CU::Vector2f(aMultiplierValue, aMultiplierValue);
+}
+
+inline void StaticSprite::SetSizeMultiplier(const CU::Vector2f & aMultiplierValue)
+{
 	myRenderData.mySize = aMultiplierValue;
 }
 
-inline float StaticSprite::GetSizeMultiplier() const
+inline CU::Vector2f StaticSprite::GetSizeMultiplier() const
 {
 	return myRenderData.mySize;
 }

@@ -78,11 +78,11 @@ void RenderCommand::Render() const
 
 		float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 
-		DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale, normalizedWindowSizeY * renderScale);
+		DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale * myRenderData.mySize.x, normalizedWindowSizeY * renderScale * myRenderData.mySize.y);
 
 		mySprite->SetColor(tempColor);
 		mySprite->SetPosition(tempPosition);
-		mySprite->SetSize(tempSize * myRenderData.mySize);
+		mySprite->SetSize(tempSize);
 
 		mySprite->SetCustomShader(myRenderData.myShaderPtr);
 
