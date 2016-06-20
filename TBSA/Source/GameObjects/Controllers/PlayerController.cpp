@@ -129,6 +129,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eEatCandy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eSuggestAPChange, *this);
 
+	SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
 	myMouseController.Init();
 }
 

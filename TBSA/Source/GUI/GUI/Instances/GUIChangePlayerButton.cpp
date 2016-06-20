@@ -3,7 +3,7 @@
 
 GUIChangePlayerButton::GUIChangePlayerButton()
 {
-	SingletonPostMaster::AddReciever(RecieverTypes::eClickedOnPlayer, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eSelectedPlayerHasChanged, *this);
 }
 
 GUIChangePlayerButton::~GUIChangePlayerButton()
@@ -33,6 +33,9 @@ void GUIChangePlayerButton::Render()
 
 bool GUIChangePlayerButton::RecieveMessage(const PlayerIDMessage& aMessage)
 {
-	myPlayerID = aMessage.myPlayerID;
+	if (aMessage.myType == RecieverTypes::eSelectedPlayerHasChanged)
+	{
+		myPlayerID = aMessage.myPlayerID;
+	}
 	return true;
 }
