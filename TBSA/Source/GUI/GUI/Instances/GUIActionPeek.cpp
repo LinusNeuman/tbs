@@ -76,7 +76,7 @@ void GUIActionPeek::Init()
 {
 	CU::Vector2f position;
 	position.x = 220;
-	position.y = 854;
+	position.y = 841;
 	
 
 	position.x /= 1920;
@@ -85,5 +85,5 @@ void GUIActionPeek::Init()
 	position.x *= SingletonDataHolder::GetTargetResolution().x;
 	position.y *= SingletonDataHolder::GetTargetResolution().y;
 
-	Create("Sprites/GUI/Actions/Peek", position, 3, 2);
+	Create("Sprites/GUI/Actions/Peek", position, 3, 2, "Peeking into the adjacent area is a strategic move.\nCost: 3 AP for Ginger, 2 AP for Long John. Shortcut: E", { 420, 64 });
 }

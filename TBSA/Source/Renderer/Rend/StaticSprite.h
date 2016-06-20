@@ -108,6 +108,10 @@ public:
 	const CU::Vector4f & GetColor() const;
 	void SetColor(const CU::Vector4f & aColor);
 
+	CU::Vector2f GetSizeMultiplier() const;
+	void SetSizeMultiplier(const float aMultiplierValue);
+	void SetSizeMultiplier(const CU::Vector2f & aMultiplierValue);
+
 	CU::Vector2f GetSize() const;
 
 	const bool GetIsIsometric() const;
@@ -121,6 +125,8 @@ public:
 	*/
 	void SetRenderPriority(const float aPriority);
 	float GetRenderPriority() const;
+
+	
 
 	DX2D::CSprite * GetSprite() const;
 	void SetShader(DX2D::CCustomShader * aCustomShader);
@@ -217,5 +223,19 @@ inline float StaticSprite::GetRenderPriority() const
 	return myPriority;
 }
 
+inline void StaticSprite::SetSizeMultiplier(const float aMultiplierValue)
+{
+	myRenderData.mySize = CU::Vector2f(aMultiplierValue, aMultiplierValue);
+}
+
+inline void StaticSprite::SetSizeMultiplier(const CU::Vector2f & aMultiplierValue)
+{
+	myRenderData.mySize = aMultiplierValue;
+}
+
+inline CU::Vector2f StaticSprite::GetSizeMultiplier() const
+{
+	return myRenderData.mySize;
+}
 
 typedef StaticSprite SSprite;

@@ -19,9 +19,21 @@ RenderCommand::RenderCommand(DX2D::CSprite & aSpriteToRender, const CU::Vector2f
 	myText = nullptr;
 }
 
-RenderCommand::RenderCommand(const float aRenderPriority, const USHORT aLayer, const TextRenderData& aRenderData, const bool aOffsetMiddleOfScreen/* = false*/)
+RenderCommand::RenderCommand(const float aRenderPriority, const USHORT aLayer, const TextRenderData& aRenderData, const bool aOffsetMiddleOfScreen/* = false*/, bool aUseSmallFont)
 {
-	myText = new DX2D::CText("text/calibril.ttf_sdf");
+	
+
+	if (aUseSmallFont == true)
+	{
+		myText = new DX2D::CText("text/erasdust.ttf_sdf");
+		myTextScalar = 0.25f;
+	}
+	else
+	{
+		myText = new DX2D::CText("text/calibril.ttf_sdf");
+		myTextScalar = 0.5f;
+	}
+	
 	myText->myText = aRenderData.myText;
 	myRenderPriority = aRenderPriority;
 	myPosition = aRenderData.myPos;
@@ -66,7 +78,7 @@ void RenderCommand::Render() const
 
 		float renderScale = FLOATCAST(SingletonDataHolder::GetTargetResolution().y) / (1080.f);
 
-		DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale, normalizedWindowSizeY * renderScale);
+		DX2D::Vector2f tempSize(normalizedWindowSizeX * renderScale * myRenderData.mySize.x, normalizedWindowSizeY * renderScale * myRenderData.mySize.y);
 
 		mySprite->SetColor(tempColor);
 		mySprite->SetPosition(tempPosition);
@@ -84,6 +96,7 @@ void RenderCommand::Render() const
 
 		myText->myColor = tempColor;
 		myText->myPosition = tempPosition;
+		myText->mySize = myTextScalar;
 
 		myText->Render();
 	}

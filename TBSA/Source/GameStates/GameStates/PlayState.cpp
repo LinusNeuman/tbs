@@ -21,6 +21,7 @@
 #include <Message/TextMessage.h>
 #include "VictoryState.h"
 #include "Message/DeadEnemyDataMessage.h"
+#include <Message/CheckpointMessage.h>
 
 PlayState::PlayState()
 {
@@ -84,9 +85,11 @@ void PlayState::Init(const std::string& aLevelPath)
 	{
 		myLevelKey = aLevelPath;
 	}
-
+	myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
+	myDeadEnemies.Init(10);
+	mySavedDeadEnemies.Init(10);
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
-	myLevel = myLevelFactory->CreateLevel(myLevelKey);
+	myLevel = myLevelFactory->CreateLevel(myLevelKey, myRespawnPosition, mySavedDeadEnemies);
 	myCurrentLevelpath = myLevelKey;
 	LoadGUI("InGame");
 
@@ -170,7 +173,6 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		newState->Init();
 		aStateStack.AddMainState(newState);
 	}
-
 	return eStackReturnValue::eStay;
 }
 
@@ -204,6 +206,7 @@ bool PlayState::RecieveMessage(const TextMessage& aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eLevelEnd)
 	{
+		ResetSavedData();
 		ChangeLevel(aMessage.myText);
 		myShowPostLevelScreen = true;
 	}
@@ -212,32 +215,31 @@ bool PlayState::RecieveMessage(const TextMessage& aMessage)
 
 bool PlayState::RecieveMessage(const CheckpointMessage& aMessage)
 {
-	myHasTriggeredCheckpoint = true;
+	if (aMessage.myType == RecieverTypes::eTriggeredCheckpoint)
+	{
+
+		myRespawnPosition = aMessage.myRespawnPosition;
+		myHasTriggeredCheckpoint = true;
+		mySavedDeadEnemies = myDeadEnemies;
+	}
+	
 	return true;
 }
 
 bool PlayState::RecieveMessage(const GoalReachedMessage& aMessage)
 {
+	
 	ChangeLevel(aMessage.aLevelPathNameToChangeTo);
 	myShowPostLevelScreen = true;
 	return true;
 }
 
-
-
 bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 {
 	if (myGameOver == true)
 	{
-		if (myHasTriggeredCheckpoint == false)
-		{
-			ChangeLevel(myCurrentLevelpath);
-			myGameOver = false;
-		}
-		else
-		{
-			
-		}
+		ChangeLevel(myCurrentLevelpath);
+		myGameOver = false;
 	}
 	else
 	{
@@ -256,9 +258,16 @@ bool PlayState::RecieveMessage(const DeadEnemyMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eDeadEnemyData)
 	{
- 		
+		myDeadEnemies.Add(SavedDeadEnemy({ USHORTCAST(aMessage.myEnemyData.myTilePosition.x), USHORTCAST(aMessage.myEnemyData.myTilePosition.y) }, aMessage.myEnemyData.myEnemyIndex));
 	}
 	return true;
+}
+
+void PlayState::ResetSavedData()
+{
+	myDeadEnemies.RemoveAll();
+	mySavedDeadEnemies.RemoveAll();
+	myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
 }
 
 void PlayState::ChangeLevel(const std::string& aFilePath)
@@ -272,6 +281,6 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
-	myLevel = myLevelFactory->CreateLevel( aFilePath);
+	myLevel = myLevelFactory->CreateLevel(aFilePath, myRespawnPosition, mySavedDeadEnemies);
 	myCurrentLevelpath = aFilePath;
 }

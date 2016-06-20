@@ -33,20 +33,32 @@ void GUIAction::ResetAnimateGlow()
 	myUnlockedGlow->SetColor(color);
 }
 
-void GUIAction::Create(const std::string& aSpritePath, CU::Vector2f aPosition, int aCost1, int aCost2)
+void GUIAction::Create(const std::string& aSpritePath, CU::Vector2f aPosition, int aCost1, int aCost2, const char* aTooltip, CU::Vector2i aTooltipsize)
 {
-	GUIButton::Create("ActionElement", aSpritePath, { 0, 0 }, aPosition, { 109, 93 }, true, true, true, false, true);
+	GUIButton::Create("ActionElement", aSpritePath, { 0, 0 }, aPosition, { 109, 93 }, true, true, true, aTooltip, aTooltipsize, 0.044f, false, true);
+
+	myFulHax = true;
 
 	myCostP1 = aCost1;
 	myCostP2 = aCost2;
 
 	myLocked = new StaticSprite();
-	myLocked->Init(aSpritePath + "/Locked.dds", false, { 0, 0, 109, 93 });
+	myLocked->Init(aSpritePath + "/Locked.dds", false, { 0, 0, 91, 73 });
 	myLocked->SetLayer(enumRenderLayer::eGUI);
 
 	myUnlockedGlow = new StaticSprite();
 	myUnlockedGlow->Init(aSpritePath + "/Unlocked.dds", false, { 0, 0, 109, 93 });
 	myUnlockedGlow->SetLayer(enumRenderLayer::eGUI);
+
+	CU::Vector2f boxPosition = { myPosition.x / SingletonDataHolder::GetTargetResolutionf().x, myPosition.y / SingletonDataHolder::GetTargetResolutionf().y };
+	CU::Vector2f spriteSizeNorm = { FLOATCAST(myLocked->GetSizeInPixels().x) / (1920.f), FLOATCAST(myLocked->GetSizeInPixels().y) / (1080.f) };
+
+	myCollisionBox.SetWithMaxAndMinPos(
+		boxPosition,
+		{
+			boxPosition.x + spriteSizeNorm.x,
+			boxPosition.y + spriteSizeNorm.y
+		});
 
 	ResetAnimateGlow();
 }
@@ -98,6 +110,8 @@ void GUIAction::FadeDownGlow(const CommonUtilities::Time aTime)
 
 void GUIAction::Update(const CU::Time& aDelta)
 {
+	myTooltip.Update(aDelta);
+
 	if (mySelectedPlayer == 0)
 	{
 		if (myCanDoP1 == true)
@@ -160,10 +174,14 @@ void GUIAction::WhenHovered()
 			GUIButton::WhenHovered();
 		}
 	}
+
+	myTooltip.Show();
 }
 
 void GUIAction::Render()
 {
+	myTooltip.Render();
+
 	if (mySelectedPlayer == 0)
 	{
 		if (myCanDoP1 == true)

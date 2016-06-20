@@ -8,7 +8,7 @@ public:
 	GUIAction();
 	virtual ~GUIAction();
 
-	virtual void Create(const std::string& aSpritePath, CU::Vector2f aPosition, int aCost1, int aCost2);
+	virtual void Create(const std::string& aSpritePath, CU::Vector2f aPosition, int aCost1, int aCost2, const char* aTooltip, CU::Vector2i aTooltipSize);
 
 	virtual void Update(const CU::Time &aDelta) override;
 

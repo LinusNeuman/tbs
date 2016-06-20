@@ -78,7 +78,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -91,7 +91,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -106,7 +106,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GUI\;$(SolutionDir)PostMessages\;$(SolutionDir)PostMaster\;$(ProjectDir);$(SolutionDir)CommonUtilities\;$(SolutionDir)Renderer\;$(SolutionDir)Input\;$(SolutionDir)JSONWrapper\;$(SolutionDir)DX2DEngine\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -129,6 +129,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonUtilities\CommonUtilities.vcxproj">
       <Project>{a41e3ed6-a914-40b1-b1e9-9551e0cc7eab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\DX2DEngine\DX2DEngine.vcxproj">
+      <Project>{11f98bf6-7bdb-4cfb-96cf-577db4ae312f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\GUI\GUI.vcxproj">
       <Project>{0a8e37f3-e093-4a13-9336-de37a5b0af85}</Project>

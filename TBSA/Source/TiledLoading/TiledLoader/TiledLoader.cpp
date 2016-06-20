@@ -23,7 +23,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void GetPathNodes(const int aINdex, PathAndName & aPath, const picojson::array & someData, const int aMapWidth, const int aLastTile);
 
 
-void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
+void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData)
 {
 	TiledData& someTiles = *aTilePointer;
 	std::map<std::string, unsigned short> enemyIndexes;
@@ -208,10 +208,27 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					}
 
 					Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
+					float posX;
+					float posY;
+					if (aRespawnPosition == CU::Vector2ui(UINT_MAX, UINT_MAX))
+					{
+						posX = static_cast<float>(JsonHelp::GetNumber(player["x"])) / 64;
+						posY = static_cast<float>(JsonHelp::GetNumber(player["y"])) / 64;
+					}
+					else
+					{
+						if (playerType == eActorType::ePlayerOne)
+						{
+							posX = aRespawnPosition.x;
+							posY = aRespawnPosition.y;
+						}
+						else
+						{
+							posX = aRespawnPosition.x + 1;
+							posY = aRespawnPosition.y;
+						}
 
-					const float posX = static_cast<float>(JsonHelp::GetNumber(player["x"])) / 64;
-					const float posY = static_cast<float>(JsonHelp::GetNumber(player["y"])) / 64;
-
+					}
 					playerActor->SetPosition(CommonUtilities::Vector2f(posX, posY));
 					someTiles.myPlayers[playerIndex] = playerActor;
 				}
@@ -298,8 +315,19 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 							}
 						}
 					}
-
+					
 					someTiles.myEnemies.Add(enemyActor);
+					for (size_t iEnemy = 0; iEnemy < aDeadEnemyData.Size(); iEnemy++)
+					{
+						if (aDeadEnemyData[iEnemy].myEnemyIndex == k)
+						{
+							enemyActor->SetActorState(eActorState::eDead);
+							enemyActor->SetPosition(CommonUtilities::Vector2f(aDeadEnemyData[iEnemy].myTilePosition.x, aDeadEnemyData[iEnemy].myTilePosition.y));
+							enemyActor->SetDeadestFlag(true);
+							enemyActor->ChangeAnimation("DeadestState");
+							
+						}
+					}
 
 					enemyIndexes[JsonHelp::GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;
 				}
@@ -353,6 +381,23 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer)
 					someTiles.myObjectives.Add(objectiveObject);
 
 					someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
+				}
+			}
+			else if (name == "Checkpoint" || name == "Checkpoints")
+			{
+				picojson::array objects = JsonHelp::GetArray(currentLayer["objects"]);
+				for (size_t k = 0; k < objects.size(); k++)
+				{
+					picojson::object checkpoint = JsonHelp::GetPicoJsonObject(objects[k]);
+
+					const float posX = static_cast<float>(JsonHelp::GetNumber(checkpoint["x"])) / 64;
+					const float posY = static_cast<float>(JsonHelp::GetNumber(checkpoint["y"])) / 64;
+					const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY)+static_cast<int>(posX);
+
+					Checkpoint* const checkopointObject = new Checkpoint();
+					checkopointObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
+
+					someTiles.myCheckpoints.Add(checkopointObject);
 				}
 			}
 		}

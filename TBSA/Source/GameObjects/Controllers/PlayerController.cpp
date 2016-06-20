@@ -35,6 +35,7 @@
 #include <message/CandyAmountMessage.h>
 #include "Message/PlayerDiedMessage.h"
 #include <Message/CheckpointMessage.h>
+#include "Message/SendApSuggestion.h"
 
 #define EDGE_SCROLL_LIMIT -50.05f
 
@@ -126,6 +127,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::ePlayEvents, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, *this, RecieverOrder::VIP);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEatCandy, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eSuggestAPChange, *this);
 
 	myMouseController.Init();
 }
@@ -208,6 +210,8 @@ void PlayerController::CostAP(const int anAP)
 
 void PlayerController::Update(const CommonUtilities::Time& aTime)
 {
+	SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
+
 	const TilePosition mousePosition = TilePosition(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
 
 #pragma region CameraControls
@@ -240,7 +244,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEndTurn));
 	}
-	if (IsometricInput::GetKeyPressed(DIK_P) == true)
+	if (IsometricInput::GetKeyPressed(DIK_E) == true)
 	{
 		if (mySelectedPlayer->GetMyAP() >= mySelectedPlayer->GetPeekCost())
 		{
@@ -253,7 +257,7 @@ void PlayerController::Update(const CommonUtilities::Time& aTime)
 			}
 		}
 	}
-	if (IsometricInput::GetKeyPressed(DIK_U) == true)
+	if (IsometricInput::GetKeyPressed(DIK_Q) == true)
 	{
 		SendPostMessage(GUIMessage(RecieverTypes::eEatCandy));
 	}
@@ -489,6 +493,15 @@ bool PlayerController::RecieveMessage(const PlayerDiedMessage & aMessage)
 	return true;
 }
 
+bool PlayerController::RecieveMessage(const SendAPSuggestionMessage & aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eSuggestAPChange)
+	{
+		SuggestCostAP(-aMessage.myAPSuggestion);
+	}
+	return true;
+}
+
 void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 {
 	myScoreCounter.AddScore(enumScoreTypes::eCandy, 1.f);
@@ -603,10 +616,10 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::CHECKPOINT)
+	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
-		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, aMessage.myPosition));
+		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, CommonUtilities::Vector2ui(aMessage.myPosition.x, aMessage.myPosition.y)));
 	}
 
 
@@ -950,6 +963,7 @@ void PlayerController::EatCandy()
 	{
 		myCandy -= 1;
 		mySelectedPlayer->AddAP(2);
+		SendPostMessage(CandyAmountMessage(RecieverTypes::eCandyAmount, myCandy));
 	}
 }
 

@@ -1,5 +1,4 @@
  #include "GUIFactory.h"
-#include <iostream>
 
 #include <CU/Timer/Timer.h>
 #include <CU/Timer/TimeManager.h>
@@ -14,6 +13,7 @@
 #include <GUI/Instances/GUIActionPeek.h>
 #include <GUI/Instances/GUIObjectiveDialog.h>
 #include <GUI/Instances/GUIActionCandy.h>
+#include <GUI/Instances/GUICandyCounter.h>
 
 GUIFactory* GUIFactory::myInstance = nullptr;
 
@@ -33,9 +33,6 @@ GUIFactory::~GUIFactory()
 void GUIFactory::Load()
 {
 	myGUIElements.Init(1);
-
-	std::cout << "Started loading all GUI.." << std::endl;
-	CU::Timer loadTimer;
 
 	picojson::value rootValue = myJSON.LoadPicoValue("Data/GUI/root.json");
 	picojson::array arrayJson = rootValue.get("GameStates").get<picojson::array>();//myJSON.GetPicoArray("GameStates", rootValue.get<picojson::object>());
@@ -73,7 +70,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIChangePlayerButton* changePlayerButton = new GUIChangePlayerButton();
-			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, false, true);
+			changePlayerButton->Create("ChangeSelectedPlayerButton", "Sprites/GUI/InGame/PortraitChangeButton", CU::Vector2f::Zero, position, { 85, 68 }, true, true, true, "Changes the selected player. Shortcut: Tab", {320, 20}, 0.005f, false, true);
 
 			myGUIElements.Add(changePlayerButton);
 
@@ -86,7 +83,7 @@ void GUIFactory::Load()
 			position.y *= SingletonDataHolder::GetTargetResolution().y;
 
 			GUIPortraitActive* portraitActive = new GUIPortraitActive();
-			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", {0,0}, position, { 192, 192 }, true, true, true, false, true);
+			portraitActive->Create("PortraitActive", "Sprites/GUI/InGame/PortraitIconActive", { 0, 0 }, position, { 192, 192 }, true, true, true, "This is your selected character.", { 230, 20 }, 0.005f, false, true);
 
 			myGUIElements.Add(portraitActive);
 
@@ -101,7 +98,7 @@ void GUIFactory::Load()
 
 			GUIPortraitPassive* newPortraitPassive = new GUIPortraitPassive();
 
-			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, false, true);
+			newPortraitPassive->Create("PassivePortraitIcon", "Sprites/GUI/InGame/PortraitIconPassive", CU::Vector2f::Zero, position, { 85, 85 }, true, true, true, "This is your unselected character.", {250,20}, 0.005f, false, true);
 
 			myGUIElements.Add(newPortraitPassive);
 
@@ -115,6 +112,11 @@ void GUIFactory::Load()
 
 			myGUIElements.Add(newCandy);
 
+			GUICandyCounter* newCandyCounter = new GUICandyCounter();
+
+			myGUIElements.Add(newCandyCounter);
+
+			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
 			++elementsAdded;
@@ -170,6 +172,39 @@ void GUIFactory::Load()
 					const std::string clickEvent = myJSON.GetString("Click", events);
 					const std::string hoverEvent = myJSON.GetString("Hover", events);
 
+					std::string tooltip = "";
+
+					CU::Vector2i tooltipsize = { 0, 0 };
+
+					if (arrayElements[j].contains("myTooltip") == true)
+					{
+						tooltip = myJSON.GetString("myTooltip", arrayElements[j].get<picojson::object>());
+					}
+					if (arrayElements[j].contains("myTooltipSizeX") == true)
+					{
+						tooltipsize.x = myJSON.GetInt("myTooltipSizeX", arrayElements[j].get<picojson::object>());
+						if (arrayElements[j].contains("myTooltipSizeY") == true)
+						{
+							tooltipsize.y = myJSON.GetInt("myTooltipSizeY", arrayElements[j].get<picojson::object>());
+						}
+					}
+
+					float offsetText = 0.f;
+
+					if (name == "endTurn_btn")
+					{
+						tooltip = "Ends your turn.";
+						tooltipsize = {110, 20};
+						offsetText = 0.005f;
+					}
+					
+					/*if (name == "menu_btn")
+					{
+						tooltip = "For pausing and options.";
+						tooltipsize = { 110, 20 };
+						offsetText = 0.005f;
+					}*/
+
 					GUIButton* newButton = new GUIButton();
 					if (name == "BackButton")
 					{
@@ -182,6 +217,9 @@ void GUIFactory::Load()
 							animated,
 							shouldplayclick,
 							shouldplayhover,
+							tooltip.c_str(),
+							tooltipsize,
+							offsetText,
 							isometric,
 							enabled,
 							2100.f
@@ -198,6 +236,9 @@ void GUIFactory::Load()
 							animated,
 							shouldplayclick,
 							shouldplayhover,
+							tooltip.c_str(),
+							tooltipsize,
+							offsetText,
 							isometric,
 							enabled
 							);
@@ -309,10 +350,6 @@ void GUIFactory::Load()
 					++elementsAdded;
 		}
 	}
-
-	CU::TimeManager::Update();
-
-	std::cout << "Loading all GUI took " << loadTimer.GetTime().GetMilliSeconds() << " ms" << std::endl;
 }
 
 

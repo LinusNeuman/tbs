@@ -41,7 +41,7 @@
             "myParentPositionX": 0,
             "myParentPositionY": 0,
             "Events": {
-              "Click": "",
+              "Click": "EndScreenContinue",
               "Hover": ""
             }
           }
@@ -459,8 +459,8 @@
               "myWidth": 200,
               "myHeight": 190
             },
-            "myShouldPlayHoverSound": false,
-            "myShouldPlayClickSound": false,
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
             "myAnimated": false,
             "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
             "mySizeX": 200,
@@ -500,8 +500,8 @@
               "myWidth": 200,
               "myHeight": 190
             },
-            "myShouldPlayHoverSound": false,
-            "myShouldPlayClickSound": false,
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
             "myAnimated": false,
             "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
             "mySizeX": 200,
@@ -541,8 +541,8 @@
               "myWidth": 200,
               "myHeight": 190
             },
-            "myShouldPlayHoverSound": false,
-            "myShouldPlayClickSound": false,
+            "myShouldPlayHoverSound": true,
+            "myShouldPlayClickSound": true,
             "myAnimated": false,
             "myImagesPath": "Sprites/GUI/LevelSelect\\LevelSelectBtn",
             "mySizeX": 200,

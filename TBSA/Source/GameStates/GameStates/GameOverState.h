@@ -22,5 +22,6 @@ private:
 	bool myShouldDisplayStats;
 	bool myShouldExit;
 	TextBox myStatsBox;
+	float myTimer;
 };
 

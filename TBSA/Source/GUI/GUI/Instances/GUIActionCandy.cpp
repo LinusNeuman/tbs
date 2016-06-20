@@ -1,6 +1,9 @@
 #include "GUIActionCandy.h"
 #include <Message/CandyAmountMessage.h>
 #include <CU/Utility/DataHolder/SingletonDataHolder.h>
+#include <Rend/RenderConverter.h>
+#include <Rend/RenderCommand.h>
+#include "Message/SendApSuggestion.h"
 
 GUIActionCandy::GUIActionCandy()
 {
@@ -31,6 +34,18 @@ void GUIActionCandy::WhenClicked()
 void GUIActionCandy::WhenHovered()
 {
 	GUIAction::WhenHovered();
+	if (myCanDoP1 == true)
+	{
+		SendPostMessage(SendAPSuggestionMessage(RecieverTypes::eSuggestAPChange, 2))
+	}
+}
+
+void GUIActionCandy::Render()
+{
+	GUIAction::Render();
+
+	
+//	RenderConverter::AddRenderCommandPutInCameraSpaceAndNormalize(RenderCommand(500.f, static_cast<unsigned short>(enumRenderLayer::eGUI), data));
 }
 
 bool GUIActionCandy::RecieveMessage(const CandyAmountMessage& aMessage)
@@ -55,8 +70,8 @@ bool GUIActionCandy::RecieveMessage(const CandyAmountMessage& aMessage)
 void GUIActionCandy::Init()
 {
 	CU::Vector2f position;
-	position.x = 211;
-	position.y = 905;
+	position.x = 220;
+	position.y = 901;
 	
 	position.x /= 1920;
 	position.y /= 1080;
@@ -64,5 +79,5 @@ void GUIActionCandy::Init()
 	position.x *= SingletonDataHolder::GetTargetResolution().x;
 	position.y *= SingletonDataHolder::GetTargetResolution().y;
 
-	Create("Sprites/GUI/Actions/Candy", position, 1, 1);
+	Create("Sprites/GUI/Actions/Candy", position, 0, 0, "Eat candy to gain extra AP for the selected character.\nCost: 1 Candy. Shortcut: Q", {400, 64});
 }

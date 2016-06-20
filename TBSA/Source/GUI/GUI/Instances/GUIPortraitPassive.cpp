@@ -19,7 +19,7 @@ GUIPortraitPassive::~GUIPortraitPassive()
 	SAFE_DELETE(myCharacter1);
 }
 
-void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, bool aIsIsometric, bool aIsEnabled, float aPriority)
+void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePath, CU::Vector2f aParentSpace, CU::Vector2f anOffset, CU::Vector2f aImageSize, bool aAnimated, bool aPlayClickSound, bool aPlayHoverSound, const char* aTooltip, CU::Vector2i aTooltipsize, float aTextOffset, bool aIsIsometric, bool aIsEnabled, float aPriority)
 {
 	myName = aName;
 	myIsIsometric = aIsIsometric;
@@ -61,7 +61,7 @@ void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePat
 	);
 	mySpriteHovered->SetLayer(enumRenderLayer::eGUI);
 
-	
+
 
 	myParentSpace = aParentSpace;
 	myPosition = aParentSpace + anOffset;
@@ -76,27 +76,17 @@ void GUIPortraitPassive::Create(const char* aName, const std::string& aSpritePat
 	CU::Vector2f penisapa = myCharacter0->GetSizeInPixels();
 
 	myCollisionBox.SetWithMaxAndMinPos(
-	boxPosition,
-	{
-		boxPosition.x + myCharacter0->GetSizeInPixels().x / 1920.f/*SingletonDataHolder::GetTargetResolution().x*/,
-		boxPosition.y + myCharacter0->GetSizeInPixels().y / 1080/*SingletonDataHolder::GetTargetResolution().y*/
-	});
+		boxPosition,
+		{
+			boxPosition.x + myCharacter0->GetSizeInPixels().x / 1920.f/*SingletonDataHolder::GetTargetResolution().x*/,
+			boxPosition.y + myCharacter0->GetSizeInPixels().y / 1080/*SingletonDataHolder::GetTargetResolution().y*/
+		});
 
 	mySprite = mySpriteUnpressed;
 
-	if (aPlayHoverSound == true)
-	{
-		myHoverSound = new SoundEffect();
-		myHoverSound->Init("Sounds/GUI/HoverMenuItem.ogg");
-	}
-
-	if (aPlayClickSound == true)
-	{
-		myClickSound = new SoundEffect();
-		myClickSound->Init("Sounds/GUI/HoverMenuItem2.ogg");
-	}
-
 	ResetAnimate();
+
+	myTooltip.Init(aTooltip, aTooltipsize, 0.5f, aTextOffset);
 }
 
 void GUIPortraitPassive::Update(const CU::Time& aDelta)
@@ -106,16 +96,20 @@ void GUIPortraitPassive::Update(const CU::Time& aDelta)
 		Animate(aDelta);
 	}
 	mySprite = mySpriteUnpressed;
-}
 
-void GUIPortraitPassive::WhenClicked()
-{
-
+	myTooltip.Update(aDelta);
 }
 
 void GUIPortraitPassive::WhenHovered()
 {
-	GUIButton::WhenHovered();
+	myTooltip.Show();
+}
+
+void GUIPortraitPassive::WhenLeaved()
+{
+	//GUIButton::WhenHovered();
+
+	myTooltip.Close();
 }
 
 void GUIPortraitPassive::Render()
@@ -138,9 +132,11 @@ void GUIPortraitPassive::Render()
 	{
 		if (myIsCurrentlyHovered == true)
 		{
-			mySpriteHovered->Draw(myPosition);
+			//mySpriteHovered->Draw(myPosition);
 		}
 	}
+
+	myTooltip.Render();
 }
 
 bool GUIPortraitPassive::RecieveMessage(const PlayerIDMessage& aMessage)

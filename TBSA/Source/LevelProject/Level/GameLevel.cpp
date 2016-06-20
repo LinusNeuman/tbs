@@ -99,11 +99,6 @@ void GameLevel::InternalInit()
 	}
 	myEnemies[0]->SetEnemyPath(path);*/
 
-	for (size_t i = 0; i < myEnemies.Size(); i++)
-	{
-		myEnemies[i]->ChangeAnimation("EnemyIdle180");
-	}
-
 	myPlayerController->SetCameraPositionToPlayer(1);
 	if (myObjectives.IsInitialized() == true)
 	{
@@ -112,6 +107,10 @@ void GameLevel::InternalInit()
 			myFloor.GetTile(CU::Vector2ui(USHORTCAST(myObjectives[i]->GetPosition().x), USHORTCAST(myObjectives[i]->GetPosition().y))).SetTileType(eTileType::IS_OBJECTIVE);
 		}
 	}	
+
+	myCheckpoints = myTiledData->myCheckpoints;
+
+
 	for (size_t y = 0; y < myFloor.GetDimensions().y; y++)
 	{
 		for (size_t x = 0; x < myFloor.GetDimensions().x; x++)
@@ -244,6 +243,13 @@ void GameLevel::Draw() const
 bool GameLevel::RecieveMessage(const DijkstraMessage& aMessage)
 {
 	const CommonUtilities::Vector2ui position = aMessage.myPosition;
+
+	if (aMessage.myPosition.x == 0 && aMessage.myPosition.y == 0)
+	{
+		DL_PRINT(("x Position is" + std::to_string(aMessage.myPosition.x)).c_str());
+		DL_PRINT(("y Position is" + std::to_string(aMessage.myPosition.y)).c_str());
+	}
+
 	const int distance = aMessage.myDistance;
 
 	const CommonUtilities::Vector2ui mapSize = myTiledData->myMapSize;

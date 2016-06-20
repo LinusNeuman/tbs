@@ -52,5 +52,6 @@
     <ClInclude Include="Message\CandyAmountMessage.h" />
     <ClInclude Include="Message\CheckpointMessage.h" />
     <ClInclude Include="Message\DeadEnemyDataMessage.h" />
+    <ClInclude Include="Message\SendApSuggestion.h" />
   </ItemGroup>
 </Project>

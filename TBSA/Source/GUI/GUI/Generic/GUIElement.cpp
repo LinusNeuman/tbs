@@ -46,7 +46,6 @@ void GUIElement::WhenClicked()
 
 void GUIElement::WhenLeaved()
 {
-
 }
 
 void GUIElement::Render()

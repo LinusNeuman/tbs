@@ -63,17 +63,30 @@ void GameOverState::Init()
 	LoadGUI("GameOver");
 
 	myMouseController.Init();
+	myTimer = 0;
 }
 
 eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateStack& aStateStack)
 {
+	if (myShouldDisplayStats == true && myTimer > 200.f)
+	{
+		myGUIManager.StartRecieving();
+	}
+	else
+	{
+		myGUIManager.StopRecieving();
+	}
+
+	myGUIManager.Update(aDeltaTime);
+
 	if (IsometricInput::GetAnyKeyPressed() == true || IsometricInput::GetAnyMouseButtonPressed() == true)
 	{
 		myShouldDisplayStats = true;
 	}
+	
 	if (myShouldDisplayStats == true)
 	{
-		myGUIManager.Update(aDeltaTime);
+		myTimer += aDeltaTime.GetMilliSeconds();
 	}
 
 	myMouseController.SetMouseState(enumMouseState::eClickedOnEmptyTile);
@@ -83,6 +96,7 @@ eStackReturnValue GameOverState::Update(const CU::Time& aDeltaTime, ProxyStateSt
 	if (myShouldExit == true)
 	{
 		myShouldExit = false;
+		myTimer = 0.f;
 		return eStackReturnValue::eDeleteSubstate;
 	}
 	return eStackReturnValue::eStay;

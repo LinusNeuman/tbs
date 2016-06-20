@@ -182,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorEnums.h" />
+    <ClInclude Include="Checkpoint.h" />
     <ClInclude Include="Controllers\enumMouseState.h" />
     <ClInclude Include="GameObjects\Actor\APBox.h" />
     <ClInclude Include="Controllers\EnemyController.h" />

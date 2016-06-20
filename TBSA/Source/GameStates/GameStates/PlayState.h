@@ -11,9 +11,11 @@
 #include "Audio\Instances\Song.h"
 #include <Controllers\ScoreCounter.h>
 #include "Audio\Instances\SoundEffect.h"
+#include <TiledData/TiledData.h>
 
 class LevelFactory;
 class GameLevel;
+struct SavedDeadEnemy;
 
 class PlayState : public GameState, public MessageReciever
 {
@@ -36,6 +38,7 @@ public:
 	virtual bool RecieveMessage(const DeadEnemyMessage & aMessage) override;
 
 private:
+	void ResetSavedData();
 	ScoreCounter myScoreCounter;
 	ParticleEmitter<250> myEmitter;
 	GameLevel * myLevel;
@@ -44,6 +47,9 @@ private:
 	LevelFactory* myLevelFactory;
 	SoundEffect* myAmbiance;
 	Song* myMusic;
+	CommonUtilities::GrowingArray<SavedDeadEnemy> myDeadEnemies;
+	CommonUtilities::GrowingArray<SavedDeadEnemy> mySavedDeadEnemies;
+	TilePosition myRespawnPosition;
 	bool scoreScreenDone;
 	bool myShouldExit;
 	bool myGameOver;

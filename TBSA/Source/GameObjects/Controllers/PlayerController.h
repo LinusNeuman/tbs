@@ -56,6 +56,7 @@ public:
 	virtual bool RecieveMessage(const TextMessage & aMessage) override;
 	virtual bool RecieveMessage(const EnemyNextPathMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
+	virtual bool RecieveMessage(const SendAPSuggestionMessage & aMessage) override;
 
 private:
 	void AddCandy(const unsigned short aCandyAmount = 0);

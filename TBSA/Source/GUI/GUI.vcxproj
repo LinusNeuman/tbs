@@ -46,7 +46,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)TextBox\;$(SolutionDir)DX2DEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)TextBox\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -59,7 +59,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)TextBox\;$(SolutionDir)DX2DEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DX2DEngine\;$(SolutionDir)JSONWrapper\;$(ProjectDir)\;$(SolutionDir)PostMaster\;$(SolutionDir)PostMessages\;$(SolutionDir)Renderer\;$(SolutionDir)CommonUtilities\;$(SolutionDir)Input\;$(SolutionDir)Audio\;$(SolutionDir)TextBox\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GUI\Instances\GUICandyCounter.h" />
     <ClInclude Include="GUI\Instances\GUIActionCandy.h" />
     <ClInclude Include="GUI\Instances\GUIObjectiveDialog.h" />
     <ClInclude Include="GUI\Instances\GUIActionPeek.h" />
@@ -83,8 +84,10 @@
     <ClInclude Include="GUI\Messaging\Generic\GUIMessage.h" />
     <ClInclude Include="GUI\Instances\GUIButton.h" />
     <ClInclude Include="GUI\Generic\GUIElement.h" />
+    <ClInclude Include="GUI\Generic\Tooltip.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GUI\Instances\GUICandyCounter.cpp" />
     <ClCompile Include="GUI\Instances\GUIActionCandy.cpp" />
     <ClCompile Include="GUI\Instances\GUIObjectiveDialog.cpp" />
     <ClCompile Include="GUI\Instances\GUIActionPeek.cpp" />
@@ -100,6 +103,7 @@
     <ClCompile Include="GUI\Messaging\Generic\GUIMessage.cpp" />
     <ClCompile Include="GUI\Instances\GUIButton.cpp" />
     <ClCompile Include="GUI\Generic\GUIElement.cpp" />
+    <ClCompile Include="GUI\Generic\Tooltip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Audio\Audio.vcxproj">

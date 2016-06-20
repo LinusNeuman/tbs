@@ -8,6 +8,7 @@ const CU::Vector4f CantAffordColor = {1.f, 0.f, 0.f, 1.f};
 const CU::Vector4f PathColor = { 1.f, 0.5f, 0.5f, 1.f };
 const CU::Vector4f AttackColor = { 0.f, 1.f, 0.f, 1.f };
 const CU::Vector4f NeutralColor = { 1.f, 1.f, 1.f, 1.f };
+const CU::Vector4f PositiveColor = { 0.f, 1.f, 0.f, 1.f };
 
 APBox::APBox()
 {
@@ -66,6 +67,10 @@ void APBox::Update()
 		}
 		
 		myColor = PathColor;
+	}
+	else if (myCurrentCost < 0)
+	{
+		myColor = PositiveColor;
 	}
 	else
 	{

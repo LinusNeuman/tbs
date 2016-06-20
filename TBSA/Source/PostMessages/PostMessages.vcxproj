@@ -252,6 +252,7 @@
     <ClInclude Include="Message\ScoreCounterMessage.h" />
     <ClInclude Include="Message\ScrollLogDownMessage.h" />
     <ClInclude Include="Message\ScrollLogUpMessage.h" />
+    <ClInclude Include="Message\SendApSuggestion.h" />
     <ClInclude Include="Message\SetHWNDMessage.h" />
     <ClInclude Include="Message\SetMainCameraMessage.h" />
     <ClInclude Include="Message\SetTargetResolutionMessage.h" />

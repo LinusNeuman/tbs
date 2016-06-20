@@ -86,7 +86,6 @@ public:
 	eDirection GetPreviousDirectionEnum() const;
 
 	virtual bool RecieveMessage(const ColliderMessage & aMessage) override;
-	virtual bool RecieveMessage(const CheckpointMessage & aMessage) override;
 
 	virtual void OnClick() = 0;
 
