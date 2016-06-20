@@ -256,7 +256,7 @@ bool PlayState::RecieveMessage(const DeadEnemyMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eDeadEnemyData)
 	{
- 		int apa = 10;
+ 		
 	}
 	return true;
 }
