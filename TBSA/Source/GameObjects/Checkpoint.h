@@ -1,5 +1,18 @@
 #pragma once
 
+struct CheckpointData
+{
+	CheckpointData()
+	{
+		myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
+		mySavedDeadEnemies.Init(10);
+	}
+	CommonUtilities::GrowingArray<SavedDeadEnemy> mySavedDeadEnemies;
+	TilePosition myRespawnPosition;
+	ObjectiveManager myObjectiveState;
+};
+
+
 class Checkpoint
 {
 public:

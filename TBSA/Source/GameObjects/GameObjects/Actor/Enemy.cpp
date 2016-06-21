@@ -302,7 +302,7 @@ void Enemy::DecideAnimation()
 				myAnimations.GetSprite()->SetRenderPriority(10.f);
 				myIsDeadeastFlag = true;
 				SendPostMessage(EnemyObjectMessage(RecieverTypes::eEnemyDead, *this));
-				SendPostMessage(TextMessage(RecieverTypes::eEnemyDied, GetName()));
+				//SendPostMessage(TextMessage(RecieverTypes::eEnemyDied, GetName()));
 			}
 			else
 			{
