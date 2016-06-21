@@ -85,9 +85,11 @@ void PlayState::Init(const std::string& aLevelPath)
 	{
 		myLevelKey = aLevelPath;
 	}
+	myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
 	myDeadEnemies.Init(10);
+	mySavedDeadEnemies.Init(10);
 	//myLevels[myLevelKey] = myLevelFactory->CreateLevel(myStartPath + myLevelKey);
-	myLevel = myLevelFactory->CreateLevel(myLevelKey, myCheckpointData);
+	myLevel = myLevelFactory->CreateLevel(myLevelKey, myRespawnPosition, mySavedDeadEnemies);
 	myCurrentLevelpath = myLevelKey;
 	LoadGUI("InGame");
 
@@ -215,10 +217,10 @@ bool PlayState::RecieveMessage(const CheckpointMessage& aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eTriggeredCheckpoint)
 	{
-		myCheckpointData.myRespawnPosition = aMessage.myRespawnPosition;
+
+		myRespawnPosition = aMessage.myRespawnPosition;
 		myHasTriggeredCheckpoint = true;
-		myCheckpointData.mySavedDeadEnemies = myDeadEnemies;
-		myCheckpointData.myObjectiveState = myLevel->GetObjectiveManager();
+		mySavedDeadEnemies = myDeadEnemies;
 	}
 	
 	return true;
@@ -264,9 +266,8 @@ bool PlayState::RecieveMessage(const DeadEnemyMessage & aMessage)
 void PlayState::ResetSavedData()
 {
 	myDeadEnemies.RemoveAll();
-	myCheckpointData.mySavedDeadEnemies.RemoveAll();
-	myCheckpointData.myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
-	myCheckpointData.myObjectiveState = ObjectiveManager();
+	mySavedDeadEnemies.RemoveAll();
+	myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
 }
 
 void PlayState::ChangeLevel(const std::string& aFilePath)
@@ -280,6 +281,6 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
-	myLevel = myLevelFactory->CreateLevel(aFilePath, myCheckpointData);
+	myLevel = myLevelFactory->CreateLevel(aFilePath, myRespawnPosition, mySavedDeadEnemies);
 	myCurrentLevelpath = aFilePath;
 }

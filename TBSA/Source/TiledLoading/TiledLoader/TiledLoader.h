@@ -4,7 +4,6 @@
 */
 #pragma once
 #include <CU/Vectors/vector2.h>
-struct CheckpointData;
 struct SavedPlayerStruct;
 struct SavedDeadEnemy;
 struct TiledData;
@@ -13,5 +12,5 @@ struct TiledData;
 
 namespace TiledLoader
 {
-	void Load(std::string aFilePath, TiledData* aTilePointer, CheckpointData &aCheckpointData);
+	void Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData);
 }
