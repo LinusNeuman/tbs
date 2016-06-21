@@ -70,7 +70,9 @@ public:
 	void ToggleDebugMode();
 
 	bool CheckHasCandy() const;
+	bool CheckHasCheckpoint() const;
 	void SetHasCandy();
+	void SetHasCheckpoint();
 	void TakeCandy();
 
 	void SetVisible(bool aIsVisible);
@@ -111,6 +113,7 @@ private:
 	eTileState myState;
 
 	bool myHasCandy;
+	bool myHasCheckpoint;
 	bool myIsVisible;
 	bool myIsInEnemyFoV;
 	bool myIsDiscovered;
@@ -171,9 +174,19 @@ inline bool IsometricTile::CheckHasCandy() const
 	return myHasCandy;
 }
 
+inline bool IsometricTile::CheckHasCheckpoint() const
+{
+	return myHasCheckpoint;
+}
+
 inline void IsometricTile::SetHasCandy()
 {
 	myHasCandy = true;
+}
+
+inline void IsometricTile::SetHasCheckpoint()
+{
+	myHasCheckpoint = true;
 }
 
 inline void IsometricTile::TakeCandy()

@@ -108,7 +108,6 @@ void GameLevel::InternalInit()
 		}
 	}	
 
-	myCheckpoints = myTiledData->myCheckpoints;
 
 
 	for (size_t y = 0; y < myFloor.GetDimensions().y; y++)

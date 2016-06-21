@@ -51,7 +51,9 @@ PlayerController::PlayerController()
 	myClickedOnEnemy = false;
 	myFakeClickedOnEnemy = false;
 	myPlayerTurnFlag = false;
+	myHasTriggeredCheckpoint = false;
 	myCandy = 2;
+
 
 	mySelectPlayerSound = new SoundEffect();
 	mySelectPlayerSound->Init("Sounds/SFX/switch.ogg");
@@ -99,6 +101,7 @@ PlayerController::~PlayerController()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayerIsPeeking, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eEnemyNextPath, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::ePlayEvents, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 
 	SingletonPostMaster::RemoveReciever(*this);
 
@@ -128,6 +131,7 @@ void PlayerController::Init()
 	SingletonPostMaster::AddReciever(RecieverTypes::eEndTurn, *this, RecieverOrder::VIP);
 	SingletonPostMaster::AddReciever(RecieverTypes::eEatCandy, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eSuggestAPChange, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 
 	SendPostMessage(PlayerIDMessage(RecieverTypes::eSelectedPlayerHasChanged, mySelectedPlayerIndex));
 	myMouseController.Init();
@@ -454,6 +458,11 @@ bool PlayerController::CheckForCandy(const TilePosition & aPosToCheckForCandyAt)
 	return myFloor->GetTile(aPosToCheckForCandyAt).CheckHasCandy();
 }
 
+bool PlayerController::CheckForCheckpoint(const TilePosition & aPosToCheckForCheckpoint)
+{
+	return myFloor->GetTile(aPosToCheckForCheckpoint).CheckHasCheckpoint();
+}
+
 bool PlayerController::RecieveMessage(const GUIMessage & aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eChangeSelectedPlayer)
@@ -499,6 +508,15 @@ bool PlayerController::RecieveMessage(const SendAPSuggestionMessage & aMessage)
 	if (aMessage.myType == RecieverTypes::eSuggestAPChange)
 	{
 		SuggestCostAP(-aMessage.myAPSuggestion);
+	}
+	return true;
+}
+
+bool PlayerController::RecieveMessage(const CheckpointMessage& aMessage)
+{
+	if (aMessage.myType == RecieverTypes::eTriggeredCheckpoint)
+	{
+		myHasTriggeredCheckpoint = true;
 	}
 	return true;
 }
@@ -600,6 +618,12 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 	}
 
+	if (myHasTriggeredCheckpoint == false && CheckForCheckpoint(aMessage.myPosition) == true)
+	{
+		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
+		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, CommonUtilities::Vector2ui(aMessage.myPosition.x, aMessage.myPosition.y)));
+	}
+
 	
 	if (myFloor->GetTile(aMessage.myPlayer.GetPosition().x, aMessage.myPlayer.GetPosition().y).GetInEnemyFov() == true )
 	{
@@ -617,11 +641,11 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(PositionMessage(RecieverTypes::eObjctive, CommonUtilities::Vector2i(aMessage.myPosition)));
 	}
-	if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
+	/*if (myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).GetTileType() == eTileType::IS_OBJECTIVE)
 	{
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, CommonUtilities::Vector2ui(aMessage.myPosition.x, aMessage.myPosition.y)));
-	}
+	}*/
 
 
 

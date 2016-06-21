@@ -364,6 +364,19 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 						someTiles.myTiles[index].GetObjectiveSprite()[0]->Init("Sprites/Candy.dds");
 						someTiles.myTiles[index].GetObjectiveSprite()[0]->SetLayer(enumRenderLayer::eGameObjects);
 					}
+					else if (typeString == "Checkpoint" || typeString == "Checkpoints")
+					{
+						objectiveType = eObjectiveType::eLevelEnd;
+
+						someTiles.myTiles[index].SetHasCheckpoint();
+						someTiles.myTiles[index].GetObjectiveSprite()[0] = std::make_shared<StaticSprite>();
+						someTiles.myTiles[index].GetObjectiveSprite()[0]->Init("Sprites/Checkpoints/checkPointUnchecked.dds");
+						someTiles.myTiles[index].GetObjectiveSprite()[0]->SetLayer(enumRenderLayer::eGameObjects);
+						someTiles.myTiles[index].GetObjectiveSprite()[1] = std::make_shared<StaticSprite>();
+						someTiles.myTiles[index].GetObjectiveSprite()[1]->Init("Sprites/Checkpoints/checkPointChecked.dds");
+						someTiles.myTiles[index].GetObjectiveSprite()[1]->SetLayer(enumRenderLayer::eGameObjects);
+
+					}
 					else if (typeString == "DialogMessage")
 					{
 						objectiveType = eObjectiveType::eDialogMessage;
@@ -381,23 +394,6 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 					someTiles.myObjectives.Add(objectiveObject);
 
 					someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
-				}
-			}
-			else if (name == "Checkpoint" || name == "Checkpoints")
-			{
-				picojson::array objects = JsonHelp::GetArray(currentLayer["objects"]);
-				for (size_t k = 0; k < objects.size(); k++)
-				{
-					picojson::object checkpoint = JsonHelp::GetPicoJsonObject(objects[k]);
-
-					const float posX = static_cast<float>(JsonHelp::GetNumber(checkpoint["x"])) / 64;
-					const float posY = static_cast<float>(JsonHelp::GetNumber(checkpoint["y"])) / 64;
-					const SIZE_T index = someTiles.myMapSize.x * static_cast<int>(posY)+static_cast<int>(posX);
-
-					Checkpoint* const checkopointObject = new Checkpoint();
-					checkopointObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
-
-					someTiles.myCheckpoints.Add(checkopointObject);
 				}
 			}
 		}

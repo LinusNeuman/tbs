@@ -21,7 +21,6 @@ struct TiledData
 		myPlayers[0] = nullptr;
 		myPlayers[1] = nullptr;
 		myObjectives.Init(1);
-		myCheckpoints.Init(1);
 	}
 
 	CommonUtilities::GrowingArray<IsometricTile> myTiles;
@@ -33,7 +32,6 @@ struct TiledData
 	CommonUtilities::StaticArray<Player*, 2> myPlayers;
 	CommonUtilities::GrowingArray<Enemy*> myEnemies;
 	CommonUtilities::GrowingArray<Objective*> myObjectives;
-	CommonUtilities::GrowingArray<Checkpoint*> myCheckpoints;
 
 	std::atomic<bool> myIsLoaded;
 };

@@ -57,6 +57,7 @@ public:
 	virtual bool RecieveMessage(const EnemyNextPathMessage & aMessage) override;
 	virtual bool RecieveMessage(const PlayerDiedMessage & aMessage) override;
 	virtual bool RecieveMessage(const SendAPSuggestionMessage & aMessage) override;
+	virtual bool RecieveMessage(const CheckpointMessage & aMessage) override;
 
 private:
 	void AddCandy(const unsigned short aCandyAmount = 0);
@@ -66,6 +67,7 @@ private:
 	int GetPlayerAttackAPCost() const;
 
 	bool CheckForCandy(const TilePosition & aPosToCheckForCandyAt);
+	bool CheckForCheckpoint(const TilePosition& aPosToCheckForCheckpoint);
 	void TakeCandy(const TilePosition & aPosToTakeCandyFrom);
 
 	void ActivePlayerFight(const unsigned short aPlayerIndex);
@@ -98,7 +100,7 @@ private:
 	bool myClickedOnEnemy;
 	bool myClickedOnBB;
 	bool myClickedOnSelectedPlayer;
-
+	bool myHasTriggeredCheckpoint;
 	LayerInputReciever myMouseInput;
 
 	std::vector<CU::Vector2f> myDebugStart;
