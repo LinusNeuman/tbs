@@ -30,6 +30,7 @@ public:
 
 	TiledData* GetTiledData();
 	ObjectiveManager & GetObjectiveManager();
+	ObjectiveManager GetObjectiveManagerCopy();
 private:
 	void InternalInit();
 

@@ -385,20 +385,20 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, Checkpoin
 					{
 						DL_ASSERT(false, "ERROR:  Objective type does not exist");
 					}
-					if (aCheckpointData.myRespawnPosition == CU::Vector2ui(UINT_MAX, UINT_MAX))
-					{
+					//if (aCheckpointData.myRespawnPosition == CU::Vector2ui(UINT_MAX, UINT_MAX))
+					//{
 						Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
 						objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
 						someTiles.myObjectives.Add(objectiveObject);
 						someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
-					}
-					else
+					//}
+					/*else
 					{
 						Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
 						objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
 						someTiles.myObjectives.Add(objectiveObject);
 						someTiles.myObjectiveManager = &(aCheckpointData.myObjectiveState);
-					}
+					}*/
 					
 				}
 			}

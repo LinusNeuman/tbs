@@ -326,3 +326,8 @@ ObjectiveManager& GameLevel::GetObjectiveManager()
 {
 	return myObjectiveManager;
 }
+
+ObjectiveManager GameLevel::GetObjectiveManagerCopy()
+{
+	return myObjectiveManager;
+}
