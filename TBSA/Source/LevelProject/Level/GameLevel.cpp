@@ -50,6 +50,8 @@ GameLevel::~GameLevel()
 void GameLevel::Init(TiledData* aTileData)
 {
 	myTiledData = aTileData;
+
+	myObjectiveManager.Init();
 }
 
 void GameLevel::InternalInit()

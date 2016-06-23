@@ -19,6 +19,9 @@ public:
 
 	void LoadFromJson(std::string aPath);
 	void Update();
+
+	void Init();
+	void AddAsReciever();
 	
 	void UpdateObjectiveBox();
 	static std::string GetObjectiveDescription(const LevelObjective & aLevelObjective);

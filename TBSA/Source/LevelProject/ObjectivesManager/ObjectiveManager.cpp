@@ -13,14 +13,6 @@
 
 ObjectiveManager::ObjectiveManager()
 {
-	myStages.Init(1);
-	myCurrentStage = 0;
-	SingletonPostMaster::AddReciever(RecieverTypes::eObjctive, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eLeaveObjective, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDied, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eDialogEnabled, *this);
-	SingletonPostMaster::AddReciever(RecieverTypes::eDialogDisabled, *this);
-	myStageEndDialogs.Init(1);
 }
 
 ObjectiveManager::~ObjectiveManager()
@@ -167,6 +159,23 @@ void ObjectiveManager::Update()
 
 		SendPostMessage(DialogTextMessage(RecieverTypes::eDialogTextMessage, myDialogs[str]));
 	}
+}
+
+void ObjectiveManager::Init()
+{
+	myStages.Init(1);
+	myCurrentStage = 0;
+	AddAsReciever();
+	myStageEndDialogs.Init(1);
+}
+
+void ObjectiveManager::AddAsReciever()
+{
+	SingletonPostMaster::AddReciever(RecieverTypes::eObjctive, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eLeaveObjective, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eEnemyDied, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eDialogEnabled, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eDialogDisabled, *this);
 }
 
 void ObjectiveManager::UpdateObjectiveBox()
