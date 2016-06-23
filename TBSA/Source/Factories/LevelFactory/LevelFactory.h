@@ -12,10 +12,10 @@ class LevelFactory
 public:
 	LevelFactory();
 	~LevelFactory();
-	GameLevel* CreateLevel(const std::string& aLevelPath, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData);
+	GameLevel* CreateLevel(const std::string& aLevelPath, CheckpointData &aCheckpointData);
 private:
-	void LoadLevel(const std::string& aLevelPath, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData);
-	static void StaticLoad(const std::string& aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData);
+	void LoadLevel(const std::string& aLevelPath, CheckpointData &aCheckpointData);
+	static void StaticLoad(const std::string& aFilePath, TiledData* aTilePointer, CheckpointData &aCheckpointData);
 
 	PlayerFactory myPlayerFactory;
 	EnemyFactory myEnemyFactory;

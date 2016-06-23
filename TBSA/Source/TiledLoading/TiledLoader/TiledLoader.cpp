@@ -23,7 +23,7 @@ CommonUtilities::GrowingArray<SpriteSheet> LoadSpriteSheets(const picojson::arra
 void GetPathNodes(const int aINdex, PathAndName & aPath, const picojson::array & someData, const int aMapWidth, const int aLastTile);
 
 
-void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU::Vector2ui aRespawnPosition, const CommonUtilities::GrowingArray<SavedDeadEnemy> &aDeadEnemyData)
+void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, CheckpointData &aCheckpointData)
 {
 	TiledData& someTiles = *aTilePointer;
 	std::map<std::string, unsigned short> enemyIndexes;
@@ -210,7 +210,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 					Player *const playerActor = someTiles.myPlayerFactory->CreatePlayer(playerType);
 					float posX;
 					float posY;
-					if (aRespawnPosition == CU::Vector2ui(UINT_MAX, UINT_MAX))
+					if (aCheckpointData.myRespawnPosition == CU::Vector2ui(UINT_MAX, UINT_MAX))
 					{
 						posX = static_cast<float>(JsonHelp::GetNumber(player["x"])) / 64;
 						posY = static_cast<float>(JsonHelp::GetNumber(player["y"])) / 64;
@@ -219,13 +219,13 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 					{
 						if (playerType == eActorType::ePlayerOne)
 						{
-							posX = aRespawnPosition.x;
-							posY = aRespawnPosition.y;
+							posX = aCheckpointData.myRespawnPosition.x;
+							posY = aCheckpointData.myRespawnPosition.y;
 						}
 						else
 						{
-							posX = aRespawnPosition.x + 1;
-							posY = aRespawnPosition.y;
+							posX = aCheckpointData.myRespawnPosition.x + 1;
+							posY = aCheckpointData.myRespawnPosition.y;
 						}
 
 					}
@@ -317,12 +317,12 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 					}
 					
 					someTiles.myEnemies.Add(enemyActor);
-					for (size_t iEnemy = 0; iEnemy < aDeadEnemyData.Size(); iEnemy++)
+					for (size_t iEnemy = 0; iEnemy < aCheckpointData.mySavedDeadEnemies.Size(); iEnemy++)
 					{
-						if (aDeadEnemyData[iEnemy].myEnemyIndex == k)
+						if (aCheckpointData.mySavedDeadEnemies[iEnemy].myEnemyIndex == k)
 						{
 							enemyActor->SetActorState(eActorState::eDead);
-							enemyActor->SetPosition(CommonUtilities::Vector2f(aDeadEnemyData[iEnemy].myTilePosition.x, aDeadEnemyData[iEnemy].myTilePosition.y));
+							enemyActor->SetPosition(CommonUtilities::Vector2f(aCheckpointData.mySavedDeadEnemies[iEnemy].myTilePosition.x, aCheckpointData.mySavedDeadEnemies[iEnemy].myTilePosition.y));
 							enemyActor->SetDeadestFlag(true);
 							enemyActor->ChangeAnimation("DeadestState");
 							
@@ -385,15 +385,21 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, const CU:
 					{
 						DL_ASSERT(false, "ERROR:  Objective type does not exist");
 					}
-
-					Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
-
-
-
-					objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
-					someTiles.myObjectives.Add(objectiveObject);
-
-					someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
+					if (aCheckpointData.myRespawnPosition == CU::Vector2ui(UINT_MAX, UINT_MAX))
+					{
+						Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
+						objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
+						someTiles.myObjectives.Add(objectiveObject);
+						someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
+					}
+					else
+					{
+						Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
+						objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
+						someTiles.myObjectives.Add(objectiveObject);
+						someTiles.myObjectiveManager = &(aCheckpointData.myObjectiveState);
+					}
+					
 				}
 			}
 		}

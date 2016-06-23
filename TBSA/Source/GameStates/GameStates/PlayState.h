@@ -48,8 +48,7 @@ private:
 	SoundEffect* myAmbiance;
 	Song* myMusic;
 	CommonUtilities::GrowingArray<SavedDeadEnemy> myDeadEnemies;
-	CommonUtilities::GrowingArray<SavedDeadEnemy> mySavedDeadEnemies;
-	TilePosition myRespawnPosition;
+	CheckpointData myCheckpointData;
 	bool scoreScreenDone;
 	bool myShouldExit;
 	bool myGameOver;
