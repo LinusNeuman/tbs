@@ -86,10 +86,6 @@
                  "height":64,
                  "id":4,
                  "name":"Ginger",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Player1",
                  "visible":true,
@@ -101,10 +97,6 @@
                  "height":64,
                  "id":5,
                  "name":"John",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Player2",
                  "visible":true,
@@ -128,10 +120,6 @@
                  "height":64,
                  "id":7,
                  "name":"Grunt",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -143,10 +131,6 @@
                  "height":64,
                  "id":10,
                  "name":"Enemy2",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy3",
                  "visible":true,
@@ -158,10 +142,6 @@
                  "height":64,
                  "id":20,
                  "name":"Enemy3",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -173,10 +153,6 @@
                  "height":64,
                  "id":21,
                  "name":"Enemy4",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -188,10 +164,6 @@
                  "height":64,
                  "id":24,
                  "name":"Enemy5",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -207,6 +179,10 @@
                     {
                      "direction":"W"
                     },
+                 "propertytypes":
+                    {
+                     "direction":"string"
+                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -218,10 +194,6 @@
                  "height":64,
                  "id":28,
                  "name":"Enemy8",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -233,10 +205,6 @@
                  "height":64,
                  "id":29,
                  "name":"Enemy9",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -248,10 +216,6 @@
                  "height":64,
                  "id":33,
                  "name":"Enemy10",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -267,6 +231,10 @@
                     {
                      "direciton":"W"
                     },
+                 "propertytypes":
+                    {
+                     "direciton":"string"
+                    },
                  "rotation":0,
                  "type":"Enemy3",
                  "visible":true,
@@ -278,10 +246,6 @@
                  "height":64,
                  "id":36,
                  "name":"Enemy12",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -293,10 +257,6 @@
                  "height":64,
                  "id":37,
                  "name":"Oliver",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy4",
                  "visible":true,
@@ -308,10 +268,6 @@
                  "height":64,
                  "id":45,
                  "name":"Enemy14",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy3",
                  "visible":true,
@@ -323,10 +279,6 @@
                  "height":64,
                  "id":47,
                  "name":"Enemy14",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy2",
                  "visible":true,
@@ -338,10 +290,6 @@
                  "height":64,
                  "id":50,
                  "name":"BigBaddie",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Enemy1",
                  "visible":true,
@@ -365,10 +313,6 @@
                  "height":64,
                  "id":8,
                  "name":"endzone1",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"LevelEnd",
                  "visible":true,
@@ -380,10 +324,6 @@
                  "height":64,
                  "id":9,
                  "name":"endzone2",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"LevelEnd",
                  "visible":true,
@@ -395,10 +335,6 @@
                  "height":64,
                  "id":12,
                  "name":"Candy1",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Sweet",
                  "visible":true,
@@ -410,10 +346,6 @@
                  "height":64,
                  "id":14,
                  "name":"Candy3",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -425,10 +357,6 @@
                  "height":64,
                  "id":16,
                  "name":"Candy2",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -440,10 +368,6 @@
                  "height":64,
                  "id":17,
                  "name":"Candy4",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -455,10 +379,6 @@
                  "height":64,
                  "id":18,
                  "name":"Candy5",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -470,10 +390,6 @@
                  "height":64,
                  "id":43,
                  "name":"Candy6",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -485,10 +401,6 @@
                  "height":64,
                  "id":51,
                  "name":"Candy7",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"Candy",
                  "visible":true,
@@ -500,16 +412,23 @@
                  "height":64,
                  "id":52,
                  "name":"Snowballs",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"LevelEnd",
                  "visible":true,
                  "width":64,
                  "x":512,
                  "y":1728
+                }, 
+                {
+                 "height":52,
+                 "id":111,
+                 "name":"Checkpoint",
+                 "rotation":0,
+                 "type":"Checkpoint",
+                 "visible":true,
+                 "width":54,
+                 "x":1925,
+                 "y":1928.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -660,10 +579,6 @@
                  "height":64,
                  "id":59,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -675,10 +590,6 @@
                  "height":64,
                  "id":62,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -690,10 +601,6 @@
                  "height":64,
                  "id":63,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -705,10 +612,6 @@
                  "height":64,
                  "id":71,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -720,10 +623,6 @@
                  "height":64,
                  "id":72,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -735,10 +634,6 @@
                  "height":64,
                  "id":73,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -750,10 +645,6 @@
                  "height":64,
                  "id":76,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -765,10 +656,6 @@
                  "height":64,
                  "id":77,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -780,10 +667,6 @@
                  "height":64,
                  "id":79,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -795,10 +678,6 @@
                  "height":64,
                  "id":80,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -810,10 +689,6 @@
                  "height":64,
                  "id":81,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -825,10 +700,6 @@
                  "height":256,
                  "id":83,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -840,10 +711,6 @@
                  "height":128,
                  "id":85,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -855,10 +722,6 @@
                  "height":64,
                  "id":86,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -870,10 +733,6 @@
                  "height":64,
                  "id":87,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -885,10 +744,6 @@
                  "height":64,
                  "id":88,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -900,10 +755,6 @@
                  "height":64,
                  "id":92,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -915,10 +766,6 @@
                  "height":128,
                  "id":93,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -930,10 +777,6 @@
                  "height":256,
                  "id":96,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -945,10 +788,6 @@
                  "height":64,
                  "id":97,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -960,10 +799,6 @@
                  "height":128,
                  "id":98,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -975,10 +810,6 @@
                  "height":64,
                  "id":99,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -990,10 +821,6 @@
                  "height":128,
                  "id":100,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1005,10 +832,6 @@
                  "height":128,
                  "id":101,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1020,10 +843,6 @@
                  "height":64,
                  "id":102,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1035,10 +854,6 @@
                  "height":64,
                  "id":104,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1050,10 +865,6 @@
                  "height":64,
                  "id":105,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1065,10 +876,6 @@
                  "height":64,
                  "id":106,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1080,10 +887,6 @@
                  "height":64,
                  "id":107,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1095,10 +898,6 @@
                  "height":64,
                  "id":110,
                  "name":"",
-                 "properties":
-                    {
-
-                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -1113,74 +912,58 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":111,
+ "nextobjectid":112,
  "orientation":"isometric",
- "properties":
-    {
-
-    },
  "renderorder":"right-down",
  "tileheight":64,
  "tilesets":[
         {
+         "columns":16,
          "firstgid":1,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetWalls.png",
          "imageheight":1024,
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetWalls",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":128,
          "tileheight":128,
          "tilewidth":128
         }, 
         {
+         "columns":16,
          "firstgid":129,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetFloors.png",
          "imageheight":1024,
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetFloors",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":128,
          "tileheight":128,
          "tilewidth":128
         }, 
         {
+         "columns":16,
          "firstgid":257,
          "image":"..\/..\/Sprites\/SpriteSheets\/tileSheetProps.png",
          "imageheight":1024,
          "imagewidth":2048,
          "margin":0,
          "name":"tileSheetProps",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":128,
          "tileheight":128,
          "tilewidth":128
         }, 
         {
+         "columns":8,
          "firstgid":385,
          "image":"..\/..\/Sprites\/SpriteSheets\/dataTileSheet.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
          "name":"_dataTileSheet",
-         "properties":
-            {
-
-            },
          "spacing":0,
          "tilecount":64,
          "tileheight":128,

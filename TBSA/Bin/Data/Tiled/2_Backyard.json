@@ -358,12 +358,12 @@
                  "type":"Checkpoint",
                  "visible":true,
                  "width":54,
-                 "x":1606.33333333333,
-                 "y":2311.33333333333
+                 "x":1350.33333333333,
+                 "y":2055.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -382,8 +382,8 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":1600,
-                 "y":2304
+                 "x":1604.66666666667,
+                 "y":2304.66666666667
                 }, 
                 {
                  "height":64,
