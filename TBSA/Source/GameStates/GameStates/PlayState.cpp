@@ -280,6 +280,7 @@ void PlayState::ChangeLevel(const std::string& aFilePath)
 	{
 		delete(myLevel);
 	}
+
 	myLevel = myLevelFactory->CreateLevel(aFilePath, myCheckpointData);
 	myCurrentLevelpath = aFilePath;
 }

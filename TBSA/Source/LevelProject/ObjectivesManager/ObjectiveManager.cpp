@@ -22,6 +22,7 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
+	myIsInitialized = false;
 	dialogSent = false;
 	dialogDone = false;
 	levelDone = false;
@@ -163,6 +164,7 @@ void ObjectiveManager::Update()
 
 void ObjectiveManager::Init()
 {
+	myIsInitialized = true;
 	myStages.Init(1);
 	myCurrentStage = 0;
 	AddAsReciever();

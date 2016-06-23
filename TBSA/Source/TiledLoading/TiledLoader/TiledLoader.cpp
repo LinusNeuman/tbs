@@ -332,7 +332,7 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, Checkpoin
 					enemyIndexes[JsonHelp::GetString(enemy["name"])] = someTiles.myEnemies.Size() - 1;
 				}
 			}
-			else if (name == "Objective" || name == "Objectives")
+			else if ((name == "Objective" || name == "Objectives"))
 			{
 				picojson::array objects = JsonHelp::GetArray(currentLayer["objects"]);
 				for (size_t k = 0; k < objects.size(); k++)
@@ -390,7 +390,10 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, Checkpoin
 						Objective* const objectiveObject = someTiles.myObjectiveFactory->CreateObjective(objectiveType);
 						objectiveObject->SetPosition(CommonUtilities::Vector2f(posX, posY));
 						someTiles.myObjectives.Add(objectiveObject);
-						someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY)+static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
+						if (someTiles.myObjectiveManager->GetShouldLoadData() == true)
+						{
+							someTiles.myObjectiveManager->AddObjective(1000 * static_cast<int>(posY) + static_cast<int>(posX), JsonHelp::GetString(goal["name"]));
+						}
 					//}
 					/*else
 					{

@@ -27,7 +27,21 @@ GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath, CheckpointDa
 	GameLevel* level = new GameLevel();
 	myTileData = new TiledData;
 
-	myTileData->myObjectiveManager = &level->GetObjectiveManager();
+	
+
+	if (aCheckpointData.myObjectiveState.GetIsInitialized() == false)
+	{
+		myTileData->myObjectiveManager = &level->GetObjectiveManager();
+		myTileData->myObjectiveManager->Init();
+		myTileData->myObjectiveManager->SetShouldLoadData(true);
+	}
+	else
+	{
+		level->GetObjectiveManager() = aCheckpointData.myObjectiveState;
+		myTileData->myObjectiveManager = &level->GetObjectiveManager();
+		myTileData->myObjectiveManager->AddAsReciever();
+		myTileData->myObjectiveManager->SetShouldLoadData(false);
+	}
 
 	LoadLevel(aLevelPath, aCheckpointData);
 	level->Init(myTileData);
@@ -60,7 +74,8 @@ void LevelFactory::LoadLevel(const std::string& aLevelPath, CheckpointData &aChe
 	
 	myTileData->myIsLoaded = false;
 
-	std::thread(StaticLoad, aLevelPath, myTileData, aCheckpointData).detach();
+	StaticLoad(aLevelPath, myTileData, aCheckpointData);
+	//std::thread(StaticLoad, aLevelPath, myTileData, aCheckpointData).detach();
 	//TiledLoader::Load(aLevelPath, myTileData);
 
 	
@@ -68,6 +83,9 @@ void LevelFactory::LoadLevel(const std::string& aLevelPath, CheckpointData &aChe
 
 void LevelFactory::StaticLoad(const std::string& aFilePath, TiledData* aTilePointer, CheckpointData &aCheckpointData)
 {
-	aTilePointer->myObjectiveManager->LoadFromJson(OBJECTIVE_LOCATION + aFilePath);
+	if (aTilePointer->myObjectiveManager->GetShouldLoadData() == true)
+	{
+		aTilePointer->myObjectiveManager->LoadFromJson(OBJECTIVE_LOCATION + aFilePath);
+	}
 	TiledLoader::Load(LEVEL_LOCATION + aFilePath, aTilePointer, aCheckpointData);
 }

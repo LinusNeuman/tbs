@@ -35,7 +35,13 @@ public:
 	bool RecieveMessage(const PositionMessage& aMessage) override;
 	bool RecieveMessage(const GUIMessage& aMessage) override;
 
+	bool GetIsInitialized() const;
+	bool GetShouldLoadData() const;
+	void SetShouldLoadData(const bool aLoadDataFlag);
+
 private:
+	bool myIShouldLoadData;
+	bool myIsInitialized;
 	bool dialogDone;
 	bool dialogSent;
 	bool levelDone;
@@ -50,3 +56,18 @@ private:
 
 	CommonUtilities::GrowingArray<std::string> myStageEndDialogs;
 };
+
+inline bool ObjectiveManager::GetIsInitialized() const
+{
+	return myIsInitialized;
+}
+
+inline bool ObjectiveManager::GetShouldLoadData() const
+{
+	return myIShouldLoadData;
+}
+
+inline void ObjectiveManager::SetShouldLoadData(const bool aLoadDataFlag)
+{
+	myIShouldLoadData = aLoadDataFlag;
+}
