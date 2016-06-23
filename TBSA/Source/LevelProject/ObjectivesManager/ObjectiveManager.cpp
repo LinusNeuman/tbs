@@ -13,6 +13,7 @@
 
 ObjectiveManager::ObjectiveManager()
 {
+	myIsInitialized = false;
 }
 
 ObjectiveManager::~ObjectiveManager()
@@ -22,7 +23,6 @@ ObjectiveManager::~ObjectiveManager()
 
 void ObjectiveManager::LoadFromJson(std::string aPath)
 {
-	myIsInitialized = false;
 	dialogSent = false;
 	dialogDone = false;
 	levelDone = false;
