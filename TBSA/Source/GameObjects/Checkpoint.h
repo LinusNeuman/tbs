@@ -9,7 +9,7 @@ struct CheckpointData
 	}
 	CommonUtilities::GrowingArray<SavedDeadEnemy> mySavedDeadEnemies;
 	TilePosition myRespawnPosition;
-	//ObjectiveManager myObjectiveState; //Denna kommer att krasha spelet då den kommer få massor av meddelanden och kommer försöka göra saker med dom utan att vara initade.
+	ObjectiveManager myObjectiveState;
 };
 
 

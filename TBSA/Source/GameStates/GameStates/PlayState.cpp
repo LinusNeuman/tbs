@@ -218,7 +218,7 @@ bool PlayState::RecieveMessage(const CheckpointMessage& aMessage)
 		myCheckpointData.myRespawnPosition = aMessage.myRespawnPosition;
 		myHasTriggeredCheckpoint = true;
 		myCheckpointData.mySavedDeadEnemies = myDeadEnemies;
-		//myCheckpointData.myObjectiveState = myLevel->GetObjectiveManager();
+		myCheckpointData.myObjectiveState = myLevel->GetObjectiveManagerCopy();
 	}
 	
 	return true;
@@ -266,7 +266,7 @@ void PlayState::ResetSavedData()
 	myDeadEnemies.RemoveAll();
 	myCheckpointData.mySavedDeadEnemies.RemoveAll();
 	myCheckpointData.myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
-	//myCheckpointData.myObjectiveState = ObjectiveManager();
+	myCheckpointData.myObjectiveState = ObjectiveManager();
 }
 
 void PlayState::ChangeLevel(const std::string& aFilePath)
