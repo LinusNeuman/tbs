@@ -517,6 +517,7 @@ bool PlayerController::RecieveMessage(const CheckpointMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::eTriggeredCheckpoint)
 	{
 		myHasTriggeredCheckpoint = true;
+		SendPostMessage(ScoreCounterMessage(RecieverTypes::eCheckPointScore, myScoreCounter));
 	}
 	return true;
 }

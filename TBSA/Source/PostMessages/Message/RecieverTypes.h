@@ -82,5 +82,6 @@ enum class RecieverTypes
 	eTriggeredCheckpoint,
 	eDeadEnemyData,
 	eSuggestAPChange,
+	eCheckPointScore,
 	enumlength
 };

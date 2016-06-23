@@ -61,6 +61,7 @@ PlayState::~PlayState()
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eGameOverScore, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 	SingletonPostMaster::RemoveReciever(RecieverTypes::eDeadEnemyData, *this);
+	SingletonPostMaster::RemoveReciever(RecieverTypes::eCheckPointScore, *this);
 }
 
 void PlayState::Init(const std::string& aLevelPath)
@@ -76,6 +77,7 @@ void PlayState::Init(const std::string& aLevelPath)
 	SingletonPostMaster::AddReciever(RecieverTypes::eGameOverScore, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eTriggeredCheckpoint, *this);
 	SingletonPostMaster::AddReciever(RecieverTypes::eDeadEnemyData, *this);
+	SingletonPostMaster::AddReciever(RecieverTypes::eCheckPointScore, *this);
 
 	if (aLevelPath == "")
 	{
@@ -248,7 +250,15 @@ bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 
 bool PlayState::RecieveMessage(const ScoreCounterMessage& aMessage)
 {
-	myScoreCounter = aMessage.myScoreCounter;
+	if (aMessage.myType != RecieverTypes::eCheckPointScore)
+	{
+		myScoreCounter = aMessage.myScoreCounter;
+	}
+	else
+	{
+		myCheckpointData.myScoreCounter = aMessage.myScoreCounter;
+	}
+
 	return true;
 }
 

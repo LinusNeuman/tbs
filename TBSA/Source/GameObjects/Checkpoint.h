@@ -1,4 +1,7 @@
 #pragma once
+#include "Controllers\ScoreCounter.h"
+
+
 
 struct CheckpointData
 {
@@ -10,6 +13,7 @@ struct CheckpointData
 	CommonUtilities::GrowingArray<SavedDeadEnemy> mySavedDeadEnemies;
 	TilePosition myRespawnPosition;
 	ObjectiveManager myObjectiveState;
+	ScoreCounter myScoreCounter;
 };
 
 
