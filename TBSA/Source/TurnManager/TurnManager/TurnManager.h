@@ -32,6 +32,8 @@ public:
 
 	EnemyController & GetEnemyController();
 
+	void SetPlayerScore(const ScoreCounter & aScoreCounter);
+
 	void ForceTurn(eTurn aTurn);
 	bool RecieveMessage(const GUIMessage&) override;
 	bool RecieveMessage(const FlagPlayerDiedMessage&) override;

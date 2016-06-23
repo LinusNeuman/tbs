@@ -413,6 +413,8 @@ void TiledLoader::Load(std::string aFilePath, TiledData* aTilePointer, Checkpoin
 		someTiles.myEnemies[enemyIndex]->SetEnemyPath(paths[i].myPath);
 	}
 	someTiles.myIsLoaded = true;
+
+	
 }
 
 

@@ -277,6 +277,7 @@ void PlayState::ResetSavedData()
 	myCheckpointData.mySavedDeadEnemies.RemoveAll();
 	myCheckpointData.myRespawnPosition = CU::Vector2ui(UINT_MAX, UINT_MAX);
 	myCheckpointData.myObjectiveState = ObjectiveManager();
+	myCheckpointData.myScoreCounter = ScoreCounter();
 }
 
 void PlayState::ChangeLevel(const std::string& aFilePath)

@@ -29,6 +29,7 @@ public:
 	void ConstructNavGraph();
 
 	TiledData* GetTiledData();
+	void SetPlayerScore(const ScoreCounter & aScoreCounter);
 	ObjectiveManager & GetObjectiveManager();
 	ObjectiveManager GetObjectiveManagerCopy();
 private:

@@ -409,6 +409,11 @@ void PlayerController::ConstantUpdate(const CommonUtilities::Time& aDeltaTime)
 	myPlayers[1]->Update(aDeltaTime);
 }
 
+void PlayerController::SetPlayerScore(const ScoreCounter & aScoreCounter)
+{
+	myScoreCounter = aScoreCounter;
+}
+
 void PlayerController::SetFloor(GameFloor & aFloor)
 {
 	myFloor = &aFloor;

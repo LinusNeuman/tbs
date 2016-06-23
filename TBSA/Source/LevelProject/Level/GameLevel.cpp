@@ -324,6 +324,11 @@ TiledData* GameLevel::GetTiledData()
 	return myTiledData;
 }
 
+void GameLevel::SetPlayerScore(const ScoreCounter & aScoreCounter)
+{
+	myTurnManager.SetPlayerScore(aScoreCounter);
+}
+
 ObjectiveManager& GameLevel::GetObjectiveManager()
 {
 	return myObjectiveManager;

@@ -64,6 +64,11 @@ bool TurnManager::Update(CommonUtilities::Time aDeltaTime)
 	};
 }
 
+void TurnManager::SetPlayerScore(const ScoreCounter & aScoreCounter)
+{
+	myPlayerController.SetPlayerScore(aScoreCounter);
+}
+
 void TurnManager::ForceTurn(eTurn aTurn)
 {
 	myCurrentTurn = aTurn;

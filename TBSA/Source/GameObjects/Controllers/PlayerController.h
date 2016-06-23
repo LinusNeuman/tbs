@@ -36,6 +36,7 @@ public:
 	void Update(const CommonUtilities::Time& aTime);
 	void ConstantUpdate(const CommonUtilities::Time& aDeltaTime);
 
+	void SetPlayerScore(const ScoreCounter & aScoreCounter);
 	void SetFloor(GameFloor & aFloor);
 	void PrePlayer();
 	void SetCameraPositionToPlayer(int aIndex);

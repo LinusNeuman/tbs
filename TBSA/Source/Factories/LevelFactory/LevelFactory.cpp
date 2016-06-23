@@ -43,8 +43,10 @@ GameLevel* LevelFactory::CreateLevel(const std::string& aLevelPath, CheckpointDa
 		myTileData->myObjectiveManager->SetShouldLoadData(false);
 	}
 
+	
 	LoadLevel(aLevelPath, aCheckpointData);
 	level->Init(myTileData);
+	level->SetPlayerScore(aCheckpointData.myScoreCounter);
 	return level;
 }
 
