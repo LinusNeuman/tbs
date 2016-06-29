@@ -1,6 +1,8 @@
 #pragma once
 #include "render/render_common.h"
 
+#include <d3dcommon.h>
+
 struct IDXGISwapChain;
 struct ID3D11Device;
 struct ID3D11DeviceContext;
@@ -70,6 +72,8 @@ namespace DX2D
         int GetObjectRenderCount();
 
 
+		D3D_FEATURE_LEVEL GetFeatureLevel() { return myFeatureLevel; };
+
         //
         // MartinH mods
         //
@@ -110,5 +114,8 @@ namespace DX2D
 		CColor myClearColor;
 		int myVideoCardMemory;
 		bool myEnableVSync;
+
+		D3D_FEATURE_LEVEL myFeatureLevel;
+
 	};
 }

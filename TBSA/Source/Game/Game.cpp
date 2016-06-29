@@ -126,7 +126,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
 #endif
 
     createParameters.myApplicationName = appname;
-    createParameters.myEnableVSync = false;
+    createParameters.myEnableVSync = true;
 
     DX2D::CEngine::CreateInstance( createParameters );
 

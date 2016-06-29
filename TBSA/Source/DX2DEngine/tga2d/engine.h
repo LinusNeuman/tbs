@@ -13,6 +13,8 @@ It takes care of creating everything necessary for window handling and rendering
 #include "math/vector2.h"
 #include <chrono>
 
+
+
 namespace DX2D
 {
     class CWindowsWindow;
@@ -164,7 +166,7 @@ namespace DX2D
 
         // Passes data to GPU. Run at the end of the frame.
         //
-        void EndFrame( void );
+		void EndFrame(void);
 		
     private:
         CEngine(const SEngineCreateParameters& aCreateParameters);

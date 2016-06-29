@@ -51,18 +51,45 @@ bool DX2D::CShader::CreateShaders(const char* aVertex, const char* aPixel, callb
 	ID3D10Blob *PS = nullptr;
 	INFO_PRINT("%s%s", "Initing vertex Shader: ", aVertex);
 	INFO_PRINT("%s%s", "Initing pixel Shader: ", aPixel);
-	if (!myEngine->GetDirect3D().CompileShader(aVertex, "VShader", "vs_5_0", VS))
+
+	if (myEngine->GetDirect3D().GetFeatureLevel() == D3D_FEATURE_LEVEL_10_1)
 	{
-		ERROR_AUTO_PRINT("%s%s", "Shader error in file: ", aVertex);
-		return false;
+		if (!myEngine->GetDirect3D().CompileShader(aVertex, "VShader", "vs_4_0", VS))
+		{
+			ERROR_AUTO_PRINT("%s%s", "Shader error in file: ", aVertex);
+			return false;
+		}
+		if (!myEngine->GetDirect3D().CompileShader(aPixel, "PShader", "ps_4_0", PS))
+		{
+			ERROR_AUTO_PRINT("%s%s", "Shader error in file: ", aPixel);
+			return false;
+		}
 	}
-	if (!myEngine->GetDirect3D().CompileShader(aPixel, "PShader", "ps_5_0", PS))
+	else
 	{
-		ERROR_AUTO_PRINT("%s%s", "Shader error in file: ", aPixel);
-		return false;
+		if (!myEngine->GetDirect3D().CompileShader(aVertex, "VShader", "vs_5_0", VS))
+		{
+			ERROR_AUTO_PRINT("%s%s", "Shader error in file: ", aVertex);
+			return false;
+		}
+		if (!myEngine->GetDirect3D().CompileShader(aPixel, "PShader", "ps_5_0", PS))
+		{
+			ERROR_AUTO_PRINT("%s%s", "Shader error in file: ", aPixel);
+			return false;
+		}
 	}
-	myEngine->GetDirect3D().GetDevice()->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &myVertexShader);
-	myEngine->GetDirect3D().GetDevice()->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &myPixelShader);
+
+	
+	HRESULT resultVS = myEngine->GetDirect3D().GetDevice()->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &myVertexShader);
+	if (resultVS != 0)
+	{
+		ERROR_PRINT("%s%s", "Could not create vertex shader: ", aVertex);
+	}
+	HRESULT resultPS = myEngine->GetDirect3D().GetDevice()->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &myPixelShader);
+	if (resultPS != 0)
+	{
+		ERROR_PRINT("%s%s", "Could not create pixel shader: ", aVertex);
+	}
 
 	if (myLayout)
 	{

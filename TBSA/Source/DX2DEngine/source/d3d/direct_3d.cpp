@@ -270,7 +270,7 @@ bool CDirectEngine::Init(const CEngine& aEngine, Vector2<unsigned int> aWindowSi
     swapChainDescription.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
     swapChainDescription.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
-    UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+	UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 #if defined(_DEBUG)
 #if defined(REPORT_DX_WARNIGNS)
 	creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
@@ -365,6 +365,8 @@ bool CDirectEngine::Init(const CEngine& aEngine, Vector2<unsigned int> aWindowSi
     }
 
     INFO_PRINT( "%s", "Swapchain created" );
+	myFeatureLevel = myDevice->GetFeatureLevel();
+
     // use the back buffer address to create the render target
     result = myDevice->CreateRenderTargetView( backBuffer, NULL, &myBackbuffer );
     SetDebugObjectName( myBackbuffer, "myBackbuffer" );
@@ -530,6 +532,10 @@ bool CDirectEngine::Init(const CEngine& aEngine, Vector2<unsigned int> aWindowSi
 
     myTexturedQuadBatchDrawer = new CTexturedQuadBatchDrawer( this );
     myTexturedQuadBatchDrawer->Init();
+
+	myDeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	myFeatureLevel = myDevice->GetFeatureLevel();
 
     INFO_PRINT( "%s", "All done, starting..." );
     return true;
