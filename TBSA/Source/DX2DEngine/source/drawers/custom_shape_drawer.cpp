@@ -216,7 +216,7 @@ void DX2D::CCustomShapeDrawer::Draw( CRenderObjectCustom* aObject )
 	{
 		return;
 	}
-    myEngine.GetContext()->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+   // myEngine.GetContext()->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 
     int tris = SetShaderParameters( aObject );
     if( tris > 0 && tris % 3 == 0 )
