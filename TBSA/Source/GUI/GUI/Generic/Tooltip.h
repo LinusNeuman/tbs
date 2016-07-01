@@ -25,6 +25,7 @@ public:
 
 	void Show();
 	void Close();
+	void ResetForStates();
 	
 	void Update(const CU::Time &aDelta);
 

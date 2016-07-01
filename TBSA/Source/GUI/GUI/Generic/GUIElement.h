@@ -48,6 +48,8 @@ public:
 	virtual void Update(const CU::Time &aDelta) = 0;
 
 	virtual void Render();
+
+	void TooltipReset();
 protected:
 	GUIMessageHandler myMessageHandler;
 

@@ -60,3 +60,8 @@ void GUIElement::Render()
 		myGUIChilds[u]->Render();
 	}*/
 }
+
+void GUIElement::TooltipReset()
+{
+	myTooltip.ResetForStates();
+}

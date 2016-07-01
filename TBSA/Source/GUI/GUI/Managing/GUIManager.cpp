@@ -61,6 +61,15 @@ void GUIManager::LoadActiveGUI(CU::GrowingArray<GUIElement*, uchar>* anActiveGUI
 void GUIManager::StopRecieving()
 {
 	SingletonPostMaster::RemoveReciever(*this);
+
+	if (myActiveGUI == nullptr)
+	{
+		return;
+	}
+	for (uchar ch = 0; ch < myActiveGUI->Size(); ++ch)
+	{
+		(*myActiveGUI)[ch]->TooltipReset();
+	}
 }
 
 void GUIManager::StartRecieving()

@@ -7,6 +7,8 @@
 
 Tooltip::Tooltip()
 {
+	myBackground = nullptr;
+
 	myText = new DX2D::CText("Text/erasdust.ttf_sdf");
 	myText->myText = "";
 
@@ -130,4 +132,19 @@ void Tooltip::Reset()
 {
 	myIsTriggered = false;
 	myCurrentTimeDelayed = 0.f;
+}
+
+void Tooltip::ResetForStates()
+{
+	if (myBackground == nullptr)
+	{
+		return;
+	}
+
+	myIsTriggered = false;
+	myCurrentTimeDelayed = 0.f;
+	myShouldShow = false;
+
+	myBackground->SetColor({ myBackground->GetColor().r, myBackground->GetColor().g, myBackground->GetColor().b, 0.f });
+	myTextColor = myBackground->GetColor();
 }
