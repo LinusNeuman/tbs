@@ -990,7 +990,7 @@ void PlayerController::AddCandy(const unsigned short aCandyAmount /*= 0*/)
 
 void PlayerController::EatCandy()
 {
-	if (myCandy > 0)
+	if (myCandy > 0 && mySelectedPlayer->GetIsSeen() == false)
 	{
 		myCandy -= 1;
 		mySelectedPlayer->AddAP(2);

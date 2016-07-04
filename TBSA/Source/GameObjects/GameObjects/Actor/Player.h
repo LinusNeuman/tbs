@@ -53,7 +53,7 @@ public:
 	void PreTurn();
 	int GetPeekCost() const;
 	int GetAttackCost() const;
-
+	bool GetIsSeen() const;
 	void Update(const CU::Time &aDeltaTime) override;
 
 

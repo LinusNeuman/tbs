@@ -146,6 +146,11 @@ int Player::GetAttackCost() const
 	return myAttackCost - 1; // remove 1 for the movement cost of going to the same tile as the enemy.
 }
 
+bool Player::GetIsSeen() const
+{
+	return myIsSeen;
+}
+
 void Player::Update(const CU::Time& aDeltaTime)
 {
 	Actor::Update(aDeltaTime);
