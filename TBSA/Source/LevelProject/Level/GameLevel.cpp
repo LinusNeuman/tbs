@@ -164,7 +164,7 @@ void GameLevel::Update(const CU::Time & aTimeDelta)
 
 	myFloor.GetTile(mousePosition).SetTileState(eTileState::UNDER_MOUSE);
 
-	if (myFloor.GetTile(mousePosition).CheckIfWalkable() == true && myFloor.GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+	if (myFloor.GetTile(mousePosition).CheckIfWalkable() == true && (myFloor.GetTile(mousePosition).GetVertexHandle().Null() == false && myFloor.GetTile(mousePosition).GetVertexHandle()->IsSearched() == true))
 	{
 		CommonUtilities::GrowingArray<int> path = myFloor.GetTile(mousePosition).GetVertexHandle()->GetPath();
 		for (size_t i = 0; i < path.Size(); i++)

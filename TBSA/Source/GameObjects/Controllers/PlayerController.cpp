@@ -362,7 +362,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 	{
 		return enumMouseState::eHeldOnNoCombat;
 	}
-	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false || myClickedOnSelectedPlayer == true)
+	else if (myFloor->GetTile(mousePosition).CheckIfWalkable() == false || (myFloor->GetTile(mousePosition).GetVertexHandle().Null() == true || myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == false) || myClickedOnSelectedPlayer == true)
 	{
 		return enumMouseState::eHeldOnVoid;
 	}
@@ -384,7 +384,7 @@ enumMouseState PlayerController::GetCurrentMouseState()
 			}
 		}
 	}
-	else if (myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
+	else if (myFloor->GetTile(mousePosition).GetVertexHandle().Null() == false && myFloor->GetTile(mousePosition).GetVertexHandle()->IsSearched() == true)
 	{
 		if (myMouseInput.GetMouseButtonPressed(CU::enumMouseButtons::eLeft) == true)
 		{
@@ -857,8 +857,12 @@ bool PlayerController::CheckIfCloseToDoor(const CU::Vector2ui &aPosition, const 
 void PlayerController::BuildPath(PathArray & aPathContainterToBuild)
 {
 	const TilePosition mousePosition = TilePosition(IsometricInput::GetMouseWindowPositionIsometric() + CommonUtilities::Vector2f(0.5, 0.5));
-
-	CommonUtilities::GrowingArray<int> indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
+	CommonUtilities::GrowingArray<int> indexPath;
+	indexPath.Init(1);
+	if (myFloor->GetTile(mousePosition).GetVertexHandle().Null() == false)
+	{
+		indexPath = myFloor->GetTile(mousePosition).GetVertexHandle()->GetPath();
+	}
 
 	aPathContainterToBuild.Init(indexPath.Size());
 

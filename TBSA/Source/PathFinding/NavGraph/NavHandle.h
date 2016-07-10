@@ -27,72 +27,80 @@ struct EdgeHandle
 
 	EdgeHandle& operator=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle = aHandle;
 		return *this;
 	}
 
 	EdgeHandle operator+(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return EdgeHandle(myHandle + aHandle, myGraph);
 	}
 
 	EdgeHandle& operator+=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle += aHandle;
 		return *this;
 	}
 
 	EdgeHandle operator-(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return EdgeHandle(myHandle - aHandle, myGraph);
 	}
 
 	EdgeHandle& operator-=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle -= aHandle;
 		return *this;
 	}
 
 	EdgeHandle operator*(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return EdgeHandle(myHandle * aHandle, myGraph);
 	}
 
 	EdgeHandle& operator*=(const NavHandle& aHandle)
 	{ 
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle *= aHandle;
 		return *this;
 	}
 
 	EdgeHandle operator/(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return EdgeHandle(myHandle - aHandle, myGraph);
 	}
 
 	EdgeHandle& operator/=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle /= aHandle;
 		return *this;
 	}
 
 	NavEdge* operator->() const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return myGraph->GetEdge(myHandle);
 	}
 
 	bool Null() const
 	{
 		return myGraph == nullptr;
+	}
+
+	void CheckNull()const
+	{
+		if (Null() == true)
+		{
+			DL_ASSERT(false, "ERROR: Handle is not initialized!!");
+		}
 	}
 
 private:
@@ -117,7 +125,7 @@ struct VertexHandle
 
 	bool operator==(const VertexHandle& aVertex) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return myHandle == aVertex.myHandle && myGraph == aVertex.myGraph;
 	}
 
@@ -134,65 +142,73 @@ struct VertexHandle
 
 	VertexHandle operator+(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return VertexHandle(myHandle + aHandle, myGraph);
 	}
 
 	VertexHandle& operator+=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle += aHandle;
 		return *this;
 	}
 
 	VertexHandle operator-(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return VertexHandle(myHandle - aHandle, myGraph);
 	}
 
 	VertexHandle& operator-=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle -= aHandle;
 		return *this;
 	}
 
 	VertexHandle operator*(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return VertexHandle(myHandle * aHandle, myGraph);
 	}
 
 	VertexHandle& operator*=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle *= aHandle;
 		return *this;
 	}
 
 	VertexHandle operator/(const NavHandle& aHandle) const
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		return VertexHandle(myHandle - aHandle, myGraph);
 	}
 
 	VertexHandle& operator/=(const NavHandle& aHandle)
 	{
-		DL_ASSERT(!Null(), "ERROR: Handle is not initialized!!")
+		CheckNull();
 		myHandle /= aHandle;
 		return *this;
 	}
 
 	NavVertex* operator->() const
 	{
-		DL_ASSERT(!Null() , "ERROR: Handle is not initialized!!")
+		CheckNull();
  		return myGraph->GetVertex(myHandle);
 	}
 
 	bool Null() const
 	{
 		return myGraph == nullptr;
+	}
+
+	void CheckNull()const
+	{
+		if (Null() == true)
+		{
+			DL_ASSERT(false, "ERROR: Handle is not initialized!!");
+		}
 	}
 private:
 	NavGraph * myGraph;

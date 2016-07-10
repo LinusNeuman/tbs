@@ -41,6 +41,7 @@ void GameFloor::SetDiagonals(const CU::Vector2f& aPosition, float aCost)
 {
 	const IsometricTile tile = GetTile(CommonUtilities::Vector2ui(aPosition));
 	VertexHandle vertex = tile.GetVertexHandle();
+	DL_ASSERT(vertex.Null(), "something is off in set diagonals function, nav handle became null")
 	CommonUtilities::GrowingArray<EdgeHandle> someEdges = vertex->GetEdges();
 
 	for (size_t i = 0; i < someEdges.Size(); i++)
