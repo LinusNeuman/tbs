@@ -4,7 +4,7 @@
 			{
 				"type" : "take_objective",
 				"target" : "Chocolate",
-				"description":"find the chocolate",
+				"description":"Find the chocolate",
 				"image" : {
 					"active" : "Objectives/Thermos.dds"
 				}

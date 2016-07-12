@@ -4,36 +4,36 @@
 		{
 				"type" : "kill",
 				"target" : "Enemy1",
-				"description":"Take out enemies"
+				"description":"Take out all enemies"
 			},
 			{
 				"type" : "kill",
 				"target" : "Enemy2",
-				"description":"Take out enemies"
+				"description":"Take out all enemies"
 			},
 				{
 				"type" : "kill",
 				"target" : "Enemy3",
-				"description":"Take out enemies"
+				"description":"Take out all enemies"
 			},
 					{
 				"type" : "kill",
 				"target" : "Enemy4",
-				"description":"Take out enemies"
+				"description":"Take out all enemies"
 			},
 					{
 				"type" : "kill",
 				"target" : "Enemy5",
-				"description":"Take out enemies"
+				"description":"Take out all enemies"
 			},
 					{
 				"type" : "kill",
 				"target" : "Enemy6",
-				"description":"Take out enemies"
+				"description":"Take out all enemies"
 			},		{
 				"type" : "kill",
 				"target" : "Enemy7",
-				"description":"Take out enemies",
+				"description":"Take out all enemies",
 				"stageEndDialog" : "lakesideDialog2"
 			}
 			
