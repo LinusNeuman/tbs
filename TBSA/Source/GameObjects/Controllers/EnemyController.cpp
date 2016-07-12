@@ -185,7 +185,7 @@ void EnemyController::RayTrace(const CU::Vector2f& aPosition, const CU::Vector2f
 			error += dx;
 		}
 	}
-	
+	myFloor->GetTile(aEnemy->GetPosition().x, aEnemy->GetPosition().y).SetInEnemyFoV(false, aEnemy);
 
 }
 
