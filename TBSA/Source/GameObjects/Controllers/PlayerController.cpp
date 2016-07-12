@@ -534,7 +534,8 @@ void PlayerController::TakeCandy(const TilePosition & aPosToTakeCandyFrom)
 	myFloor->GetTile(aPosToTakeCandyFrom).TakeCandy();
 	myCandySound->Play(0.5f);
 	SendPostMessage(CandyAmountMessage(RecieverTypes::eCandyAmount, myCandy));
-	SendPostMessage(TextMessage(RecieverTypes::eObjctive , "CandyMessage"));
+	SendPostMessage(TextMessage(RecieverTypes::eObjctive, "CandyMessage"));
+	
 }
 
 bool PlayerController::RecieveMessage(const PlayerIDMessage & aMessage)
@@ -628,6 +629,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	{
 		myFloor->GetTile(aMessage.myPosition.x, aMessage.myPosition.y).SetCurrentObjectiveSprite(1);
 		SendPostMessage(CheckpointMessage(RecieverTypes::eTriggeredCheckpoint, CommonUtilities::Vector2ui(aMessage.myPosition.x, aMessage.myPosition.y)));
+		SendPostMessage(TextMessage(RecieverTypes::eObjctive, "CheckpointMessage"));
 	}
 
 	

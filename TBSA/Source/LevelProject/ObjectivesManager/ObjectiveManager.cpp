@@ -200,7 +200,7 @@ void ObjectiveManager::UpdateObjectiveBox()
 			myDescriptions[currentDescription].y += 1;
 		}
 
-		objectiveTexts[myDescriptions[currentDescription].x] = currentDescription + "( " + std::to_string(myDescriptions[currentDescription].y) + " left)";
+		objectiveTexts[myDescriptions[currentDescription].x] = currentDescription + " [ " + std::to_string(myDescriptions[currentDescription].y) + " left ]";
 	}
 
 	for (size_t i = 0; i < objectiveTexts.Size(); i++)
