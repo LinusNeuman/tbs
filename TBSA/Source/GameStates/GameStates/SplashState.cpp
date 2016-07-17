@@ -22,7 +22,7 @@ Splash::Splash(const char* aPath)
 	myIsDone = false;
 	myStayTimer = 0.f;
 
-	while (ShowCursor(false) > 0);
+	while (ShowCursor(false) > 0); // Häxkod så in i helvete? -Findus
 }
 
 Splash::~Splash()

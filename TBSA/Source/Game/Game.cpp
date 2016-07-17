@@ -116,7 +116,7 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
     createParameters.myClearColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 
 	
-	std::wstring appname = L"FIMBULVINTER [" + aVersion + L"]";
+	std::wstring appname = L"Fimbulvinter";
 #ifdef _DEBUG
 	appname = L"TBS DEBUG  [" + aVersion + L"]";
 
@@ -135,8 +135,6 @@ void CGame::Init(const std::wstring& aVersion, HWND aHandle)
         ERROR_AUTO_PRINT( "Fatal error! Engine could not start!" );
 		system("pause");
     }
-
-
 }
 
 bool CGame::RecieveMessage(const GUIMessage & aMessage)

@@ -37,7 +37,7 @@ void MouseController::Init()
 
 void MouseController::SetMouseState(const enumMouseState aMouseStateToChangeTo)
 {
-	while (ShowCursor(true) < 0);
+	//while (ShowCursor(true) < 0);
 	myCurrentState = aMouseStateToChangeTo;
 }
 

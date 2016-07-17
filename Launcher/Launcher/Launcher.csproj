@@ -34,6 +34,9 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\Fimbulvinter.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="KUtility">
       <HintPath>..\packages\KUtility.0.0.3\lib\net45\KUtility.dll</HintPath>
@@ -78,6 +81,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
