@@ -52,7 +52,7 @@ PlayerController::PlayerController()
 	myFakeClickedOnEnemy = false;
 	myPlayerTurnFlag = false;
 	myHasTriggeredCheckpoint = false;
-	myCandy = 2;
+	myCandy = 0;
 
 
 	mySelectPlayerSound = new SoundEffect();
