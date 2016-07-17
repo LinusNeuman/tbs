@@ -58,6 +58,13 @@ void NavGraph::Dijkstra(const VertexHandle& aFirstNode,const unsigned aDistance)
 	// Här borde den väl kolla om first node är null och i så fall returna?
 	// Annars kraschar den ju.
 	// - Findus 18/06
+	// stämmer
+	// - hampus
+
+	if (aFirstNode.Null() == true)
+	{
+		return;
+	}
 
 	aFirstNode->SetDistance(0);
 	if (aDistance == 0)
