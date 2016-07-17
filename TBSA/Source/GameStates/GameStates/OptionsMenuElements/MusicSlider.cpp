@@ -10,6 +10,8 @@ MusicSlider::MusicSlider()
 void MusicSlider::InitValue()
 {
 	AudioManager::GetInstance()->GetChannelGroup("Song")->getVolume(&myValue);
+	SetAllKnobs(ConvertValueToPosition());
+	ProgressGet();
 }
 
 void MusicSlider::SliderSpecificUpdate()

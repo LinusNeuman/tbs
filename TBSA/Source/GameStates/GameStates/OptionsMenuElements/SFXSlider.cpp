@@ -10,6 +10,8 @@ SFXSlider::SFXSlider()
 void SFXSlider::InitValue()
 {
 	AudioManager::GetInstance()->GetChannelGroup("SFX")->getVolume(&myValue);
+	SetAllKnobs(ConvertValueToPosition());
+	ProgressGet();
 }
 
 void SFXSlider::SliderSpecificUpdate()

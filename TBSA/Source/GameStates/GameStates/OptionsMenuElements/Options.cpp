@@ -38,6 +38,9 @@ void Options::Initialize()
 
 	mySFXSlider.InitPositions(SliderArgsSFX.myPositionArguments);
 	myMusicSlider.InitPositions(SliderArgsMusic.myPositionArguments);
+
+	mySFXSlider.InitValue();
+	myMusicSlider.InitValue();
 }
 
 void Options::Update(float aDeltaTime)
