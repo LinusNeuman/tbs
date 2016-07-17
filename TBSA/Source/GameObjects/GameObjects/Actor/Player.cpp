@@ -67,9 +67,12 @@ void Player::CostAP(const int aCost)
 
 void Player::SetAP(const int aValue)
 {
-	myCurrentAP = aValue;
-	SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
-	SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(myPosition), GetMyAP()));
+	if (myState != eActorState::eWalking)
+	{
+		myCurrentAP = aValue;
+		SendPostMessage(PlayerAPChangedMessage(RecieverTypes::ePlayerAPChanged, myCurrentAP));
+		SendPostMessage(DijkstraMessage(RecieverTypes::eRoom, CommonUtilities::Vector2ui(myPosition), GetMyAP()));
+	}
 }
 
 void Player::AddAP(const int aValue)
