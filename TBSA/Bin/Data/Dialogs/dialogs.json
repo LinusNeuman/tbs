@@ -1,5 +1,5 @@
 {
-	"dialogs":[{"name":"test", "file":"test.json"},
+	"dialogs":[
 	{"name":"treehouseDialog1", "file":"treehouseDialog1.json"},
 	{"name":"1_Treehouse", "file":"treehouseDialog3.json"},
 	{"name":"CandyMessage", "file":"candyText.json"},
