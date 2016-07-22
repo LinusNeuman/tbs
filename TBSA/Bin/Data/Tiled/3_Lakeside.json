@@ -17,7 +17,7 @@
          "name":"_Room_1",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":35,
          "x":0,
          "y":0
@@ -372,8 +372,8 @@
                  "type":"Checkpoint",
                  "visible":true,
                  "width":54,
-                 "x":1094.33333333333,
-                 "y":1284.66666666667
+                 "x":837.33333333333,
+                 "y":965.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
