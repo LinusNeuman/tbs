@@ -505,6 +505,7 @@ bool PlayerController::RecieveMessage(const PlayerDiedMessage & aMessage)
 	{
 		SendPostMessage(ScoreCounterMessage(RecieverTypes::eGameOverScore, myScoreCounter));
 	}
+	
 	return true;
 }
 
@@ -656,7 +657,7 @@ bool PlayerController::RecieveMessage(const PlayerPositionChangedMessage& aMessa
 	}*/
 
 
-
+	SendPostMessage(CandyAmountMessage(RecieverTypes::eCandyAmount, myCandy));
 	return true;
 }
 
