@@ -52,6 +52,7 @@ private:
 	bool scoreScreenDone;
 	bool myShouldExit;
 	bool myGameOver;
+	bool myHasDied;
 	bool myShouldPause;
 	bool myShowPostLevelScreen;
 	bool myFinishedGame;

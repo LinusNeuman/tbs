@@ -33,6 +33,7 @@ PlayState::PlayState()
 	myShouldPause = false;
 	myGameOver = false;
 	myShowPostLevelScreen = false;
+	myHasDied = false;
 
 	myAmbiance = new SoundEffect();
 	myAmbiance->Init("Sounds/AMB/windy.ogg", true);
@@ -207,6 +208,7 @@ bool PlayState::RecieveMessage(const TextMessage& aMessage)
 	if (aMessage.myType == RecieverTypes::eLevelEnd)
 	{
 		ResetSavedData();
+		myHasDied = false;
 		ChangeLevel(aMessage.myText);
 		myShowPostLevelScreen = true;
 	}
@@ -217,10 +219,13 @@ bool PlayState::RecieveMessage(const CheckpointMessage& aMessage)
 {
 	if (aMessage.myType == RecieverTypes::eTriggeredCheckpoint)
 	{
-		myCheckpointData.myRespawnPosition = aMessage.myRespawnPosition;
-		myHasTriggeredCheckpoint = true;
-		myCheckpointData.mySavedDeadEnemies = myDeadEnemies;
-		myCheckpointData.myObjectiveState = myLevel->GetObjectiveManagerCopy();
+		if (myHasDied == false)
+		{
+			myCheckpointData.myRespawnPosition = aMessage.myRespawnPosition;
+			myHasTriggeredCheckpoint = true;
+			myCheckpointData.mySavedDeadEnemies = myDeadEnemies;
+			myCheckpointData.myObjectiveState = myLevel->GetObjectiveManagerCopy();
+		}
 	}
 	
 	return true;
@@ -244,6 +249,10 @@ bool PlayState::RecieveMessage(const PlayerDiedMessage& aMessage)
 	else
 	{
 		myGameOver = true;
+		if (myHasTriggeredCheckpoint == true)
+		{
+			myHasDied = true;
+		}
 	}
 	return true;
 }
