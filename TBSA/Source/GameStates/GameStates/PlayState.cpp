@@ -157,16 +157,18 @@ eStackReturnValue PlayState::Update(const CU::Time & aTimeDelta, ProxyStateStack
 		aStateStack.AddSubState(newState);
 	}
 	
-	if (myLevel->GetTiledData()->myIsLoaded == false)
-	{
+	//if (myLevel->GetTiledData()->myIsLoaded == false) // I have no idea what i'm doing -findus
+	//{
 		if (myShowPostLevelScreen == true)
 		{
 			myShowPostLevelScreen = false;
 			aStateStack.AddSubState(new PostLevelState(myScoreCounter.GetScore(enumScoreTypes::eCandy) , myScoreCounter.GetScore(enumScoreTypes::eTurnCount), myScoreCounter.GetScore(enumScoreTypes::eEnemiesKilled)));
+
+			scoreScreenDone = true; // moved this up because I don't know why it wasn't before -findus
 		}
 
-		scoreScreenDone = true;
-	}
+		
+	//}
 
 	if (myFinishedGame == true)
 	{
